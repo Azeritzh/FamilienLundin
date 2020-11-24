@@ -1,6 +1,6 @@
 # Kristjans forord
 
-Kør backend med `yarn nx serve api` og frontend med `yarn nx serve lundin`.
+Kør backend med `yarn nx serve api` og frontend med `yarn nx serve lundin`. Production build af frontenden laves med `yarn nx build lundin --prod`, hvorefter man kan nøjes med at køre backenden for at bruge siden (fordi den serverer den kompilerede frontend).
 
 # Lundin
 
