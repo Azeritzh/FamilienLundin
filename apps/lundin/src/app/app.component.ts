@@ -3,11 +3,11 @@ import { Component } from "@angular/core"
 import { Message } from "@lundin/api-interfaces"
 
 @Component({
-  selector: "lundin-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"],
+	selector: "lundin-root",
+	templateUrl: "./app.component.html",
+	styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-  hello$ = this.http.get<Message>("/api/hello")
-  constructor(private http: HttpClient) { }
+	hello$ = this.http.get<Message>("/api/hello")
+	constructor(private http: HttpClient) { }
 }
