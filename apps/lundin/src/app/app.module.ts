@@ -7,9 +7,13 @@ import { GamesComponent } from "./games/games.component"
 import { HomeComponent } from "./home/home.component"
 
 @NgModule({
-	declarations: [AppComponent, GamesComponent, HomeComponent],
+	declarations: [
+		AppComponent,
+		GamesComponent,
+		HomeComponent,
+	],
 	imports: [BrowserModule, HttpClientModule, AppRoutingModule],
 	providers: [],
 	bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

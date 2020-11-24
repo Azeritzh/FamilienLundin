@@ -1,5 +1,12 @@
-<div style="text-align: center">
-	<h1>Welcome to lundin!</h1>
-</div>
-<div>Message: {{ hello$ | async | json }}</div>
-<router-outlet></router-outlet>
+<header>
+	{{header}}
+</header>
+<nav>
+	<a *ngFor="let entry of navigationEntries"
+		[routerLink]="entry.link">
+		{{entry.text}}
+	</a>
+</nav>
+<article>
+	<router-outlet></router-outlet>
+</article>
