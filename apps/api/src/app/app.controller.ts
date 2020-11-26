@@ -1,13 +1,22 @@
 import { Message } from "@lundin/api-interfaces"
-import { Controller, Get } from "@nestjs/common"
-import { AppService } from "./app.service"
+import { Body, Controller, Get, Post } from "@nestjs/common"
+import { StorageService } from "./storage/storage.service"
 
 @Controller()
 export class AppController {
-	constructor(private readonly appService: AppService) { }
+	constructor(
+		private readonly storageService: StorageService,
+	) { }
 
-	@Get("hello")
+	@Get("getData")
 	getData(): Message {
-		return this.appService.getData()
+		const collection = this.storageService.getCollection["hej du"]
+		return <Message><unknown>collection.findOne()
+	}
+
+	@Post("saveData")
+	saveData(@Body() message: Message): Message {
+		const collection = this.storageService.getCollection("hej du")
+		return collection.insertOne(message)
 	}
 }

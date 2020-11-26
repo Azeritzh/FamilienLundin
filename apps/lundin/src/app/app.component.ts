@@ -20,6 +20,15 @@ export class AppComponent {
 	]
 
 	constructor(private http: HttpClient) { }
+
+	async get() {
+		const message = await this.http.get<Message>("/api/getData").toPromise()
+		console.log(message)
+	}
+
+	add() {
+		this.http.post<Message>("/api/saveData", { message: "wahey" }).toPromise()
+	}
 }
 
 interface NavigationEntry {
