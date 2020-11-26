@@ -10,13 +10,15 @@ export class AppController {
 
 	@Get("getData")
 	getData(): Message {
-		const collection = this.storageService.getCollection["hej du"]
+		const collection = this.storageService.getCollection("hej du")
 		return <Message><unknown>collection.findOne()
 	}
 
 	@Post("saveData")
 	saveData(@Body() message: Message): Message {
 		const collection = this.storageService.getCollection("hej du")
-		return collection.insertOne(message)
+		const newMessage = collection.insertOne(message)
+		this.storageService.saveCollections()
+		return newMessage
 	}
 }

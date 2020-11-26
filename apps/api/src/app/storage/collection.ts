@@ -1,5 +1,28 @@
+import * as fs from "fs"
+
 export class Collection {
 	tempStore: { [id: string]: Entry } = {}
+
+	constructor(public readonly name: string) { }
+
+	load() {
+		fs.readFile(
+			"./storage/" + this.name + ".json",
+			"utf-8",
+			(error, data) => {
+				if (error)
+					console.log(error)
+				this.tempStore = JSON.parse(data)
+			})
+	}
+
+	save() {
+		fs.writeFile(
+			"./storage/" + this.name + ".json",
+			JSON.stringify(this.tempStore),
+			{ encoding: "utf-8" },
+			error => console.log(error))
+	}
 
 	insertOne(entry) {
 		entry._id = this.generateId()
