@@ -6,12 +6,9 @@
 		[routerLink]="entry.link">
 		{{entry.text}}
 	</a>
-	<button (click)="get()">
-		Hent ting
-	</button>
-	<button (click)="add()">
-		Lav ting
-	</button>
+	<button (click)="get()">Hent ting</button>
+	<button (click)="add()">Lav ting</button>
+	<button (click)="login()">log ind</button>
 </nav>
 <article>
 	<router-outlet></router-outlet>

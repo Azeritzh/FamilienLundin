@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http"
 import { Component } from "@angular/core"
 import { Message } from "@lundin/api-interfaces"
+import { AuthService } from "./auth/auth.service"
 
 @Component({
 	selector: "lundin-root",
@@ -8,7 +9,6 @@ import { Message } from "@lundin/api-interfaces"
 	styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-	hello$ = this.http.get<Message>("/api/hello")
 	header = "Familien Lundin"
 	navigationEntries: NavigationEntry[] = [
 		{ text: "Hjem", link: "/" },
@@ -19,7 +19,10 @@ export class AppComponent {
 		{ text: "Spil", link: "/games" },
 	]
 
-	constructor(private http: HttpClient) { }
+	constructor(
+		private authService: AuthService,
+		private http: HttpClient
+	) { }
 
 	async get() {
 		const message = await this.http.get<Message>("/api/getData").toPromise()
@@ -27,7 +30,13 @@ export class AppComponent {
 	}
 
 	add() {
-		this.http.post<Message>("/api/saveData", { message: "wahey" }).toPromise()
+		this.http
+			.post<Message>("/api/saveData", { message: "wahey" })
+			.toPromise()
+	}
+
+	login() {
+		this.authService.login()
 	}
 }
 
