@@ -3,14 +3,23 @@ import { Body, Controller, Get, Post, Request, UseGuards } from "@nestjs/common"
 import { AuthGuard } from "@nestjs/passport"
 import { AuthService } from "../auth/auth.service"
 import { JwtAuthGuard } from "../auth/jwt-auth.guard"
+import { UserService } from "../user/user.service"
 import { StorageService } from "./storage/storage.service"
 
 @Controller()
 export class AppController {
 	constructor(
 		private readonly authService: AuthService,
+		private readonly userService: UserService,
 		private readonly storageService: StorageService
 	) { }
+
+	@Post("user/create")
+	async create(@Body() newUser: { name: string, password: string }) {
+		const user = await this.userService.addUser(newUser.name, newUser.password)
+		console.log(user)
+		return "success"
+	}
 
 	@UseGuards(AuthGuard("local"))
 	@Post("auth/login")

@@ -31,7 +31,7 @@ export class AppComponent {
 
 	add() {
 		this.http
-			.post<Message>("/api/saveData", { message: "wahey" })
+			.post<Message>("/user/create", { message: "wahey" })
 			.toPromise()
 	}
 

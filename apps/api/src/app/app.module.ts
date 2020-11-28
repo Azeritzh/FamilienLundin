@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common"
 import { ServeStaticModule } from "@nestjs/serve-static"
 import { join } from "path"
 import { AuthModule } from "../auth/auth.module"
+import { UserModule } from "../user/user.module"
 import { AppController } from "./app.controller"
 import { AppService } from "./app.service"
 import { StorageService } from "./storage/storage.service"
@@ -12,6 +13,7 @@ import { StorageService } from "./storage/storage.service"
 			rootPath: join(__dirname, "..", "lundin"),
 		}),
 		AuthModule,
+		UserModule,
 	],
 	controllers: [AppController],
 	providers: [AppService, StorageService],
