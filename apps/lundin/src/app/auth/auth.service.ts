@@ -9,9 +9,9 @@ export class AuthService {
 		this.jwtToken = localStorage.getItem("jwtToken")
 	}
 
-	async login() {
+	async login(username: string, password: string) {
 		const response = await this.http
-			.post<{ access_token: string }>("/api/auth/login", { username: "Test", password: "test" })
+			.post<{ access_token: string }>("/api/auth/login", { username, password })
 			.toPromise()
 		this.jwtToken = response.access_token
 		localStorage.setItem("jwtToken", this.jwtToken)

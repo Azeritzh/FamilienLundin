@@ -14,6 +14,7 @@ export class AppController {
 		private readonly storageService: StorageService
 	) { }
 
+	@UseGuards(JwtAuthGuard)
 	@Post("user/create")
 	async create(@Body() newUser: { name: string, password: string }) {
 		const user = await this.userService.addUser(newUser.name, newUser.password)

@@ -21,7 +21,7 @@ export class AppComponent {
 
 	constructor(
 		private authService: AuthService,
-		private http: HttpClient
+		private http: HttpClient,
 	) { }
 
 	async get() {
@@ -35,8 +35,12 @@ export class AppComponent {
 			.toPromise()
 	}
 
-	login() {
-		this.authService.login()
+	isLoggedIn() {
+		return !!this.authService.jwtToken
+	}
+
+	logout() {
+		return this.authService.logout()
 	}
 }
 
