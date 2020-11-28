@@ -3,8 +3,8 @@ import { Body, Controller, Get, Post, Request, UseGuards } from "@nestjs/common"
 import { AuthGuard } from "@nestjs/passport"
 import { AuthService } from "../auth/auth.service"
 import { JwtAuthGuard } from "../auth/jwt-auth.guard"
+import { StorageService } from "../storage/storage.service"
 import { UserService } from "../user/user.service"
-import { StorageService } from "./storage/storage.service"
 
 @Controller()
 export class AppController {
@@ -17,6 +17,7 @@ export class AppController {
 	@Post("user/create")
 	async create(@Body() newUser: { name: string, password: string }) {
 		const user = await this.userService.addUser(newUser.name, newUser.password)
+		this.storageService.saveCollections()
 		console.log(user)
 		return "success"
 	}

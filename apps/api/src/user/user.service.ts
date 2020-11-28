@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common"
 import * as bcrypt from "bcrypt"
+import { StorageService } from "../storage/storage.service"
 
 export interface User {
 	_id?: number
@@ -9,27 +10,16 @@ export interface User {
 
 @Injectable()
 export class UserService {
-	private readonly users: User[] = [
-		{
-			_id: 1,
-			username: "Kristjan",
-			passwordHash: "$2b$10$EYHJXsD1xBB98ahx.ZU5IeCD/uZz/5TdzwV2IrIM56io5AdrgUKLW"
-		},
-		{
-			_id: 2,
-			username: "Test",
-			passwordHash: "$2b$10$XJ1vSn9kXX6iRiDgXKfQG.QE1rwk.reUdZ4GD2KKJTRmh/P55LFcC"		
-		},
-	]
+	constructor(private readonly storageService: StorageService) { }
 
 	async findOne(username: string): Promise<User | undefined> {
-		return this.users.find((user) => user.username === username)
+		const users = this.storageService.getCollection("users")
+		return <User>users.findOne({ username })
 	}
 
 	async addUser(username: string, password: string) {
 		const passwordHash = await bcrypt.hash(password, 10)
-		const user: User = { username, passwordHash }
-		this.users.push(user)
-		return user
+		const users = this.storageService.getCollection("users")
+		return <User>users.insertOne({ username, passwordHash })
 	}
 }

@@ -21,4 +21,8 @@ export class AuthService {
 		localStorage.removeItem("jwtToken")
 		this.jwtToken = null
 	}
+
+	createUser(username: string) {
+		this.http.post("/api/user/create", { name: username, password: "test" }).toPromise()
+	}
 }

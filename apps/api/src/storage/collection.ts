@@ -2,6 +2,7 @@ import * as fs from "fs"
 
 export class Collection {
 	tempStore: { [id: string]: Entry } = {}
+	hasChanged = false
 
 	constructor(public readonly name: string) { }
 
@@ -13,20 +14,28 @@ export class Collection {
 				if (error)
 					console.log(error)
 				this.tempStore = JSON.parse(data)
+				this.hasChanged = false
 			})
 	}
 
 	save() {
+		if (!this.hasChanged)
+			return
 		fs.writeFile(
 			"./storage/" + this.name + ".json",
 			JSON.stringify(this.tempStore),
 			{ encoding: "utf-8" },
-			error => console.log(error))
+			error => {
+				if (error)
+					console.log(error)
+				this.hasChanged = false
+			})
 	}
 
 	insertOne(entry) {
 		entry._id = this.generateId()
 		this.tempStore[entry._id] = entry
+		this.hasChanged = true
 		return entry
 	}
 
@@ -50,17 +59,20 @@ export class Collection {
 	private makeChanges(entry, changes) {
 		for (const key in changes)
 			entry[key] = changes[key]
+		this.hasChanged = true
 	}
 
 	deleteOne(query) {
 		const entry = this.findOne(query)
 		delete this.tempStore[entry._id]
+		this.hasChanged = true
 	}
 
 	deleteMany(query) {
 		const entries = this.find(query)
 		for (const entry of entries)
 			delete this.tempStore[entry._id]
+		this.hasChanged = true
 	}
 
 	find(query?) {
@@ -94,5 +106,5 @@ export class Collection {
 
 interface Entry {
 	_id: number
-	[key: string]: unknown
+	[key: string]: any
 }
