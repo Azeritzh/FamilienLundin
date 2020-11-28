@@ -1,9 +1,12 @@
 <h1>{{title}}</h1>
 <h2>{{subtitle}}</h2>
 <input type="text"
-	[(ngModel)]="name">
+	[(ngModel)]="name"
+	placeholder="Navn">
 <input type="password"
-	[(ngModel)]="password">
+	[(ngModel)]="password"
+	placeholder="Kode"
+	(keyup.enter)="login()">
 <button type="button"
 	(click)="login()">
 	Log ind

@@ -4,10 +4,20 @@
 		"navigation content";
 	grid-template-columns: 10rem 1fr;
 	grid-template-rows: 3rem 1fr;
+	height: 100vh;
 }
 
 header { grid-area: header; }
 nav { grid-area: navigation; }
 article { grid-area: content; }
+lundin-login { grid-area: 2 / 1 / 3 / 3; }
 
+header {
+	font-size: 2rem;
+	font-weight: bold;
+	background-color: lightgrey;
+	color: white;
+	line-height: 3rem;
+	padding: 0 1rem;
+}
 nav a { display: block; }
