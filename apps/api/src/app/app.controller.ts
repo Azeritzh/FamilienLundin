@@ -17,9 +17,8 @@ export class AppController {
 	@UseGuards(JwtAuthGuard)
 	@Post("user/create")
 	async create(@Body() newUser: { name: string, password: string }) {
-		const user = await this.userService.addUser(newUser.name, newUser.password)
+		await this.userService.addUser(newUser.name, newUser.password)
 		this.storageService.saveCollections()
-		console.log(user)
 		return "success"
 	}
 

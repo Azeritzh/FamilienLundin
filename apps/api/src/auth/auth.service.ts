@@ -12,7 +12,7 @@ export class AuthService {
 
 	async validateUser(username: string, password: string) {
 		const user = await this.userService.findOne(username)
-		return this.isMatch(password, user?.passwordHash)
+		return await this.isMatch(password, user?.passwordHash)
 			? user
 			: null
 	}
