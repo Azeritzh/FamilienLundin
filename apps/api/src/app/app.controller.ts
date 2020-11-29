@@ -1,4 +1,4 @@
-import { Message } from "@lundin/api-interfaces"
+import type { Message } from "@lundin/api-interfaces"
 import { Body, Controller, Get, Post, Request, UseGuards } from "@nestjs/common"
 import { AuthGuard } from "@nestjs/passport"
 import { AuthService } from "../auth/auth.service"

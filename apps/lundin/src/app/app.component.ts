@@ -12,10 +12,10 @@ export class AppComponent {
 	header = "Familien Lundin"
 	navigationEntries: NavigationEntry[] = [
 		{ text: "Hjem", link: "/" },
-		{ text: "Kalender", link: "/" },
-		{ text: "Familie", link: "/" },
-		{ text: "Galleri", link: "/" },
-		{ text: "Opskrifter", link: "/" },
+		{ text: "Kalender", link: "/calendar" },
+		{ text: "Familie", link: "/ancestry" },
+		{ text: "Galleri", link: "/gallery" },
+		{ text: "Opskrifter", link: "/recipes" },
 		{ text: "Spil", link: "/games" },
 	]
 
