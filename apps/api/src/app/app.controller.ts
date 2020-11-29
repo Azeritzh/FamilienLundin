@@ -14,6 +14,16 @@ export class AppController {
 		private readonly storageService: StorageService
 	) { }
 
+	@Get("auth/add-basic")
+	async addBasic() {
+		const users = this.storageService.getCollection("users")
+		if (users.count() > 0)
+			return "lolno"
+		await this.userService.addUser("Test", "test")
+		this.storageService.saveCollections()
+		return "okay"
+	}
+
 	@UseGuards(JwtAuthGuard)
 	@Post("user/create")
 	async create(@Body() newUser: { name: string, password: string }) {

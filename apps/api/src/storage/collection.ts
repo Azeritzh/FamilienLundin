@@ -99,6 +99,10 @@ export class Collection {
 		})
 	}
 
+	count(){
+		return Object.keys(this.tempStore).length
+	}
+
 	private generateId() {
 		return Math.ceil(Math.random() * 1000000)
 	}
