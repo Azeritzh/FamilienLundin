@@ -1,6 +1,4 @@
-import { HttpClient } from "@angular/common/http"
-import { Component } from "@angular/core"
-import { Message } from "@lundin/api-interfaces"
+import { Component, HostBinding } from "@angular/core"
 import { AuthService } from "./auth/auth.service"
 
 @Component({
@@ -18,22 +16,9 @@ export class AppComponent {
 		{ text: "Opskrifter", link: "/recipes" },
 		{ text: "Spil", link: "/games" },
 	]
+	@HostBinding("class.hidden-navigation") hideNavigation = false
 
-	constructor(
-		private authService: AuthService,
-		private http: HttpClient,
-	) { }
-
-	async get() {
-		const message = await this.http.get<Message>("/api/getData").toPromise()
-		console.log(message)
-	}
-
-	add() {
-		this.http
-			.post<Message>("/api/saveData", { message: "wahey" })
-			.toPromise()
-	}
+	constructor(private authService: AuthService) { }
 
 	isLoggedIn() {
 		return !!this.authService.jwtToken

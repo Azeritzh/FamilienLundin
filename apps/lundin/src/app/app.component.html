@@ -2,12 +2,11 @@
 	{{header}}
 </header>
 <nav *ngIf="isLoggedIn()">
+	<button (click)="hideNavigation = true">Kollaps</button>
 	<a *ngFor="let entry of navigationEntries"
 		[routerLink]="entry.link">
 		{{entry.text}}
 	</a>
-	<button (click)="get()">Hent ting</button>
-	<button (click)="add()">Lav ting</button>
 	<button (click)="logout()">Log ud</button>
 </nav>
 <article *ngIf="isLoggedIn()">
