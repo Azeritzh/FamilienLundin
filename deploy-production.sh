@@ -1,5 +1,5 @@
 #!/bin/bash
 echo Clearing folder
-rmdir -r dist
+rm -r dist
 echo Extracting archive
 tar xzf dist.tar.gz
