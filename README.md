@@ -4,6 +4,8 @@ Kør backend med `yarn nx serve api` og frontend med `yarn nx serve lundin`. Pro
 
 Alting kan auto-formateres med `yarn format`.
 
+Production håndteres ved at clone projektet på serveren, navigere ind i mappen og køre `yarn install --production` og derefter køre `./deploy-production`. Det kan startes med `./run-production`, men det er en midlertidig måde.
+
 # Lundin
 
 This project was generated using [Nx](https://nx.dev).
