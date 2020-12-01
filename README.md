@@ -4,7 +4,7 @@ Kør backend med `yarn nx serve api` og frontend med `yarn nx serve lundin`. Pro
 
 Alting kan auto-formateres med `yarn format`.
 
-Production håndteres ved at clone projektet på serveren, navigere ind i mappen og køre `yarn install --production` og derefter køre `./deploy-production`. Det kan startes med `./run-production`, men det er en midlertidig måde.
+Production håndteres ved at clone projektet på serveren, navigere ind i mappen og køre `yarn install --production` og derefter køre `./deploy-production.sh` (det kræver at man har kørt `build-production.bat` og committed det). Serveren startes med `nohup node dist/apps/api/main.js &` (`&` starter det som en baggrundsprocess, og `nohup` sørger for den ikke stopper når sessionen gør). Process id'en kan findes med `ps -x`, som viser kørende processer, og serveren stoppes så med `kill 1234` (hvor 1234 er processens id).
 
 # Lundin
 
