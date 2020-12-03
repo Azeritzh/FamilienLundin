@@ -21,7 +21,7 @@ export class AppController {
 			return "lolno"
 		await this.userService.addUser("Test", "test")
 		this.storageService.saveCollections()
-		return "okay"
+		return "Added user \"Test\" with password \"test\""
 	}
 
 	@UseGuards(JwtAuthGuard)

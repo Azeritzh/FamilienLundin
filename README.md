@@ -1,106 +1,19 @@
-# Kristjans forord
-
-Kør backend med `yarn nx serve api` og frontend med `yarn nx serve lundin`. Production build af frontenden laves med `yarn nx build lundin --prod`, hvorefter man kan nøjes med at køre backenden for at bruge siden (fordi den serverer den kompilerede frontend).
-
-Alting kan auto-formateres med `yarn format`.
-
-Production håndteres ved at clone projektet på serveren, navigere ind i mappen og køre `yarn install --production` og derefter køre `./deploy-production.sh` (det kræver at man har kørt `build-production.bat` og committed det). Serveren startes med `nohup node dist/apps/api/main.js &` (`&` starter det som en baggrundsprocess, og `nohup` sørger for den ikke stopper når sessionen gør). Process id'en kan findes med `ps -x`, som viser kørende processer, og serveren stoppes så med `kill 1234` (hvor 1234 er processens id).
-
 # Lundin
 
-This project was generated using [Nx](https://nx.dev).
+Dette er koden bag FamilienLundin siden. Den er bygget med [Nx](https://nx.dev), og består af en [Angular](https://angular.io) frontend og en [NestJs](https://nestjs.com) backend.
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+## Opsætning
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+For at arbejde på projektet skal der bruges en række programmer. Sørg for at have installeret [git](https://git-scm.com/), [Node.js](https://nodejs.org) og [Yarn](https://yarnpkg.com/), og eventuelt [Visual Studio Code]() til at programmere i. Yarn er lidt speciel med hensyn til installering: man skal først installere Node, og derefter åbne en terminal og køre `npm install -g yarn`.
 
-## Quick Start & Documentation
+For at komme igang skal projektet først downloades. Åbn en terminal i den mappe, det skal ligge i, og kør `git clone asdf` for at hente det ned. Resten skal foregå inde fra den mappe, så navigér derind i terminalen med `cd FamilienLundin`. Nu er næste trin at hente de biblioteker og værktøjer projektet har brug for; det sker ved at køre `yarn`. Når den en gang er færdig, er projektet klar til brug.
 
-[Nx Documentation](https://nx.dev/angular)
+## Struktur
 
-[10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
+Dette er et såkaldt "monorepo", hvilket vil sige at det er et enkelt repository som indeholder adskillige projekter. De primære projekter vi har er frontenden, som findes under `apps/lundin` og backenden, som findes under `apps/api`. Derudover er der en `libs` mappe til diverse kodebiblioteker (det kunne f.eks. være logikken bag et spil).
 
-[Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
+## Udvikling
 
-## Adding capabilities to your workspace
+For at kunne køre og teste det kode man skriver, må man starte både backend og frontend. Kør backend med `yarn nx serve api` og frontend med `yarn nx serve lundin` (det kræver hver sin terminal. Ting der kører i en terminal kan stoppes igen med Ctrl+C). Derefter er siden tilgængelig på localhost:4200 i en browser. Siden kræver login, og der følger ingen data-filer med i projektet, så der skal oprettes en test bruger for at kunne logge ind. Det kan gør man ved at navigere til localhost:3333/api/auth/add-basic.
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
-
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
-
-Below are our core plugins:
-
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
-
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
-
-## Generate an application
-
-Run `ng g @nrwl/angular:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are sharable across libraries and applications. They can be imported from `@lundin/mylib`.
-
-## Development server
-
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng g component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
-
-## ☁ Nx Cloud
-
-### Computation Memoization in the Cloud
-
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+Production håndteres ved at clone projektet på serveren, navigere ind i mappen og køre `yarn install --production` og derefter køre `./deploy-production.sh` (det kræver at man har kørt `build-production.bat` og committed det). Serveren startes med `nohup node dist/apps/api/main.js &` (`&` starter det som en baggrundsprocess, og `nohup` sørger for den ikke stopper når sessionen gør). Process id'en kan findes med `ps -x`, som viser kørende processer, og serveren stoppes så med `kill 1234` (hvor 1234 er processens id).
