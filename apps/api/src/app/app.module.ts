@@ -4,7 +4,8 @@ import { join } from "path"
 import { AuthModule } from "../auth/auth.module"
 import { StorageModule } from "../storage/storage.module"
 import { UserModule } from "../user/user.module"
-import { AppController } from "./app.controller"
+import { AppController } from "./controllers/app.controller"
+import { AuthController } from "./controllers/auth.controller"
 import { AppService } from "./app.service"
 
 @Module({
@@ -16,7 +17,7 @@ import { AppService } from "./app.service"
 		StorageModule,
 		UserModule,
 	],
-	controllers: [AppController],
+	controllers: [AppController, AuthController],
 	providers: [AppService],
 })
 export class AppModule { }

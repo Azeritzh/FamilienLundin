@@ -27,7 +27,13 @@ export class AuthService {
 
 	async login(username: string, password: string) {
 		this.user = await this.http
-			.post<{ access_token: string }>("/api/auth/login", { username, password })
+			.post<{ _id: number }>("/api/auth/login", { username, password })
+			.toPromise()
+	}
+
+	async refresh() {
+		this.user = await this.http
+			.get<{ _id: number }>("/api/auth/refresh")
 			.toPromise()
 	}
 

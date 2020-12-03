@@ -12,7 +12,7 @@ export class AuthService {
 	) { }
 
 	async validateUser(username: string, password: string) {
-		const user = await this.userService.findOne(username)
+		const user = await this.userService.findOne({ username })
 		return await this.isMatch(password, user?.passwordHash)
 			? user
 			: null
@@ -24,15 +24,26 @@ export class AuthService {
 		return await bcrypt.compare(password, hash)
 	}
 
-	createJwtTokenCookie(user: User) {
-		const payload: JwtPayload = { username: user.username, sub: user._id }
-		const token = this.jwtService.sign(payload)
-		
+	createAccessToken(user: User) {
+		const payload: JwtPayload = { sub: user._id }
+		return this.jwtService.sign(payload)
+	}
+
+	createAccessTokenCookie(token: string) {
 		return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${jwtConstants.accessExpiration}`
+	}
+
+	createRefreshToken(user: User) {
+		const payload: JwtPayload = { sub: user._id }
+		return this.jwtService.sign(payload, {
+			secret: jwtConstants.refreshSecret,
+			expiresIn: jwtConstants.refreshExpiration,
+		})
+	}
+
+	createRefreshTokenCookie(token: string, refreshUrl: string) {
+		return `Refresh=${token}; HttpOnly; Path=/${refreshUrl}; Max-Age=${jwtConstants.refreshExpiration}`
 	}
 }
 
-export interface JwtPayload {
-	username: string,
-	sub: number
-}
+export interface JwtPayload { sub: number }

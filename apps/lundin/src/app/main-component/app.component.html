@@ -7,6 +7,7 @@
 		[routerLink]="entry.link">
 		{{entry.text}}
 	</a>
+	<button (click)="authService.refresh()">refresh</button>
 	<button (click)="authService.logout()">Log ud</button>
 </nav>
 <article *ngIf="authService.isLoggedIn()">
