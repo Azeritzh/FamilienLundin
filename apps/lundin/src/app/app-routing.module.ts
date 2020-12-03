@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
-import { AncestryComponent } from "./ancestry/ancestry.component"
-import { CalendarComponent } from "./calendar/calendar.component"
-import { GalleryComponent } from "./gallery/gallery.component"
-import { GamesComponent } from "./games/games.component"
-import { HomeComponent } from "./home/home.component"
-import { RecipesComponent } from "./recipes/recipes.component"
+import { AncestryComponent } from "./pages/ancestry/ancestry.component"
+import { CalendarComponent } from "./pages/calendar/calendar.component"
+import { GalleryComponent } from "./pages/gallery/gallery.component"
+import { GamesComponent } from "./pages/games/games.component"
+import { HomeComponent } from "./pages/home/home.component"
+import { RecipesComponent } from "./pages/recipes/recipes.component"
 
 const routes: Routes = [
 	{ path: "", component: HomeComponent },
