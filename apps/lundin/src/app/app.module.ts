@@ -6,7 +6,6 @@ import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { AppRoutingModule } from "./app-routing.module"
 import { AppComponent } from "./main-component/app.component"
 import { AuthService } from "./auth/auth.service"
-import { jwtInterceptorProvider } from "./auth/jwt-interceptor"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { GalleryComponent } from "./pages/gallery/gallery.component"
 import { GamesComponent } from "./pages/games/games.component"
@@ -31,7 +30,7 @@ import { RecipesComponent } from "./pages/recipes/recipes.component"
 		HttpClientModule,
 		AppRoutingModule,
 	],
-	providers: [AuthService, jwtInterceptorProvider],
+	providers: [AuthService],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }

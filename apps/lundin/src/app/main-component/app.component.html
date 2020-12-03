@@ -1,15 +1,15 @@
 <header>
 	{{header}}
 </header>
-<nav *ngIf="isLoggedIn()">
+<nav *ngIf="authService.isLoggedIn()">
 	<button (click)="hideNavigation = true">Kollaps</button>
 	<a *ngFor="let entry of navigationEntries"
 		[routerLink]="entry.link">
 		{{entry.text}}
 	</a>
-	<button (click)="logout()">Log ud</button>
+	<button (click)="authService.logout()">Log ud</button>
 </nav>
-<article *ngIf="isLoggedIn()">
+<article *ngIf="authService.isLoggedIn()">
 	<router-outlet></router-outlet>
 </article>
-<lundin-login *ngIf="!isLoggedIn()"></lundin-login>
+<lundin-login *ngIf="!authService.isLoggedIn()"></lundin-login>

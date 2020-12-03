@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common"
 import { JwtService } from "@nestjs/jwt"
 import { User, UserService } from "../user/user.service"
 import * as bcrypt from "bcrypt"
+import { jwtConstants } from "./constants"
 
 @Injectable()
 export class AuthService {
@@ -23,9 +24,11 @@ export class AuthService {
 		return await bcrypt.compare(password, hash)
 	}
 
-	async createLoginToken(user: User) {
+	createJwtTokenCookie(user: User) {
 		const payload: JwtPayload = { username: user.username, sub: user._id }
-		return { access_token: this.jwtService.sign(payload) }
+		const token = this.jwtService.sign(payload)
+		
+		return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${jwtConstants.accessExpiration}`
 	}
 }
 

@@ -3,11 +3,12 @@ import { Injectable } from "@angular/core"
 
 @Injectable()
 export class AuthService {
+	user
 	jwtToken: string
 
 	constructor(private http: HttpClient) {
-		this.jwtToken = localStorage.getItem("jwtToken")
-		this.verifyExpiration()
+		// this.jwtToken = localStorage.getItem("jwtToken")
+		// this.verifyExpiration()
 	}
 
 	private verifyExpiration() {
@@ -25,19 +26,21 @@ export class AuthService {
 	}
 
 	async login(username: string, password: string) {
-		const response = await this.http
+		this.user = await this.http
 			.post<{ access_token: string }>("/api/auth/login", { username, password })
 			.toPromise()
-		this.jwtToken = response.access_token
-		localStorage.setItem("jwtToken", this.jwtToken)
 	}
 
 	logout() {
-		localStorage.removeItem("jwtToken")
-		this.jwtToken = null
+		// localStorage.removeItem("jwtToken")
+		this.user = null
 	}
 
 	createUser(username: string) {
 		this.http.post("/api/user/create", { name: username, password: "test" }).toPromise()
+	}
+
+	isLoggedIn(){
+		return !!this.user
 	}
 }

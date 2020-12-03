@@ -1,5 +1,6 @@
 import type { Message } from "@lundin/api-interfaces"
-import { Body, Controller, Get, Post, Request, UseGuards } from "@nestjs/common"
+import { Body, Controller, Get, Post, Request, Res, UseGuards } from "@nestjs/common"
+import { Response } from "express"
 import { AuthGuard } from "@nestjs/passport"
 import { AuthService } from "../auth/auth.service"
 import { JwtAuthGuard } from "../auth/jwt-auth.guard"
@@ -34,8 +35,10 @@ export class AppController {
 
 	@UseGuards(AuthGuard("local"))
 	@Post("auth/login")
-	async login(@Request() req) {
-		return this.authService.createLoginToken(req.user)
+	async login(@Request() req, @Res() response: Response) {
+		const cookie = this.authService.createJwtTokenCookie(req.user)
+		response.setHeader("Set-Cookie", cookie)
+		return response.send(req.user)
 	}
 
 	@UseGuards(JwtAuthGuard)

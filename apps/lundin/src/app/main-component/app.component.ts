@@ -18,15 +18,7 @@ export class AppComponent {
 	]
 	@HostBinding("class.hidden-navigation") hideNavigation = false
 
-	constructor(private authService: AuthService) { }
-
-	isLoggedIn() {
-		return !!this.authService.jwtToken
-	}
-
-	logout() {
-		return this.authService.logout()
-	}
+	constructor(public authService: AuthService) { }
 }
 
 interface NavigationEntry {
