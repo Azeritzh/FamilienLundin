@@ -1,5 +1,5 @@
 import { Component, HostBinding } from "@angular/core"
-import { AuthService } from "./auth/auth.service"
+import { AuthService } from "../auth/auth.service"
 
 @Component({
 	selector: "lundin-root",

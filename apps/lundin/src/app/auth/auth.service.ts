@@ -7,6 +7,21 @@ export class AuthService {
 
 	constructor(private http: HttpClient) {
 		this.jwtToken = localStorage.getItem("jwtToken")
+		this.verifyExpiration()
+	}
+
+	private verifyExpiration() {
+		if (!this.jwtToken)
+			return
+		const payload = this.decodePayload(this.jwtToken)
+		const expirationDate = new Date(payload.exp)
+		if (expirationDate.getTime() < new Date().getTime())
+			this.logout()
+	}
+
+	private decodePayload(token: string) {
+		const encodedPayload = token.split(".")[1]
+		return JSON.parse(atob(encodedPayload))
 	}
 
 	async login(username: string, password: string) {
