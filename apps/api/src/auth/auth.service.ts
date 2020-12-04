@@ -29,7 +29,7 @@ export class AuthService {
 		return this.jwtService.sign(payload)
 	}
 
-	createAccessTokenCookie(token: string) {
+	getAccessTokenCookie(token: string) {
 		return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${jwtConstants.accessExpiration}`
 	}
 
@@ -41,8 +41,15 @@ export class AuthService {
 		})
 	}
 
-	createRefreshTokenCookie(token: string, refreshUrl: string) {
+	getRefreshTokenCookie(token: string, refreshUrl: string) {
 		return `Refresh=${token}; HttpOnly; Path=/${refreshUrl}; Max-Age=${jwtConstants.refreshExpiration}`
+	}
+
+	getLogoutCookies() {
+		return [
+			"Authentication=; HttpOnly; Path=/; Max-Age=0",
+			"Refresh=; HttpOnly; Path=/; Max-Age=0",
+		]
 	}
 }
 

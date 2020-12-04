@@ -37,7 +37,10 @@ export class AuthService {
 			.toPromise()
 	}
 
-	logout() {
+	async logout() {
+		await this.http
+			.get("/api/auth/logout")
+			.toPromise()
 		// localStorage.removeItem("jwtToken")
 		this.user = null
 	}

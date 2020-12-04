@@ -30,10 +30,8 @@ export class UserService {
 		users.updateOne({ _id: userId }, { refreshHash })
 	}
 
-	async getUserIfRefreshTokenMatches(userId: number, refreshToken: string) {
-		const user = await this.findOne({ _id: userId })
-		const refreshTokenMatches = await bcrypt.compare(refreshToken, user.refreshHash)
-		if (refreshTokenMatches)
-			return user
+	async clearRefreshTokenHash(userId: number) {
+		const users = this.storageService.getCollection("users")
+		users.updateOne({ _id: userId }, { refreshHash: null })
 	}
 }

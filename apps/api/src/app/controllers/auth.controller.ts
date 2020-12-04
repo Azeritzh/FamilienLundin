@@ -2,6 +2,8 @@ import { Controller, Get, Post, Req, UseGuards } from "@nestjs/common"
 import { AuthGuard } from "@nestjs/passport"
 import { Request } from "express"
 import { AuthService } from "../../auth/auth.service"
+import { jwtConstants } from "../../auth/constants"
+import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { RefreshJwtAuthGuard } from "../../auth/refresh-token.strategy"
 import { StorageService } from "../../storage/storage.service"
 import { User, UserService } from "../../user/user.service"
@@ -26,27 +28,35 @@ export class AuthController {
 
 	@UseGuards(AuthGuard("local"))
 	@Post("login")
-	async login(@Req() request: Request) {
-		const user: User = <User>request.user
+	async login(@Req() request: RequestWithUser) {
+		const user = request.user
 		const accessToken = this.authService.createAccessToken(user)
-		const accessCookie = this.authService.createAccessTokenCookie(accessToken)
+		const accessCookie = this.authService.getAccessTokenCookie(accessToken)
 		const refreshToken = this.authService.createRefreshToken(user)
-		const refreshCookie = this.authService.createRefreshTokenCookie(refreshToken, "api/auth/refresh")
-		this.userService.updateRefreshTokenHash(user._id, refreshToken)
+		const refreshCookie = this.authService.getRefreshTokenCookie(refreshToken, "api/auth/refresh")
+		await this.userService.updateRefreshTokenHash(user._id, refreshToken)
 		request.res.setHeader("Set-Cookie", [accessCookie, refreshCookie])
-		return user._id
+		return { userId: user._id, expiration: jwtConstants.accessExpiration }
 	}
 
 	@UseGuards(RefreshJwtAuthGuard)
 	@Get("refresh")
-	async refresh(@Req() request: Request) {
-		request.cookies?.Refresh
-
-		const user: User = <User>request.user
+	async refresh(@Req() request: RequestWithUser) {
+		const user = request.user
 		const accessToken = this.authService.createAccessToken(user)
-		const accessCookie = this.authService.createAccessTokenCookie(accessToken)
-
+		const accessCookie = this.authService.getAccessTokenCookie(accessToken)
 		request.res.setHeader("Set-Cookie", accessCookie)
-		return request.user
+		return { userId: user._id, expiration: jwtConstants.accessExpiration }
 	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get("logout")
+	async logout(@Req() request: RequestWithUser) {
+		await this.userService.clearRefreshTokenHash(request.user._id)
+		request.res.setHeader("Set-Cookie", this.authService.getLogoutCookies())
+	}
+}
+
+interface RequestWithUser extends Request {
+  user: User
 }
