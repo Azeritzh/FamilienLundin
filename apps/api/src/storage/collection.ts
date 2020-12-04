@@ -35,7 +35,7 @@ export class Collection {
 	insertOne(entry) {
 		entry._id = this.generateId()
 		this.tempStore[entry._id] = entry
-		this.hasChanged = true
+		this.onUpdate()
 		return entry
 	}
 
@@ -59,20 +59,20 @@ export class Collection {
 	private makeChanges(entry, changes) {
 		for (const key in changes)
 			entry[key] = changes[key]
-		this.hasChanged = true
+		this.onUpdate()
 	}
 
 	deleteOne(query) {
 		const entry = this.findOne(query)
 		delete this.tempStore[entry._id]
-		this.hasChanged = true
+		this.onUpdate()
 	}
 
 	deleteMany(query) {
 		const entries = this.find(query)
 		for (const entry of entries)
 			delete this.tempStore[entry._id]
-		this.hasChanged = true
+		this.onUpdate()
 	}
 
 	find(query?) {
@@ -105,6 +105,11 @@ export class Collection {
 
 	private generateId() {
 		return Math.ceil(Math.random() * 1000000)
+	}
+
+	private onUpdate() {
+		this.hasChanged = true
+		this.save() // TODO
 	}
 }
 

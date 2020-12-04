@@ -22,7 +22,7 @@ export class RefreshJwtStrategy extends PassportStrategy(Strategy, "jwt-refresh-
 	async validate(request: Request, payload: JwtPayload): Promise<User> {
 		const user = await this.userService.findOne({ _id: payload.sub })
 		const refreshToken = request.cookies?.Refresh
-		if (!refreshToken || !user)
+		if (!refreshToken || !user?.refreshHash)
 			return null
 		const refreshTokenMatches = await bcrypt.compare(refreshToken, user.refreshHash)
 		return refreshTokenMatches ? user : null

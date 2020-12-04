@@ -1,55 +1,86 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
+import { AuthResponse } from "@lundin/api-interfaces"
 
 @Injectable()
 export class AuthService {
-	user
-	jwtToken: string
+	loginInfo: AuthResponse
 
 	constructor(private http: HttpClient) {
-		// this.jwtToken = localStorage.getItem("jwtToken")
-		// this.verifyExpiration()
+		this.loadLoginInfoFromStorage()
+		this.verifyExpiration()
+		if (this.loginInfo)
+			this.startRefreshTimer()
+		else
+			this.refresh()
+	}
+
+	private loadLoginInfoFromStorage() {
+		const storedInfo = localStorage.getItem("loginInfo")
+		if (storedInfo)
+			this.loginInfo = JSON.parse(storedInfo)
 	}
 
 	private verifyExpiration() {
-		if (!this.jwtToken)
-			return
-		const payload = this.decodePayload(this.jwtToken)
-		const expirationDate = new Date(payload.exp)
-		if (expirationDate.getTime() < new Date().getTime())
-			this.logout()
+		if (this.loginInfo && this.isLoginExpired())
+			this.clearLoginInfo()
 	}
 
-	private decodePayload(token: string) {
-		const encodedPayload = token.split(".")[1]
-		return JSON.parse(atob(encodedPayload))
+	private startRefreshTimer() {
+		setTimeout(() => this.refresh(), (this.secondsToExpiration() - 60) * 1000)
+	}
+
+	private isLoginExpired() {
+		return this.secondsToExpiration() <= 0
+	}
+
+	private secondsToExpiration() {
+		const secondsSinceEpoch = new Date().getTime() / 1000
+		const expiration = this.loginInfo.expiration
+		return expiration - secondsSinceEpoch
+	}
+
+	private clearLoginInfo() {
+		this.loginInfo = null
+		localStorage.removeItem("loginInfo")
 	}
 
 	async login(username: string, password: string) {
-		this.user = await this.http
-			.post<{ _id: number }>("/api/auth/login", { username, password })
+		this.loginInfo = await this.http
+			.post<AuthResponse>("/api/auth/login", { username, password })
 			.toPromise()
+			.catch(error => {
+				console.log("failed login: " + JSON.stringify(error))
+				return null
+			})
+		if (this.loginInfo)
+			this.startRefreshTimer()
 	}
 
 	async refresh() {
-		this.user = await this.http
-			.get<{ _id: number }>("/api/auth/refresh")
+		this.loginInfo = await this.http
+			.get<AuthResponse>("/api/auth/refresh")
 			.toPromise()
+			.catch(error => {
+				console.log("failed login: " + JSON.stringify(error))
+				return null
+			})
+		if (this.loginInfo)
+			this.startRefreshTimer()
 	}
 
 	async logout() {
 		await this.http
 			.get("/api/auth/logout")
 			.toPromise()
-		// localStorage.removeItem("jwtToken")
-		this.user = null
+		this.clearLoginInfo()
 	}
 
 	createUser(username: string) {
 		this.http.post("/api/user/create", { name: username, password: "test" }).toPromise()
 	}
 
-	isLoggedIn(){
-		return !!this.user
+	isLoggedIn() {
+		return !!this.loginInfo
 	}
 }

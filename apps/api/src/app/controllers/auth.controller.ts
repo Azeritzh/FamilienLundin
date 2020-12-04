@@ -1,3 +1,4 @@
+import { AuthResponse } from "@lundin/api-interfaces"
 import { Controller, Get, Post, Req, UseGuards } from "@nestjs/common"
 import { AuthGuard } from "@nestjs/passport"
 import { Request } from "express"
@@ -28,7 +29,7 @@ export class AuthController {
 
 	@UseGuards(AuthGuard("local"))
 	@Post("login")
-	async login(@Req() request: RequestWithUser) {
+	async login(@Req() request: RequestWithUser): Promise<AuthResponse> {
 		const user = request.user
 		const accessToken = this.authService.createAccessToken(user)
 		const accessCookie = this.authService.getAccessTokenCookie(accessToken)
@@ -36,17 +37,17 @@ export class AuthController {
 		const refreshCookie = this.authService.getRefreshTokenCookie(refreshToken, "api/auth/refresh")
 		await this.userService.updateRefreshTokenHash(user._id, refreshToken)
 		request.res.setHeader("Set-Cookie", [accessCookie, refreshCookie])
-		return { userId: user._id, expiration: jwtConstants.accessExpiration }
+		return { userId: user._id, expiration: this.getExpirationDate() }
 	}
 
 	@UseGuards(RefreshJwtAuthGuard)
 	@Get("refresh")
-	async refresh(@Req() request: RequestWithUser) {
+	async refresh(@Req() request: RequestWithUser): Promise<AuthResponse> {
 		const user = request.user
 		const accessToken = this.authService.createAccessToken(user)
 		const accessCookie = this.authService.getAccessTokenCookie(accessToken)
 		request.res.setHeader("Set-Cookie", accessCookie)
-		return { userId: user._id, expiration: jwtConstants.accessExpiration }
+		return { userId: user._id, expiration: this.getExpirationDate() }
 	}
 
 	@UseGuards(JwtAuthGuard)
@@ -55,8 +56,13 @@ export class AuthController {
 		await this.userService.clearRefreshTokenHash(request.user._id)
 		request.res.setHeader("Set-Cookie", this.authService.getLogoutCookies())
 	}
+
+	private getExpirationDate() {
+		const secondsSinceEpoch = new Date().getTime() / 1000
+		return secondsSinceEpoch + jwtConstants.accessExpiration
+	}
 }
 
 interface RequestWithUser extends Request {
-  user: User
+	user: User
 }
