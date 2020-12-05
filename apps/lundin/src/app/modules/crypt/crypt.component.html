@@ -14,15 +14,22 @@
 	id="encrypted"
 	readonly>
 
-<button (click)="decrypt()">Dekryptér</button>
+<button (click)="decrypt()"
+	[disabled]="!key">
+	Dekryptér
+</button>
 
 <label for="content">
 	Indhold
 </label>
-<textarea #textarea [(ngModel)]="content"
+<textarea #textarea
+	[(ngModel)]="content"
 	id="content"
 	placeholder="Min hemmelige dagbog"
 	(keydown)="insertTab(textarea, $event)">
 </textarea>
 
-<button (click)="encrypt()">Kryptér og gem</button>
+<button (click)="encrypt()"
+	[disabled]="!content || !key">
+	Kryptér og gem
+</button>

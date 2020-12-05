@@ -11,10 +11,13 @@ export class CryptComponent {
 	content = ""
 	encrypted = "U2FsdGVkX1/jGbqemIDO8kirGU7QAlxysqZb/uwqfw/DWncmuJfpyAeoGen1lzHw"
 
-	constructor(private cryptService: CryptService) { }
+	constructor(private cryptService: CryptService) {
+		cryptService.load().then(encrypted => this.encrypted = encrypted)
+	}
 
 	encrypt() {
 		this.encrypted = this.cryptService.encrypt(this.content, this.key)
+		this.cryptService.save(this.encrypted)
 	}
 
 	decrypt() {
