@@ -9,7 +9,7 @@ import { CryptService } from "./crypt.service"
 export class CryptComponent {
 	key = ""
 	content = ""
-	encrypted = "U2FsdGVkX1/jGbqemIDO8kirGU7QAlxysqZb/uwqfw/DWncmuJfpyAeoGen1lzHw"
+	encrypted = ""
 
 	constructor(private cryptService: CryptService) {
 		cryptService.load().then(encrypted => this.encrypted = encrypted)

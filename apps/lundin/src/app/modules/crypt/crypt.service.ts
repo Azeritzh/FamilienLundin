@@ -14,8 +14,9 @@ export class CryptService {
 		return AES.decrypt(encrypted, key).toString(enc.Utf8)
 	}
 
-	load() {
-		return this.httpClient.get<string>("api/crypt/load").toPromise()
+	async load() {
+		const response = await this.httpClient.get<{ encrypted: string }>("api/crypt/load").toPromise()
+		return response.encrypted
 	}
 
 	save(encrypted: string) {
