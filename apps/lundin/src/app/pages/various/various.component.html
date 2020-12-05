@@ -1,8 +1,14 @@
 <ng-container *ngIf="!gameLink">
-	<button *ngFor="let game of games"
-		(click)="gameLink = game.link">
-		{{game.text}}
-	</button>
+	<ng-container *ngFor="let game of games">
+		<button *ngIf="!game.local"
+			(click)="gameLink = game.link">
+			{{game.text}}
+		</button>
+		<a *ngIf="game.local"
+			[routerLink]="game.link">
+			{{game.text}}
+		</a>
+	</ng-container>
 </ng-container>
 
 <iframe *ngIf="gameLink"

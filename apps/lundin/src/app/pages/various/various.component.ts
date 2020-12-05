@@ -14,6 +14,7 @@ export class VariousComponent {
 		{ text: "Piong", link: "http://armienn.github.io/archive/piong" },
 		{ text: "Game of Life", link: "http://armienn.github.io/archive/game-of-life" },
 		{ text: "Bilspil", link: "http://belrokt.github.io/Bilspil/" },
+		{ text: "Krypt", link: "/various/crypt", local: true },
 	]
 
 	constructor(private sanitizer: DomSanitizer) { }
@@ -26,4 +27,5 @@ export class VariousComponent {
 interface GameEntry {
 	text: string
 	link: string
+	local?: boolean
 }

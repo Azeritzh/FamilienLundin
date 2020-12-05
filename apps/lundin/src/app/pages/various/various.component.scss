@@ -8,7 +8,10 @@ iframe {
 	height: 100%;
 }
 
-button {
+button, a {
+	display: inline-block;
+	background-color: lightgrey;
+	text-align: center;
 	font-size: 1.5rem;
 	font-weight: bold;
 	padding: 2rem;
