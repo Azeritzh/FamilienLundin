@@ -1,5 +1,7 @@
 import * as fs from "fs"
 
+type Change = ((e: any) => void) | { [key: string]: any }
+
 export class Collection {
 	tempStore: { [id: string]: Entry } = {}
 	hasChanged = false
@@ -43,22 +45,25 @@ export class Collection {
 		return entries.map(x => this.insertOne(x))
 	}
 
-	updateOne(query, changes) {
+	updateOne(query, changes: Change) {
 		const entry = this.findOne(query)
 		this.makeChanges(entry, changes)
 		return entry
 	}
 
-	updateMany(query, changes) {
+	updateMany(query, changes: Change) {
 		const entries = this.find(query)
 		for (const entry of entries)
 			this.makeChanges(entry, changes)
 		return entries
 	}
 
-	private makeChanges(entry, changes) {
-		for (const key in changes)
-			entry[key] = changes[key]
+	private makeChanges(entry, changes: Change) {
+		if (typeof changes === "function")
+			changes(entry)
+		else
+			for (const key in changes)
+				entry[key] = changes[key]
 		this.onUpdate()
 	}
 
@@ -99,7 +104,7 @@ export class Collection {
 		})
 	}
 
-	count(){
+	count() {
 		return Object.keys(this.tempStore).length
 	}
 

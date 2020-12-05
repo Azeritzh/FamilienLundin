@@ -1,16 +1,14 @@
-import { Injectable } from "@nestjs/common"
+import { Injectable, UnauthorizedException } from "@nestjs/common"
 import { AuthGuard, PassportStrategy } from "@nestjs/passport"
-import * as bcrypt from "bcrypt"
 import { Request } from "express"
 import { Strategy } from "passport-jwt"
-import { User, UserService } from "../user/user.service"
-import { JwtPayload } from "./auth.service"
+import { AuthService, JwtPayload } from "./auth.service"
 import { jwtConstants } from "./constants"
 
 @Injectable()
 export class RefreshJwtStrategy extends PassportStrategy(Strategy, "jwt-refresh-token") {
 	constructor(
-		private userService: UserService,
+		private authService: AuthService,
 	) {
 		super({
 			jwtFromRequest: (request: Request) => request?.cookies?.Refresh,
@@ -19,13 +17,10 @@ export class RefreshJwtStrategy extends PassportStrategy(Strategy, "jwt-refresh-
 		})
 	}
 
-	async validate(request: Request, payload: JwtPayload): Promise<User> {
-		const user = await this.userService.findOne({ _id: payload.sub })
-		const refreshToken = request.cookies?.Refresh
-		if (!refreshToken || !user?.refreshHash)
-			return null
-		const refreshTokenMatches = await bcrypt.compare(refreshToken, user.refreshHash)
-		return refreshTokenMatches ? user : null
+	async validate(request: Request, payload: JwtPayload) {
+		const user = await this.authService.validateRefreshToken(payload.sub, request.cookies?.Refresh)
+		if (!user) throw new UnauthorizedException()
+		return user
 	}
 }
 

@@ -71,7 +71,7 @@ export class AuthService {
 
 	async logout() {
 		await this.http
-			.get("/api/auth/logout")
+			.get("/api/auth/refresh/logout")
 			.toPromise()
 		this.clearLoginInfo()
 	}

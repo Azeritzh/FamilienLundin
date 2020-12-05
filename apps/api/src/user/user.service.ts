@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common"
-import * as bcrypt from "bcrypt"
+import { expirationFrom, hashPassword, hashRefreshToken } from "../auth/hashing"
 import { StorageService } from "../storage/storage.service"
 
 export interface User {
@@ -7,6 +7,7 @@ export interface User {
 	username: string
 	passwordHash: string
 	refreshHash?: string
+	refreshTokens?: { [expiration: string]: string }
 }
 
 @Injectable()
@@ -19,19 +20,40 @@ export class UserService {
 	}
 
 	async addUser(username: string, password: string) {
-		const passwordHash = await bcrypt.hash(password, 10)
+		const passwordHash = await hashPassword(password)
 		const users = this.storageService.getCollection("users")
 		return <User>users.insertOne({ username, passwordHash })
 	}
 
-	async updateRefreshTokenHash(userId: number, refreshToken: string) {
-		const refreshHash = await bcrypt.hash(refreshToken, 10)
+	async updateRefreshTokenHash(userId: number, token: string) {
+		const hash = await hashRefreshToken(token)
 		const users = this.storageService.getCollection("users")
-		users.updateOne({ _id: userId }, { refreshHash })
+		users.updateOne({ _id: userId }, this.addToken(expirationFrom(token), hash))
 	}
 
-	async clearRefreshTokenHash(userId: number) {
+	async clearRefreshToken(userId: number, token: string) {
 		const users = this.storageService.getCollection("users")
-		users.updateOne({ _id: userId }, { refreshHash: null })
+		users.updateOne({ _id: userId }, this.removeToken(expirationFrom(token)))
+	}
+
+	private addToken = (expiration: number, token: string) => (user: User) => {
+		if (!user.refreshTokens)
+			user.refreshTokens = {}
+		this.removeOutdatedTokens(user)
+		user.refreshTokens[expiration] = token
+	}
+
+	private removeOutdatedTokens(user: User) {
+		const expirations = Object.keys(user.refreshTokens)
+		const now = new Date().getTime() / 1000
+		for (const expiration of expirations)
+			if (+expiration < now)
+				delete user.refreshTokens[expiration]
+	}
+
+	private removeToken = (expiration: number) => (user: User) => {
+		if (!user.refreshTokens)
+			return
+		delete user.refreshTokens[expiration]
 	}
 }

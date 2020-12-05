@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common"
 import { JwtService } from "@nestjs/jwt"
 import { User, UserService } from "../user/user.service"
-import * as bcrypt from "bcrypt"
 import { jwtConstants } from "./constants"
+import { expirationFrom, passwordMatches, refreshTokenMatches } from "./hashing"
 
 @Injectable()
 export class AuthService {
@@ -13,15 +13,17 @@ export class AuthService {
 
 	async validateUser(username: string, password: string) {
 		const user = await this.userService.findOne({ username })
-		return await this.isMatch(password, user?.passwordHash)
+		return await passwordMatches(password, user?.passwordHash)
 			? user
 			: null
 	}
 
-	private async isMatch(password: string, hash: string) {
-		if (!hash)
-			return false
-		return await bcrypt.compare(password, hash)
+	async validateRefreshToken(userId: number, token: string) {
+		const user = await this.userService.findOne({ _id: userId })
+		const hashedToken = user.refreshTokens?.[expirationFrom(token)]
+		return await refreshTokenMatches(token, hashedToken)
+			? user
+			: null
 	}
 
 	createAccessToken(user: User) {

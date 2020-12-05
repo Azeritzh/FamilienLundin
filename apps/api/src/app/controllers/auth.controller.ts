@@ -46,14 +46,18 @@ export class AuthController {
 		const user = request.user
 		const accessToken = this.authService.createAccessToken(user)
 		const accessCookie = this.authService.getAccessTokenCookie(accessToken)
-		request.res.setHeader("Set-Cookie", accessCookie)
+		const refreshToken = this.authService.createRefreshToken(user)
+		const refreshCookie = this.authService.getRefreshTokenCookie(refreshToken, "api/auth/refresh")
+		await this.userService.clearRefreshToken(user._id, request.cookies.Refresh)
+		await this.userService.updateRefreshTokenHash(user._id, refreshToken)
+		request.res.setHeader("Set-Cookie", [accessCookie, refreshCookie])
 		return { userId: user._id, expiration: this.getExpirationDate() }
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Get("logout")
+	@Get("refresh/logout")
 	async logout(@Req() request: RequestWithUser) {
-		await this.userService.clearRefreshTokenHash(request.user._id)
+		await this.userService.clearRefreshToken(request.user._id, request.cookies.Refresh)
 		request.res.setHeader("Set-Cookie", this.authService.getLogoutCookies())
 	}
 
