@@ -1,0 +1,9 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+textarea { flex: 1; }
+
+* { padding: 0.5rem; }

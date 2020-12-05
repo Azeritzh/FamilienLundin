@@ -45,6 +45,7 @@
 		"@nrwl/angular": "10.4.4",
 		"bcrypt": "^5.0.0",
 		"cookie-parser": "^1.4.5",
+		"crypto-js": "^4.0.0",
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",
 		"passport-local": "^1.0.0",
@@ -70,6 +71,7 @@
 		"@nrwl/workspace": "10.4.4",
 		"@types/bcrypt": "^3.0.0",
 		"@types/cookie-parser": "^1.4.2",
+		"@types/crypto-js": "^4.0.1",
 		"@types/jest": "26.0.8",
 		"@types/node": "~8.9.4",
 		"@types/passport-jwt": "^3.0.3",
@@ -87,5 +89,8 @@
 		"ts-jest": "26.4.0",
 		"ts-node": "~7.0.0",
 		"typescript": "~4.0.3"
+	},
+	"browser": {
+		"crypto": false
 	}
 }

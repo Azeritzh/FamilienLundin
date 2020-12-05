@@ -1,1 +1,27 @@
-Hej crypt
+<label for="encryption-key">
+	Krypteringsnøgle
+</label>
+<input type="password"
+	[(ngModel)]="key"
+	id="encryption-key"
+	placeholder="MinHemmeligeNøgle">
+
+<label for="encrypted">
+	Krypteret indhold
+</label>
+<input type="text"
+	[(ngModel)]="encrypted"
+	id="encrypted"
+	readonly>
+
+<button (click)="decrypt()">Dekryptér</button>
+
+<label for="content">
+	Indhold
+</label>
+<textarea [(ngModel)]="content"
+	id="content"
+	placeholder="Min hemmelige dagbog">
+</textarea>
+
+<button (click)="encrypt()">Kryptér og gem</button>
