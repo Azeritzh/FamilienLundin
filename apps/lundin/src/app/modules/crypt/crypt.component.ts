@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import { AES, enc } from "crypto-js"
+import { CryptService } from "./crypt.service"
 
 @Component({
 	selector: "lundin-crypt",
@@ -11,11 +11,22 @@ export class CryptComponent {
 	content = ""
 	encrypted = "U2FsdGVkX1/jGbqemIDO8kirGU7QAlxysqZb/uwqfw/DWncmuJfpyAeoGen1lzHw"
 
-	encrypt(){
-		this.encrypted = AES.encrypt(this.content, this.key).toString()
+	constructor(private cryptService: CryptService) { }
+
+	encrypt() {
+		this.encrypted = this.cryptService.encrypt(this.content, this.key)
 	}
 
-	decrypt(){
-		this.content = AES.decrypt(this.encrypted, this.key).toString(enc.Utf8)
+	decrypt() {
+		this.content = this.cryptService.decrypt(this.encrypted, this.key)
+	}
+
+	insertTab(textarea: HTMLTextAreaElement, event: KeyboardEvent) {
+		if (event.code !== "Tab")
+			return
+		event.preventDefault()
+		const position = textarea.selectionStart
+		textarea.value = textarea.value.substring(0, position) + "\t" + textarea.value.substring(textarea.selectionEnd)
+		textarea.setSelectionRange(position + 1, position + 1, "none")
 	}
 }

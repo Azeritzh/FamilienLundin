@@ -19,9 +19,10 @@
 <label for="content">
 	Indhold
 </label>
-<textarea [(ngModel)]="content"
+<textarea #textarea [(ngModel)]="content"
 	id="content"
-	placeholder="Min hemmelige dagbog">
+	placeholder="Min hemmelige dagbog"
+	(keydown)="insertTab(textarea, $event)">
 </textarea>
 
 <button (click)="encrypt()">Kryptér og gem</button>

@@ -4,6 +4,9 @@
 	height: 100%;
 }
 
-textarea { flex: 1; }
+textarea {
+	flex: 1;
+	tab-size: 4;
+}
 
 * { padding: 0.5rem; }
