@@ -14,7 +14,7 @@ export class AppComponent {
 		{ text: "Familie", link: "/ancestry" },
 		{ text: "Galleri", link: "/gallery" },
 		{ text: "Opskrifter", link: "/recipes" },
-		{ text: "Spil", link: "/games" },
+		{ text: "Diverse", link: "/various" },
 	]
 	@HostBinding("class.hidden-navigation") hideNavigation = false
 

@@ -8,7 +8,7 @@ import { AppComponent } from "./main-component/app.component"
 import { AuthService } from "./auth/auth.service"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { GalleryComponent } from "./pages/gallery/gallery.component"
-import { GamesComponent } from "./pages/games/games.component"
+import { VariousComponent } from "./pages/various/various.component"
 import { HomeComponent } from "./pages/home/home.component"
 import { LoginComponent } from "./pages/login/login.component"
 import { RecipesComponent } from "./pages/recipes/recipes.component"
@@ -19,7 +19,7 @@ import { RecipesComponent } from "./pages/recipes/recipes.component"
 		AppComponent,
 		CalendarComponent,
 		GalleryComponent,
-		GamesComponent,
+		VariousComponent,
 		HomeComponent,
 		LoginComponent,
 		RecipesComponent,
