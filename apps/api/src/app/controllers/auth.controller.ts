@@ -1,13 +1,13 @@
 import { AuthResponse } from "@lundin/api-interfaces"
-import { Controller, Get, Post, Req, UseGuards } from "@nestjs/common"
+import { Body, Controller, Get, Post, Req, UnauthorizedException, UseGuards } from "@nestjs/common"
 import { AuthGuard } from "@nestjs/passport"
 import { Request } from "express"
-import { AuthService } from "../../auth/auth.service"
+import { AuthService, BasicUserInfo } from "../../auth/auth.service"
 import { jwtConstants } from "../../auth/constants"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { RefreshJwtAuthGuard } from "../../auth/refresh-token.strategy"
 import { StorageService } from "../../storage/storage.service"
-import { StoredUser, UserService } from "../../user/user.service"
+import { UserService } from "../../user/user.service"
 
 @Controller("auth")
 export class AuthController {
@@ -53,6 +53,11 @@ export class AuthController {
 		return { userId: user._id, expiration: this.getExpirationDate() }
 	}
 
+	private getExpirationDate() {
+		const secondsSinceEpoch = new Date().getTime() / 1000
+		return secondsSinceEpoch + jwtConstants.accessExpiration
+	}
+
 	@UseGuards(JwtAuthGuard)
 	@Get("refresh/logout")
 	async logout(@Req() request: RequestWithUser) {
@@ -60,12 +65,19 @@ export class AuthController {
 		request.res.setHeader("Set-Cookie", this.authService.getLogoutCookies())
 	}
 
-	private getExpirationDate() {
-		const secondsSinceEpoch = new Date().getTime() / 1000
-		return secondsSinceEpoch + jwtConstants.accessExpiration
+	@UseGuards(JwtAuthGuard)
+	@Post("change")
+	async changePassword(@Req() request: RequestWithUser, @Body() message: { blob: string }) {
+		const decoded = Buffer.from(message.blob, "base64").toString("utf-8")
+		const { password, newPassword } = JSON.parse(decoded)
+		const user = await this.authService.validateUser(request.user.username, password)
+		if (!user)
+			throw new UnauthorizedException()
+		await this.userService.updatePassword(user._id, newPassword)
+		return { success: true }
 	}
 }
 
-interface RequestWithUser extends Request {
-	user: StoredUser
+export interface RequestWithUser extends Request {
+	user: BasicUserInfo
 }

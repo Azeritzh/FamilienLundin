@@ -22,7 +22,13 @@ export class UserService {
 	async addUser(username: string, password: string) {
 		const passwordHash = await hashPassword(password)
 		const users = this.storageService.userCollection
-		return <StoredUser>users.insertOne({ username, passwordHash })
+		return users.insertOne({ username, passwordHash })
+	}
+
+	async updatePassword(userId: number, password: string) {
+		const passwordHash = await hashPassword(password)
+		const users = this.storageService.userCollection
+		return users.updateOne({ _id: userId }, { passwordHash })
 	}
 
 	async updateRefreshTokenHash(userId: number, token: string) {
