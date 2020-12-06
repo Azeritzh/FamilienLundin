@@ -1,15 +1,20 @@
 <h1>{{title}}</h1>
 <h2>{{subtitle}}</h2>
-<input type="text"
-	[(ngModel)]="name"
-	placeholder="Navn">
-<input type="password"
-	[(ngModel)]="password"
-	placeholder="Kode"
-	autocomplete="current-password"
-	required
-	(keyup.enter)="login()">
-<button type="button"
-	(click)="login()">
-	Log ind
-</button>
+
+<form>
+	<input type="text"
+		[(ngModel)]="name"
+		placeholder="Navn"
+		name="name">
+	<input type="password"
+		[(ngModel)]="password"
+		placeholder="Kode"
+		autocomplete="current-password"
+		name="password"
+		required
+		(keyup.enter)="login()">
+	<button type="button"
+		(click)="login()">
+		Log ind
+	</button>
+</form>

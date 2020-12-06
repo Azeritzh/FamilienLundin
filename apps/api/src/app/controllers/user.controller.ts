@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, Req, UnauthorizedException, UseGuards } fr
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
 import { UserService } from "../../user/user.service"
-import { RequestWithUser } from "./auth.controller"
+import type { RequestWithUser } from "./auth.controller"
 
 @Controller("user")
 export class UserController {

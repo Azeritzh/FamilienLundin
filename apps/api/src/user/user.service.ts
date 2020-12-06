@@ -3,7 +3,7 @@ import { expirationFrom, hashPassword, hashRefreshToken } from "../auth/hashing"
 import { StorageService } from "../storage/storage.service"
 
 export interface StoredUser {
-	_id?: number
+	_id: number
 	username: string
 	passwordHash: string
 	refreshHash?: string
@@ -17,13 +17,13 @@ export class UserService {
 
 	async findOne(query: { _id: number } | { username: string }): Promise<StoredUser | undefined> {
 		const users = this.storageService.userCollection
-		return <StoredUser>users.findOne(query)
+		return users.findOne(query)
 	}
 
 	async addUser(username: string, password: string) {
 		const passwordHash = await hashPassword(password)
 		const users = this.storageService.userCollection
-		return users.insertOne({ username, passwordHash, type: "member" })
+		return users.insertOne({ _id: null, username, passwordHash, type: "member" })
 	}
 
 	async updatePassword(userId: number, password: string) {

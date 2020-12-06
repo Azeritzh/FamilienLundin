@@ -18,20 +18,20 @@ export class AuthController {
 	@UseGuards(AuthGuard("local"))
 	@Post("login")
 	async login(@Req() request: RequestWithUser): Promise<AuthResponse> {
-		const user = request.user
+		const user = await this.userService.findOne({ _id: request.user._id })
 		const accessToken = this.authService.createAccessToken(user)
 		const accessCookie = this.authService.getAccessTokenCookie(accessToken)
 		const refreshToken = this.authService.createRefreshToken(user)
 		const refreshCookie = this.authService.getRefreshTokenCookie(refreshToken, "api/auth/refresh")
 		await this.userService.updateRefreshTokenHash(user._id, refreshToken)
 		request.res.setHeader("Set-Cookie", [accessCookie, refreshCookie])
-		return { userId: user._id, expiration: this.getExpirationDate() }
+		return { userId: user._id, expiration: this.getExpirationDate(), username: user.username, type: user.type }
 	}
 
 	@UseGuards(RefreshJwtAuthGuard)
 	@Get("refresh")
 	async refresh(@Req() request: RequestWithUser): Promise<AuthResponse> {
-		const user = request.user
+		const user = await this.userService.findOne({ _id: request.user._id })
 		const accessToken = this.authService.createAccessToken(user)
 		const accessCookie = this.authService.getAccessTokenCookie(accessToken)
 		const refreshToken = this.authService.createRefreshToken(user)
@@ -39,7 +39,7 @@ export class AuthController {
 		await this.userService.clearRefreshToken(user._id, request.cookies.Refresh)
 		await this.userService.updateRefreshTokenHash(user._id, refreshToken)
 		request.res.setHeader("Set-Cookie", [accessCookie, refreshCookie])
-		return { userId: user._id, expiration: this.getExpirationDate() }
+		return { userId: user._id, expiration: this.getExpirationDate(), username: user.username, type: user.type }
 	}
 
 	private getExpirationDate() {

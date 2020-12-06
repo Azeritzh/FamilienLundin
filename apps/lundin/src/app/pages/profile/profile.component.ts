@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http"
 import { Component } from "@angular/core"
+import { AuthService } from "../../auth/auth.service"
 
 @Component({
 	selector: "lundin-profile",
@@ -9,8 +10,12 @@ import { Component } from "@angular/core"
 export class ProfileComponent {
 	password: string
 	newPassword: string
+	repeatNewPassword: string
 
-	constructor(private http: HttpClient) { }
+	constructor(
+		public authService: AuthService,
+		private http: HttpClient,
+	) { }
 
 	async changePassword() {
 		const blob = btoa(JSON.stringify({ password: this.password, newPassword: this.newPassword }))

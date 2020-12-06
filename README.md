@@ -14,7 +14,7 @@ Dette er et såkaldt "monorepo", hvilket vil sige at det er et enkelt repository
 
 ## Udvikling
 
-For at kunne køre og teste det kode man skriver, må man starte både backend og frontend. Kør backend med `yarn nx serve api` og frontend med `yarn nx serve lundin` (det kræver hver sin terminal. Ting der kører i en terminal kan stoppes igen med Ctrl+C). Derefter er siden tilgængelig på localhost:4200 i en browser. Siden kræver login, og der følger ingen data-filer med i projektet, så der skal oprettes en test bruger for at kunne logge ind. Det kan gør man ved at navigere til localhost:3333/api/auth/add-basic.
+For at kunne køre og teste det kode man skriver, må man starte både backend og frontend. Kør backend med `yarn nx serve api` og frontend med `yarn nx serve lundin` (det kræver hver sin terminal. Ting der kører i en terminal kan stoppes igen med Ctrl+C). Derefter er siden tilgængelig på localhost:4200 i en browser. Siden kræver login, og der følger ingen data-filer med i projektet, så der skal oprettes en test bruger for at kunne logge ind. Det kan gør man ved at navigere til `localhost:3333/api/user/add-basic`.
 
 ## Produktion
 

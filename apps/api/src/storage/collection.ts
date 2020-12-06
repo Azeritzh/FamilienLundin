@@ -13,7 +13,7 @@ export class Collection<T extends { _id?: number }> {
 		private readonly storageService: StorageService,
 	) {
 		this.load()
-		this.update$.pipe(auditTime(60000))
+		this.update$.pipe(auditTime(30000))
 			.subscribe(() => this.save())
 	}
 

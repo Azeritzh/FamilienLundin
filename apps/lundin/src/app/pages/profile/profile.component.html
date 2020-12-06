@@ -1,14 +1,53 @@
-<input type="password"
-	[(ngModel)]="password"
-	placeholder="Kode"
-	autocomplete="current-password"
-	required>
-<input type="password"
-	[(ngModel)]="newPassword"
-	placeholder="Ny kode"
-	autocomplete="new-password"
-	required>
-<button type="button"
-	(click)="changePassword()">
-	Skift kode
-</button>
+<form>
+	<label for="password">
+		Tilføj bruger:
+	</label>
+	<input id="password"
+		type="password"
+		[(ngModel)]="password"
+		placeholder="Kode"
+		autocomplete="current-password"
+		name="password"
+		required>
+
+	<label for="new-password">
+		Tilføj bruger:
+	</label>
+	<input id="new-password"
+		type="password"
+		[(ngModel)]="newPassword"
+		placeholder="Ny kode"
+		autocomplete="new-password"
+		name="new-password"
+		required>
+
+	<label for="repeat-password">
+		Tilføj bruger:
+	</label>
+	<input id="repeat-password"
+		type="password"
+		[(ngModel)]="repeatNewPassword"
+		placeholder="Gentag ny kode"
+		autocomplete="new-password"
+		name="repeat-password"
+		required>
+	<button type="button"
+		(click)="changePassword()"
+		[disabled]="!password || !newPassword || newPassword !== repeatNewPassword">
+		Skift kode
+	</button>
+</form>
+
+<ng-container *ngIf="authService.isAdmin()">
+	<label for="new-user">
+		Tilføj bruger:
+	</label>
+	<input #newUser
+		type="text"
+		id="new-user"
+		placeholder="Brugernavn">
+	<button type="button"
+		(click)="authService.addUser(newUser.value)">
+		Tilføj
+	</button>
+</ng-container>

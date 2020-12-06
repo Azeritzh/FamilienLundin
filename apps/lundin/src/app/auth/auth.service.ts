@@ -76,11 +76,15 @@ export class AuthService {
 		this.clearLoginInfo()
 	}
 
-	createUser(username: string) {
-		this.http.post("/api/user/create", { name: username, password: "test" }).toPromise()
+	addUser(username: string) {
+		this.http.post("/api/user/add", { username }).toPromise()
 	}
 
 	isLoggedIn() {
 		return !!this.loginInfo
+	}
+
+	isAdmin() {
+		return this.loginInfo?.type === "admin"
 	}
 }

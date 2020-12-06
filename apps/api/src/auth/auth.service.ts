@@ -13,6 +13,8 @@ export class AuthService {
 
 	async validateUser(username: string, password: string) {
 		const user = await this.userService.findOne({ username })
+		if (!user)
+			return null
 		return await passwordMatches(password, user?.passwordHash)
 			? user
 			: null
@@ -20,6 +22,8 @@ export class AuthService {
 
 	async validateRefreshToken(userId: number, token: string) {
 		const user = await this.userService.findOne({ _id: userId })
+		if (!user)
+			return null
 		const hashedToken = user.refreshTokens?.[expirationFrom(token)]
 		return await refreshTokenMatches(token, hashedToken)
 			? user
