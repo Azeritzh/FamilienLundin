@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common"
 import { AuthGuard, PassportStrategy } from "@nestjs/passport"
 import { Strategy } from "passport-jwt"
 import { Request } from "express"
-import { User, UserService } from "../user/user.service"
+import { StoredUser, UserService } from "../user/user.service"
 import { JwtPayload } from "./auth.service"
 import { jwtConstants } from "./constants"
 
@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		})
 	}
 
-	async validate(payload: JwtPayload): Promise<User> {
+	async validate(payload: JwtPayload): Promise<StoredUser> {
 		return this.userService.findOne({ _id: payload.sub }) // TODO: return just stuff in the jwt
 	}
 }

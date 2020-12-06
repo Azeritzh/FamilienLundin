@@ -7,7 +7,7 @@ import { jwtConstants } from "../../auth/constants"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { RefreshJwtAuthGuard } from "../../auth/refresh-token.strategy"
 import { StorageService } from "../../storage/storage.service"
-import { User, UserService } from "../../user/user.service"
+import { StoredUser, UserService } from "../../user/user.service"
 
 @Controller("auth")
 export class AuthController {
@@ -19,11 +19,10 @@ export class AuthController {
 
 	@Get("add-basic")
 	async addBasic() {
-		const users = this.storageService.getCollection("users")
+		const users = this.storageService.userCollection
 		if (users.count() > 0)
 			return "lolno"
 		await this.userService.addUser("Test", "test")
-		this.storageService.saveCollections()
 		return "Added user \"Test\" with password \"test\""
 	}
 
@@ -68,5 +67,5 @@ export class AuthController {
 }
 
 interface RequestWithUser extends Request {
-	user: User
+	user: StoredUser
 }

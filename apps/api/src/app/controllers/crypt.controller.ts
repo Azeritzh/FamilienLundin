@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common"
 import { Request } from "express"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
-import { User } from "../../user/user.service"
+import { StoredUser } from "../../user/user.service"
 
 @Controller("crypt")
 export class CryptController {
@@ -14,7 +14,7 @@ export class CryptController {
 	@Get("load")
 	async load(@Req() request: RequestWithUser) {
 		const userId = request.user._id
-		const crypts = this.storageService.getCollection("crypt")
+		const crypts = this.storageService.cryptCollection
 		return crypts.findOne({ userId }) ?? ""
 	}
 
@@ -23,7 +23,7 @@ export class CryptController {
 	async save(@Req() request: RequestWithUser, @Body() message: { encrypted: string }) {
 		const userId = request.user._id
 		const encrypted = message.encrypted
-		const crypts = this.storageService.getCollection("crypt")
+		const crypts = this.storageService.cryptCollection
 		const crypt = crypts.findOne({ userId })
 		if (!crypt)
 			crypts.insertOne({ userId, encrypted })
@@ -33,5 +33,5 @@ export class CryptController {
 }
 
 interface RequestWithUser extends Request {
-	user: User
+	user: StoredUser
 }

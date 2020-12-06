@@ -1,44 +1,43 @@
 import { Injectable } from "@nestjs/common"
-import { Collection } from "./collection"
 import * as fs from "fs"
+import { StoredUser } from "../user/user.service"
+import { Collection } from "./collection"
 
 @Injectable()
 export class StorageService {
-	private collections: { [name: string]: Collection } = {}
+	userCollection = new Collection<StoredUser>("users", this)
+	cryptCollection = new Collection<{ _id?: number, userId: number, encrypted: string }>("crypt", this)
 
-	constructor() {
-		fs.readdir(
-			"./storage/",
-			"utf-8",
-			(error, files) => {
-				if (error)
-					console.log(error)
-				for (const file of files)
-					this.loadFile(file)
-			})
+	saveJsonFile(name: string, content: any): Promise<void> {
+		const path = "./storage/" + name + ".json"
+		return new Promise((resolve, reject) => {
+			fs.writeFile(
+				path,
+				JSON.stringify(content, null, "\t"),
+				{ encoding: "utf-8" },
+				error => {
+					if (error)
+						reject(error)
+					else
+						resolve()
+				})
+		})
 	}
 
-	private loadFile(file: string | Buffer) {
-		if (!(typeof file === "string" && file.endsWith(".json")))
-			return
-		const name = file.slice(0, file.length - 5)
-		const collection = this.createCollection(name)
-		collection.load()
-	}
-
-	getCollection(name: string) {
-		const collection = this.collections[name]
-		return collection ?? this.createCollection(name)
-	}
-
-	createCollection(name: string) {
-		const collection = new Collection(name)
-		this.collections[name] = collection
-		return collection
-	}
-
-	saveCollections() {
-		for (const name in this.collections)
-			this.collections[name].save()
+	loadJsonFile(name: string): Promise<any> {
+		const path = "./storage/" + name + ".json"
+		return new Promise((resolve, reject) => {
+			if (!fs.existsSync(path))
+				return resolve({})
+			fs.readFile(
+				path,
+				"utf-8",
+				(error, data) => {
+					if (error)
+						reject(error)
+					else
+						resolve(JSON.parse(data))
+				})
+		})
 	}
 }

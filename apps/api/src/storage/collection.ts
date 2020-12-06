@@ -1,47 +1,38 @@
-import * as fs from "fs"
+import { Subject } from "rxjs"
+import { auditTime } from "rxjs/operators"
+import { StorageService } from "./storage.service"
 
 type Change = ((e: any) => void) | { [key: string]: any }
 
-export class Collection {
-	tempStore: { [id: string]: Entry } = {}
-	hasChanged = false
+export class Collection<T extends { _id?: number }> {
+	private tempStore: { [id: string]: T } = {}
+	private update$ = new Subject()
 
-	constructor(public readonly name: string) { }
+	constructor(
+		public readonly name: string,
+		private readonly storageService: StorageService,
+	) {
+		this.load()
+		this.update$.pipe(auditTime(60000))
+			.subscribe(() => this.save())
+	}
 
-	load() {
-		fs.readFile(
-			"./storage/" + this.name + ".json",
-			"utf-8",
-			(error, data) => {
-				if (error)
-					console.log(error)
-				this.tempStore = JSON.parse(data)
-				this.hasChanged = false
-			})
+	private async load() {
+		this.tempStore = await this.storageService.loadJsonFile(this.name)
 	}
 
 	save() {
-		if (!this.hasChanged)
-			return
-		fs.writeFile(
-			"./storage/" + this.name + ".json",
-			JSON.stringify(this.tempStore),
-			{ encoding: "utf-8" },
-			error => {
-				if (error)
-					console.log(error)
-				this.hasChanged = false
-			})
+		this.storageService.saveJsonFile(this.name, this.tempStore)
 	}
 
-	insertOne(entry) {
+	insertOne(entry: T) {
 		entry._id = this.generateId()
 		this.tempStore[entry._id] = entry
-		this.onUpdate()
+		this.update$.next()
 		return entry
 	}
 
-	insertMany(entries: unknown[]) {
+	insertMany(entries: T[]) {
 		return entries.map(x => this.insertOne(x))
 	}
 
@@ -58,26 +49,26 @@ export class Collection {
 		return entries
 	}
 
-	private makeChanges(entry, changes: Change) {
+	private makeChanges(entry: T, changes: Change) {
 		if (typeof changes === "function")
 			changes(entry)
 		else
 			for (const key in changes)
 				entry[key] = changes[key]
-		this.onUpdate()
+		this.update$.next()
 	}
 
 	deleteOne(query) {
 		const entry = this.findOne(query)
 		delete this.tempStore[entry._id]
-		this.onUpdate()
+		this.update$.next()
 	}
 
 	deleteMany(query) {
 		const entries = this.find(query)
 		for (const entry of entries)
 			delete this.tempStore[entry._id]
-		this.onUpdate()
+		this.update$.next()
 	}
 
 	find(query?) {
@@ -111,14 +102,4 @@ export class Collection {
 	private generateId() {
 		return Math.ceil(Math.random() * 1000000)
 	}
-
-	private onUpdate() {
-		this.hasChanged = true
-		this.save() // TODO
-	}
-}
-
-interface Entry {
-	_id: number
-	[key: string]: any
 }

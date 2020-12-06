@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common"
 import { JwtService } from "@nestjs/jwt"
-import { User, UserService } from "../user/user.service"
+import { StoredUser, UserService } from "../user/user.service"
 import { jwtConstants } from "./constants"
 import { expirationFrom, passwordMatches, refreshTokenMatches } from "./hashing"
 
@@ -26,7 +26,7 @@ export class AuthService {
 			: null
 	}
 
-	createAccessToken(user: User) {
+	createAccessToken(user: StoredUser) {
 		const payload: JwtPayload = { sub: user._id }
 		return this.jwtService.sign(payload)
 	}
@@ -35,7 +35,7 @@ export class AuthService {
 		return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${jwtConstants.accessExpiration}`
 	}
 
-	createRefreshToken(user: User) {
+	createRefreshToken(user: StoredUser) {
 		const payload: JwtPayload = { sub: user._id }
 		return this.jwtService.sign(payload, {
 			secret: jwtConstants.refreshSecret,
