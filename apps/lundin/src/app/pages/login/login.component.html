@@ -6,6 +6,8 @@
 <input type="password"
 	[(ngModel)]="password"
 	placeholder="Kode"
+	autocomplete="current-password"
+	required
 	(keyup.enter)="login()">
 <button type="button"
 	(click)="login()">

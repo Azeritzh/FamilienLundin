@@ -1,1 +1,14 @@
-Profil i stil
+<input type="password"
+	[(ngModel)]="password"
+	placeholder="Kode"
+	autocomplete="current-password"
+	required>
+<input type="password"
+	[(ngModel)]="newPassword"
+	placeholder="Ny kode"
+	autocomplete="new-password"
+	required>
+<button type="button"
+	(click)="changePassword()">
+	Skift kode
+</button>

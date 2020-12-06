@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http"
 import { Component } from "@angular/core"
-import { Message } from "@lundin/api-interfaces"
 
 @Component({
 	selector: "lundin-profile",
@@ -8,16 +7,16 @@ import { Message } from "@lundin/api-interfaces"
 	styleUrls: ["./profile.component.scss"]
 })
 export class ProfileComponent {
+	password: string
+	newPassword: string
+
 	constructor(private http: HttpClient) { }
 
-	async get() {
-		const message = await this.http.get<Message>("/api/getData").toPromise()
-		console.log(message)
-	}
-
-	add() {
-		this.http
-			.post<Message>("/api/saveData", { message: "wahey" })
-			.toPromise()
+	async changePassword() {
+		const blob = btoa(JSON.stringify({ password: this.password, newPassword: this.newPassword }))
+		this.password = ""
+		this.newPassword = ""
+		const response = await this.http.post<{ success: string }>("/api/auth/change", { blob }).toPromise()
+		console.log(response)
 	}
 }
