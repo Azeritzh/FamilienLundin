@@ -15,7 +15,7 @@ export class CryptController {
 	async load(@Req() request: RequestWithUser) {
 		const userId = request.user._id
 		const crypts = this.storageService.cryptCollection
-		return crypts.findOne({ userId }) ?? ""
+		return crypts.findOne({ userId }) ?? { encrypted: "" }
 	}
 
 	@UseGuards(JwtAuthGuard)
