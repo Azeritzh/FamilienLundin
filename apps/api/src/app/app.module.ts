@@ -8,6 +8,7 @@ import { AppService } from "./app.service"
 import { AppController } from "./controllers/app.controller"
 import { AuthController } from "./controllers/auth.controller"
 import { CryptController } from "./controllers/crypt.controller"
+import { UserController } from "./controllers/user.controller"
 
 @Module({
 	imports: [
@@ -18,7 +19,12 @@ import { CryptController } from "./controllers/crypt.controller"
 		StorageModule,
 		UserModule,
 	],
-	controllers: [AppController, AuthController, CryptController],
+	controllers: [
+		AppController,
+		AuthController,
+		CryptController,
+		UserController,
+	],
 	providers: [AppService],
 })
 export class AppModule { }

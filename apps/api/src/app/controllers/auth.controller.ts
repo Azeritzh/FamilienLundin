@@ -6,7 +6,6 @@ import { AuthService, BasicUserInfo } from "../../auth/auth.service"
 import { jwtConstants } from "../../auth/constants"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { RefreshJwtAuthGuard } from "../../auth/refresh-token.strategy"
-import { StorageService } from "../../storage/storage.service"
 import { UserService } from "../../user/user.service"
 
 @Controller("auth")
@@ -14,17 +13,7 @@ export class AuthController {
 	constructor(
 		private readonly authService: AuthService,
 		private readonly userService: UserService,
-		private readonly storageService: StorageService
 	) { }
-
-	@Get("add-basic")
-	async addBasic() {
-		const users = this.storageService.userCollection
-		if (users.count() > 0)
-			return "lolno"
-		await this.userService.addUser("Test", "test")
-		return "Added user \"Test\" with password \"test\""
-	}
 
 	@UseGuards(AuthGuard("local"))
 	@Post("login")

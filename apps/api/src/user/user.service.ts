@@ -8,6 +8,7 @@ export interface StoredUser {
 	passwordHash: string
 	refreshHash?: string
 	refreshTokens?: { [expiration: string]: string }
+	type: "admin" | "member" | "guest"
 }
 
 @Injectable()
@@ -22,7 +23,7 @@ export class UserService {
 	async addUser(username: string, password: string) {
 		const passwordHash = await hashPassword(password)
 		const users = this.storageService.userCollection
-		return users.insertOne({ username, passwordHash })
+		return users.insertOne({ username, passwordHash, type: "member" })
 	}
 
 	async updatePassword(userId: number, password: string) {
