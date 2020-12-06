@@ -11,6 +11,7 @@ import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { GalleryComponent } from "./pages/gallery/gallery.component"
 import { HomeComponent } from "./pages/home/home.component"
 import { LoginComponent } from "./pages/login/login.component"
+import { ProfileComponent } from "./pages/profile/profile.component"
 import { RecipesComponent } from "./pages/recipes/recipes.component"
 import { VariousComponent } from "./pages/various/various.component"
 
@@ -20,10 +21,11 @@ import { VariousComponent } from "./pages/various/various.component"
 		AppComponent,
 		CalendarComponent,
 		GalleryComponent,
-		VariousComponent,
 		HomeComponent,
 		LoginComponent,
+		ProfileComponent,
 		RecipesComponent,
+		VariousComponent,
 	],
 	imports: [
 		AppRoutingModule,

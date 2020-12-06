@@ -1,5 +1,6 @@
 <header>
 	{{header}}
+	<a routerLink="profile">Profil</a>
 </header>
 <nav *ngIf="authService.isLoggedIn()">
 	<button (click)="hideNavigation = true">Kollaps</button>

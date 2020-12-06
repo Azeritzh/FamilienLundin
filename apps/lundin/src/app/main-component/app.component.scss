@@ -17,12 +17,18 @@ article { grid-area: content; }
 lundin-login { grid-area: 2 / 1 / 3 / 3; }
 
 header {
+	display: flex;
 	font-size: 2rem;
 	font-weight: bold;
 	background-color: lightgrey;
 	color: white;
 	line-height: 3rem;
 	padding: 0 1rem;
+}
+
+header a {
+	margin-left: auto;
+	line-height: 2rem;
 }
 
 nav {
@@ -42,6 +48,5 @@ button { display: block; }
 a, button {
 	font-size: 1.2rem;
 	padding: 0.5rem;
-	width: 100%;
 }
 a + button { margin-top: auto; }
