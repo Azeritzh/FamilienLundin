@@ -3,12 +3,13 @@
 	<a routerLink="profile">Profil</a>
 </header>
 <nav *ngIf="authService.isLoggedIn()">
-	<button (click)="hideNavigation = true">Kollaps</button>
+	<button (click)="hideNavigation = true" class="nav-btn collaps-btn">Kollaps</button>
 	<a *ngFor="let entry of navigationEntries"
-		[routerLink]="entry.link">
+		[routerLink]="entry.link"
+		class="nav-btn">
 		{{entry.text}}
 	</a>
-	<button (click)="authService.logout()">Log ud</button>
+	<button (click)="authService.logout()" class="nav-btn logout-btn">Log ud</button>
 </nav>
 <article *ngIf="authService.isLoggedIn()">
 	<router-outlet></router-outlet>
