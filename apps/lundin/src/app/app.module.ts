@@ -6,6 +6,7 @@ import { AppRoutingModule } from "./app-routing.module"
 import { AuthService } from "./auth/auth.service"
 import { AppComponent } from "./main-component/app.component"
 import { CryptModule } from "./modules/crypt/crypt.module"
+import { MessageModule } from "./modules/message/message.module"
 import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { GalleryComponent } from "./pages/gallery/gallery.component"
@@ -33,6 +34,7 @@ import { VariousComponent } from "./pages/various/various.component"
 		CryptModule,
 		FormsModule,
 		HttpClientModule,
+		MessageModule,
 	],
 	providers: [AuthService],
 	bootstrap: [AppComponent],
