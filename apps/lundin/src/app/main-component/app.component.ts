@@ -9,12 +9,12 @@ import { AuthService } from "../auth/auth.service"
 export class AppComponent {
 	header = "Familien Lundin"
 	navigationEntries: NavigationEntry[] = [
-		{ text: "Hjem", link: "/" },
-		{ text: "Kalender", link: "/calendar" },
-		{ text: "Familie", link: "/ancestry" },
-		{ text: "Galleri", link: "/gallery" },
-		{ text: "Opskrifter", link: "/recipes" },
-		{ text: "Diverse", link: "/various" },
+		{ text: "Hjem", link: "/", imageUrl: "/assets/images/icons/Home_icon.svg" },
+		{ text: "Kalender", link: "/calendar", imageUrl: "/assets/images/icons/Calendar_icon.svg" },
+		{ text: "Familie", link: "/ancestry", imageUrl: "/assets/images/icons/Family_icon.svg" },
+		{ text: "Galleri", link: "/gallery", imageUrl: "/assets/images/icons/Gallery_icon.svg" },
+		{ text: "Opskrifter", link: "/recipes", imageUrl: "/assets/images/icons/Recipes_icon.svg" },
+		{ text: "Diverse", link: "/various", imageUrl: "/assets/images/icons/Home_icon.svg" },
 	]
 	@HostBinding("class.hidden-navigation") hideNavigation = false
 
@@ -24,4 +24,5 @@ export class AppComponent {
 interface NavigationEntry {
 	text: string
 	link: string
+	imageUrl: string
 }

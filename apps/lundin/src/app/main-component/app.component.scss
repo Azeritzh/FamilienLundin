@@ -43,9 +43,9 @@ article {
 	overflow: auto;
 }
 
-nav a { display: block; }
+nav a { display: inline-flex; }
 
-button { display: block; }
+button { display: inline-flex; }
 a, button {
 	font-size: 1.2rem;
 	padding: 0.5rem;
@@ -54,6 +54,15 @@ a + button { margin-top: auto; }
 
 .nav-btn {
 	background-color: var(--color-background);
+}
+
+.nav-btn img {
+	width: 3rem;
+}
+
+.nav-btn span {
+	margin-top: auto;
+    margin-bottom: auto;
 }
 
 .nav-btn:hover {
