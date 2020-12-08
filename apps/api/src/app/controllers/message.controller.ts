@@ -6,16 +6,18 @@ import { RequestWithUser } from "./auth.controller"
 
 @Controller("message")
 export class MessageController {
-	constructor(
-		private readonly storageService: StorageService
-	) { }
+	constructor(private readonly storageService: StorageService) { }
 
 	@UseGuards(JwtAuthGuard)
 	@Get("getThreads")
 	async getThreads(@Req() request: RequestWithUser) {
 		const userId = request.user._id
 		const threads = this.storageService.messageCollection.find()
-		return threads.filter(x => x.participantIds.includes(userId))
+		return threads.filter(this.showForUser(userId))
+	}
+
+	private showForUser = (userId: number) => (thread: MessageThread) => {
+		return thread.participantIds.length === 0 || thread.participantIds.includes(userId)
 	}
 
 	@UseGuards(JwtAuthGuard)
@@ -35,6 +37,6 @@ export class MessageController {
 	@Post("addResponse")
 	async addResponse(@Req() request: RequestWithUser, @Body() message: { threadId: number, message: Message }) {
 		message.message.authorId = request.user._id
-		return this.storageService.messageCollection.updateOne({ _id: message.threadId}, x => x.responses.push(message.message))
+		return this.storageService.messageCollection.updateOne({ _id: message.threadId }, x => x.responses.push(message.message))
 	}
 }

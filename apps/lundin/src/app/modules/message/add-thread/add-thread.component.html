@@ -1,0 +1,12 @@
+<input type="text"
+	[(ngModel)]="thread.title"
+	placeholder="Titel">
+<textarea type="text"
+	[(ngModel)]="thread.content"
+	placeholder="Indhold">
+</textarea>
+
+<button type="button"
+	(click)="addThread()">
+	Opret beskedtråd
+</button>

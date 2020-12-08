@@ -1,6 +1,6 @@
 import { Component } from "@angular/core"
 import { MessageThread } from "@lundin/api-interfaces"
-import { MessageService } from "./message.service"
+import { MessageService } from "../message.service"
 
 @Component({
 	selector: "lundin-message-list",
