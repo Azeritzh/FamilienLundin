@@ -1,0 +1,31 @@
+<h1>{{thread.title}}</h1>
+<div class="thread-content">
+	{{thread.content}}
+</div>
+<div class="thread-author">
+	{{thread.authorId}}
+</div>
+<div class="thread-date">
+	{{thread.creationTime | date}}
+</div>
+
+<div class="responses">
+	<button type="button"
+		(click)="addResponse()">
+		Svar
+	</button>
+
+	<div *ngFor="let response of thread.responses"
+		class="response"
+		(click)="openThread(thread._id)">
+		<div class="response-content">
+			{{thread.content}}
+		</div>
+		<div class="response-author">
+			{{thread.authorId}}
+		</div>
+		<div class="response-date">
+			{{thread.creationTime | date}}
+		</div>
+	</div>
+</div>

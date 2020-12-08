@@ -1,0 +1,44 @@
+:host {
+	display: grid;
+	grid-template-areas: "title title"
+	"content author"
+	"content date"
+	"responses responses";
+	grid-template-columns: 1fr 8rem;
+}
+
+h1 { grid-area: title; }
+.thread-date { grid-area: date; }
+.thread-content { grid-area: content; }
+.thread-author { grid-area: author; }
+.responses { grid-area: responses; }
+
+.thread-title { font-weight: bold; }
+.thread-date { text-align: right; }
+.thread-author { text-align: right; }
+
+h1 {
+	font-size: 1.5rem;
+	font-weight: bold;
+	background-color: var(--color-primary);
+}
+
+.response {
+	display: grid;
+	grid-template-areas: "content date"
+	"content author";
+	grid-template-columns: 1fr 8rem;
+	border-bottom: 1px solid var(--color-border);
+	cursor: pointer;
+}
+.response:first-child {
+	border-top: 1px solid var(--color-border);
+}
+.response * { padding: 0.5rem; }
+
+.response-date { grid-area: date; }
+.response-content { grid-area: content; }
+.response-author { grid-area: author; }
+
+.response-date { text-align: right; }
+.response-author { text-align: right; }
