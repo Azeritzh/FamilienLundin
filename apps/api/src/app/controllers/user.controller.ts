@@ -29,4 +29,11 @@ export class UserController {
 		const newUser = await this.userService.addUser(message.username, "KristjanErSej")
 		return { _id: newUser._id, username: newUser.username }
 	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get("get-all")
+	async getAll() {
+		return this.storageService.userCollection.find()
+			.map(x => ({ _id: x._id, name: x.username }))
+	}
 }

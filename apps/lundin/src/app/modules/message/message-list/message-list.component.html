@@ -8,7 +8,7 @@
 		{{thread.content}}
 	</div>
 	<div class="author">
-		{{thread.authorId}}
+		{{thread.authorId | user | async}}
 	</div>
 	<div class="date">
 		{{thread.creationTime | date}}

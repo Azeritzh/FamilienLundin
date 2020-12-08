@@ -1,7 +1,7 @@
 import { HttpClientModule } from "@angular/common/http"
 import { NgModule } from "@angular/core"
-import { FormsModule } from "@angular/forms"
 import { BrowserModule } from "@angular/platform-browser"
+import { SharedModule } from "../../shared/shared.module"
 import { CryptComponent } from "./crypt.component"
 import { CryptService } from "./crypt.service"
 
@@ -9,7 +9,7 @@ import { CryptService } from "./crypt.service"
 	declarations: [CryptComponent],
 	imports: [
 		BrowserModule,
-		FormsModule,
+		SharedModule,
 		HttpClientModule,
 	],
 	providers: [CryptService],

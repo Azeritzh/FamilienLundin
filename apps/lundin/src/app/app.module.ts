@@ -17,6 +17,7 @@ import { RecipesComponent } from "./pages/recipes/recipes.component"
 import { VariousComponent } from "./pages/various/various.component"
 import { AuthService } from "./services/auth.service"
 import { NavigationService } from "./services/navigation.service"
+import { UserService } from "./services/user.service"
 
 @NgModule({
 	declarations: [
@@ -39,7 +40,7 @@ import { NavigationService } from "./services/navigation.service"
 		HttpClientModule,
 		MessageModule,
 	],
-	providers: [AuthService, NavigationService],
+	providers: [AuthService, NavigationService, UserService],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }

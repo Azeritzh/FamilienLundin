@@ -15,7 +15,7 @@ export interface Message {
 }
 
 export interface User {
-  _id: string
+  _id: number
   name: string
 }
 
