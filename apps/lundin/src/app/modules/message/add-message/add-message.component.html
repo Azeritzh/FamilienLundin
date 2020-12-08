@@ -1,0 +1,28 @@
+<h1>Opret ny besked</h1>
+
+<label *ngIf="!threadId"
+	for="title">
+	Titel
+</label>
+<input *ngIf="!threadId"
+	type="text"
+	[(ngModel)]="title"
+	id="title"
+	placeholder="Titel"
+	autocomplete="off">
+
+<label for="content">
+	Indhold
+</label>
+<textarea type="text"
+	[(ngModel)]="content"
+	id="content"
+	placeholder="Indhold"
+	autocomplete="off">
+</textarea>
+
+<button type="button"
+	(click)="addMessage()"
+	[disabled]="!content || (!threadId && !title)">
+	Opret besked
+</button>

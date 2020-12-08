@@ -1,0 +1,24 @@
+.thread {
+	display: grid;
+	grid-template-areas: "title date"
+	"content author";
+	grid-template-columns: 1fr 8rem;
+	border-bottom: 1px solid var(--color-border);
+	cursor: pointer;
+}
+.thread:first-child {
+	border-top: 1px solid var(--color-border);
+}
+.thread:hover {
+	background-color: var(--color-secondary);
+}
+.thread * { padding: 0.5rem; }
+
+.title { grid-area: title; }
+.date { grid-area: date; }
+.content { grid-area: content; }
+.author { grid-area: author; }
+
+.title { font-weight: bold; }
+.date { text-align: right; }
+.author { text-align: right; }

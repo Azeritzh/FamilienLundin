@@ -1,5 +1,7 @@
-import { Component, HostBinding } from "@angular/core"
-import { AuthService } from "../auth/auth.service"
+import { Component, ComponentFactoryResolver, HostBinding, Type, ViewChild } from "@angular/core"
+import { OverlayHostDirective } from "../directives/overlay-host.directive"
+import { AuthService } from "../services/auth.service"
+import { NavigationService } from "../services/navigation.service"
 
 @Component({
 	selector: "lundin-root",
@@ -18,7 +20,34 @@ export class AppComponent {
 	]
 	@HostBinding("class.hidden-navigation") hideNavigation = false
 
-	constructor(public authService: AuthService) { }
+	@ViewChild("overlayHost", { read: OverlayHostDirective, static: true }) overlayHost: OverlayHostDirective
+	showingOverlay = false
+
+	constructor(
+		public authService: AuthService,
+		private componentFactoryResolver: ComponentFactoryResolver,
+		private navigationService: NavigationService,
+	) {
+		this.navigationService.openOverlay$.subscribe(({ component, init }) => {
+			this.overlayHost.viewContainerRef.clear()
+			this.showingOverlay = false
+			if (component)
+				init(this.openAsOverlay(component))
+		})
+	}
+
+	openAsOverlay<T>(component: Type<T>): T {
+		const factory = this.componentFactoryResolver.resolveComponentFactory(component)
+		const componentRef = this.overlayHost.viewContainerRef.createComponent(factory)
+		this.showingOverlay = true
+		return componentRef.instance
+	}
+
+	closeOverlay(event: MouseEvent) {
+		event.stopPropagation()
+		if (event.target === event.currentTarget)
+			this.navigationService.closeOverlay()
+	}
 }
 
 interface NavigationEntry {

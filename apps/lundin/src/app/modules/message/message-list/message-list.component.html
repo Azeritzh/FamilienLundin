@@ -1,0 +1,16 @@
+<div *ngFor="let thread of threads"
+	class="thread"
+	(click)="openThread(thread._id)">
+	<div class="title">
+		{{thread.title}}
+	</div>
+	<div class="content">
+		{{thread.content}}
+	</div>
+	<div class="author">
+		{{thread.authorId | user | async}}
+	</div>
+	<div class="date">
+		{{thread.creationTime | date}}
+	</div>
+</div>
