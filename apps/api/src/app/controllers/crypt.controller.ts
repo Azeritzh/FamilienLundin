@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
-import { RequestWithUser } from "./auth.controller"
+import type { RequestWithUser } from "./auth.controller"
 
 @Controller("crypt")
 export class CryptController {

@@ -1,8 +1,8 @@
-import { Message, MessageThread } from "@lundin/api-interfaces"
+import type { Message, MessageThread } from "@lundin/api-interfaces"
 import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
-import { RequestWithUser } from "./auth.controller"
+import type { RequestWithUser } from "./auth.controller"
 
 @Controller("message")
 export class MessageController {

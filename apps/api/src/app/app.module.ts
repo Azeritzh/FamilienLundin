@@ -4,7 +4,6 @@ import { join } from "path"
 import { AuthModule } from "../auth/auth.module"
 import { StorageModule } from "../storage/storage.module"
 import { UserModule } from "../user/user.module"
-import { AppService } from "./app.service"
 import { AuthController } from "./controllers/auth.controller"
 import { CryptController } from "./controllers/crypt.controller"
 import { MessageController } from "./controllers/message.controller"
@@ -25,6 +24,5 @@ import { UserController } from "./controllers/user.controller"
 		MessageController,
 		UserController,
 	],
-	providers: [AppService],
 })
 export class AppModule { }
