@@ -1,8 +1,7 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common"
-import { Request } from "express"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
-import { StoredUser } from "../../user/user.service"
+import { RequestWithUser } from "./auth.controller"
 
 @Controller("crypt")
 export class CryptController {
@@ -30,8 +29,4 @@ export class CryptController {
 		else
 			crypts.updateOne({ userId }, { encrypted })
 	}
-}
-
-interface RequestWithUser extends Request {
-	user: StoredUser
 }

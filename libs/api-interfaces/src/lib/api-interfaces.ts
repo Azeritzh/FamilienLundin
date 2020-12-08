@@ -4,7 +4,7 @@ export interface MessageThread {
 	content: string
 	authorId: number
 	creationTime: string
-	participant: number
+	participantIds: number[]
 	responses: Message[]
 }
 

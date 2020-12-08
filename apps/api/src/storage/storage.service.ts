@@ -1,3 +1,4 @@
+import { MessageThread } from "@lundin/api-interfaces"
 import { Injectable } from "@nestjs/common"
 import * as fs from "fs"
 import { StoredUser } from "../user/user.service"
@@ -5,8 +6,9 @@ import { Collection } from "./collection"
 
 @Injectable()
 export class StorageService {
-	userCollection = new Collection<StoredUser>("users", this)
 	cryptCollection = new Collection<{ _id?: number, userId: number, encrypted: string }>("crypt", this)
+	messageCollection = new Collection<MessageThread>("messages", this)
+	userCollection = new Collection<StoredUser>("users", this)
 
 	saveJsonFile(name: string, content: any): Promise<void> {
 		const path = "./storage/" + name + ".json"
