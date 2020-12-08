@@ -22,6 +22,7 @@
 </textarea>
 
 <button type="button"
-	(click)="addMessage()">
+	(click)="addMessage()"
+	[disabled]="!content || (!threadId && !title)">
 	Opret besked
 </button>
