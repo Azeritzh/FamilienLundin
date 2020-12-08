@@ -1,4 +1,16 @@
-Tråde:
-<div *ngFor="let thread of threads">
-	{{thread.title}}
+<div *ngFor="let thread of threads"
+	class="thread"
+	(click)="openThread(thread._id)">
+	<div class="title">
+		{{thread.title}}
+	</div>
+	<div class="content">
+		{{thread.content}}
+	</div>
+	<div class="author">
+		{{thread.authorId}}
+	</div>
+	<div class="date">
+		{{thread.creationTime | date}}
+	</div>
 </div>

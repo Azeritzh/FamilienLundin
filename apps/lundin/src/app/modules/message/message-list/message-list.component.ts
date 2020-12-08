@@ -17,4 +17,8 @@ export class MessageListComponent {
 	async updateThreads() {
 		this.threads = await this.messageService.getThreads()
 	}
+
+	openThread(threadId: number){
+		console.log(threadId)
+	}
 }
