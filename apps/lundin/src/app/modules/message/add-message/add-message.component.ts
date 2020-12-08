@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { NavigationService } from "../../../services/navigation.service"
 import { MessageService } from "../message.service"
 
 @Component({
@@ -11,13 +12,17 @@ export class AddMessageComponent {
 	title = ""
 	content = ""
 
-	constructor(private messageService: MessageService) { }
+	constructor(
+		private messageService: MessageService,
+		private navigationService: NavigationService,
+	) { }
 
 	async addMessage() {
 		if (!this.threadId)
 			this.addMessageThread()
 		else
 			this.addMessageResponse()
+		this.navigationService.closeOverlay()
 	}
 
 	async addMessageResponse() {
@@ -27,7 +32,7 @@ export class AddMessageComponent {
 			creationTime: new Date().toISOString(),
 		}
 		await this.messageService.addResponse(this.threadId, message)
-		console.log("saved")
+		this.navigationService.open("messages/" + this.threadId)
 	}
 
 	async addMessageThread() {
@@ -40,7 +45,7 @@ export class AddMessageComponent {
 			participantIds: [],
 			responses: [],
 		}
-		await this.messageService.addThread(thread)
-		console.log("saved")
+		const { _id } = await this.messageService.addThread(thread)
+		this.navigationService.open("messages/" + _id)
 	}
 }

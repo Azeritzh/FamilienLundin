@@ -1,8 +1,8 @@
 :host {
 	display: grid;
 	grid-template-areas: "title title"
-	"content author"
 	"content date"
+	"content author"
 	"responses responses";
 	grid-template-columns: 1fr 8rem;
 }
@@ -25,13 +25,13 @@ h1 {
 
 .response {
 	display: grid;
-	grid-template-areas: "content date"
-	"content author";
+	grid-template-areas: "author date"
+	"content content";
 	grid-template-columns: 1fr 8rem;
 	border-bottom: 1px solid var(--color-border);
 	cursor: pointer;
 }
-.response:first-child {
+button + .response {
 	border-top: 1px solid var(--color-border);
 }
 .response * { padding: 0.5rem; }
@@ -41,4 +41,4 @@ h1 {
 .response-author { grid-area: author; }
 
 .response-date { text-align: right; }
-.response-author { text-align: right; }
+.response-author { font-weight: bold; }

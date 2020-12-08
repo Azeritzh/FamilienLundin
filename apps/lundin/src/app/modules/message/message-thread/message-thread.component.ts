@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { MessageThread } from "@lundin/api-interfaces"
+import { NavigationService } from "../../../services/navigation.service"
+import { AddMessageComponent } from "../add-message/add-message.component"
 import { MessageService } from "../message.service"
 
 @Component({
@@ -12,8 +14,9 @@ export class MessageThreadComponent implements OnInit {
 	thread = <MessageThread>{}
 
 	constructor(
-		private messageService: MessageService,
 		private activatedRoute: ActivatedRoute,
+		private messageService: MessageService,
+		private navigationService: NavigationService,
 	) { }
 
 	ngOnInit() {
@@ -23,7 +26,8 @@ export class MessageThreadComponent implements OnInit {
 		})
 	}
 
-	addResponse() {
-		console.log(this.thread)
+	async addResponse() {
+		const component = await this.navigationService.openAsOverlay(AddMessageComponent)
+		component.threadId = this.thread._id
 	}
 }

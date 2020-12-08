@@ -11,7 +11,7 @@ export class MessageService {
 	}
 
 	addThread(thread: MessageThread){
-		return this.httpClient.post("api/message/addThread", thread).toPromise()
+		return this.httpClient.post<MessageThread>("api/message/addThread", thread).toPromise()
 	}
 
 	getFullThread(threadId: number) {
