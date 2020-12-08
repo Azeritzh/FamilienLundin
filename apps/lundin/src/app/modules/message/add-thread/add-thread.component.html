@@ -1,8 +1,19 @@
+<h1>Opret ny beskedtråd</h1>
+
+<label for="title">
+	Titel
+</label>
 <input type="text"
 	[(ngModel)]="thread.title"
+	id="title"
 	placeholder="Titel">
+
+<label for="content">
+	Indhold
+</label>
 <textarea type="text"
 	[(ngModel)]="thread.content"
+	id="content"
 	placeholder="Indhold">
 </textarea>
 

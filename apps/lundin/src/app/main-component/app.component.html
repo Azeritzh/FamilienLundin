@@ -3,7 +3,8 @@
 	<a routerLink="profile">Profil</a>
 </header>
 <nav *ngIf="authService.isLoggedIn()">
-	<button (click)="hideNavigation = true" class="nav-btn collaps-btn">
+	<button (click)="hideNavigation = true"
+		class="nav-btn collaps-btn">
 		<img src="/assets/images/icons/Collapse1_icon.svg">
 		<span>Kollaps</span>
 	</button>
@@ -13,7 +14,8 @@
 		<img src={{entry.imageUrl}}>
 		<span>{{entry.text}}</span>
 	</a>
-	<button (click)="authService.logout()" class="nav-btn logout-btn">
+	<button (click)="authService.logout()"
+		class="nav-btn logout-btn">
 		<img src="/assets/images/icons/LogOut_icon.svg">
 		<span>Log ud</span>
 	</button>
@@ -22,3 +24,10 @@
 	<router-outlet></router-outlet>
 </article>
 <lundin-login *ngIf="!authService.isLoggedIn()"></lundin-login>
+
+<div class="overlay"
+	[class.hidden]="!showingOverlay"
+	(click)="closeOverlay($event)">
+	<ng-template #overlayHost
+		lundinOverlayHost></ng-template>
+</div>

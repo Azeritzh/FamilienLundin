@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core"
 import { FormsModule } from "@angular/forms"
 import { BrowserModule } from "@angular/platform-browser"
 import { AppRoutingModule } from "./app-routing.module"
-import { AuthService } from "./auth/auth.service"
+import { OverlayHostDirective } from "./directives/overlay-host.directive"
 import { AppComponent } from "./main-component/app.component"
 import { CryptModule } from "./modules/crypt/crypt.module"
 import { MessageModule } from "./modules/message/message.module"
@@ -15,6 +15,8 @@ import { LoginComponent } from "./pages/login/login.component"
 import { ProfileComponent } from "./pages/profile/profile.component"
 import { RecipesComponent } from "./pages/recipes/recipes.component"
 import { VariousComponent } from "./pages/various/various.component"
+import { AuthService } from "./services/auth.service"
+import { NavigationService } from "./services/navigation.service"
 
 @NgModule({
 	declarations: [
@@ -27,6 +29,7 @@ import { VariousComponent } from "./pages/various/various.component"
 		ProfileComponent,
 		RecipesComponent,
 		VariousComponent,
+		OverlayHostDirective,
 	],
 	imports: [
 		AppRoutingModule,
@@ -36,7 +39,7 @@ import { VariousComponent } from "./pages/various/various.component"
 		HttpClientModule,
 		MessageModule,
 	],
-	providers: [AuthService],
+	providers: [AuthService, NavigationService],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }
