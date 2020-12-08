@@ -1,16 +1,16 @@
 export interface MessageThread {
 	_id: number
+	authorId: number
 	title: string
 	content: string
-	authorId: number
 	creationTime: string
 	participantIds: number[]
 	responses: Message[]
 }
 
 export interface Message {
-	content: string
 	authorId: number
+	content: string
 	creationTime: string
 }
 

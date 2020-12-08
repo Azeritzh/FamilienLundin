@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import { AddThreadComponent } from "../../modules/message/add-thread/add-thread.component"
+import { AddMessageComponent } from "../../modules/message/add-message/add-message.component"
 import { NavigationService } from "../../services/navigation.service"
 
 @Component({
@@ -10,7 +10,7 @@ import { NavigationService } from "../../services/navigation.service"
 export class HomeComponent {
 	constructor(private navigationService: NavigationService) { }
 
-	asdf() {
-		this.navigationService.openAsOverlay(AddThreadComponent)
+	async addThread() {
+		this.navigationService.openAsOverlay(AddMessageComponent)
 	}
 }
