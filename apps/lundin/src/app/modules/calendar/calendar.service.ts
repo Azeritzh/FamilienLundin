@@ -7,10 +7,10 @@ export class CalendarService {
 	constructor(private httpClient: HttpClient) { }
 
 	getCalendarEvents() {
-		return this.httpClient.get<CalendarEvent[]>("api/message/get-calendar-events").toPromise()
+		return this.httpClient.get<CalendarEvent[]>("api/calendar/get-calendar-events").toPromise()
 	}
 
 	addCalendarEvent(event: CalendarEvent) {
-		return this.httpClient.post<CalendarEvent>("api/message/add-calendar-event", event).toPromise()
+		return this.httpClient.post<CalendarEvent>("api/calendar/add-calendar-event", event).toPromise()
 	}
 }

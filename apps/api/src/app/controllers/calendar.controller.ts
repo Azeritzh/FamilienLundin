@@ -3,8 +3,8 @@ import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
 
-@Controller("calendar-event")
-export class CalendarEventController {
+@Controller("calendar")
+export class CalendarController {
 	constructor(private readonly storageService: StorageService) { }
 
 	@UseGuards(JwtAuthGuard)
