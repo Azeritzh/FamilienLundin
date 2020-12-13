@@ -1,0 +1,13 @@
+<div *ngFor="let event of events"
+	class="entry"
+	(click)="openEvent(event._id)">
+	<div class="title">
+		{{event.title}}
+	</div>
+	<div class="content">
+		{{event.description}}
+	</div>
+	<div class="date">
+		{{event.date | date}}
+	</div>
+</div>

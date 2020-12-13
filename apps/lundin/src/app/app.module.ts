@@ -5,6 +5,7 @@ import { BrowserModule } from "@angular/platform-browser"
 import { AppRoutingModule } from "./app-routing.module"
 import { OverlayHostDirective } from "./directives/overlay-host.directive"
 import { AppComponent } from "./main-component/app.component"
+import { CalendarModule } from "./modules/calendar/calendar.module"
 import { CryptModule } from "./modules/crypt/crypt.module"
 import { MessageModule } from "./modules/message/message.module"
 import { AncestryComponent } from "./pages/ancestry/ancestry.component"
@@ -35,6 +36,7 @@ import { UserService } from "./services/user.service"
 	imports: [
 		AppRoutingModule,
 		BrowserModule,
+		CalendarModule,
 		CryptModule,
 		FormsModule,
 		HttpClientModule,

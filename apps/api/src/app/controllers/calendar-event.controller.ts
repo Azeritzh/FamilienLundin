@@ -9,13 +9,13 @@ export class CalendarEventController {
 
 	@UseGuards(JwtAuthGuard)
 	@Get("get-calendar-events")
-	async getThreads() {
+	async getCalendarEvents() {
 		return this.storageService.calendarEventCollection.find()
 	}
 
 	@UseGuards(JwtAuthGuard)
 	@Post("add-calendar-event")
-	async addThread(@Body() event: CalendarEvent) {
+	async addCalendarEvent(@Body() event: CalendarEvent) {
 		return this.storageService.calendarEventCollection.insertOne(event)
 	}
 }
