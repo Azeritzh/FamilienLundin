@@ -1,3 +1,15 @@
+export interface User {
+  _id: number
+  name: string
+}
+
+export interface AuthResponse {
+  userId: number
+  expiration: number
+  username: string
+  type: "admin" | "member" | "guest"
+}
+
 export interface MessageThread {
 	_id: number
 	authorId: number
@@ -14,14 +26,12 @@ export interface Message {
 	creationTime: string
 }
 
-export interface User {
-  _id: number
-  name: string
-}
-
-export interface AuthResponse {
-  userId: number
-  expiration: number
-  username: string
-  type: "admin" | "member" | "guest"
+export interface CalendarEvent {
+	_id: number
+	title: string
+	description: string
+	date: string
+	startTime: string
+	endTime: string
+	participantIds: number[]
 }
