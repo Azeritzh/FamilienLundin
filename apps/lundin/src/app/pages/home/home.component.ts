@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { AddCalendarEventComponent } from "../../modules/calendar/add-calendar-event/add-calendar-event.component"
 import { AddMessageComponent } from "../../modules/message/add-message/add-message.component"
 import { NavigationService } from "../../services/navigation.service"
 
@@ -12,5 +13,9 @@ export class HomeComponent {
 
 	async addThread() {
 		this.navigationService.openAsOverlay(AddMessageComponent)
+	}
+
+	async addCalendarEvent() {
+		this.navigationService.openAsOverlay(AddCalendarEventComponent)
 	}
 }
