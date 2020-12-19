@@ -12,11 +12,11 @@ export class AgEngine<GameAction> {
 	}
 }
 
-interface GameState {
+export interface GameState {
 	tick: number
 	finishUpdate(): void
 }
 
-interface GameLogic<GameAction> {
+export interface GameLogic<GameAction> {
 	update(actions: GameAction[]): void
 }

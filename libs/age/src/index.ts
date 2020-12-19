@@ -1,1 +1,1 @@
-export * from "./lib/age.module"
+export * from "./lib/age"

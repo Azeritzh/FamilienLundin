@@ -37,6 +37,9 @@
     },
     "age": {
       "tags": []
+    },
+    "tic-tac-toe": {
+      "tags": []
     }
   }
 }

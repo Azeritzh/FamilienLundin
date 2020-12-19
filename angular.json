@@ -206,6 +206,28 @@
         }
       },
       "schematics": {}
+    },
+    "tic-tac-toe": {
+      "projectType": "library",
+      "root": "libs/tic-tac-toe",
+      "sourceRoot": "libs/tic-tac-toe/src",
+      "prefix": "lundin",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/tic-tac-toe/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/tic-tac-toe/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {
