@@ -1,25 +1,22 @@
-export class AgEngine {
-	state: GameState
-
+export class AgEngine<GameAction> {
 	constructor(
-		private readonly persistenceProvider: PersistenceProvider,
-		private readonly config: GameConfig,
-		private readonly logics: GameLogic[],
-	) {
-		this.state = GameState.FromConfig(config)
-	}
+		private readonly logics: GameLogic<GameAction>[],
+		public state: GameState
+	) { }
 
 	update(...actions: GameAction[]) {
-		this.state.Tick++
-		this.state.Actions.AddRange(actions)
-		for (const logic in this.logics)
-			logic.Update()
-		this.state.FinishUpdate()
+		this.state.tick++
+		for (const logic of this.logics)
+			logic.update(actions)
+		this.state.finishUpdate()
 	}
 }
 
-interface GameState { }
-interface GameConfig { }
-interface GameLogic { }
-interface PersistenceProvider { }
-interface GameAction { }
+interface GameState {
+	tick: number
+	finishUpdate(): void
+}
+
+interface GameLogic<GameAction> {
+	update(actions: GameAction[]): void
+}
