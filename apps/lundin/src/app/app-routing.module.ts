@@ -7,6 +7,7 @@ import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { GalleryComponent } from "./pages/gallery/gallery.component"
 import { HomeComponent } from "./pages/home/home.component"
+import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
 import { ProfileComponent } from "./pages/profile/profile.component"
 import { RecipesComponent } from "./pages/recipes/recipes.component"
 import { VariousComponent } from "./pages/various/various.component"
@@ -16,6 +17,7 @@ const routes: Routes = [
 	{ path: "ancestry", component: AncestryComponent },
 	{ path: "calendar", component: CalendarComponent },
 	{ path: "gallery", component: GalleryComponent },
+	{ path: "games/iframe/:game", component: IframeGameComponent },
 	{ path: "games/noughts-and-crosses", component: NoughtsAndCrossesComponent },
 	{ path: "messages/:id", component: MessageThreadComponent },
 	{ path: "profile", component: ProfileComponent },

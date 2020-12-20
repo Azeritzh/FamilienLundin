@@ -13,6 +13,7 @@ import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { GalleryComponent } from "./pages/gallery/gallery.component"
 import { HomeComponent } from "./pages/home/home.component"
+import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
 import { LoginComponent } from "./pages/login/login.component"
 import { ProfileComponent } from "./pages/profile/profile.component"
 import { RecipesComponent } from "./pages/recipes/recipes.component"
@@ -28,6 +29,7 @@ import { UserService } from "./services/user.service"
 		CalendarComponent,
 		GalleryComponent,
 		HomeComponent,
+		IframeGameComponent,
 		LoginComponent,
 		ProfileComponent,
 		RecipesComponent,
