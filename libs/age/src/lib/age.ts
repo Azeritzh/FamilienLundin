@@ -1,7 +1,7 @@
 export class AgEngine<GameAction> {
 	constructor(
 		private readonly logics: GameLogic<GameAction>[],
-		public state: GameState
+		private readonly state: GameState
 	) { }
 
 	update(...actions: GameAction[]) {

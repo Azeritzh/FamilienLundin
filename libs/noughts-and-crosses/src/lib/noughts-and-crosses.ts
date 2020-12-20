@@ -1,15 +1,19 @@
 import { AgEngine } from "@lundin/age"
+import { NoughtsAndCrossesAction, NoughtsAndCrossesLogic } from "./noughts-and-crosses-logic"
 import { NoughtsAndCrossesState } from "./noughts-and-crosses-state"
 
 export class NoughtsAndCrosses {
-	private engine: AgEngine<NoughtsAndCrossesAction>
+	readonly state: NoughtsAndCrossesState
+	private readonly engine: AgEngine<NoughtsAndCrossesAction>
+
 	constructor() {
-		this.engine = new AgEngine([], new NoughtsAndCrossesState())
+		this.state = new NoughtsAndCrossesState()
+		this.engine = new AgEngine(
+			[new NoughtsAndCrossesLogic(this.state)],
+			this.state)
 	}
 
 	update(...actions: NoughtsAndCrossesAction[]) {
 		this.engine.update(actions)
 	}
 }
-
-export class NoughtsAndCrossesAction { }
