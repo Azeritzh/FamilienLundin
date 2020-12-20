@@ -228,6 +228,28 @@
         }
       },
       "schematics": {}
+    },
+    "virus": {
+      "projectType": "library",
+      "root": "libs/virus",
+      "sourceRoot": "libs/virus/src",
+      "prefix": "lundin",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/virus/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/virus/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {
