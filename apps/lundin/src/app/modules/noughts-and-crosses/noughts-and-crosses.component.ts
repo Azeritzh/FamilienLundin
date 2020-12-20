@@ -9,12 +9,18 @@ import { NoughtsAndCrosses, NoughtsAndCrossesType, NoughtsAndCrossesAction } fro
 export class NoughtsAndCrossesComponent {
 	game = new NoughtsAndCrosses()
 	positions: { x: number, y: number }[]
+	message = ""
 
 	constructor() {
 		this.positions = []
 		for (let y = 0; y < 3; y++)
 			for (let x = 0; x < 3; x++)
 				this.positions.push({ x, y })
+	}
+
+	restart() {
+		this.game = new NoughtsAndCrosses()
+		this.message = ""
 	}
 
 	pieceAt(x: number, y: number) {
@@ -29,5 +35,8 @@ export class NoughtsAndCrossesComponent {
 	placePiece(x: number, y: number) {
 		const action = new NoughtsAndCrossesAction(this.game.state.currentPlayer, x, y)
 		this.game.update(action)
+		const winner = this.game.state.findWinner()
+		if (winner)
+			this.message = winner.toString() + " har vundet!"
 	}
 }

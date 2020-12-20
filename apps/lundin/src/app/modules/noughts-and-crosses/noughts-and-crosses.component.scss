@@ -1,11 +1,14 @@
 :host {
-	display: grid;
-	grid-template-columns: 2rem 2rem 2rem;
-	grid-template-rows: 2rem 2rem 2rem;
 	height: 100%;
 }
 
-div {
+.game-container {
+	display: grid;
+	grid-template-columns: 2rem 2rem 2rem;
+	grid-template-rows: 2rem 2rem 2rem;
+}
+
+.game-field {
 	line-height: 2rem;
 	text-align: center;
 	border: 1px solid black;

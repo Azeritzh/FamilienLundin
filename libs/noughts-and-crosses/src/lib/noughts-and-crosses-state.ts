@@ -27,6 +27,29 @@ export class NoughtsAndCrossesState implements GameState {
 	pieceAt(x: number, y: number) {
 		return this.board[this.indexFor(x, y)]
 	}
+
+	findWinner() {
+		if (this.hasPieceWon(NoughtsAndCrossesType.Cross))
+			return NoughtsAndCrossesType.Cross
+		else if (this.hasPieceWon(NoughtsAndCrossesType.Nought))
+			return NoughtsAndCrossesType.Nought
+		return null
+	}
+
+	private hasPieceWon(piece: NoughtsAndCrossesType) {
+		const lines = [
+			[this.pieceAt(0, 0), this.pieceAt(0, 1), this.pieceAt(0, 2)],
+			[this.pieceAt(1, 0), this.pieceAt(1, 1), this.pieceAt(1, 2)],
+			[this.pieceAt(2, 0), this.pieceAt(2, 1), this.pieceAt(2, 2)],
+			[this.pieceAt(0, 0), this.pieceAt(1, 0), this.pieceAt(2, 0)],
+			[this.pieceAt(0, 1), this.pieceAt(1, 1), this.pieceAt(2, 1)],
+			[this.pieceAt(0, 2), this.pieceAt(1, 2), this.pieceAt(2, 2)],
+			[this.pieceAt(0, 0), this.pieceAt(1, 1), this.pieceAt(2, 2)],
+			[this.pieceAt(0, 2), this.pieceAt(1, 1), this.pieceAt(2, 0)],
+		]
+		const isFullRow = (line: NoughtsAndCrossesType[]) => line.every(x => x === piece)
+		return lines.some(isFullRow)
+	}
 }
 
 export enum NoughtsAndCrossesType { None, Nought, Cross }
