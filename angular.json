@@ -184,6 +184,50 @@
           }
         }
       }
+    },
+    "age": {
+      "projectType": "library",
+      "root": "libs/age",
+      "sourceRoot": "libs/age/src",
+      "prefix": "lundin",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/age/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/age/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "noughts-and-crosses": {
+      "projectType": "library",
+      "root": "libs/noughts-and-crosses",
+      "sourceRoot": "libs/noughts-and-crosses/src",
+      "prefix": "lundin",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/noughts-and-crosses/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/noughts-and-crosses/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {

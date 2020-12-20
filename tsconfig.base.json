@@ -16,7 +16,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@lundin/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@lundin/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@lundin/age": ["libs/age/src/index.ts"],
+      "@lundin/noughts-and-crosses": ["libs/noughts-and-crosses/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

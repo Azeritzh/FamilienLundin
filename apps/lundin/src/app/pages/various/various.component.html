@@ -1,18 +1,3 @@
-<ng-container *ngIf="!gameLink">
-	<ng-container *ngFor="let game of games">
-		<button *ngIf="!game.local"
-			(click)="gameLink = game.link">
-			{{game.text}}
-		</button>
-		<a *ngIf="game.local"
-			[routerLink]="game.link">
-			{{game.text}}
-		</a>
-	</ng-container>
+<ng-container *ngFor="let game of games">
+	<a [routerLink]="game.link">{{game.text}}</a>
 </ng-container>
-
-<iframe *ngIf="gameLink"
-	[src]="getLink()"
-	name="iframe_a">
-	<p>Your browser does not support iframes.</p>
-</iframe>

@@ -8,10 +8,12 @@ import { AppComponent } from "./main-component/app.component"
 import { CalendarModule } from "./modules/calendar/calendar.module"
 import { CryptModule } from "./modules/crypt/crypt.module"
 import { MessageModule } from "./modules/message/message.module"
+import { NoughtsAndCrossesModule } from "./modules/noughts-and-crosses/noughts-and-crosses.module"
 import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { GalleryComponent } from "./pages/gallery/gallery.component"
 import { HomeComponent } from "./pages/home/home.component"
+import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
 import { LoginComponent } from "./pages/login/login.component"
 import { ProfileComponent } from "./pages/profile/profile.component"
 import { RecipesComponent } from "./pages/recipes/recipes.component"
@@ -27,6 +29,7 @@ import { UserService } from "./services/user.service"
 		CalendarComponent,
 		GalleryComponent,
 		HomeComponent,
+		IframeGameComponent,
 		LoginComponent,
 		ProfileComponent,
 		RecipesComponent,
@@ -41,6 +44,7 @@ import { UserService } from "./services/user.service"
 		FormsModule,
 		HttpClientModule,
 		MessageModule,
+		NoughtsAndCrossesModule,
 	],
 	providers: [AuthService, NavigationService, UserService],
 	bootstrap: [AppComponent],
