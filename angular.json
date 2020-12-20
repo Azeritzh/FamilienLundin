@@ -207,22 +207,22 @@
       },
       "schematics": {}
     },
-    "tic-tac-toe": {
+    "noughts-and-crosses": {
       "projectType": "library",
-      "root": "libs/tic-tac-toe",
-      "sourceRoot": "libs/tic-tac-toe/src",
+      "root": "libs/noughts-and-crosses",
+      "sourceRoot": "libs/noughts-and-crosses/src",
       "prefix": "lundin",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/tic-tac-toe/src/**/*.ts"]
+            "lintFilePatterns": ["libs/noughts-and-crosses/src/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/tic-tac-toe/jest.config.js",
+            "jestConfig": "libs/noughts-and-crosses/jest.config.js",
             "passWithNoTests": true
           }
         }

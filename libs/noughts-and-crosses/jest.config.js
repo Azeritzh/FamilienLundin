@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: "tic-tac-toe",
+  displayName: "noughts-and-crosses",
   preset: "../../jest.preset.js",
   setupFilesAfterEnv: ["<rootDir>/src/test-setup.ts"],
   globals: {
@@ -14,7 +14,7 @@ module.exports = {
       },
     },
   },
-  coverageDirectory: "../../coverage/libs/tic-tac-toe",
+  coverageDirectory: "../../coverage/libs/noughts-and-crosses",
   snapshotSerializers: [
     "jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js",
     "jest-preset-angular/build/AngularSnapshotSerializer.js",

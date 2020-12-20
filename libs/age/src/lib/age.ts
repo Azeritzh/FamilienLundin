@@ -8,13 +8,13 @@ export class AgEngine<GameAction> {
 		this.state.tick++
 		for (const logic of this.logics)
 			logic.update(actions)
-		this.state.finishUpdate()
+		this.state.finishUpdate?.()
 	}
 }
 
 export interface GameState {
 	tick: number
-	finishUpdate(): void
+	finishUpdate?(): void
 }
 
 export interface GameLogic<GameAction> {

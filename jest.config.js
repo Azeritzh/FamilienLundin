@@ -4,6 +4,6 @@ module.exports = {
     "<rootDir>/apps/api",
     "<rootDir>/libs/api-interfaces",
     "<rootDir>/libs/age",
-    "<rootDir>/libs/tic-tac-toe",
+    "<rootDir>/libs/noughts-and-crosses",
   ],
 }
