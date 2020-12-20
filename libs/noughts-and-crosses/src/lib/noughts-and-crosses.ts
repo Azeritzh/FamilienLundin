@@ -13,7 +13,7 @@ export class NoughtsAndCrosses {
 			this.state)
 	}
 
-	update(...actions: NoughtsAndCrossesAction[]) {
-		this.engine.update(actions)
+	update(action: NoughtsAndCrossesAction) {
+		this.engine.update(action)
 	}
 }
