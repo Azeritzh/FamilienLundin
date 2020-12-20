@@ -14,6 +14,9 @@ export class NoughtsAndCrosses {
 	}
 
 	update(action: NoughtsAndCrossesAction) {
-		this.engine.update(action)
+		const validation = NoughtsAndCrossesLogic.validate(this.state, action)
+		if (validation.isValid)
+			this.engine.update(action)
+		return validation
 	}
 }

@@ -34,9 +34,22 @@ export class NoughtsAndCrossesComponent {
 
 	placePiece(x: number, y: number) {
 		const action = new NoughtsAndCrossesAction(this.game.state.currentPlayer, x, y)
-		this.game.update(action)
+		const validation = this.game.update(action)
+		if (!validation.isValid)
+			this.writeProblems(validation.problems)
+		else
+			this.checkWinner()
+	}
+
+	private writeProblems(problems: string[]) {
+		this.message = problems.join("\n")
+	}
+
+	private checkWinner() {
 		const winner = this.game.state.findWinner()
 		if (winner)
 			this.message = winner.toString() + " har vundet!"
+		else
+			this.message = ""
 	}
 }

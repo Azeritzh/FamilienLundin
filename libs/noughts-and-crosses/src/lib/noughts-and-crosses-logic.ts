@@ -6,10 +6,6 @@ export class NoughtsAndCrossesLogic implements GameLogic<NoughtsAndCrossesAction
 
 	update(actions: NoughtsAndCrossesAction[]): void {
 		const action = actions[0]
-		if (action.piece !== this.state.currentPlayer)
-			throw new Error(`Not ${action.piece}'s turn`) // TODO
-		if (this.state.pieceAt(action.x, action.y) !== NoughtsAndCrossesType.None)
-			throw new Error("Position is not empty") // TODO
 		this.state.setPiece(action.piece, action.x, action.y)
 		this.switchPlayer()
 	}
@@ -18,6 +14,14 @@ export class NoughtsAndCrossesLogic implements GameLogic<NoughtsAndCrossesAction
 		this.state.currentPlayer = this.state.currentPlayer === NoughtsAndCrossesType.Cross
 			? NoughtsAndCrossesType.Nought
 			: NoughtsAndCrossesType.Cross
+	}
+
+	static validate(state: NoughtsAndCrossesState, action: NoughtsAndCrossesAction) {
+		if (action.piece !== state.currentPlayer)
+			return { isValid: false, problems: [`Not ${action.piece}'s turn`] }
+		if (state.pieceAt(action.x, action.y) !== NoughtsAndCrossesType.None)
+			return { isValid: false, problems: ["Position is not empty"] }
+		return { isValid: true, problems: [] }
 	}
 }
 
