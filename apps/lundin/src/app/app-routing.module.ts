@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
 import { CryptComponent } from "./modules/crypt/crypt.component"
 import { MessageThreadComponent } from "./modules/message/message-thread/message-thread.component"
+import { NoughtsAndCrossesComponent } from "./modules/noughts-and-crosses/noughts-and-crosses.component"
 import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { GalleryComponent } from "./pages/gallery/gallery.component"
@@ -15,6 +16,7 @@ const routes: Routes = [
 	{ path: "ancestry", component: AncestryComponent },
 	{ path: "calendar", component: CalendarComponent },
 	{ path: "gallery", component: GalleryComponent },
+	{ path: "games/noughts-and-crosses", component: NoughtsAndCrossesComponent },
 	{ path: "messages/:id", component: MessageThreadComponent },
 	{ path: "profile", component: ProfileComponent },
 	{ path: "recipes", component: RecipesComponent },

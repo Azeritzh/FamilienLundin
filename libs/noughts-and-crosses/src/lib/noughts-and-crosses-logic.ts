@@ -8,9 +8,9 @@ export class NoughtsAndCrossesLogic implements GameLogic<NoughtsAndCrossesAction
 		const action = actions[0]
 		if (action.piece !== this.state.currentPlayer)
 			throw new Error(`Not ${action.piece}'s turn`) // TODO
-		if (this.state.pieceAt(action.position.x, action.position.y) !== NoughtsAndCrossesType.None)
+		if (this.state.pieceAt(action.x, action.y) !== NoughtsAndCrossesType.None)
 			throw new Error("Position is not empty") // TODO
-		this.state.setPiece(action.piece, action.position.x, action.position.y)
+		this.state.setPiece(action.piece, action.x, action.y)
 		this.switchPlayer()
 	}
 
@@ -22,6 +22,9 @@ export class NoughtsAndCrossesLogic implements GameLogic<NoughtsAndCrossesAction
 }
 
 export class NoughtsAndCrossesAction {
-	piece: NoughtsAndCrossesType.Nought | NoughtsAndCrossesType.Cross
-	position: { x: 0 | 1 | 2, y: 0 | 1 | 2 }
+	constructor(
+		public piece: NoughtsAndCrossesType.Nought | NoughtsAndCrossesType.Cross,
+		public x: number,
+		public y: number,
+	) { }
 }

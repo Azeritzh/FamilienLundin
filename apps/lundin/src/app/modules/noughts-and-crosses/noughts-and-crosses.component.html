@@ -1,0 +1,4 @@
+<div *ngFor="let position of positions"
+	(click)="placePiece(position.x, position.y)">
+	{{pieceAt(position.x, position.y)}}
+</div>
