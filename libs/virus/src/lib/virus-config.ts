@@ -5,7 +5,7 @@ export class VirusConfig {
 		public height = 8,
 	) { }
 
-	initialPositions(x: number, y: number) {
+	initialPositions = (x: number, y: number) => {
 		if (x === 0 && y === 0)
 			return this.topLeftPlayer()
 		if (x === this.width - 1 && y === 0)

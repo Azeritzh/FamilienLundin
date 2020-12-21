@@ -14,8 +14,12 @@ export class TurnLogic implements GameLogic<VirusAction> {
 	}
 
 	turnNeighbours(action: VirusAction) {
-		for (let n = Math.max(0, action.destination.x - 1); n < Math.min(this.config.width - 1, action.destination.x + 1); n++)
-			for (let m = Math.max(0, action.destination.y - 1); m < Math.min(this.config.height - 1, action.destination.y + 1); n++)
+		const firstX = Math.max(0, action.destination.x - 1)
+		const lastX = Math.min(this.config.width - 1, action.destination.x + 1)
+		const firstY = Math.max(0, action.destination.y - 1)
+		const lastY = Math.min(this.config.height - 1, action.destination.y + 1)
+		for (let n = firstX; n < lastX; n++)
+			for (let m = firstY; m < lastY; m++)
 				if (this.state.board.get(n, m) != 0)
 					this.state.board.set(n, m, action.player)
 	}

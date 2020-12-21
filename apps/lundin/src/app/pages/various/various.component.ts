@@ -13,6 +13,7 @@ export class VariousComponent {
 		{ text: "Game of Life", link: "/games/iframe/game-of-life" },
 		{ text: "Bilspil", link: "/games/iframe/bilspil" },
 		{ text: "Kryds og Bolle", link: "/games/noughts-and-crosses" },
+		{ text: "Virus", link: "/games/virus" },
 		{ text: "Krypt", link: "/various/crypt" },
 	]
 }

@@ -9,6 +9,7 @@ import { CalendarModule } from "./modules/calendar/calendar.module"
 import { CryptModule } from "./modules/crypt/crypt.module"
 import { MessageModule } from "./modules/message/message.module"
 import { NoughtsAndCrossesModule } from "./modules/noughts-and-crosses/noughts-and-crosses.module"
+import { VirusModule } from "./modules/virus/virus.module"
 import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { GalleryComponent } from "./pages/gallery/gallery.component"
@@ -45,6 +46,7 @@ import { UserService } from "./services/user.service"
 		HttpClientModule,
 		MessageModule,
 		NoughtsAndCrossesModule,
+		VirusModule,
 	],
 	providers: [AuthService, NavigationService, UserService],
 	bootstrap: [AppComponent],

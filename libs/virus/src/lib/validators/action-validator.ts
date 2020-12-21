@@ -19,6 +19,7 @@ export class ActionValidator implements GameValidator<VirusAction> {
 			return problem("destination must be empty")
 		if (this.isMovingTooFar(action))
 			return problem("must not move too far")
+		return { isValid: true, problems: [] }
 	}
 
 	originIsWithinBoard(action: VirusAction) {

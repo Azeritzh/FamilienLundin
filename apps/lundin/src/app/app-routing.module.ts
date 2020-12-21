@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router"
 import { CryptComponent } from "./modules/crypt/crypt.component"
 import { MessageThreadComponent } from "./modules/message/message-thread/message-thread.component"
 import { NoughtsAndCrossesComponent } from "./modules/noughts-and-crosses/noughts-and-crosses.component"
+import { VirusComponent } from "./modules/virus/virus.component"
 import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { GalleryComponent } from "./pages/gallery/gallery.component"
@@ -19,6 +20,7 @@ const routes: Routes = [
 	{ path: "gallery", component: GalleryComponent },
 	{ path: "games/iframe/:game", component: IframeGameComponent },
 	{ path: "games/noughts-and-crosses", component: NoughtsAndCrossesComponent },
+	{ path: "games/virus", component: VirusComponent },
 	{ path: "messages/:id", component: MessageThreadComponent },
 	{ path: "profile", component: ProfileComponent },
 	{ path: "recipes", component: RecipesComponent },
