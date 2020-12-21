@@ -11,6 +11,10 @@ export class VirusState implements GameState {
 		this.board.setAll(this.config.initialPositions)
 	}
 
+	findMovablePlayers() {
+		return []
+	}
+
 	findWinner() {
 		return null
 	}
