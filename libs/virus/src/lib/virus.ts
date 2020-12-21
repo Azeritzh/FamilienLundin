@@ -1,13 +1,16 @@
 import { AgEngine } from "@lundin/age"
+import { VirusConfig } from "./virus-config"
 import { VirusAction, VirusLogic } from "./virus-logic"
 import { VirusState } from "./virus-state"
 
 export class Virus {
+	readonly config: VirusConfig
 	readonly state: VirusState
 	private readonly engine: AgEngine<VirusAction>
 
 	constructor() {
-		this.state = new VirusState()
+		this.config = new VirusConfig()
+		this.state = new VirusState(this.config)
 		this.engine = new AgEngine(
 			[new VirusLogic(this.state)],
 			this.state)
