@@ -17,10 +17,14 @@ export class GameGrid<T> {
 	}
 
 	get(x: number, y: number) {
-		return this.grid[x + y * this.width]
+		return this.grid[this.indexFor(x, y)]
 	}
 
 	set(x: number, y: number, item: T) {
-		this.grid[x + y * this.width] = item
+		this.grid[this.indexFor(x, y)] = item
+	}
+	
+	private indexFor(x: number, y: number) {
+		return x + y * this.width
 	}
 }

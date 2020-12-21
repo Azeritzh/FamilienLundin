@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import { NoughtsAndCrosses, NoughtsAndCrossesType, NoughtsAndCrossesAction } from "@lundin/noughts-and-crosses"
+import { NoughtsAndCrosses, NoughtsAndCrossesPiece, NoughtsAndCrossesAction } from "@lundin/noughts-and-crosses"
 
 @Component({
 	selector: "lundin-noughts-and-crosses",
@@ -25,9 +25,9 @@ export class NoughtsAndCrossesComponent {
 
 	pieceAt(x: number, y: number) {
 		const piece = this.game.state.pieceAt(x, y)
-		if (piece === NoughtsAndCrossesType.Cross)
+		if (piece === NoughtsAndCrossesPiece.Cross)
 			return "x"
-		if (piece === NoughtsAndCrossesType.Nought)
+		if (piece === NoughtsAndCrossesPiece.Nought)
 			return "o"
 		return ""
 	}
