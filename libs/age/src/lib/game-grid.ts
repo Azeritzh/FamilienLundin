@@ -1,3 +1,5 @@
+import { range } from "@lundin/utility"
+
 export class GameGrid<T> {
 	private grid: T[]
 
@@ -17,8 +19,8 @@ export class GameGrid<T> {
 	}
 
 	forAll(callback: (x: number, y: number, item: T) => void | true) {
-		for (let y = 0; y < this.height; y++)
-			for (let x = 0; x < this.width; x++)
+		for (const y of range(0, this.height))
+			for (const x of range(0, this.width))
 				if (callback(x, y, this.get(x, y)))
 					return
 	}

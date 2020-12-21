@@ -1,4 +1,5 @@
 import { GameGrid, GameState } from "@lundin/age"
+import { range } from "@lundin/utility"
 import { VirusConfig } from "./virus-config"
 
 export class VirusState implements GameState {
@@ -17,8 +18,8 @@ export class VirusState implements GameState {
 			if (piece === 0)
 				return
 
-			for (let n = Math.max(0, i - 2); n < Math.min(this.config.width, i + 3); n++) {
-				for (let m = Math.max(0, j - 2); m < Math.min(this.config.height, j + 3); m++) {
+			for (const n of range(Math.max(0, i - 2), Math.min(this.config.width, i + 3))) {
+				for (const m of range( Math.max(0, j - 2), Math.min(this.config.height, j + 3))) {
 					const playerForField = this.board.get(n, m)
 					if (playerForField > 0)
 						movablePlayers[playerForField] = true
@@ -30,7 +31,7 @@ export class VirusState implements GameState {
 		return movablePlayers
 	}
 
-	private allPlayersCanMove(movablePlayers: boolean[]){
+	private allPlayersCanMove(movablePlayers: boolean[]) {
 		return movablePlayers.filter(x => x).length === this.config.playerCount
 	}
 
@@ -38,3 +39,4 @@ export class VirusState implements GameState {
 		return null
 	}
 }
+
