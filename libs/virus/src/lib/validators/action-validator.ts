@@ -45,5 +45,5 @@ export class ActionValidator implements GameValidator<VirusAction> {
 }
 
 function problem(problem: string) {
-	return { isValid: true, problems: [problem] }
+	return { isValid: false, problems: [problem] }
 }

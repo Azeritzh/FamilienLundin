@@ -1,5 +1,4 @@
 import { GameGrid, GameState } from "@lundin/age"
-import { range } from "@lundin/utility"
 import { VirusConfig } from "./virus-config"
 
 export class VirusState implements GameState {
@@ -14,20 +13,18 @@ export class VirusState implements GameState {
 
 	findMovablePlayers() {
 		const movablePlayers = []
-		this.board.forAll((i, j, piece) => {
-			if (piece === 0)
-				return
+		for (const { x, y, field } of this.board.allFields()) {
+			if (field === 0)
+				continue
 
-			for (const n of range(Math.max(0, i - 2), Math.min(this.config.width, i + 3))) {
-				for (const m of range( Math.max(0, j - 2), Math.min(this.config.height, j + 3))) {
-					const playerForField = this.board.get(n, m)
-					if (playerForField > 0)
-						movablePlayers[playerForField] = true
-					if (this.allPlayersCanMove(movablePlayers))
-						return true // this breaks out of forAll()
-				}
+			for (const { i, j } of this.board.fieldsAround(x, y, 2)) {
+				const playerForField = this.board.get(i, j)
+				if (playerForField > 0)
+					movablePlayers[playerForField] = true
+				if (this.allPlayersCanMove(movablePlayers))
+					return movablePlayers
 			}
-		})
+		}
 		return movablePlayers
 	}
 

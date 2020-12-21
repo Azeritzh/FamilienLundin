@@ -18,7 +18,7 @@ export class Virus {
 		this.engine = new AgEngine(
 			[
 				new MoveLogic(this.state),
-				new TurnLogic(this.config, this.state),
+				new TurnLogic(this.state),
 				new ChangePlayerLogic(this.config, this.state),
 			],
 			[new ActionValidator(this.state)],
