@@ -1,8 +1,8 @@
 import { AgEngine } from "@lundin/age"
-import { ActionValidator } from "./action-validator"
 import { ChangePlayerLogic } from "./logics/change-player-logic"
 import { MoveLogic } from "./logics/move-logic"
 import { TurnLogic } from "./logics/turn-logic"
+import { ActionValidator } from "./validators/action-validator"
 import { VirusAction } from "./virus-action"
 import { VirusConfig } from "./virus-config"
 import { VirusState } from "./virus-state"
@@ -21,13 +21,11 @@ export class Virus {
 				new TurnLogic(this.config, this.state),
 				new ChangePlayerLogic(this.config, this.state),
 			],
+			[new ActionValidator(this.config, this.state)],
 			this.state)
 	}
 
 	update(action: VirusAction) {
-		const validation = new ActionValidator(this.config, this.state).validate(action)
-		if (validation.isValid)
-			this.engine.update(action)
-		return validation
+		return this.engine.update(action)
 	}
 }

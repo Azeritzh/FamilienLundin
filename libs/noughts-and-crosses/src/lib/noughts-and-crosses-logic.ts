@@ -15,14 +15,6 @@ export class NoughtsAndCrossesLogic implements GameLogic<NoughtsAndCrossesAction
 			? NoughtsAndCrossesPiece.Nought
 			: NoughtsAndCrossesPiece.Cross
 	}
-
-	static validate(state: NoughtsAndCrossesState, action: NoughtsAndCrossesAction) {
-		if (action.piece !== state.currentPlayer)
-			return { isValid: false, problems: [`Not ${action.piece}'s turn`] }
-		if (state.pieceAt(action.x, action.y) !== null)
-			return { isValid: false, problems: ["Position is not empty"] }
-		return { isValid: true, problems: [] }
-	}
 }
 
 export class NoughtsAndCrossesAction {
