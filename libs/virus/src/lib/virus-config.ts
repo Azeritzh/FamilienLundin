@@ -1,8 +1,8 @@
 export class VirusConfig {
 	constructor(
 		public playerCount = 2,
-		public width = 8,
-		public height = 8,
+		public width = 3,
+		public height = 3,
 	) { }
 
 	initialPositions = (x: number, y: number) => {

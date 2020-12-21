@@ -1,4 +1,5 @@
 import { GameGrid, GameState } from "@lundin/age"
+import { range } from "@lundin/utility"
 import { VirusConfig } from "./virus-config"
 
 export class VirusState implements GameState {
@@ -33,7 +34,13 @@ export class VirusState implements GameState {
 	}
 
 	findWinner() {
-		return null
+		if (this.currentPlayer !== 0)
+			return
+		const counts = [...range(0, this.config.playerCount + 1)].map(() => 0)
+		for (const { field } of this.board.allFields())
+			counts[field]++
+		const most = Math.max(...counts)
+		return counts.indexOf(most)
 	}
 }
 

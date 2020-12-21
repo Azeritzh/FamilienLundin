@@ -16,7 +16,7 @@ export class ChangePlayerLogic implements GameLogic<VirusAction> {
 	changePlayer() {
 		const movablePlayers = this.state.findMovablePlayers()
 		let nextPlayer = this.state.currentPlayer + 1
-		if (movablePlayers.length === 0) {
+		if (movablePlayers.filter(x => x).length < 2) {
 			nextPlayer = 0
 		} else {
 			if (nextPlayer > this.config.playerCount)

@@ -13,8 +13,8 @@ export class VirusComponent {
 
 	constructor() {
 		this.positions = []
-		for (let y = 0; y < 8; y++)
-			for (let x = 0; x < 8; x++)
+		for (let y = 0; y < 3; y++)
+			for (let x = 0; x < 3; x++)
 				this.positions.push({ x, y })
 	}
 
