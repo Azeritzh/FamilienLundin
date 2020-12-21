@@ -40,6 +40,12 @@
     },
     "noughts-and-crosses": {
       "tags": []
+    },
+    "virus": {
+      "tags": []
+    },
+    "utility": {
+      "tags": []
     }
   }
 }

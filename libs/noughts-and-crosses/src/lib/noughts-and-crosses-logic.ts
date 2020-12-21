@@ -1,5 +1,5 @@
 import { GameLogic } from "@lundin/age"
-import { NoughtsAndCrossesState, NoughtsAndCrossesType } from "./noughts-and-crosses-state"
+import { NoughtsAndCrossesState, NoughtsAndCrossesPiece } from "./noughts-and-crosses-state"
 
 export class NoughtsAndCrossesLogic implements GameLogic<NoughtsAndCrossesAction> {
 	constructor(private readonly state: NoughtsAndCrossesState) { }
@@ -11,23 +11,15 @@ export class NoughtsAndCrossesLogic implements GameLogic<NoughtsAndCrossesAction
 	}
 
 	private switchPlayer() {
-		this.state.currentPlayer = this.state.currentPlayer === NoughtsAndCrossesType.Cross
-			? NoughtsAndCrossesType.Nought
-			: NoughtsAndCrossesType.Cross
-	}
-
-	static validate(state: NoughtsAndCrossesState, action: NoughtsAndCrossesAction) {
-		if (action.piece !== state.currentPlayer)
-			return { isValid: false, problems: [`Not ${action.piece}'s turn`] }
-		if (state.pieceAt(action.x, action.y) !== NoughtsAndCrossesType.None)
-			return { isValid: false, problems: ["Position is not empty"] }
-		return { isValid: true, problems: [] }
+		this.state.currentPlayer = this.state.currentPlayer === NoughtsAndCrossesPiece.Cross
+			? NoughtsAndCrossesPiece.Nought
+			: NoughtsAndCrossesPiece.Cross
 	}
 }
 
 export class NoughtsAndCrossesAction {
 	constructor(
-		public piece: NoughtsAndCrossesType.Nought | NoughtsAndCrossesType.Cross,
+		public piece: NoughtsAndCrossesPiece.Nought | NoughtsAndCrossesPiece.Cross,
 		public x: number,
 		public y: number,
 	) { }
