@@ -9,14 +9,14 @@ export class ChangePlayerLogic implements GameLogic<VirusAction> {
 		private readonly state: VirusState,
 	) { }
 
-	update(actions: VirusAction[]): void {
+	update() {
 		this.changePlayer()
 	}
 
 	changePlayer() {
 		const movablePlayers = this.state.findMovablePlayers()
 		let nextPlayer = this.state.currentPlayer + 1
-		if (movablePlayers.length > 0) {
+		if (movablePlayers.length === 0) {
 			nextPlayer = 0
 		} else {
 			if (nextPlayer > this.config.playerCount)
