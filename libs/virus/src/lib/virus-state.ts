@@ -13,15 +13,14 @@ export class VirusState implements GameState {
 	}
 
 	findMovablePlayers() {
-		const movablePlayers = []
+		const movablePlayers = [...range(0, this.config.playerCount + 1)].map(() => false)
 		for (const { x, y, field } of this.board.allFields()) {
 			if (field === 0)
 				continue
 
 			for (const { i, j } of this.board.fieldsAround(x, y, 2)) {
-				const playerForField = this.board.get(i, j)
-				if (playerForField > 0)
-					movablePlayers[playerForField] = true
+				if (this.board.get(i, j) === 0)
+					movablePlayers[field] = true
 				if (this.allPlayersCanMove(movablePlayers))
 					return movablePlayers
 			}
@@ -39,6 +38,7 @@ export class VirusState implements GameState {
 		const counts = [...range(0, this.config.playerCount + 1)].map(() => 0)
 		for (const { field } of this.board.allFields())
 			counts[field]++
+		counts[0] = 0
 		const most = Math.max(...counts)
 		return counts.indexOf(most)
 	}

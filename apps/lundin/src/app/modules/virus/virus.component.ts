@@ -9,12 +9,13 @@ import { Virus, VirusAction } from "@lundin/virus"
 export class VirusComponent {
 	game = new Virus()
 	positions: { x: number, y: number }[]
+	origin?: { x: number, y: number }
 	message = ""
 
 	constructor() {
 		this.positions = []
-		for (let y = 0; y < 3; y++)
-			for (let x = 0; x < 3; x++)
+		for (let y = 0; y < 8; y++)
+			for (let x = 0; x < 8; x++)
 				this.positions.push({ x, y })
 	}
 
@@ -27,8 +28,16 @@ export class VirusComponent {
 		return this.game.state.board.get(x, y)
 	}
 
-	placePiece(x: number, y: number) {
-		const action = new VirusAction(this.game.state.currentPlayer, 0, 0, x, y)
+	select(x: number, y: number) {
+		if (!this.origin)
+			return this.origin = { x, y }
+		const action = new VirusAction(
+			this.game.state.currentPlayer,
+			this.origin.x,
+			this.origin.y,
+			x,
+			y)
+		this.origin = null
 		const validation = this.game.update(action)
 		if (!validation.isValid)
 			this.writeProblems(validation.problems)
