@@ -2,7 +2,7 @@ import { GameGrid, GameState } from "@lundin/age"
 
 export class MinestrygerState implements GameState {
     tick: number = 0
-    board = new GameGrid<Field>(10, 10, () => {
+    board = new GameGrid<Field>(30, 16, () => {
         return new Field()
     })
 }
