@@ -272,6 +272,28 @@
         }
       },
       "schematics": {}
+    },
+    "minestryger": {
+      "projectType": "library",
+      "root": "libs/minestryger",
+      "sourceRoot": "libs/minestryger/src",
+      "prefix": "lundin",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/minestryger/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/minestryger/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {
