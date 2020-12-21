@@ -8,6 +8,7 @@ import { AppComponent } from "./main-component/app.component"
 import { CalendarModule } from "./modules/calendar/calendar.module"
 import { CryptModule } from "./modules/crypt/crypt.module"
 import { MessageModule } from "./modules/message/message.module"
+import { MinestrygerModule } from "./modules/minestryger/minestryger.module"
 import { NoughtsAndCrossesModule } from "./modules/noughts-and-crosses/noughts-and-crosses.module"
 import { VirusModule } from "./modules/virus/virus.module"
 import { AncestryComponent } from "./pages/ancestry/ancestry.component"
@@ -45,6 +46,7 @@ import { UserService } from "./services/user.service"
 		FormsModule,
 		HttpClientModule,
 		MessageModule,
+		MinestrygerModule,
 		NoughtsAndCrossesModule,
 		VirusModule,
 	],

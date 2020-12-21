@@ -7,7 +7,7 @@ import { Component } from "@angular/core"
 })
 export class VariousComponent {
 	games: { text: string, link: string }[] = [
-		{ text: "Minestryger", link: "/games/iframe/minestryger" },
+		{ text: "Minestryger", link: "/games/minestryger" },
 		{ text: "Tern", link: "/games/iframe/tern" },
 		{ text: "Piong", link: "/games/iframe/piong" },
 		{ text: "Game of Life", link: "/games/iframe/game-of-life" },
