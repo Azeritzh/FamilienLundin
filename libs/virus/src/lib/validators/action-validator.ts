@@ -39,7 +39,7 @@ export class ActionValidator implements GameValidator<VirusAction> {
 	}
 
 	isMovingTooFar(action: VirusAction) {
-		return 2 < Math.abs(action.origin.x - action.destination.x) && 2 < Math.abs(action.origin.y - action.destination.y)
+		return 2 < Math.abs(action.origin.x - action.destination.x) || 2 < Math.abs(action.origin.y - action.destination.y)
 	}
 
 }
