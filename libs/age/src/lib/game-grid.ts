@@ -31,6 +31,11 @@ export class GameGrid<T> {
 		this.grid[this.indexFor(x, y)] = item
 	}
 
+	isWithinBounds(x: number, y: number) {
+		return 0 <= x && x < this.width
+			&& 0 <= y && y < this.height
+	}
+
 	private indexFor(x: number, y: number) {
 		return x + y * this.width
 	}

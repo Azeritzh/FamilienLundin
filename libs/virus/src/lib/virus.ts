@@ -21,7 +21,7 @@ export class Virus {
 				new TurnLogic(this.config, this.state),
 				new ChangePlayerLogic(this.config, this.state),
 			],
-			[new ActionValidator(this.config, this.state)],
+			[new ActionValidator(this.state)],
 			this.state)
 	}
 
