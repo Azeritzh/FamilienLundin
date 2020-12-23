@@ -18,7 +18,7 @@ export class MinestrygerGameComponent {
 	leftMouseDown = false
 	middleMouseDown = false
 	rightMouseDown = false
-	activateOnMouseDown = true
+	activateOnMouseDown = false
 
 	ngOnInit() {
 		this.context = this.canvas.getContext("2d")
@@ -92,20 +92,31 @@ export class MinestrygerGameComponent {
 	}
 
 	mouseDown(event: MouseEvent) {
-		var pos = this.gridPositionFromMousePosition(event)
 		if (this.hasFinished())
 			return
 
+		var pos = this.gridPositionFromMousePosition(event)
 		if (this.isLeftButton(event))
-			this.leftClick(pos.x, pos.y)
+			this.handleLeftMouse(true, pos.x, pos.y)
 		if (this.isMiddleButton(event))
-			this.middleMouseDown = true
-		if (this.isRightButton(event)) {
-			this.rightMouseDown = true
-
-			//this.rightClick(pos.x, pos.y)
-		}
+			this.handleMiddleMouse(true, pos.x, pos.y)
+		if (this.isRightButton(event))
+			this.handleRightMouse(true, pos.x, pos.y)
 		//this.showMiddleClickHover(pos)
+	}
+
+	mouseUp(event: MouseEvent) {
+		if (this.hasFinished())
+			return
+
+		var pos = this.gridPositionFromMousePosition(event)
+		if (this.isLeftButton(event))
+			this.handleLeftMouse(false, pos.x, pos.y)
+		if (this.isMiddleButton(event))
+			this.handleMiddleMouse(false, pos.x, pos.y)
+		if (this.isRightButton(event))
+			this.handleRightMouse(false, pos.x, pos.y)
+		//this.resetLastHoverPosition()
 	}
 
 	gridPositionFromMousePosition(event: MouseEvent) {
@@ -133,11 +144,31 @@ export class MinestrygerGameComponent {
 		return event.button === 2
 	}
 
-	leftClick(x, y) {
-		this.leftMouseDown = true
-		if (!this.activateOnMouseDown)
-			return
+	handleLeftMouse(mouseDown: boolean, x: number, y: number) {
+		this.leftMouseDown = mouseDown
+		if (this.shouldClickField())
+			this.clickField(x, y)
+		if (this.rightMouseDown && this.leftMouseDown)
+			this.revealSurroundings(x, y)
+	}
 
+	handleMiddleMouse(mouseDown: boolean, x: number, y: number) {
+		this.middleMouseDown = mouseDown
+		if (!this.middleMouseDown)
+			this.revealSurroundings(x, y)
+	}
+
+	handleRightMouse(mouseDown: boolean, x: number, y: number) {
+		this.rightMouseDown = mouseDown
+		if (this.rightMouseDown && this.leftMouseDown)
+			this.revealSurroundings(x, y)
+	}
+
+	shouldClickField() {
+		return this.activateOnMouseDown === this.leftMouseDown
+	}
+
+	clickField(x: number, y: number) {
 		if (!this.isTimerRunning())
 			this.firstClick(x, y)
 		this.revealField(x, y)
@@ -152,7 +183,11 @@ export class MinestrygerGameComponent {
 		//Start timer
 	}
 
-	revealField(x, y) {
+	revealSurroundings(x: number, y: number) {
+
+	}
+
+	revealField(x: number, y: number) {
 		//game.reveal xy
 		//Tjek efter vinder
 		this.game.state.board.get(x, y).revealed = true
