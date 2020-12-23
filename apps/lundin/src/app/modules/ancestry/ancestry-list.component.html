@@ -1,0 +1,8 @@
+<div *ngFor="let person of people">
+	{{person | json}}
+</div>
+
+<button type="button"
+	(click)="add()">
+	Tilføj person
+</button>
