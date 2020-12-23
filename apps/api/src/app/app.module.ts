@@ -4,6 +4,7 @@ import { join } from "path"
 import { AuthModule } from "../auth/auth.module"
 import { StorageModule } from "../storage/storage.module"
 import { UserModule } from "../user/user.module"
+import { AcnestryController } from "./controllers/ancestry.controller"
 import { AuthController } from "./controllers/auth.controller"
 import { CalendarController } from "./controllers/calendar.controller"
 import { CryptController } from "./controllers/crypt.controller"
@@ -20,6 +21,7 @@ import { UserController } from "./controllers/user.controller"
 		UserModule,
 	],
 	controllers: [
+		AcnestryController,
 		AuthController,
 		CalendarController,
 		CryptController,

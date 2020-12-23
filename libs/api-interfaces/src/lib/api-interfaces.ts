@@ -1,13 +1,13 @@
 export interface User {
-  _id: number
-  name: string
+	_id: number
+	name: string
 }
 
 export interface AuthResponse {
-  userId: number
-  expiration: number
-  username: string
-  type: "admin" | "member" | "guest"
+	userId: number
+	expiration: number
+	username: string
+	type: "admin" | "member" | "guest"
 }
 
 export interface MessageThread {
@@ -34,4 +34,14 @@ export interface CalendarEvent {
 	startTime: string
 	endTime: string
 	participantIds: number[]
+}
+
+export interface Person {
+	_id: number
+	userId?: number
+	name: string
+	information: { [key: string]: string }
+	fatherId?: number
+	motherId?: number
+	childIds: number[]
 }

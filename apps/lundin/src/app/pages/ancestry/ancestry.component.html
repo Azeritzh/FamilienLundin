@@ -1,1 +1,8 @@
 Under konstruktion
+<button type="button"
+	(click)="add()">
+	Tilføj person
+</button>
+<div *ngFor="let person of persons | async">
+	{{person | json}}
+</div>
