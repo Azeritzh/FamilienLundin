@@ -38,6 +38,10 @@ export interface CalendarEvent {
 
 export interface Person {
 	_id: number
+	userId?: number
 	name: string
 	information: { [key: string]: string }
+	fatherId?: number
+	motherId?: number
+	childIds: number[]
 }
