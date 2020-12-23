@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core"
+import { Component, ElementRef, ViewChild } from "@angular/core"
 import { Minestryger } from "@lundin/minestryger"
 
 @Component({
@@ -7,18 +7,25 @@ import { Minestryger } from "@lundin/minestryger"
 	styleUrls: ["./minestryger-game.component.scss"],
 })
 export class MinestrygerGameComponent {
-	@ViewChild("canvas",{static:true}) canvas
+	@ViewChild("canvas", { static: true }) canvasElement: ElementRef<HTMLCanvasElement>
+	get canvas() {
+		return this.canvasElement.nativeElement
+	}
 	game = new Minestryger()
 	context: CanvasRenderingContext2D
 	size = 20
+	timerId: number
+	leftMouseDown = false
+	middleMouseDown = false
+	rightMouseDown = false
+	activateOnMouseDown = true
 
 	ngOnInit() {
-		var canvas = this.canvas.nativeElement
-		this.context = canvas.getContext("2d")
-        canvas.width = this.game.state.board.width * this.size
-        canvas.height = this.game.state.board.height * this.size
-        this.context.fillStyle = "black"
-        this.context.fillRect(0, 0, canvas.width, canvas.height)
+		this.context = this.canvas.getContext("2d")
+		this.canvas.width = this.game.state.board.width * this.size
+		this.canvas.height = this.game.state.board.height * this.size
+		this.context.fillStyle = "black"
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 		for (const { x, y } of this.game.state.board.allFields())
 			this.drawField(x, y)
 	}
@@ -82,5 +89,74 @@ export class MinestrygerGameComponent {
 		this.context.font = textfont
 		this.context.textAlign = "center"
 		this.context.fillText(text, (this.size) * x + 0.5 * this.size, (this.size) * y + 0.80 * this.size)
+	}
+
+	mouseDown(event: MouseEvent) {
+		var pos = this.gridPositionFromMousePosition(event)
+		if (this.hasFinished())
+			return
+
+		if (this.isLeftButton(event))
+			this.leftClick(pos.x, pos.y)
+		if (this.isMiddleButton(event))
+			this.middleMouseDown = true
+		if (this.isRightButton(event)) {
+			this.rightMouseDown = true
+
+			//this.rightClick(pos.x, pos.y)
+		}
+		//this.showMiddleClickHover(pos)
+	}
+
+	gridPositionFromMousePosition(event: MouseEvent) {
+		var rect = this.canvas.getBoundingClientRect()
+		var mx = event.clientX - rect.left
+		var my = event.clientY - rect.top
+		var x = Math.floor(mx / this.size)
+		var y = Math.floor(my / this.size)
+		return { x: x, y: y }
+	}
+
+	hasFinished() {
+		return false
+	}
+
+	isLeftButton(event: MouseEvent) {
+		return event.button === 0
+	}
+
+	isMiddleButton(event: MouseEvent) {
+		return event.button === 1
+	}
+
+	isRightButton(event: MouseEvent) {
+		return event.button === 2
+	}
+
+	leftClick(x, y) {
+		this.leftMouseDown = true
+		if (!this.activateOnMouseDown)
+			return
+
+		if (!this.isTimerRunning())
+			this.firstClick(x, y)
+		this.revealField(x, y)
+	}
+
+	isTimerRunning() {
+		return this.timerId !== undefined
+	}
+
+	firstClick(x: number, y: number) {
+		//Opsæt ny bane
+		//Start timer
+	}
+
+	revealField(x, y) {
+		//game.reveal xy
+		//Tjek efter vinder
+		this.game.state.board.get(x, y).revealed = true
+		for (const { x, y } of this.game.state.board.allFields())
+			this.drawField(x, y)
 	}
 }
