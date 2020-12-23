@@ -1,5 +1,7 @@
 import { Component } from "@angular/core"
 import { Person } from "@lundin/api-interfaces"
+import { NavigationService } from "../../services/navigation.service"
+import { AddPersonComponent } from "./add-person/add-person.component"
 import { AncestryService } from "./ancestry.service"
 
 @Component({
@@ -10,17 +12,14 @@ import { AncestryService } from "./ancestry.service"
 export class AncestryListComponent {
 	people: Person[]
 
-	constructor(private ancestryService: AncestryService) {
+	constructor(
+		ancestryService: AncestryService,
+		private navigationService: NavigationService,
+	) {
 		ancestryService.load().then(people => this.people = people)
 	}
 
 	add() {
-		const person: Person = {
-			_id: 0,
-			name: "Jørgen",
-			information: { "død": "nu", "alder": "101" },
-			childIds: []
-		}
-		this.ancestryService.add(person)
+		this.navigationService.openAsOverlay(AddPersonComponent)
 	}
 }

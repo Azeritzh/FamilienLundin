@@ -1,0 +1,16 @@
+<h1>Opret ny person</h1>
+
+<label for="name">
+	Navn
+</label>
+<input type="text"
+	[(ngModel)]="person.name"
+	id="name"
+	placeholder="Navn"
+	autocomplete="off">
+
+<button type="button"
+	(click)="add()"
+	[disabled]="!person.name">
+	Opret person
+</button>
