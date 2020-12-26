@@ -21,6 +21,7 @@ export class VirusComponent {
 		for (let y = 0; y < 8; y++)
 			for (let x = 0; x < 8; x++)
 				this.positions.push({ x, y })
+		this.message = this.currentPlayerMessage()
 	}
 
 	restart() {
@@ -51,11 +52,22 @@ export class VirusComponent {
 	}
 
 	private checkWinner() {
-		const winnerId = this.game.state.findWinner()
-		if (winnerId)
-			this.message = this.players.find(x => x.playerId === winnerId).name + " har vundet!"
+		const winner = this.game.state.findWinner()
+		if (winner)
+			this.message = this.winnerMessage(winner)
 		else
-			this.message = ""
+			this.message = this.currentPlayerMessage()
+	}
+
+	private winnerMessage(winnerId: number) {
+		const player = this.players.find(x => x.playerId === winnerId)
+		return player.name + " har vundet!"
+	}
+
+	private currentPlayerMessage() {
+		const playerId = this.game.state.currentPlayer
+		const player = this.players.find(x => x.playerId === playerId)
+		return player.name + "'s tur"
 	}
 
 	colorFor(position: { x: number, y: number }) {

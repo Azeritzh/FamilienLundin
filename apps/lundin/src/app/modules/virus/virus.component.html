@@ -6,6 +6,13 @@
 	Start nyt spil
 </button>
 
+<ol>
+	<li *ngFor="let player of players">
+		<input [(ngModel)]="player.name" placeholder="Spillernavn">
+		<input [(ngModel)]="player.color" placeholder="Farve">
+	</li>
+</ol>
+
 <div class="game-container">
 	<div *ngFor="let position of positions"
 		class="game-field"
