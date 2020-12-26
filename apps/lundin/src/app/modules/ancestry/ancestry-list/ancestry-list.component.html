@@ -1,6 +1,15 @@
-<div *ngFor="let person of people$ | async">
-	{{person | json}}
-</div>
+<ul>
+	<li *ngFor="let person of people$ | async"
+		class="person">
+		<div class="name">
+			{{person.name}}
+		</div>
+		<span *ngFor="let info of person.information"
+			class="info">
+			{{info.title}}: {{info.content}}
+		</span>
+	</li>
+</ul>
 
 <button type="button"
 	(click)="add()">

@@ -12,22 +12,24 @@
 <label>
 	Information
 </label>
-<li *ngFor="let info of person.information"
-	class="information-row">
-	<input type="text"
-		[(ngModel)]="info.title"
-		placeholder="Titel"
-		autocomplete="off">
-	<input type="text"
-		[(ngModel)]="info.content"
-		placeholder="Beskrivelse"
-		autocomplete="off">
-	<button type="button"
-		class="delete"
-		(click)="deleteInformation(info)">
-		Delete
-	</button>
-</li>
+<ul>
+	<li *ngFor="let info of person.information"
+		class="information-row">
+		<input type="text"
+			[(ngModel)]="info.title"
+			placeholder="Titel"
+			autocomplete="off">
+		<input type="text"
+			[(ngModel)]="info.content"
+			placeholder="Beskrivelse"
+			autocomplete="off">
+		<button type="button"
+			class="delete"
+			(click)="deleteInformation(info)">
+			Delete
+		</button>
+	</li>
+</ul>
 
 <button type="button"
 	class="add-info"
