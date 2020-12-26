@@ -8,12 +8,12 @@ import { VirusConfig } from "./virus-config"
 import { VirusState } from "./virus-state"
 
 export class Virus {
-	readonly config: VirusConfig
 	readonly state: VirusState
 	private readonly engine: AgEngine<VirusAction>
 
-	constructor() {
-		this.config = new VirusConfig()
+	constructor(
+		public readonly config: VirusConfig = new VirusConfig(),
+	) {
 		this.state = new VirusState(this.config)
 		this.engine = new AgEngine(
 			[
