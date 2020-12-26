@@ -58,9 +58,13 @@ export class VirusComponent {
 			this.message = ""
 	}
 
-	colorFor(position: {x: number, y: number}) {
+	colorFor(position: { x: number, y: number }) {
 		const playerId = this.game.state.board.get(position.x, position.y)
 		const player = this.players.find(x => x.playerId === playerId)
 		return player?.color ?? "white"
+	}
+
+	isSelected(position: { x: number, y: number }) {
+		return this.origin?.x === position.x && this.origin?.y === position.y
 	}
 }

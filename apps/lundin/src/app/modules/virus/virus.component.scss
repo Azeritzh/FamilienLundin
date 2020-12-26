@@ -13,3 +13,9 @@
 	text-align: center;
 	border: 1px solid black;
 }
+
+.selected{
+	outline: 3px solid white;
+	outline-style: solid;
+	outline-offset: -4px;
+}

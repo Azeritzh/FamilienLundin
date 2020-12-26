@@ -10,6 +10,7 @@
 	<div *ngFor="let position of positions"
 		class="game-field"
 		(click)="select(position.x, position.y)"
-		[style.backgroundColor]="colorFor(position)">
+		[style.backgroundColor]="colorFor(position)"
+		[class.selected]="isSelected(position)">
 	</div>
 </div>
