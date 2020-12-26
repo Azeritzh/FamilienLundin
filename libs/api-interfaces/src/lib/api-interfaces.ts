@@ -43,5 +43,11 @@ export interface Person {
 	information: { [key: string]: string }
 	fatherId?: number
 	motherId?: number
-	childIds: number[]
+	relations: PersonalRelation[]
+}
+
+export interface PersonalRelation {
+	type: "child" | "partner"
+	id: number
+	description: string
 }

@@ -13,7 +13,7 @@ export class AddPersonComponent {
 		_id: 0,
 		name: "",
 		information: { "død": "nu", "alder": "101" },
-		childIds: [],
+		relations: [],
 	}
 
 	constructor(
