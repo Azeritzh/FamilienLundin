@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import { Virus, VirusAction } from "@lundin/virus"
+import { Virus, VirusAction, VirusConfig } from "@lundin/virus"
 
 @Component({
 	selector: "lundin-virus",
@@ -11,6 +11,10 @@ export class VirusComponent {
 	positions: { x: number, y: number }[]
 	origin?: { x: number, y: number }
 	message = ""
+	players = [
+		{ name: "Spiller 1", color: "red", playerId: 1 },
+		{ name: "Spiller 2", color: "yellow", playerId: 2 },
+	]
 
 	constructor() {
 		this.positions = []
@@ -20,12 +24,9 @@ export class VirusComponent {
 	}
 
 	restart() {
-		this.game = new Virus()
+		const config = new VirusConfig(this.players.length)
+		this.game = new Virus(config)
 		this.message = ""
-	}
-
-	pieceAt(x: number, y: number) {
-		return this.game.state.board.get(x, y)
 	}
 
 	select(x: number, y: number) {
@@ -50,10 +51,16 @@ export class VirusComponent {
 	}
 
 	private checkWinner() {
-		const winner = this.game.state.findWinner()
-		if (winner)
-			this.message = winner.toString() + " har vundet!"
+		const winnerId = this.game.state.findWinner()
+		if (winnerId)
+			this.message = this.players.find(x => x.playerId === winnerId).name + " har vundet!"
 		else
 			this.message = ""
+	}
+
+	colorFor(position: {x: number, y: number}) {
+		const playerId = this.game.state.board.get(position.x, position.y)
+		const player = this.players.find(x => x.playerId === playerId)
+		return player?.color ?? "white"
 	}
 }

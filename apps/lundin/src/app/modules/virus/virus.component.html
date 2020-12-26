@@ -9,7 +9,7 @@
 <div class="game-container">
 	<div *ngFor="let position of positions"
 		class="game-field"
-		(click)="select(position.x, position.y)">
-		{{pieceAt(position.x, position.y)}}
+		(click)="select(position.x, position.y)"
+		[style.backgroundColor]="colorFor(position)">
 	</div>
 </div>
