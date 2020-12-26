@@ -1,50 +1,55 @@
 <h1>Opret ny begivenhed</h1>
 
-<label for="title">
-	Titel
-</label>
-<input type="text"
-	[(ngModel)]="event.title"
-	id="title"
-	placeholder="Titel"
-	autocomplete="off">
+<div class="content-container">
+	<label for="title">
+		Titel
+	</label>
+	<input type="text"
+		[(ngModel)]="event.title"
+		id="title"
+		placeholder="Titel"
+		autocomplete="off">
 
-<label for="date">
-	Dato
-</label>
-<input type="date"
-	[(ngModel)]="event.date"
-	id="date"
-	autocomplete="off">
+	<label for="date">
+		Dato
+	</label>
+	<input type="date"
+		[(ngModel)]="event.date"
+		id="date"
+		autocomplete="off">
 
-<label for="start">
-	Starttidspunkt
-</label>
-<input type="time"
-	[(ngModel)]="event.startTime"
-	id="start"
-	autocomplete="off">
+	<label for="start">
+		Starttidspunkt
+	</label>
+	<input type="time"
+		[(ngModel)]="event.startTime"
+		id="start"
+		autocomplete="off">
 
-<label for="end">
-	Sluttidspunkt
-</label>
-<input type="time"
-	[(ngModel)]="event.endTime"
-	id="end"
-	autocomplete="off">
+	<label for="end">
+		Sluttidspunkt
+	</label>
+	<input type="time"
+		[(ngModel)]="event.endTime"
+		id="end"
+		autocomplete="off">
 
-<label for="description">
-	Indhold
-</label>
-<textarea type="text"
-	[(ngModel)]="event.description"
-	id="description"
-	placeholder="Beskrivelse"
-	autocomplete="off">
-</textarea>
+	<label for="description">
+		Indhold
+	</label>
+	<textarea type="text"
+		[(ngModel)]="event.description"
+		id="description"
+		placeholder="Beskrivelse"
+		autocomplete="off">
+	</textarea>
+</div>
 
-<button type="button"
-	(click)="addCalendarEvent()"
-	[disabled]="!event.title || !event.description">
-	Opret begivenhed
-</button>
+<div class="btn-container">
+	<button type="button"
+		(click)="addCalendarEvent()"
+		[disabled]="!event.title || !event.description">
+		Opret begivenhed
+	</button>
+</div>
+

@@ -6,7 +6,7 @@ import { AncestryService } from "../ancestry.service"
 @Component({
 	selector: "lundin-add-person",
 	templateUrl: "./add-person.component.html",
-	styleUrls: ["./add-person.component.scss"],
+	styleUrls: ["./add-person.component.scss", "../../../styles/popup-box.scss"],
 })
 export class AddPersonComponent {
 	person: Person = {

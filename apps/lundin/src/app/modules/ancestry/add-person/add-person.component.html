@@ -1,45 +1,50 @@
 <h1>Opret ny person</h1>
 
-<label for="name">
-	Navn
-</label>
-<input type="text"
-	[(ngModel)]="person.name"
-	id="name"
-	placeholder="Navn"
-	autocomplete="off">
+<div class="content-container">
+	<label for="name">
+		Navn
+	</label>
+	<input type="text"
+		[(ngModel)]="person.name"
+		id="name"
+		placeholder="Navn"
+		autocomplete="off">
 
-<label>
-	Information
-</label>
-<ul>
-	<li *ngFor="let info of person.information"
-		class="information-row">
-		<input type="text"
-			[(ngModel)]="info.title"
-			placeholder="Titel"
-			autocomplete="off">
-		<input type="text"
-			[(ngModel)]="info.content"
-			placeholder="Beskrivelse"
-			autocomplete="off">
-		<button type="button"
-			class="delete"
-			(click)="deleteInformation(info)">
-			Delete
-		</button>
-	</li>
-</ul>
+	<label>
+		Information
+	</label>
+	<ul>
+		<li *ngFor="let info of person.information"
+			class="information-row">
+			<input type="text"
+				[(ngModel)]="info.title"
+				placeholder="Titel"
+				autocomplete="off">
+			<input type="text"
+				[(ngModel)]="info.content"
+				placeholder="Beskrivelse"
+				autocomplete="off">
+			<button type="button"
+				class="delete"
+				(click)="deleteInformation(info)">
+				Delete
+			</button>
+		</li>
+	</ul>
+</div>
 
-<button type="button"
-	class="add-info"
-	(click)="addInformation()">
-	Tilføj infolinje
-</button>
+<div class="btn-container">
+	<button type="button"
+		class="add-info"
+		(click)="addInformation()">
+		Tilføj infolinje
+	</button>
 
-<button type="button"
-	class="add-person"
-	(click)="add()"
-	[disabled]="!person.name">
-	Opret person
-</button>
+	<button type="button"
+		class="add-person"
+		(click)="add()"
+		[disabled]="!person.name">
+		Opret person
+	</button>
+</div>
+
