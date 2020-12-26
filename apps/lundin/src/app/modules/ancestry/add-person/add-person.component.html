@@ -9,7 +9,34 @@
 	placeholder="Navn"
 	autocomplete="off">
 
+<label>
+	Information
+</label>
+<li *ngFor="let info of person.information"
+	class="information-row">
+	<input type="text"
+		[(ngModel)]="info.title"
+		placeholder="Titel"
+		autocomplete="off">
+	<input type="text"
+		[(ngModel)]="info.content"
+		placeholder="Beskrivelse"
+		autocomplete="off">
+	<button type="button"
+		class="delete"
+		(click)="deleteInformation(info)">
+		Delete
+	</button>
+</li>
+
 <button type="button"
+	class="add-info"
+	(click)="addInformation()">
+	Tilføj infolinje
+</button>
+
+<button type="button"
+	class="add-person"
 	(click)="add()"
 	[disabled]="!person.name">
 	Opret person

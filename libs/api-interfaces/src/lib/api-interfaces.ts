@@ -40,7 +40,7 @@ export interface Person {
 	_id: number
 	userId?: number
 	name: string
-	information: { [key: string]: string }
+	information: { title: string, content: string }[]
 	fatherId?: number
 	motherId?: number
 	relations: PersonalRelation[]

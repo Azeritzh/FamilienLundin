@@ -12,7 +12,7 @@ export class AddPersonComponent {
 	person: Person = {
 		_id: 0,
 		name: "",
-		information: { "død": "nu", "alder": "101" },
+		information: [{ title: "Født", content: "" }, { title: "Død", content: "" }],
 		relations: [],
 	}
 
@@ -20,6 +20,15 @@ export class AddPersonComponent {
 		private ancestryService: AncestryService,
 		private navigationService: NavigationService,
 	) { }
+
+	deleteInformation(row: { title: string, content: string }) {
+		const index = this.person.information.indexOf(row)
+		this.person.information.splice(index, 1)
+	}
+
+	addInformation() {
+		this.person.information.push({ title: "", content: "" })
+	}
 
 	async add() {
 		await this.ancestryService.add(this.person)
