@@ -1,5 +1,6 @@
 import { Component } from "@angular/core"
 import { Person } from "@lundin/api-interfaces"
+import { Observable } from "rxjs"
 import { NavigationService } from "../../../services/navigation.service"
 import { AddPersonComponent } from "../add-person/add-person.component"
 import { AncestryService } from "../ancestry.service"
@@ -10,13 +11,13 @@ import { AncestryService } from "../ancestry.service"
 	styleUrls: ["./ancestry-list.component.scss"],
 })
 export class AncestryListComponent {
-	people: Person[]
+	people$: Observable<Person[]>
 
 	constructor(
 		ancestryService: AncestryService,
 		private navigationService: NavigationService,
 	) {
-		ancestryService.load().then(people => this.people = people)
+		this.people$ = ancestryService.load()
 	}
 
 	add() {
