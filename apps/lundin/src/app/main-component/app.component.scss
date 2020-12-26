@@ -1,3 +1,5 @@
+/*-------------- Topbar, Navbar & Overlay -----------------  */
+
 :host {
 	display: grid;
 	grid-template-areas: "header header"
@@ -41,6 +43,7 @@ nav {
 article {
 	height: calc(100vh - 3rem);
 	overflow: auto;
+	margin: 1rem;
 }
 
 nav a { display: inline-flex; }
@@ -54,6 +57,8 @@ a + button { margin-top: auto; }
 
 .nav-btn {
 	background-color: var(--color-background);
+	color: var(--color-text-dark);
+	border-radius: unset;
 }
 
 .nav-btn img {
