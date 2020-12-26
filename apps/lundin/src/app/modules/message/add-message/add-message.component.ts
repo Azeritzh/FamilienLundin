@@ -5,7 +5,7 @@ import { MessageService } from "../message.service"
 @Component({
 	selector: "lundin-add-message",
 	templateUrl: "./add-message.component.html",
-	styleUrls: ["./add-message.component.scss"],
+	styleUrls: ["./add-message.component.scss", "../../../styles/popup-box.scss"],
 })
 export class AddMessageComponent {
 	threadId?: number

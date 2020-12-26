@@ -1,28 +1,25 @@
 <h1>Opret ny besked</h1>
 
-<label *ngIf="!threadId"
-	for="title">
-	Titel
-</label>
-<input *ngIf="!threadId"
-	type="text"
-	[(ngModel)]="title"
-	id="title"
-	placeholder="Titel"
-	autocomplete="off">
+<div class="content-container">
+	<input *ngIf="!threadId"
+		type="text"
+		[(ngModel)]="title"
+		id="title"
+		placeholder="Titel"
+		autocomplete="off">
+	
+	<textarea type="text"
+		[(ngModel)]="content"
+		id="content"
+		placeholder="Indhold"
+		autocomplete="off">
+	</textarea>
+</div>
 
-<label for="content">
-	Indhold
-</label>
-<textarea type="text"
-	[(ngModel)]="content"
-	id="content"
-	placeholder="Indhold"
-	autocomplete="off">
-</textarea>
-
-<button type="button"
-	(click)="addMessage()"
-	[disabled]="!content || (!threadId && !title)">
-	Opret besked
-</button>
+<div class="btn-container">
+	<button type="button"
+		(click)="addMessage()"
+		[disabled]="!content || (!threadId && !title)">
+		Opret besked
+	</button>
+</div>
