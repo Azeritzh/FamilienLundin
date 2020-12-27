@@ -13,6 +13,12 @@
 	</li>
 </ol>
 
+<button type="button"
+	class="add-player"
+	(click)="addPlayer()">
+	Tilføj spiller
+</button>
+
 <div class="game-container">
 	<div *ngFor="let position of positions"
 		class="game-field"

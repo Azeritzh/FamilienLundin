@@ -13,7 +13,7 @@ export class VirusComponent {
 	message = ""
 	players = [
 		{ name: "Spiller 1", color: "red", playerId: 1 },
-		{ name: "Spiller 2", color: "yellow", playerId: 2 },
+		{ name: "Spiller 2", color: "green", playerId: 2 },
 	]
 
 	constructor() {
@@ -78,5 +78,9 @@ export class VirusComponent {
 
 	isSelected(position: { x: number, y: number }) {
 		return this.origin?.x === position.x && this.origin?.y === position.y
+	}
+
+	addPlayer() {
+		this.players.push({ name: "Spiller 3", color: "blue", playerId: 3 })
 	}
 }
