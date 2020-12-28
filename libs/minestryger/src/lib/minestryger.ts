@@ -3,7 +3,7 @@ import { MinestrygerConfig } from "./minestryger-config"
 import { MinestrygerState } from "./minestryger-state"
 
 export class Minestryger {
-	state = new MinestrygerState(new MinestrygerConfig(30, 16, 50))
+	state = new MinestrygerState(new MinestrygerConfig(30, 16, 99)) // 16*16 40 // 9*9 10 
 	engine = new AgEngine<MinestrygerAction>([], [], this.state)
 }
 

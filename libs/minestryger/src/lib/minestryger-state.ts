@@ -18,6 +18,11 @@ export class MinestrygerState implements GameState {
 				field = this.getRandomField()
 			field.bomb = true
 		}
+		for (const { x, y, field } of this.board.allFields()) {
+			const nearby = [...this.board.fieldsAround(x, y)].map(x => x.field)
+			const bombs = nearby.filter(x => x.bomb).length
+			field.surroundingBombs = bombs
+		}
 	}
 
 	private getRandomField() {
