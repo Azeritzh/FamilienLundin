@@ -1,4 +1,4 @@
-import { CalendarEvent, MessageThread } from "@lundin/api-interfaces"
+import { CalendarEvent, MessageThread, Person } from "@lundin/api-interfaces"
 import { Injectable } from "@nestjs/common"
 import * as fs from "fs"
 import { StoredUser } from "../user/user.service"
@@ -10,6 +10,7 @@ export class StorageService {
 	cryptCollection = new Collection<{ _id?: number, userId: number, encrypted: string }>("crypt", this)
 	messageCollection = new Collection<MessageThread>("messages", this)
 	userCollection = new Collection<StoredUser>("users", this)
+	ancestryCollection = new Collection<Person>("ancestry", this)
 
 	saveJsonFile(name: string, content: any): Promise<void> {
 		const path = "./storage/" + name + ".json"

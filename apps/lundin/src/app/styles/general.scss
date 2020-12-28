@@ -1,0 +1,46 @@
+* {
+    font-family: "Segoe UI", "Calibri";
+}
+
+body {
+	background-color: var(--color-background);
+}
+
+button {
+    background-color: var(--color-btn-neutral);
+    padding: 0.5rem;
+    border-radius: var(--border-radius-size);
+    color: white;
+}
+
+button:hover{
+    background-color: var(--color-btn-neutral-hover);
+}
+
+button:disabled {
+    background-color: var(--color-btn-disabled);
+}
+
+.btn-positive {
+    background-color: var(--color-btn-positive);
+}
+
+.btn-positive:hover {
+    background-color: var(--color-btn-positive-hover);
+}
+
+.btn-negative {
+    background-color: var(--color-btn-negative);
+}
+
+.btn-negative:hover {
+    background-color: var(--color-btn-negative-hover);
+}
+
+input, textarea {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: var(--border-radius-size);
+    border: 1px solid var(--color-border);
+    outline-color: var(--color-primary);
+}
