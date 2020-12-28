@@ -30,12 +30,12 @@ export class MinestrygerGameComponent {
 			this.drawField(x, y)
 	}
 
-	drawField(x: number, y: number, hover: boolean = false) {
-		var field = this.game.state.board.get(x, y)
-		var color = "grey"
-		var text = ""
-		var textfont = "bold " + (this.size - 4) + "px arial"
-		var textcolor = "black"
+	drawField(x: number, y: number, hover = false) {
+		const field = this.game.state.board.get(x, y)
+		let color = "grey"
+		let text = ""
+		let textfont = "bold " + (this.size - 4) + "px arial"
+		let textcolor = "black"
 		if (field.revealed) {
 			if (field.bomb) {
 				color = "red"
@@ -95,7 +95,7 @@ export class MinestrygerGameComponent {
 		if (this.hasFinished())
 			return
 
-		var pos = this.gridPositionFromMousePosition(event)
+		const pos = this.gridPositionFromMousePosition(event)
 		if (this.isLeftButton(event))
 			this.handleLeftMouse(true, pos.x, pos.y)
 		if (this.isMiddleButton(event))
@@ -109,7 +109,7 @@ export class MinestrygerGameComponent {
 		if (this.hasFinished())
 			return
 
-		var pos = this.gridPositionFromMousePosition(event)
+		const pos = this.gridPositionFromMousePosition(event)
 		if (this.isLeftButton(event))
 			this.handleLeftMouse(false, pos.x, pos.y)
 		if (this.isMiddleButton(event))
@@ -120,11 +120,11 @@ export class MinestrygerGameComponent {
 	}
 
 	gridPositionFromMousePosition(event: MouseEvent) {
-		var rect = this.canvas.getBoundingClientRect()
-		var mx = event.clientX - rect.left
-		var my = event.clientY - rect.top
-		var x = Math.floor(mx / this.size)
-		var y = Math.floor(my / this.size)
+		const rect = this.canvas.getBoundingClientRect()
+		const mx = event.clientX - rect.left
+		const my = event.clientY - rect.top
+		const x = Math.floor(mx / this.size)
+		const y = Math.floor(my / this.size)
 		return { x: x, y: y }
 	}
 
@@ -184,7 +184,7 @@ export class MinestrygerGameComponent {
 	}
 
 	revealSurroundings(x: number, y: number) {
-
+		//
 	}
 
 	revealField(x: number, y: number) {
