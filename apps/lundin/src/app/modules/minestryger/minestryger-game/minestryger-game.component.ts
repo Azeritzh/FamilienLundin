@@ -179,6 +179,8 @@ export class MinestrygerGameComponent {
 	}
 
 	firstClick(x: number, y: number) {
+		this.game.state.generateAround(x, y)
+		this.timerId = 1
 		//Opsæt ny bane
 		//Start timer
 	}
