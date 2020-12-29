@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core"
-import { FlagAction, Minestryger, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core"
+import { FlagAction, Minestryger, MinestrygerConfig, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
 
 @Component({
 	selector: "lundin-minestryger-game",
@@ -7,6 +7,12 @@ import { FlagAction, Minestryger, PlayState, RevealAction, RevealAreaAction } fr
 	styleUrls: ["./minestryger-game.component.scss"],
 })
 export class MinestrygerGameComponent implements OnInit, OnDestroy {
+	@Input() width = 30
+	@Input() height = 16
+	@Input() bombs = 99
+	@Input() allowFlags = true
+	@Input() activateOnMouseDown = false
+
 	@ViewChild("canvas", { static: true }) canvasElement: ElementRef<HTMLCanvasElement>
 	get canvas() {
 		return this.canvasElement.nativeElement
@@ -20,7 +26,6 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	private leftMouseDown = false
 	private middleMouseDown = false
 	private rightMouseDown = false
-	private activateOnMouseDown = false
 	private lastHoverPosition?: { x: number, y: number }
 
 	ngOnInit() {
@@ -33,7 +38,13 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	private startGame() {
-		this.game = new Minestryger()
+		const config = new MinestrygerConfig(
+			this.width,
+			this.height,
+			this.bombs,
+			this.allowFlags,
+		)
+		this.game = new Minestryger(config)
 		this.remainingBombs = this.game.config.bombs
 		this.currentTime = 0
 		this.resetCanvas()
@@ -233,6 +244,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		this.game.update(new FlagAction(x, y))
 		this.countRemainingBombs()
 		this.drawEverything()
+		this.drawField(x, y, true)
 	}
 
 	private countRemainingBombs() {
