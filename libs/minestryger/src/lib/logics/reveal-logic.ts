@@ -13,7 +13,7 @@ export class RevealLogic implements GameLogic<MinestrygerAction> {
 
 	private reveal(x: number, y: number) {
 		const field = this.state.board.get(x, y)
-		if (field.revealed)
+		if (field.revealed || field.locked)
 			return
 		field.revealed = true
 		if (field.surroundingBombs === 0)

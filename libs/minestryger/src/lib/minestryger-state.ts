@@ -6,6 +6,7 @@ export class MinestrygerState implements GameState {
 
 	constructor(
 		private config: MinestrygerConfig,
+		public playState: PlayState = PlayState.NotStarted,
 		public board = new GameGrid<Field>(config.width, config.height, () => new Field()),
 		public tick = 0,
 	) { }
@@ -35,6 +36,8 @@ export class MinestrygerState implements GameState {
 		return Math.floor(Math.random() * number)
 	}
 }
+
+export enum PlayState { NotStarted, Started, Won, Lost }
 
 class Field {
 	bomb = false

@@ -1,4 +1,5 @@
 import { AgEngine } from "@lundin/age"
+import { LoseLogic } from "./logics/lose-logic"
 import { RevealLogic } from "./logics/reveal-logic"
 import { MinestrygerAction } from "./minestryger-action"
 import { MinestrygerConfig } from "./minestryger-config"
@@ -12,7 +13,10 @@ export class Minestryger {
 		public state = new MinestrygerState(config),
 	) {
 		this.engine = new AgEngine<MinestrygerAction>(
-			[new RevealLogic(this.state)],
+			[
+				new RevealLogic(this.state),
+				new LoseLogic(this.state),
+			],
 			[],
 			this.state)
 	}
