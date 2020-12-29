@@ -254,7 +254,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	private registerScore() {
 		const score = {
 			time: this.game.state.finishTime,
-			date: new Date().toISOString().split("T")[0],
+			date: new Date().toISOString(),
 			type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.config.allowFlags ? "f" : "n"}`,
 		}
 		this.minestrygerService.registerScore(score)

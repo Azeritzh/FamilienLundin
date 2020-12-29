@@ -4,36 +4,36 @@
 	<h2>Begynder (med flag)</h2>
 	<div *ngFor="let score of topScores.beginnerFlags"
 		[title]="score.date">
-		{{score.userId}}: {{score.time}}
+		{{score.userId | user | async}}: {{score.time / 1000 | number:'1.2-2'}}s
 	</div>
 
 	<h2>Øvet (med flag)</h2>
 	<div *ngFor="let score of topScores.trainedFlags"
 		[title]="score.date">
-		{{score.userId}}: {{score.time}}
+		{{score.userId | user | async}}: {{score.time / 1000 | number:'1.2-2'}}s
 	</div>
 
 	<h2>Ekspert (med flag)</h2>
 	<div *ngFor="let score of topScores.expertFlags"
 		[title]="score.date">
-		{{score.userId}}: {{score.time}}
+		{{score.userId | user | async}}: {{score.time / 1000 | number:'1.2-2'}}s
 	</div>
 
 	<h2>Begynder (ingen flag)</h2>
 	<div *ngFor="let score of topScores.beginnerNoFlags"
 		[title]="score.date">
-		{{score.userId}}: {{score.time}}
+		{{score.userId | user | async}}: {{score.time / 1000 | number:'1.2-2'}}s
 	</div>
 
 	<h2>Øvet (ingen flag)</h2>
 	<div *ngFor="let score of topScores.trainedNoFlags"
 		[title]="score.date">
-		{{score.userId}}: {{score.time}}
+		{{score.userId | user | async}}: {{score.time / 1000 | number:'1.2-2'}}s
 	</div>
 
 	<h2>Ekspert (ingen flag)</h2>
 	<div *ngFor="let score of topScores.expertNoFlags"
 		[title]="score.date">
-		{{score.userId}}: {{score.time}}
+		{{score.userId | user | async}}: {{score.time / 1000 | number:'1.2-2'}}s
 	</div>
 </ng-container>
