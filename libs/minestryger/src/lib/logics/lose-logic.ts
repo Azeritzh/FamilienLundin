@@ -1,5 +1,5 @@
 import { GameLogic } from "@lundin/age"
-import { MinestrygerAction, RevealAction } from "../minestryger-action"
+import { MinestrygerAction, RevealAction, RevealAreaAction } from "../minestryger-action"
 import { MinestrygerState, PlayState } from "../minestryger-state"
 
 export class LoseLogic implements GameLogic<MinestrygerAction> {
@@ -9,8 +9,17 @@ export class LoseLogic implements GameLogic<MinestrygerAction> {
 		if (this.state.playState !== PlayState.Started)
 			return
 		for (const action of actions)
-			if (action instanceof RevealAction)
-				this.check(action.x, action.y)
+			this.handleAction(action)
+	}
+
+	private handleAction(action: MinestrygerAction) {
+		if (action instanceof RevealAction)
+			this.check(action.x, action.y)
+		else if (action instanceof RevealAreaAction) {
+			this.check(action.x, action.y)
+			for (const { i, j } of this.state.board.fieldsAround(action.x, action.y))
+				this.check(i, j)
+		}
 	}
 
 	private check(x: number, y: number) {

@@ -37,7 +37,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		window.clearInterval(this.timerId)
 	}
 
-	private startGame() {
+	startGame() {
 		const config = new MinestrygerConfig(
 			this.width,
 			this.height,
