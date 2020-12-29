@@ -1,11 +1,13 @@
 import { GameLogic } from "@lundin/age"
 import { MinestrygerAction, RevealAction } from "../minestryger-action"
-import { MinestrygerState } from "../minestryger-state"
+import { MinestrygerState, PlayState } from "../minestryger-state"
 
 export class RevealLogic implements GameLogic<MinestrygerAction> {
 	constructor(private state: MinestrygerState) { }
 
 	update(actions: MinestrygerAction[]) {
+		if (this.state.playState !== PlayState.Started)
+			return
 		for (const action of actions)
 			if (action instanceof RevealAction)
 				this.reveal(action.x, action.y)

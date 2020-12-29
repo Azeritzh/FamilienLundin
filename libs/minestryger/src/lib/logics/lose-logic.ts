@@ -6,6 +6,8 @@ export class LoseLogic implements GameLogic<MinestrygerAction> {
 	constructor(private state: MinestrygerState) { }
 
 	update(actions: MinestrygerAction[]) {
+		if (this.state.playState !== PlayState.Started)
+			return
 		for (const action of actions)
 			if (action instanceof RevealAction)
 				this.check(action.x, action.y)
