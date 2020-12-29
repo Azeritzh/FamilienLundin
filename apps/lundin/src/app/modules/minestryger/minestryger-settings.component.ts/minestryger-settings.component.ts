@@ -16,4 +16,25 @@ export class MinestrygerSettingsComponent {
 	@Output() allowFlagsChange = new EventEmitter<number>()
 	@Input() activateOnMouseDown = false
 	@Output() activateOnMouseDownChange = new EventEmitter<number>()
+
+	useEasySettings() {
+		this.useSettings(9, 9, 10)
+	}
+
+	useMediumSettings() {
+		this.useSettings(16, 16, 40)
+	}
+
+	useHardSettings() {
+		this.useSettings(30, 16, 99)
+	}
+
+	useSettings(width: number, height: number, bombs: number) {
+		this.width = width
+		this.widthChange.emit(width)
+		this.height = height
+		this.heightChange.emit(height)
+		this.bombs = bombs
+		this.bombsChange.emit(bombs)
+	}
 }

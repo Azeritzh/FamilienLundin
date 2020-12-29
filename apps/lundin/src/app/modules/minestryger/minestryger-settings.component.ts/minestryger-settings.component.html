@@ -19,7 +19,31 @@
 	(ngModelChange)="bombsChange.emit($event)"
 	autocomplete="off">
 
+<label for="flags">Tillad flag</label>
+<input id="flags"
+	type="checkbox"
+	[ngModel]="allowFlags"
+	(ngModelChange)="allowFlagsChange.emit($event)"
+	autocomplete="off">
+
+<label for="earlyClick">Tidligt klik</label>
+<input id="earlyClick"
+	type="checkbox"
+	[ngModel]="activateOnMouseDown"
+	(ngModelChange)="activateOnMouseDownChange.emit($event)"
+	autocomplete="off">
+
 <button type="button"
-	(click)="$event">
-	Nyt spil
+	(click)="useEasySettings()">
+	Begynder
+</button>
+
+<button type="button"
+	(click)="useMediumSettings()">
+	Øvet
+</button>
+
+<button type="button"
+	(click)="useHardSettings()">
+	Ekspert
 </button>
