@@ -24,6 +24,7 @@ export class StartLogic implements GameLogic<MinestrygerAction> {
 
 	private initialiseGame(x: number, y: number) {
 		this.state.playState = PlayState.Started
+		this.state.startTime = Date.now()
 		this.generateAround(x, y)
 	}
 

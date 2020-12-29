@@ -10,7 +10,13 @@ export class WinLogic implements GameLogic<MinestrygerAction> {
 			return
 		const allFields = [...this.state.board.allFields()].map(x => x.field)
 		if (allFields.every(isRevealedXorBomb))
-			this.state.playState = PlayState.Won
+			this.finishGame()
+	}
+
+	private finishGame() {
+		this.state.playState = PlayState.Won
+		this.state.finishTime = Date.now() - this.state.startTime
+		console.log(this.state.finishTime)
 	}
 }
 

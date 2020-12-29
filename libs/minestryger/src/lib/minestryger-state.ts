@@ -6,6 +6,8 @@ export class MinestrygerState implements GameState {
 	constructor(
 		config: MinestrygerConfig,
 		public playState: PlayState = PlayState.NotStarted,
+		public startTime: number = null,
+		public finishTime: number = null,
 		public board = new GameGrid<Field>(config.width, config.height, () => new Field()),
 		public tick = 0,
 	) { }
