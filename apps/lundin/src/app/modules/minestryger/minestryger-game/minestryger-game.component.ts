@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from "@angular/core"
-import { Minestryger } from "@lundin/minestryger"
+import { Minestryger, RevealAction } from "@lundin/minestryger"
 
 @Component({
 	selector: "lundin-minestryger-game",
@@ -190,9 +190,9 @@ export class MinestrygerGameComponent {
 	}
 
 	revealField(x: number, y: number) {
+		this.game.update(new RevealAction(x, y))
 		//game.reveal xy
 		//Tjek efter vinder
-		this.game.state.board.get(x, y).revealed = true
 		for (const { x, y } of this.game.state.board.allFields())
 			this.drawField(x, y)
 	}
