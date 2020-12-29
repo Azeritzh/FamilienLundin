@@ -27,7 +27,8 @@
 				"quotes": ["error", "double"],
 				"indent": ["error", "tab", { "SwitchCase": 1 }],
 				"no-empty-function": "off",
-				"@typescript-eslint/no-explicit-any": "off"
+				"@typescript-eslint/no-explicit-any": "off",
+				"@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "_" }]
 			}
 		},
 		{

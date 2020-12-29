@@ -12,7 +12,7 @@ export class MinestrygerState implements GameState {
 
 	generateAround(x: number, y: number) {
 		const surroundingFields = [...this.board.fieldsAround(x, y)].map(x => x.field)
-		for (const i of range(0, this.config.bombs)) {
+		for (const _ of range(0, this.config.bombs)) {
 			let field = this.getRandomField()
 			while (surroundingFields.includes(field)) // TODO: this risks an infinite loop
 				field = this.getRandomField()
