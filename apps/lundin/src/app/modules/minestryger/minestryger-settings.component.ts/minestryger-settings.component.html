@@ -1,0 +1,25 @@
+<label for="width">Vidde</label>
+<input id="width"
+	type="number"
+	[ngModel]="width"
+	(ngModelChange)="widthChange.emit($event)"
+	autocomplete="off">
+
+<label for="height">Højde</label>
+<input id="height"
+	type="number"
+	[ngModel]="height"
+	(ngModelChange)="heightChange.emit($event)"
+	autocomplete="off">
+
+<label for="bombs">Bomber</label>
+<input id="bombs"
+	type="number"
+	[ngModel]="bombs"
+	(ngModelChange)="bombsChange.emit($event)"
+	autocomplete="off">
+
+<button type="button"
+	(click)="$event">
+	Nyt spil
+</button>

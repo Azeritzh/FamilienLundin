@@ -1,6 +1,12 @@
-<lundin-minestryger-game [width]="10"
-	[height]="10"
-	[bombs]="9"
-	[allowFlags]="false"
-	[activateOnMouseDown]="true">
+<lundin-minestryger-game [width]="width"
+	[height]="height"
+	[bombs]="bombs"
+	[allowFlags]="allowFlags"
+	[activateOnMouseDown]="activateOnMouseDown">
 </lundin-minestryger-game>
+<lundin-minestryger-settings [(width)]="width"
+	[(height)]="height"
+	[(bombs)]="bombs"
+	[(allowFlags)]="allowFlags"
+	[(activateOnMouseDown)]="activateOnMouseDown">
+</lundin-minestryger-settings>

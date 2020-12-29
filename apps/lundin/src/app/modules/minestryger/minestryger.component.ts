@@ -1,5 +1,4 @@
 import { Component } from "@angular/core"
-import { Minestryger } from "@lundin/minestryger"
 
 @Component({
 	selector: "lundin-minestryger",
@@ -7,5 +6,9 @@ import { Minestryger } from "@lundin/minestryger"
 	styleUrls: ["./minestryger.component.scss"],
 })
 export class MinestrygerComponent {
-	game = new Minestryger()
+	width = 30
+	height = 16
+	bombs = 99
+	allowFlags = true
+	activateOnMouseDown = false
 }

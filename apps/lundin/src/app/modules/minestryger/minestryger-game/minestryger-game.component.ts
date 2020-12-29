@@ -65,6 +65,8 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	private drawField(x: number, y: number, hover = false) {
+		if (!this.game.state.board.isWithinBounds(x, y))
+			return
 		const field = this.game.state.board.get(x, y)
 		let color = "grey"
 		let text = ""
@@ -136,8 +138,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 			return
 
 		this.redrawLastHoverPosition()
-		if (!this.game.state.board.get(x, y).revealed)
-			this.drawField(x, y, true)
+		this.drawField(x, y, true)
 		this.showMiddleClickHover(x, y)
 		this.lastHoverPosition = { x, y }
 	}
