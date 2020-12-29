@@ -28,7 +28,8 @@ export class MinestrygerService {
 		return this.topScores$
 	}
 
-	registerScore(score: NewScore) {
-		return this.httpClient.post("api/minestryger/register", score).toPromise()
+	async registerScore(score: NewScore) {
+		this.topScores = await this.httpClient.post<TopScoreSet>("api/minestryger/register", score).toPromise()
+		this._topScores$.next(this.topScores)
 	}
 }

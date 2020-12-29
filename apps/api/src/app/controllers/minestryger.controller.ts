@@ -52,7 +52,6 @@ export class MinestrygerController {
 		const bestScore = existingScore?.time <= newScore.time
 			? existingScore
 			: newScore
-		console.log("inserting " + JSON.stringify(bestScore))
 		topscores.push(bestScore)
 	}
 
