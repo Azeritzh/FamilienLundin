@@ -3,7 +3,7 @@
 	grid-template-areas: "game game game"
 		"time button bombs";
 	grid-template-rows: 1fr 2rem;
-	grid-template-columns: 4rem 1fr 4rem;
+	grid-template-columns: 3rem 1fr 3rem;
 	width: fit-content;
 	height: fit-content;
 }
@@ -11,7 +11,7 @@
 canvas { grid-area: game; }
 
 .number-box {
-	width: 4rem;
+	width: 3rem;
 	height: 2rem;
 	text-align: center;
 	line-height: 2rem;

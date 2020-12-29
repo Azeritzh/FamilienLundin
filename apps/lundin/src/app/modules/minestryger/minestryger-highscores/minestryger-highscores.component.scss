@@ -1,9 +1,28 @@
-.setting {
-	display: flex;
-	margin-bottom: 0.5rem;
-	margin-right: 0.5rem;
+:host{ margin-right: 0.5rem; }
+
+h1 {
+	font-size: 1.2rem;
+	font-weight: bold;
+	line-height: 2rem;
+	text-align: center;
+	background-color: var(--color-primary);
+	color: var(--color-text-light);
 }
-.setting * { line-height: 2rem; }
-.setting label { flex: 1; }
-.setting input { width: 4rem; }
-.setting button { flex: 1; }
+
+h2 {
+	font-size: 1rem;
+	line-height: 2rem;
+	text-align: center;
+	background-color: var(--color-secondary);
+	color: var(--color-text-dark);
+}
+
+div {
+	display: flex;
+	line-height: 2rem;
+	padding: 0 0.5rem;
+}
+
+.name {
+	margin-right: auto;
+}
