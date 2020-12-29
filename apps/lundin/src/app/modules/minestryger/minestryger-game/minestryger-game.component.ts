@@ -21,6 +21,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	private middleMouseDown = false
 	private rightMouseDown = false
 	private activateOnMouseDown = false
+	private lastHoverPosition?: { x: number, y: number }
 
 	ngOnInit() {
 		this.startGame()
@@ -66,21 +67,9 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 			}
 			else {
 				color = "white"
-				if (field.surroundingBombs == 0) {
-					text = ""
-				}
-				else {
+				if (field.surroundingBombs) {
 					text = field.surroundingBombs.toString()
-					switch (field.surroundingBombs) {
-						case 1: textcolor = "#0100fe"; break
-						case 2: textcolor = "#017f01"; break
-						case 3: textcolor = "#fe0000"; break
-						case 4: textcolor = "#010080"; break
-						case 5: textcolor = "#810102"; break
-						case 6: textcolor = "#008081"; break
-						case 7: textcolor = "#000"; break
-						case 8: textcolor = "#808080"; break
-					}
+					textcolor = this.colorForNumber(field.surroundingBombs)
 				}
 			}
 		}
@@ -95,6 +84,19 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 			}
 		}
 		this.drawBox(x, y, text, color, textcolor, textfont)
+	}
+
+	private colorForNumber(number: number) {
+		switch (number) {
+			case 1: return "#0100fe"
+			case 2: return "#017f01"
+			case 3: return "#fe0000"
+			case 4: return "#010080"
+			case 5: return "#810102"
+			case 6: return "#008081"
+			case 7: return "#000000"
+			case 8: return "#808080"
+		}
 	}
 
 	private drawBox(
@@ -113,34 +115,61 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		this.context.fillText(text, (this.fieldSize) * x + 0.5 * this.fieldSize, (this.fieldSize) * y + 0.80 * this.fieldSize)
 	}
 
-	mouseDown(event: MouseEvent) {
-		event.preventDefault()
-		if (this.hasFinished())
-			return
-
-		const pos = this.gridPositionFromMousePosition(event)
-		if (this.isLeftButton(event))
-			this.handleLeftMouse(true, pos.x, pos.y)
-		if (this.isMiddleButton(event))
-			this.handleMiddleMouse(true, pos.x, pos.y)
-		if (this.isRightButton(event))
-			this.handleRightMouse(true, pos.x, pos.y)
-		//this.showMiddleClickHover(pos)
+	mouseMove(event: MouseEvent) {
+		const { x, y } = this.gridPositionFromMousePosition(event)
+		this.updateHovering(x, y)
 	}
 
-	mouseUp(event: MouseEvent) {
+	private updateHovering(x: number, y: number) {
+		if (!this.hoverPositionHasChanged(x, y))
+			return
+
+		this.redrawLastHoverPosition()
+		if (!this.game.state.board.get(x, y).revealed)
+			this.drawField(x, y, true)
+		this.showMiddleClickHover(x, y)
+		this.lastHoverPosition = { x, y }
+	}
+
+	private hoverPositionHasChanged(currentX: number, currentY: number) {
+		const lastPosition = this.lastHoverPosition
+		return currentX != lastPosition?.x || currentY != lastPosition?.y
+	}
+
+	private redrawLastHoverPosition() {
+		if (!this.lastHoverPosition)
+			return
+		const { x, y } = this.lastHoverPosition
+		this.drawField(x, y)
+		for (const { i, j } of this.game.state.board.fieldsAround(x, y))
+			this.drawField(i, j)
+	}
+
+	private showMiddleClickHover(x: number, y: number) {
+		if (!this.shouldShowMiddleClickHover())
+			return
+		for (const { i, j, field } of this.game.state.board.fieldsAround(x, y))
+			if (!field.locked && !field.revealed)
+				this.drawField(i, j, true)
+	}
+
+	private shouldShowMiddleClickHover() {
+		return (this.leftMouseDown && this.rightMouseDown) || this.middleMouseDown
+	}
+
+	updateMouseClick(event: MouseEvent, isDown: boolean) {
 		event.preventDefault()
 		if (this.hasFinished())
 			return
 
-		const pos = this.gridPositionFromMousePosition(event)
+		const { x, y } = this.gridPositionFromMousePosition(event)
 		if (this.isLeftButton(event))
-			this.handleLeftMouse(false, pos.x, pos.y)
+			this.handleLeftMouse(isDown, x, y)
 		if (this.isMiddleButton(event))
-			this.handleMiddleMouse(false, pos.x, pos.y)
+			this.handleMiddleMouse(isDown, x, y)
 		if (this.isRightButton(event))
-			this.handleRightMouse(false, pos.x, pos.y)
-		//this.resetLastHoverPosition()
+			this.handleRightMouse(isDown, x, y)
+		this.updateHovering(x, y)
 	}
 
 	private gridPositionFromMousePosition(event: MouseEvent) {
