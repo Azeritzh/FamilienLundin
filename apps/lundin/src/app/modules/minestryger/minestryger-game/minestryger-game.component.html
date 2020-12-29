@@ -1,5 +1,6 @@
 <canvas #canvas
 	(mousedown)="mouseDown($event)"
-	(mouseup)="mouseUp($event)">
+	(mouseup)="mouseUp($event)"
+	(contextmenu)="$event.preventDefault()">
 </canvas>
 <div class="time">{{currentTime}}</div>

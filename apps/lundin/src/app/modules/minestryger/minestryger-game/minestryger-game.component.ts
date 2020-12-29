@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core"
-import { Minestryger, RevealAction } from "@lundin/minestryger"
+import { FlagAction, Minestryger, PlayState, RevealAction } from "@lundin/minestryger"
 
 @Component({
 	selector: "lundin-minestryger-game",
@@ -27,13 +27,17 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		this.canvas.height = this.game.config.height * this.fieldSize
 		this.context.fillStyle = "black"
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
-		for (const { x, y } of this.game.state.board.allFields())
-			this.drawField(x, y)
+		this.drawEverything()
 		this.timerId = window.setInterval(this.timerUpdate, 1000)
 	}
 
 	ngOnDestroy() {
 		window.clearInterval(this.timerId)
+	}
+
+	private drawEverything() {
+		for (const { x, y } of this.game.state.board.allFields())
+			this.drawField(x, y)
 	}
 
 	private drawField(x: number, y: number, hover = false) {
@@ -98,6 +102,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	mouseDown(event: MouseEvent) {
+		event.preventDefault()
 		if (this.hasFinished())
 			return
 
@@ -112,6 +117,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	mouseUp(event: MouseEvent) {
+		event.preventDefault()
 		if (this.hasFinished())
 			return
 
@@ -135,7 +141,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	private hasFinished() {
-		return false
+		return this.game.state.playState === PlayState.Lost || this.game.state.playState === PlayState.Won
 	}
 
 	private isLeftButton(event: MouseEvent) {
@@ -168,6 +174,8 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		this.rightMouseDown = mouseDown
 		if (this.rightMouseDown && this.leftMouseDown)
 			this.revealSurroundings(x, y)
+		else if (this.rightMouseDown)
+			this.flagField(x, y)
 	}
 
 	private shouldClickField() {
@@ -177,8 +185,12 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	private revealField(x: number, y: number) {
 		this.game.update(new RevealAction(x, y))
 		//Tjek efter vinder
-		for (const { x, y } of this.game.state.board.allFields())
-			this.drawField(x, y)
+		this.drawEverything()
+	}
+
+	private flagField(x: number, y: number) {
+		this.game.update(new FlagAction(x, y))
+		this.drawEverything()
 	}
 
 	private revealSurroundings(x: number, y: number) {

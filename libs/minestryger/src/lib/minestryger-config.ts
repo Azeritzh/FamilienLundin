@@ -3,6 +3,6 @@ export class MinestrygerConfig {
 		public width: number,
 		public height: number,
 		public bombs: number,
-		// allowLocking ?
+		public allowFlags: boolean,
 	) { }
 }
