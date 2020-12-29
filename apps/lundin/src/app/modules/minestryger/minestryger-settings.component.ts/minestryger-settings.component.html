@@ -1,49 +1,65 @@
-<label for="width">Vidde</label>
-<input id="width"
-	type="number"
-	[ngModel]="width"
-	(ngModelChange)="widthChange.emit($event)"
-	autocomplete="off">
+<div class="setting">
+	<label for="width">Vidde</label>
+	<input id="width"
+		type="number"
+		[ngModel]="width"
+		(ngModelChange)="widthChange.emit($event)"
+		autocomplete="off">
+</div>
 
-<label for="height">Højde</label>
-<input id="height"
-	type="number"
-	[ngModel]="height"
-	(ngModelChange)="heightChange.emit($event)"
-	autocomplete="off">
+<div class="setting">
+	<label for="height">Højde</label>
+	<input id="height"
+		type="number"
+		[ngModel]="height"
+		(ngModelChange)="heightChange.emit($event)"
+		autocomplete="off">
+</div>
 
-<label for="bombs">Bomber</label>
-<input id="bombs"
-	type="number"
-	[ngModel]="bombs"
-	(ngModelChange)="bombsChange.emit($event)"
-	autocomplete="off">
+<div class="setting">
+	<label for="bombs">Bomber</label>
+	<input id="bombs"
+		type="number"
+		[ngModel]="bombs"
+		(ngModelChange)="bombsChange.emit($event)"
+		autocomplete="off">
+</div>
 
-<label for="flags">Tillad flag</label>
-<input id="flags"
-	type="checkbox"
-	[ngModel]="allowFlags"
-	(ngModelChange)="allowFlagsChange.emit($event)"
-	autocomplete="off">
+<div class="setting">
+	<label for="flags">Tillad flag</label>
+	<input id="flags"
+		type="checkbox"
+		[ngModel]="allowFlags"
+		(ngModelChange)="allowFlagsChange.emit($event)"
+		autocomplete="off">
+</div>
 
-<label for="earlyClick">Tidligt klik</label>
-<input id="earlyClick"
-	type="checkbox"
-	[ngModel]="activateOnMouseDown"
-	(ngModelChange)="activateOnMouseDownChange.emit($event)"
-	autocomplete="off">
+<div class="setting">
+	<label for="earlyClick">Tidligt klik</label>
+	<input id="earlyClick"
+		type="checkbox"
+		[ngModel]="activateOnMouseDown"
+		(ngModelChange)="activateOnMouseDownChange.emit($event)"
+		autocomplete="off">
+</div>
 
-<button type="button"
-	(click)="useEasySettings()">
-	Begynder
-</button>
+<div class="setting">
+	<button type="button"
+		(click)="useEasySettings()">
+		Begynder
+	</button>
+</div>
 
-<button type="button"
-	(click)="useMediumSettings()">
-	Øvet
-</button>
+<div class="setting">
+	<button type="button"
+		(click)="useMediumSettings()">
+		Øvet
+	</button>
+</div>
 
-<button type="button"
-	(click)="useHardSettings()">
-	Ekspert
-</button>
+<div class="setting">
+	<button type="button"
+		(click)="useHardSettings()">
+		Ekspert
+	</button>
+</div>

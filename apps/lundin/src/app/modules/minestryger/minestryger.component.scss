@@ -1,15 +1,11 @@
 :host {
 	height: 100%;
-}
-
-.game-container {
 	display: grid;
-	grid-template-columns: 2rem 2rem 2rem;
-	grid-template-rows: 2rem 2rem 2rem;
+	grid-template-areas: "settings game"
+		"highscore game";
+		grid-template-columns: 10rem 1fr;
 }
 
-.game-field {
-	line-height: 2rem;
-	text-align: center;
-	border: 1px solid black;
-}
+lundin-minestryger-game { grid-area: game; }
+
+lundin-minestryger-settings { grid-area: settings; }
