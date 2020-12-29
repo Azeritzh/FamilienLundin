@@ -13,8 +13,8 @@ export class MinestrygerGameComponent {
 	}
 	game = new Minestryger()
 	context: CanvasRenderingContext2D
-	size = 20
-	timerId: number
+	fieldSize = 20
+	currentTime: number
 	leftMouseDown = false
 	middleMouseDown = false
 	rightMouseDown = false
@@ -22,25 +22,25 @@ export class MinestrygerGameComponent {
 
 	ngOnInit() {
 		this.context = this.canvas.getContext("2d")
-		this.canvas.width = this.game.state.board.width * this.size
-		this.canvas.height = this.game.state.board.height * this.size
+		this.canvas.width = this.game.config.width * this.fieldSize
+		this.canvas.height = this.game.config.height * this.fieldSize
 		this.context.fillStyle = "black"
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 		for (const { x, y } of this.game.state.board.allFields())
 			this.drawField(x, y)
 	}
 
-	drawField(x: number, y: number, hover = false) {
+	private drawField(x: number, y: number, hover = false) {
 		const field = this.game.state.board.get(x, y)
 		let color = "grey"
 		let text = ""
-		let textfont = "bold " + (this.size - 4) + "px arial"
+		let textfont = "bold " + (this.fieldSize - 4) + "px arial"
 		let textcolor = "black"
 		if (field.revealed) {
 			if (field.bomb) {
 				color = "red"
 				text = "💣"
-				textfont = this.context.font = (this.size - 8) + "px serif"
+				textfont = this.context.font = (this.fieldSize - 8) + "px serif"
 			}
 			else {
 				color = "white"
@@ -65,7 +65,7 @@ export class MinestrygerGameComponent {
 		else {
 			if (field.locked) {
 				text = "⚑"
-				textfont = (this.size - 4) + "px serif"
+				textfont = (this.fieldSize - 4) + "px serif"
 				textcolor = "red"
 			}
 			else if (hover) {
@@ -75,20 +75,20 @@ export class MinestrygerGameComponent {
 		this.drawBox(x, y, text, color, textcolor, textfont)
 	}
 
-	drawBox(
+	private drawBox(
 		x: number,
 		y: number,
 		text: string,
 		color: string,
 		textcolor = "black",
-		textfont = "bold " + (this.size - 4) + "px arial"
+		textfont = "bold " + (this.fieldSize - 4) + "px arial"
 	) {
 		this.context.fillStyle = color
-		this.context.fillRect(this.size * x + 1, this.size * y + 1, this.size - 2, this.size - 2)
+		this.context.fillRect(this.fieldSize * x + 1, this.fieldSize * y + 1, this.fieldSize - 2, this.fieldSize - 2)
 		this.context.fillStyle = textcolor
 		this.context.font = textfont
 		this.context.textAlign = "center"
-		this.context.fillText(text, (this.size) * x + 0.5 * this.size, (this.size) * y + 0.80 * this.size)
+		this.context.fillText(text, (this.fieldSize) * x + 0.5 * this.fieldSize, (this.fieldSize) * y + 0.80 * this.fieldSize)
 	}
 
 	mouseDown(event: MouseEvent) {
@@ -119,81 +119,63 @@ export class MinestrygerGameComponent {
 		//this.resetLastHoverPosition()
 	}
 
-	gridPositionFromMousePosition(event: MouseEvent) {
+	private gridPositionFromMousePosition(event: MouseEvent) {
 		const rect = this.canvas.getBoundingClientRect()
 		const mx = event.clientX - rect.left
 		const my = event.clientY - rect.top
-		const x = Math.floor(mx / this.size)
-		const y = Math.floor(my / this.size)
+		const x = Math.floor(mx / this.fieldSize)
+		const y = Math.floor(my / this.fieldSize)
 		return { x: x, y: y }
 	}
 
-	hasFinished() {
+	private hasFinished() {
 		return false
 	}
 
-	isLeftButton(event: MouseEvent) {
+	private isLeftButton(event: MouseEvent) {
 		return event.button === 0
 	}
 
-	isMiddleButton(event: MouseEvent) {
+	private isMiddleButton(event: MouseEvent) {
 		return event.button === 1
 	}
 
-	isRightButton(event: MouseEvent) {
+	private isRightButton(event: MouseEvent) {
 		return event.button === 2
 	}
 
-	handleLeftMouse(mouseDown: boolean, x: number, y: number) {
+	private handleLeftMouse(mouseDown: boolean, x: number, y: number) {
 		this.leftMouseDown = mouseDown
 		if (this.shouldClickField())
-			this.clickField(x, y)
+			this.revealField(x, y)
 		if (this.rightMouseDown && this.leftMouseDown)
 			this.revealSurroundings(x, y)
 	}
 
-	handleMiddleMouse(mouseDown: boolean, x: number, y: number) {
+	private handleMiddleMouse(mouseDown: boolean, x: number, y: number) {
 		this.middleMouseDown = mouseDown
 		if (!this.middleMouseDown)
 			this.revealSurroundings(x, y)
 	}
 
-	handleRightMouse(mouseDown: boolean, x: number, y: number) {
+	private handleRightMouse(mouseDown: boolean, x: number, y: number) {
 		this.rightMouseDown = mouseDown
 		if (this.rightMouseDown && this.leftMouseDown)
 			this.revealSurroundings(x, y)
 	}
 
-	shouldClickField() {
+	private shouldClickField() {
 		return this.activateOnMouseDown === this.leftMouseDown
 	}
 
-	clickField(x: number, y: number) {
-		if (!this.isTimerRunning())
-			this.firstClick(x, y)
-		this.revealField(x, y)
-	}
-
-	isTimerRunning() {
-		return this.timerId !== undefined
-	}
-
-	firstClick(x: number, y: number) {
-		//this.game.state.generateAround(x, y)
-		this.timerId = 1
-		//Opsæt ny bane
-		//Start timer
-	}
-
-	revealSurroundings(x: number, y: number) {
-		//
-	}
-
-	revealField(x: number, y: number) {
+	private revealField(x: number, y: number) {
 		this.game.update(new RevealAction(x, y))
-		//game.reveal xy
 		//Tjek efter vinder
 		for (const { x, y } of this.game.state.board.allFields())
 			this.drawField(x, y)
+	}
+
+	private revealSurroundings(x: number, y: number) {
+		//
 	}
 }
