@@ -19,3 +19,16 @@ For at kunne køre og teste det kode man skriver, må man starte både backend o
 ## Produktion
 
 Production håndteres ved at clone projektet på serveren, navigere ind i mappen og køre `yarn install --production` og derefter køre `./deploy-production.sh` (det kræver at man har kørt `build-production.bat` og committed det). Serveren startes med `nohup node dist/apps/api/main.js &` (`&` starter det som en baggrundsprocess, og `nohup` sørger for den ikke stopper når sessionen gør). Process id'en kan findes med `ps -x`, som viser kørende processer, og serveren stoppes så med `kill 1234` (hvor 1234 er processens id).
+
+Skridt:
+```
+ssh pi@123.123.123.123
+// skriv kode
+ps -x
+// find pid
+kill 1234
+cd FamilienLundin
+git pull
+./deploy-production.sh
+nohup node dist/apps/api/main.js &
+```
