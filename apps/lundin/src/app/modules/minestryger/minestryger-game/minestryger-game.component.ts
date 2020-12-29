@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core"
-import { FlagAction, Minestryger, MinestrygerConfig, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
+import { FlagAction, Minestryger, MinestrygerAction, MinestrygerConfig, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
 import { MinestrygerService } from "../minestryger.service"
 
 @Component({
@@ -239,15 +239,25 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	private revealField(x: number, y: number) {
-		this.game.update(new RevealAction(x, y))
-		//Tjek efter vinder
-		if (this.game.state.playState === PlayState.Won)
-			this.minestrygerService.registerScore({
-				time: this.game.state.finishTime,
-				date: new Date().toISOString(),
-				type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.config.allowFlags ? "f" : "n"}`,
-			})
+		this.perform(new RevealAction(x, y))
+	}
+
+	private perform(action: MinestrygerAction) {
+		const oldState = this.game.state.playState
+		this.game.update(action)
+		const newState = this.game.state.playState
+		if (newState === PlayState.Won && oldState !== newState)
+			this.registerScore()
 		this.drawEverything()
+	}
+
+	private registerScore() {
+		const score = {
+			time: this.game.state.finishTime,
+			date: new Date().toISOString().split("T")[0],
+			type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.config.allowFlags ? "f" : "n"}`,
+		}
+		this.minestrygerService.registerScore(score)
 	}
 
 	private flagField(x: number, y: number) {
@@ -266,9 +276,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	private revealSurroundings(x: number, y: number) {
-		this.game.update(new RevealAreaAction(x, y))
-		// tjek vinder
-		this.drawEverything()
+		this.perform(new RevealAreaAction(x, y))
 	}
 
 	private timerUpdate = () => {

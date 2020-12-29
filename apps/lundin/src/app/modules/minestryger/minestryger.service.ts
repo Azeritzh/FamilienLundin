@@ -6,8 +6,8 @@ import { BehaviorSubject } from "rxjs"
 @Injectable()
 export class MinestrygerService {
 	topScores: TopScoreSet = {
-		beginnerFlags: [{ userId: 678138, time: 12023, date: "2020-03-23" }],
-		trainedFlags: [{ userId: 678138, time: 52723, date: "2020-03-24" }],
+		beginnerFlags: [],
+		trainedFlags: [],
 		expertFlags: [],
 		beginnerNoFlags: [],
 		trainedNoFlags: [],
