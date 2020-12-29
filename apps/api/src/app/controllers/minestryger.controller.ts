@@ -19,18 +19,19 @@ export class MinestrygerController {
 	@UseGuards(JwtAuthGuard)
 	@Post("register")
 	async registerScore(@Req() request: RequestWithUser, @Body() score: NewScore) {
-		const userId = request.user._id
+		this.ensureTopScoresExist()
 		const collection = this.storageService.minestrygerTopScoreCollection
-		const topscores = collection.findOne()
-			?? this.newTopScores()
-		if (collection.findOne())
-			collection.deleteOne(() => true)
-		this.updateTopScores(topscores, userId, score)
-		collection.insertOne(<any>topscores)
-		return topscores
+		collection.updateOne(() => true, this.updateTopScores(request.user._id, score))
+		return collection.findOne()
 	}
 
-	private updateTopScores(topscores: TopScoreSet, userId: number, score: NewScore) {
+	private ensureTopScoresExist() {
+		const topscores = this.storageService.minestrygerTopScoreCollection.findOne()
+		if (!topscores)
+			this.storageService.minestrygerTopScoreCollection.insertOne(<any>this.newTopScores())
+	}
+
+	private updateTopScores = (userId: number, score: NewScore) => (topscores: TopScoreSet) => {
 		const newScore = { userId, time: score.time, date: score.date }
 		if (score.type === "9-9-10-f")
 			this.insertInto(topscores.beginnerFlags, newScore)
