@@ -4,11 +4,12 @@ import { join } from "path"
 import { AuthModule } from "../auth/auth.module"
 import { StorageModule } from "../storage/storage.module"
 import { UserModule } from "../user/user.module"
-import { AcnestryController } from "./controllers/ancestry.controller"
+import { AncestryController } from "./controllers/ancestry.controller"
 import { AuthController } from "./controllers/auth.controller"
 import { CalendarController } from "./controllers/calendar.controller"
 import { CryptController } from "./controllers/crypt.controller"
 import { MessageController } from "./controllers/message.controller"
+import { MinestrygerController } from "./controllers/minestryger.controller"
 import { UserController } from "./controllers/user.controller"
 
 @Module({
@@ -21,11 +22,12 @@ import { UserController } from "./controllers/user.controller"
 		UserModule,
 	],
 	controllers: [
-		AcnestryController,
+		AncestryController,
 		AuthController,
 		CalendarController,
 		CryptController,
 		MessageController,
+		MinestrygerController,
 		UserController,
 	],
 })

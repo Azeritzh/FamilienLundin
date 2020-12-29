@@ -7,5 +7,6 @@ module.exports = {
     "<rootDir>/libs/noughts-and-crosses",
     "<rootDir>/libs/virus",
     "<rootDir>/libs/utility",
+    "<rootDir>/libs/minestryger",
   ],
 }

@@ -51,3 +51,24 @@ export interface PersonalRelation {
 	id: number
 	description: string
 }
+
+export interface TopScoreSet {
+	beginnerFlags: TopScore[]
+	trainedFlags: TopScore[]
+	expertFlags: TopScore[]
+	beginnerNoFlags: TopScore[]
+	trainedNoFlags: TopScore[]
+	expertNoFlags: TopScore[]
+}
+
+export interface TopScore {
+	userId: number
+	time: number
+	date: string
+}
+
+export interface NewScore {
+	type: string
+	time: number
+	date: string
+}

@@ -1,0 +1,38 @@
+:host {
+	display: grid;
+	grid-template-areas: "game game game"
+		"time button bombs";
+	grid-template-rows: 1fr 2rem;
+	grid-template-columns: 3rem 1fr 3rem;
+	width: fit-content;
+	height: fit-content;
+}
+
+canvas { grid-area: game; }
+
+.number-box {
+	width: 3rem;
+	height: 2rem;
+	text-align: center;
+	line-height: 2rem;
+	font-weight: bold;
+	font-size: 1.2rem;
+	color: red;
+	background-color: black;
+}
+
+.time {
+	@extend .number-box;
+	grid-area: time;
+}
+
+button {
+	grid-area: button;
+	border-radius: 0;
+}
+
+.bombs {
+	@extend .number-box;
+	grid-area: bombs;
+	margin-left: auto;
+}

@@ -4,7 +4,7 @@ import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
 
 @Controller("ancestry")
-export class AcnestryController {
+export class AncestryController {
 	constructor(
 		private readonly storageService: StorageService
 	) { }
