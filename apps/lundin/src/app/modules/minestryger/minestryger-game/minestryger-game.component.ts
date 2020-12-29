@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core"
-import { FlagAction, Minestryger, PlayState, RevealAction } from "@lundin/minestryger"
+import { FlagAction, Minestryger, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
 
 @Component({
 	selector: "lundin-minestryger-game",
@@ -215,7 +215,9 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	private revealSurroundings(x: number, y: number) {
-		//
+		this.game.update(new RevealAreaAction(x, y))
+		// tjek vinder
+		this.drawEverything()
 	}
 
 	private timerUpdate = () => {
