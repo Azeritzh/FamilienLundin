@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { FlagAction, Minestryger, MinestrygerConfig, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
+import { MinestrygerService } from "../minestryger.service"
 
 @Component({
 	selector: "lundin-minestryger-game",
@@ -27,6 +28,8 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	private middleMouseDown = false
 	private rightMouseDown = false
 	private lastHoverPosition?: { x: number, y: number }
+
+	constructor(private minestrygerService: MinestrygerService) { }
 
 	ngOnInit() {
 		this.startGame()
@@ -238,6 +241,12 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	private revealField(x: number, y: number) {
 		this.game.update(new RevealAction(x, y))
 		//Tjek efter vinder
+		if (this.game.state.playState === PlayState.Won)
+			this.minestrygerService.registerScore({
+				time: this.game.state.finishTime,
+				date: new Date().toISOString(),
+				type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.config.allowFlags ? "f" : "n"}`,
+			})
 		this.drawEverything()
 	}
 

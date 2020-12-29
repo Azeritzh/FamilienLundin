@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { TopScoreSet } from "@lundin/api-interfaces"
+import { NewScore, TopScoreSet } from "@lundin/api-interfaces"
 import { BehaviorSubject } from "rxjs"
 
 @Injectable()
@@ -28,7 +28,7 @@ export class MinestrygerService {
 		return this.topScores$
 	}
 
-	registerScore(score: { time: number, date: string }) {
+	registerScore(score: NewScore) {
 		return this.httpClient.post("api/minestryger/register", score).toPromise()
 	}
 }

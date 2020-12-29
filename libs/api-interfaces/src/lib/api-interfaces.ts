@@ -53,16 +53,22 @@ export interface PersonalRelation {
 }
 
 export interface TopScoreSet {
-	beginnerFlags: HighScore[]
-	trainedFlags: HighScore[]
-	expertFlags: HighScore[]
-	beginnerNoFlags: HighScore[]
-	trainedNoFlags: HighScore[]
-	expertNoFlags: HighScore[]
+	beginnerFlags: TopScore[]
+	trainedFlags: TopScore[]
+	expertFlags: TopScore[]
+	beginnerNoFlags: TopScore[]
+	trainedNoFlags: TopScore[]
+	expertNoFlags: TopScore[]
 }
 
-export interface HighScore {
+export interface TopScore {
 	userId: number
+	time: number
+	date: string
+}
+
+export interface NewScore {
+	type: string
 	time: number
 	date: string
 }
