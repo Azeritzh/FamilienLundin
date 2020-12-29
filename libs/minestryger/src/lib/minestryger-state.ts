@@ -13,7 +13,7 @@ export class MinestrygerState implements GameState {
 
 export enum PlayState { NotStarted, Started, Won, Lost }
 
-class Field {
+export class Field {
 	bomb = false
 	revealed = false
 	surroundingBombs = 0
