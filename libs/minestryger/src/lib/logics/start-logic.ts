@@ -29,28 +29,47 @@ export class StartLogic implements GameLogic<MinestrygerAction> {
 	}
 
 	generateAround(x: number, y: number) {
-		const board = this.state.board
-		const surroundingFields = [...board.fieldsAround(x, y)].map(x => x.field)
-		for (const _ of range(0, this.config.bombs)) {
-			let field = this.getRandomField()
-			while (surroundingFields.includes(field) || field.bomb) // TODO: this risks an infinite loop
-				field = this.getRandomField()
-			field.bomb = true
-		}
-		for (const { x, y, field } of board.allFields()) {
-			const nearby = [...board.fieldsAround(x, y)].map(x => x.field)
-			const bombs = nearby.filter(x => x.bomb).length
-			field.surroundingBombs = bombs
-		}
+		const bombableFields = this.getBombableFields(x, y)
+		for (const _ of range(0, this.config.bombs))
+			this.takeRandomFrom(bombableFields).bomb = true
+		this.updateBombCounts()
 	}
 
-	private getRandomField() {
-		const x = this.randomInteger(this.config.width)
-		const y = this.randomInteger(this.config.height)
-		return this.state.board.get(x, y)
+	private getBombableFields(startX: number, startY: number) {
+		const startField = this.state.board.get(startX, startY)
+		const surroundingFields = [...this.state.board.fieldsAround(startX, startY)].map(x => x.field)
+		const bombableFields = [...this.state.board.allFields()].map(x => x.field)
+
+		this.removeFrom(bombableFields, x => x === startField)
+		if (this.shouldStartWithEmptyArea())
+			for (const field of surroundingFields)
+				this.removeFrom(bombableFields, x => x === field)
+		return bombableFields
+	}
+
+	private shouldStartWithEmptyArea() {
+		const bombFactor = this.config.bombs / (this.config.width * this.config.height)
+		return bombFactor < 0.5
+	}
+
+	private removeFrom<T>(list: T[], predicate: (entry: T) => boolean) {
+		const index = list.findIndex(predicate)
+		list.splice(index, 1)
+	}
+
+	private takeRandomFrom<T>(list: T[]) {
+		return list.splice(this.randomInteger(list.length), 1)[0]
 	}
 
 	private randomInteger(number: number) {
 		return Math.floor(Math.random() * number)
+	}
+
+	private updateBombCounts() {
+		for (const { x, y, field } of this.state.board.allFields()) {
+			const nearby = [...this.state.board.fieldsAround(x, y)].map(x => x.field)
+			const bombs = nearby.filter(x => x.bomb).length
+			field.surroundingBombs = bombs
+		}
 	}
 }
