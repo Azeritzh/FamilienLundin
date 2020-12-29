@@ -1,37 +1,39 @@
 <h1>Topscores</h1>
 
-<h2>Begynder (med flag)</h2>
-<div *ngFor="let score of topHighscoresFlags.beginner"
-	[title]="score.date">
-	{{score.userId}}: {{score.time}}
-</div>
+<ng-container *ngIf="topScores$ | async as topScores">
+	<h2>Begynder (med flag)</h2>
+	<div *ngFor="let score of topScores.beginnerFlags"
+		[title]="score.date">
+		{{score.userId}}: {{score.time}}
+	</div>
 
-<h2>Øvet (med flag)</h2>
-<div *ngFor="let score of topHighscoresFlags.trained"
-	[title]="score.date">
-	{{score.userId}}: {{score.time}}
-</div>
+	<h2>Øvet (med flag)</h2>
+	<div *ngFor="let score of topScores.trainedFlags"
+		[title]="score.date">
+		{{score.userId}}: {{score.time}}
+	</div>
 
-<h2>Ekspert (med flag)</h2>
-<div *ngFor="let score of topHighscoresFlags.expert"
-	[title]="score.date">
-	{{score.userId}}: {{score.time}}
-</div>
+	<h2>Ekspert (med flag)</h2>
+	<div *ngFor="let score of topScores.expertFlags"
+		[title]="score.date">
+		{{score.userId}}: {{score.time}}
+	</div>
 
-<h2>Begynder (ingen flag)</h2>
-<div *ngFor="let score of topHighscoresNoFlags.beginner"
-	[title]="score.date">
-	{{score.userId}}: {{score.time}}
-</div>
+	<h2>Begynder (ingen flag)</h2>
+	<div *ngFor="let score of topScores.beginnerNoFlags"
+		[title]="score.date">
+		{{score.userId}}: {{score.time}}
+	</div>
 
-<h2>Øvet (ingen flag)</h2>
-<div *ngFor="let score of topHighscoresNoFlags.trained"
-	[title]="score.date">
-	{{score.userId}}: {{score.time}}
-</div>
+	<h2>Øvet (ingen flag)</h2>
+	<div *ngFor="let score of topScores.trainedNoFlags"
+		[title]="score.date">
+		{{score.userId}}: {{score.time}}
+	</div>
 
-<h2>Ekspert (ingen flag)</h2>
-<div *ngFor="let score of topHighscoresNoFlags.expert"
-	[title]="score.date">
-	{{score.userId}}: {{score.time}}
-</div>
+	<h2>Ekspert (ingen flag)</h2>
+	<div *ngFor="let score of topScores.expertNoFlags"
+		[title]="score.date">
+		{{score.userId}}: {{score.time}}
+	</div>
+</ng-container>

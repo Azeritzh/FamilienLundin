@@ -5,6 +5,7 @@ import { MinestrygerGameComponent } from "./minestryger-game/minestryger-game.co
 import { MinestrygerHighscoresComponent } from "./minestryger-highscores/minestryger-highscores.component"
 import { MinestrygerSettingsComponent } from "./minestryger-settings/minestryger-settings.component"
 import { MinestrygerComponent } from "./minestryger.component"
+import { MinestrygerService } from "./minestryger.service"
 
 @NgModule({
 	declarations: [
@@ -17,6 +18,6 @@ import { MinestrygerComponent } from "./minestryger.component"
 		BrowserModule,
 		SharedModule,
 	],
-	providers: [],
+	providers: [MinestrygerService],
 })
 export class MinestrygerModule { }

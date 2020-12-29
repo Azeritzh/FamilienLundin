@@ -1,4 +1,7 @@
 import { Component } from "@angular/core"
+import { TopScoreSet } from "@lundin/api-interfaces"
+import { Observable } from "rxjs"
+import { MinestrygerService } from "../minestryger.service"
 
 @Component({
 	selector: "lundin-minestryger-highscores",
@@ -6,27 +9,9 @@ import { Component } from "@angular/core"
 	styleUrls: ["./minestryger-highscores.component.scss"],
 })
 export class MinestrygerHighscoresComponent {
-	topHighscoresFlags: TopScoreSet = {
-		beginner: [{ userId: 678138, time: 12023, date: "2020-03-23" }],
-		trained: [{ userId: 678138, time: 52723, date: "2020-03-24" }],
-		expert: [],
+	topScores$: Observable<TopScoreSet>
+
+	constructor(minestrygerService: MinestrygerService) {
+		this.topScores$ = minestrygerService.loadTopScores()
 	}
-
-	topHighscoresNoFlags: TopScoreSet = {
-		beginner: [],
-		trained: [],
-		expert: [],
-	}
-}
-
-interface TopScoreSet {
-	beginner: HighScore[]
-	trained: HighScore[]
-	expert: HighScore[]
-}
-
-interface HighScore {
-	userId: number
-	time: number
-	date: string
 }
