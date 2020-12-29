@@ -14,6 +14,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	game = new Minestryger()
 	private context: CanvasRenderingContext2D
 	private fieldSize = 20
+	remainingBombs = 0
 	currentTime: number
 	private timerId: number
 	private leftMouseDown = false
@@ -22,17 +23,28 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	private activateOnMouseDown = false
 
 	ngOnInit() {
-		this.context = this.canvas.getContext("2d")
-		this.canvas.width = this.game.config.width * this.fieldSize
-		this.canvas.height = this.game.config.height * this.fieldSize
-		this.context.fillStyle = "black"
-		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
-		this.drawEverything()
+		this.startGame()
 		this.timerId = window.setInterval(this.timerUpdate, 1000)
 	}
 
 	ngOnDestroy() {
 		window.clearInterval(this.timerId)
+	}
+
+	private startGame() {
+		this.game = new Minestryger()
+		this.remainingBombs = this.game.config.bombs
+		this.currentTime = 0
+		this.resetCanvas()
+		this.drawEverything()
+	}
+
+	private resetCanvas() {
+		this.context = this.canvas.getContext("2d")
+		this.canvas.width = this.game.config.width * this.fieldSize
+		this.canvas.height = this.game.config.height * this.fieldSize
+		this.context.fillStyle = "black"
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 	}
 
 	private drawEverything() {
@@ -190,7 +202,16 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 
 	private flagField(x: number, y: number) {
 		this.game.update(new FlagAction(x, y))
+		this.countRemainingBombs()
 		this.drawEverything()
+	}
+
+	private countRemainingBombs() {
+		const lockedFields = [...this.game.state.board.allFields()]
+			.map(x => x.field)
+			.filter(x => x.locked)
+			.length
+		this.remainingBombs = this.game.config.bombs - lockedFields
 	}
 
 	private revealSurroundings(x: number, y: number) {
@@ -204,5 +225,6 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 			this.currentTime = (Date.now() - this.game.state.startTime) / 1000
 		else
 			this.currentTime = 0
+		this.currentTime = Math.floor(this.currentTime)
 	}
 }

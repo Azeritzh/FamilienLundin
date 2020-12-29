@@ -33,7 +33,7 @@ export class StartLogic implements GameLogic<MinestrygerAction> {
 		const surroundingFields = [...board.fieldsAround(x, y)].map(x => x.field)
 		for (const _ of range(0, this.config.bombs)) {
 			let field = this.getRandomField()
-			while (surroundingFields.includes(field)) // TODO: this risks an infinite loop
+			while (surroundingFields.includes(field) || field.bomb) // TODO: this risks an infinite loop
 				field = this.getRandomField()
 			field.bomb = true
 		}
