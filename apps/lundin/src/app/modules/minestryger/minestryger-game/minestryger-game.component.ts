@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from "@angular/core"
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { Minestryger, RevealAction } from "@lundin/minestryger"
 
 @Component({
@@ -6,19 +6,20 @@ import { Minestryger, RevealAction } from "@lundin/minestryger"
 	templateUrl: "./minestryger-game.component.html",
 	styleUrls: ["./minestryger-game.component.scss"],
 })
-export class MinestrygerGameComponent {
+export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	@ViewChild("canvas", { static: true }) canvasElement: ElementRef<HTMLCanvasElement>
 	get canvas() {
 		return this.canvasElement.nativeElement
 	}
 	game = new Minestryger()
-	context: CanvasRenderingContext2D
-	fieldSize = 20
+	private context: CanvasRenderingContext2D
+	private fieldSize = 20
 	currentTime: number
-	leftMouseDown = false
-	middleMouseDown = false
-	rightMouseDown = false
-	activateOnMouseDown = false
+	private timerId: number
+	private leftMouseDown = false
+	private middleMouseDown = false
+	private rightMouseDown = false
+	private activateOnMouseDown = false
 
 	ngOnInit() {
 		this.context = this.canvas.getContext("2d")
@@ -28,6 +29,11 @@ export class MinestrygerGameComponent {
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 		for (const { x, y } of this.game.state.board.allFields())
 			this.drawField(x, y)
+		this.timerId = window.setInterval(this.timerUpdate, 1000)
+	}
+
+	ngOnDestroy() {
+		window.clearInterval(this.timerId)
 	}
 
 	private drawField(x: number, y: number, hover = false) {
@@ -177,5 +183,14 @@ export class MinestrygerGameComponent {
 
 	private revealSurroundings(x: number, y: number) {
 		//
+	}
+
+	private timerUpdate = () => {
+		if (this.game.state.finishTime)
+			this.currentTime = this.game.state.finishTime / 1000
+		else if (this.game.state.startTime)
+			this.currentTime = (Date.now() - this.game.state.startTime) / 1000
+		else
+			this.currentTime = 0
 	}
 }
