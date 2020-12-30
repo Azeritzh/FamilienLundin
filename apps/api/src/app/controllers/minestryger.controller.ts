@@ -1,4 +1,4 @@
-import type { NewMinestrygerScore, MinestrygerTopScoreSet, MinestrygerTopScore } from "@lundin/api-interfaces"
+import type { MinestrygerScoreSet, MinestrygerTopScore, MinestrygerTopScoreSet, NewMinestrygerScore } from "@lundin/api-interfaces"
 import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
@@ -19,10 +19,34 @@ export class MinestrygerController {
 	@UseGuards(JwtAuthGuard)
 	@Post("register")
 	async registerScore(@Req() request: RequestWithUser, @Body() score: NewMinestrygerScore) {
+		this.addToTopScore(request.user._id, score)
+		this.addToPersonalScore(request.user._id, score)
+		return this.storageService.minestrygerTopScoreCollection.findOne()
+	}
+
+	private addToPersonalScore(userId: number, score: NewMinestrygerScore) {
+		this.ensureScoresExist(userId)
+		const collection = this.storageService.minestrygerScoreCollection
+		collection.updateOne({ userId }, this.updateScores(score))
+	}
+
+	private ensureScoresExist(userId: number) {
+		const scores = this.storageService.minestrygerScoreCollection.findOne({ userId })
+		if (!scores)
+			this.storageService.minestrygerScoreCollection.insertOne({ _id: 0, userId, categories: {} })
+	}
+
+	private updateScores = (score: NewMinestrygerScore) => (scoreSet: MinestrygerScoreSet) => {
+		const scores = scoreSet.categories[score.type] ?? []
+		scores.push({ time: score.time, date: score.date })
+		scores.sort((a, b) => a.time - b.time)
+		scoreSet.categories[score.type] = scores
+	}
+
+	private addToTopScore(userId: number, score: NewMinestrygerScore) {
 		this.ensureTopScoresExist()
 		const collection = this.storageService.minestrygerTopScoreCollection
-		collection.updateOne(() => true, this.updateTopScores(request.user._id, score))
-		return collection.findOne()
+		collection.updateOne({}, this.updateTopScores(userId, score))
 	}
 
 	private ensureTopScoresExist() {
