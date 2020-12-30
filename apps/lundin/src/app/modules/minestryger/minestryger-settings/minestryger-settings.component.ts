@@ -16,6 +16,8 @@ export class MinestrygerSettingsComponent {
 	@Output() allowFlagsChange = new EventEmitter<number>()
 	@Input() activateOnMouseDown = false
 	@Output() activateOnMouseDownChange = new EventEmitter<number>()
+	@Input() fieldSize = 20
+	@Output() fieldSizeChange = new EventEmitter<number>()
 	@Output() triggerNewGame = new EventEmitter()
 	showAdvancedSettings = false
 

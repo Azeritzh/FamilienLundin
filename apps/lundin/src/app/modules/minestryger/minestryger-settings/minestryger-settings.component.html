@@ -73,4 +73,13 @@
 			(ngModelChange)="activateOnMouseDownChange.emit($event)"
 			autocomplete="off">
 	</div>
+	
+	<div class="setting">
+		<label for="fieldSize">Feltstørrelse</label>
+		<input id="fieldSize"
+			type="number"
+			[ngModel]="fieldSize"
+			(ngModelChange)="fieldSizeChange.emit($event)"
+			autocomplete="off">
+	</div>
 </ng-container>

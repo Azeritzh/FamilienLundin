@@ -14,6 +14,7 @@ export class MinestrygerComponent {
 	bombs = 99
 	allowFlags = true
 	activateOnMouseDown = false
+	fieldSize = 20
 
 	currentCategory() {
 		return `${this.width}-${this.height}-${this.bombs}-${this.allowFlags ? "f" : "n"}`

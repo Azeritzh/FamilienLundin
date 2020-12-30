@@ -13,6 +13,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	@Input() bombs = 99
 	@Input() allowFlags = true
 	@Input() activateOnMouseDown = false
+	@Input() fieldSize = 20
 
 	@ViewChild("canvas", { static: true }) canvasElement: ElementRef<HTMLCanvasElement>
 	get canvas() {
@@ -20,7 +21,6 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 	game = new Minestryger()
 	private context: CanvasRenderingContext2D
-	private fieldSize = 20
 	remainingBombs = 0
 	currentTime: number
 	private timerId: number
@@ -73,13 +73,13 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		const field = this.game.state.board.get(x, y)
 		let color = "grey"
 		let text = ""
-		let textfont = "bold " + (this.fieldSize - 4) + "px arial"
+		let textfont = "bold " + (this.fieldSize * 0.8) + "px arial"
 		let textcolor = "black"
 		if (field.revealed) {
 			if (field.bomb) {
 				color = "red"
 				text = "💣"
-				textfont = this.context.font = (this.fieldSize - 8) + "px serif"
+				textfont = (this.fieldSize * 0.6) + "px serif"
 			}
 			else {
 				color = "white"
@@ -92,7 +92,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		else {
 			if (field.locked) {
 				text = "⚑"
-				textfont = (this.fieldSize - 4) + "px serif"
+				textfont = (this.fieldSize * 0.8) + "px serif"
 				textcolor = "red"
 			}
 			else if (hover) {
@@ -120,8 +120,8 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		y: number,
 		text: string,
 		color: string,
-		textcolor = "black",
-		textfont = "bold " + (this.fieldSize - 4) + "px arial"
+		textcolor: string,
+		textfont: string
 	) {
 		this.context.fillStyle = color
 		this.context.fillRect(this.fieldSize * x + 1, this.fieldSize * y + 1, this.fieldSize - 2, this.fieldSize - 2)
