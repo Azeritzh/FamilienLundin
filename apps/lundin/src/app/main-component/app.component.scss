@@ -10,7 +10,7 @@
 	transition: 0.3s ease; // transition only works with grid-template-columns in firefox so far
 }
 :host.hidden-navigation {
-	grid-template-columns: 0 1fr;
+	grid-template-columns: 4rem 1fr;
 }
 
 header { grid-area: header; }
@@ -67,7 +67,8 @@ a + button { margin-top: auto; }
 
 .nav-btn span {
 	margin-top: auto;
-    margin-bottom: auto;
+	margin-bottom: auto;
+	white-space: nowrap;
 }
 
 .nav-btn:hover {
@@ -91,3 +92,7 @@ a + button { margin-top: auto; }
 	padding: 1rem calc(50vw - 20rem);
 }
 .overlay.hidden { display: none; }
+
+.nav-text {
+	margin-left: 0.4rem;
+}

@@ -3,21 +3,21 @@
 	<a routerLink="profile">Profil</a>
 </header>
 <nav *ngIf="authService.isLoggedIn()">
-	<button (click)="hideNavigation = true"
+	<button (click)="hideNavigation = !hideNavigation"
 		class="nav-btn collaps-btn">
-		<img src="/assets/images/icons/Collapse1_icon.svg">
-		<span>Kollaps</span>
+		<img [src]="hideNavigation ? '/assets/images/icons/Collapse2_icon.svg' : '/assets/images/icons/Collapse1_icon.svg'">
+		<span class="nav-text">Kollaps</span>
 	</button>
 	<a *ngFor="let entry of navigationEntries"
 		[routerLink]="entry.link"
 		class="nav-btn">
 		<img src={{entry.imageUrl}}>
-		<span>{{entry.text}}</span>
+		<span class="nav-text">{{entry.text}}</span>
 	</a>
 	<button (click)="authService.logout()"
 		class="nav-btn logout-btn">
 		<img src="/assets/images/icons/LogOut_icon.svg">
-		<span>Log ud</span>
+		<span class="nav-text">Log ud</span>
 	</button>
 </nav>
 <article *ngIf="authService.isLoggedIn()">

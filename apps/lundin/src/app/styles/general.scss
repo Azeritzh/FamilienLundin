@@ -12,6 +12,7 @@ button {
     padding: 0 0.5rem;
     border-radius: var(--border-radius-size);
     color: white;
+    outline: unset;
 }
 
 button:hover{
