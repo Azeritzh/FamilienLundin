@@ -53,6 +53,7 @@ export class MinestrygerController {
 			? existingScore
 			: newScore
 		topscores.push(bestScore)
+		topscores.sort((a, b) => a.time - b.time)
 	}
 
 	private takeExisting(userId: number, topscores: TopScore[]) {
