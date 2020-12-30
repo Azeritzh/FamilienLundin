@@ -26,7 +26,7 @@
 	<input id="flags"
 		type="checkbox"
 		[ngModel]="allowFlags"
-		(ngModelChange)="allowFlagsChange.emit($event)"
+		(ngModelChange)="allowFlagsChange.emit($event); triggerNewGame.emit()"
 		autocomplete="off">
 </div>
 

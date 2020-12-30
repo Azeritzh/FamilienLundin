@@ -1,4 +1,6 @@
-import { Component } from "@angular/core"
+import { Component, ViewChild } from "@angular/core"
+import { PlayState } from "@lundin/minestryger"
+import { MinestrygerGameComponent } from "./minestryger-game/minestryger-game.component"
 
 @Component({
 	selector: "lundin-minestryger",
@@ -6,6 +8,7 @@ import { Component } from "@angular/core"
 	styleUrls: ["./minestryger.component.scss"],
 })
 export class MinestrygerComponent {
+	@ViewChild(MinestrygerGameComponent) gameComponent: MinestrygerGameComponent
 	width = 30
 	height = 16
 	bombs = 99
@@ -14,5 +17,10 @@ export class MinestrygerComponent {
 
 	currentCategory() {
 		return `${this.width}-${this.height}-${this.bombs}-${this.allowFlags ? "f" : "n"}`
+	}
+
+	triggerNewGame() {
+		if (this.gameComponent.game.state.playState !== PlayState.Started)
+			setTimeout(() => this.gameComponent.startGame(), 1)
 	}
 }

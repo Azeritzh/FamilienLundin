@@ -8,6 +8,7 @@
 	[(height)]="height"
 	[(bombs)]="bombs"
 	[(allowFlags)]="allowFlags"
-	[(activateOnMouseDown)]="activateOnMouseDown">
+	[(activateOnMouseDown)]="activateOnMouseDown"
+	(triggerNewGame)="triggerNewGame()">
 </lundin-minestryger-settings>
 <lundin-minestryger-highscores [category]="currentCategory()"></lundin-minestryger-highscores>
