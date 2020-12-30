@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { NewMinestrygerScore, MinestrygerTopScoreSet } from "@lundin/api-interfaces"
+import { NewMinestrygerScore, MinestrygerTopScoreSet, MinestrygerScoreSet } from "@lundin/api-interfaces"
 import { BehaviorSubject } from "rxjs"
 
 @Injectable()
@@ -18,7 +18,25 @@ export class MinestrygerService {
 		return this._topScores$.asObservable()
 	}
 
+	myScores: MinestrygerScoreSet = {
+		_id: 0,
+		userId: 0,
+		categories: {},
+	}
+	private _myScores$ = new BehaviorSubject<MinestrygerScoreSet>(this.myScores)
+	get myScores$() {
+		return this._myScores$.asObservable()
+	}
+
 	constructor(private httpClient: HttpClient) { }
+
+	loadMyScores() {
+		this.httpClient.get<MinestrygerScoreSet>("api/minestryger/load-my-scores").toPromise().then(myScores => {
+			this.myScores = myScores
+			this._myScores$.next(this.myScores)
+		})
+		return this.myScores$
+	}
 
 	loadTopScores() {
 		this.httpClient.get<MinestrygerTopScoreSet>("api/minestryger/load-top-scores").toPromise().then(topScores => {

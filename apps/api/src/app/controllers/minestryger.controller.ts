@@ -11,6 +11,13 @@ export class MinestrygerController {
 	) { }
 
 	@UseGuards(JwtAuthGuard)
+	@Get("load-my-scores")
+	async loadMyScores(@Req() request: RequestWithUser) {
+		const userId = request.user._id
+		return this.storageService.minestrygerScoreCollection.findOne({ userId }) ?? this.newMyScores(userId)
+	}
+
+	@UseGuards(JwtAuthGuard)
 	@Get("load-top-scores")
 	async loadTopScores() {
 		return this.storageService.minestrygerTopScoreCollection.findOne() ?? this.newTopScores()
@@ -33,7 +40,7 @@ export class MinestrygerController {
 	private ensureScoresExist(userId: number) {
 		const scores = this.storageService.minestrygerScoreCollection.findOne({ userId })
 		if (!scores)
-			this.storageService.minestrygerScoreCollection.insertOne({ _id: 0, userId, categories: {} })
+			this.storageService.minestrygerScoreCollection.insertOne(this.newMyScores(userId))
 	}
 
 	private updateScores = (score: NewMinestrygerScore) => (scoreSet: MinestrygerScoreSet) => {
@@ -91,5 +98,9 @@ export class MinestrygerController {
 
 	private newTopScores() {
 		return { beginnerFlags: [], trainedFlags: [], expertFlags: [], beginnerNoFlags: [], trainedNoFlags: [], expertNoFlags: [] }
+	}
+
+	private newMyScores(userId: number) {
+		return { _id: 0, userId, categories: {} }
 	}
 }

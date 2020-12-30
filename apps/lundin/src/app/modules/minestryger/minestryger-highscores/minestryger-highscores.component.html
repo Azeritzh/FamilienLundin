@@ -47,9 +47,8 @@
 <h1>Mine tider</h1>
 <ng-container *ngIf="myScores$ | async as myScores">
 	<h2>Nuværende indstillinger</h2>
-	<div *ngFor="let score of currentCategory(myScores)"
-		[title]="score.date">
-		<span class="name">{{score.userId | user | async}}:</span>
+	<div *ngFor="let score of currentCategory(myScores)">
+		<span class="name">{{score.date | date:"yyyy-MM-dd hh:mm"}}</span>
 		<span class="time">{{score.time / 1000 | number:'1.2-2'}}s</span>
 	</div>
 </ng-container>

@@ -14,6 +14,7 @@ export class MinestrygerHighscoresComponent {
 
 	constructor(minestrygerService: MinestrygerService) {
 		this.topScores$ = minestrygerService.loadTopScores()
+		this.myScores$ = minestrygerService.loadMyScores()
 	}
 
 	currentCategory(myScores: MinestrygerScoreSet) {
