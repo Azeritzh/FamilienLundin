@@ -71,8 +71,10 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	private sizeToArea() {
 		const width = window.innerWidth / 2
 		const height = window.innerHeight / 2
-		const horisontalFieldSize = Math.floor(width / this.width)
-		const verticalFieldSize = Math.floor(height / this.height)
+		const horisontalFields = Math.max(this.width, 30) // make size for at least the expert version
+		const verticalFields = Math.max(this.height, 16) // make size for at least the expert version
+		const horisontalFieldSize = Math.floor(width / horisontalFields)
+		const verticalFieldSize = Math.floor(height / verticalFields)
 		this.fieldSize = Math.min(horisontalFieldSize, verticalFieldSize)
 		this.fieldSize = Math.max(this.fieldSize, 15)
 	}
