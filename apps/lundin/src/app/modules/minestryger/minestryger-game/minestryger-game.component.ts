@@ -54,7 +54,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		this.drawEverything()
 	}
 
-	private resetCanvas() {
+	resetCanvas() {
 		this.context = this.canvas.getContext("2d")
 		this.canvas.width = this.game.config.width * this.fieldSize
 		this.canvas.height = this.game.config.height * this.fieldSize
@@ -62,7 +62,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 	}
 
-	private drawEverything() {
+	drawEverything() {
 		for (const { x, y } of this.game.state.board.allFields())
 			this.drawField(x, y)
 	}

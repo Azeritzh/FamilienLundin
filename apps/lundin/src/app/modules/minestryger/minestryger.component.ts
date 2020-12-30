@@ -15,6 +15,7 @@ export class MinestrygerComponent {
 	allowFlags = true
 	activateOnMouseDown = false
 	fieldSize = 20
+	autoSize = true
 
 	currentCategory() {
 		return `${this.width}-${this.height}-${this.bombs}-${this.allowFlags ? "f" : "n"}`
@@ -23,5 +24,12 @@ export class MinestrygerComponent {
 	triggerNewGame() {
 		if (this.gameComponent.game.state.playState !== PlayState.Started)
 			setTimeout(() => this.gameComponent.startGame(), 1)
+	}
+
+	triggerRedraw() {
+		setTimeout(() => {
+			this.gameComponent.resetCanvas()
+			this.gameComponent.drawEverything()
+		}, 1)
 	}
 }

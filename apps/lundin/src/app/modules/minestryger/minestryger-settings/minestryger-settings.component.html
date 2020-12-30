@@ -79,7 +79,17 @@
 		<input id="fieldSize"
 			type="number"
 			[ngModel]="fieldSize"
-			(ngModelChange)="fieldSizeChange.emit($event)"
+			(ngModelChange)="fieldSizeChange.emit($event); triggerRedraw.emit()"
+			autocomplete="off"
+			[disabled]="autoSize">
+	</div>
+
+	<div class="setting">
+		<label for="autoSize">Automatisk feltstørrelse</label>
+		<input id="autoSize"
+			type="checkbox"
+			[ngModel]="autoSize"
+			(ngModelChange)="autoSizeChange.emit($event); triggerRedraw.emit()"
 			autocomplete="off">
 	</div>
 </ng-container>

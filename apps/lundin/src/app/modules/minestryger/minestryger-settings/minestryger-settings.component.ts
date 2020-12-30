@@ -13,12 +13,15 @@ export class MinestrygerSettingsComponent {
 	@Input() bombs = 99
 	@Output() bombsChange = new EventEmitter<number>()
 	@Input() allowFlags = true
-	@Output() allowFlagsChange = new EventEmitter<number>()
+	@Output() allowFlagsChange = new EventEmitter<boolean>()
 	@Input() activateOnMouseDown = false
-	@Output() activateOnMouseDownChange = new EventEmitter<number>()
+	@Output() activateOnMouseDownChange = new EventEmitter<boolean>()
 	@Input() fieldSize = 20
 	@Output() fieldSizeChange = new EventEmitter<number>()
+	@Input() autoSize = true
+	@Output() autoSizeChange = new EventEmitter<boolean>()
 	@Output() triggerNewGame = new EventEmitter()
+	@Output() triggerRedraw = new EventEmitter()
 	showAdvancedSettings = false
 
 	useEasySettings() {
