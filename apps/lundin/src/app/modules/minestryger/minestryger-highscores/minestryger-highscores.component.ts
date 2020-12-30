@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import { MinestrygerTopScoreSet } from "@lundin/api-interfaces"
+import { MinestrygerScoreSet, MinestrygerTopScoreSet } from "@lundin/api-interfaces"
 import { Observable } from "rxjs"
 import { MinestrygerService } from "../minestryger.service"
 
@@ -10,8 +10,13 @@ import { MinestrygerService } from "../minestryger.service"
 })
 export class MinestrygerHighscoresComponent {
 	topScores$: Observable<MinestrygerTopScoreSet>
+	myScores$: Observable<MinestrygerScoreSet>
 
 	constructor(minestrygerService: MinestrygerService) {
 		this.topScores$ = minestrygerService.loadTopScores()
+	}
+
+	currentCategory(myScores: MinestrygerScoreSet) {
+		return myScores.categories["9-9-10-f"] ?? []
 	}
 }

@@ -1,4 +1,4 @@
-<h1>Topscores</h1>
+<h1>Rekordtider</h1>
 
 <ng-container *ngIf="topScores$ | async as topScores">
 	<h2>Begynder (med flag)</h2>
@@ -38,6 +38,16 @@
 
 	<h2>Ekspert (ingen flag)</h2>
 	<div *ngFor="let score of topScores.expertNoFlags"
+		[title]="score.date">
+		<span class="name">{{score.userId | user | async}}:</span>
+		<span class="time">{{score.time / 1000 | number:'1.2-2'}}s</span>
+	</div>
+</ng-container>
+
+<h1>Mine tider</h1>
+<ng-container *ngIf="myScores$ | async as myScores">
+	<h2>Nuværende indstillinger</h2>
+	<div *ngFor="let score of currentCategory(myScores)"
 		[title]="score.date">
 		<span class="name">{{score.userId | user | async}}:</span>
 		<span class="time">{{score.time / 1000 | number:'1.2-2'}}s</span>
