@@ -53,8 +53,10 @@ export class AuthService {
 				console.log("failed login: " + JSON.stringify(error))
 				return null
 			})
-		if (this.loginInfo)
+		if (this.loginInfo) {
+			localStorage.setItem("loginInfo", JSON.stringify(this.loginInfo))
 			this.startRefreshTimer()
+		}
 	}
 
 	async refresh() {
@@ -65,8 +67,10 @@ export class AuthService {
 				console.log("failed login: " + JSON.stringify(error))
 				return null
 			})
-		if (this.loginInfo)
+		if (this.loginInfo) {
+			localStorage.setItem("loginInfo", JSON.stringify(this.loginInfo))
 			this.startRefreshTimer()
+		}
 	}
 
 	async logout() {
