@@ -1,6 +1,8 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { FlagAction, Minestryger, MinestrygerAction, MinestrygerConfig, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
+import { NavigationService } from "../../../services/navigation.service"
 import { MinestrygerService } from "../minestryger.service"
+import { WinMessageComponent } from "./win-message.component"
 
 @Component({
 	selector: "lundin-minestryger-game",
@@ -31,7 +33,10 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	private rightMouseDown = false
 	private lastHoverPosition?: { x: number, y: number }
 
-	constructor(private minestrygerService: MinestrygerService) { }
+	constructor(
+		private minestrygerService: MinestrygerService,
+		private navigationService: NavigationService,
+	) { }
 
 	ngOnInit() {
 		this.startGame()
@@ -260,7 +265,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		this.drawEverything()
 	}
 
-	private registerScore() {
+	private async registerScore() {
 		this.timerUpdate()
 		const score = {
 			time: this.game.state.finishTime,
@@ -268,6 +273,8 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 			type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.config.allowFlags ? "f" : "n"}`,
 		}
 		this.minestrygerService.registerScore(score)
+		const component = await this.navigationService.openAsOverlay(WinMessageComponent)
+		component.time = this.game.state.finishTime
 	}
 
 	private flagField(x: number, y: number) {
