@@ -13,7 +13,9 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	@Input() bombs = 99
 	@Input() allowFlags = true
 	@Input() activateOnMouseDown = false
-	@Input() fieldSize = 20
+	@Input("fieldSize") inputFieldSize = 20
+	@Input() autoSize = true
+	fieldSize = 20
 
 	@ViewChild("canvas", { static: true }) canvasElement: ElementRef<HTMLCanvasElement>
 	get canvas() {
@@ -55,11 +57,24 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	resetCanvas() {
+		if (this.autoSize)
+			this.sizeToArea()
+		else
+			this.fieldSize = this.inputFieldSize
 		this.context = this.canvas.getContext("2d")
 		this.canvas.width = this.game.config.width * this.fieldSize
 		this.canvas.height = this.game.config.height * this.fieldSize
 		this.context.fillStyle = "black"
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
+	}
+
+	private sizeToArea() {
+		const width = window.innerWidth / 2
+		const height = window.innerHeight / 2
+		const horisontalFieldSize = Math.floor(width / this.width)
+		const verticalFieldSize = Math.floor(height / this.height)
+		this.fieldSize = Math.min(horisontalFieldSize, verticalFieldSize)
+		this.fieldSize = Math.max(this.fieldSize, 15)
 	}
 
 	drawEverything() {
