@@ -2,7 +2,7 @@ import type { NewScore, TopScoreSet, TopScore } from "@lundin/api-interfaces"
 import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
-import { RequestWithUser } from "./auth.controller"
+import type { RequestWithUser } from "./auth.controller"
 
 @Controller("minestryger")
 export class MinestrygerController {
@@ -56,7 +56,7 @@ export class MinestrygerController {
 	}
 
 	private takeExisting(userId: number, topscores: TopScore[]) {
-		const existingScore = topscores.find(x => x.userId = userId)
+		const existingScore = topscores.find(x => x.userId === userId)
 		if (!existingScore)
 			return
 		const index = topscores.indexOf(existingScore)
