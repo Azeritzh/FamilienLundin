@@ -1,14 +1,21 @@
-import type { NewScore, TopScoreSet, TopScore } from "@lundin/api-interfaces"
+import type { MinestrygerScoreSet, MinestrygerTopScore, MinestrygerTopScoreSet, NewMinestrygerScore } from "@lundin/api-interfaces"
 import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
-import { RequestWithUser } from "./auth.controller"
+import type { RequestWithUser } from "./auth.controller"
 
 @Controller("minestryger")
 export class MinestrygerController {
 	constructor(
 		private readonly storageService: StorageService
 	) { }
+
+	@UseGuards(JwtAuthGuard)
+	@Get("load-my-scores")
+	async loadMyScores(@Req() request: RequestWithUser) {
+		const userId = request.user._id
+		return this.storageService.minestrygerScoreCollection.findOne({ userId }) ?? this.newMyScores(userId)
+	}
 
 	@UseGuards(JwtAuthGuard)
 	@Get("load-top-scores")
@@ -18,11 +25,35 @@ export class MinestrygerController {
 
 	@UseGuards(JwtAuthGuard)
 	@Post("register")
-	async registerScore(@Req() request: RequestWithUser, @Body() score: NewScore) {
+	async registerScore(@Req() request: RequestWithUser, @Body() score: NewMinestrygerScore) {
+		this.addToTopScore(request.user._id, score)
+		this.addToPersonalScore(request.user._id, score)
+		return this.storageService.minestrygerTopScoreCollection.findOne()
+	}
+
+	private addToPersonalScore(userId: number, score: NewMinestrygerScore) {
+		this.ensureScoresExist(userId)
+		const collection = this.storageService.minestrygerScoreCollection
+		collection.updateOne({ userId }, this.updateScores(score))
+	}
+
+	private ensureScoresExist(userId: number) {
+		const scores = this.storageService.minestrygerScoreCollection.findOne({ userId })
+		if (!scores)
+			this.storageService.minestrygerScoreCollection.insertOne(this.newMyScores(userId))
+	}
+
+	private updateScores = (score: NewMinestrygerScore) => (scoreSet: MinestrygerScoreSet) => {
+		const scores = scoreSet.categories[score.type] ?? []
+		scores.push({ time: score.time, date: score.date })
+		scores.sort((a, b) => a.time - b.time)
+		scoreSet.categories[score.type] = scores
+	}
+
+	private addToTopScore(userId: number, score: NewMinestrygerScore) {
 		this.ensureTopScoresExist()
 		const collection = this.storageService.minestrygerTopScoreCollection
-		collection.updateOne(() => true, this.updateTopScores(request.user._id, score))
-		return collection.findOne()
+		collection.updateOne({}, this.updateTopScores(userId, score))
 	}
 
 	private ensureTopScoresExist() {
@@ -31,7 +62,7 @@ export class MinestrygerController {
 			this.storageService.minestrygerTopScoreCollection.insertOne(<any>this.newTopScores())
 	}
 
-	private updateTopScores = (userId: number, score: NewScore) => (topscores: TopScoreSet) => {
+	private updateTopScores = (userId: number, score: NewMinestrygerScore) => (topscores: MinestrygerTopScoreSet) => {
 		const newScore = { userId, time: score.time, date: score.date }
 		if (score.type === "9-9-10-f")
 			this.insertInto(topscores.beginnerFlags, newScore)
@@ -47,16 +78,17 @@ export class MinestrygerController {
 			this.insertInto(topscores.expertNoFlags, newScore)
 	}
 
-	private insertInto(topscores: TopScore[], newScore: TopScore) {
+	private insertInto(topscores: MinestrygerTopScore[], newScore: MinestrygerTopScore) {
 		const existingScore = this.takeExisting(newScore.userId, topscores)
 		const bestScore = existingScore?.time <= newScore.time
 			? existingScore
 			: newScore
 		topscores.push(bestScore)
+		topscores.sort((a, b) => a.time - b.time)
 	}
 
-	private takeExisting(userId: number, topscores: TopScore[]) {
-		const existingScore = topscores.find(x => x.userId = userId)
+	private takeExisting(userId: number, topscores: MinestrygerTopScore[]) {
+		const existingScore = topscores.find(x => x.userId === userId)
 		if (!existingScore)
 			return
 		const index = topscores.indexOf(existingScore)
@@ -66,5 +98,9 @@ export class MinestrygerController {
 
 	private newTopScores() {
 		return { beginnerFlags: [], trainedFlags: [], expertFlags: [], beginnerNoFlags: [], trainedNoFlags: [], expertNoFlags: [] }
+	}
+
+	private newMyScores(userId: number) {
+		return { _id: 0, userId, categories: {} }
 	}
 }

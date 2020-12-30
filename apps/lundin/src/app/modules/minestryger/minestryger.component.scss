@@ -3,7 +3,8 @@
 	display: grid;
 	grid-template-areas: "settings game"
 		"highscore game";
-		grid-template-columns: 16rem 1fr;
+	grid-template-columns: 16rem 1fr;
+	grid-template-rows: max-content;
 }
 
 lundin-minestryger-game { grid-area: game; }
