@@ -10,6 +10,14 @@ import { MinestrygerService } from "../minestryger.service"
 })
 export class MinestrygerHighscoresComponent {
 	@Input() category: string
+	topScoreCategories = [
+		{ key: "beginnerFlags", title: "Begynder (med flag)" },
+		{ key: "trainedFlags", title: "Øvet (med flag)" },
+		{ key: "expertFlags", title: "Ekspert (med flag)" },
+		{ key: "beginnerNoFlags", title: "Begynder (ingen flag)" },
+		{ key: "trainedNoFlags", title: "Øvet (ingen flag)" },
+		{ key: "expertNoFlags", title: "Ekspert (ingen flag)" },
+	]
 	topScores$: Observable<MinestrygerTopScoreSet>
 	myScores$: Observable<MinestrygerScoreSet>
 
