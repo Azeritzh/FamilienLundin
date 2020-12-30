@@ -154,18 +154,10 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	private updateHovering(x: number, y: number) {
-		if (!this.hoverPositionHasChanged(x, y))
-			return
-
 		this.redrawLastHoverPosition()
 		this.drawField(x, y, true)
 		this.showMiddleClickHover(x, y)
 		this.lastHoverPosition = { x, y }
-	}
-
-	private hoverPositionHasChanged(currentX: number, currentY: number) {
-		const lastPosition = this.lastHoverPosition
-		return currentX != lastPosition?.x || currentY != lastPosition?.y
 	}
 
 	private redrawLastHoverPosition() {
@@ -231,9 +223,9 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 
 	private handleLeftMouse(mouseDown: boolean, x: number, y: number) {
 		this.leftMouseDown = mouseDown
-		if (this.shouldClickField())
+		if (this.shouldClickField() && !this.rightMouseDown)
 			this.revealField(x, y)
-		if (this.rightMouseDown && this.leftMouseDown)
+		if (!this.leftMouseDown && this.rightMouseDown)
 			this.revealSurroundings(x, y)
 	}
 
@@ -245,9 +237,9 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 
 	private handleRightMouse(mouseDown: boolean, x: number, y: number) {
 		this.rightMouseDown = mouseDown
-		if (this.rightMouseDown && this.leftMouseDown)
+		if (!this.rightMouseDown && this.leftMouseDown)
 			this.revealSurroundings(x, y)
-		else if (this.rightMouseDown)
+		else if (!this.rightMouseDown)
 			this.flagField(x, y)
 	}
 
