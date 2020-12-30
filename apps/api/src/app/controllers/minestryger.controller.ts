@@ -1,4 +1,4 @@
-import type { NewScore, TopScoreSet, TopScore } from "@lundin/api-interfaces"
+import type { NewMinestrygerScore, MinestrygerTopScoreSet, MinestrygerTopScore } from "@lundin/api-interfaces"
 import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
@@ -18,7 +18,7 @@ export class MinestrygerController {
 
 	@UseGuards(JwtAuthGuard)
 	@Post("register")
-	async registerScore(@Req() request: RequestWithUser, @Body() score: NewScore) {
+	async registerScore(@Req() request: RequestWithUser, @Body() score: NewMinestrygerScore) {
 		this.ensureTopScoresExist()
 		const collection = this.storageService.minestrygerTopScoreCollection
 		collection.updateOne(() => true, this.updateTopScores(request.user._id, score))
@@ -31,7 +31,7 @@ export class MinestrygerController {
 			this.storageService.minestrygerTopScoreCollection.insertOne(<any>this.newTopScores())
 	}
 
-	private updateTopScores = (userId: number, score: NewScore) => (topscores: TopScoreSet) => {
+	private updateTopScores = (userId: number, score: NewMinestrygerScore) => (topscores: MinestrygerTopScoreSet) => {
 		const newScore = { userId, time: score.time, date: score.date }
 		if (score.type === "9-9-10-f")
 			this.insertInto(topscores.beginnerFlags, newScore)
@@ -47,7 +47,7 @@ export class MinestrygerController {
 			this.insertInto(topscores.expertNoFlags, newScore)
 	}
 
-	private insertInto(topscores: TopScore[], newScore: TopScore) {
+	private insertInto(topscores: MinestrygerTopScore[], newScore: MinestrygerTopScore) {
 		const existingScore = this.takeExisting(newScore.userId, topscores)
 		const bestScore = existingScore?.time <= newScore.time
 			? existingScore
@@ -56,7 +56,7 @@ export class MinestrygerController {
 		topscores.sort((a, b) => a.time - b.time)
 	}
 
-	private takeExisting(userId: number, topscores: TopScore[]) {
+	private takeExisting(userId: number, topscores: MinestrygerTopScore[]) {
 		const existingScore = topscores.find(x => x.userId === userId)
 		if (!existingScore)
 			return

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import { TopScoreSet } from "@lundin/api-interfaces"
+import { MinestrygerTopScoreSet } from "@lundin/api-interfaces"
 import { Observable } from "rxjs"
 import { MinestrygerService } from "../minestryger.service"
 
@@ -9,7 +9,7 @@ import { MinestrygerService } from "../minestryger.service"
 	styleUrls: ["./minestryger-highscores.component.scss"],
 })
 export class MinestrygerHighscoresComponent {
-	topScores$: Observable<TopScoreSet>
+	topScores$: Observable<MinestrygerTopScoreSet>
 
 	constructor(minestrygerService: MinestrygerService) {
 		this.topScores$ = minestrygerService.loadTopScores()

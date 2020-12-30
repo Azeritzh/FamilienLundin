@@ -52,23 +52,30 @@ export interface PersonalRelation {
 	description: string
 }
 
-export interface TopScoreSet {
-	beginnerFlags: TopScore[]
-	trainedFlags: TopScore[]
-	expertFlags: TopScore[]
-	beginnerNoFlags: TopScore[]
-	trainedNoFlags: TopScore[]
-	expertNoFlags: TopScore[]
+export interface MinestrygerTopScoreSet {
+	beginnerFlags: MinestrygerTopScore[]
+	trainedFlags: MinestrygerTopScore[]
+	expertFlags: MinestrygerTopScore[]
+	beginnerNoFlags: MinestrygerTopScore[]
+	trainedNoFlags: MinestrygerTopScore[]
+	expertNoFlags: MinestrygerTopScore[]
 }
 
-export interface TopScore {
+export interface MinestrygerScore {
+	time: number
+	date: string
+}
+
+export interface MinestrygerTopScore extends MinestrygerScore {
 	userId: number
-	time: number
-	date: string
 }
 
-export interface NewScore {
+export interface NewMinestrygerScore extends MinestrygerScore {
 	type: string
-	time: number
-	date: string
+}
+
+export interface MinestrygerScoreSet {
+	_id: number
+	userId: number
+	categories: { [category: string]: MinestrygerScore[] }
 }
