@@ -33,7 +33,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.startGame()
-		this.timerId = window.setInterval(this.timerUpdate, 1000)
+		this.timerId = window.setInterval(this.timerUpdate, 500)
 	}
 
 	ngOnDestroy() {
@@ -252,6 +252,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	private registerScore() {
+		this.timerUpdate()
 		const score = {
 			time: this.game.state.finishTime,
 			date: new Date().toISOString(),
