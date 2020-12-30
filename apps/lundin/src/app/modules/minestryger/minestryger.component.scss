@@ -1,12 +1,13 @@
 :host {
 	height: 100%;
 	display: grid;
-	grid-template-areas: "settings game"
-		"highscore game";
-	grid-template-columns: 16rem 1fr;
-	grid-template-rows: max-content;
+	grid-template-areas: "settings game highscores";
+	grid-template-columns: 15rem 1fr 15rem;
 }
 
-lundin-minestryger-game { grid-area: game; }
-
+lundin-minestryger-game {
+	grid-area: game;
+	margin: auto;
+}
 lundin-minestryger-settings { grid-area: settings; }
+lundin-minestryger-highscores { grid-area: highscores; }

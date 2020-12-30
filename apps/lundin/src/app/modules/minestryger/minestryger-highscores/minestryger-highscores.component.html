@@ -7,6 +7,9 @@
 			<span class="name">{{score.userId | user | async}}:</span>
 			<span class="time">{{score.time / 1000 | number:'1.2-2'}}s</span>
 		</div>
+		<div *ngIf="topScores[category.key].length === 0">
+			Ingen tider
+		</div>
 	</ng-container>
 </ng-container>
 
@@ -16,5 +19,8 @@
 	<div *ngFor="let score of currentCategory(myScores)">
 		<span class="name">{{score.date | date:"yyyy-MM-dd hh:mm"}}</span>
 		<span class="time">{{score.time / 1000 | number:'1.2-2'}}s</span>
+	</div>
+	<div *ngIf="currentCategory(myScores).length === 0">
+		Ingen tider
 	</div>
 </ng-container>

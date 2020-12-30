@@ -13,6 +13,9 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	@Input() bombs = 99
 	@Input() allowFlags = true
 	@Input() activateOnMouseDown = false
+	@Input("fieldSize") inputFieldSize = 20
+	@Input() autoSize = true
+	fieldSize = 20
 
 	@ViewChild("canvas", { static: true }) canvasElement: ElementRef<HTMLCanvasElement>
 	get canvas() {
@@ -20,7 +23,6 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 	game = new Minestryger()
 	private context: CanvasRenderingContext2D
-	private fieldSize = 20
 	remainingBombs = 0
 	currentTime: number
 	private timerId: number
@@ -54,7 +56,11 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		this.drawEverything()
 	}
 
-	private resetCanvas() {
+	resetCanvas() {
+		if (this.autoSize)
+			this.sizeToArea()
+		else
+			this.fieldSize = this.inputFieldSize
 		this.context = this.canvas.getContext("2d")
 		this.canvas.width = this.game.config.width * this.fieldSize
 		this.canvas.height = this.game.config.height * this.fieldSize
@@ -62,7 +68,18 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 	}
 
-	private drawEverything() {
+	private sizeToArea() {
+		const width = window.innerWidth / 2
+		const height = window.innerHeight / 2
+		const horisontalFields = Math.max(this.width, 30) // make size for at least the expert version
+		const verticalFields = Math.max(this.height, 16) // make size for at least the expert version
+		const horisontalFieldSize = Math.floor(width / horisontalFields)
+		const verticalFieldSize = Math.floor(height / verticalFields)
+		this.fieldSize = Math.min(horisontalFieldSize, verticalFieldSize)
+		this.fieldSize = Math.max(this.fieldSize, 15)
+	}
+
+	drawEverything() {
 		for (const { x, y } of this.game.state.board.allFields())
 			this.drawField(x, y)
 	}
@@ -73,13 +90,13 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		const field = this.game.state.board.get(x, y)
 		let color = "grey"
 		let text = ""
-		let textfont = "bold " + (this.fieldSize - 4) + "px arial"
+		let textfont = "bold " + (this.fieldSize * 0.8) + "px arial"
 		let textcolor = "black"
 		if (field.revealed) {
 			if (field.bomb) {
 				color = "red"
 				text = "💣"
-				textfont = this.context.font = (this.fieldSize - 8) + "px serif"
+				textfont = (this.fieldSize * 0.6) + "px serif"
 			}
 			else {
 				color = "white"
@@ -92,7 +109,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		else {
 			if (field.locked) {
 				text = "⚑"
-				textfont = (this.fieldSize - 4) + "px serif"
+				textfont = (this.fieldSize * 0.8) + "px serif"
 				textcolor = "red"
 			}
 			else if (hover) {
@@ -120,8 +137,8 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		y: number,
 		text: string,
 		color: string,
-		textcolor = "black",
-		textfont = "bold " + (this.fieldSize - 4) + "px arial"
+		textcolor: string,
+		textfont: string
 	) {
 		this.context.fillStyle = color
 		this.context.fillRect(this.fieldSize * x + 1, this.fieldSize * y + 1, this.fieldSize - 2, this.fieldSize - 2)
@@ -137,18 +154,10 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	private updateHovering(x: number, y: number) {
-		if (!this.hoverPositionHasChanged(x, y))
-			return
-
 		this.redrawLastHoverPosition()
 		this.drawField(x, y, true)
 		this.showMiddleClickHover(x, y)
 		this.lastHoverPosition = { x, y }
-	}
-
-	private hoverPositionHasChanged(currentX: number, currentY: number) {
-		const lastPosition = this.lastHoverPosition
-		return currentX != lastPosition?.x || currentY != lastPosition?.y
 	}
 
 	private redrawLastHoverPosition() {
@@ -214,9 +223,9 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 
 	private handleLeftMouse(mouseDown: boolean, x: number, y: number) {
 		this.leftMouseDown = mouseDown
-		if (this.shouldClickField())
+		if (this.shouldClickField() && !this.rightMouseDown)
 			this.revealField(x, y)
-		if (this.rightMouseDown && this.leftMouseDown)
+		if (!this.leftMouseDown && this.rightMouseDown)
 			this.revealSurroundings(x, y)
 	}
 
@@ -228,9 +237,9 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 
 	private handleRightMouse(mouseDown: boolean, x: number, y: number) {
 		this.rightMouseDown = mouseDown
-		if (this.rightMouseDown && this.leftMouseDown)
+		if (!this.rightMouseDown && this.leftMouseDown)
 			this.revealSurroundings(x, y)
-		else if (this.rightMouseDown)
+		else if (!this.rightMouseDown)
 			this.flagField(x, y)
 	}
 

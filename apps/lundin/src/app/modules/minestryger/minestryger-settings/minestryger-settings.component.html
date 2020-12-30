@@ -1,51 +1,6 @@
 <h1>Indstillinger</h1>
 
 <div class="setting">
-	<label for="width">Vidde</label>
-	<input id="width"
-		type="number"
-		[ngModel]="width"
-		(ngModelChange)="widthChange.emit($event)"
-		autocomplete="off">
-</div>
-
-<div class="setting">
-	<label for="height">Højde</label>
-	<input id="height"
-		type="number"
-		[ngModel]="height"
-		(ngModelChange)="heightChange.emit($event)"
-		autocomplete="off">
-</div>
-
-<div class="setting">
-	<label for="bombs">Bomber</label>
-	<input id="bombs"
-		type="number"
-		[ngModel]="bombs"
-		(ngModelChange)="bombsChange.emit($event)"
-		autocomplete="off">
-</div>
-
-<div class="setting">
-	<label for="flags">Tillad flag</label>
-	<input id="flags"
-		type="checkbox"
-		[ngModel]="allowFlags"
-		(ngModelChange)="allowFlagsChange.emit($event)"
-		autocomplete="off">
-</div>
-
-<div class="setting">
-	<label for="earlyClick">Tidligt klik</label>
-	<input id="earlyClick"
-		type="checkbox"
-		[ngModel]="activateOnMouseDown"
-		(ngModelChange)="activateOnMouseDownChange.emit($event)"
-		autocomplete="off">
-</div>
-
-<div class="setting">
 	<button type="button"
 		(click)="useEasySettings()">
 		Begynder
@@ -65,3 +20,76 @@
 		Ekspert
 	</button>
 </div>
+
+<div class="setting">
+	<label for="flags">Tillad flag</label>
+	<input id="flags"
+		type="checkbox"
+		[ngModel]="allowFlags"
+		(ngModelChange)="allowFlagsChange.emit($event); triggerNewGame.emit()"
+		autocomplete="off">
+</div>
+
+<div class="setting">
+	<button type="button"
+		(click)="toggleAdvanced()">
+		Avancerede indstillinger
+	</button>
+</div>
+
+<ng-container *ngIf="showAdvancedSettings">
+	<div class="setting">
+		<label for="width">Vidde</label>
+		<input id="width"
+			type="number"
+			[ngModel]="width"
+			(ngModelChange)="widthChange.emit($event)"
+			autocomplete="off">
+	</div>
+	
+	<div class="setting">
+		<label for="height">Højde</label>
+		<input id="height"
+			type="number"
+			[ngModel]="height"
+			(ngModelChange)="heightChange.emit($event)"
+			autocomplete="off">
+	</div>
+	
+	<div class="setting">
+		<label for="bombs">Bomber</label>
+		<input id="bombs"
+			type="number"
+			[ngModel]="bombs"
+			(ngModelChange)="bombsChange.emit($event)"
+			autocomplete="off">
+	</div>
+
+	<div class="setting">
+		<label for="earlyClick">Tidligt klik</label>
+		<input id="earlyClick"
+			type="checkbox"
+			[ngModel]="activateOnMouseDown"
+			(ngModelChange)="activateOnMouseDownChange.emit($event)"
+			autocomplete="off">
+	</div>
+	
+	<div class="setting">
+		<label for="fieldSize">Feltstørrelse</label>
+		<input id="fieldSize"
+			type="number"
+			[ngModel]="fieldSize"
+			(ngModelChange)="fieldSizeChange.emit($event); triggerRedraw.emit()"
+			autocomplete="off"
+			[disabled]="autoSize">
+	</div>
+
+	<div class="setting">
+		<label for="autoSize">Automatisk feltstørrelse</label>
+		<input id="autoSize"
+			type="checkbox"
+			[ngModel]="autoSize"
+			(ngModelChange)="autoSizeChange.emit($event); triggerRedraw.emit()"
+			autocomplete="off">
+	</div>
+</ng-container>
