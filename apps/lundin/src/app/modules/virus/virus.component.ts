@@ -15,6 +15,9 @@ export class VirusComponent {
 		{ name: "Spiller 1", color: "red", playerId: 1 },
 		{ name: "Spiller 2", color: "green", playerId: 2 },
 	]
+	boardSize = 8
+	fieldSize = 20
+	autoSize = true
 
 	constructor() {
 		this.positions = []

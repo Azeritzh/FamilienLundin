@@ -1,10 +1,14 @@
 import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
 import { SharedModule } from "../../shared/shared.module"
+import { SettingsComponent } from "./settings/settings.component"
 import { VirusComponent } from "./virus.component"
 
 @NgModule({
-	declarations: [VirusComponent],
+	declarations: [
+		SettingsComponent,
+		VirusComponent,
+	],
 	imports: [
 		BrowserModule,
 		SharedModule,

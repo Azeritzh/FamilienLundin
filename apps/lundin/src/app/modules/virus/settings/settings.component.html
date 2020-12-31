@@ -1,0 +1,29 @@
+<h1>Indstillinger</h1>
+
+<div class="setting">
+	<label for="boardSize">Brætstørrelse</label>
+	<input id="boardSize"
+		type="number"
+		[ngModel]="boardSize"
+		(ngModelChange)="boardSizeChange.emit($event)"
+		autocomplete="off">
+</div>
+
+<div class="setting">
+	<label for="fieldSize">Feltstørrelse</label>
+	<input id="fieldSize"
+		type="number"
+		[ngModel]="fieldSize"
+		(ngModelChange)="fieldSizeChange.emit($event); triggerRedraw.emit()"
+		autocomplete="off"
+		[disabled]="autoSize">
+</div>
+
+<div class="setting">
+	<label for="autoSize">Automatisk feltstørrelse</label>
+	<input id="autoSize"
+		type="checkbox"
+		[ngModel]="autoSize"
+		(ngModelChange)="autoSizeChange.emit($event); triggerRedraw.emit()"
+		autocomplete="off">
+</div>
