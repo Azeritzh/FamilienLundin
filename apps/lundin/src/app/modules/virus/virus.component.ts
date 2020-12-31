@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core"
-import { VirusGameComponent } from "./virus-game/virus-game.component"
+import { VirusGameComponent, VirusPlayer } from "./virus-game/virus-game.component"
 
 @Component({
 	selector: "lundin-virus",
@@ -9,15 +9,15 @@ import { VirusGameComponent } from "./virus-game/virus-game.component"
 export class VirusComponent {
 	@ViewChild(VirusGameComponent) gameComponent: VirusGameComponent
 	players = [
-		{ name: "Spiller 1", color: "red", playerId: 1 },
-		{ name: "Spiller 2", color: "green", playerId: 2 },
+		new VirusPlayer("Spiller 1", "red", 1),
+		new VirusPlayer("Spiller 2", "green", 2),
 	]
 	boardSize = 8
 	fieldSize = 50
 	autoSize = true
 
-	triggerNewGame() {
-		if (this.gameComponent.game.state.tick === 0)
+	triggerNewGame(force = false) {
+		if (force || this.gameComponent.game.state.tick === 0)
 			this.gameComponent.startGame()
 	}
 }

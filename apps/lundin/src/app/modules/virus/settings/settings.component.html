@@ -2,15 +2,17 @@
 
 <button type="button"
 	class="start"
-	(click)="restart()">
+	(click)="triggerNewGame.emit(true)">
 	Start nyt spil
 </button>
 
 <ol>
 	<li *ngFor="let player of players">
 		<input [(ngModel)]="player.name"
+			(change)="triggerNewGame.emit()"
 			placeholder="Spillernavn">
 		<input [(ngModel)]="player.color"
+			(change)="triggerNewGame.emit()"
 			placeholder="Farve">
 	</li>
 </ol>

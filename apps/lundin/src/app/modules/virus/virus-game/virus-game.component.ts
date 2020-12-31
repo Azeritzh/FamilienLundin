@@ -8,17 +8,18 @@ import { Virus, VirusAction, VirusConfig } from "@lundin/virus"
 	styleUrls: ["./virus-game.component.scss"],
 })
 export class VirusGameComponent {
-	game = new Virus()
-	positions: { x: number, y: number }[]
-	origin?: { x: number, y: number }
-	message = ""
-	players = [
-		{ name: "Spiller 1", color: "red", playerId: 1 },
-		{ name: "Spiller 2", color: "green", playerId: 2 },
+	@Input() players = [
+		new VirusPlayer("Spiller 1", "red", 1),
+		new VirusPlayer("Spiller 2", "green", 2),
 	]
 	@Input() boardSize = 8
 	@Input() fieldSize = 50
 	@Input() autoSize = true
+	
+	game = new Virus()
+	positions: { x: number, y: number }[]
+	origin?: { x: number, y: number }
+	message = ""
 
 	@HostBinding("style.grid-template-columns") get columns() {
 		return `repeat(${this.game.config.width}, ${this.getFieldSize()})`
@@ -115,4 +116,12 @@ export class VirusGameComponent {
 	addPlayer() {
 		this.players.push({ name: "Spiller 3", color: "blue", playerId: 3 })
 	}
+}
+
+export class VirusPlayer {
+	constructor(
+		public name: string,
+		public color: string,
+		public playerId: number,
+	) { }
 }

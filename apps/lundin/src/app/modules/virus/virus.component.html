@@ -1,9 +1,11 @@
-<lundin-settings [(boardSize)]="boardSize"
+<lundin-settings [(players)]="players"
+	[(boardSize)]="boardSize"
 	[(fieldSize)]="fieldSize"
 	[(autoSize)]="autoSize"
-	(triggerNewGame)="triggerNewGame()">
+	(triggerNewGame)="triggerNewGame($event)">
 </lundin-settings>
-<lundin-virus-game [boardSize]="boardSize"
+<lundin-virus-game [players]="players"
+	[boardSize]="boardSize"
 	[fieldSize]="fieldSize"
 	[autoSize]="autoSize">
 </lundin-virus-game>
