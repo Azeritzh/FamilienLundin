@@ -13,14 +13,4 @@ export class VirusComponent {
 	boardSize = 8
 	fieldSize = 20
 	autoSize = true
-
-	addPlayer() {
-		this.players.push({ name: "Spiller 3", color: "blue", playerId: 3 })
-	}
-
-	restart() {
-		/*const config = new VirusConfig(this.players.length)
-		this.game = new Virus(config)
-		this.message = ""*/
-	}
 }

@@ -1,0 +1,22 @@
+<h1>Spillere</h1>
+
+<button type="button"
+	class="start"
+	(click)="restart()">
+	Start nyt spil
+</button>
+
+<ol>
+	<li *ngFor="let player of players">
+		<input [(ngModel)]="player.name"
+			placeholder="Spillernavn">
+		<input [(ngModel)]="player.color"
+			placeholder="Farve">
+	</li>
+</ol>
+
+<button type="button"
+	class="add-player"
+	(click)="addPlayer()">
+	Tilføj spiller
+</button>
