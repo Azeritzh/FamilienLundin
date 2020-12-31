@@ -1,11 +1,6 @@
 :host {
 	height: 100%;
-}
-
-.game-container {
 	display: grid;
-	grid-template-columns: repeat(8, 2rem);
-	grid-template-rows: repeat(8, 2rem);
 }
 
 .game-field {

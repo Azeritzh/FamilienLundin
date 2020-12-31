@@ -1,4 +1,5 @@
-import { Component } from "@angular/core"
+import { Component, HostBinding, Input } from "@angular/core"
+import { range } from "@lundin/utility"
 import { Virus, VirusAction, VirusConfig } from "@lundin/virus"
 
 @Component({
@@ -15,22 +16,37 @@ export class VirusGameComponent {
 		{ name: "Spiller 1", color: "red", playerId: 1 },
 		{ name: "Spiller 2", color: "green", playerId: 2 },
 	]
-	boardSize = 8
-	fieldSize = 20
-	autoSize = true
+	@Input() boardSize = 8
+	@Input() fieldSize = 20
+	@Input() autoSize = true
+
+	@HostBinding("style.grid-template-columns") get columns() {
+		return `repeat(${this.game.config.width}, 2rem)`
+	}
+	@HostBinding("style.grid-template-rows") get rows() {
+		return `repeat(${this.game.config.height + 1}, 2rem)`
+	}
 
 	constructor() {
-		this.positions = []
-		for (let y = 0; y < 8; y++)
-			for (let x = 0; x < 8; x++)
-				this.positions.push({ x, y })
+		this.startGame()
 		this.message = this.currentPlayerMessage()
 	}
 
-	restart() {
-		const config = new VirusConfig(this.players.length)
+	startGame() {
+		this.resetBoard()
+		const config = new VirusConfig(
+			this.players.length,
+			this.boardSize,
+			this.boardSize)
 		this.game = new Virus(config)
 		this.message = ""
+	}
+
+	private resetBoard() {
+		this.positions = []
+		for (const y of range(0, this.boardSize))
+			for (const x of range(0, this.boardSize))
+				this.positions.push({ x, y })
 	}
 
 	select(x: number, y: number) {

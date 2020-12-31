@@ -5,7 +5,7 @@
 	<input id="boardSize"
 		type="number"
 		[ngModel]="boardSize"
-		(ngModelChange)="boardSizeChange.emit($event)"
+		(ngModelChange)="boardSizeChange.emit($event); triggerNewGame.emit()"
 		autocomplete="off">
 </div>
 
