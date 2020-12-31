@@ -3,8 +3,6 @@
 	[(autoSize)]="autoSize">
 </lundin-settings>
 
-<div class="message">{{message}}</div>
-
 <button type="button"
 	class="start"
 	(click)="restart()">
@@ -26,11 +24,4 @@
 	Tilføj spiller
 </button>
 
-<div class="game-container">
-	<div *ngFor="let position of positions"
-		class="game-field"
-		(click)="select(position.x, position.y)"
-		[style.backgroundColor]="colorFor(position)"
-		[class.selected]="isSelected(position)">
-	</div>
-</div>
+<lundin-virus-game></lundin-virus-game>
