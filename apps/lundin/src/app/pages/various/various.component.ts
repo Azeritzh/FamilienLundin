@@ -6,14 +6,16 @@ import { Component } from "@angular/core"
 	styleUrls: ["./various.component.scss"]
 })
 export class VariousComponent {
-	games: { text: string, link: string }[] = [
-		{ text: "Minestryger", link: "/games/minestryger" },
-		{ text: "Tern", link: "/games/iframe/tern" },
-		{ text: "Piong", link: "/games/iframe/piong" },
-		{ text: "Game of Life", link: "/games/iframe/game-of-life" },
-		{ text: "Bilspil", link: "/games/iframe/bilspil" },
-		{ text: "Kryds og Bolle", link: "/games/noughts-and-crosses" },
-		{ text: "Virus", link: "/games/virus" },
-		{ text: "Krypt", link: "/various/crypt" },
+	tools: { title: string, link: string }[] = [
+		{ title: "Krypt", link: "/various/crypt" },
+	]
+
+	games: { title: string, link: string }[] = [
+		{ title: "Minestryger", link: "/games/minestryger" },
+		{ title: "Piong", link: "/games/iframe/piong" },
+		{ title: "Game of Life", link: "/games/iframe/game-of-life" },
+		{ title: "Bilspil", link: "/games/iframe/bilspil" },
+		{ title: "Kryds og Bolle", link: "/games/noughts-and-crosses" },
+		{ title: "Virus", link: "/games/virus" },
 	]
 }

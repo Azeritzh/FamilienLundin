@@ -3,10 +3,20 @@
 	height: 100%;
 }
 
+h1 {
+	background-color: var(--color-primary);
+	color: var(--color-text-light);
+	text-align: center;
+	font-size: 1.5rem;
+	font-weight: bold;
+	padding: 1rem;
+	border-radius: var(--border-radius-size);
+}
+
 a {
 	display: inline-block;
 	background-color: var(--color-btn-positive);
-	color: white;
+	color: var(--color-text-light);
 	text-align: center;
 	font-size: 1.5rem;
 	font-weight: bold;
