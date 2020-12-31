@@ -9,8 +9,8 @@ import { VirusGameComponent, VirusPlayer } from "./virus-game/virus-game.compone
 export class VirusComponent {
 	@ViewChild(VirusGameComponent) gameComponent: VirusGameComponent
 	players = [
-		new VirusPlayer("Spiller 1", "red", 1),
-		new VirusPlayer("Spiller 2", "green", 2),
+		new VirusPlayer("Spiller 1", "red"),
+		new VirusPlayer("Spiller 2", "green"),
 	]
 	boardSize = 8
 	fieldSize = 50

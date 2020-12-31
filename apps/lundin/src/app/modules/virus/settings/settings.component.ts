@@ -8,8 +8,8 @@ import { VirusPlayer } from "../virus-game/virus-game.component"
 })
 export class SettingsComponent {
 	@Input() players = [
-		new VirusPlayer("Spiller 1", "red", 1),
-		new VirusPlayer("Spiller 2", "green", 2),
+		new VirusPlayer("Spiller 1", "red"),
+		new VirusPlayer("Spiller 2", "green"),
 	]
 	@Output() playersChange = new EventEmitter<VirusPlayer[]>()
 	@Input() boardSize = 8
@@ -26,6 +26,7 @@ export class SettingsComponent {
 	}
 
 	addPlayer() {
-		this.players.push({ name: "Spiller 3", color: "blue", playerId: 3 })
+		const newPlayerNumber = this.players.length + 1
+		this.players.push(new VirusPlayer("Spiller " + newPlayerNumber, "blue"))
 	}
 }
