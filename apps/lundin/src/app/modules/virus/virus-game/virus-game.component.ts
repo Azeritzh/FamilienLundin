@@ -65,7 +65,7 @@ export class VirusGameComponent {
 
 	select(x: number, y: number) {
 		if (!this.origin)
-			return this.origin = { x, y }
+			return this.selectOrigin(x, y)
 		const action = new VirusAction(
 			this.game.state.currentPlayer,
 			this.origin.x,
@@ -74,6 +74,13 @@ export class VirusGameComponent {
 			y)
 		this.origin = null
 		this.performAction(action)
+	}
+
+	private selectOrigin(x: number, y: number) {
+		const playerAtPosition = this.game.state.board.get(x, y)
+		if (playerAtPosition !== this.game.state.currentPlayer)
+			return
+		this.origin = { x, y }
 	}
 
 	private performAction(action: VirusAction) {
