@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core"
 export class SettingsComponent {
 	@Input() boardSize = 8
 	@Output() boardSizeChange = new EventEmitter<number>()
-	@Input() fieldSize = 20
+	@Input() fieldSize = 50
 	@Output() fieldSizeChange = new EventEmitter<number>()
 	@Input() autoSize = true
 	@Output() autoSizeChange = new EventEmitter<boolean>()

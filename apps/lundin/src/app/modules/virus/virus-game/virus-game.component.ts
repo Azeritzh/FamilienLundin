@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from "@angular/core"
+import { Component, ElementRef, HostBinding, Input } from "@angular/core"
 import { range } from "@lundin/utility"
 import { Virus, VirusAction, VirusConfig } from "@lundin/virus"
 
@@ -17,19 +17,32 @@ export class VirusGameComponent {
 		{ name: "Spiller 2", color: "green", playerId: 2 },
 	]
 	@Input() boardSize = 8
-	@Input() fieldSize = 20
+	@Input() fieldSize = 50
 	@Input() autoSize = true
 
 	@HostBinding("style.grid-template-columns") get columns() {
-		return `repeat(${this.game.config.width}, 2rem)`
+		return `repeat(${this.game.config.width}, ${this.getFieldSize()})`
 	}
 	@HostBinding("style.grid-template-rows") get rows() {
-		return `repeat(${this.game.config.height + 1}, 2rem)`
+		return `repeat(${this.game.config.height}, ${this.getFieldSize()}) 2rem`
 	}
 
-	constructor() {
+	constructor(private elementRef: ElementRef) {
 		this.startGame()
 		this.message = this.currentPlayerMessage()
+	}
+
+	private getFieldSize() {
+		if (!this.autoSize)
+			return this.fieldSize + "px"
+		const element = this.elementRef?.nativeElement
+		if (!element)
+			return "2rem"
+		const width = window.innerWidth * 0.8
+		const height = window.innerHeight * 0.8
+		const horisontalFieldSize = Math.floor(width / this.game.config.width)
+		const verticalFieldSize = Math.floor(height / this.game.config.height)
+		return Math.min(horisontalFieldSize, verticalFieldSize) + "px"
 	}
 
 	startGame() {

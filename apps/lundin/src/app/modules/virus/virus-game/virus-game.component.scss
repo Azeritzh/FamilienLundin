@@ -1,5 +1,6 @@
 :host {
 	height: 100%;
+	width: 100%;
 	display: grid;
 }
 
@@ -13,4 +14,8 @@
 	outline: 3px solid white;
 	outline-style: solid;
 	outline-offset: -4px;
+}
+
+.message {
+	grid-column: 1 / -1;
 }

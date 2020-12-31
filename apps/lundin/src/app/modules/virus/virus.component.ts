@@ -13,7 +13,7 @@ export class VirusComponent {
 		{ name: "Spiller 2", color: "green", playerId: 2 },
 	]
 	boardSize = 8
-	fieldSize = 20
+	fieldSize = 50
 	autoSize = true
 
 	triggerNewGame() {
