@@ -7,10 +7,7 @@ import { VirusPlayer } from "../virus-game/virus-game.component"
 	styleUrls: ["./settings.component.scss"],
 })
 export class SettingsComponent {
-	@Input() players = [
-		new VirusPlayer("Spiller 1", "red"),
-		new VirusPlayer("Spiller 2", "green"),
-	]
+	@Input() players = []
 	@Output() playersChange = new EventEmitter<VirusPlayer[]>()
 	@Input() boardSize = 8
 	@Output() boardSizeChange = new EventEmitter<number>()
