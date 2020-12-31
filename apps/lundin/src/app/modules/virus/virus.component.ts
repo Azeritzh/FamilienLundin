@@ -1,5 +1,7 @@
 import { Component, ViewChild } from "@angular/core"
-import { VirusGameComponent, VirusPlayer, SimpleAi } from "./virus-game/virus-game.component"
+import { RandomAi } from "@lundin/age"
+import { generateVirusActions } from "@lundin/virus"
+import { VirusGameComponent, VirusPlayer } from "./virus-game/virus-game.component"
 
 @Component({
 	selector: "lundin-virus",
@@ -10,7 +12,7 @@ export class VirusComponent {
 	@ViewChild(VirusGameComponent) gameComponent: VirusGameComponent
 	players = [
 		new VirusPlayer("Spiller 1", "red"),
-		new VirusPlayer("Spiller 2", "green", new SimpleAi()),
+		new VirusPlayer("Spiller 2", "green", new RandomAi(generateVirusActions)),
 	]
 	boardSize = 8
 	fieldSize = 50

@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostBinding, Input } from "@angular/core"
-import { GameAi } from "@lundin/age"
+import { GameAi, RandomAi } from "@lundin/age"
 import { range } from "@lundin/utility"
-import { Virus, VirusAction, VirusConfig } from "@lundin/virus"
+import { Virus, VirusAction, VirusConfig, generateVirusActions } from "@lundin/virus"
 
 @Component({
 	selector: "lundin-virus-game",
@@ -11,7 +11,7 @@ import { Virus, VirusAction, VirusConfig } from "@lundin/virus"
 export class VirusGameComponent {
 	@Input() players = [
 		new VirusPlayer("Spiller 1", "red"),
-		new VirusPlayer("Spiller 2", "green", new SimpleAi()),
+		new VirusPlayer("Spiller 2", "green", new RandomAi(generateVirusActions)),
 	]
 	@Input() boardSize = 8
 	@Input() fieldSize = 50
@@ -125,10 +125,4 @@ export class VirusPlayer {
 		public color: string,
 		public ai: GameAi<Virus, VirusAction> = null
 	) { }
-}
-
-export class SimpleAi implements GameAi<Virus, VirusAction>{
-	requestActions(game: Virus) {
-		return [new VirusAction(game.state.currentPlayer, 0, 7, 0, 6)]
-	}
 }
