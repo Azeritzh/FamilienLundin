@@ -14,7 +14,7 @@
 	<input id="fieldSize"
 		type="number"
 		[ngModel]="fieldSize"
-		(ngModelChange)="fieldSizeChange.emit($event); triggerRedraw.emit()"
+		(ngModelChange)="fieldSizeChange.emit($event)"
 		autocomplete="off"
 		[disabled]="autoSize">
 </div>
@@ -24,6 +24,6 @@
 	<input id="autoSize"
 		type="checkbox"
 		[ngModel]="autoSize"
-		(ngModelChange)="autoSizeChange.emit($event); triggerRedraw.emit()"
+		(ngModelChange)="autoSizeChange.emit($event)"
 		autocomplete="off">
 </div>

@@ -13,7 +13,6 @@ export class SettingsComponent {
 	@Input() autoSize = true
 	@Output() autoSizeChange = new EventEmitter<boolean>()
 	@Output() triggerNewGame = new EventEmitter()
-	@Output() triggerRedraw = new EventEmitter()
 	showAdvancedSettings = false
 
 	toggleAdvanced() {

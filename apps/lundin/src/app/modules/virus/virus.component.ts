@@ -20,8 +20,4 @@ export class VirusComponent {
 		if (this.gameComponent.game.state.tick === 0)
 			this.gameComponent.startGame()
 	}
-
-	triggerRedraw() {
-		//
-	}
 }
