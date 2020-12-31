@@ -1,21 +1,13 @@
 :host {
 	height: 100%;
-}
-
-.game-container {
 	display: grid;
-	grid-template-columns: repeat(8, 2rem);
-	grid-template-rows: repeat(8, 2rem);
+	grid-template-areas: "settings game players";
+	grid-template-columns: 15rem 1fr 15rem;
 }
 
-.game-field {
-	line-height: 2rem;
-	text-align: center;
-	border: 1px solid black;
+lundin-virus-game {
+	grid-area: game;
+	margin: auto;
 }
-
-.selected{
-	outline: 3px solid white;
-	outline-style: solid;
-	outline-offset: -4px;
-}
+lundin-settings { grid-area: settings; }
+lundin-players { grid-area: players; }

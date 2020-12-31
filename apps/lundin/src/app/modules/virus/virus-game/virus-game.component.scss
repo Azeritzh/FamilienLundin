@@ -1,0 +1,19 @@
+:host {
+	display: grid;
+}
+
+.game-field {
+	line-height: 2rem;
+	text-align: center;
+	border: 1px solid black;
+}
+
+.selected{
+	outline: 3px solid white;
+	outline-style: solid;
+	outline-offset: -4px;
+}
+
+.message {
+	grid-column: 1 / -1;
+}

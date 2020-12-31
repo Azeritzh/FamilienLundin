@@ -1,3 +1,7 @@
+import { GameLogic } from "./game-logic"
+import { GameState } from "./game-state"
+import { GameValidator, Validation } from "./game-validator"
+
 export class AgEngine<GameAction> {
 	constructor(
 		private readonly logics: GameLogic<GameAction>[],
@@ -27,22 +31,4 @@ export class AgEngine<GameAction> {
 			logic.update(actions)
 		this.state.finishUpdate?.()
 	}
-}
-
-export interface GameState {
-	tick: number
-	finishUpdate?(): void
-}
-
-export interface GameLogic<GameAction> {
-	update(actions: GameAction[]): void
-}
-
-export interface GameValidator<GameAction> {
-	validate(actions: GameAction[]): Validation
-}
-
-export interface Validation {
-	isValid: boolean
-	problems: string[]
 }
