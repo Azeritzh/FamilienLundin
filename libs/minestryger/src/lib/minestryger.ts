@@ -12,7 +12,7 @@ export class Minestryger {
 	private engine: AgEngine<MinestrygerAction>
 
 	constructor(
-		public config = new MinestrygerConfig(30, 16, 99, true), // 16*16 40 // 9*9 10
+		public config = new MinestrygerConfig(30, 16, 99, true),
 		public state = new MinestrygerState(config),
 	) {
 		this.engine = new AgEngine<MinestrygerAction>(

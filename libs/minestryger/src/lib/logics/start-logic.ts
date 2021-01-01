@@ -23,12 +23,12 @@ export class StartLogic implements GameLogic<MinestrygerAction> {
 	}
 
 	private initialiseGame(x: number, y: number) {
+		this.generateAround(x, y)
 		this.state.playState = PlayState.Started
 		this.state.startTime = Date.now()
-		this.generateAround(x, y)
 	}
 
-	generateAround(x: number, y: number) {
+	private generateAround(x: number, y: number) {
 		const bombableFields = this.getBombableFields(x, y)
 		for (const _ of range(0, this.config.bombs))
 			this.takeRandomFrom(bombableFields).bomb = true
@@ -48,8 +48,10 @@ export class StartLogic implements GameLogic<MinestrygerAction> {
 	}
 
 	private shouldStartWithEmptyArea() {
-		const bombFactor = this.config.bombs / (this.config.width * this.config.height)
-		return bombFactor < 0.5
+		const totalFields = this.config.width * this.config.height
+		const emptyFields = totalFields - this.config.bombs
+		const bombFactor = this.config.bombs / totalFields
+		return bombFactor < 0.5 && 20 < emptyFields
 	}
 
 	private removeFrom<T>(list: T[], predicate: (entry: T) => boolean) {

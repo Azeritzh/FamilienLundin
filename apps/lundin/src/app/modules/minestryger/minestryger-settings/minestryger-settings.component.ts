@@ -46,7 +46,33 @@ export class MinestrygerSettingsComponent {
 		this.triggerNewGame.emit()
 	}
 
+	updateWidth(width: number) {
+		this.width = limit(width, 2, 9999)
+		this.widthChange.emit(this.width)
+		this.updateBombs(this.bombs)
+	}
+
+	updateHeight(height: number) {
+		this.height = limit(height, 2, 9999)
+		this.heightChange.emit(this.height)
+		this.updateBombs(this.bombs)
+	}
+
+	updateBombs(bombs: number) {
+		const fields = this.width * this.height
+		this.bombs = limit(bombs, 1, fields - 1)
+		this.bombsChange.emit(this.bombs)
+	}
+
 	toggleAdvanced() {
 		this.showAdvancedSettings = !this.showAdvancedSettings
 	}
+}
+
+function limit(number: number, min: number, max: number) {
+	if (number < min)
+		return min
+	if (max < number)
+		return max
+	return number
 }

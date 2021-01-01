@@ -43,7 +43,9 @@
 		<input id="width"
 			type="number"
 			[ngModel]="width"
-			(ngModelChange)="widthChange.emit($event)"
+			(ngModelChange)="updateWidth($event);"
+			min="2"
+			max="9999"
 			autocomplete="off">
 	</div>
 	
@@ -52,7 +54,9 @@
 		<input id="height"
 			type="number"
 			[ngModel]="height"
-			(ngModelChange)="heightChange.emit($event)"
+			(ngModelChange)="updateHeight($event)"
+			min="2"
+			max="9999"
 			autocomplete="off">
 	</div>
 	
@@ -61,7 +65,9 @@
 		<input id="bombs"
 			type="number"
 			[ngModel]="bombs"
-			(ngModelChange)="bombsChange.emit($event)"
+			(ngModelChange)="updateBombs($event)"
+			min="1"
+			[max]="width * height - 1"
 			autocomplete="off">
 	</div>
 
