@@ -27,6 +27,6 @@ export class MinestrygerHighscoresComponent {
 	}
 
 	currentCategory(myScores: MinestrygerScoreSet) {
-		return myScores.categories[this.category] ?? []
+		return myScores.categories[this.category]?.slice(0, 10) ?? []
 	}
 }
