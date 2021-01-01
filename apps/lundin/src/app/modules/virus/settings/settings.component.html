@@ -7,19 +7,23 @@
 </button>
 
 <ol>
-	<li *ngFor="let player of players">
+	<li *ngFor="let player of players"
+		[style.background-color]="player.color">
 		<input [(ngModel)]="player.name"
 			(change)="triggerNewGame.emit()"
+			class="name"
 			placeholder="Spillernavn">
-		<input [(ngModel)]="player.color"
-			(change)="triggerNewGame.emit()"
-			placeholder="Farve">
 		<select [ngModel]="typeOf(player)"
-			(ngModelChange)="changePlayerType(player, $event)">
+			(ngModelChange)="changePlayerType(player, $event)"
+			class="type">
 			<option value="human">Menneske</option>
 			<option value="random">Tilfældig AI</option>
 			<option value="none">Ingen</option>
 		</select>
+		<input [(ngModel)]="player.color"
+			(change)="triggerNewGame.emit()"
+			class="color"
+			placeholder="Farve">
 	</li>
 </ol>
 

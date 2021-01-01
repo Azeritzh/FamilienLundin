@@ -8,6 +8,7 @@ body {
 
 button {
     background-color: var(--color-btn-neutral);
+    height: 2rem;
     line-height: 2rem;
     padding: 0 0.5rem;
     border-radius: var(--border-radius-size);
@@ -39,7 +40,8 @@ button:disabled {
     background-color: var(--color-btn-negative-hover);
 }
 
-input, textarea {
+input, textarea, select {
+    height: 2rem;
     line-height: 2rem;
     padding: 0 0.5rem;
     border-radius: var(--border-radius-size);
