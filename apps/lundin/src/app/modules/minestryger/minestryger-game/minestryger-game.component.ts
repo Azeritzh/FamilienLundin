@@ -297,7 +297,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	private timerUpdate = () => {
-		if (this.game.state.finishTime)
+		if (this.game.state.finishTime !== null)
 			this.currentTime = this.game.state.finishTime / 1000
 		else if (this.game.state.startTime)
 			this.currentTime = (Date.now() - this.game.state.startTime) / 1000

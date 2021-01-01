@@ -23,12 +23,12 @@ export class StartLogic implements GameLogic<MinestrygerAction> {
 	}
 
 	private initialiseGame(x: number, y: number) {
+		this.generateAround(x, y)
 		this.state.playState = PlayState.Started
 		this.state.startTime = Date.now()
-		this.generateAround(x, y)
 	}
 
-	generateAround(x: number, y: number) {
+	private generateAround(x: number, y: number) {
 		const bombableFields = this.getBombableFields(x, y)
 		for (const _ of range(0, this.config.bombs))
 			this.takeRandomFrom(bombableFields).bomb = true
