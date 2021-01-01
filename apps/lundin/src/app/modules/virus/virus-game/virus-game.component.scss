@@ -16,4 +16,15 @@
 
 .message {
 	grid-column: 1 / -1;
+	text-align: center;
+	line-height: 2rem;
+	font-size: 1.2rem;
+	font-weight: bold;
+	border-top-left-radius: var(--border-radius-size);
+	border-top-right-radius: var(--border-radius-size);
+	color: var(--color-text-light);
+	background: var(--color-primary);
+	border-style: solid;
+	border-left-width: 3rem;
+	border-right-width: 3rem;
 }

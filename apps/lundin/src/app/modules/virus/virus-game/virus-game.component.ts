@@ -26,7 +26,7 @@ export class VirusGameComponent {
 		return `repeat(${this.game.config.width}, ${this.getFieldSize()})`
 	}
 	@HostBinding("style.grid-template-rows") get rows() {
-		return `repeat(${this.game.config.height}, ${this.getFieldSize()}) 2rem`
+		return `2rem repeat(${this.game.config.height}, ${this.getFieldSize()})`
 	}
 
 	constructor(private elementRef: ElementRef) {
@@ -107,7 +107,7 @@ export class VirusGameComponent {
 		const player = this.getPlayer()
 		this.message = player.name + "'s tur"
 		if (player.ai)
-			setTimeout(() => this.performAction(player.ai.requestActions(this.game)[0]), 100)
+			setTimeout(() => this.performAction(player.ai.requestActions(this.game)[0]), 10)
 	}
 
 	colorFor(position: { x: number, y: number }) {
