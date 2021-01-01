@@ -19,17 +19,19 @@ export class MinestrygerHighscoresComponent {
 		{ key: "expertNoFlags", title: "Ekspert (uden flag)" },
 	]
 	topScores$: Observable<MinestrygerTopScoreSet>
+	yearlyTopScores$: Observable<MinestrygerTopScoreSet>
 	myScores$: Observable<MinestrygerScoreSet>
 	scoresThisYear = true
 
 	constructor(minestrygerService: MinestrygerService) {
 		this.topScores$ = minestrygerService.loadTopScores()
+		this.yearlyTopScores$ = minestrygerService.loadYearlyTopScores()
 		this.myScores$ = minestrygerService.loadMyScores()
 	}
 
 	currentTopScoreSet$() {
 		return this.scoresThisYear
-			? this.topScores$
+			? this.yearlyTopScores$
 			: this.topScores$
 	}
 
