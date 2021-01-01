@@ -12,10 +12,10 @@ export class VariousComponent {
 
 	games: { title: string, link: string }[] = [
 		{ title: "Minestryger", link: "/games/minestryger" },
+		{ title: "Virus", link: "/games/virus" },
+		{ title: "Kryds og Bolle", link: "/games/noughts-and-crosses" },
 		{ title: "Piong", link: "/games/iframe/piong" },
 		{ title: "Game of Life", link: "/games/iframe/game-of-life" },
 		{ title: "Bilspil", link: "/games/iframe/bilspil" },
-		{ title: "Kryds og Bolle", link: "/games/noughts-and-crosses" },
-		{ title: "Virus", link: "/games/virus" },
 	]
 }

@@ -26,7 +26,7 @@ export class VirusGameComponent {
 		return `repeat(${this.game.config.width}, ${this.getFieldSize()})`
 	}
 	@HostBinding("style.grid-template-rows") get rows() {
-		return `repeat(${this.game.config.height}, ${this.getFieldSize()}) 2rem`
+		return `2rem repeat(${this.game.config.height}, ${this.getFieldSize()})`
 	}
 
 	constructor(private elementRef: ElementRef) {
@@ -95,7 +95,18 @@ export class VirusGameComponent {
 	}
 
 	private writeProblems(problems: string[]) {
-		this.message = problems.join("\n")
+		this.message = problems.map(this.translateProblem).join("\n")
+	}
+
+	private translateProblem(problem: string) {
+		switch(problem){
+			case "origin must be within board": return "Startfeltet skal være indenfor banen"
+			case "must move own piece": return "Man kan ikke flytte andre spilleres brikker"
+			case "destination must be within board": return "Destinationen skal være indenfor banen"
+			case "destination must be empty": return "Destinationen skal være tom"
+			case "must not move too far": return "Man kan ikke flytte længere end to felter"
+			default: return problem
+		}
 	}
 
 	private announceWinner(winner: number) {
@@ -107,7 +118,7 @@ export class VirusGameComponent {
 		const player = this.getPlayer()
 		this.message = player.name + "'s tur"
 		if (player.ai)
-			setTimeout(() => this.performAction(player.ai.requestActions(this.game)[0]), 100)
+			setTimeout(() => this.performAction(player.ai.requestActions(this.game)[0]), 10)
 	}
 
 	colorFor(position: { x: number, y: number }) {
