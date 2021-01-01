@@ -48,8 +48,10 @@ export class StartLogic implements GameLogic<MinestrygerAction> {
 	}
 
 	private shouldStartWithEmptyArea() {
-		const bombFactor = this.config.bombs / (this.config.width * this.config.height)
-		return bombFactor < 0.5
+		const totalFields = this.config.width * this.config.height
+		const emptyFields = totalFields - this.config.bombs
+		const bombFactor = this.config.bombs / totalFields
+		return bombFactor < 0.5 && 20 < emptyFields
 	}
 
 	private removeFrom<T>(list: T[], predicate: (entry: T) => boolean) {
