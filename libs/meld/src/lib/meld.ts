@@ -1,4 +1,5 @@
 import { AgEngine, GameState } from "@lundin/age"
+import { MeldConfig } from "./meld-config"
 
 export class Meld {
 	private engine: AgEngine<MeldAction>
@@ -18,7 +19,6 @@ export class Meld {
 	}
 }
 
-class MeldConfig { }
 class MeldState implements GameState {
 	tick: number
 	finishUpdate?(): void {
