@@ -8,5 +8,6 @@ module.exports = {
     "<rootDir>/libs/virus",
     "<rootDir>/libs/utility",
     "<rootDir>/libs/minestryger",
+    "<rootDir>/libs/meld",
   ],
 }

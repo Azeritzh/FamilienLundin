@@ -294,6 +294,28 @@
         }
       },
       "schematics": {}
+    },
+    "meld": {
+      "projectType": "library",
+      "root": "libs/meld",
+      "sourceRoot": "libs/meld/src",
+      "prefix": "lundin",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/meld/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/meld/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {
