@@ -12,21 +12,40 @@ export class MinestrygerHighscoresComponent {
 	@Input() category: string
 	topScoreCategories = [
 		{ key: "beginnerFlags", title: "Begynder (med flag)" },
+		{ key: "beginnerNoFlags", title: "Begynder (uden flag)" },
 		{ key: "trainedFlags", title: "Øvet (med flag)" },
+		{ key: "trainedNoFlags", title: "Øvet (uden flag)" },
 		{ key: "expertFlags", title: "Ekspert (med flag)" },
-		{ key: "beginnerNoFlags", title: "Begynder (ingen flag)" },
-		{ key: "trainedNoFlags", title: "Øvet (ingen flag)" },
-		{ key: "expertNoFlags", title: "Ekspert (ingen flag)" },
+		{ key: "expertNoFlags", title: "Ekspert (uden flag)" },
 	]
 	topScores$: Observable<MinestrygerTopScoreSet>
+	yearlyTopScores$: Observable<MinestrygerTopScoreSet>
 	myScores$: Observable<MinestrygerScoreSet>
+	scoresThisYear = true
 
 	constructor(minestrygerService: MinestrygerService) {
 		this.topScores$ = minestrygerService.loadTopScores()
+		this.yearlyTopScores$ = minestrygerService.loadYearlyTopScores()
 		this.myScores$ = minestrygerService.loadMyScores()
 	}
 
+	currentTopScoreSet$() {
+		return this.scoresThisYear
+			? this.yearlyTopScores$
+			: this.topScores$
+	}
+
 	currentCategory(myScores: MinestrygerScoreSet) {
-		return myScores.categories[this.category] ?? []
+		const scores = myScores.categories[this.category]
+		if (!scores)
+			return []
+		const currentYear = "" + new Date().getFullYear()
+		return this.scoresThisYear
+			? scores.filter(x => x.date.startsWith(currentYear)).slice(0, 10)
+			: scores.slice(0, 10)
+	}
+
+	switchPeriod() {
+		this.scoresThisYear = !this.scoresThisYear
 	}
 }

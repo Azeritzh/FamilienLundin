@@ -132,8 +132,8 @@ export class VirusGameComponent {
 		return this.origin?.x === position.x && this.origin?.y === position.y
 	}
 
-	private getPlayer(playerNumber: number = this.game.state.currentPlayer) {
-		return this.players[playerNumber - 1] ?? new VirusPlayer("Ukendt", "red")
+	getPlayer(playerNumber: number = this.game.state.currentPlayer) {
+		return this.players[playerNumber - 1] ?? new VirusPlayer("Ukendt", "grey")
 	}
 }
 

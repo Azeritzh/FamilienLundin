@@ -53,6 +53,7 @@ export interface PersonalRelation {
 }
 
 export interface MinestrygerTopScoreSet {
+	year?: string
 	beginnerFlags: MinestrygerTopScore[]
 	trainedFlags: MinestrygerTopScore[]
 	expertFlags: MinestrygerTopScore[]

@@ -17,6 +17,18 @@ export class MinestrygerService {
 	get topScores$() {
 		return this._topScores$.asObservable()
 	}
+	yearlyTopScores: MinestrygerTopScoreSet = {
+		beginnerFlags: [],
+		trainedFlags: [],
+		expertFlags: [],
+		beginnerNoFlags: [],
+		trainedNoFlags: [],
+		expertNoFlags: [],
+	}
+	private _yearlyTopScores$ = new BehaviorSubject<MinestrygerTopScoreSet>(this.yearlyTopScores)
+	get yearlyTopScores$() {
+		return this._yearlyTopScores$.asObservable()
+	}
 
 	myScores: MinestrygerScoreSet = {
 		_id: 0,
@@ -46,11 +58,22 @@ export class MinestrygerService {
 		return this.topScores$
 	}
 
+	loadYearlyTopScores() {
+		this.httpClient.get<MinestrygerTopScoreSet>("api/minestryger/load-yearly-top-scores").toPromise().then(topScores => {
+			this.yearlyTopScores = topScores
+			this._yearlyTopScores$.next(this.yearlyTopScores)
+		})
+		return this.yearlyTopScores$
+	}
+
 	async registerScore(score: NewMinestrygerScore) {
 		this.addToPersonalScore(score)
 		this._myScores$.next(this.myScores)
-		this.topScores = await this.httpClient.post<MinestrygerTopScoreSet>("api/minestryger/register", score).toPromise()
+		const topScores = await this.httpClient.post<[MinestrygerTopScoreSet,MinestrygerTopScoreSet]>("api/minestryger/register", score).toPromise()
+		this.topScores = topScores[0]
+		this.yearlyTopScores = topScores[1]
 		this._topScores$.next(this.topScores)
+		this._yearlyTopScores$.next(this.yearlyTopScores)
 	}
 
 	private addToPersonalScore(score: NewMinestrygerScore) {
