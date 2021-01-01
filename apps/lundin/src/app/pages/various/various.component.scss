@@ -15,7 +15,7 @@ h1 {
 
 a {
 	display: inline-block;
-	background-color: var(--color-btn-positive);
+	background-color: var(--color-btn-neutral);
 	color: var(--color-text-light);
 	text-align: center;
 	font-size: 1.5rem;
@@ -25,4 +25,4 @@ a {
 	width: 15rem;
 	transition: 0.3s ease;
 }
-a:hover { background-color: var(--color-btn-positive-hover); }
+a:hover { background-color: var(--color-btn-neutral-hover); }

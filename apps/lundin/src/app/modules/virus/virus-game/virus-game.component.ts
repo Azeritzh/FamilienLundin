@@ -95,7 +95,18 @@ export class VirusGameComponent {
 	}
 
 	private writeProblems(problems: string[]) {
-		this.message = problems.join("\n")
+		this.message = problems.map(this.translateProblem).join("\n")
+	}
+
+	private translateProblem(problem: string) {
+		switch(problem){
+			case "origin must be within board": return "Startfeltet skal være indenfor banen"
+			case "must move own piece": return "Man kan ikke flytte andre spilleres brikker"
+			case "destination must be within board": return "Destinationen skal være indenfor banen"
+			case "destination must be empty": return "Destinationen skal være tom"
+			case "must not move too far": return "Man kan ikke flytte længere end to felter"
+			default: return problem
+		}
 	}
 
 	private announceWinner(winner: number) {
