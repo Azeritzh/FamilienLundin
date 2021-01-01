@@ -34,7 +34,13 @@ export class MinestrygerHighscoresComponent {
 	}
 
 	currentCategory(myScores: MinestrygerScoreSet) {
-		return myScores.categories[this.category]?.slice(0, 10) ?? []
+		const scores = myScores.categories[this.category]
+		if (!scores)
+			return []
+		const currentYear = "" + new Date().getFullYear()
+		return this.scoresThisYear
+			? scores.filter(x => x.date.startsWith(currentYear)).slice(0, 10)
+			: scores.slice(0, 10)
 	}
 
 	switchPeriod() {
