@@ -9,6 +9,11 @@ h1 {
 	color: var(--color-text-light);
 }
 
+h1 button {
+	float: right;
+	border-radius: 0;
+}
+
 h2 {
 	font-size: 1rem;
 	line-height: 2rem;

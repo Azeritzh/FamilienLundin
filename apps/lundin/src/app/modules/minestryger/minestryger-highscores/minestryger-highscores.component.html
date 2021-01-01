@@ -1,5 +1,11 @@
-<h1>Bedste tider</h1>
-<ng-container *ngIf="topScores$ | async as topScores">
+<h1>
+	Bedste tider
+	<button type="button"
+		(click)="switchPeriod()">
+		{{scoresThisYear ? "I år" : "Altid"}}
+	</button>
+</h1>
+<ng-container *ngIf="currentTopScoreSet$() | async as topScores">
 	<ng-container *ngFor="let category of topScoreCategories">
 		<h2>{{category.title}}</h2>
 		<div *ngFor="let score of topScores[category.key]"
