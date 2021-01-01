@@ -35,7 +35,10 @@ export class MinestrygerController {
 		this.addToTopScore(request.user._id, score)
 		this.addToTopScore(request.user._id, score, score.date.substr(0, 4))
 		this.addToPersonalScore(request.user._id, score)
-		return this.storageService.minestrygerTopScoreCollection.findOne()
+		return [
+			this.storageService.minestrygerTopScoreCollection.findOne({ year: undefined }),
+			this.storageService.minestrygerTopScoreCollection.findOne({ year: new Date().getFullYear() + "" }),
+		]
 	}
 
 	private addToPersonalScore(userId: number, score: NewMinestrygerScore) {

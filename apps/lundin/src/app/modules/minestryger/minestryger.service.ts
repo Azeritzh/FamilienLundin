@@ -69,8 +69,11 @@ export class MinestrygerService {
 	async registerScore(score: NewMinestrygerScore) {
 		this.addToPersonalScore(score)
 		this._myScores$.next(this.myScores)
-		this.topScores = await this.httpClient.post<MinestrygerTopScoreSet>("api/minestryger/register", score).toPromise()
+		const topScores = await this.httpClient.post<[MinestrygerTopScoreSet,MinestrygerTopScoreSet]>("api/minestryger/register", score).toPromise()
+		this.topScores = topScores[0]
+		this.yearlyTopScores = topScores[1]
 		this._topScores$.next(this.topScores)
+		this._yearlyTopScores$.next(this.yearlyTopScores)
 	}
 
 	private addToPersonalScore(score: NewMinestrygerScore) {
