@@ -20,13 +20,20 @@ export class MinestrygerController {
 	@UseGuards(JwtAuthGuard)
 	@Get("load-top-scores")
 	async loadTopScores() {
-		return this.storageService.minestrygerTopScoreCollection.findOne() ?? this.newTopScores()
+		return this.storageService.minestrygerTopScoreCollection.findOne({ year: undefined }) ?? this.newTopScores()
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get("load-yearly-top-scores")
+	async loadYearlyTopScores() {
+		return this.storageService.minestrygerTopScoreCollection.findOne({ year: new Date().getFullYear() + "" }) ?? this.newTopScores()
 	}
 
 	@UseGuards(JwtAuthGuard)
 	@Post("register")
 	async registerScore(@Req() request: RequestWithUser, @Body() score: NewMinestrygerScore) {
 		this.addToTopScore(request.user._id, score)
+		this.addToTopScore(request.user._id, score, score.date.substr(0, 4))
 		this.addToPersonalScore(request.user._id, score)
 		return this.storageService.minestrygerTopScoreCollection.findOne()
 	}
@@ -50,16 +57,16 @@ export class MinestrygerController {
 		scoreSet.categories[score.type] = scores
 	}
 
-	private addToTopScore(userId: number, score: NewMinestrygerScore) {
-		this.ensureTopScoresExist()
+	private addToTopScore(userId: number, score: NewMinestrygerScore, year: string = undefined) {
+		this.ensureTopScoresExist(year)
 		const collection = this.storageService.minestrygerTopScoreCollection
-		collection.updateOne({}, this.updateTopScores(userId, score))
+		collection.updateOne({ year }, this.updateTopScores(userId, score))
 	}
 
-	private ensureTopScoresExist() {
-		const topscores = this.storageService.minestrygerTopScoreCollection.findOne()
+	private ensureTopScoresExist(year: string = undefined) {
+		const topscores = this.storageService.minestrygerTopScoreCollection.findOne({ year })
 		if (!topscores)
-			this.storageService.minestrygerTopScoreCollection.insertOne(<any>this.newTopScores())
+			this.storageService.minestrygerTopScoreCollection.insertOne(<any>this.newTopScores(year))
 	}
 
 	private updateTopScores = (userId: number, score: NewMinestrygerScore) => (topscores: MinestrygerTopScoreSet) => {
@@ -96,8 +103,8 @@ export class MinestrygerController {
 		return existingScore
 	}
 
-	private newTopScores() {
-		return { beginnerFlags: [], trainedFlags: [], expertFlags: [], beginnerNoFlags: [], trainedNoFlags: [], expertNoFlags: [] }
+	private newTopScores(year: string = undefined) {
+		return { year, beginnerFlags: [], trainedFlags: [], expertFlags: [], beginnerNoFlags: [], trainedNoFlags: [], expertNoFlags: [] }
 	}
 
 	private newMyScores(userId: number) {
