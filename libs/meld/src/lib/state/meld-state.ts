@@ -1,5 +1,7 @@
 import { Vector3 } from "@lundin/utility"
+import { PlayerEntity } from "../entities/player-entity"
 import { MeldConfig } from "../meld-config"
+import { EntityCollection } from "./entity-collection"
 import { MeldAction } from "./meld-action"
 
 export class MeldState {
@@ -23,9 +25,9 @@ export class MeldState {
 	public loadConfig(config: MeldConfig) {
 		this.terrain.ChunkSize = config.constants.chunkSize
 		for (const type in config.typeValues)
-			this.entities.TypeValues.AddValuesFrom(this.typeMapping.CreateEntityTypeId(type), config.typeValues[type])
+			this.entities.typeValues.addValuesFrom(this.typeMapping.CreateEntityTypeId(type), config.typeValues[type])
 		for (const type in config.classValues)
-			this.entities.ClassValues.AddValuesFrom(this.typeMapping.ClassFor(type), config.classValues[type])
+			this.entities.classValues.addValuesFrom(this.typeMapping.ClassFor(type), config.classValues[type])
 		for (const type in config.solidBlockValues)
 			this.terrain.SolidBlockValues.AddValuesFrom(this.typeMapping.CreateSolidBlockTypeId(type), config.solidBlockValues[type])
 		for (const type in config.nonSolidBlockValues)
@@ -65,11 +67,10 @@ export class MeldState {
 	}*/
 
 	public EntityIdForPlayer(playerId: string): number {
-		const players = this.entities
-			.SelectType<PlayerEntity>()
-			.Where(x => x.PlayerId == playerId)
-		if (players.Any())
-			return players.First().Id
+		for(const entity of this.entities){
+			if(entity instanceof PlayerEntity && entity.playerId === playerId)
+				return entity.id
+		}
 		return null
 	}
 
@@ -82,13 +83,11 @@ export class MeldState {
 	}
 
 	public FinishUpdate() {
-		this.entities.ApplyUpdatedValues()
+		this.entities.applyUpdatedValues()
 		this.actions.splice(0, this.actions.length)
 		this.randomGenerator = null
 	}
 }
-
-class PlayerEntity { }
 
 class Random {
 	constructor(private seed: number) { }
@@ -100,19 +99,4 @@ class TerrainCollection {
 		public SolidBlockValues?: any,
 		public NonSolidBlockValues?: any,
 	) { }
-}
-
-class EntityCollection {
-	constructor(
-		public TypeValues?: any,
-		public ClassValues?: any,
-	) { }
-
-	SelectType<_>(): any {
-		return
-	}
-
-	ApplyUpdatedValues() {
-		return
-	}
 }

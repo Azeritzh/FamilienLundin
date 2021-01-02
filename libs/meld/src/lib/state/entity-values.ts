@@ -19,23 +19,23 @@ export class EntityValues<TKey> {
 		return map
 	}
 
-	Clear() {
+	clear() {
 		for (const map of this.allValueMaps)
 			map.clear()
 	}
 
-	RemoveValuesFor(key: TKey) {
+	removeValuesFor(key: TKey) {
 		for (const map of this.allValueMaps)
 			map.delete(key)
 	}
 
-	AddValuesFromOther(otherValues: EntityValues<TKey>) {
+	addValuesFromOther(otherValues: EntityValues<TKey>) {
 		for (let i = 0; i < this.allValueMaps.length; i++)
 			for (const [key, value] of otherValues.allValueMaps[i])
 				this.allValueMaps[i].set(key, value)
 	}
 
-	Where(predicate: (key: TKey) => boolean): EntityValues<TKey> {
+	where(predicate: (key: TKey) => boolean): EntityValues<TKey> {
 		const newValues = new EntityValues<TKey>()
 		for (let i = 0; i < this.allValueMaps.length; i++)
 			for (const [key, value] of this.allValueMaps[i])
@@ -44,7 +44,7 @@ export class EntityValues<TKey> {
 		return newValues
 	}
 
-	AddValuesFrom(key: TKey, values: GroupedEntityValues) {
+	addValuesFrom(key: TKey, values: GroupedEntityValues) {
 		if (values.entitySize !== undefined)
 			this.entitySizeValues.set(key, values.entitySize)
 		if (values.health !== undefined)
@@ -53,7 +53,7 @@ export class EntityValues<TKey> {
 			this.positioningValues.set(key, values.positioning)
 	}
 
-	GroupFor(key: TKey) {
+	groupFor(key: TKey) {
 		return new GroupedEntityValues(
 			this.entitySizeValues.get(key),
 			this.healthValues.get(key),
