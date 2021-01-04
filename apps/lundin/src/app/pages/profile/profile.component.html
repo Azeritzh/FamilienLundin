@@ -50,4 +50,8 @@
 		(click)="authService.addUser(newUser.value)">
 		Tilføj
 	</button>
+	<button type="button"
+		(click)="authService.resetPasswordFor(newUser.value)">
+		Reset kode
+	</button>
 </ng-container>

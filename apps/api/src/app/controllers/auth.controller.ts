@@ -1,5 +1,5 @@
 import { AuthResponse } from "@lundin/api-interfaces"
-import { Body, Controller, Get, Post, Req, UnauthorizedException, UseGuards } from "@nestjs/common"
+import { Body, Controller, Get, NotFoundException, Post, Req, UnauthorizedException, UseGuards } from "@nestjs/common"
 import { AuthGuard } from "@nestjs/passport"
 import { Request } from "express"
 import { AuthService, BasicUserInfo } from "../../auth/auth.service"
@@ -63,6 +63,19 @@ export class AuthController {
 		if (!user)
 			throw new UnauthorizedException()
 		await this.userService.updatePassword(user._id, newPassword)
+		return { success: true }
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post("reset")
+	async resetPassword(@Req() request: RequestWithUser, @Body() message: { username: string }) {
+		const currentUser = await this.userService.findOne({ _id: request.user._id })
+		if (currentUser.type !== "admin")
+			throw new UnauthorizedException()
+		const targetUser = await this.userService.findOne({ username: message.username })
+		if (!targetUser)
+			throw new NotFoundException()
+		await this.userService.updatePassword(targetUser._id, "KristjanErSej")
 		return { success: true }
 	}
 }

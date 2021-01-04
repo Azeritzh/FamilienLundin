@@ -84,6 +84,10 @@ export class AuthService {
 		this.http.post("/api/user/add", { username }).toPromise()
 	}
 
+	resetPasswordFor(username: string) {
+		this.http.post("/api/auth/reset", { username }).toPromise()
+	}
+
 	isLoggedIn() {
 		return !!this.loginInfo
 	}
