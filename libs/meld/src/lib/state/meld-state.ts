@@ -1,8 +1,8 @@
-import { Vector3 } from "@lundin/utility"
 import { PlayerEntity } from "../entities/player-entity"
 import { MeldConfig } from "../meld-config"
 import { EntityCollection } from "./entity-collection"
 import { MeldAction } from "./meld-action"
+import { TerrainCollection } from "./terrain-collection"
 
 export class MeldState {
 	constructor(
@@ -23,15 +23,15 @@ export class MeldState {
 	}
 
 	public loadConfig(config: MeldConfig) {
-		this.terrain.ChunkSize = config.constants.chunkSize
+		this.terrain.chunkSize = config.constants.chunkSize
 		for (const type in config.typeValues)
 			this.entities.typeValues.addValuesFrom(this.typeMapping.CreateEntityTypeId(type), config.typeValues[type])
 		for (const type in config.classValues)
 			this.entities.classValues.addValuesFrom(this.typeMapping.ClassFor(type), config.classValues[type])
 		for (const type in config.solidBlockValues)
-			this.terrain.SolidBlockValues.AddValuesFrom(this.typeMapping.CreateSolidBlockTypeId(type), config.solidBlockValues[type])
+			this.terrain.solidBlockValues.addValuesFrom(this.typeMapping.CreateSolidBlockTypeId(type), config.solidBlockValues[type])
 		for (const type in config.nonSolidBlockValues)
-			this.terrain.NonSolidBlockValues.AddValuesFrom(this.typeMapping.CreateNonSolidBlockTypeId(type), config.nonSolidBlockValues[type])
+			this.terrain.nonSolidBlockValues.addValuesFrom(this.typeMapping.CreateNonSolidBlockTypeId(type), config.nonSolidBlockValues[type])
 	}
 	/*
 		public LoadBaseState(baseState: BaseState) {
@@ -91,12 +91,4 @@ export class MeldState {
 
 class Random {
 	constructor(private seed: number) { }
-}
-
-class TerrainCollection {
-	constructor(
-		public ChunkSize?: Vector3,
-		public SolidBlockValues?: any,
-		public NonSolidBlockValues?: any,
-	) { }
 }

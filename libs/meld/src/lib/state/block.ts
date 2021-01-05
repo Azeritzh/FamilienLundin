@@ -1,10 +1,10 @@
 import { MeldState } from "./meld-state"
 
-export class Block {
+export class Block { // struct
 	constructor(
-		public blockType: BlockType,
-		public solidType: number,
-		public nonSolidType: number,
+		public readonly blockType: BlockType,
+		public readonly solidType: number,
+		public readonly nonSolidType: number,
 	) { }
 
 	static newEmpty(nonSolidType: number) {
@@ -46,7 +46,7 @@ export class Block {
 	}
 
 	hardness(state: MeldState) {
-		state.terrain.SolidBlockValues.HardnessValues[this.solidType]
+		state.terrain.solidBlockValues.hardnessValues[this.solidType]
 			?? 1
 	}
 }

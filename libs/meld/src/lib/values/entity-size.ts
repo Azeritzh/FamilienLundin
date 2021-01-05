@@ -1,13 +1,13 @@
 import { Vector3 } from "@lundin/utility"
 
-export class EntitySize {
+export class EntitySize { // struct
 	constructor(
 		public readonly height: number,
 		public readonly radius: number,
 	) { }
 }
 
-export class Box {
+export class Box { // struct
 	constructor(
 		public readonly minX: number,
 		public readonly maxX: number,

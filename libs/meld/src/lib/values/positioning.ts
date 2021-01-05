@@ -1,6 +1,6 @@
 import { Vector3 } from "@lundin/utility"
 
-export class Positioning {
+export class Positioning { // struct
 	constructor(
 		public readonly position: Vector3,
 		public readonly velocity: Vector3,

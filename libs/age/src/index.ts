@@ -1,6 +1,7 @@
 export * from "./lib/age"
 export * from "./lib/game-ai"
 export * from "./lib/game-grid"
+export * from "./lib/game-grid-3d"
 export * from "./lib/game-logic"
 export * from "./lib/game-state"
 export * from "./lib/game-validator"

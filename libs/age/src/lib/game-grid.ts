@@ -4,8 +4,8 @@ export class GameGrid<T> {
 	private grid: T[]
 
 	constructor(
-		public width: number,
-		public height: number,
+		public readonly width: number,
+		public readonly height: number,
 		initialise: (x: number, y: number) => T = () => null,
 	) {
 		this.setAll(initialise)
