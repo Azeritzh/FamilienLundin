@@ -158,6 +158,13 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		this.updateHovering(x, y)
 	}
 
+	mouseLeave(event: MouseEvent) {
+		this.leftMouseDown = false
+		this.middleMouseDown = false
+		this.rightMouseDown = false
+		this.mouseMove(event)
+	}
+
 	private updateHovering(x: number, y: number) {
 		this.redrawLastHoverPosition()
 		this.drawField(x, y, true)

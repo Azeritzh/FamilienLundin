@@ -1,6 +1,6 @@
 <canvas #canvas
 	(mousemove)="mouseMove($event)"
-	(mouseleave)="mouseMove($event)"
+	(mouseleave)="mouseLeave($event)"
 	(mousedown)="updateMouseClick($event, true)"
 	(mouseup)="updateMouseClick($event, false)"
 	(contextmenu)="$event.preventDefault()">
