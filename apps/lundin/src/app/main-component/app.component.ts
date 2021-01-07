@@ -22,21 +22,31 @@ export class AppComponent {
 
 	@ViewChild("overlayHost", { read: OverlayHostDirective, static: true }) overlayHost: OverlayHostDirective
 	showingOverlay = false
+	message = ""
+	showingMessage = false
 
 	constructor(
 		public authService: AuthService,
 		private componentFactoryResolver: ComponentFactoryResolver,
 		private navigationService: NavigationService,
 	) {
-		this.navigationService.openOverlay$.subscribe(({ component, init }) => {
+		this.navigationService.overlay$.subscribe(({ component, init }) => {
 			this.overlayHost.viewContainerRef.clear()
 			this.showingOverlay = false
 			if (component)
 				init(this.openAsOverlay(component))
 		})
+		this.navigationService.message$.subscribe(message => {
+			this.showingMessage = !!message
+			this.message = message
+			setTimeout(() => {
+				if (this.message === message)
+					this.showingMessage = false
+			}, 60000)
+		})
 	}
 
-	openAsOverlay<T>(component: Type<T>): T {
+	private openAsOverlay<T>(component: Type<T>): T {
 		const factory = this.componentFactoryResolver.resolveComponentFactory(component)
 		const componentRef = this.overlayHost.viewContainerRef.createComponent(factory)
 		this.showingOverlay = true
@@ -47,6 +57,10 @@ export class AppComponent {
 		event.stopPropagation()
 		if (event.target === event.currentTarget)
 			this.navigationService.closeOverlay()
+	}
+
+	closeMessage() {
+		this.showingMessage = false
 	}
 }
 

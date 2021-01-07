@@ -7,7 +7,7 @@
 	grid-template-columns: 10rem 1fr;
 	grid-template-rows: 3rem 1fr;
 	height: 100vh;
-	transition: 0.3s ease; // transition only works with grid-template-columns in firefox so far
+	transition: var(--standard-transition); // transition only works with grid-template-columns in firefox so far
 }
 :host.hidden-navigation {
 	grid-template-columns: 4rem 1fr;
@@ -93,6 +93,43 @@ a + button { margin-top: auto; }
 	padding: 1rem calc(50vw - 20rem);
 }
 .overlay.hidden { display: none; }
+
+.message-box {
+	position: absolute;
+	display: flow-root;
+
+	font-weight: bold;
+	text-align: center;
+	color: var(--color-text-light);
+	background-color: var(--color-primary);
+	padding: 0.5rem;
+	border-radius: var(--border-radius-size);
+
+	white-space: pre-line;
+	min-height: 1rem;
+	max-height: 20rem;
+	bottom: 1rem;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 40rem;
+	box-shadow: var(--standard-shadow);
+	transition: var(--standard-transition);
+}
+.message-box.hidden { bottom: -6rem; }
+.message-box img {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 1.5rem;
+	margin: 0.2rem;
+	opacity: 0.5;
+	transition: var(--standard-transition);
+}
+.message-box img:hover {
+	opacity: 1;
+	cursor: pointer;
+}
 
 .nav-text {
 	margin-left: 0.4rem;

@@ -2,7 +2,6 @@ import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@ang
 import { FlagAction, Minestryger, MinestrygerAction, MinestrygerConfig, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
 import { NavigationService } from "../../../services/navigation.service"
 import { MinestrygerService } from "../minestryger.service"
-import { WinMessageComponent } from "./win-message.component"
 
 @Component({
 	selector: "lundin-minestryger-game",
@@ -280,8 +279,8 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 			type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.config.allowFlags ? "f" : "n"}`,
 		}
 		this.minestrygerService.registerScore(score)
-		const component = await this.navigationService.openAsOverlay(WinMessageComponent)
-		component.time = this.game.state.finishTime
+		const time = (this.game.state.finishTime / 1000).toLocaleString(undefined, { minimumFractionDigits: 2 })
+		this.navigationService.showMessage(`Du har vundet! Endelig tid: ${time} sekunder`)
 	}
 
 	private flagField(x: number, y: number) {

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core"
+import { Router } from "@angular/router"
 import { MessageThread } from "@lundin/api-interfaces"
-import { NavigationService } from "../../../services/navigation.service"
 import { MessageService } from "../message.service"
 
 @Component({
@@ -13,7 +13,7 @@ export class MessageListComponent {
 
 	constructor(
 		private messageService: MessageService,
-		private navigationService: NavigationService,
+		private router: Router,
 	) {
 		this.updateThreads()
 	}
@@ -23,6 +23,6 @@ export class MessageListComponent {
 	}
 
 	openThread(threadId: number){
-		this.navigationService.open("messages/" + threadId)
+		this.router.navigateByUrl("messages/" + threadId)
 	}
 }

@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { Router } from "@angular/router"
 import { NavigationService } from "../../../services/navigation.service"
 import { MessageService } from "../message.service"
 
@@ -14,6 +15,7 @@ export class AddMessageComponent {
 
 	constructor(
 		private messageService: MessageService,
+		private router: Router,
 		private navigationService: NavigationService,
 	) { }
 
@@ -32,7 +34,7 @@ export class AddMessageComponent {
 			creationTime: new Date().toISOString(),
 		}
 		await this.messageService.addResponse(this.threadId, message)
-		this.navigationService.open("messages/" + this.threadId)
+		this.router.navigateByUrl("messages/" + this.threadId)
 	}
 
 	async addMessageThread() {
@@ -46,6 +48,6 @@ export class AddMessageComponent {
 			responses: [],
 		}
 		const { _id } = await this.messageService.addThread(thread)
-		this.navigationService.open("messages/" + _id)
+		this.router.navigateByUrl("messages/" + _id)
 	}
 }
