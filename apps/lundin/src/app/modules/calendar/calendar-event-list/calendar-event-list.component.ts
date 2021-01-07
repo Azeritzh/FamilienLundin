@@ -1,6 +1,6 @@
 import { Component } from "@angular/core"
+import { Router } from "@angular/router"
 import { CalendarEvent } from "@lundin/api-interfaces"
-import { NavigationService } from "../../../services/navigation.service"
 import { CalendarService } from "../calendar.service"
 
 @Component({
@@ -13,7 +13,7 @@ export class CalendarEventListComponent {
 
 	constructor(
 		private calendarService: CalendarService,
-		private navigationService: NavigationService,
+		private router: Router,
 	) {
 		this.updateEvents()
 	}
@@ -24,6 +24,6 @@ export class CalendarEventListComponent {
 
 	openEvent(eventId: number) {
 		console.log("Clicked event " + eventId)
-		// this.navigationService.open("messages/" + threadId)
+		// this.router.navigateByUrl("messages/" + threadId)
 	}
 }

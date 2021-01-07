@@ -1,5 +1,5 @@
 import { Injectable, Type } from "@angular/core"
-import { Router } from "@angular/router"
+import { NavigationEnd, Router } from "@angular/router"
 import { Subject } from "rxjs"
 
 @Injectable()
@@ -7,11 +7,16 @@ export class NavigationService {
 	overlay$ = new Subject<{ component?: Type<any>, init?: (component: any) => void }>()
 	message$ = new Subject<string>()
 
-	constructor(private router: Router) { }
+	constructor(router: Router) {
+		router.events.subscribe(x => {
+			if(x instanceof NavigationEnd)
+				this.afterNavigation()
+		})
+	}
 
-	open(path: string) {
-		this.router.navigateByUrl(path)
+	private afterNavigation(){
 		this.closeOverlay()
+		this.closeMessage()
 	}
 
 	openAsOverlay<T>(component: Type<T>) {
