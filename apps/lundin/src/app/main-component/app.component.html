@@ -32,3 +32,10 @@
 		lundinOverlayHost>
 	</ng-template>
 </div>
+
+<div class="message-box"
+	[class.hidden]="!showingMessage">
+	{{message}}
+	<img src="/assets/images/icons/Close_icon.svg"
+		(click)="closeMessage()">
+</div>

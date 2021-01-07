@@ -4,7 +4,9 @@ import { Subject } from "rxjs"
 
 @Injectable()
 export class NavigationService {
-	openOverlay$ = new Subject<{ component?: Type<any>, init?: (component: any) => void }>()
+	overlay$ = new Subject<{ component?: Type<any>, init?: (component: any) => void }>()
+	message$ = new Subject<string>()
+
 	constructor(private router: Router) { }
 
 	open(path: string) {
@@ -14,11 +16,19 @@ export class NavigationService {
 
 	openAsOverlay<T>(component: Type<T>) {
 		return new Promise<T>(resolve => {
-			this.openOverlay$.next({ component, init: (instance: T) => resolve(instance) })
+			this.overlay$.next({ component, init: (instance: T) => resolve(instance) })
 		})
 	}
 
 	closeOverlay() {
-		this.openOverlay$.next({})
+		this.overlay$.next({})
+	}
+
+	showMessage(message: string) {
+		this.message$.next(message)
+	}
+
+	closeMessage() {
+		this.message$.next(null)
 	}
 }

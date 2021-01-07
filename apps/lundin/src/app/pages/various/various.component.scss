@@ -23,6 +23,6 @@ a {
 	padding: 2rem;
 	margin: 1rem;
 	width: 15rem;
-	transition: 0.3s ease;
+	transition: var(--standard-transition);
 }
 a:hover { background-color: var(--color-btn-neutral-hover); }
