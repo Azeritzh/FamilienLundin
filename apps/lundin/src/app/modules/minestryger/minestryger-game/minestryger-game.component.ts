@@ -58,6 +58,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		this.currentTime = 0
 		this.resetCanvas()
 		this.drawEverything()
+		this.navigationService.closeMessage()
 	}
 
 	resetCanvas() {
