@@ -11,7 +11,7 @@
 	<a *ngFor="let entry of navigationEntries"
 		[routerLink]="entry.link"
 		class="nav-btn">
-		<img src={{entry.imageUrl}}>
+		<img [src]="entry.imageUrl">
 		<span class="nav-text">{{entry.text}}</span>
 	</a>
 	<button (click)="authService.logout()"
