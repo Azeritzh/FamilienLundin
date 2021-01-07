@@ -39,10 +39,6 @@ export class AppComponent {
 		this.navigationService.message$.subscribe(message => {
 			this.showingMessage = !!message
 			this.message = message
-			setTimeout(() => {
-				if (this.message === message)
-					this.showingMessage = false
-			}, 60000)
 		})
 	}
 
