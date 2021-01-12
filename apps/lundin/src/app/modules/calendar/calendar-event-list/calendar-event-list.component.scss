@@ -1,8 +1,9 @@
 .entry {
-	display: grid;
-	grid-template-areas: "title date"
-	"content content";
-	grid-template-columns: 1fr 8rem;
+	@extend .list-entry-container;
+	// display: grid;
+	// grid-template-areas: "title date"
+	// "content content";
+	// grid-template-columns: 1fr 8rem;
 	border-bottom: 1px solid var(--color-border);
 	cursor: pointer;
 }
@@ -12,7 +13,7 @@
 .entry:hover {
 	background-color: var(--color-secondary);
 }
-.entry * { padding: 0.5rem; }
+.entry * { padding: 0.2rem; }
 
 .title { grid-area: title; }
 .date { grid-area: date; }
@@ -20,3 +21,28 @@
 
 .title { font-weight: bold; }
 .date { text-align: right; }
+
+.list-entry-container {
+	border: 1px solid var(--color-primary);
+	margin: 0.2rem;
+	border-radius: var(--border-radius-half);
+}
+
+.list-entry-content {
+	display: flex;
+	justify-content: space-between;
+}
+
+.message-header {
+	@extend .list-entry-content;
+	background-color: var(--color-secondary);
+	border-top-left-radius: var(--border-radius-half);
+	border-top-right-radius: var(--border-radius-half);
+}
+
+.message-content {
+	@extend .list-entry-content;
+	background-color: white;
+	border-bottom-left-radius: var(--border-radius-half);
+	border-bottom-right-radius: var(--border-radius-half);
+}

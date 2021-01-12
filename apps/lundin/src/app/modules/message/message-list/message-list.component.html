@@ -1,16 +1,20 @@
 <div *ngFor="let thread of threads"
 	class="thread"
 	(click)="openThread(thread._id)">
-	<div class="title">
-		{{thread.title}}
-	</div>
-	<div class="content">
-		{{thread.content}}
-	</div>
-	<div class="author">
-		{{thread.authorId | user | async}}
-	</div>
-	<div class="date">
-		{{thread.creationTime | date}}
-	</div>
+	<header class="message-header">
+		<div class="title">
+			{{thread.title}}
+		</div>
+		<div class="date">
+			{{thread.creationTime | date}}
+		</div>
+	</header>
+	<section class="message-content">
+		<div class="content">
+			{{thread.content}}
+		</div>
+		<div class="author">
+			{{thread.authorId | user | async}}
+		</div>
+	</section>
 </div>
