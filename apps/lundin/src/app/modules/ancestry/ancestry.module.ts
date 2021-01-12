@@ -5,11 +5,13 @@ import { SharedModule } from "../../shared/shared.module"
 import { AddPersonComponent } from "./add-person/add-person.component"
 import { AncestryListComponent } from "./ancestry-list/ancestry-list.component"
 import { AncestryService } from "./ancestry.service"
+import { PersonComponent } from "./person/person.component"
 
 @NgModule({
 	declarations: [
 		AddPersonComponent,
 		AncestryListComponent,
+		PersonComponent,
 	],
 	imports: [
 		BrowserModule,
