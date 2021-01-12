@@ -1,0 +1,20 @@
+.home-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.messages {
+    @extend .container-styling;
+    flex: 5
+}
+
+.events {
+    @extend .container-styling;
+    flex: 1;
+}
+
+.container-styling {
+    border: 1px solid var(--color-primary);
+    border-radius: var(--border-radius-full);
+    padding-bottom: 0.5rem;
+}

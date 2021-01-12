@@ -11,8 +11,8 @@ button {
     background-color: var(--color-btn-neutral);
     height: 2rem;
     line-height: 2rem;
-    padding: 0 0.5rem;
-    border-radius: var(--border-radius-size);
+    padding: 0 1rem;
+    border-radius: var(--border-radius-full);
     color: white;
     outline: unset;
 }
@@ -45,7 +45,7 @@ input, textarea, select {
     height: 2rem;
     line-height: 2rem;
     padding: 0 0.5rem;
-    border-radius: var(--border-radius-size);
+    border-radius: var(--border-radius-half);
     border: 1px solid var(--color-border);
     outline-color: var(--color-primary);
 }
@@ -53,4 +53,16 @@ input, textarea, select {
 input[type="checkbox"] {
     margin-top: 0.5rem;
     height: 1rem;
+}
+
+header.container-header {
+    display: flex;
+    background-color: var(--color-primary);
+    justify-content: space-between;
+    font-size: 1.2rem;
+    padding: 0.2rem 0.5rem;
+    line-height: 1.7rem;
+    color: var(--color-text-light);
+    border-top-left-radius: 0.9rem;
+    border-top-right-radius: 0.9rem;
 }
