@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { Person } from "@lundin/api-interfaces"
 import { BehaviorSubject } from "rxjs"
+import { map } from "rxjs/operators"
 
 @Injectable()
 export class AncestryService {
@@ -30,5 +31,10 @@ export class AncestryService {
 
 	private updatePeople$() {
 		this._people$.next(this.people.slice())
+	}
+
+	person$(id: number) {
+		const toThisPerson = (people: Person[]) => people.find(x => x._id === id)
+		return this._people$.asObservable().pipe(map(toThisPerson))
 	}
 }
