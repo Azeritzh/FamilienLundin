@@ -64,6 +64,10 @@ export class AppComponent {
 	closeMessage() {
 		this.showingMessage = false
 	}
+
+	firstLetterOf(name: string) {
+		return name[0]
+	}
 }
 
 interface NavigationEntry {

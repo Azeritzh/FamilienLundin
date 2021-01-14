@@ -52,7 +52,7 @@ button { display: inline-flex; }
 a, button {
 	height: unset;
 	font-size: 1.2rem;
-	padding: 0.5rem;
+	padding: 0.2rem;
 }
 a + button { margin-top: auto; }
 
@@ -152,4 +152,28 @@ a + button { margin-top: auto; }
 
 .nav-text {
 	margin-left: 0.4rem;
+}
+
+.profile-img {
+	background-color: #e0e8e3;
+    width: 2.5rem;
+    height: 2.5rem;
+	border-radius: 1.5rem;
+	text-align: center;
+	color: var(--color-text-dark);
+	font-size: 1.5rem;
+	padding-top: 0.2rem;
+}
+
+.profile-welcome-message {
+	font-size: 1rem;
+	margin-right: 0.5rem;
+}
+
+.profile-nav-content {
+	display: flex;
+}
+
+.nav-content {
+	justify-content: space-between;
 }

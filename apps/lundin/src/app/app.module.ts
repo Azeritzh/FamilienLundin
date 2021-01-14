@@ -24,6 +24,7 @@ import { VariousComponent } from "./pages/various/various.component"
 import { AuthService } from "./services/auth.service"
 import { NavigationService } from "./services/navigation.service"
 import { UserService } from "./services/user.service"
+import { SharedModule } from "./shared/shared.module"
 
 @NgModule({
 	declarations: [
@@ -50,6 +51,7 @@ import { UserService } from "./services/user.service"
 		MessageModule,
 		MinestrygerModule,
 		NoughtsAndCrossesModule,
+		SharedModule,
 		VirusModule,
 	],
 	providers: [AuthService, NavigationService, UserService],

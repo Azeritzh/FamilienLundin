@@ -1,11 +1,19 @@
-<header>
+<header class="nav-content">
 	{{header}}
-	<a routerLink="profile">Profil</a>
+	<div *ngIf="authService.loginInfo?.userId | user | async as username"
+		class="profile-nav-content">
+		<div class="profile-welcome-message">{{username}}</div>
+		<a routerLink="profile">
+			<div class="profile-img">{{firstLetterOf(username)}}</div>
+		</a>
+	</div>
 </header>
+
 <nav *ngIf="authService.isLoggedIn()">
 	<button (click)="hideNavigation = !hideNavigation"
 		class="nav-btn collaps-btn">
-		<img [src]="hideNavigation ? '/assets/images/icons/Collapse2_icon.svg' : '/assets/images/icons/Collapse1_icon.svg'">
+		<img
+			[src]="hideNavigation ? '/assets/images/icons/Collapse2_icon.svg' : '/assets/images/icons/Collapse1_icon.svg'">
 		<span class="nav-text">Kollaps</span>
 	</button>
 	<a *ngFor="let entry of navigationEntries"
