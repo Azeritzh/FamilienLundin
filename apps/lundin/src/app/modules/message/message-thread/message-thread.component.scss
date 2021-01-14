@@ -1,21 +1,30 @@
-:host {
-	display: grid;
-	grid-template-areas: "title title"
-	"content date"
-	"content author"
-	"responses responses";
-	grid-template-columns: 1fr 8rem;
+.thread-container {
+	display: flex;
 }
 
-h1 { grid-area: title; }
-.thread-date { grid-area: date; }
-.thread-content { grid-area: content; }
-.thread-author { grid-area: author; }
-.responses { grid-area: responses; }
+.thread-content-container {
+	@extend .container-box;
+	width: 100%;
+	min-height: 14rem;
+}
 
-.thread-title { font-weight: bold; }
-.thread-date { text-align: right; }
-.thread-author { text-align: right; }
+.container-box {
+    border: 1px solid var(--color-primary);
+    border-radius: var(--border-radius-full);
+    padding-bottom: 0.5rem;
+    background-color: white;
+    height: calc(100vh - 5rem);
+}
+
+.thread-subheading {
+	display: flex;
+	justify-content: space-between;
+	margin: 0.5rem;
+}
+
+.thread-author { font-weight: bold; }
+.thread-content { padding: 0.5rem; }
+.thread-subject { border-bottom: 1px solid var(--color-primary); }
 
 h1 {
 	font-size: 1.5rem;
@@ -23,21 +32,62 @@ h1 {
 	background-color: var(--color-primary);
 }
 
-.response {
-	display: grid;
-	grid-template-areas: "author date"
-	"content content";
-	grid-template-columns: 1fr 8rem;
-	border-bottom: 1px solid var(--color-border);
-}
 button + .response {
 	border-top: 1px solid var(--color-border);
 }
-.response * { padding: 0.5rem; }
+.response * { padding: 0.2rem; }
 
-.response-date { grid-area: date; }
-.response-content { grid-area: content; }
-.response-author { grid-area: author; }
+.list-entry-container {
+	border: 1px solid var(--color-primary);
+	margin: 0.2rem 0.5rem;
+	border-radius: var(--border-radius-half);
+}
+
+.response {
+	@extend .list-entry-container;
+	overflow: hidden;
+}
 
 .response-date { text-align: right; }
 .response-author { font-weight: bold; }
+
+.response-header {
+	@extend .list-entry-content;
+	background-color: var(--color-secondary);
+}
+
+.response-content {
+	@extend .list-entry-content;
+	background-color: white;
+}
+
+.list-entry-content {
+	display: flex;
+	justify-content: space-between;
+}
+
+.scroll-list-container {
+    height: calc(100% - 7rem);
+    overflow-y: scroll;
+    width: calc(100% - 0.5rem);
+    margin-top: 0.5rem;
+}
+
+.scroll-list-container::-webkit-scrollbar-track
+{
+    border-radius: var(--border-radius-full);
+    border: 1px solid var(--color-primary);
+	background-color: white;
+}
+
+.scroll-list-container::-webkit-scrollbar
+{
+	width: 1rem;
+	background-color: white;
+}
+
+.scroll-list-container::-webkit-scrollbar-thumb
+{
+	border-radius: var(--border-radius-full);
+	background-color: var(--color-btn-neutral);
+}

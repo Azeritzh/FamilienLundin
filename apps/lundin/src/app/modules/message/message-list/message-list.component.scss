@@ -2,6 +2,7 @@
 	@extend .list-entry-container;
 	border-bottom: 1px solid var(--color-border);
 	cursor: pointer;
+	overflow: hidden;
 }
 .thread:first-child {
 	border-top: 1px solid var(--color-border);
@@ -10,11 +11,6 @@
 	background-color: var(--color-secondary);
 }
 .thread * { padding: 0.2rem; }
-
-.title { grid-area: title; }
-.date { grid-area: date; }
-.content { grid-area: content; }
-.author { grid-area: author; }
 
 .title { font-weight: bold; }
 .date { text-align: right; }
@@ -34,13 +30,9 @@
 .message-header {
 	@extend .list-entry-content;
 	background-color: var(--color-secondary);
-	border-top-left-radius: var(--border-radius-half);
-	border-top-right-radius: var(--border-radius-half);
 }
 
 .message-content {
 	@extend .list-entry-content;
 	background-color: white;
-	border-bottom-left-radius: var(--border-radius-half);
-	border-bottom-right-radius: var(--border-radius-half);
 }

@@ -1,30 +1,40 @@
-<h1>{{thread.title}}</h1>
-<div class="thread-content">
-	{{thread.content}}
-</div>
-<div class="thread-author">
-	{{thread.authorId | user | async }}
-</div>
-<div class="thread-date">
-	{{thread.creationTime | date}}
-</div>
-
-<div class="responses">
-	<button type="button"
-		(click)="addResponse()">
-		Svar
-	</button>
-
-	<div *ngFor="let response of thread.responses"
-		class="response">
-		<div class="response-content">
-			{{response.content}}
-		</div>
-		<div class="response-author">
-			{{response.authorId | user | async}}
-		</div>
-		<div class="response-date">
-			{{response.creationTime | date}}
-		</div>
-	</div>
-</div>
+<section class="thread-container">
+	<section class="thread-content-container">
+		<header class="container-header">
+			<h1>{{thread.title}}</h1>
+			<button type="button"
+				(click)="addResponse()">
+				Opret svar
+			</button>
+		</header>
+		<section class="thread-subject">
+			<div class="thread-subheading">
+				<div class="thread-author">
+					{{thread.authorId | user | async }}
+				</div>
+				<div class="thread-date">
+					{{thread.creationTime | date}}
+				</div>
+			</div>
+			<div class="thread-content">
+				{{thread.content}}
+			</div>
+		</section>
+		<section class="responses scroll-list-container">
+			<div *ngFor="let response of thread.responses"
+				class="response">
+				<header class="response-header">
+					<div class="response-author">
+						{{response.authorId | user | async}}
+					</div>
+					<div class="response-date">
+						{{response.creationTime | date}}
+					</div>
+				</header>
+				<div class="response-content">
+					{{response.content}}
+				</div>
+			</div>
+		</section>
+	</section>
+</section>
