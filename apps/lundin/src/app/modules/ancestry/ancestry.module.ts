@@ -7,6 +7,7 @@ import { AncestryListComponent } from "./ancestry-list/ancestry-list.component"
 import { AncestryService } from "./ancestry.service"
 import { EditInfoComponent } from "./edit-info/edit-info.component"
 import { PersonComponent } from "./person/person.component"
+import { TreeComponent } from "./tree/tree.component"
 
 @NgModule({
 	declarations: [
@@ -14,6 +15,7 @@ import { PersonComponent } from "./person/person.component"
 		AncestryListComponent,
 		EditInfoComponent,
 		PersonComponent,
+		TreeComponent,
 	],
 	imports: [
 		BrowserModule,
