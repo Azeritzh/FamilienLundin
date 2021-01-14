@@ -25,6 +25,11 @@
 </article>
 <lundin-login *ngIf="!authService.isLoggedIn()"></lundin-login>
 
+<div class="loading"
+	[class.hidden]="!showingLoading">
+	{{header}}
+</div>
+
 <div class="overlay"
 	[class.hidden]="!showingOverlay"
 	(click)="closeOverlay($event)">
