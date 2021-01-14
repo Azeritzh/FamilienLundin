@@ -20,4 +20,13 @@ export class AncestryController {
 	async save(@Body() person: Person) {
 		return this.storageService.ancestryCollection.insertOne(person)
 	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post("update-info")
+	async updateInfo(@Body() message: { personId: number, information: { title: string, content: string }[] }) {
+		return this.storageService.ancestryCollection.updateOne(
+			{ _id: message.personId },
+			x => x.information = message.information
+		)
+	}
 }

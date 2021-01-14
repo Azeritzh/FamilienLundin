@@ -32,8 +32,7 @@ export class EditInfoComponent {
 	}
 
 	async save() {
-		// TODO
-		// await this.ancestryService.add(this.person)
+		await this.ancestryService.updateInfo(this.personId, this.information)
 		this.navigationService.closeOverlay()
 	}
 

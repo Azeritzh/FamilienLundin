@@ -29,6 +29,14 @@ export class AncestryService {
 		return savedPerson
 	}
 
+	async updateInfo(personId: number, information: { title: string, content: string }[]) {
+		const updatedPerson = await this.httpClient.post<Person>("api/ancestry/update-info", { personId, information }).toPromise()
+		const index = this.people.findIndex(x => x._id === updatedPerson._id )
+		this.people[index] = updatedPerson
+		this.updatePeople$()
+		return updatedPerson
+	}
+
 	private updatePeople$() {
 		this._people$.next(this.people.slice())
 	}
