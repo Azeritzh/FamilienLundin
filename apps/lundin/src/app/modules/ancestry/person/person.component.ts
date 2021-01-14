@@ -28,8 +28,16 @@ export class PersonComponent implements OnInit {
 		})
 	}
 
+	async editRelations(){
+		throw new Error("not implemented")
+	}
+
 	async editInfo(){
 		const component = await this.navigationService.openAsOverlay(EditInfoComponent)
 		component.editPerson(this.personId)
+	}
+
+	async editFiles(){
+		throw new Error("not implemented")
 	}
 }

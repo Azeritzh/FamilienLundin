@@ -1,7 +1,11 @@
 <ng-container *ngIf="person$ | async as person">
 	<section class="tree-box">
 		<header>
-			<h1>{{person.name}}</h1>
+			<h1>{{person.name}} - Familie</h1>
+			<button type="button"
+				(click)="editRelations()">
+				Redigér
+			</button>
 		</header>
 		<lundin-tree [personId]="personId"></lundin-tree>
 	</section>
@@ -22,10 +26,13 @@
 		</ul>
 	</section>
 
-	<section class="image-box">
+	<section class="file-box">
 		<header>
-			<h1>Billeder</h1>
-			<button>Redigér</button>
+			<h1>Filer</h1>
+			<button type="button"
+				(click)="editFiles()">
+				Redigér
+			</button>
 		</header>
 		<ul>
 			<li *ngFor="let file of person.files">

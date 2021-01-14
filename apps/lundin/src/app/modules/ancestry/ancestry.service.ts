@@ -12,7 +12,9 @@ export class AncestryService {
 		return this._people$.asObservable()
 	}
 
-	constructor(private httpClient: HttpClient) { }
+	constructor(private httpClient: HttpClient) {
+		this.load()
+	}
 
 	load() {
 		this.httpClient.get<Person[]>("api/ancestry/load-all").toPromise().then(people => {
