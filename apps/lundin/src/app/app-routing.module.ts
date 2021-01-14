@@ -1,8 +1,9 @@
 import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
+import { PersonComponent } from "./modules/ancestry/person/person.component"
 import { CryptComponent } from "./modules/crypt/crypt.component"
 import { MessageThreadComponent } from "./modules/message/message-thread/message-thread.component"
-import { MinestrygerComponent } from './modules/minestryger/minestryger.component'
+import { MinestrygerComponent } from "./modules/minestryger/minestryger.component"
 import { NoughtsAndCrossesComponent } from "./modules/noughts-and-crosses/noughts-and-crosses.component"
 import { VirusComponent } from "./modules/virus/virus.component"
 import { AncestryComponent } from "./pages/ancestry/ancestry.component"
@@ -17,6 +18,7 @@ import { VariousComponent } from "./pages/various/various.component"
 const routes: Routes = [
 	{ path: "", component: HomeComponent },
 	{ path: "ancestry", component: AncestryComponent },
+	{ path: "ancestry/person/:id", component: PersonComponent },
 	{ path: "calendar", component: CalendarComponent },
 	{ path: "gallery", component: GalleryComponent },
 	{ path: "games/iframe/:game", component: IframeGameComponent },

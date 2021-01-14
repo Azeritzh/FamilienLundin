@@ -2,16 +2,19 @@ import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { Person } from "@lundin/api-interfaces"
 import { BehaviorSubject } from "rxjs"
+import { map } from "rxjs/operators"
 
 @Injectable()
 export class AncestryService {
-	people = []
+	people: Person[] = []
 	private _people$ = new BehaviorSubject<Person[]>(this.people.slice())
 	get people$() {
 		return this._people$.asObservable()
 	}
 
-	constructor(private httpClient: HttpClient) { }
+	constructor(private httpClient: HttpClient) {
+		this.load()
+	}
 
 	load() {
 		this.httpClient.get<Person[]>("api/ancestry/load-all").toPromise().then(people => {
@@ -28,7 +31,24 @@ export class AncestryService {
 		return savedPerson
 	}
 
+	async updateInfo(personId: number, information: { title: string, content: string }[]) {
+		const updatedPerson = await this.httpClient.post<Person>("api/ancestry/update-info", { personId, information }).toPromise()
+		const index = this.people.findIndex(x => x._id === updatedPerson._id )
+		this.people[index] = updatedPerson
+		this.updatePeople$()
+		return updatedPerson
+	}
+
 	private updatePeople$() {
 		this._people$.next(this.people.slice())
+	}
+
+	person$(id: number) {
+		const toThisPerson = (people: Person[]) => people.find(x => x._id === id)
+		return this._people$.asObservable().pipe(map(toThisPerson))
+	}
+
+	person(id: number) {
+		return this.people.find(x => x._id === id)
 	}
 }

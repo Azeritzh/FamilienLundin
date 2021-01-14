@@ -1,6 +1,7 @@
 <ul>
 	<li *ngFor="let person of people$ | async"
-		class="person">
+		class="person"
+		(click)="clickPerson(person._id)">
 		<div class="name">
 			{{person.name}}
 		</div>

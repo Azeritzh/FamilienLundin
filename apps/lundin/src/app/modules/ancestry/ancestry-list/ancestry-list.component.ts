@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { Router } from "@angular/router"
 import { Person } from "@lundin/api-interfaces"
 import { Observable } from "rxjs"
 import { NavigationService } from "../../../services/navigation.service"
@@ -15,6 +16,7 @@ export class AncestryListComponent {
 
 	constructor(
 		ancestryService: AncestryService,
+		private router: Router,
 		private navigationService: NavigationService,
 	) {
 		this.people$ = ancestryService.load()
@@ -22,5 +24,9 @@ export class AncestryListComponent {
 
 	add() {
 		this.navigationService.openAsOverlay(AddPersonComponent)
+	}
+
+	clickPerson(personId: number) {
+		this.router.navigateByUrl("ancestry/person/" + personId)
 	}
 }
