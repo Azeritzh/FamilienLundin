@@ -1,9 +1,11 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { AuthResponse } from "@lundin/api-interfaces"
+import { Subject } from "rxjs"
 
 @Injectable()
 export class AuthService {
+	onRefreshResponse = new Subject()
 	loginInfo: AuthResponse
 
 	constructor(private http: HttpClient) {
@@ -67,6 +69,7 @@ export class AuthService {
 				console.log("failed login: " + JSON.stringify(error))
 				return null
 			})
+		this.onRefreshResponse.next()
 		if (this.loginInfo) {
 			localStorage.setItem("loginInfo", JSON.stringify(this.loginInfo))
 			this.startRefreshTimer()

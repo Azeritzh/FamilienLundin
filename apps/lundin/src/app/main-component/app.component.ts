@@ -1,4 +1,5 @@
 import { Component, ComponentFactoryResolver, HostBinding, Type, ViewChild } from "@angular/core"
+import { first } from "rxjs/operators"
 import { OverlayHostDirective } from "../directives/overlay-host.directive"
 import { AuthService } from "../services/auth.service"
 import { NavigationService } from "../services/navigation.service"
@@ -21,9 +22,10 @@ export class AppComponent {
 	@HostBinding("class.hidden-navigation") hideNavigation = false
 
 	@ViewChild("overlayHost", { read: OverlayHostDirective, static: true }) overlayHost: OverlayHostDirective
+	showingLoading = true
 	showingOverlay = false
-	message = ""
 	showingMessage = false
+	message = ""
 
 	constructor(
 		public authService: AuthService,
@@ -40,6 +42,10 @@ export class AppComponent {
 			this.showingMessage = !!message
 			this.message = message
 		})
+		if (this.authService.loginInfo)
+			this.showingLoading = false
+		else
+			this.authService.onRefreshResponse.pipe(first()).subscribe(() => this.showingLoading = false)
 	}
 
 	private openAsOverlay<T>(component: Type<T>): T {
