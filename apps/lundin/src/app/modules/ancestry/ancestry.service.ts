@@ -6,7 +6,7 @@ import { map } from "rxjs/operators"
 
 @Injectable()
 export class AncestryService {
-	people = []
+	people: Person[] = []
 	private _people$ = new BehaviorSubject<Person[]>(this.people.slice())
 	get people$() {
 		return this._people$.asObservable()
@@ -36,5 +36,9 @@ export class AncestryService {
 	person$(id: number) {
 		const toThisPerson = (people: Person[]) => people.find(x => x._id === id)
 		return this._people$.asObservable().pipe(map(toThisPerson))
+	}
+
+	person(id: number) {
+		return this.people.find(x => x._id === id)
 	}
 }

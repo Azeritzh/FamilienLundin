@@ -2,7 +2,9 @@ import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { Person } from "@lundin/api-interfaces"
 import { Observable } from "rxjs"
+import { NavigationService } from "../../../services/navigation.service"
 import { AncestryService } from "../ancestry.service"
+import { EditInfoComponent } from "../edit-info/edit-info.component"
 
 @Component({
 	selector: "lundin-person",
@@ -10,17 +12,24 @@ import { AncestryService } from "../ancestry.service"
 	styleUrls: ["./person.component.scss"],
 })
 export class PersonComponent implements OnInit {
+	personId: number
 	person$: Observable<Person>
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private ancestryService: AncestryService,
+		private navigationService: NavigationService,
 	) { }
 
 	ngOnInit() {
 		this.activatedRoute.paramMap.subscribe(async params => {
-			const id = +params.get("id")
-			this.person$ = this.ancestryService.person$(id)
+			this.personId = +params.get("id")
+			this.person$ = this.ancestryService.person$(this.personId)
 		})
+	}
+
+	async editInfo(){
+		const component = await this.navigationService.openAsOverlay(EditInfoComponent)
+		component.editPerson(this.personId)
 	}
 }
