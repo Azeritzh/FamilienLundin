@@ -13,6 +13,7 @@ export class AddPersonComponent {
 		_id: 0,
 		name: "",
 		information: [{ title: "Født", content: "" }, { title: "Død", content: "" }],
+		files: [],
 		relations: [],
 	}
 

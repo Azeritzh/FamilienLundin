@@ -41,6 +41,7 @@ export interface Person {
 	userId?: number
 	name: string
 	information: { title: string, content: string }[]
+	files: { type: string, name: string, description: string }[]
 	fatherId?: number
 	motherId?: number
 	relations: PersonalRelation[]

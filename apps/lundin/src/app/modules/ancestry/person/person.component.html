@@ -1,7 +1,34 @@
 <ng-container *ngIf="person$ | async as person">
-	<h1>{{person.name}}</h1>
-	<span *ngFor="let info of person.information"
-		class="info">
-		{{info.title}}: {{info.content}}
-	</span>
+	<section class="tree-box">
+		<header>
+			<h1>{{person.name}}</h1>
+		</header>
+		<div>stamtræ</div>
+	</section>
+
+	<section class="information-box">
+		<header>
+			<h1>Information</h1>
+			<button>Redigér</button>
+		</header>
+		<ul>
+			<li *ngFor="let info of person.information">
+				<span class="information-title">{{info.title}}</span>
+				<span class="information-content">{{info.content}}</span>
+			</li>
+		</ul>
+	</section>
+
+	<section class="image-box">
+		<header>
+			<h1>Billeder</h1>
+			<button>Redigér</button>
+		</header>
+		<ul>
+			<li *ngFor="let file of person.files">
+				<img src="todo.jpg">
+				<span class="file-description">{{file.description}}</span>
+			</li>
+		</ul>
+	</section>
 </ng-container>
