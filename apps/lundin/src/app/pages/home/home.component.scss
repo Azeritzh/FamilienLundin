@@ -6,13 +6,15 @@
 .messages {
     @extend .container-box;
     flex: 5;
-	min-height: 14rem;
+    min-height: 14rem;
+    min-width: 22rem;
 }
 
 .events {
     @extend .container-box;
     flex: 1;
-	min-height: 14rem;
+    min-height: 14rem;
+    min-width: 16rem;
 }
 
 .container-box {
