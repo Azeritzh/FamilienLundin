@@ -1,6 +1,6 @@
 <header class="nav-content">
 	{{header}}
-	<div *ngIf="authService.loginInfo?.userId | user | async as username"
+	<div *ngIf="authService.isLoggedIn() && (authService.loginInfo?.userId | user | async) as username"
 		class="profile-nav-content">
 		<div class="profile-welcome-message">{{username}}</div>
 		<a routerLink="profile">
