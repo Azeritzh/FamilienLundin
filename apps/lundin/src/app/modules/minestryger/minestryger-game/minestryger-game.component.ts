@@ -31,6 +31,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	private middleMouseDown = false
 	private rightMouseDown = false
 	private lastHoverPosition?: { x: number, y: number }
+	private hasUsedFlags = false
 
 	constructor(
 		private minestrygerService: MinestrygerService,
@@ -55,6 +56,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		)
 		this.game = new Minestryger(config)
 		this.remainingBombs = this.game.config.bombs
+		this.hasUsedFlags = false
 		this.currentTime = 0
 		this.resetCanvas()
 		this.drawEverything()
@@ -277,7 +279,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		const score = {
 			time: this.game.state.finishTime,
 			date: new Date().toISOString(),
-			type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.config.allowFlags ? "f" : "n"}`,
+			type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.config.allowFlags && this.hasUsedFlags ? "f" : "n"}`,
 		}
 		this.minestrygerService.registerScore(score)
 		const time = (this.game.state.finishTime / 1000).toLocaleString(undefined, { minimumFractionDigits: 2 })
@@ -285,6 +287,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	}
 
 	private flagField(x: number, y: number) {
+		this.hasUsedFlags = true
 		this.game.update(new FlagAction(x, y))
 		this.countRemainingBombs()
 		this.drawEverything()
