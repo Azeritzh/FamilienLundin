@@ -17,6 +17,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 	@Input("fieldSize") inputFieldSize = 20
 	@Input() autoSize = true
 	fieldSize = 20
+	private enableRegistering = true
 
 	@ViewChild("canvas", { static: true }) canvasElement: ElementRef<HTMLCanvasElement>
 	get canvas() {
@@ -55,6 +56,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 			this.allowFlags,
 		)
 		this.game = new Minestryger(config)
+		this.exposeGame()
 		this.remainingBombs = this.game.config.bombs
 		this.hasUsedFlags = false
 		this.currentTime = 0
@@ -137,6 +139,23 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 			case 7: return "#000000"
 			case 8: return "#808080"
 		}
+	}
+
+	private exposeGame = () => {
+		const exposed: any = {}
+		window["minestryger"] = exposed
+		exposed.game = this.game
+		exposed.startNewGame = (width?: number, height?: number, bombs?: number) => {
+			this.width = width ?? this.width
+			this.height = height ?? this.height
+			this.bombs = bombs ?? this.bombs
+			this.startGame()
+		}
+		exposed.revealField = (x: number, y: number) => this.revealField(x, y)
+		exposed.flagField = (x: number, y: number) => this.flagField(x, y)
+		exposed.revealSurroundings = (x: number, y: number) => this.revealSurroundings(x, y)
+		exposed.hasWon = () => this.game.state.playState === PlayState.Won
+		exposed.hasLost = () => this.game.state.playState === PlayState.Lost
 	}
 
 	private drawBox(
@@ -281,7 +300,8 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 			date: new Date().toISOString(),
 			type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.config.allowFlags && this.hasUsedFlags ? "f" : "n"}`,
 		}
-		this.minestrygerService.registerScore(score)
+		if (this.enableRegistering)
+			this.minestrygerService.registerScore(score)
 		const time = (this.game.state.finishTime / 1000).toLocaleString(undefined, { minimumFractionDigits: 2 })
 		this.navigationService.showMessage(`Du har vundet! Endelig tid: ${time} sekunder`)
 	}
