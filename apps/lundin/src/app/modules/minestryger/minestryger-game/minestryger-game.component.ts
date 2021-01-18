@@ -57,6 +57,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		)
 		this.game = new Minestryger(config)
 		this.exposeGame()
+		this.enableRegistering = true
 		this.remainingBombs = this.game.config.bombs
 		this.hasUsedFlags = false
 		this.currentTime = 0
@@ -145,15 +146,25 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 		const exposed: any = {}
 		window["minestryger"] = exposed
 		exposed.game = this.game
+		exposed.board = this.game.state.board
 		exposed.startNewGame = (width?: number, height?: number, bombs?: number) => {
 			this.width = width ?? this.width
 			this.height = height ?? this.height
 			this.bombs = bombs ?? this.bombs
 			this.startGame()
 		}
-		exposed.revealField = (x: number, y: number) => this.revealField(x, y)
-		exposed.flagField = (x: number, y: number) => this.flagField(x, y)
-		exposed.revealSurroundings = (x: number, y: number) => this.revealSurroundings(x, y)
+		exposed.revealField = (x: number, y: number) => {
+			this.enableRegistering = false
+			this.revealField(x, y)
+		}
+		exposed.flagField = (x: number, y: number) => {
+			this.enableRegistering = false
+			this.flagField(x, y)
+		}
+		exposed.revealSurroundings = (x: number, y: number) => {
+			this.enableRegistering = false
+			this.revealSurroundings(x, y)
+		}
 		exposed.hasWon = () => this.game.state.playState === PlayState.Won
 		exposed.hasLost = () => this.game.state.playState === PlayState.Lost
 	}
