@@ -1,0 +1,24 @@
+<h1>Redigér informationer</h1>
+
+<div class="content-container">
+	<input type="file"
+		(change)="handleFile($event.target.files)">
+	<input type="text"
+		(input)="file.description = $event.target.value"
+		placeholder="Beskrivelse"
+		autocomplete="off">
+</div>
+
+<div class="btn-container">
+	<button type="button"
+		class="save"
+		(click)="save()">
+		Gem ændringer
+	</button>
+
+	<button type="button"
+		class="cancel"
+		(click)="cancel()">
+		Fortryd
+	</button>
+</div>

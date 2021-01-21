@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router"
 import { Person } from "@lundin/api-interfaces"
 import { Observable } from "rxjs"
 import { NavigationService } from "../../../services/navigation.service"
+import { AddFileComponent } from "../add-file/add-file.component"
 import { AncestryService } from "../ancestry.service"
 import { EditInfoComponent } from "../edit-info/edit-info.component"
 
@@ -38,6 +39,7 @@ export class PersonComponent implements OnInit {
 	}
 
 	async editFiles(){
-		throw new Error("not implemented")
+		const component = await this.navigationService.openAsOverlay(AddFileComponent)
+		component.personId = this.personId
 	}
 }

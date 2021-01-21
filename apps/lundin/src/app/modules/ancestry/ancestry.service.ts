@@ -39,6 +39,15 @@ export class AncestryService {
 		return updatedPerson
 	}
 
+	async addFile(personId: number, file: { description: string, data: File }) {
+		const formdata = new FormData()
+		formdata.set("file", file.data)
+		formdata.set("description", file.description)
+		formdata.set("personId", "" + personId)
+		const response = await this.httpClient.post<string>("api/ancestry/upload-file", formdata).toPromise()
+		return response
+	}
+
 	private updatePeople$() {
 		this._people$.next(this.people.slice())
 	}
