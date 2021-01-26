@@ -1,8 +1,7 @@
 <h1>Redigér informationer</h1>
 
 <div class="content-container">
-	<input type="file"
-		(change)="handleFile($event.target.files)">
+	<lundin-file-input (changeFile)="handleFile($event)"></lundin-file-input>
 	<input type="text"
 		(input)="file.description = $event.target.value"
 		placeholder="Beskrivelse"

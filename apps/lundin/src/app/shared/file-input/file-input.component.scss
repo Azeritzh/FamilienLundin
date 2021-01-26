@@ -1,0 +1,23 @@
+#file-box {
+	position: relative;
+	text-align: center;
+	line-height: 4rem;
+	border-radius: var(--border-radius-full);
+	background-color: var(--color-secondary);
+	border: 2px dashed white;
+	cursor: pointer;
+	transition: var(--standard-transition);
+}
+#file-box:hover, #file-box.dragover {
+	background-color: var(--color-background);
+}
+#file-box.loading {
+	color: transparent;
+}
+
+img {
+	position: absolute;
+	height: 3rem;
+	left: 0.5rem;
+	top: 0.5rem;
+}

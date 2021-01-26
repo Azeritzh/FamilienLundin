@@ -16,8 +16,8 @@ export class AddFileComponent {
 		private navigationService: NavigationService,
 	) { }
 
-	handleFile = (files) => {
-		this.file.data = files[0]
+	handleFile(file: File) {
+		this.file.data = file
 	}
 
 	async save() {
