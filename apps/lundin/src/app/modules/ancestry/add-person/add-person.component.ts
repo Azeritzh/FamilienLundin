@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { PersonalRelation } from "@lundin/api-interfaces"
 import { NavigationService } from "../../../services/navigation.service"
 import { AncestryService } from "../ancestry.service"
 
@@ -12,32 +13,29 @@ export class AddPersonComponent {
 	gender: "male" | "female" | "other" = "male"
 	born = ""
 	dead = ""
-	information = [{ title: "Født", content: "" }, { title: "Død", content: "" }]
-	relations = []
+	relations: PersonalRelation[] = [{ type: "child", id: 0 }]
 
 	constructor(
 		private ancestryService: AncestryService,
 		private navigationService: NavigationService,
 	) { }
 
-	deleteInformation(row: { title: string, content: string }) {
-		const index = this.information.indexOf(row)
-		this.information.splice(index, 1)
+	deleteRelation(relation: PersonalRelation) {
+		const index = this.relations.indexOf(relation)
+		this.relations.splice(index, 1)
 	}
 
-	addInformation() {
-		this.information.push({ title: "", content: "" })
+	addRelation() {
+		this.relations.push({ type: "child", id: 0 })
 	}
 
 	async add() {
-		this.information.push({ title: "__born", content: this.born })
-		this.information.push({ title: "__dead", content: this.dead })
 		await this.ancestryService.add({
 			_id: 0,
 			name: this.name,
 			gender: this.gender,
 			relations: this.relations,
-			information: this.information,
+			information: [{ title: "__born", content: this.born }, { title: "__dead", content: this.dead }],
 			files: [],
 		})
 		this.navigationService.closeOverlay()

@@ -12,7 +12,7 @@
 	<label for="gender">
 		Køn
 	</label>
-	<select>
+	<select [(ngModel)]="gender">
 		<option value="male">
 			Hankøn
 		</option>
@@ -40,23 +40,45 @@
 		id="dead"
 		autocomplete="off">
 
-	<label>
-		Information
-	</label>
+	<h2>
+		Relationer
+	</h2>
+	<button type="button"
+		class="add-relation"
+		(click)="addRelation()">
+		Tilføj relation
+	</button>
 	<ul>
-		<li *ngFor="let info of information"
-			class="information-row">
-			<input type="text"
-				[(ngModel)]="info.title"
-				placeholder="Titel"
-				autocomplete="off">
-			<input type="text"
-				[(ngModel)]="info.content"
-				placeholder="Beskrivelse"
-				autocomplete="off">
+		<li *ngFor="let relation of relations"
+			class="relation-row">
+
+			<select [(ngModel)]="relation.id">
+				<option value="1">
+					Jens Jensen
+				</option>
+				<option value="2">
+					Hanne Hansen
+				</option>
+				<option value="3">
+					Jesus Kristus
+				</option>
+			</select>
+
+			<select [(ngModel)]="relation.type">
+				<option value="parent">
+					Forælder
+				</option>
+				<option value="child">
+					Barn
+				</option>
+				<option value="partner">
+					Partner
+				</option>
+			</select>
+
 			<button type="button"
 				class="delete"
-				(click)="deleteInformation(info)">
+				(click)="deleteRelation(relation)">
 				Slet
 			</button>
 		</li>
@@ -64,12 +86,6 @@
 </div>
 
 <div class="btn-container">
-	<button type="button"
-		class="add-info"
-		(click)="addInformation()">
-		Tilføj infolinje
-	</button>
-
 	<button type="button"
 		class="add-person"
 		(click)="add()"
