@@ -33,10 +33,25 @@ export class AncestryService {
 
 	async updateInfo(personId: number, information: { title: string, content: string }[]) {
 		const updatedPerson = await this.httpClient.post<Person>("api/ancestry/update-info", { personId, information }).toPromise()
-		const index = this.people.findIndex(x => x._id === updatedPerson._id )
-		this.people[index] = updatedPerson
-		this.updatePeople$()
+		this.updatePerson(updatedPerson)
 		return updatedPerson
+	}
+
+	async addFile(personId: number, file: { description: string, data: File }) {
+		const formdata = new FormData()
+		formdata.set("file", file.data)
+		formdata.set("name", file.data.name)
+		formdata.set("description", file.description)
+		formdata.set("personId", "" + personId)
+		const updatedPerson = await this.httpClient.post<Person>("api/ancestry/upload-file", formdata).toPromise()
+		this.updatePerson(updatedPerson)
+		return updatedPerson
+	}
+
+	private updatePerson(person: Person) {
+		const index = this.people.findIndex(x => x._id === person._id )
+		this.people[index] = person
+		this.updatePeople$()
 	}
 
 	private updatePeople$() {

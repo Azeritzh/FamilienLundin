@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
-import { Person } from "@lundin/api-interfaces"
+import { Person, PersonFile } from "@lundin/api-interfaces"
 import { Observable } from "rxjs"
 import { NavigationService } from "../../../services/navigation.service"
+import { AddFileComponent } from "../add-file/add-file.component"
 import { AncestryService } from "../ancestry.service"
 import { EditInfoComponent } from "../edit-info/edit-info.component"
 
@@ -28,16 +29,26 @@ export class PersonComponent implements OnInit {
 		})
 	}
 
-	async editRelations(){
+	async editRelations() {
 		throw new Error("not implemented")
 	}
 
-	async editInfo(){
+	async editInfo() {
 		const component = await this.navigationService.openAsOverlay(EditInfoComponent)
 		component.editPerson(this.personId)
 	}
 
-	async editFiles(){
-		throw new Error("not implemented")
+	async editFiles() {
+		const component = await this.navigationService.openAsOverlay(AddFileComponent)
+		component.personId = this.personId
+	}
+
+	pathFor(file: PersonFile) {
+		return `api/ancestry/file/${file.fileId}/${file.name}`
+	}
+
+	isImage(file: PersonFile) {
+		const imageExtensions = [".jpg", ".png", ".bmp"]
+		return imageExtensions.some(x => file.name.endsWith(x))
 	}
 }

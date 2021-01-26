@@ -1,0 +1,13 @@
+<div id="file-box"
+	(click)="clickThrough(fileInput)"
+	(dragover)="fileDragHover($event)"
+	(dragleave)="fileDragHover($event)"
+	(drop)="fileSelectHandler(handleFiles)($event)">
+	<img src="/assets/images/icons/DropFiles_icon.svg">
+	Vælg en fil eller træk den herind
+	<input #fileInput
+		id="file-input"
+		style="display: none;"
+		type="file"
+		(change)="handleFiles($event.target.files)" />
+</div>

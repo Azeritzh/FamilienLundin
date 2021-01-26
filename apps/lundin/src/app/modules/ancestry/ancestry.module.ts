@@ -2,6 +2,7 @@ import { HttpClientModule } from "@angular/common/http"
 import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
 import { SharedModule } from "../../shared/shared.module"
+import { AddFileComponent } from "./add-file/add-file.component"
 import { AddPersonComponent } from "./add-person/add-person.component"
 import { AncestryListComponent } from "./ancestry-list/ancestry-list.component"
 import { AncestryService } from "./ancestry.service"
@@ -11,6 +12,7 @@ import { TreeComponent } from "./tree/tree.component"
 
 @NgModule({
 	declarations: [
+		AddFileComponent,
 		AddPersonComponent,
 		AncestryListComponent,
 		EditInfoComponent,

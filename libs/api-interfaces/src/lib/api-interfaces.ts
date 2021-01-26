@@ -41,10 +41,16 @@ export interface Person {
 	userId?: number
 	name: string
 	information: { title: string, content: string }[]
-	files: { type: string, name: string, description: string }[]
+	files: PersonFile[]
 	fatherId?: number
 	motherId?: number
 	relations: PersonalRelation[]
+}
+
+export interface PersonFile {
+	name: string
+	description: string
+	fileId: string
 }
 
 export interface PersonalRelation {
