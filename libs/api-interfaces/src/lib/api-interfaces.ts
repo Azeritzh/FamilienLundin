@@ -40,23 +40,21 @@ export interface Person {
 	_id: number
 	userId?: number
 	name: string
+	gender: "male" | "female" | "other"
+	relations: PersonalRelation[]
 	information: { title: string, content: string }[]
 	files: PersonFile[]
-	fatherId?: number
-	motherId?: number
-	relations: PersonalRelation[]
+}
+
+export interface PersonalRelation {
+	type: "parent" | "child" | "partner"
+	id: number
 }
 
 export interface PersonFile {
 	name: string
 	description: string
 	fileId: string
-}
-
-export interface PersonalRelation {
-	type: "child" | "partner"
-	id: number
-	description: string
 }
 
 export interface MinestrygerTopScoreSet {

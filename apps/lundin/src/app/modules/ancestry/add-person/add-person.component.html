@@ -5,16 +5,46 @@
 		Navn
 	</label>
 	<input type="text"
-		[(ngModel)]="person.name"
+		[(ngModel)]="name"
 		id="name"
-		placeholder="Navn"
+		autocomplete="off">
+
+	<label for="gender">
+		Køn
+	</label>
+	<select>
+		<option value="male">
+			Hankøn
+		</option>
+		<option value="female">
+			Hunkøn
+		</option>
+		<option value="other">
+			Andet
+		</option>
+	</select>
+
+	<label for="born">
+		Født
+	</label>
+	<input type="text"
+		[(ngModel)]="born"
+		id="born"
+		autocomplete="off">
+
+	<label for="dead">
+		Død
+	</label>
+	<input type="text"
+		[(ngModel)]="dead"
+		id="dead"
 		autocomplete="off">
 
 	<label>
 		Information
 	</label>
 	<ul>
-		<li *ngFor="let info of person.information"
+		<li *ngFor="let info of information"
 			class="information-row">
 			<input type="text"
 				[(ngModel)]="info.title"
@@ -43,8 +73,7 @@
 	<button type="button"
 		class="add-person"
 		(click)="add()"
-		[disabled]="!person.name">
+		[disabled]="!name">
 		Opret person
 	</button>
 </div>
-
