@@ -2,7 +2,7 @@ import { Subject } from "rxjs"
 import { auditTime } from "rxjs/operators"
 import { StorageService } from "./storage.service"
 
-type Change = ((e: any) => void) | { [key: string]: any }
+type Change<T> = ((e: T) => void) | { [key: string]: any }
 
 export class Collection<T extends { _id?: number }> {
 	private tempStore: { [id: string]: T } = {}
@@ -36,20 +36,20 @@ export class Collection<T extends { _id?: number }> {
 		return entries.map(x => this.insertOne(x))
 	}
 
-	updateOne(query, changes: Change) {
+	updateOne(query, changes: Change<T>) {
 		const entry = this.findOne(query)
 		this.makeChanges(entry, changes)
 		return entry
 	}
 
-	updateMany(query, changes: Change) {
+	updateMany(query, changes: Change<T>) {
 		const entries = this.find(query)
 		for (const entry of entries)
 			this.makeChanges(entry, changes)
 		return entries
 	}
 
-	private makeChanges(entry: T, changes: Change) {
+	private makeChanges(entry: T, changes: Change<T>) {
 		if (typeof changes === "function")
 			changes(entry)
 		else

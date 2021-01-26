@@ -36,7 +36,9 @@
 		</header>
 		<ul>
 			<li *ngFor="let file of person.files">
-				<img src="todo.jpg">
+				<img *ngIf="file.name.endsWith('.jpg')"
+					[src]="'api/ancestry/file/' + file.fileId + '/' + file.name">
+				<a [href]="'api/ancestry/file/' + file.fileId + '/' + file.name">{{file.name}}</a>
 				<span class="file-description">{{file.description}}</span>
 			</li>
 		</ul>
