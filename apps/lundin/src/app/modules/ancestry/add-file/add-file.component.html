@@ -2,6 +2,9 @@
 
 <div class="content-container">
 	<lundin-file-input (changeFile)="handleFile($event)"></lundin-file-input>
+	<div *ngIf="file.data" class="file-display">
+		Fil: {{file.data.name}}
+	</div>
 	<input type="text"
 		(input)="file.description = $event.target.value"
 		placeholder="Beskrivelse"
