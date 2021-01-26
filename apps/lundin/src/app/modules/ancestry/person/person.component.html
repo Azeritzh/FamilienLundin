@@ -1,6 +1,7 @@
-<ng-container *ngIf="person$ | async as person">
+<ng-container *ngIf="person$ | async as person"
+	class="person-container">
 	<section class="tree-box">
-		<header>
+		<header class="container-header">
 			<h1>{{person.name}} - Familie</h1>
 			<button type="button"
 				(click)="editRelations()">
@@ -10,43 +11,46 @@
 		<lundin-tree [personId]="personId"></lundin-tree>
 	</section>
 
-	<section class="information-box">
-		<header>
-			<h1>Information</h1>
-			<button type="button"
-				(click)="editInfo()">
-				Redigér
-			</button>
-		</header>
-		<ul>
-			<li *ngFor="let info of person.information">
-				<span class="information-title">{{info.title}}</span>
-				<span class="information-content">{{info.content}}</span>
-			</li>
-		</ul>
+	<section class="info-file-container">
+		<section class="information-box">
+			<header class="container-header">
+				<h1>Information</h1>
+				<button type="button"
+					(click)="editInfo()">
+					Tilføj / Redigér
+				</button>
+			</header>
+			<ul class="scroll-info-file-container">
+				<li *ngFor="let info of person.information" class="info-list">
+					<span class="information-title">{{info.title}}</span>
+					<span class="information-content">{{info.content}}</span>
+				</li>
+			</ul>
+		</section>
+
+		<section class="file-box">
+			<header class="container-header">
+				<h1>Filer</h1>
+				<button type="button"
+					(click)="editFiles()">
+					Tilføj ny fil
+				</button>
+			</header>
+			<ul class="scroll-info-file-container file-list">
+				<li *ngFor="let file of person.files">
+					<a [href]="pathFor(file)"
+						[title]="file.description"
+						target="_blank"
+						rel="noopener noreferrer">
+						<img *ngIf="isImage(file)"
+							[src]="pathFor(file)">
+						<span *ngIf="!isImage(file)">
+							{{file.name}}
+						</span>
+					</a>
+				</li>
+			</ul>
+		</section>
 	</section>
 
-	<section class="file-box">
-		<header>
-			<h1>Filer</h1>
-			<button type="button"
-				(click)="editFiles()">
-				Redigér
-			</button>
-		</header>
-		<ul>
-			<li *ngFor="let file of person.files">
-				<a [href]="pathFor(file)"
-					[title]="file.description"
-					target="_blank"
-					rel="noopener noreferrer">
-					<img *ngIf="isImage(file)"
-						[src]="pathFor(file)">
-					<span *ngIf="!isImage(file)">
-						{{file.name}}
-					</span>
-				</a>
-			</li>
-		</ul>
-	</section>
 </ng-container>
