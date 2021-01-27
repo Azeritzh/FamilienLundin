@@ -47,6 +47,9 @@
 						<span *ngIf="!isImage(file)" class="file-text-item">
 							{{file.name}}
 						</span>
+						<span *ngIf="file.description" class="file-description">
+							{{file.description}}
+						</span>
 					</a>
 				</li>
 			</ul>
