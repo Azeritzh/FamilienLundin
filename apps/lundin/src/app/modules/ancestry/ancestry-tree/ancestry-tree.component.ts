@@ -4,11 +4,11 @@ import { Observable } from "rxjs"
 import { AncestryService } from "../ancestry.service"
 
 @Component({
-	selector: "lundin-tree",
-	templateUrl: "./tree.component.html",
-	styleUrls: ["./tree.component.scss"],
+	selector: "lundin-ancestry-tree",
+	templateUrl: "./ancestry-tree.component.html",
+	styleUrls: ["./ancestry-tree.component.scss"],
 })
-export class TreeComponent {
+export class AncestryTreeComponent {
 	@Input() personId: number
 	person$: Observable<Person>
 
