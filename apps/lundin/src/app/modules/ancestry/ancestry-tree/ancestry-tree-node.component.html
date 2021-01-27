@@ -3,10 +3,12 @@
 		(click)="navigateToPerson()"
 		[style.cursor]="personNode ? 'pointer' : 'initial'">
 		<div *ngIf="personNode && personNode.person"
-		class="person-info">
+			class="person-info">
 			<div class="label">{{personNode.person.name}}</div>
-			<div class="label">Født: {{bornText()}}</div>
-			<div class="label">Død: {{deadText()}}</div>
+			<div *ngIf="generations > 2"
+				class="label">Født: {{bornText()}}</div>
+			<div *ngIf="generations > 2"
+				class="label">Død: {{deadText()}}</div>
 		</div>
 	</div>
 	<div class="parents">
