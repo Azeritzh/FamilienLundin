@@ -1,46 +1,54 @@
 <h1>Opret ny begivenhed</h1>
 
 <div class="content-container">
-	<label for="title">
+	<label for="title"
+		[labelling]="titleInput">
 		Titel
 	</label>
-	<input type="text"
+	<input #titleInput
+		type="text"
 		[(ngModel)]="event.title"
 		id="title"
-		placeholder="Titel"
 		autocomplete="off">
 
-	<label for="date">
+	<label for="date"
+		[labelling]="dateInput">
 		Dato
 	</label>
-	<input type="date"
+	<input #dateInput
+		type="date"
 		[(ngModel)]="event.date"
 		id="date"
 		autocomplete="off">
 
-	<label for="start">
+	<label for="start"
+		[labelling]="startInput">
 		Starttidspunkt
 	</label>
-	<input type="time"
+	<input #startInput
+		type="time"
 		[(ngModel)]="event.startTime"
 		id="start"
 		autocomplete="off">
 
-	<label for="end">
+	<label for="end"
+		[labelling]="endInput">
 		Sluttidspunkt
 	</label>
-	<input type="time"
+	<input #endInput
+		type="time"
 		[(ngModel)]="event.endTime"
 		id="end"
 		autocomplete="off">
 
-	<label for="description">
-		Indhold
+	<label for="description"
+		[labelling]="descriptionInput">
+		Beskrivelse
 	</label>
-	<textarea type="text"
+	<textarea #descriptionInput
+		type="text"
 		[(ngModel)]="event.description"
 		id="description"
-		placeholder="Beskrivelse"
 		autocomplete="off">
 	</textarea>
 </div>
@@ -52,4 +60,3 @@
 		Opret begivenhed
 	</button>
 </div>
-
