@@ -40,4 +40,8 @@ export class AddPersonComponent {
 		})
 		this.navigationService.closeOverlay()
 	}
+
+	closePopup() {
+		this.navigationService.closeOverlay()
+	}
 }
