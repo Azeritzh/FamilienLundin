@@ -37,7 +37,7 @@
 					{{deadFor(person)}}
 				</span>
 				<div class="list-item-active-column">
-					Ikke aktiv
+					{{person.userId ? "Aktiv" : "Ikke aktiv"}}
 				</div>
 			</li>
 		</div>
