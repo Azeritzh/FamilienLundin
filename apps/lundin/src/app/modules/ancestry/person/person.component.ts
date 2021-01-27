@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core"
-import { ActivatedRoute } from "@angular/router"
+import { ActivatedRoute, Router } from "@angular/router"
 import { Person, PersonFile } from "@lundin/api-interfaces"
 import { Observable } from "rxjs"
 import { NavigationService } from "../../../services/navigation.service"
@@ -20,6 +20,7 @@ export class PersonComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private ancestryService: AncestryService,
 		private navigationService: NavigationService,
+		private router: Router
 	) { }
 
 	ngOnInit() {
@@ -34,7 +35,7 @@ export class PersonComponent implements OnInit {
 	}
 
 	async seeAncestryTree() {
-		throw new Error("not implemented")
+		this.router.navigateByUrl("/ancestry/tree/" + this.personId)
 	}
 
 	async editInfo() {

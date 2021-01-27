@@ -2,7 +2,7 @@
 	width: 10rem;
 	height: 100%;
 	float: left;
-	border-right: 1px solid black;
+	border: 1px solid black;
 	display: flex;
 }
 
@@ -22,9 +22,12 @@
 	float: left;
 }
 
-p {
+.person-info {
+	margin: auto 0;
+	width: 100%;
+}
+
+.label {
 	text-align: center;
 	display: block;
-	width: 100%;
-	margin: auto 0;
 }

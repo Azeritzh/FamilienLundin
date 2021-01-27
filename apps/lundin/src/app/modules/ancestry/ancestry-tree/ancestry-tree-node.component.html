@@ -1,7 +1,10 @@
 <ng-container *ngIf="personNode">
-	<div class="person"
-		[style.backgroundColor]="personNode.person.gender === 'male'? 'powderBlue':'plum'">
-		<p>{{personNode.person.name}}</p>
+	<div class="person">
+		<div class="person-info">
+			<div class="label">{{personNode.person.name}}</div>
+			<div class="label">Født: {{bornText()}}</div>
+			<div class="label">Død: {{deadText()}}</div>
+		</div>
 	</div>
 	<div class="parents">
 		<div class="father">
