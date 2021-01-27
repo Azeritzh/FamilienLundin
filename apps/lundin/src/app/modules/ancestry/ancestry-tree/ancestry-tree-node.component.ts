@@ -9,6 +9,7 @@ import { PersonNode } from "./ancestry-tree.component";
 })
 export class AncestryTreeNodeComponent {
 	@Input() personNode: PersonNode
+	@Input() generations: number
 
 	constructor (
 		private router: Router
@@ -25,6 +26,8 @@ export class AncestryTreeNodeComponent {
 	}
 
 	navigateToPerson() {
+		if (!this.personNode)
+			return
 		this.router.navigateByUrl("/ancestry/person/" + this.personNode.person._id)
 	}
 }

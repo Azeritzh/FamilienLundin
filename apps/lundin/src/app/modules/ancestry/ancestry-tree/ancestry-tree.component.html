@@ -3,6 +3,8 @@
 		<header class="container-header">
 			<h1>{{rootPersonNode.person.name}} - stamtræ</h1>
 		</header>
-		<lundin-ancestry-tree-node [personNode]="rootPersonNode" class="ancestry-tree"></lundin-ancestry-tree-node>
+		<lundin-ancestry-tree-node class="ancestry-tree"
+			[personNode]="rootPersonNode"
+			[generations]="6"></lundin-ancestry-tree-node>
 	</section>
 </ng-container>
