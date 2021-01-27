@@ -1,5 +1,6 @@
 <ng-container *ngIf="personNode">
-	<div class="person">
+	<div class="person"
+		(click)="navigateToPerson()">
 		<div class="person-info">
 			<div class="label">{{personNode.person.name}}</div>
 			<div class="label">Født: {{bornText()}}</div>
