@@ -33,6 +33,10 @@ export class PersonComponent implements OnInit {
 		throw new Error("not implemented")
 	}
 
+	async seeAncestryTree() {
+		throw new Error("not implemented")
+	}
+
 	async editInfo() {
 		const component = await this.navigationService.openAsOverlay(EditInfoComponent)
 		component.editPerson(this.personId)
