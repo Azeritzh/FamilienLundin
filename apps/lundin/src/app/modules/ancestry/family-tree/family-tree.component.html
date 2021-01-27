@@ -1,3 +1,38 @@
-<ng-container *ngIf="person$ | async as person">
-	stamtræ for {{person.name}}
+<ng-container *ngIf="person">
+	<section class="parents">
+		<lundin-portrait *ngIf="getFather() as father"
+			[person]="father"
+			relation="parent">
+		</lundin-portrait>
+		<lundin-portrait *ngIf="getMother() as mother"
+			[person]="mother"
+			relation="parent">
+		</lundin-portrait>
+	</section>
+
+	<section class="siblings">
+		<lundin-portrait *ngFor="let sibling of siblings"
+			[person]="sibling"
+			relation="sibling">
+		</lundin-portrait>
+	</section>
+
+	<section class="person">
+		<lundin-portrait [person]="person">
+		</lundin-portrait>
+	</section>
+
+	<section class="partners">
+		<lundin-portrait *ngFor="let partner of partners"
+			[person]="partner"
+			relation="partner">
+		</lundin-portrait>
+	</section>
+
+	<section class="children">
+		<lundin-portrait *ngFor="let child of children"
+			[person]="child"
+			relation="child">
+		</lundin-portrait>
+	</section>
 </ng-container>
