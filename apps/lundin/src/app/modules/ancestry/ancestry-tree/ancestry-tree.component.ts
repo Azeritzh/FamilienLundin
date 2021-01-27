@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core"
+import { ActivatedRoute } from "@angular/router"
 import { Person } from "@lundin/api-interfaces"
 import { Observable } from "rxjs"
 import { AncestryService } from "../ancestry.service"
@@ -9,14 +10,18 @@ import { AncestryService } from "../ancestry.service"
 	styleUrls: ["./ancestry-tree.component.scss"],
 })
 export class AncestryTreeComponent {
-	@Input() personId: number
+	personId: number
 	person$: Observable<Person>
 
 	constructor(
+		private activatedRoute: ActivatedRoute,
 		private ancestryService: AncestryService,
 	) { }
 
 	ngOnInit() {
-		this.person$ = this.ancestryService.person$(this.personId)
+		this.activatedRoute.paramMap.subscribe(async params => {
+			this.personId = +params.get("id")
+			this.person$ = this.ancestryService.person$(this.personId)
+		})
 	}
 }

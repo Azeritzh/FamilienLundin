@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
+import { AncestryTreeComponent } from "./modules/ancestry/ancestry-tree/ancestry-tree.component"
 import { PersonComponent } from "./modules/ancestry/person/person.component"
 import { CryptComponent } from "./modules/crypt/crypt.component"
 import { MessageThreadComponent } from "./modules/message/message-thread/message-thread.component"
@@ -19,6 +20,7 @@ const routes: Routes = [
 	{ path: "", component: HomeComponent },
 	{ path: "ancestry", component: AncestryComponent },
 	{ path: "ancestry/person/:id", component: PersonComponent },
+	{ path: "ancestry/tree/:id", component: AncestryTreeComponent },
 	{ path: "calendar", component: CalendarComponent },
 	{ path: "gallery", component: GalleryComponent },
 	{ path: "games/iframe/:game", component: IframeGameComponent },
