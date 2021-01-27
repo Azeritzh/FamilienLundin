@@ -1,9 +1,27 @@
 <ng-container *ngIf="person">
-	<lundin-portrait [person]="person"></lundin-portrait>
-	<lundin-portrait *ngFor="let parent of parents"
-		[person]="parent"></lundin-portrait>
-	<lundin-portrait *ngFor="let partner of partners"
-		[person]="partner"></lundin-portrait>
-	<lundin-portrait *ngFor="let child of children"
-		[person]="child"></lundin-portrait>
+	<section class="parents">
+		<lundin-portrait *ngFor="let parent of parents; let i = index;"
+			[person]="parent">
+		</lundin-portrait>
+	</section>
+
+	<section class="siblings">
+	</section>
+
+	<section class="person">
+		<lundin-portrait [person]="person">
+		</lundin-portrait>
+	</section>
+
+	<section class="partners">
+		<lundin-portrait *ngFor="let partner of partners"
+			[person]="partner">
+		</lundin-portrait>
+	</section>
+
+	<section class="children">
+		<lundin-portrait *ngFor="let child of children; let i = index;"
+			[person]="child">
+		</lundin-portrait>
+	</section>
 </ng-container>

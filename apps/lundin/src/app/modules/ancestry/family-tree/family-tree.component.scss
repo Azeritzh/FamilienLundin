@@ -1,0 +1,22 @@
+:host {
+	position: relative;
+	height: 100%;
+	display: grid;
+	grid-template-areas: "parents parents parents"
+		"siblings person partners"
+		"children children children";
+}
+
+.parents { grid-area: parents; }
+.siblings { grid-area: siblings; }
+.person { grid-area: person; }
+.partners { grid-area: partners; }
+.children { grid-area: children; }
+
+section {
+	display: flex;
+}
+
+lundin-portrait {
+	flex: 1;
+}

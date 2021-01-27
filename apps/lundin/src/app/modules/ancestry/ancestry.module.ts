@@ -11,6 +11,7 @@ import { EditInfoComponent } from "./edit-info/edit-info.component"
 import { FamilyTreeComponent } from "./family-tree/family-tree.component"
 import { PortraitComponent } from "./portrait/portrait.component"
 import { PersonComponent } from "./person/person.component"
+import { AppRoutingModule } from "../../app-routing.module"
 
 @NgModule({
 	declarations: [
@@ -24,6 +25,7 @@ import { PersonComponent } from "./person/person.component"
 		AncestryTreeComponent,
 	],
 	imports: [
+		AppRoutingModule,
 		BrowserModule,
 		SharedModule,
 		HttpClientModule,
