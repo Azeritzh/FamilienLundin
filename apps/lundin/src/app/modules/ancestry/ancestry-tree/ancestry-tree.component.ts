@@ -10,8 +10,7 @@ import { AncestryService } from "../ancestry.service"
 	styleUrls: ["./ancestry-tree.component.scss"],
 })
 export class AncestryTreeComponent implements OnInit, OnDestroy {
-	person: Person
-	parents: Person[]
+	rootPersonNode: PersonNode
 	private subscription: Subscription
 
 	constructor(
@@ -34,15 +33,31 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 	}
 
 	private setup = (person: Person) => {
+		this.rootPersonNode = this.createPersonNode(person)
+	}
+
+	createPersonNode(person: Person): PersonNode {
 		if (!person)
-			return
-		this.person = person
-		this.parents = person.relations
+			return null
+		const parents = person.relations
 			.filter(x => x.type === "parent")
 			.map(x => this.ancestryService.person(x.id))
+		const mother = parents.find(x => x.gender === "female")
+		const father = parents.find(x => x.gender === "male")
+		return new PersonNode(person,
+			this.createPersonNode(mother),
+			this.createPersonNode(father))
 	}
 
 	ngOnDestroy() {
 		this.subscription?.unsubscribe()
 	}
+}
+
+class PersonNode {
+	constructor(
+		public person: Person,
+		public mother: PersonNode,
+		public father: PersonNode
+	) { }
 }
