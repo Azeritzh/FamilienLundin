@@ -13,6 +13,7 @@ import { FamilyTreeComponent } from "./family-tree/family-tree.component"
 import { PortraitComponent } from "./portrait/portrait.component"
 import { PersonComponent } from "./person/person.component"
 import { AppRoutingModule } from "../../app-routing.module"
+import { EditRelationsComponent } from "./edit-relations/edit-relations.component"
 
 @NgModule({
 	declarations: [
@@ -20,6 +21,7 @@ import { AppRoutingModule } from "../../app-routing.module"
 		AddPersonComponent,
 		AncestryListComponent,
 		EditInfoComponent,
+		EditRelationsComponent,
 		FamilyTreeComponent,
 		PersonComponent,
 		AncestryTreeNodeComponent,

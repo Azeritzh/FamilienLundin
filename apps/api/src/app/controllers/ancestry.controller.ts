@@ -51,6 +51,35 @@ export class AncestryController {
 	}
 
 	@UseGuards(JwtAuthGuard)
+	@Post("update-relations")
+	async updateRelations(@Body() message: { personId: number, relations: PersonalRelation[] }) {
+		const oldRelations = this.storageService.ancestryCollection.findOne({ _id: message.personId }).relations
+
+		const newPerson = this.storageService.ancestryCollection.updateOne(
+			{ _id: message.personId },
+			x => x.relations = message.relations
+		)
+		const updatedPeople = [newPerson]
+		for (const relation of oldRelations)
+			updatedPeople.push(this.updateForRemovedRelation(newPerson._id, relation))
+		for (const relation of message.relations)
+			updatedPeople.push(this.updateForRelation(newPerson._id, relation))
+		return updatedPeople
+	}
+
+	private updateForRemovedRelation(personId: number, relation: PersonalRelation) {
+		return this.storageService.ancestryCollection.updateOne(
+			{ _id: relation.id },
+			x => this.removeRelationBetween(x, personId)
+		)
+	}
+
+	private removeRelationBetween(person: Person, otherPersonId: number) {
+		const index = person.relations.findIndex(x => x.id === otherPersonId)
+		person.relations.splice(index, 1)
+	}
+
+	@UseGuards(JwtAuthGuard)
 	@Post("upload-file")
 	@UseInterceptors(FileInterceptor("file", { dest: "./ancestry-uploads" }))
 	async uploadFile(@UploadedFile() file, @Body() message: { name: string, description: string, personId: string }) {

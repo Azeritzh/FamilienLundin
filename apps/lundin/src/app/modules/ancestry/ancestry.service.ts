@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { Person } from "@lundin/api-interfaces"
+import { Person, PersonalRelation } from "@lundin/api-interfaces"
 import { BehaviorSubject } from "rxjs"
 import { map } from "rxjs/operators"
 
@@ -35,6 +35,13 @@ export class AncestryService {
 		const updatedPerson = await this.httpClient.post<Person>("api/ancestry/update-info", { personId, information }).toPromise()
 		this.updatePerson(updatedPerson)
 		return updatedPerson
+	}
+
+	async updateRelations(personId: number, relations: PersonalRelation[]) {
+		const updatedPeople = await this.httpClient.post<Person[]>("api/ancestry/update-relations", { personId, relations }).toPromise()
+		for (const person of updatedPeople)
+			this.updatePerson(person)
+		return updatedPeople[0]
 	}
 
 	async addFile(personId: number, file: { description: string, data: File }) {

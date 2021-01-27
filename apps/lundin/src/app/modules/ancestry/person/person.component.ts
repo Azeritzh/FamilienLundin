@@ -6,6 +6,7 @@ import { NavigationService } from "../../../services/navigation.service"
 import { AddFileComponent } from "../add-file/add-file.component"
 import { AncestryService } from "../ancestry.service"
 import { EditInfoComponent } from "../edit-info/edit-info.component"
+import { EditRelationsComponent } from "../edit-relations/edit-relations.component"
 
 @Component({
 	selector: "lundin-person",
@@ -35,7 +36,8 @@ export class PersonComponent implements OnInit {
 	}
 
 	async editRelations() {
-		throw new Error("not implemented")
+		const component = await this.navigationService.openAsOverlay(EditRelationsComponent)
+		component.editPerson(this.personId)
 	}
 
 	async seeAncestryTree() {
