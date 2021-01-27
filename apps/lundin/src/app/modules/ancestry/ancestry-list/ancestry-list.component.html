@@ -11,21 +11,35 @@
 			placeholder="Søg efter familiemedlem"
 			autocomplete="off">
 		<label class="checkbox-container">
-			<input type="checkbox" class="checkbox-input">
+			<input type="checkbox"
+				class="checkbox-input">
 			Inkluder alle
 		</label>
 	</section>
-	<ul>
-		<li *ngFor="let person of people$ | async"
-			class="person"
-			(click)="clickPerson(person._id)">
-			<div class="name">
-				{{person.name}}
-			</div>
-			<span *ngFor="let info of person.information"
-				class="info">
-				{{info.title}}: {{info.content}}
-			</span>
+	<ul class="list-content-container">
+		<li class="list-titles-container">
+			<div class="list-item">Navn</div>
+			<div class="list-item">Født</div>
+			<div class="list-item">Død</div>
+			<div class="list-item-active-column">Aktivt medlem</div>
 		</li>
+		<div class="scroll-list-container">
+			<li *ngFor="let person of people$ | async"
+				class="person list-entry-container"
+				(click)="clickPerson(person._id)">
+				<div class="name list-item">
+					{{person.name}}
+				</div>
+				<span class="info list-item">
+					{{bornFor(person)}}
+				</span>
+				<span class="info list-item">
+					{{deadFor(person)}}
+				</span>
+				<div class="list-item-active-column">
+					Ikke aktiv
+				</div>
+			</li>
+		</div>
 	</ul>
 </section>
