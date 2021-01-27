@@ -13,6 +13,8 @@ import { AncestryService } from "../ancestry.service"
 })
 export class AncestryListComponent {
 	people$: Observable<Person[]>
+	query = ""
+	includeAll = true
 
 	constructor(
 		ancestryService: AncestryService,
@@ -36,5 +38,24 @@ export class AncestryListComponent {
 
 	deadFor(person: Person) {
 		return person.information.find(x => x.title === "__dead").content
+	}
+
+	filter(people: Person[]) {
+		return people
+			.filter(x => this.includeAll || x.userId)
+			.filter(x => this.search([x.name.toLowerCase()]))
+	}
+
+	private search(attributes: string[]): boolean {
+		const searchedWords = this.query.toLowerCase().split(/\s/g)
+		const existingWords = attributes.join(" ").toLowerCase().split(/\s/g)
+		for (const word of searchedWords)
+			if (!this.wordExists(word, existingWords))
+				return false
+		return true
+	}
+
+	private wordExists(word: string, words: string[]): boolean {
+		return words.findIndex(x => x.startsWith(word)) > -1
 	}
 }
