@@ -1,0 +1,20 @@
+<ng-container *ngIf="personNode">
+	<div class="person"
+		(click)="navigateToPerson()">
+		<div class="person-info">
+			<div class="label">{{personNode.person.name}}</div>
+			<div class="label">Født: {{bornText()}}</div>
+			<div class="label">Død: {{deadText()}}</div>
+		</div>
+	</div>
+	<div class="parents">
+		<div class="father">
+			<lundin-ancestry-tree-node *ngIf="personNode.father"
+				[personNode]="personNode.father"></lundin-ancestry-tree-node>
+		</div>
+		<div class="mother">
+			<lundin-ancestry-tree-node *ngIf="personNode.mother"
+				[personNode]="personNode.mother"></lundin-ancestry-tree-node>
+		</div>
+	</div>
+</ng-container>
