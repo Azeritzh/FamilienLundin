@@ -2,3 +2,7 @@ input, select { margin-bottom: 0.5rem; }
 section { display: flex; }
 section input, section select { flex: 1; }
 section input + label { margin-left: 0.5rem; }
+
+.info-list {
+    margin: 0.5rem 0;
+}
