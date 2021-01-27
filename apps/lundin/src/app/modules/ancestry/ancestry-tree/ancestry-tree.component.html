@@ -1,3 +1,8 @@
 <ng-container *ngIf="rootPersonNode">
-	<lundin-ancestry-tree-node [personNode]="rootPersonNode"></lundin-ancestry-tree-node>
+	<section class="tree-container">
+		<header class="container-header">
+			<h1>{{rootPersonNode.person.name}} - stamtræ</h1>
+		</header>
+		<lundin-ancestry-tree-node [personNode]="rootPersonNode" class="ancestry-tree"></lundin-ancestry-tree-node>
+	</section>
 </ng-container>

@@ -1,0 +1,17 @@
+.container-box {
+	border: 1px solid var(--color-primary);
+	border-radius: var(--border-radius-full);
+	padding-bottom: 0.5rem;
+	background-color: white;
+}
+
+.tree-container {
+	@extend .container-box;
+	height: calc(100% - 1.5rem);
+}
+
+.ancestry-tree {
+    padding: 0.5rem;
+    display: flex;
+    height: calc(100% - 3rem);
+}
