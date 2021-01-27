@@ -45,4 +45,12 @@ export class FamilyTreeComponent implements OnDestroy {
 	ngOnDestroy() {
 		this.subscription?.unsubscribe()
 	}
+
+	getFather() {
+		return this.parents.find(x => x.gender === "male")
+	}
+
+	getMother() {
+		return this.parents.find(x => x.gender === "female")
+	}
 }

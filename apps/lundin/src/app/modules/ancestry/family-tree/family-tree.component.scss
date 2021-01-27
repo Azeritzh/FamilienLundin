@@ -1,10 +1,13 @@
 :host {
 	position: relative;
-	height: 100%;
+	height: calc(100% - 2rem);
 	display: grid;
 	grid-template-areas: "parents parents parents"
 		"siblings person partners"
 		"children children children";
+	grid-auto-columns: 1fr 1fr 1fr;
+	grid-auto-rows: 1fr 1fr 1fr;
+	overflow-y: auto;
 }
 
 .parents { grid-area: parents; }
@@ -19,4 +22,5 @@ section {
 
 lundin-portrait {
 	flex: 1;
+	margin: auto 0;
 }

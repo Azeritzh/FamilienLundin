@@ -12,7 +12,9 @@ a {
 	background-color: #e0e8e3;
 }
 
-.name {
+.name, .relation, .dates {
 	white-space: pre;
 	text-align: center;
 }
+
+.name { font-weight: bold; }

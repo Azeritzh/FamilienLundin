@@ -1,7 +1,12 @@
 <ng-container *ngIf="person">
 	<section class="parents">
-		<lundin-portrait *ngFor="let parent of parents; let i = index;"
-			[person]="parent">
+		<lundin-portrait *ngIf="getFather() as father"
+			[person]="father"
+			relation="parent">
+		</lundin-portrait>
+		<lundin-portrait *ngIf="getMother() as mother"
+			[person]="mother"
+			relation="parent">
 		</lundin-portrait>
 	</section>
 
@@ -15,13 +20,15 @@
 
 	<section class="partners">
 		<lundin-portrait *ngFor="let partner of partners"
-			[person]="partner">
+			[person]="partner"
+			relation="partner">
 		</lundin-portrait>
 	</section>
 
 	<section class="children">
 		<lundin-portrait *ngFor="let child of children; let i = index;"
-			[person]="child">
+			[person]="child"
+			relation="child">
 		</lundin-portrait>
 	</section>
 </ng-container>
