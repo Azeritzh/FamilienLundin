@@ -1,18 +1,22 @@
 <h1>Opret ny person</h1>
 
 <div class="content-container">
-	<label for="name">
+	<label for="name"
+		[labelling]="nameInput">
 		Navn
 	</label>
-	<input type="text"
+	<input #nameInput
+		type="text"
 		[(ngModel)]="name"
 		id="name"
 		autocomplete="off">
 
-	<label for="gender">
+	<label for="gender"
+		[labelling]="genderInput">
 		Køn
 	</label>
-	<select [(ngModel)]="gender">
+	<select #genderInput
+		[(ngModel)]="gender">
 		<option value="male">
 			Hankøn
 		</option>
@@ -24,18 +28,22 @@
 		</option>
 	</select>
 
-	<label for="born">
+	<label for="born"
+		[labelling]="bornInput">
 		Født
 	</label>
-	<input type="text"
+	<input #bornInput
+		type="text"
 		[(ngModel)]="born"
 		id="born"
 		autocomplete="off">
 
-	<label for="dead">
+	<label for="dead"
+		[labelling]="deadInput">
 		Død
 	</label>
-	<input type="text"
+	<input #deadInput
+		type="text"
 		[(ngModel)]="dead"
 		id="dead"
 		autocomplete="off">
@@ -53,14 +61,9 @@
 			class="relation-row">
 
 			<select [(ngModel)]="relation.id">
-				<option value="1">
-					Jens Jensen
-				</option>
-				<option value="2">
-					Hanne Hansen
-				</option>
-				<option value="3">
-					Jesus Kristus
+				<option *ngFor="let person of ancestryService.people"
+					value="person._id">
+					{{person.name}} ({{person._id}})
 				</option>
 			</select>
 
