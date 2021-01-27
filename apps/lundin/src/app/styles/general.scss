@@ -50,6 +50,13 @@ input, textarea, select {
 	outline-color: var(--color-primary);
 }
 
+textarea {
+	padding-top: 0.5rem;
+	line-height: 1rem;
+	height: 5rem;
+	resize: vertical;
+}
+
 input[type="checkbox"] {
 	margin-top: 0.5rem;
 	height: 1rem;
