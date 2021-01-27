@@ -5,6 +5,7 @@ import { SharedModule } from "../../shared/shared.module"
 import { AddFileComponent } from "./add-file/add-file.component"
 import { AddPersonComponent } from "./add-person/add-person.component"
 import { AncestryListComponent } from "./ancestry-list/ancestry-list.component"
+import { AncestryTreeNodeComponent } from "./ancestry-tree/ancestry-tree-node.component"
 import { AncestryTreeComponent } from "./ancestry-tree/ancestry-tree.component"
 import { AncestryService } from "./ancestry.service"
 import { EditInfoComponent } from "./edit-info/edit-info.component"
@@ -19,6 +20,7 @@ import { PersonComponent } from "./person/person.component"
 		EditInfoComponent,
 		FamilyTreeComponent,
 		PersonComponent,
+		AncestryTreeNodeComponent,
 		AncestryTreeComponent,
 	],
 	imports: [

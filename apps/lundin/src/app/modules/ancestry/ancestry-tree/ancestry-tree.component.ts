@@ -54,7 +54,7 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 	}
 }
 
-class PersonNode {
+export class PersonNode {
 	constructor(
 		public person: Person,
 		public mother: PersonNode,

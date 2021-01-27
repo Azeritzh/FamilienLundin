@@ -1,0 +1,28 @@
+.person {
+	width: 10rem;
+	height: 100%;
+	float: left;
+	border-right: 1px solid black;
+}
+
+.parents {
+	display: grid;
+	height: 100%;
+	float: left;
+}
+
+.mother {
+	height: 100%;
+	float: left;
+}
+
+.father {
+	height: 100%;
+	float: left;
+}
+
+p {
+	text-align: center;
+	margin-top:100%;
+	margin-bottom: auto;
+}
