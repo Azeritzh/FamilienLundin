@@ -9,6 +9,7 @@ import { AncestryTreeComponent } from "./ancestry-tree/ancestry-tree.component"
 import { AncestryService } from "./ancestry.service"
 import { EditInfoComponent } from "./edit-info/edit-info.component"
 import { FamilyTreeComponent } from "./family-tree/family-tree.component"
+import { PortraitComponent } from "./portrait/portrait.component"
 import { PersonComponent } from "./person/person.component"
 
 @NgModule({
@@ -19,6 +20,7 @@ import { PersonComponent } from "./person/person.component"
 		EditInfoComponent,
 		FamilyTreeComponent,
 		PersonComponent,
+		PortraitComponent,
 		AncestryTreeComponent,
 	],
 	imports: [

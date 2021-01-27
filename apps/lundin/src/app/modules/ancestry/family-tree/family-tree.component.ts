@@ -26,6 +26,8 @@ export class FamilyTreeComponent implements OnDestroy {
 	}
 
 	private setup = (person: Person) => {
+		if (!person)
+			return
 		this.person = person
 		this.parents = person.relations
 			.filter(x => x.type === "parent")
