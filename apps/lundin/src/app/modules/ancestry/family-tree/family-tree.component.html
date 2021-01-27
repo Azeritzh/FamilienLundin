@@ -1,3 +1,4 @@
-<ng-container *ngIf="person$ | async as person">
+<ng-container *ngIf="person">
 	stamtræ for {{person.name}}
+	forældre: {{parents.join(", ")}}
 </ng-container>
