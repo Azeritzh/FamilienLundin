@@ -50,10 +50,10 @@ export class AncestryService {
 
 	private updatePerson(person: Person) {
 		const index = this.people.findIndex(x => x._id === person._id)
-		if (index !== null)
-			this.people[index] = person
-		else
+		if (index === -1)
 			this.people.push(person)
+		else
+			this.people[index] = person
 		this.updatePeople$()
 	}
 

@@ -10,6 +10,8 @@ import { AncestryService } from "../ancestry.service"
 export class EditInfoComponent {
 	personId: number
 	information: { title: string, content: string }[] = []
+	born = ""
+	dead = ""
 
 	constructor(
 		private ancestryService: AncestryService,
@@ -19,7 +21,15 @@ export class EditInfoComponent {
 	editPerson(personId: number) {
 		this.personId = personId
 		const person = this.ancestryService.person(personId)
-		this.information = person.information.map(x => ({ ...x }))
+		this.information = person.information
+			.map(x => ({ ...x }))
+			.filter(this.isCustom)
+		this.born = person.information.find(x => x.title === "__born")?.content ?? ""
+		this.dead = person.information.find(x => x.title === "__dead")?.content ?? ""
+	}
+
+	private isCustom(info: { title: string, content: string }) {
+		return info.title !== "__born" && info.title !== "__dead"
 	}
 
 	deleteInformation(row: { title: string, content: string }) {
@@ -32,7 +42,12 @@ export class EditInfoComponent {
 	}
 
 	async save() {
-		await this.ancestryService.updateInfo(this.personId, this.information)
+		const information = [
+			{ title: "__born", content: this.born },
+			{ title: "__dead", content: this.dead },
+			...this.information
+		]
+		await this.ancestryService.updateInfo(this.personId, information)
 		this.navigationService.closeOverlay()
 	}
 

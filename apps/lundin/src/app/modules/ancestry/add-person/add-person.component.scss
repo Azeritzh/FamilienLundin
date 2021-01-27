@@ -1,74 +1,70 @@
 input, select { margin-bottom: 0.5rem; }
-
 section { display: flex; }
 section input, section select { flex: 1; }
 section input + label { margin-left: 0.5rem; }
 
 .relations-top {
-    align-items: center;
-    font-weight: bold;
-    font-size: 1rem;
-    justify-content: space-between;
+	align-items: center;
+	font-weight: bold;
+	font-size: 1rem;
+	justify-content: space-between;
 }
 
 .add-relation {
-    flex: unset;
-    background-color: var(--color-btn-positive);
+	flex: unset;
+	background-color: var(--color-btn-positive);
 }
 
 .add-person:disabled {
-    background-color: var(--color-btn-disabled);
+	background-color: var(--color-btn-disabled);
 }
 
 .add-person {
-    background-color: var(--color-btn-positive);
+	background-color: var(--color-btn-positive);
 }
 
 .delete {
-    background-color: var(--color-btn-negative);
-    flex: unset;
+	background-color: var(--color-btn-negative);
+	flex: unset;
 }
 
 .relation-row {
-    display: flex;
-    gap: 0.5rem;
-    margin-right: 0.5rem;
+	display: flex;
+	gap: 0.5rem;
+	margin-right: 0.5rem;
 }
 
 .select-relation-name {
-    flex: 2;
+	flex: 2;
 }
 
 .select-relation {
-    flex: 1;
+	flex: 1;
 }
 
 .relations-list-container {
-    margin-top: 0.5rem;
+	margin-top: 0.5rem;
 }
 
 .scroll-list-container {
-    max-height: 20rem;
-    overflow-y: scroll;
-    width: calc(100% - 0.5rem);
-    margin-top: 0.5rem;
+	max-height: 20rem;
+	overflow-y: scroll;
+	width: calc(100% - 0.5rem);
+	margin-top: 0.5rem;
 }
 
-.scroll-list-container::-webkit-scrollbar-track
-{
-    border-radius: var(--border-radius-full);
-    border: 1px solid var(--color-primary);
+.scroll-list-container::-webkit-scrollbar-track {
+	border-radius: var(--border-radius-full);
+	border: 1px solid var(--color-primary);
 	background-color: white;
 }
 
-.scroll-list-container::-webkit-scrollbar
-{
+.scroll-list-container::-webkit-scrollbar {
 	width: 1rem;
 	background-color: white;
 }
 
-.scroll-list-container::-webkit-scrollbar-thumb
-{
+.scroll-list-container::-webkit-scrollbar-thumb {
 	border-radius: var(--border-radius-full);
 	background-color: var(--color-btn-neutral);
 }
