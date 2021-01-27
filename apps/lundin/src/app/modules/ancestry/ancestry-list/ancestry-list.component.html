@@ -6,16 +6,20 @@
 			Tilføj person
 		</button>
 	</header>
+
 	<section class="search-container ">
 		<input type="text"
+			[(ngModel)]="query"
 			placeholder="Søg efter familiemedlem"
 			autocomplete="off">
 		<label class="checkbox-container">
 			<input type="checkbox"
+				[(ngModel)]="includeAll"
 				class="checkbox-input">
 			Inkluder alle
 		</label>
 	</section>
+
 	<ul class="list-content-container">
 		<li class="list-titles-container">
 			<div class="list-item">Navn</div>
@@ -24,7 +28,7 @@
 			<div class="list-item-active-column">Aktivt medlem</div>
 		</li>
 		<div class="scroll-list-container">
-			<li *ngFor="let person of people$ | async"
+			<li *ngFor="let person of filter(people$ | async)"
 				class="person list-entry-container"
 				(click)="clickPerson(person._id)">
 				<div class="name list-item">
@@ -42,4 +46,5 @@
 			</li>
 		</div>
 	</ul>
+
 </section>
