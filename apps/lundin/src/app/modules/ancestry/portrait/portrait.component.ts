@@ -8,13 +8,14 @@ import { Person } from "@lundin/api-interfaces"
 })
 export class PortraitComponent {
 	@Input() person: Person
-	@Input() relation: "partner" | "parent" | "child"
+	@Input() relation: "partner" | "parent" | "child" | "sibling"
 
 	relationText(){
 		switch (this.relation) {
 			case "partner": return "Partner"
 			case "parent": return this.parentText()
 			case "child": return this.childText()
+			case "sibling": return this.siblingText()
 		}
 	}
 
@@ -31,6 +32,14 @@ export class PortraitComponent {
 			case "male": return "Søn"
 			case "female": return "Datter"
 			case "other": return "Barn"
+		}
+	}
+
+	private siblingText(){
+		switch (this.person.gender) {
+			case "male": return "Bror"
+			case "female": return "Søster"
+			case "other": return "Søskende"
 		}
 	}
 

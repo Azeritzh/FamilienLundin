@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy } from "@angular/core"
-import { Person } from "@lundin/api-interfaces"
+import { Person, PersonalRelation } from "@lundin/api-interfaces"
 import { Subscription } from "rxjs"
 import { AncestryService } from "../ancestry.service"
 
@@ -16,6 +16,7 @@ export class FamilyTreeComponent implements OnDestroy {
 	parents: Person[]
 	partners: Person[]
 	children: Person[]
+	siblings: Person[]
 	private subscription: Subscription
 
 	constructor(
@@ -40,6 +41,21 @@ export class FamilyTreeComponent implements OnDestroy {
 		this.children = person.relations
 			.filter(x => x.type === "child")
 			.map(x => this.ancestryService.person(x.id))
+		this.siblings = this.getSiblingRelations()
+			.map(x => this.ancestryService.person(x.id))
+	}
+
+	private getSiblingRelations(): PersonalRelation[] {
+		const siblingSets = this.parents.map(x => x.relations.filter(this.isOtherChild))
+		return [].concat(...siblingSets).filter(this.onlyUnique)
+	}
+
+	private isOtherChild = (relation: PersonalRelation) => {
+		return relation.id !== this.person._id && relation.type === "child"
+	}
+
+	private onlyUnique(relation: PersonalRelation, index: number, self: PersonalRelation[]) {
+		return self.findIndex(x => relation.id === x.id) === index
 	}
 
 	ngOnDestroy() {

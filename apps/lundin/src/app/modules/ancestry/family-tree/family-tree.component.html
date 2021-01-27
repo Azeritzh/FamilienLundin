@@ -11,6 +11,10 @@
 	</section>
 
 	<section class="siblings">
+		<lundin-portrait *ngFor="let sibling of siblings"
+			[person]="sibling"
+			relation="sibling">
+		</lundin-portrait>
 	</section>
 
 	<section class="person">
@@ -26,7 +30,7 @@
 	</section>
 
 	<section class="children">
-		<lundin-portrait *ngFor="let child of children; let i = index;"
+		<lundin-portrait *ngFor="let child of children"
 			[person]="child"
 			relation="child">
 		</lundin-portrait>
