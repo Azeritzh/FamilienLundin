@@ -115,3 +115,8 @@ img {
 	border-radius: var(--border-radius-full);
 	background-color: var(--color-btn-neutral);
 }
+
+.btn-container {
+	gap: 0.5rem;
+	display: flex;
+}

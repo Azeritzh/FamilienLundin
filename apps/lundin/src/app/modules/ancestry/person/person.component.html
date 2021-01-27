@@ -3,10 +3,17 @@
 	<section class="tree-box">
 		<header class="container-header">
 			<h1>{{person.name}} - Familie</h1>
-			<button type="button"
-				(click)="editRelations()">
-				Redigér
-			</button>
+			<div class="btn-container">
+				<button type="button"
+					(click)="seeAncestryTree()">
+					Se stamtræ
+				</button>
+				<button type="button"
+					(click)="editRelations()">
+					Redigér
+				</button>
+			</div>
+
 		</header>
 		<lundin-tree [personId]="personId"></lundin-tree>
 	</section>
@@ -21,7 +28,8 @@
 				</button>
 			</header>
 			<ul class="scroll-info-file-container">
-				<li *ngFor="let info of person.information" class="info-list">
+				<li *ngFor="let info of person.information"
+					class="info-list">
 					<span class="information-title">{{info.title}}</span>
 					<span class="information-content">{{info.content}}</span>
 				</li>
@@ -37,17 +45,20 @@
 				</button>
 			</header>
 			<ul class="scroll-info-file-container file-list">
-				<li *ngFor="let file of person.files" class="file-item">
+				<li *ngFor="let file of person.files"
+					class="file-item">
 					<a [href]="pathFor(file)"
 						[title]="file.description"
 						target="_blank"
 						rel="noopener noreferrer">
 						<img *ngIf="isImage(file)"
 							[src]="pathFor(file)">
-						<span *ngIf="!isImage(file)" class="file-text-item">
+						<span *ngIf="!isImage(file)"
+							class="file-text-item">
 							{{file.name}}
 						</span>
-						<span *ngIf="file.description" class="file-description">
+						<span *ngIf="file.description"
+							class="file-description">
 							{{file.description}}
 						</span>
 					</a>
