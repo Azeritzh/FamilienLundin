@@ -25,10 +25,10 @@ export class AncestryService {
 	}
 
 	async add(person: Person) {
-		const savedPerson = await this.httpClient.post<Person>("api/ancestry/add", person).toPromise()
-		this.people.push(savedPerson)
-		this.updatePeople$()
-		return savedPerson
+		const updatedPeople = await this.httpClient.post<Person[]>("api/ancestry/add", person).toPromise()
+		for (const person of updatedPeople)
+			this.updatePerson(person)
+		return updatedPeople[0]
 	}
 
 	async updateInfo(personId: number, information: { title: string, content: string }[]) {
@@ -49,8 +49,11 @@ export class AncestryService {
 	}
 
 	private updatePerson(person: Person) {
-		const index = this.people.findIndex(x => x._id === person._id )
-		this.people[index] = person
+		const index = this.people.findIndex(x => x._id === person._id)
+		if (index !== null)
+			this.people[index] = person
+		else
+			this.people.push(person)
 		this.updatePeople$()
 	}
 

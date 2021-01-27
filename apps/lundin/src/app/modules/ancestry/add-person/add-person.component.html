@@ -1,32 +1,88 @@
 <h1>Opret ny person</h1>
 
 <div class="content-container">
-	<label for="name">
+	<label for="name"
+		[labelling]="nameInput">
 		Navn
 	</label>
-	<input type="text"
-		[(ngModel)]="person.name"
+	<input #nameInput
+		type="text"
+		[(ngModel)]="name"
 		id="name"
-		placeholder="Navn"
 		autocomplete="off">
 
-	<label>
-		Information
+	<label for="gender"
+		[labelling]="genderInput">
+		Køn
 	</label>
+	<select #genderInput
+		[(ngModel)]="gender">
+		<option value="male">
+			Hankøn
+		</option>
+		<option value="female">
+			Hunkøn
+		</option>
+		<option value="other">
+			Andet
+		</option>
+	</select>
+
+	<label for="born"
+		[labelling]="bornInput">
+		Født
+	</label>
+	<input #bornInput
+		type="text"
+		[(ngModel)]="born"
+		id="born"
+		autocomplete="off">
+
+	<label for="dead"
+		[labelling]="deadInput">
+		Død
+	</label>
+	<input #deadInput
+		type="text"
+		[(ngModel)]="dead"
+		id="dead"
+		autocomplete="off">
+
+	<h2>
+		Relationer
+	</h2>
+	<button type="button"
+		class="add-relation"
+		(click)="addRelation()">
+		Tilføj relation
+	</button>
 	<ul>
-		<li *ngFor="let info of person.information"
-			class="information-row">
-			<input type="text"
-				[(ngModel)]="info.title"
-				placeholder="Titel"
-				autocomplete="off">
-			<input type="text"
-				[(ngModel)]="info.content"
-				placeholder="Beskrivelse"
-				autocomplete="off">
+		<li *ngFor="let relation of relations"
+			class="relation-row">
+
+			<select [ngModel]="relation.id"
+				(ngModelChange)="relation.id = +$event">
+				<option *ngFor="let person of ancestryService.people"
+					[value]="person._id">
+					{{person.name}} ({{person._id}})
+				</option>
+			</select>
+
+			<select [(ngModel)]="relation.type">
+				<option value="parent">
+					Forælder
+				</option>
+				<option value="child">
+					Barn
+				</option>
+				<option value="partner">
+					Partner
+				</option>
+			</select>
+
 			<button type="button"
 				class="delete"
-				(click)="deleteInformation(info)">
+				(click)="deleteRelation(relation)">
 				Slet
 			</button>
 		</li>
@@ -35,16 +91,9 @@
 
 <div class="btn-container">
 	<button type="button"
-		class="add-info"
-		(click)="addInformation()">
-		Tilføj infolinje
-	</button>
-
-	<button type="button"
 		class="add-person"
 		(click)="add()"
-		[disabled]="!person.name">
+		[disabled]="!name">
 		Opret person
 	</button>
 </div>
-

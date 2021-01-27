@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import { Person } from "@lundin/api-interfaces"
+import { PersonalRelation } from "@lundin/api-interfaces"
 import { NavigationService } from "../../../services/navigation.service"
 import { AncestryService } from "../ancestry.service"
 
@@ -9,30 +9,35 @@ import { AncestryService } from "../ancestry.service"
 	styleUrls: ["./add-person.component.scss", "../../../styles/popup-box.scss"],
 })
 export class AddPersonComponent {
-	person: Person = {
-		_id: 0,
-		name: "",
-		information: [{ title: "Født", content: "" }, { title: "Død", content: "" }],
-		files: [],
-		relations: [],
-	}
+	name = ""
+	gender: "male" | "female" | "other" = "male"
+	born = ""
+	dead = ""
+	relations: PersonalRelation[] = [{ type: "child", id: 0 }]
 
 	constructor(
 		private ancestryService: AncestryService,
 		private navigationService: NavigationService,
 	) { }
 
-	deleteInformation(row: { title: string, content: string }) {
-		const index = this.person.information.indexOf(row)
-		this.person.information.splice(index, 1)
+	deleteRelation(relation: PersonalRelation) {
+		const index = this.relations.indexOf(relation)
+		this.relations.splice(index, 1)
 	}
 
-	addInformation() {
-		this.person.information.push({ title: "", content: "" })
+	addRelation() {
+		this.relations.push({ type: "child", id: 0 })
 	}
 
 	async add() {
-		await this.ancestryService.add(this.person)
+		await this.ancestryService.add({
+			_id: 0,
+			name: this.name,
+			gender: this.gender,
+			relations: this.relations,
+			information: [{ title: "__born", content: this.born }, { title: "__dead", content: this.dead }],
+			files: [],
+		})
 		this.navigationService.closeOverlay()
 	}
 }

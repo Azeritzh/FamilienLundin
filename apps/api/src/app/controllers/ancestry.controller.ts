@@ -1,4 +1,4 @@
-import type { Person } from "@lundin/api-interfaces"
+import type { Person, PersonalRelation } from "@lundin/api-interfaces"
 import { Body, Controller, Get, Param, Post, Res, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common"
 import { FileInterceptor } from "@nestjs/platform-express"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
@@ -19,7 +19,26 @@ export class AncestryController {
 	@UseGuards(JwtAuthGuard)
 	@Post("add")
 	async save(@Body() person: Person) {
-		return this.storageService.ancestryCollection.insertOne(person)
+		const newPerson = this.storageService.ancestryCollection.insertOne(person)
+		const updatedPeople = [newPerson]
+		for (const relation of person.relations)
+			updatedPeople.push(this.updateForRelation(newPerson._id, relation))
+		return updatedPeople
+	}
+
+	private updateForRelation(personId: number, relation: PersonalRelation) {
+		return this.storageService.ancestryCollection.updateOne(
+			{ _id: relation.id },
+			x => x.relations.push({ id: personId, type: this.oppositeTypeOf(relation) })
+		)
+	}
+
+	private oppositeTypeOf(relation: PersonalRelation) {
+		switch (relation.type) {
+			case "child": return "parent"
+			case "parent": return "child"
+			case "partner": return "partner"
+		}
 	}
 
 	@UseGuards(JwtAuthGuard)
@@ -44,6 +63,6 @@ export class AncestryController {
 	@UseGuards(JwtAuthGuard)
 	@Get("file/:fileId/:fileName")
 	async getFile(@Param("fileId") fileId, @Res() res) {
-		res.sendFile(fileId, { root: "ancestry-uploads"})
+		res.sendFile(fileId, { root: "ancestry-uploads" })
 	}
 }
