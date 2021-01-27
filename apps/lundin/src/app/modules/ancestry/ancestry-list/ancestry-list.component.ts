@@ -29,4 +29,12 @@ export class AncestryListComponent {
 	clickPerson(personId: number) {
 		this.router.navigateByUrl("ancestry/person/" + personId)
 	}
+
+	bornFor(person: Person) {
+		return person.information.find(x => x.title === "__born").content
+	}
+
+	deadFor(person: Person) {
+		return person.information.find(x => x.title === "__dead").content
+	}
 }
