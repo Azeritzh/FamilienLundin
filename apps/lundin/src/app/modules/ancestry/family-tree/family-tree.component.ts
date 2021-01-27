@@ -14,6 +14,8 @@ export class FamilyTreeComponent implements OnDestroy {
 	}
 	person: Person
 	parents: Person[]
+	partners: Person[]
+	children: Person[]
 	private subscription: Subscription
 
 	constructor(
@@ -31,6 +33,12 @@ export class FamilyTreeComponent implements OnDestroy {
 		this.person = person
 		this.parents = person.relations
 			.filter(x => x.type === "parent")
+			.map(x => this.ancestryService.person(x.id))
+		this.partners = person.relations
+			.filter(x => x.type === "partner")
+			.map(x => this.ancestryService.person(x.id))
+		this.children = person.relations
+			.filter(x => x.type === "child")
 			.map(x => this.ancestryService.person(x.id))
 	}
 
