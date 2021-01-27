@@ -15,6 +15,10 @@ import { EditInfoComponent } from "../edit-info/edit-info.component"
 export class PersonComponent implements OnInit {
 	personId: number
 	person$: Observable<Person>
+	predefinedInfoTexts = {
+		__born: "Født",
+		__dead: "Død",
+	}
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -55,5 +59,9 @@ export class PersonComponent implements OnInit {
 	isImage(file: PersonFile) {
 		const imageExtensions = [".jpg", ".png", ".bmp"]
 		return imageExtensions.some(x => file.name.endsWith(x))
+	}
+
+	titleOf(info: { title: string, content: string }) {
+		return this.predefinedInfoTexts[info.title] ?? info.title
 	}
 }

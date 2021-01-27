@@ -30,7 +30,7 @@
 			<ul class="scroll-info-file-container">
 				<li *ngFor="let info of person.information"
 					class="info-list">
-					<span class="information-title">{{info.title}}</span>
+					<span class="information-title">{{titleOf(info)}}</span>
 					<span class="information-content">{{info.content}}</span>
 				</li>
 			</ul>
