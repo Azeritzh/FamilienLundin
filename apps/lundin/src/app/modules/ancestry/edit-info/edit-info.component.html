@@ -1,6 +1,29 @@
 <h1>Redigér informationer</h1>
 
 <div class="content-container">
+
+	<section>
+		<label for="born"
+			[labelling]="bornInput">
+			Født
+		</label>
+		<input #bornInput
+			type="text"
+			[(ngModel)]="born"
+			id="born"
+			autocomplete="off">
+
+		<label for="dead"
+			[labelling]="deadInput">
+			Død
+		</label>
+		<input #deadInput
+			type="text"
+			[(ngModel)]="dead"
+			id="dead"
+			autocomplete="off">
+	</section>
+	
 	<button type="button"
 		class="add-info"
 		(click)="addInformation()">
