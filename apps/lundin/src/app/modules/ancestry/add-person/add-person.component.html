@@ -60,9 +60,10 @@
 		<li *ngFor="let relation of relations"
 			class="relation-row">
 
-			<select [(ngModel)]="relation.id">
+			<select [ngModel]="relation.id"
+				(ngModelChange)="relation.id = +$event">
 				<option *ngFor="let person of ancestryService.people"
-					value="person._id">
+					[value]="person._id">
 					{{person.name}} ({{person._id}})
 				</option>
 			</select>
