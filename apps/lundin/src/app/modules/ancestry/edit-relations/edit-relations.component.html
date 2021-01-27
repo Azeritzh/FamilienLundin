@@ -1,0 +1,61 @@
+<h1>Rediger relationer</h1>
+
+<div class="content-container">
+	<section class="relations-top">
+		<h2>
+			Relationer
+		</h2>
+		<button type="button"
+			class="add-relation"
+			(click)="addRelation()">
+			Tilføj ny relation
+		</button>
+	</section>
+
+	<ul class="relations-list-container scroll-list-container">
+		<li *ngFor="let relation of relations"
+			class="relation-row">
+
+			<select [ngModel]="relation.id"
+				(ngModelChange)="relation.id = +$event"
+				class="select-relation-name">
+				<option *ngFor="let person of ancestryService.people"
+					[value]="person._id">
+					{{person.name}} (ID: {{person._id}})
+				</option>
+			</select>
+
+			<select [(ngModel)]="relation.type"
+			class="select-relation">
+				<option value="parent">
+					Forælder
+				</option>
+				<option value="child">
+					Barn
+				</option>
+				<option value="partner">
+					Partner
+				</option>
+			</select>
+
+			<button type="button"
+				class="delete"
+				(click)="deleteRelation(relation)">
+				Slet
+			</button>
+		</li>
+	</ul>
+</div>
+
+<div class="btn-container">
+	<button type="button"
+		class="add-person"
+		(click)="save()">
+		Gem ændringer
+	</button>
+	<button type="button"
+		class="cancel-btn"
+		(click)="cancel()">
+		Annuller
+	</button>
+</div>
