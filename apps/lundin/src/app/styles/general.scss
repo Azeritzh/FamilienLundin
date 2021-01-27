@@ -1,68 +1,91 @@
 * {
-    font-family: "Segoe UI", "Calibri";
+	font-family: "Segoe UI", "Calibri";
 }
 
 body {
-    overflow: hidden;
+	overflow: hidden;
 	background-color: var(--color-background);
 }
 
 button {
-    background-color: var(--color-btn-neutral);
-    height: 2rem;
-    line-height: 2rem;
-    padding: 0 1rem;
-    border-radius: var(--border-radius-full);
-    color: white;
-    outline: unset;
+	background-color: var(--color-btn-neutral);
+	height: 2rem;
+	line-height: 2rem;
+	padding: 0 1rem;
+	border-radius: var(--border-radius-full);
+	color: white;
+	outline: unset;
 }
 
 button:hover{
-    background-color: var(--color-btn-neutral-hover);
+	background-color: var(--color-btn-neutral-hover);
 }
 
 button:disabled {
-    background-color: var(--color-btn-disabled);
+	background-color: var(--color-btn-disabled);
 }
 
 .btn-positive {
-    background-color: var(--color-btn-positive);
+	background-color: var(--color-btn-positive);
 }
 
 .btn-positive:hover {
-    background-color: var(--color-btn-positive-hover);
+	background-color: var(--color-btn-positive-hover);
 }
 
 .btn-negative {
-    background-color: var(--color-btn-negative);
+	background-color: var(--color-btn-negative);
 }
 
 .btn-negative:hover {
-    background-color: var(--color-btn-negative-hover);
+	background-color: var(--color-btn-negative-hover);
 }
 
 input, textarea, select {
-    height: 2rem;
-    line-height: 2rem;
-    padding: 0 0.5rem;
-    border-radius: var(--border-radius-half);
-    border: 1px solid var(--color-border);
-    outline-color: var(--color-primary);
+	height: 2rem;
+	line-height: 2rem;
+	padding: 0 0.5rem;
+	border-radius: var(--border-radius-half);
+	border: 1px solid var(--color-border);
+	outline-color: var(--color-primary);
 }
 
 input[type="checkbox"] {
-    margin-top: 0.5rem;
-    height: 1rem;
+	margin-top: 0.5rem;
+	height: 1rem;
 }
 
 header.container-header {
-    display: flex;
-    background-color: var(--color-primary);
-    justify-content: space-between;
-    font-size: 1.2rem;
-    padding: 0.2rem 0.5rem;
-    line-height: 1.7rem;
-    color: var(--color-text-light);
-    border-top-left-radius: 0.9rem;
-    border-top-right-radius: 0.9rem;
+	display: flex;
+	background-color: var(--color-primary);
+	justify-content: space-between;
+	font-size: 1.2rem;
+	padding: 0.2rem 0.5rem;
+	line-height: 1.7rem;
+	color: var(--color-text-light);
+	border-top-left-radius: 0.9rem;
+	border-top-right-radius: 0.9rem;
+}
+
+.lowered-label {
+	position: relative;
+	top: 0;
+	left: 0.5rem;
+	line-height: 2rem;
+	height: 0;
+	opacity: 0.7;
+	transition: var(--standard-transition);
+}
+
+.raised-label {
+	position: relative;
+	display: inline;
+	width: fit-content;
+	top: -0.5rem;
+	left: 0.5rem;
+	line-height: 1rem;
+	height: 0;
+	font-size: 12px;
+	text-shadow: -1px 1px 0 white, 1px 1px 0 white, 1px -1px 0 white, -1px -1px 0 white;
+	transition: var(--standard-transition);
 }
