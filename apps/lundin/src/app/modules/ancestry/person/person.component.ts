@@ -60,7 +60,8 @@ export class PersonComponent implements OnInit {
 
 	isImage(file: PersonFile) {
 		const imageExtensions = [".jpg", ".png", ".bmp"]
-		return imageExtensions.some(x => file.name.endsWith(x))
+		const fileName = file.name.toLowerCase()
+		return imageExtensions.some(x => fileName.endsWith(x))
 	}
 
 	titleOf(info: { title: string, content: string }) {
