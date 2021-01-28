@@ -47,21 +47,21 @@
 			<ul class="scroll-info-file-container file-list">
 				<li *ngFor="let file of person.files"
 					class="file-item">
-					<a [href]="pathFor(file)"
+					<img *ngIf="isImage(file)"
+						[src]="pathFor(file)"
+						(click)="editFile(file)">
+					<a *ngIf="!isImage(file)"
+						[href]="pathFor(file)"
 						[title]="file.description"
 						target="_blank"
-						rel="noopener noreferrer">
-						<img *ngIf="isImage(file)"
-							[src]="pathFor(file)">
-						<span *ngIf="!isImage(file)"
-							class="file-text-item">
-							{{file.name}}
-						</span>
-						<span *ngIf="file.description"
-							class="file-description">
-							{{file.description}}
-						</span>
+						rel="noopener noreferrer"
+						class="file-text-item">
+						{{file.name}}
 					</a>
+					<span *ngIf="file.description"
+						class="file-description">
+						{{file.description}}
+					</span>
 				</li>
 			</ul>
 		</section>

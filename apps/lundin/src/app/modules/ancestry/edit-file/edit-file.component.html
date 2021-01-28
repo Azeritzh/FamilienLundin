@@ -1,0 +1,14 @@
+<h1>{{file.name}}</h1>
+
+<div class="content-container">
+	<img *ngIf="isImage(file)"
+		[src]="pathFor(file)">
+	<span *ngIf="!isImage(file)"
+		class="file-text-item">
+		{{file.name}}
+	</span>
+</div>
+
+<div class="description">
+	{{file.description}}
+</div>

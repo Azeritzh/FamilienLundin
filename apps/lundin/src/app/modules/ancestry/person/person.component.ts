@@ -5,6 +5,7 @@ import { Observable } from "rxjs"
 import { NavigationService } from "../../../services/navigation.service"
 import { AddFileComponent } from "../add-file/add-file.component"
 import { AncestryService } from "../ancestry.service"
+import { EditFileComponent } from "../edit-file/edit-file.component"
 import { EditInfoComponent } from "../edit-info/edit-info.component"
 import { EditRelationsComponent } from "../edit-relations/edit-relations.component"
 
@@ -52,6 +53,12 @@ export class PersonComponent implements OnInit {
 	async editFiles() {
 		const component = await this.navigationService.openAsOverlay(AddFileComponent)
 		component.personId = this.personId
+	}
+
+	async editFile(file: PersonFile) {
+		const component = await this.navigationService.openAsOverlay(EditFileComponent)
+		component.personId = this.personId
+		component.file = file
 	}
 
 	pathFor(file: PersonFile) {
