@@ -74,4 +74,12 @@ export class PersonComponent implements OnInit {
 	titleOf(info: { title: string, content: string }) {
 		return this.predefinedInfoTexts[info.title] ?? info.title
 	}
+
+	genderIcon(person: Person){
+		switch (person.gender) {
+			case "male": return "♂"
+			case "female": return "♀"
+			default: return "⚲"
+		}
+	}
 }

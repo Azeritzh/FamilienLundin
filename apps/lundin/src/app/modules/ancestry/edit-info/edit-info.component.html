@@ -1,6 +1,33 @@
 <h1>Redigér informationer</h1>
 
 <div class="content-container">
+	<section>
+		<label for="name"
+			[labelling]="nameInput">
+			Navn
+		</label>
+		<input #nameInput
+			type="text"
+			[(ngModel)]="name"
+			id="name"
+			autocomplete="off">
+		<label for="gender"
+			[labelling]="genderInput">
+			Køn
+		</label>
+		<select #genderInput
+			[(ngModel)]="gender">
+			<option value="male">
+				Hankøn
+			</option>
+			<option value="female">
+				Hunkøn
+			</option>
+			<option value="other">
+				Andet
+			</option>
+		</select>
+	</section>
 
 	<section>
 		<label for="born"
