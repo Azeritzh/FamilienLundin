@@ -31,8 +31,8 @@ export class AncestryService {
 		return updatedPeople[0]
 	}
 
-	async updateInfo(personId: number, information: { title: string, content: string }[]) {
-		const updatedPerson = await this.httpClient.post<Person>("api/ancestry/update-info", { personId, information }).toPromise()
+	async updateInfo(personId: number, name: string, gender: "male" | "female" | "other", information: { title: string, content: string }[]) {
+		const updatedPerson = await this.httpClient.post<Person>("api/ancestry/update-info", { personId, name, gender, information }).toPromise()
 		this.updatePerson(updatedPerson)
 		return updatedPerson
 	}

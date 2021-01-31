@@ -9,9 +9,11 @@ import { AncestryService } from "../ancestry.service"
 })
 export class EditInfoComponent {
 	personId: number
-	information: { title: string, content: string }[] = []
+	name = ""
+	gender: "male" | "female" | "other" = "male"
 	born = ""
 	dead = ""
+	information: { title: string, content: string }[] = []
 
 	constructor(
 		private ancestryService: AncestryService,
@@ -26,6 +28,8 @@ export class EditInfoComponent {
 			.filter(this.isCustom)
 		this.born = person.information.find(x => x.title === "__born")?.content ?? ""
 		this.dead = person.information.find(x => x.title === "__dead")?.content ?? ""
+		this.name = person.name
+		this.gender = person.gender
 	}
 
 	private isCustom(info: { title: string, content: string }) {
@@ -47,7 +51,7 @@ export class EditInfoComponent {
 			{ title: "__dead", content: this.dead },
 			...this.information
 		]
-		await this.ancestryService.updateInfo(this.personId, information)
+		await this.ancestryService.updateInfo(this.personId, this.name, this.gender, information)
 		this.navigationService.closeOverlay()
 	}
 
