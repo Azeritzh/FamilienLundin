@@ -12,12 +12,12 @@ import { NavigationService } from "../services/navigation.service"
 export class AppComponent implements OnInit {
 	header = "Familien Lundin"
 	navigationEntries: NavigationEntry[] = [
-		{ text: "Hjem", link: "/", imageUrl: "/assets/images/icons/Home_icon.svg", mustBeLoggedIn: false },
+		{ text: "Hjem", link: "/", imageUrl: "/assets/images/icons/Home_icon.svg" },
 		{ text: "Kalender", link: "/calendar", imageUrl: "/assets/images/icons/Calendar_icon.svg", mustBeLoggedIn: true },
-		{ text: "Familie", link: "/ancestry", imageUrl: "/assets/images/icons/Family_icon.svg", mustBeLoggedIn: false },
+		{ text: "Familie", link: "/ancestry", imageUrl: "/assets/images/icons/Family_icon.svg" },
 		{ text: "Galleri", link: "/gallery", imageUrl: "/assets/images/icons/Gallery_icon.svg", mustBeLoggedIn: true },
 		{ text: "Opskrifter", link: "/recipes", imageUrl: "/assets/images/icons/Recipes_icon.svg", mustBeLoggedIn: true },
-		{ text: "Diverse", link: "/various", imageUrl: "/assets/images/icons/Home_icon.svg", mustBeLoggedIn: false },
+		{ text: "Diverse", link: "/various", imageUrl: "/assets/images/icons/Home_icon.svg" },
 	]
 	@HostBinding("class.hidden-navigation") hideNavigation = false
 
@@ -83,5 +83,5 @@ interface NavigationEntry {
 	text: string
 	link: string
 	imageUrl: string
-	mustBeLoggedIn: boolean
+	mustBeLoggedIn?: boolean
 }

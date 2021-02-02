@@ -1,9 +1,9 @@
-<h1>Værktøjer</h1>
-<ng-container *ngFor="let tool of tools">
-	<a [routerLink]="tool.link">{{tool.title}}</a>
+<h1>Spil</h1>
+<ng-container *ngFor="let game of shown(games)">
+	<a [routerLink]="game.link">{{game.title}}</a>
 </ng-container>
 
-<h1>Spil</h1>
-<ng-container *ngFor="let game of games">
-	<a [routerLink]="game.link">{{game.title}}</a>
+<h1>Diverse</h1>
+<ng-container *ngFor="let tool of shown(tools)">
+	<a [routerLink]="tool.link">{{tool.title}}</a>
 </ng-container>

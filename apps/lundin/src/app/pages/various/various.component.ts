@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { AuthService } from "../../services/auth.service"
 
 @Component({
 	selector: "lundin-various",
@@ -6,16 +7,29 @@ import { Component } from "@angular/core"
 	styleUrls: ["./various.component.scss"]
 })
 export class VariousComponent {
-	tools: { title: string, link: string }[] = [
-		{ title: "Krypt", link: "/various/crypt" },
+	tools: Entry[] = [
+		{ title: "Krypt", link: "/various/crypt", mustBeLoggedIn: true },
+		{ title: "Game of Life", link: "/games/iframe/game-of-life" },
 	]
 
-	games: { title: string, link: string }[] = [
-		{ title: "Minestryger", link: "/games/minestryger" },
+	games: Entry[] = [
+		{ title: "Minestryger", link: "/games/minestryger", mustBeLoggedIn: true },
 		{ title: "Virus", link: "/games/virus" },
 		{ title: "Kryds og Bolle", link: "/games/noughts-and-crosses" },
 		{ title: "Piong", link: "/games/iframe/piong" },
-		{ title: "Game of Life", link: "/games/iframe/game-of-life" },
 		{ title: "Bilspil", link: "/games/iframe/bilspil" },
 	]
+
+	constructor(public authService: AuthService) { }
+
+	shown(entries: Entry[]) {
+		const isLoggedIn = this.authService.isLoggedIn()
+		return entries.filter(x => x.mustBeLoggedIn ? isLoggedIn : true)
+	}
+}
+
+interface Entry {
+	title: string
+	link: string
+	mustBeLoggedIn?: boolean
 }
