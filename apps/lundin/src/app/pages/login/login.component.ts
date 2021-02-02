@@ -1,5 +1,6 @@
 import { Component } from "@angular/core"
 import { AuthService } from "../../services/auth.service"
+import { NavigationService } from "../../services/navigation.service"
 
 @Component({
 	selector: "lundin-login",
@@ -12,9 +13,14 @@ export class LoginComponent {
 	name = ""
 	password = ""
 
-	constructor(private authService: AuthService) { }
+	constructor(
+		private authService: AuthService,
+		private navigationService: NavigationService
+	) { }
 
-	login() {
-		this.authService.login(this.name, this.password)
+	async login() {
+		const success = await this.authService.login(this.name, this.password)
+		if (!success)
+			this.navigationService.showMessage("Log ind fejlede")
 	}
 }

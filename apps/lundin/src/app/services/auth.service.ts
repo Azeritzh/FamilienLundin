@@ -48,6 +48,7 @@ export class AuthService {
 			})
 		if (this.isLoggedIn())
 			this.handleSuccessfulLogin()
+		return this.isLoggedIn()
 	}
 
 	private handleSuccessfulLogin(wasLoggedIn = false) {
