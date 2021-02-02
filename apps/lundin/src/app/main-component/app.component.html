@@ -9,29 +9,28 @@
 	</div>
 </header>
 
-<nav *ngIf="authService.isLoggedIn()">
+<nav>
 	<button (click)="hideNavigation = !hideNavigation"
 		class="nav-btn collaps-btn">
-		<img
-			[src]="hideNavigation ? '/assets/images/icons/Collapse2_icon.svg' : '/assets/images/icons/Collapse1_icon.svg'">
+		<img [src]="hideNavigation ? '/assets/images/icons/Collapse2_icon.svg' : '/assets/images/icons/Collapse1_icon.svg'">
 		<span class="nav-text">Kollaps</span>
 	</button>
-	<a *ngFor="let entry of navigationEntries"
+	<a *ngFor="let entry of shownNavigationEntries()"
 		[routerLink]="entry.link"
 		class="nav-btn">
 		<img [src]="entry.imageUrl">
 		<span class="nav-text">{{entry.text}}</span>
 	</a>
-	<button (click)="authService.logout()"
+	<button *ngIf="authService.isLoggedIn()"
+		(click)="authService.logout()"
 		class="nav-btn logout-btn">
 		<img src="/assets/images/icons/LogOut_icon.svg">
 		<span class="nav-text">Log ud</span>
 	</button>
 </nav>
-<article *ngIf="authService.isLoggedIn()">
+<article>
 	<router-outlet></router-outlet>
 </article>
-<lundin-login *ngIf="!authService.isLoggedIn()"></lundin-login>
 
 <div class="loading"
 	[class.hidden]="!showingLoading">

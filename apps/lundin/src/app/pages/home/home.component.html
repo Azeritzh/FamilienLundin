@@ -1,4 +1,7 @@
-<section class="home-container">
+<lundin-login *ngIf="!authService.isLoggedIn()"></lundin-login>
+
+<section *ngIf="authService.isLoggedIn()"
+	class="home-container">
 	<section class="messages">
 		<header class="container-header">
 			<h1>Beskeder og Diskussioner</h1>
@@ -10,7 +13,6 @@
 		<section class="scroll-list-container">
 			<lundin-message-list></lundin-message-list>
 		</section>
-		
 	</section>
 
 	<section class="events">

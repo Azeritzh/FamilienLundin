@@ -1,6 +1,7 @@
 import { Component } from "@angular/core"
 import { AddCalendarEventComponent } from "../../modules/calendar/add-calendar-event/add-calendar-event.component"
 import { AddMessageComponent } from "../../modules/message/add-message/add-message.component"
+import { AuthService } from "../../services/auth.service"
 import { NavigationService } from "../../services/navigation.service"
 
 @Component({
@@ -9,7 +10,10 @@ import { NavigationService } from "../../services/navigation.service"
 	styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent {
-	constructor(private navigationService: NavigationService) { }
+	constructor(
+		public authService: AuthService,
+		private navigationService: NavigationService
+	) { }
 
 	async addThread() {
 		this.navigationService.openAsOverlay(AddMessageComponent)

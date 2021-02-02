@@ -12,12 +12,12 @@ import { NavigationService } from "../services/navigation.service"
 export class AppComponent implements OnInit {
 	header = "Familien Lundin"
 	navigationEntries: NavigationEntry[] = [
-		{ text: "Hjem", link: "/", imageUrl: "/assets/images/icons/Home_icon.svg" },
-		{ text: "Kalender", link: "/calendar", imageUrl: "/assets/images/icons/Calendar_icon.svg" },
-		{ text: "Familie", link: "/ancestry", imageUrl: "/assets/images/icons/Family_icon.svg" },
-		{ text: "Galleri", link: "/gallery", imageUrl: "/assets/images/icons/Gallery_icon.svg" },
-		{ text: "Opskrifter", link: "/recipes", imageUrl: "/assets/images/icons/Recipes_icon.svg" },
-		{ text: "Diverse", link: "/various", imageUrl: "/assets/images/icons/Home_icon.svg" },
+		{ text: "Hjem", link: "/", imageUrl: "/assets/images/icons/Home_icon.svg", mustBeLoggedIn: false },
+		{ text: "Kalender", link: "/calendar", imageUrl: "/assets/images/icons/Calendar_icon.svg", mustBeLoggedIn: true },
+		{ text: "Familie", link: "/ancestry", imageUrl: "/assets/images/icons/Family_icon.svg", mustBeLoggedIn: false },
+		{ text: "Galleri", link: "/gallery", imageUrl: "/assets/images/icons/Gallery_icon.svg", mustBeLoggedIn: true },
+		{ text: "Opskrifter", link: "/recipes", imageUrl: "/assets/images/icons/Recipes_icon.svg", mustBeLoggedIn: true },
+		{ text: "Diverse", link: "/various", imageUrl: "/assets/images/icons/Home_icon.svg", mustBeLoggedIn: false },
 	]
 	@HostBinding("class.hidden-navigation") hideNavigation = false
 
@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
 			this.showingMessage = !!message
 			this.message = message
 		})
+		Object.defineProperty(this.navigationEntries[0], "text", { get: () => this.authService.isLoggedIn() ? "Hjem" : "Log ind" })
 	}
 
 	ngOnInit() {
@@ -71,10 +72,16 @@ export class AppComponent implements OnInit {
 	firstLetterOf(name: string) {
 		return name[0]
 	}
+
+	shownNavigationEntries() {
+		const isLoggedIn = this.authService.isLoggedIn()
+		return this.navigationEntries.filter(x => x.mustBeLoggedIn ? isLoggedIn : true)
+	}
 }
 
 interface NavigationEntry {
 	text: string
 	link: string
 	imageUrl: string
+	mustBeLoggedIn: boolean
 }

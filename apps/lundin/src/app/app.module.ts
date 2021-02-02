@@ -22,6 +22,7 @@ import { ProfileComponent } from "./pages/profile/profile.component"
 import { RecipesComponent } from "./pages/recipes/recipes.component"
 import { VariousComponent } from "./pages/various/various.component"
 import { AuthService } from "./services/auth.service"
+import { IsAuthenticatedGuard } from "./services/is-authenticated.guard"
 import { NavigationService } from "./services/navigation.service"
 import { UserService } from "./services/user.service"
 import { SharedModule } from "./shared/shared.module"
@@ -54,7 +55,12 @@ import { SharedModule } from "./shared/shared.module"
 		SharedModule,
 		VirusModule,
 	],
-	providers: [AuthService, NavigationService, UserService],
+	providers: [
+		AuthService,
+		IsAuthenticatedGuard,
+		NavigationService,
+		UserService
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -15,23 +15,24 @@ import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
 import { ProfileComponent } from "./pages/profile/profile.component"
 import { RecipesComponent } from "./pages/recipes/recipes.component"
 import { VariousComponent } from "./pages/various/various.component"
+import { IsAuthenticatedGuard } from "./services/is-authenticated.guard"
 
 const routes: Routes = [
 	{ path: "", component: HomeComponent },
 	{ path: "ancestry", component: AncestryComponent },
 	{ path: "ancestry/person/:id", component: PersonComponent },
 	{ path: "ancestry/tree/:id", component: AncestryTreeComponent },
-	{ path: "calendar", component: CalendarComponent },
-	{ path: "gallery", component: GalleryComponent },
+	{ path: "calendar", component: CalendarComponent, canActivate: [IsAuthenticatedGuard] },
+	{ path: "gallery", component: GalleryComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "games/iframe/:game", component: IframeGameComponent },
-	{ path: "games/minestryger", component: MinestrygerComponent },
+	{ path: "games/minestryger", component: MinestrygerComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "games/noughts-and-crosses", component: NoughtsAndCrossesComponent },
 	{ path: "games/virus", component: VirusComponent },
-	{ path: "messages/:id", component: MessageThreadComponent },
-	{ path: "profile", component: ProfileComponent },
-	{ path: "recipes", component: RecipesComponent },
+	{ path: "messages/:id", component: MessageThreadComponent, canActivate: [IsAuthenticatedGuard] },
+	{ path: "profile", component: ProfileComponent, canActivate: [IsAuthenticatedGuard] },
+	{ path: "recipes", component: RecipesComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "various", component: VariousComponent },
-	{ path: "various/crypt", component: CryptComponent },
+	{ path: "various/crypt", component: CryptComponent, canActivate: [IsAuthenticatedGuard] },
 ]
 
 @NgModule({
