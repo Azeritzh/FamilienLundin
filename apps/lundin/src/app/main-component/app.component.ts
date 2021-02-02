@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, HostBinding, Type, ViewChild } from "@angular/core"
+import { Component, ComponentFactoryResolver, HostBinding, OnInit, Type, ViewChild } from "@angular/core"
 import { first } from "rxjs/operators"
 import { OverlayHostDirective } from "../directives/overlay-host.directive"
 import { AuthService } from "../services/auth.service"
@@ -9,7 +9,7 @@ import { NavigationService } from "../services/navigation.service"
 	templateUrl: "./app.component.html",
 	styleUrls: ["./app.component.scss"],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 	header = "Familien Lundin"
 	navigationEntries: NavigationEntry[] = [
 		{ text: "Hjem", link: "/", imageUrl: "/assets/images/icons/Home_icon.svg" },
@@ -42,7 +42,10 @@ export class AppComponent {
 			this.showingMessage = !!message
 			this.message = message
 		})
-		if (this.authService.loginInfo)
+	}
+
+	ngOnInit() {
+		if (this.authService.isLoggedIn())
 			this.showingLoading = false
 		else
 			this.authService.onRefreshResponse.pipe(first()).subscribe(() => this.showingLoading = false)

@@ -10,13 +10,9 @@ export class UserService {
 
 	constructor(
 		private http: HttpClient,
-		private authService: AuthService,
+		authService: AuthService,
 	) {
-		this.getUsers()
-		authService.onRefreshResponse.subscribe(loggedIn => {
-			if (loggedIn)
-				this.getUsers()
-		})
+		authService.onLogin.subscribe(() => this.getUsers())
 	}
 
 	async getUsers() {

@@ -1,50 +1,41 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { AuthResponse } from "@lundin/api-interfaces"
-import { Subject } from "rxjs"
+import { ReplaySubject, Subject } from "rxjs"
 
 @Injectable()
 export class AuthService {
+	onLogin = new ReplaySubject(1)
 	onRefreshResponse = new Subject<boolean>()
 	loginInfo: AuthResponse
 
 	constructor(private http: HttpClient) {
+		this.initialiseLogin()
+	}
+
+	private initialiseLogin() {
 		this.loadLoginInfoFromStorage()
-		this.verifyExpiration()
-		if (this.loginInfo)
-			this.startRefreshTimer()
+		if (this.isLoggedIn())
+			this.handleSuccessfulLogin()
 		else
 			this.refresh()
 	}
 
 	private loadLoginInfoFromStorage() {
-		const storedInfo = localStorage.getItem("loginInfo")
-		if (storedInfo)
-			this.loginInfo = JSON.parse(storedInfo)
+		const storedInfo = JSON.parse(localStorage.getItem("loginInfo"))
+		if (storedInfo && this.isCurrent(storedInfo))
+			this.loginInfo = storedInfo
+		else
+			localStorage.removeItem("loginInfo")
 	}
 
-	private verifyExpiration() {
-		if (this.loginInfo && this.isLoginExpired())
-			this.clearLoginInfo()
+	private isCurrent(loginInfo: AuthResponse) {
+		return this.secondsToExpiration(loginInfo.expiration) <= 0
 	}
 
-	private startRefreshTimer() {
-		setTimeout(() => this.refresh(), (this.secondsToExpiration() - 60) * 1000)
-	}
-
-	private isLoginExpired() {
-		return this.secondsToExpiration() <= 0
-	}
-
-	private secondsToExpiration() {
+	private secondsToExpiration(expiration: number = this.loginInfo.expiration) {
 		const secondsSinceEpoch = new Date().getTime() / 1000
-		const expiration = this.loginInfo.expiration
 		return expiration - secondsSinceEpoch
-	}
-
-	private clearLoginInfo() {
-		this.loginInfo = null
-		localStorage.removeItem("loginInfo")
 	}
 
 	async login(username: string, password: string) {
@@ -55,13 +46,23 @@ export class AuthService {
 				console.log("failed login: " + JSON.stringify(error))
 				return null
 			})
-		if (this.loginInfo) {
-			localStorage.setItem("loginInfo", JSON.stringify(this.loginInfo))
-			this.startRefreshTimer()
-		}
+		if (this.isLoggedIn())
+			this.handleSuccessfulLogin()
+	}
+
+	private handleSuccessfulLogin(wasLoggedIn = false) {
+		if (!wasLoggedIn)
+			this.onLogin.next()
+		localStorage.setItem("loginInfo", JSON.stringify(this.loginInfo))
+		this.startRefreshTimer()
+	}
+
+	private startRefreshTimer() {
+		setTimeout(() => this.refresh(), (this.secondsToExpiration() - 60) * 1000)
 	}
 
 	async refresh() {
+		const wasLoggedIn = this.isLoggedIn()
 		this.loginInfo = await this.http
 			.get<AuthResponse>("/api/auth/refresh")
 			.toPromise()
@@ -69,11 +70,9 @@ export class AuthService {
 				console.log("failed login: " + JSON.stringify(error))
 				return null
 			})
-		this.onRefreshResponse.next(!!this.loginInfo)
-		if (this.loginInfo) {
-			localStorage.setItem("loginInfo", JSON.stringify(this.loginInfo))
-			this.startRefreshTimer()
-		}
+		this.onRefreshResponse.next(true)
+		if (this.isLoggedIn())
+			this.handleSuccessfulLogin(wasLoggedIn)
 	}
 
 	async logout() {
@@ -81,6 +80,11 @@ export class AuthService {
 			.get("/api/auth/refresh/logout")
 			.toPromise()
 		this.clearLoginInfo()
+	}
+
+	private clearLoginInfo() {
+		this.loginInfo = null
+		localStorage.removeItem("loginInfo")
 	}
 
 	addUser(username: string) {
