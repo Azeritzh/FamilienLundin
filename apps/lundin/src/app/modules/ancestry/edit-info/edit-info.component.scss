@@ -4,5 +4,31 @@ section input, section select { flex: 1; }
 section input + label { margin-left: 0.5rem; }
 
 .info-list {
-    margin: 0.5rem 0;
+    margin-top: 0.5rem;
+}
+
+.information-row {
+    display: flex;
+}
+
+.info-input-title {
+    flex: 3;
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+}
+
+.info-input-content {
+    flex: 3;
+    border-radius: unset;
+}
+
+.delete {
+    flex: 1;
+    border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
+    background-color: var(--color-btn-negative);
+}
+
+.save {
+    background-color: var(--color-btn-positive);
 }
