@@ -1,7 +1,8 @@
 #file-box {
-	position: relative;
+	display: flex;
+	flex-direction: column;
 	text-align: center;
-	line-height: 4rem;
+	line-height: 5rem;
 	border-radius: var(--border-radius-full);
 	background-color: var(--color-secondary);
 	border: 2px dashed white;
@@ -16,8 +17,6 @@
 }
 
 img {
-	position: absolute;
-	height: 3rem;
-	left: 0.5rem;
-	top: 0.5rem;
+	height: 4rem;
+	margin-top: 1rem;
 }
