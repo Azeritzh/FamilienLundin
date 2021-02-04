@@ -12,3 +12,23 @@
 <div class="description">
 	{{file.description}}
 </div>
+
+<div class="btn-container">
+	<button type="button"
+		class="edit"
+		(click)="save()">
+		Ret beskrivelse
+	</button>
+
+	<button type="button"
+		class="save"
+		(click)="save()">
+		Download
+	</button>
+
+	<button type="button"
+		class="cancel"
+		(click)="cancel()">
+		Annuller
+	</button>
+</div>
