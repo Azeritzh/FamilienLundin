@@ -57,14 +57,14 @@
 		Tilføj infolinje
 	</button>
 
-	<ul>
+	<ul class="info-list">
 		<li *ngFor="let info of information"
 			class="information-row">
-			<input type="text"
+			<input class="info-input-title" type="text"
 				[(ngModel)]="info.title"
 				placeholder="Titel"
 				autocomplete="off">
-			<input type="text"
+			<input class="info-input-content" type="text"
 				[(ngModel)]="info.content"
 				placeholder="Beskrivelse"
 				autocomplete="off">
