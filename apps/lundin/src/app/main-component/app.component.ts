@@ -1,4 +1,5 @@
 import { Component, ComponentFactoryResolver, HostBinding, OnInit, Type, ViewChild } from "@angular/core"
+import { Router } from "@angular/router"
 import { first } from "rxjs/operators"
 import { OverlayHostDirective } from "../directives/overlay-host.directive"
 import { AuthService } from "../services/auth.service"
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
 		public authService: AuthService,
 		private componentFactoryResolver: ComponentFactoryResolver,
 		private navigationService: NavigationService,
+		private router: Router,
 	) {
 		this.navigationService.overlay$.subscribe(({ component, init }) => {
 			this.overlayHost.viewContainerRef.clear()
@@ -76,6 +78,11 @@ export class AppComponent implements OnInit {
 	shownNavigationEntries() {
 		const isLoggedIn = this.authService.isLoggedIn()
 		return this.navigationEntries.filter(x => x.mustBeLoggedIn ? isLoggedIn : true)
+	}
+
+	async logout(){
+		await this.authService.logout()
+		this.router.navigateByUrl("/")
 	}
 }
 

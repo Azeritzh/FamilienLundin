@@ -22,7 +22,7 @@
 		<span class="nav-text">{{entry.text}}</span>
 	</a>
 	<button *ngIf="authService.isLoggedIn()"
-		(click)="authService.logout()"
+		(click)="logout()"
 		class="nav-btn logout-btn">
 		<img src="/assets/images/icons/LogOut_icon.svg">
 		<span class="nav-text">Log ud</span>
