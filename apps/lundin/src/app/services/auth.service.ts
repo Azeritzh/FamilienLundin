@@ -30,7 +30,7 @@ export class AuthService {
 	}
 
 	private isCurrent(loginInfo: AuthResponse) {
-		return this.secondsToExpiration(loginInfo.expiration) <= 0
+		return 0 < this.secondsToExpiration(loginInfo.expiration)
 	}
 
 	private secondsToExpiration(expiration: number = this.loginInfo.expiration) {
@@ -71,7 +71,7 @@ export class AuthService {
 				console.log("failed login: " + JSON.stringify(error))
 				return null
 			})
-		this.onRefreshResponse.next(true)
+		this.onRefreshResponse.next(this.isLoggedIn())
 		if (this.isLoggedIn())
 			this.handleSuccessfulLogin(wasLoggedIn)
 	}
