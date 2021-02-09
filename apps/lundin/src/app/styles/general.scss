@@ -7,6 +7,8 @@ body {
 	background-color: var(--color-background);
 }
 
+/* Custom styling for buttons */
+
 button {
 	background-color: var(--color-btn-neutral);
 	height: 2rem;
@@ -40,6 +42,8 @@ button:disabled {
 .btn-negative:hover {
 	background-color: var(--color-btn-negative-hover);
 }
+
+/* Styling for inputs, textareas, select and labels */
 
 input, textarea, select {
 	height: 2rem;
@@ -98,6 +102,8 @@ header.container-header {
 	text-shadow: -1px 1px 0 white, 1px 1px 0 white, 1px -1px 0 white, -1px -1px 0 white;
 	transition: var(--standard-transition);
 }
+
+/* Custom styling for scrollbars */
 
 .scroll-container {
     overflow-y: scroll;
