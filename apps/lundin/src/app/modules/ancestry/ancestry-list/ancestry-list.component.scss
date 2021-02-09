@@ -1,3 +1,5 @@
+@import "../../../styles/general.scss";
+
 .container-box {
 	border: 1px solid var(--color-primary);
 	border-radius: var(--border-radius-full);
@@ -53,27 +55,6 @@
 }
 
 .scroll-list-container {
-	height: calc(100vh - 15.5rem);
-	overflow-y: scroll;
-	width: calc(100% - 0.5rem);
-	margin-top: 0.5rem;
-}
-
-.scroll-list-container::-webkit-scrollbar-track
-{
-	border-radius: var(--border-radius-full);
-	border: 1px solid var(--color-primary);
-	background-color: white;
-}
-
-.scroll-list-container::-webkit-scrollbar
-{
-	width: 1rem;
-	background-color: white;
-}
-
-.scroll-list-container::-webkit-scrollbar-thumb
-{
-	border-radius: var(--border-radius-full);
-	background-color: var(--color-btn-neutral);
+	@extend .scroll-container;
+	height: calc(100vh - 16rem);
 }

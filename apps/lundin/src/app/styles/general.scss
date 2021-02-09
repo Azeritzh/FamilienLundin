@@ -98,3 +98,28 @@ header.container-header {
 	text-shadow: -1px 1px 0 white, 1px 1px 0 white, 1px -1px 0 white, -1px -1px 0 white;
 	transition: var(--standard-transition);
 }
+
+.scroll-container {
+    overflow-y: scroll;
+    width: calc(100% - 0.5rem);
+    margin-top: 0.5rem;
+}
+
+.scroll-container::-webkit-scrollbar-track
+{
+    border-radius: var(--border-radius-full);
+    border: 1px solid var(--color-primary);
+	background-color: white;
+}
+
+.scroll-container::-webkit-scrollbar
+{
+	width: 1rem;
+	background-color: white;
+}
+
+.scroll-container::-webkit-scrollbar-thumb
+{
+	border-radius: var(--border-radius-full);
+	background-color: var(--color-btn-neutral);
+}
