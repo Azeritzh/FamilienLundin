@@ -129,3 +129,12 @@ header.container-header {
 	border-radius: var(--border-radius-full);
 	background-color: var(--color-btn-neutral);
 }
+
+/* Various */
+
+.container-box {
+	border: 1px solid var(--color-primary);
+	border-radius: var(--border-radius-full);
+	padding-bottom: 0.5rem;
+	background-color: white;
+}
