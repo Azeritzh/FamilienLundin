@@ -1,0 +1,15 @@
+[markdown] h1 {
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+[markdown] h2 {
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+
+[markdown] em { font-weight: bold; }
+[markdown] a {
+	text-decoration: underline;
+	color: var(--color-btn-neutral);
+}
