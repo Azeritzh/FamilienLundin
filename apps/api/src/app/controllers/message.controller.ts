@@ -9,7 +9,7 @@ export class MessageController {
 	constructor(private readonly storageService: StorageService) { }
 
 	@UseGuards(JwtAuthGuard)
-	@Get("getThreads")
+	@Get("get-threads")
 	async getThreads(@Req() request: RequestWithUser) {
 		const userId = request.user._id
 		const threads = this.storageService.messageCollection.find()
@@ -21,22 +21,34 @@ export class MessageController {
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Post("addThread")
+	@Post("add-thread")
 	async addThread(@Req() request: RequestWithUser, @Body() thread: MessageThread) {
 		thread.authorId = request.user._id
 		return this.storageService.messageCollection.insertOne(thread)
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Post("getFullThread")
+	@Post("get-full-thread")
 	async getFullThread(@Body() message: { threadId: number }) {
 		return this.storageService.messageCollection.findOne({ _id: message.threadId })
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Post("addResponse")
+	@Post("add-response")
 	async addResponse(@Req() request: RequestWithUser, @Body() message: { threadId: number, message: Message }) {
 		message.message.authorId = request.user._id
 		return this.storageService.messageCollection.updateOne({ _id: message.threadId }, x => x.responses.push(message.message))
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post("update-thread")
+	async updateThread(@Body() message: { threadId: number, title: string, content: string }) {
+		return this.storageService.messageCollection.updateOne(
+			{ _id: message.threadId },
+			x => {
+				x.title = message.title
+				x.content = message.content
+			}
+		)
 	}
 }

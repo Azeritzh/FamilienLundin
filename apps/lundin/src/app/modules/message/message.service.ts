@@ -7,18 +7,22 @@ export class MessageService {
 	constructor(private httpClient: HttpClient) { }
 
 	getThreads() {
-		return this.httpClient.get<MessageThread[]>("api/message/getThreads").toPromise()
+		return this.httpClient.get<MessageThread[]>("api/message/get-threads").toPromise()
 	}
 
 	addThread(thread: MessageThread){
-		return this.httpClient.post<MessageThread>("api/message/addThread", thread).toPromise()
+		return this.httpClient.post<MessageThread>("api/message/add-thread", thread).toPromise()
 	}
 
 	getFullThread(threadId: number) {
-		return this.httpClient.post<MessageThread>("api/message/getFullThread", { threadId }).toPromise()
+		return this.httpClient.post<MessageThread>("api/message/get-full-thread", { threadId }).toPromise()
 	}
 
 	addResponse(threadId: number, message: Message) {
-		return this.httpClient.post("api/message/addResponse", { threadId, message }).toPromise()
+		return this.httpClient.post("api/message/add-response", { threadId, message }).toPromise()
+	}
+
+	updateThread(threadId: number, title: string, content: string) {
+		return this.httpClient.post("api/message/update-thread", { threadId, title, content }).toPromise()
 	}
 }
