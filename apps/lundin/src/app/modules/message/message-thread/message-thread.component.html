@@ -21,7 +21,7 @@
 					{{thread.creationTime | date}}
 				</div>
 			</div>
-			<div class="thread-content">{{thread.content}}</div>
+			<div markdown [data]="thread.content" class="thread-content"></div>
 		</section>
 		<section class="responses">
 			<div *ngFor="let response of thread.responses"

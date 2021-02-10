@@ -23,7 +23,7 @@
             "aot": true,
             "assets": ["apps/lundin/src/favicon.ico", "apps/lundin/src/assets"],
             "styles": ["apps/lundin/src/styles.scss"],
-            "scripts": []
+            "scripts": ["node_modules/marked/lib/marked.js"]
           },
           "configurations": {
             "production": {

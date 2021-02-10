@@ -1,6 +1,7 @@
 import { HttpClientModule } from "@angular/common/http"
 import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
+import { MarkdownModule } from "ngx-markdown"
 import { SharedModule } from "../../shared/shared.module"
 import { AddMessageComponent } from "./add-message/add-message.component"
 import { EditMessageComponent } from "./edit-message/edit-message.component"
@@ -18,6 +19,7 @@ import { MessageService } from "./message.service"
 	imports: [
 		BrowserModule,
 		HttpClientModule,
+		MarkdownModule.forRoot(),
 		SharedModule,
 	],
 	providers: [MessageService],
