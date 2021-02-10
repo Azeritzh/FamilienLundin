@@ -6,6 +6,11 @@
 				(click)="addResponse()">
 				Opret svar
 			</button>
+			<button *ngIf="canEdit()"
+				type="button"
+				(click)="editThread()">
+				Redigér
+			</button>
 		</header>
 		<section class="thread-subject">
 			<div class="thread-subheading">
