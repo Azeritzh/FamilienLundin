@@ -1,0 +1,24 @@
+<h1>Redigér besked</h1>
+
+<div class="content-container">
+	<input type="text"
+		[(ngModel)]="title"
+		id="title"
+		placeholder="Titel"
+		autocomplete="off">
+	
+	<textarea type="text"
+		[(ngModel)]="content"
+		id="content"
+		placeholder="Indhold"
+		autocomplete="off">
+	</textarea>
+</div>
+
+<div class="btn-container">
+	<button type="button"
+		(click)="updateMessage()"
+		[disabled]="!content || !title">
+		Gem ændringer
+	</button>
+</div>

@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
 import { SharedModule } from "../../shared/shared.module"
 import { AddMessageComponent } from "./add-message/add-message.component"
+import { EditMessageComponent } from "./edit-message/edit-message.component"
 import { MessageListComponent } from "./message-list/message-list.component"
 import { MessageThreadComponent } from "./message-thread/message-thread.component"
 import { MessageService } from "./message.service"
@@ -10,6 +11,7 @@ import { MessageService } from "./message.service"
 @NgModule({
 	declarations: [
 		AddMessageComponent,
+		EditMessageComponent,
 		MessageListComponent,
 		MessageThreadComponent,
 	],
@@ -21,6 +23,7 @@ import { MessageService } from "./message.service"
 	providers: [MessageService],
 	exports: [
 		AddMessageComponent,
+		EditMessageComponent,
 		MessageListComponent,
 		MessageThreadComponent,
 	],
