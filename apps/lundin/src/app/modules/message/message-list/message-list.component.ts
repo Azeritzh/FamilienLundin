@@ -22,7 +22,14 @@ export class MessageListComponent {
 		this.threads = await this.messageService.getThreads()
 	}
 
-	openThread(threadId: number){
+	openThread(threadId: number) {
 		this.router.navigateByUrl("messages/" + threadId)
+	}
+
+	firstLineOfThread(thread: MessageThread) {
+		const lines = thread.content.split("\n")
+		return lines.length > 1
+			? lines[0] + " [...]"
+			: lines[0]
 	}
 }

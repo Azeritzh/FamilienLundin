@@ -10,9 +10,7 @@
 		</div>
 	</header>
 	<section class="message-content">
-		<div class="content">
-			{{thread.content}}
-		</div>
+		<div class="content">{{firstLineOfThread(thread)}}</div>
 		<div class="author">
 			{{thread.authorId | user | async}}
 		</div>

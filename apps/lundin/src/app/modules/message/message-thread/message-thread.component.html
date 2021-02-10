@@ -16,9 +16,7 @@
 					{{thread.creationTime | date}}
 				</div>
 			</div>
-			<div class="thread-content">
-				{{thread.content}}
-			</div>
+			<div class="thread-content">{{thread.content}}</div>
 		</section>
 		<section class="responses">
 			<div *ngFor="let response of thread.responses"
@@ -32,9 +30,7 @@
 					</div>
 				</header>
 				<div class="response-content">
-					<div>
-						{{response.content}}
-					</div>
+					<div>{{response.content}}</div>
 				</div>
 			</div>
 		</section>

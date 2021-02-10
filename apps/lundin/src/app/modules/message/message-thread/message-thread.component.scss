@@ -25,7 +25,10 @@
 }
 
 .thread-author { font-weight: bold; }
-.thread-content { padding: 0.5rem; }
+.thread-content {
+	padding: 0.5rem;
+	white-space: pre;
+}
 .thread-subject { border-bottom: 1px solid var(--color-primary); }
 
 h1 {
@@ -61,6 +64,7 @@ button + .response {
 .response-content {
 	@extend .list-entry-content;
 	background-color: white;
+	white-space: pre;
 }
 
 .list-entry-content {
