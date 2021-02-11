@@ -1,0 +1,52 @@
+@import "../../styles/general.scss";
+
+.recipes-container {
+	@extend .container-box;
+	height: 100%;
+	min-width: 50rem;
+}
+
+.recipes-img-list {
+	@extend .scroll-container;
+	height: calc(100vh - 12rem);
+	padding: 0 1rem;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1rem;
+	text-align: center;
+}
+
+.recipes-list-item {
+	background-color: var(--color-secondary);
+	border-radius: var(--border-radius-full);
+	overflow: hidden;
+	height: 15rem;
+	display: flex;
+	position: relative;
+}
+
+.img-description {
+	position: absolute;
+    top: 87%;
+    width: 100%;
+    left: 0;
+    background-color: var(--color-primary);
+    padding: 0.5rem 0.2rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.search-container {
+	display: flex;
+	flex-direction: column;
+	margin: 1rem;
+}
+
+img {
+	position: relative;
+    max-height: 100%;
+    left: 50%;
+    transform: translate(-50%);
+    display: block;
+}
