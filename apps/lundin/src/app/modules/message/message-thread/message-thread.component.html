@@ -2,42 +2,49 @@
 	<section class="thread-content-container">
 		<header class="container-header">
 			<h1>{{thread.title}}</h1>
-			<button type="button"
-				(click)="addResponse()">
-				Opret svar
-			</button>
-			<button *ngIf="canEdit()"
-				type="button"
-				(click)="editThread()">
-				Redigér
-			</button>
+			<div class="btn-container">
+				<button type="button"
+					(click)="addResponse()">
+					Opret svar
+				</button>
+				<button *ngIf="canEdit()"
+					type="button"
+					(click)="editThread()">
+					Redigér
+				</button>
+			</div>
+
 		</header>
-		<section class="thread-subject">
-			<div class="thread-subheading">
-				<div class="thread-author">
-					{{thread.authorId | user | async }}
-				</div>
-				<div class="thread-date">
-					{{thread.creationTime | date}}
-				</div>
-			</div>
-			<div markdown [data]="thread.content" class="thread-content"></div>
-		</section>
-		<section class="responses">
-			<div *ngFor="let response of thread.responses"
-				class="response">
-				<header class="response-header">
-					<div class="response-author">
-						{{response.authorId | user | async}}
+		<section class="thread">
+			<section class="thread-subject">
+				<div class="thread-subheading">
+					<div class="thread-author">
+						{{thread.authorId | user | async }}
 					</div>
-					<div class="response-date">
-						{{response.creationTime | date}}
+					<div class="thread-date">
+						{{thread.creationTime | date}}
 					</div>
-				</header>
-				<div class="response-content">
-					<div>{{response.content}}</div>
 				</div>
-			</div>
+				<div markdown
+					[data]="thread.content"
+					class="thread-content"></div>
+			</section>
+			<section class="responses">
+				<div *ngFor="let response of thread.responses"
+					class="response">
+					<header class="response-header">
+						<div class="response-author">
+							{{response.authorId | user | async}}
+						</div>
+						<div class="response-date">
+							{{response.creationTime | date}}
+						</div>
+					</header>
+					<div class="response-content">
+						<div>{{response.content}}</div>
+					</div>
+				</div>
+			</section>
 		</section>
 	</section>
 </section>
