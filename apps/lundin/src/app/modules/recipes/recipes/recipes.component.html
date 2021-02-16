@@ -1,17 +1,21 @@
 <section class="recipes-container">
 	<header class="container-header">
 		<h1>Familie opskrifter (Funktionalitet ikke implementeret)</h1>
-		<button type="button">
+		<button type="button"
+			(click)="add()">
 			Tilføj ny opskrift
 		</button>
 	</header>
 
 	<section class="search-container">
-		<input type="text" placeholder="Søg i opskrifter" autocomplete="off">
+		<input type="text"
+			placeholder="Søg i opskrifter"
+			autocomplete="off">
 	</section>
 
 	<ul class="recipes-img-list">
-		<li class="recipes-list-item">
+		<li class="recipes-list-item"
+			(click)="edit()">
 			<img src="">
 			<span class="img-description">test</span>
 		</li>

@@ -13,7 +13,7 @@ import { GalleryComponent } from "./modules/gallery/gallery/gallery.component"
 import { HomeComponent } from "./pages/home/home.component"
 import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
 import { ProfileComponent } from "./pages/profile/profile.component"
-import { RecipesComponent } from "./pages/recipes/recipes.component"
+import { RecipesComponent } from "./modules/recipes/recipes/recipes.component"
 import { VariousComponent } from "./pages/various/various.component"
 import { IsAuthenticatedGuard } from "./services/is-authenticated.guard"
 
