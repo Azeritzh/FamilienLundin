@@ -86,6 +86,7 @@ header.container-header {
 	height: 0;
 	width: 0;
 	opacity: 0.7;
+	white-space: nowrap;
 	transition: var(--standard-transition);
 }
 
@@ -100,6 +101,7 @@ header.container-header {
 	width: 0;
 	font-size: 12px;
 	text-shadow: -1px 1px 0 white, 1px 1px 0 white, 1px -1px 0 white, -1px -1px 0 white;
+	white-space: nowrap;
 	transition: var(--standard-transition);
 }
 
