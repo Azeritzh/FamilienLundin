@@ -1,11 +1,7 @@
-<h1>Tilføj ny fil</h1>
+<h1>Tilføj nye billeder</h1>
 
 <div class="content-container">
 	<lundin-file-input (changeFile)="handleFile($event)"></lundin-file-input>
-	<div *ngIf="file.data"
-		class="file-display">
-		Fil: {{file.data.name}}
-	</div>
 
 	<label for="description"
 		[labelling]="descriptionInput">
@@ -14,7 +10,14 @@
 	<input #descriptionInput
 		type="text"
 		id="description"
-		(input)="file.description = $event.target.value"
+		autocomplete="off">
+	<label for="tags"
+		[labelling]="tagInput">
+		Tags
+	</label>
+	<input #tagInput
+		type="text"
+		id="tags"
 		autocomplete="off">
 </div>
 
@@ -22,7 +25,7 @@
 	<button type="button"
 		class="save"
 		(click)="save()">
-		Gem ændringer
+		Tilføj billeder
 	</button>
 
 	<button type="button"
