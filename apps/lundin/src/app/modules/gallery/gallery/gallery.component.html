@@ -2,18 +2,21 @@
 	<header class="container-header">
 		<h1>Familie billeder (Funktionalitet ikke implementeret)</h1>
 		<button type="button"
-		(click)="add()">
+			(click)="add()">
 			Tilføj nye billeder
 		</button>
 	</header>
 
 	<section class="search-container">
-		<input type="text" placeholder="Søg i billeder" autocomplete="off">
+		<input type="text"
+			placeholder="Søg i billeder"
+			autocomplete="off">
 	</section>
 
 	<ul class="gallery-img-list">
-		<li class="gallery-list-item">
-			<img src="">
+		<li class="gallery-list-item"
+			(click)="edit()">
+			<img [src]="">
 			<span class="img-description">test</span>
 		</li>
 	</ul>
