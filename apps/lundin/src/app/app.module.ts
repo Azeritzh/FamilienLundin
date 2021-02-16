@@ -19,13 +19,13 @@ import { HomeComponent } from "./pages/home/home.component"
 import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
 import { LoginComponent } from "./pages/login/login.component"
 import { ProfileComponent } from "./pages/profile/profile.component"
-import { RecipesComponent } from "./pages/recipes/recipes.component"
 import { VariousComponent } from "./pages/various/various.component"
 import { AuthService } from "./services/auth.service"
 import { IsAuthenticatedGuard } from "./services/is-authenticated.guard"
 import { NavigationService } from "./services/navigation.service"
 import { UserService } from "./services/user.service"
 import { SharedModule } from "./shared/shared.module"
+import { RecipesModule } from "./modules/recipes/recipes.module"
 
 @NgModule({
 	declarations: [
@@ -36,7 +36,6 @@ import { SharedModule } from "./shared/shared.module"
 		IframeGameComponent,
 		LoginComponent,
 		ProfileComponent,
-		RecipesComponent,
 		VariousComponent,
 		OverlayHostDirective,
 	],
@@ -48,6 +47,7 @@ import { SharedModule } from "./shared/shared.module"
 		CryptModule,
 		FormsModule,
 		GalleryModule,
+		RecipesModule,
 		HttpClientModule,
 		MessageModule,
 		MinestrygerModule,

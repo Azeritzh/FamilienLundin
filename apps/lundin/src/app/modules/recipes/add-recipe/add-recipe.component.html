@@ -1,0 +1,36 @@
+<h1>Tilføj nye billeder</h1>
+
+<div class="content-container">
+	<lundin-file-input></lundin-file-input>
+
+	<label for="description"
+		[labelling]="descriptionInput">
+		Beskrivelse
+	</label>
+	<input #descriptionInput
+		type="text"
+		id="description"
+		autocomplete="off">
+	<label for="tags"
+		[labelling]="tagInput">
+		Tags
+	</label>
+	<input #tagInput
+		type="text"
+		id="tags"
+		autocomplete="off">
+</div>
+
+<div class="btn-container">
+	<button type="button"
+		class="save"
+		(click)="save()">
+		Tilføj billeder
+	</button>
+
+	<button type="button"
+		class="cancel"
+		(click)="cancel()">
+		Annuller
+	</button>
+</div>
