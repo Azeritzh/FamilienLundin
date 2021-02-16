@@ -9,7 +9,7 @@ import { NoughtsAndCrossesComponent } from "./modules/noughts-and-crosses/nought
 import { VirusComponent } from "./modules/virus/virus.component"
 import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
-import { GalleryComponent } from "./pages/gallery/gallery.component"
+import { GalleryComponent } from "./modules/gallery/gallery/gallery.component"
 import { HomeComponent } from "./pages/home/home.component"
 import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
 import { ProfileComponent } from "./pages/profile/profile.component"

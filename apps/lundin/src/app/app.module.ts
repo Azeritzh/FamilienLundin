@@ -8,13 +8,13 @@ import { AppComponent } from "./main-component/app.component"
 import { AncestryModule } from "./modules/ancestry/ancestry.module"
 import { CalendarModule } from "./modules/calendar/calendar.module"
 import { CryptModule } from "./modules/crypt/crypt.module"
+import { GalleryModule } from "./modules/gallery/gallery.module"
 import { MessageModule } from "./modules/message/message.module"
 import { MinestrygerModule } from "./modules/minestryger/minestryger.module"
 import { NoughtsAndCrossesModule } from "./modules/noughts-and-crosses/noughts-and-crosses.module"
 import { VirusModule } from "./modules/virus/virus.module"
 import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
-import { GalleryComponent } from "./pages/gallery/gallery.component"
 import { HomeComponent } from "./pages/home/home.component"
 import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
 import { LoginComponent } from "./pages/login/login.component"
@@ -32,7 +32,6 @@ import { SharedModule } from "./shared/shared.module"
 		AncestryComponent,
 		AppComponent,
 		CalendarComponent,
-		GalleryComponent,
 		HomeComponent,
 		IframeGameComponent,
 		LoginComponent,
@@ -48,6 +47,7 @@ import { SharedModule } from "./shared/shared.module"
 		CalendarModule,
 		CryptModule,
 		FormsModule,
+		GalleryModule,
 		HttpClientModule,
 		MessageModule,
 		MinestrygerModule,
