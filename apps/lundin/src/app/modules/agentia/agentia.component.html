@@ -58,7 +58,7 @@
 			<textarea id="setupText"
 				[(ngModel)]="setupText"
 				autocomplete="off">
-		</textarea>
+			</textarea>
 		</div>
 
 		<div class="code-setting">
@@ -66,7 +66,7 @@
 			<textarea id="updateText"
 				[(ngModel)]="updateText"
 				autocomplete="off">
-		</textarea>
+			</textarea>
 		</div>
 
 		<div class="code-setting">
@@ -74,7 +74,7 @@
 			<textarea id="agentSetupText"
 				[(ngModel)]="agentSetupText"
 				autocomplete="off">
-		</textarea>
+			</textarea>
 		</div>
 
 		<div class="code-setting">
@@ -82,7 +82,15 @@
 			<textarea id="agentUpdateText"
 				[(ngModel)]="agentUpdateText"
 				autocomplete="off">
-		</textarea>
+			</textarea>
+		</div>
+
+		<div class="code-setting">
+			<label for="clickText">Klik</label>
+			<textarea id="clickText"
+				[(ngModel)]="clickText"
+				autocomplete="off">
+			</textarea>
 		</div>
 
 		<div class="setting">
@@ -96,6 +104,7 @@
 </div>
 
 <div class="game-area">
-	<canvas #canvas>
+	<canvas #canvas
+	(click)="clickCanvas($event)">
 	</canvas>
 </div>

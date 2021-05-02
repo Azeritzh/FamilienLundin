@@ -23,6 +23,9 @@ const temp = state.newWorld
 state.newWorld = state.world
 state.world = temp
 `,
+		click: `const current = state.world.get(Math.floor(x), Math.floor(y))
+state.world.set(Math.floor(x), Math.floor(y), current ? 0 : 1)
+`,
 	}
 	static Boids = {
 		setup: `config.numberOfBoids = 100
@@ -120,6 +123,9 @@ limitSpeed()
 const nearestFew = agentsWithDistance.slice(1, 5)
 
 agent.orientation = agent.velocity.angle()
+`,
+		click: `const agent = state.newAgent(config)
+agent.position.set(x, y)
 `,
 	}
 }

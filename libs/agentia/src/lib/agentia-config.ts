@@ -8,5 +8,6 @@ export class Config {
 		public update: (state: State, config: Config) => void = () => { return },
 		public agentSetup: (agent: Agent, state: State, config: Config, parameters: { [index: string]: any }) => void = () => { return },
 		public agentUpdate: (agent: Agent, state: State, config: Config) => void = () => { return },
+		public click: (x: number, y: number, state: State, config: Config) => void = () => { return },
 	) { }
 }

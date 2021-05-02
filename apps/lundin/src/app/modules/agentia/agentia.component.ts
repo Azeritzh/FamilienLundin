@@ -22,6 +22,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	updateText = ""
 	agentSetupText = ""
 	agentUpdateText = ""
+	clickText = ""
 
 	constructor(
 		private ngZone: NgZone
@@ -117,8 +118,23 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		this.updateCanvasSize()
 	}
 
+	clickCanvas(event: MouseEvent) {
+		event.preventDefault()
+		const { x, y } = this.gridPositionFromMousePosition(event)
+		this.game.config.click(x, y, this.game.state, this.game.config)
+	}
+
+	private gridPositionFromMousePosition(event: MouseEvent) {
+		const rect = this.canvas.getBoundingClientRect()
+		const mx = event.clientX - rect.left
+		const my = event.clientY - rect.top
+		const x = mx / this.fieldSize
+		const y = my / this.fieldSize
+		return { x: x, y: y }
+	}
+
 	updateCode() {
-		this.game.updateConfig(this.setupText, this.updateText, this.agentSetupText, this.agentUpdateText)
+		this.game.updateConfig(this.setupText, this.updateText, this.agentSetupText, this.agentUpdateText, this.clickText)
 		this.game.setup()
 	}
 
@@ -128,6 +144,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		this.updateText = preset.update
 		this.agentSetupText = ""
 		this.agentUpdateText = ""
+		this.clickText = preset.click
 		this.updateCode()
 	}
 
@@ -137,6 +154,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		this.updateText = ""
 		this.agentSetupText = preset.agentSetup
 		this.agentUpdateText = preset.agentUpdate
+		this.clickText = preset.click
 		this.updateCode()
 	}
 }

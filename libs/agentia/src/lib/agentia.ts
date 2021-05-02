@@ -41,6 +41,7 @@ export class Agentia {
 		update: string = null,
 		agentSetup: string = null,
 		agentUpdate: string = null,
+		click: string = null,
 	) {
 		if (setup)
 			this.updateSetup(setup)
@@ -50,6 +51,8 @@ export class Agentia {
 			this.updateAgentSetup(agentSetup)
 		if (agentUpdate)
 			this.updateAgentUpdate(agentUpdate)
+		if (click)
+			this.updateClick(click)
 	}
 
 	private updateSetup(code: string) {
@@ -70,5 +73,10 @@ export class Agentia {
 	private updateAgentUpdate(code: string) {
 		code = "'use strict'; return function(agent, state, config){" + code + "}"
 		this.config.agentUpdate = Function(code)()
+	}
+
+	private updateClick(code: string) {
+		code = "'use strict'; return function(x, y, state, config){" + code + "}"
+		this.config.click = Function(code)()
 	}
 }
