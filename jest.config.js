@@ -9,5 +9,6 @@ module.exports = {
     "<rootDir>/libs/utility",
     "<rootDir>/libs/minestryger",
     "<rootDir>/libs/meld",
+    "<rootDir>/libs/agentia",
   ],
 }

@@ -1,0 +1,105 @@
+<div class="settings-area">
+	<h1>Indstillinger</h1>
+
+	<div class="setting">
+		<button type="button"
+			(click)="useGameOfLifePreset()">
+			Game of Life
+		</button>
+	</div>
+
+	<div class="setting">
+		<label for="width">Vidde</label>
+		<input id="width"
+			type="number"
+			[ngModel]="game.config.width"
+			(ngModelChange)="updateWidth($event);"
+			min="2"
+			max="9999"
+			autocomplete="off">
+	</div>
+
+	<div class="setting">
+		<label for="height">Højde</label>
+		<input id="height"
+			type="number"
+			[ngModel]="game.config.height"
+			(ngModelChange)="updateHeight($event)"
+			min="2"
+			max="9999"
+			autocomplete="off">
+	</div>
+
+	<div class="setting">
+		<button type="button"
+			(click)="showSetupText = !showSetupText">
+			showSetupText
+		</button>
+	</div>
+	<div *ngIf="showSetupText"
+		class="code-setting">
+		<label for="setupText">setupText</label>
+		<textarea id="setupText"
+			[(ngModel)]="setupText"
+			autocomplete="off">
+		</textarea>
+	</div>
+
+	<div class="setting">
+		<button type="button"
+			(click)="showUpdateText = !showUpdateText">
+			showUpdateText
+		</button>
+	</div>
+	<div *ngIf="showUpdateText"
+		class="code-setting">
+		<label for="updateText">updateText</label>
+		<textarea id="updateText"
+			[(ngModel)]="updateText"
+			autocomplete="off">
+		</textarea>
+	</div>
+
+	<div class="setting">
+		<button type="button"
+			(click)="showAgentSetupText = !showAgentSetupText">
+			showAgentSetupText
+		</button>
+	</div>
+	<div *ngIf="showAgentSetupText"
+		class="code-setting">
+		<label for="agentSetupText">agentSetupText</label>
+		<textarea id="agentSetupText"
+			[(ngModel)]="agentSetupText"
+			autocomplete="off">
+		</textarea>
+	</div>
+
+	<div class="setting">
+		<button type="button"
+			(click)="showAgentUpdateText = !showAgentUpdateText">
+			showAgentUpdateText
+		</button>
+	</div>
+	<div *ngIf="showAgentUpdateText"
+		class="code-setting">
+		<label for="agentUpdateText">agentUpdateText</label>
+		<textarea id="agentUpdateText"
+			[(ngModel)]="agentUpdateText"
+			autocomplete="off">
+		</textarea>
+	</div>
+
+	<div class="setting">
+		<button type="button"
+			(click)="updateCode()">
+			Opdater kode
+		</button>
+	</div>
+
+</div>
+
+<div class="game-area">
+	<canvas #canvas>
+	</canvas>
+</div>

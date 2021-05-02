@@ -22,7 +22,8 @@
       "@lundin/virus": ["libs/virus/src/index.ts"],
       "@lundin/utility": ["libs/utility/src/index.ts"],
       "@lundin/minestryger": ["libs/minestryger/src/index.ts"],
-      "@lundin/meld": ["libs/meld/src/index.ts"]
+      "@lundin/meld": ["libs/meld/src/index.ts"],
+      "@lundin/agentia": ["libs/agentia/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

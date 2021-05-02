@@ -316,6 +316,28 @@
         }
       },
       "schematics": {}
+    },
+    "agentia": {
+      "projectType": "library",
+      "root": "libs/agentia",
+      "sourceRoot": "libs/agentia/src",
+      "prefix": "lundin",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/agentia/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/agentia/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {

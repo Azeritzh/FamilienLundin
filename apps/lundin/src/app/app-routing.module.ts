@@ -16,6 +16,7 @@ import { ProfileComponent } from "./pages/profile/profile.component"
 import { RecipesComponent } from "./modules/recipes/recipes/recipes.component"
 import { VariousComponent } from "./pages/various/various.component"
 import { IsAuthenticatedGuard } from "./services/is-authenticated.guard"
+import { AgentiaComponent } from "./modules/agentia/agentia.component"
 
 const routes: Routes = [
 	{ path: "", component: HomeComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
 	{ path: "profile", component: ProfileComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "recipes", component: RecipesComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "various", component: VariousComponent },
+	{ path: "various/agentia", component: AgentiaComponent },
 	{ path: "various/crypt", component: CryptComponent, canActivate: [IsAuthenticatedGuard] },
 ]
 

@@ -9,6 +9,7 @@ import { AuthService } from "../../services/auth.service"
 export class VariousComponent {
 	tools: Entry[] = [
 		{ title: "Krypt", link: "/various/crypt", mustBeLoggedIn: true },
+		{ title: "Agentia", link: "/various/agentia" },
 		{ title: "Game of Life", link: "/games/iframe/game-of-life" },
 	]
 

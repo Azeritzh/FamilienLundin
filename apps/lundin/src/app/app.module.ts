@@ -26,6 +26,7 @@ import { NavigationService } from "./services/navigation.service"
 import { UserService } from "./services/user.service"
 import { SharedModule } from "./shared/shared.module"
 import { RecipesModule } from "./modules/recipes/recipes.module"
+import { AgentiaModule } from "./modules/agentia/agentia.module"
 
 @NgModule({
 	declarations: [
@@ -40,6 +41,7 @@ import { RecipesModule } from "./modules/recipes/recipes.module"
 		OverlayHostDirective,
 	],
 	imports: [
+		AgentiaModule,
 		AncestryModule,
 		AppRoutingModule,
 		BrowserModule,
