@@ -17,6 +17,10 @@ export class Vector2 {
 		return new Vector2(this.x + vector.x, this.y + vector.y)
 	}
 
+	subtract(vector: Vector2) {
+		return new Vector2(this.x - vector.x, this.y - vector.y)
+	}
+
 	multiply(factor: number) {
 		return new Vector2(this.x * factor, this.y * factor)
 	}
@@ -25,6 +29,10 @@ export class Vector2 {
 		return new Vector2(
 			this.x * Math.cos(angle) - this.y * Math.sin(angle),
 			this.x * Math.sin(angle) + this.y * Math.cos(angle))
+	}
+
+	angle() {
+		return Math.atan2(this.y, this.x)
 	}
 
 	lengthSquared() {

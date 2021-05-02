@@ -140,7 +140,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		this.setupText = preset.setup
 		this.updateText = ""
 		this.agentSetupText = preset.agentSetup
-		this.agentUpdateText = ""
+		this.agentUpdateText = preset.agentUpdate
 		this.updateCode()
 	}
 }
