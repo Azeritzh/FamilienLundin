@@ -14,8 +14,9 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	}
 	private context: CanvasRenderingContext2D
 	private timerId: number
-	fieldSize = 20
+	private fieldSize = 4
 
+	showAdvancedSettings = false
 	setupText = ""
 	showSetupText = false
 	updateText = ""
@@ -26,7 +27,9 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	showAgentUpdateText = false
 
 	ngOnInit() {
-		this.startGame()
+		this.resetCanvas()
+		this.game.setup()
+		this.drawEverything()
 		this.timerId = window.setInterval(this.step, 500)
 	}
 
@@ -34,37 +37,14 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		window.clearInterval(this.timerId)
 	}
 
-	restart() {
-		this.game = new Agentia()
-	}
-
-	startGame() {
-		//
-		this.resetCanvas()
-		this.drawEverything()
-	}
-
-	resetCanvas() {
-		this.sizeToArea()
+	private resetCanvas() {
+		this.sizeToWindow()
 		this.context = this.canvas.getContext("2d")
-		this.canvas.width = this.game.config.width * this.fieldSize
-		this.canvas.height = this.game.config.height * this.fieldSize
 		this.context.fillStyle = "black"
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 	}
 
-	private sizeToArea() {
-		const width = window.innerWidth / 2
-		const height = window.innerHeight / 2
-		const horisontalFields = Math.max(this.game.config.width, 5)
-		const verticalFields = Math.max(this.game.config.height, 5)
-		const horisontalFieldSize = Math.floor(width / horisontalFields)
-		const verticalFieldSize = Math.floor(height / verticalFields)
-		this.fieldSize = Math.min(horisontalFieldSize, verticalFieldSize)
-		this.fieldSize = Math.max(this.fieldSize, 15)
-	}
-
-	drawEverything() {
+	private drawEverything() {
 		for (const { x, y, field } of this.game.state.world.allFields())
 			this.drawField(x, y, field)
 		for (const agent of this.game.state.agents)
@@ -72,14 +52,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	}
 
 	private drawField(x: number, y: number, field: any) {
-		if (!this.game.state.world.isWithinBounds(x, y))
-			return
-		const color = field ? "black" : "white"
-		this.drawBox(x, y, color)
-	}
-
-	private drawBox(x: number, y: number, color: string,) {
-		this.context.fillStyle = color
+		this.context.fillStyle = field ? "black" : "white"
 		this.context.fillRect(this.fieldSize * x, this.fieldSize * y, this.fieldSize, this.fieldSize)
 	}
 
@@ -89,6 +62,20 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		// TODO
 	}
 
+	sizeToWindow() {
+		const availableWidth = this.canvasElement.nativeElement.parentElement.clientWidth
+		const availableHeight = this.canvasElement.nativeElement.parentElement.clientHeight
+		this.game.config.width = Math.floor(availableWidth / 4)
+		this.game.config.height = Math.floor(availableHeight / 4)
+		this.fieldSize = 4
+		this.updateCanvasSize()
+	}
+
+	private updateCanvasSize() {
+		this.canvas.width = this.game.config.width * this.fieldSize
+		this.canvas.height = this.game.config.height * this.fieldSize
+	}
+
 	private step = () => {
 		this.game.update()
 		this.drawEverything()
@@ -96,10 +83,21 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 
 	updateWidth(width: number) {
 		this.game.resize(width, this.game.config.height)
+		this.updateFieldSize()
 	}
 
 	updateHeight(height: number) {
 		this.game.resize(this.game.config.width, height)
+		this.updateFieldSize()
+	}
+
+	private updateFieldSize() {
+		const availableWidth = this.canvasElement.nativeElement.parentElement.clientWidth
+		const availableHeight = this.canvasElement.nativeElement.parentElement.clientHeight
+		const horisontalFieldSize = Math.floor(availableWidth / this.game.config.width)
+		const verticalFieldSize = Math.floor(availableHeight / this.game.config.height)
+		this.fieldSize = Math.max(Math.min(horisontalFieldSize, verticalFieldSize), 4)
+		this.updateCanvasSize()
 	}
 
 	updateCode() {

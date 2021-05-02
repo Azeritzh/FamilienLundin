@@ -21,6 +21,7 @@ export class Agentia {
 	}
 
 	setup() {
+		this.state.world = new GameGrid<any>(this.config.width, this.config.height, () => 0)
 		this.config.setup(this.state, this.config)
 	}
 
