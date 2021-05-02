@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core"
+import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { Agentia, AgentiaPresets, Agent } from "@lundin/agentia"
 import { Vector2 } from "@lundin/utility"
 
@@ -27,11 +27,17 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	agentUpdateText = ""
 	showAgentUpdateText = false
 
+	constructor(
+		private ngZone: NgZone
+	) { }
+
 	ngOnInit() {
 		this.resetCanvas()
 		this.game.setup()
 		this.drawEverything()
-		this.timerId = window.setInterval(this.step, 200)
+		this.ngZone.runOutsideAngular(() =>
+			this.timerId = window.setInterval(this.step, 100)
+		)
 	}
 
 	ngOnDestroy() {
@@ -41,11 +47,13 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	private resetCanvas() {
 		this.sizeToWindow()
 		this.context = this.canvas.getContext("2d")
-		this.context.fillStyle = "black"
+		this.context.fillStyle = "white"
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 	}
 
 	private drawEverything() {
+		this.context.fillStyle = "white"
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 		for (const { x, y, field } of this.game.state.world.allFields())
 			this.drawField(x, y, field)
 		for (const agent of this.game.state.agents)
@@ -53,6 +61,8 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	}
 
 	private drawField(x: number, y: number, field: any) {
+		if (!field)
+			return
 		this.context.fillStyle = field ? "black" : "white"
 		this.context.fillRect(this.fieldSize * x, this.fieldSize * y, this.fieldSize, this.fieldSize)
 	}
