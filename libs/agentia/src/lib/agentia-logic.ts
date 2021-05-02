@@ -1,6 +1,6 @@
 import { GameLogic } from "@lundin/age"
 import { Config } from "./agentia-config"
-import { State } from "./agentia-state"
+import { Agent, State } from "./agentia-state"
 
 
 export class UpdateWorldLogic implements GameLogic<any> {
@@ -25,3 +25,19 @@ export class UpdateAgentsLogic implements GameLogic<any> {
 			this.config.agentUpdate(agent, this.state, this.config)
 	}
 }
+
+export class MoveLogic implements GameLogic<any> {
+	constructor(private state: State) { }
+
+	update() {
+		for (const agent of this.state.agents)
+			this.moveAgent(agent)
+	}
+
+	private moveAgent(agent: Agent) {
+		if (agent.velocity.lengthSquared() === 0)
+			return
+		agent.position = agent.position.add(agent.velocity)
+	}
+}
+

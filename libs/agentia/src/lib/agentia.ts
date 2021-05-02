@@ -1,6 +1,6 @@
 import { AgEngine, GameGrid } from "@lundin/age"
 import { Config } from "./agentia-config"
-import { UpdateAgentsLogic, UpdateWorldLogic } from "./agentia-logic"
+import { MoveLogic, UpdateAgentsLogic, UpdateWorldLogic } from "./agentia-logic"
 import { State } from "./agentia-state"
 
 export class Agentia {
@@ -14,7 +14,7 @@ export class Agentia {
 			[
 				new UpdateWorldLogic(this.config, this.state),
 				new UpdateAgentsLogic(this.config, this.state),
-				// new MoveLogic(this.config, this.state),
+				new MoveLogic(this.state),
 			],
 			[],
 			this.state)

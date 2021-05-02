@@ -1,4 +1,5 @@
 import { GameGrid, GameState } from "@lundin/age"
+import { Vector2 } from "@lundin/utility"
 import { Config } from "./agentia-config"
 
 export class State implements GameState {
@@ -24,5 +25,7 @@ export class State implements GameState {
 }
 
 export class Agent {
-
+	position = new Vector2(0, 0)
+	velocity = new Vector2(0, 0)
+	orientation = 0
 }
