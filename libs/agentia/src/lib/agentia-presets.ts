@@ -45,8 +45,7 @@ for(let i = 0; i<config.numberOfBoids; i++)
 	agent.velocity.y = 0
 	agent.velocity = agent.velocity.rotate(agent.orientation).multiply(Math.random())
 `,
-		agentUpdate: `
-let acceleration = agent.velocity.multiply(0)
+		agentUpdate: `let acceleration = agent.velocity.multiply(0)
 const agentsWithDistance = state.agents
 	.map(x => ({ distance: x.position.subtract(agent.position).lengthSquared(), agent: x}) )
 	.sort((a,b) => a.distance - b.distance)

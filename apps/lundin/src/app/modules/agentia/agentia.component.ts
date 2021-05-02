@@ -19,13 +19,9 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 
 	showAdvancedSettings = false
 	setupText = ""
-	showSetupText = false
 	updateText = ""
-	showUpdateText = false
 	agentSetupText = ""
-	showAgentSetupText = false
 	agentUpdateText = ""
-	showAgentUpdateText = false
 
 	constructor(
 		private ngZone: NgZone

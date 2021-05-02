@@ -52,60 +52,33 @@
 	</div>
 
 	<ng-container *ngIf="showAdvancedSettings">
-		<div class="setting">
-			<button type="button"
-				(click)="showSetupText = !showSetupText">
-				showSetupText
-			</button>
-		</div>
-		<div *ngIf="showSetupText"
-			class="code-setting">
-			<label for="setupText">setupText</label>
+
+		<div class="code-setting">
+			<label for="setupText">Opstart</label>
 			<textarea id="setupText"
 				[(ngModel)]="setupText"
 				autocomplete="off">
 		</textarea>
 		</div>
 
-		<div class="setting">
-			<button type="button"
-				(click)="showUpdateText = !showUpdateText">
-				showUpdateText
-			</button>
-		</div>
-		<div *ngIf="showUpdateText"
-			class="code-setting">
-			<label for="updateText">updateText</label>
+		<div class="code-setting">
+			<label for="updateText">Opdatering</label>
 			<textarea id="updateText"
 				[(ngModel)]="updateText"
 				autocomplete="off">
 		</textarea>
 		</div>
 
-		<div class="setting">
-			<button type="button"
-				(click)="showAgentSetupText = !showAgentSetupText">
-				showAgentSetupText
-			</button>
-		</div>
-		<div *ngIf="showAgentSetupText"
-			class="code-setting">
-			<label for="agentSetupText">agentSetupText</label>
+		<div class="code-setting">
+			<label for="agentSetupText">Opstart agent</label>
 			<textarea id="agentSetupText"
 				[(ngModel)]="agentSetupText"
 				autocomplete="off">
 		</textarea>
 		</div>
 
-		<div class="setting">
-			<button type="button"
-				(click)="showAgentUpdateText = !showAgentUpdateText">
-				showAgentUpdateText
-			</button>
-		</div>
-		<div *ngIf="showAgentUpdateText"
-			class="code-setting">
-			<label for="agentUpdateText">agentUpdateText</label>
+		<div class="code-setting">
+			<label for="agentUpdateText">Opdater agent</label>
 			<textarea id="agentUpdateText"
 				[(ngModel)]="agentUpdateText"
 				autocomplete="off">
