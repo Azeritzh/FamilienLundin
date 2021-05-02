@@ -24,4 +24,16 @@ state.newWorld = state.world
 state.world = temp
 `,
 	}
+	static Boids = {
+		setup: `for(let i = 0; i<20; i++)
+	state.newAgent(config)
+`,
+		agentSetup: `agent.position.x = Math.random() * 300
+	agent.position.y = Math.random() * 200
+	agent.orientation = Math.random() * Math.PI * 2
+	agent.velocity.x = 1
+	agent.velocity.y = 0
+	agent.velocity = agent.velocity.rotate(agent.orientation).multiply(Math.random())
+`,
+	}
 }

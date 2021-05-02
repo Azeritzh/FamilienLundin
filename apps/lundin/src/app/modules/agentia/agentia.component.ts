@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core"
-import { Agentia, AgentiaPresets } from "@lundin/agentia"
+import { Agentia, AgentiaPresets, Agent } from "@lundin/agentia"
+import { Vector2 } from "@lundin/utility"
 
 @Component({
 	selector: "lundin-agentia",
@@ -30,7 +31,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		this.resetCanvas()
 		this.game.setup()
 		this.drawEverything()
-		this.timerId = window.setInterval(this.step, 500)
+		this.timerId = window.setInterval(this.step, 200)
 	}
 
 	ngOnDestroy() {
@@ -56,10 +57,20 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		this.context.fillRect(this.fieldSize * x, this.fieldSize * y, this.fieldSize, this.fieldSize)
 	}
 
-	private drawAgent(agent: any) {
-		const bla = agent
-		agent = bla
-		// TODO
+	private drawAgent(agent: Agent) {
+		const forwardVector = Vector2.fromAngle(agent.orientation).multiply(2)
+		const forwardPoint = forwardVector.multiply(2).add(agent.position)
+		const leftPoint = forwardVector.rotate(2).add(agent.position)
+		const rightPoint = forwardVector.rotate(-2).add(agent.position)
+
+		this.context.strokeStyle = "black"
+		this.context.beginPath()
+		this.context.moveTo(forwardPoint.x * this.fieldSize, forwardPoint.y * this.fieldSize)
+		this.context.lineTo(leftPoint.x * this.fieldSize, leftPoint.y * this.fieldSize)
+		this.context.lineTo(rightPoint.x * this.fieldSize, rightPoint.y * this.fieldSize)
+		this.context.lineTo(forwardPoint.x * this.fieldSize, forwardPoint.y * this.fieldSize)
+		this.context.closePath()
+		this.context.stroke()
 	}
 
 	sizeToWindow() {
@@ -110,6 +121,15 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		this.setupText = preset.setup
 		this.updateText = preset.update
 		this.agentSetupText = ""
+		this.agentUpdateText = ""
+		this.updateCode()
+	}
+
+	useBoidsPreset() {
+		const preset = AgentiaPresets.Boids
+		this.setupText = preset.setup
+		this.updateText = ""
+		this.agentSetupText = preset.agentSetup
 		this.agentUpdateText = ""
 		this.updateCode()
 	}
