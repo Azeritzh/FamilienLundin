@@ -25,7 +25,17 @@ state.world = temp
 `,
 	}
 	static Boids = {
-		setup: `for(let i = 0; i<100; i++)
+		setup: `config.numberOfBoids = 100
+config.nearbyAvoidanceFactor = 20
+config.nearestToAlignWith = 5
+config.alignmentFactor = 0.2
+config.nearestToHeadFor = 10
+config.headingFactor = 0.1
+config.wallAvoidanceFactor = 5
+config.accelerationLimit = 0.5
+config.speedLimit = 3
+
+for(let i = 0; i<config.numberOfBoids; i++)
 	state.newAgent(config)
 `,
 		agentSetup: `agent.position.x = Math.random() * config.width
@@ -36,6 +46,7 @@ state.world = temp
 	agent.velocity = agent.velocity.rotate(agent.orientation).multiply(Math.random())
 `,
 		agentUpdate: `
+let acceleration = agent.velocity.multiply(0)
 const agentsWithDistance = state.agents
 	.map(x => ({ distance: x.position.subtract(agent.position).lengthSquared(), agent: x}) )
 	.sort((a,b) => a.distance - b.distance)
@@ -44,25 +55,25 @@ function avoidNearby() {
 	const nearestOne = agentsWithDistance[1]
 	const avoidanceVector = agent.position.subtract(nearestOne.agent.position)
 		.unitVector()
-		.multiply(20/nearestOne.distance)
-	agent.velocity = agent.velocity.add(avoidanceVector)
+		.multiply(config.nearbyAvoidanceFactor/nearestOne.distance)
+		acceleration = acceleration.add(avoidanceVector)
 }
 
 function alignWithNearby() {
-	const nearestFew = agentsWithDistance.slice(1, 5)
+	const nearestFew = agentsWithDistance.slice(1, config.nearestToAlignWith)
 	const averageVelocity = nearestFew
 		.map(x => x.agent.velocity.multiply(1/nearestFew.length))
 		.reduce((p, c) => p.add(c), agent.velocity.multiply(0))
-	agent.velocity = agent.velocity.multiply(0.8).add(averageVelocity.multiply(0.2))
+		acceleration = acceleration.add(averageVelocity.multiply(config.alignmentFactor))
 }
 
 function headToWithNearby() {
-	const nearestFew = agentsWithDistance.slice(1, 10)
+	const nearestFew = agentsWithDistance.slice(1, config.nearestToHeadFor)
 	const averagePosition = nearestFew
 		.map(x => x.agent.position.multiply(1/nearestFew.length))
 		.reduce((p, c) => p.add(c), agent.position.multiply(0))
 	const heading = averagePosition.subtract(agent.position).unitVector()
-	agent.velocity = agent.velocity.add(heading.multiply(0.1))
+	acceleration = acceleration.add(heading.multiply(config.headingFactor))
 }
 
 function avoidWalls() {
@@ -70,33 +81,41 @@ function avoidWalls() {
 	const distanceRight = config.width - agent.position.x
 	let horisontalAvoidance = 0
 	if(distanceLeft<20)
-		horisontalAvoidance = 5/distanceLeft
+		horisontalAvoidance = config.wallAvoidanceFactor/distanceLeft
 	else if(distanceRight<20)
-		horisontalAvoidance = -5/distanceRight
+		horisontalAvoidance = -config.wallAvoidanceFactor/distanceRight
 		
 	const distanceTop = agent.position.y
 	const distanceBottom = config.height - agent.position.y
 	let verticalAvoidance = 0
 	if(distanceTop<20)
-		verticalAvoidance = 5/distanceTop
+		verticalAvoidance = config.wallAvoidanceFactor/distanceTop
 	else if(distanceBottom<20)
-		verticalAvoidance = -5/distanceBottom
+		verticalAvoidance = -config.wallAvoidanceFactor/distanceBottom
 
 	const vector = agent.velocity.copy()
 	vector.set(horisontalAvoidance, verticalAvoidance)
-	agent.velocity = agent.velocity.add(vector)
+	acceleration = acceleration.add(vector)
+}
+
+function limitAcceleration() {
+	const lengthSquared = acceleration.lengthSquared()
+	if(lengthSquared > (config.accelerationLimit*config.accelerationLimit))
+	acceleration = acceleration.unitVector().multiply(config.accelerationLimit)
 }
 
 function limitSpeed() {
 	const lengthSquared = agent.velocity.lengthSquared()
-	if(lengthSquared > 9)
-	agent.velocity = agent.velocity.unitVector().multiply(3)
+	if(lengthSquared > (config.speedLimit * config.speedLimit))
+	agent.velocity = agent.velocity.unitVector().multiply(config.speedLimit)
 }
 
 avoidNearby()
 alignWithNearby()
 headToWithNearby()
+limitAcceleration()
 avoidWalls()
+agent.velocity = agent.velocity.add(acceleration)
 limitSpeed()
 
 const nearestFew = agentsWithDistance.slice(1, 5)
