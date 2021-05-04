@@ -1,7 +1,10 @@
 export class AgentiaPresets {
 	static GameOfLife = {
+		configure: `config.survivalCounts = [2, 3]
+config.spawnCounts = [3]
+`,
 		setup: `for(const { x, y } of state.world.allFields()) {
-	if(Math.random() > 0.5) {
+	if(Math.random() > 0.8) {
 		state.world.set(x, y, 1)
 	}
 }
@@ -12,9 +15,9 @@ state.newWorld = new state.world.constructor(config.width, config.height, () => 
 	let count = -thisField
 	for(const { field } of state.world.fieldsAround(x,y))
 		count += field
-	if(thisField && (count == 2 || count == 3))
+	if(thisField && config.survivalCounts.includes(count))
 		state.newWorld.set(x, y, 1)
-	else if(count == 3)
+	else if(config.spawnCounts.includes(count))
 		state.newWorld.set(x, y, 1)
 	else
 		state.newWorld.set(x, y, 0)

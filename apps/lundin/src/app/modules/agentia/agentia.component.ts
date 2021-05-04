@@ -140,6 +140,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		event.preventDefault()
 		const { x, y } = this.gridPositionFromMousePosition(event)
 		this.game.config.click(x, y)
+		this.drawEverything()
 	}
 
 	private gridPositionFromMousePosition(event: MouseEvent) {
