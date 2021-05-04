@@ -16,6 +16,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	private context: CanvasRenderingContext2D
 	private timerId: number
 	private fieldSize = 4
+	updateInterval = 100
 
 	showAdvancedSettings = false
 	configureText = ""
@@ -33,13 +34,29 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		this.resetCanvas()
 		this.game.setup()
 		this.drawEverything()
-		this.ngZone.runOutsideAngular(() =>
-			this.timerId = window.setInterval(this.step, 100)
-		)
+		this.startInterval()
 	}
 
 	ngOnDestroy() {
 		window.clearInterval(this.timerId)
+	}
+
+	startInterval() {
+		this.stopInterval()
+		this.ngZone.runOutsideAngular(() =>
+			this.timerId = window.setInterval(this.step, this.updateInterval)
+		)
+	}
+
+	stopInterval() {
+		if (this.timerId)
+			window.clearInterval(this.timerId)
+		this.timerId = null
+	}
+
+	setUpdateInterval(interval: number) {
+		this.updateInterval = interval >= 50 ? interval : 50
+		this.startInterval()
 	}
 
 	private resetCanvas() {

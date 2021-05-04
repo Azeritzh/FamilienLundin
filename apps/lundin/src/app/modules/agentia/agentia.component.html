@@ -45,6 +45,30 @@
 	</div>
 
 	<div class="setting">
+		<label for="interval">Opdateringsinterval</label>
+		<input id="interval"
+			type="number"
+			[ngModel]="updateInterval"
+			(ngModelChange)="setUpdateInterval($event)"
+			min="50"
+			max="5000"
+			autocomplete="off">
+	</div>
+
+	<div class="setting">
+		<button *ngIf="timerId"
+			type="button"
+			(click)="stopInterval()">
+			Stop
+		</button>
+		<button *ngIf="!timerId"
+			type="button"
+			(click)="startInterval()">
+			Start
+		</button>
+	</div>
+
+	<div class="setting">
 		<button type="button"
 			(click)="showAdvancedSettings = !showAdvancedSettings">
 			Avancerede indstillinger
