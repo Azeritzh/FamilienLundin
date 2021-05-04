@@ -1,4 +1,5 @@
 import { AgEngine, GameGrid } from "@lundin/age"
+import { Vector2 } from "@lundin/utility"
 import { Config } from "./agentia-config"
 import { MoveLogic, UpdateAgentsLogic, UpdateWorldLogic } from "./agentia-logic"
 import { State } from "./agentia-state"
@@ -12,7 +13,7 @@ export class Agentia {
 	) {
 		this.engine = new AgEngine<any>(
 			[
-				new UpdateWorldLogic(this.config, this.state),
+				new UpdateWorldLogic(this.config),
 				new UpdateAgentsLogic(this.config, this.state),
 				new MoveLogic(this.state),
 			],
@@ -23,8 +24,8 @@ export class Agentia {
 	setup() {
 		this.state.world = new GameGrid<any>(this.config.width, this.config.height, () => 0)
 		this.state.agents = []
-		this.config.configure(this.config)
-		this.config.setup(this.state, this.config)
+		this.config.configure()
+		this.config.setup()
 	}
 
 	update() {
@@ -60,32 +61,32 @@ export class Agentia {
 	}
 
 	private updateConfigure(code: string) {
-		code = "'use strict'; return function(config){" + code + "}"
-		this.config.configure = Function(code)()
+		code = "'use strict'; return function(){" + code + "}"
+		this.config.configure = Function("config", "Vector", code)(this.config, Vector2)
 	}
 
 	private updateSetup(code: string) {
-		code = "'use strict'; return function(state, config){" + code + "}"
-		this.config.setup = Function(code)()
+		code = "'use strict'; return function(){" + code + "}"
+		this.config.setup = Function("state", "config", "Vector", code)(this.state, this.config, Vector2)
 	}
 
 	private updateUpdate(code: string) {
-		code = "'use strict'; return function(state, config){" + code + "}"
-		this.config.update = Function(code)()
+		code = "'use strict'; return function(){" + code + "}"
+		this.config.update = Function("state", "config", "Vector", code)(this.state, this.config, Vector2)
 	}
 
 	private updateAgentSetup(code: string) {
-		code = "'use strict'; return function(agent, state, config, parameters){" + code + "}"
-		this.config.agentSetup = Function(code)()
+		code = "'use strict'; return function(agent, parameters){" + code + "}"
+		this.config.agentSetup = Function("state", "config", "Vector", code)(this.state, this.config, Vector2)
 	}
 
 	private updateAgentUpdate(code: string) {
-		code = "'use strict'; return function(agent, state, config){" + code + "}"
-		this.config.agentUpdate = Function(code)()
+		code = "'use strict'; return function(agent){" + code + "}"
+		this.config.agentUpdate = Function("state", "config", "Vector", code)(this.state, this.config, Vector2)
 	}
 
 	private updateClick(code: string) {
-		code = "'use strict'; return function(x, y, state, config){" + code + "}"
-		this.config.click = Function(code)()
+		code = "'use strict'; return function(x, y){" + code + "}"
+		this.config.click = Function("state", "config", "Vector", code)(this.state, this.config, Vector2)
 	}
 }

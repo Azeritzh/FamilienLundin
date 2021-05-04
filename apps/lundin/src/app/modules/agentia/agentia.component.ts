@@ -122,7 +122,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	clickCanvas(event: MouseEvent) {
 		event.preventDefault()
 		const { x, y } = this.gridPositionFromMousePosition(event)
-		this.game.config.click(x, y, this.game.state, this.game.config)
+		this.game.config.click(x, y)
 	}
 
 	private gridPositionFromMousePosition(event: MouseEvent) {
@@ -136,7 +136,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 
 	updateConfigure() {
 		this.game.updateCode(this.configureText)
-		this.game.config.configure(this.game.config)
+		this.game.config.configure()
 	}
 
 	useGameOfLifePreset() {

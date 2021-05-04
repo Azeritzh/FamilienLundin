@@ -41,14 +41,15 @@ config.speedLimit = 3
 		setup: `for(let i = 0; i<config.numberOfBoids; i++)
 	state.newAgent(config)
 `,
-		agentSetup: `agent.position.x = Math.random() * config.width
-agent.position.y = Math.random() * config.height
+		agentSetup: `agent.position = new Vector(
+	Math.random() * config.width,
+	Math.random() * config.height)
 agent.orientation = Math.random() * Math.PI * 2
-agent.velocity.x = 1
-agent.velocity.y = 0
-agent.velocity = agent.velocity.rotate(agent.orientation).multiply(Math.random())
+agent.velocity = new Vector(1, 0)
+	.rotate(agent.orientation)
+	.multiply(Math.random())
 `,
-		agentUpdate: `let acceleration = agent.velocity.multiply(0)
+		agentUpdate: `let acceleration = new Vector(0, 0)
 const agentsWithDistance = state.agents
 	.map(x => ({ distance: x.position.subtract(agent.position).lengthSquared(), agent: x}) )
 	.sort((a,b) => a.distance - b.distance)
@@ -65,7 +66,7 @@ function alignWithNearby() {
 	const nearestFew = agentsWithDistance.slice(1, config.nearestToAlignWith)
 	const averageVelocity = nearestFew
 		.map(x => x.agent.velocity.multiply(1/nearestFew.length))
-		.reduce((p, c) => p.add(c), agent.velocity.multiply(0))
+		.reduce((p, c) => p.add(c), new Vector(0, 0))
 		acceleration = acceleration.add(averageVelocity.multiply(config.alignmentFactor))
 }
 
@@ -73,7 +74,7 @@ function headToWithNearby() {
 	const nearestFew = agentsWithDistance.slice(1, config.nearestToHeadFor)
 	const averagePosition = nearestFew
 		.map(x => x.agent.position.multiply(1/nearestFew.length))
-		.reduce((p, c) => p.add(c), agent.position.multiply(0))
+		.reduce((p, c) => p.add(c), new Vector(0, 0))
 	const heading = averagePosition.subtract(agent.position).unitVector()
 	acceleration = acceleration.add(heading.multiply(config.headingFactor))
 }
@@ -82,22 +83,20 @@ function avoidWalls() {
 	const distanceLeft = agent.position.x
 	const distanceRight = config.width - agent.position.x
 	let horisontalAvoidance = 0
-	if(distanceLeft<20)
+	if(distanceLeft < 20)
 		horisontalAvoidance = config.wallAvoidanceFactor/distanceLeft
-	else if(distanceRight<20)
+	else if(distanceRight < 20)
 		horisontalAvoidance = -config.wallAvoidanceFactor/distanceRight
 		
 	const distanceTop = agent.position.y
 	const distanceBottom = config.height - agent.position.y
 	let verticalAvoidance = 0
-	if(distanceTop<20)
+	if(distanceTop < 20)
 		verticalAvoidance = config.wallAvoidanceFactor/distanceTop
-	else if(distanceBottom<20)
+	else if(distanceBottom < 20)
 		verticalAvoidance = -config.wallAvoidanceFactor/distanceBottom
 
-	const vector = agent.velocity.copy()
-	vector.set(horisontalAvoidance, verticalAvoidance)
-	acceleration = acceleration.add(vector)
+	acceleration = acceleration.add(new Vector(horisontalAvoidance, verticalAvoidance))
 }
 
 function limitAcceleration() {
