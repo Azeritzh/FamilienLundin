@@ -18,6 +18,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	private fieldSize = 4
 
 	showAdvancedSettings = false
+	configureText = ""
 	setupText = ""
 	updateText = ""
 	agentSetupText = ""
@@ -133,28 +134,32 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		return { x: x, y: y }
 	}
 
-	updateCode() {
-		this.game.updateConfig(this.setupText, this.updateText, this.agentSetupText, this.agentUpdateText, this.clickText)
-		this.game.setup()
+	updateConfigure() {
+		this.game.updateCode(this.configureText)
+		this.game.config.configure(this.game.config)
 	}
 
 	useGameOfLifePreset() {
-		const preset = AgentiaPresets.GameOfLife
-		this.setupText = preset.setup
-		this.updateText = preset.update
-		this.agentSetupText = ""
-		this.agentUpdateText = ""
-		this.clickText = preset.click
+		this.loadPreset(AgentiaPresets.GameOfLife)
 		this.updateCode()
 	}
 
 	useBoidsPreset() {
-		const preset = AgentiaPresets.Boids
-		this.setupText = preset.setup
-		this.updateText = ""
-		this.agentSetupText = preset.agentSetup
-		this.agentUpdateText = preset.agentUpdate
-		this.clickText = preset.click
+		this.loadPreset(AgentiaPresets.Boids)
 		this.updateCode()
+	}
+
+	private loadPreset(preset: any) {
+		this.configureText = preset.configure ?? ""
+		this.setupText = preset.setup ?? ""
+		this.updateText = preset.update ?? ""
+		this.agentSetupText = preset.agentSetup ?? ""
+		this.agentUpdateText = preset.agentUpdate ?? ""
+		this.clickText = preset.click ?? ""
+	}
+
+	updateCode() {
+		this.game.updateCode(this.configureText, this.setupText, this.updateText, this.agentSetupText, this.agentUpdateText, this.clickText)
+		this.game.setup()
 	}
 }

@@ -23,6 +23,7 @@ export class Agentia {
 	setup() {
 		this.state.world = new GameGrid<any>(this.config.width, this.config.height, () => 0)
 		this.state.agents = []
+		this.config.configure(this.config)
 		this.config.setup(this.state, this.config)
 	}
 
@@ -36,13 +37,16 @@ export class Agentia {
 		this.state.world = new GameGrid<any>(width, height, () => 0)
 	}
 
-	updateConfig(
+	updateCode(
+		configure: string = null,
 		setup: string = null,
 		update: string = null,
 		agentSetup: string = null,
 		agentUpdate: string = null,
 		click: string = null,
 	) {
+		if (configure)
+			this.updateConfigure(configure)
 		if (setup)
 			this.updateSetup(setup)
 		if (update)
@@ -53,6 +57,11 @@ export class Agentia {
 			this.updateAgentUpdate(agentUpdate)
 		if (click)
 			this.updateClick(click)
+	}
+
+	private updateConfigure(code: string) {
+		code = "'use strict'; return function(config){" + code + "}"
+		this.config.configure = Function(code)()
 	}
 
 	private updateSetup(code: string) {

@@ -54,6 +54,21 @@
 	<ng-container *ngIf="showAdvancedSettings">
 
 		<div class="code-setting">
+			<label for="configureText">Konfiguration</label>
+			<textarea id="configureText"
+				[(ngModel)]="configureText"
+				autocomplete="off">
+			</textarea>
+		</div>
+
+		<div class="setting">
+			<button type="button"
+				(click)="updateConfigure()">
+				Opdater konfiguration
+			</button>
+		</div>
+
+		<div class="code-setting">
 			<label for="setupText">Opstart</label>
 			<textarea id="setupText"
 				[(ngModel)]="setupText"

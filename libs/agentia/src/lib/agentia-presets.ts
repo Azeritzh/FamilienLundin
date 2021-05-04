@@ -28,25 +28,25 @@ state.world.set(Math.floor(x), Math.floor(y), current ? 0 : 1)
 `,
 	}
 	static Boids = {
-		setup: `config.numberOfBoids = 100
+		configure: `config.numberOfBoids = 100
 config.nearbyAvoidanceFactor = 20
 config.nearestToAlignWith = 5
 config.alignmentFactor = 0.2
 config.nearestToHeadFor = 10
-config.headingFactor = 0.1
+config.headingFactor = 0.2
 config.wallAvoidanceFactor = 5
 config.accelerationLimit = 0.5
 config.speedLimit = 3
-
-for(let i = 0; i<config.numberOfBoids; i++)
+`,
+		setup: `for(let i = 0; i<config.numberOfBoids; i++)
 	state.newAgent(config)
 `,
 		agentSetup: `agent.position.x = Math.random() * config.width
-	agent.position.y = Math.random() * config.height
-	agent.orientation = Math.random() * Math.PI * 2
-	agent.velocity.x = 1
-	agent.velocity.y = 0
-	agent.velocity = agent.velocity.rotate(agent.orientation).multiply(Math.random())
+agent.position.y = Math.random() * config.height
+agent.orientation = Math.random() * Math.PI * 2
+agent.velocity.x = 1
+agent.velocity.y = 0
+agent.velocity = agent.velocity.rotate(agent.orientation).multiply(Math.random())
 `,
 		agentUpdate: `let acceleration = agent.velocity.multiply(0)
 const agentsWithDistance = state.agents
