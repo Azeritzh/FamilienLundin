@@ -34,12 +34,14 @@ config.nearestToAlignWith = 5
 config.alignmentFactor = 0.2
 config.nearestToHeadFor = 10
 config.headingFactor = 0.2
+config.attractorFactor = 0.1
 config.wallAvoidanceFactor = 5
 config.accelerationLimit = 0.5
 config.speedLimit = 3
 `,
 		setup: `for(let i = 0; i<config.numberOfBoids; i++)
 	state.newAgent(config)
+state.attractor = new Vector(config.width/2, config.height/2)
 `,
 		agentSetup: `agent.position = new Vector(
 	Math.random() * config.width,
@@ -70,13 +72,18 @@ function alignWithNearby() {
 		acceleration = acceleration.add(averageVelocity.multiply(config.alignmentFactor))
 }
 
-function headToWithNearby() {
+function headToNearby() {
 	const nearestFew = agentsWithDistance.slice(1, config.nearestToHeadFor)
 	const averagePosition = nearestFew
 		.map(x => x.agent.position.multiply(1/nearestFew.length))
 		.reduce((p, c) => p.add(c), new Vector(0, 0))
 	const heading = averagePosition.subtract(agent.position).unitVector()
 	acceleration = acceleration.add(heading.multiply(config.headingFactor))
+}
+
+function headToAttractor() {
+	const heading = state.attractor.subtract(agent.position).unitVector()
+	acceleration = acceleration.add(heading.multiply(config.attractorFactor))
 }
 
 function avoidWalls() {
@@ -113,7 +120,8 @@ function limitSpeed() {
 
 avoidNearby()
 alignWithNearby()
-headToWithNearby()
+headToNearby()
+headToAttractor()
 limitAcceleration()
 avoidWalls()
 agent.velocity = agent.velocity.add(acceleration)
@@ -123,8 +131,7 @@ const nearestFew = agentsWithDistance.slice(1, 5)
 
 agent.orientation = agent.velocity.angle()
 `,
-		click: `const agent = state.newAgent(config)
-agent.position.set(x, y)
+		click: `state.attractor = new Vector(x, y)
 `,
 	}
 }
