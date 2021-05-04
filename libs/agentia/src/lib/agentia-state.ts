@@ -12,7 +12,7 @@ export class State implements GameState {
 
 	newAgent(config: Config, parameters: { [index: string]: any }) {
 		const agent = new Agent()
-		config.agentSetup(agent, this, config, parameters)
+		config.agentSetup(agent, parameters)
 		this.agents.push(agent)
 		return agent
 	}

@@ -14,7 +14,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 		return this.canvasElement.nativeElement
 	}
 	private context: CanvasRenderingContext2D
-	private timerId: number
+	timerId: number
 	private fieldSize = 4
 	updateInterval = 100
 
