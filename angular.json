@@ -338,6 +338,28 @@
         }
       },
       "schematics": {}
+    },
+    "kingdoms": {
+      "projectType": "library",
+      "root": "libs/kingdoms",
+      "sourceRoot": "libs/kingdoms/src",
+      "prefix": "lundin",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/kingdoms/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/kingdoms/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {
