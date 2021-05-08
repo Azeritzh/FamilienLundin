@@ -90,3 +90,30 @@ function clip(value: number, min: number, max: number, wrap = false) {
 		value -= max - min
 	return value
 }
+
+export function hexesAdjacentTo(x: number, y: number) {
+	return [hexNorthWestOf(x, y), hexNorthEastOf(x, y), hexWestOf(x, y), hexEastOf(x, y), hexSouthWestOf(x, y), hexSouthEastOf(x, y)]
+}
+
+export function hexNorthWestOf(x: number, y: number, distance = 1) {
+	const offset = ((y + distance) % 2 == 0) ? -1 : 0
+	return { x: x - Math.floor(distance / 2) + offset, y: y - distance }
+}
+export function hexNorthEastOf(x: number, y: number, distance = 1) {
+	const offset = ((y + distance) % 2 == 0) ? 0 : 1
+	return { x: x + Math.floor(distance / 2) + offset, y: y - distance }
+}
+export function hexWestOf(x: number, y: number, distance = 1) {
+	return { x: x - distance, y: y }
+}
+export function hexEastOf(x: number, y: number, distance = 1) {
+	return { x: x + distance, y: y }
+}
+export function hexSouthWestOf(x: number, y: number, distance = 1) {
+	const offset = ((y + distance) % 2 == 0) ? -1 : 0
+	return { x: x - Math.floor(distance / 2) + offset, y: y + distance }
+}
+export function hexSouthEastOf(x: number, y: number, distance = 1) {
+	const offset = ((y + distance) % 2 == 0) ? 0 : 1
+	return { x: x + Math.floor(distance / 2) + offset, y: y + distance }
+}
