@@ -10,15 +10,22 @@ export class KingdomsState implements GameState {
 	) { }
 }
 
-export enum FieldType { Plains, Forest, Marsh, Highlands, Mountain, Water }
+export enum Terrain { Water, Flat, Hilly, Mountainous }
+export enum Fertility { None, Low, High }
 
 export class Field {
 	constructor(
-		public type = randomFieldType()
+		public terrain: Terrain = randomTerrain(),
+		public fertility: Fertility = randomFertility(),
 	) { }
 }
 
-function randomFieldType() {
-	const types = [FieldType.Plains, FieldType.Forest, FieldType.Marsh, FieldType.Highlands, FieldType.Mountain, FieldType.Water]
-	return types[Math.floor(Math.random() * 6)]
+function randomTerrain() {
+	const types = [Terrain.Water, Terrain.Flat, Terrain.Hilly, Terrain.Mountainous]
+	return types[Math.floor(Math.random() * 4)]
+}
+
+function randomFertility() {
+	const types = [Fertility.None, Fertility.Low, Fertility.High]
+	return types[Math.floor(Math.random() * 3)]
 }

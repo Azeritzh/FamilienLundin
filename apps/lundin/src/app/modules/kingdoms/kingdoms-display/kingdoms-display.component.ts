@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core"
-import { Field, FieldType, Kingdoms } from "@lundin/kingdoms"
+import { Fertility, Field, Kingdoms, Terrain } from "@lundin/kingdoms"
 import { hexesAdjacentTo } from "@lundin/utility"
 import { DisplayState } from "./display-state"
 
@@ -86,15 +86,35 @@ export class KingdomsDisplayComponent implements OnInit {
 	}
 
 	private colorForField(field: Field) {
-		switch (field.type) {
-			case FieldType.Plains: return "orange"
-			case FieldType.Forest: return "green"
-			case FieldType.Marsh: return "darkgreen"
-			case FieldType.Highlands: return "beige"
-			case FieldType.Mountain: return "grey"
-			case FieldType.Water: return "blue"
-			default: return "purple"
+		if (field.terrain === Terrain.Water) {
+			switch (field.fertility) {
+				case Fertility.None: return "darkblue" // deep ocean
+				case Fertility.Low: return "blue" // coastal
+				case Fertility.High: return "lightblue" // freshwater
+			}
 		}
+		else if (field.terrain === Terrain.Flat) {
+			switch (field.fertility) {
+				case Fertility.None: return "yellow" // desert
+				case Fertility.Low: return "lightgreen" // plains
+				case Fertility.High: return "green" // forest
+			}
+		}
+		else if (field.terrain === Terrain.Hilly) {
+			switch (field.fertility) {
+				case Fertility.None: return "lightgrey" // desert hills
+				case Fertility.Low: return "beige" // highlands
+				case Fertility.High: return "darkgreen" // forest hills
+			}
+		}
+		else if (field.terrain === Terrain.Mountainous) {
+			switch (field.fertility) {
+				case Fertility.None: return "darkgrey" // bare mountains
+				case Fertility.Low: return "orange" // mountains
+				case Fertility.High: return "red" // forested mountains
+			}
+		}
+		return "purple"
 	}
 
 	private drawHexagon(x: number, y: number) {
