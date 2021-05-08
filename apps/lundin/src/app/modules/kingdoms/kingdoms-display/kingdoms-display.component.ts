@@ -21,7 +21,7 @@ export class KingdomsDisplayComponent implements OnInit {
 	private gridColor = "black"
 	private outerBorder = 3
 	private hexPath = new Path2D()
-	private oddRowOffset = (this.gridThickness + this.fieldSize) / 2
+	private evenRowOffset = (this.gridThickness + this.fieldSize) / 2
 	private hexDeltaX = 0
 	private hexDeltaY = 0
 	private translateX = 0
@@ -48,6 +48,27 @@ export class KingdomsDisplayComponent implements OnInit {
 		this.canvas.height = this.canvasElement.nativeElement.parentElement.clientHeight
 	}
 
+	private setupHexagons() {
+		this.hexDeltaX = this.fieldSize + this.gridThickness
+		this.hexDeltaY = 3 * (this.fieldSize / (2 * Math.sqrt(3))) + this.gridThickness / Math.sqrt(3)
+		this.evenRowOffset = this.hexDeltaX / 2
+		this.hexPath = this.createHexagonPath()
+	}
+
+	private createHexagonPath(): Path2D {
+		const halfWidth = this.fieldSize / 2
+		const fourthHeight = this.fieldSize / (2 * Math.sqrt(3))
+		const path = new Path2D()
+		path.moveTo(0, fourthHeight)
+		path.lineTo(halfWidth, 0)
+		path.lineTo(halfWidth * 2, fourthHeight)
+		path.lineTo(halfWidth * 2, fourthHeight * 3)
+		path.lineTo(halfWidth, fourthHeight * 4)
+		path.lineTo(0, fourthHeight * 3)
+		path.closePath()
+		return path
+	}
+
 	private drawEverything() {
 		this.drawBackground()
 		for (const { x, y, field } of this.game.state.board.allFields())
@@ -55,15 +76,8 @@ export class KingdomsDisplayComponent implements OnInit {
 	}
 
 	private drawBackground() {
-		const extraY = this.fieldSize / (2 * Math.sqrt(3))
-
-		const left = this.translateX + this.gridThickness - this.outerBorder
-		const top = this.translateY + this.gridThickness - this.outerBorder
-		const width = this.game.config.width * this.hexDeltaX - this.gridThickness + this.outerBorder * 2 + this.oddRowOffset
-		const height = this.game.config.height * this.hexDeltaY - this.gridThickness + this.outerBorder * 2 + extraY
-
 		this.context.fillStyle = this.gridColor
-		this.context.fillRect(left, top, width, height)
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 	}
 
 	private drawField(x: number, y: number, field: any) {
@@ -83,41 +97,13 @@ export class KingdomsDisplayComponent implements OnInit {
 		}
 	}
 
-	private setupHexagons() {
-		this.hexDeltaX = this.fieldSize + this.gridThickness
-		this.hexDeltaY = 3 * (this.fieldSize / (2 * Math.sqrt(3))) + this.gridThickness / Math.sqrt(3)
-		this.oddRowOffset = this.hexDeltaX / 2
-		this.hexPath = this.createHexagonPath()
-	}
-
-	private createHexagonPath(): Path2D {
-		const halfWidth = this.fieldSize / 2
-		const fourthHeight = this.fieldSize / (2 * Math.sqrt(3))
-		const path = new Path2D()
-		path.moveTo(0, fourthHeight)
-		path.lineTo(halfWidth, 0)
-		path.lineTo(halfWidth * 2, fourthHeight)
-		path.lineTo(halfWidth * 2, fourthHeight * 3)
-		path.lineTo(halfWidth, fourthHeight * 4)
-		path.lineTo(0, fourthHeight * 3)
-		path.closePath()
-		return path
-	}
-
 	private drawHexagon(x: number, y: number) {
 		this.context.save()
-		const offset = y % 2 === 0 ? 0 : this.oddRowOffset
+		const offset = y % 2 === 0 ? this.evenRowOffset : 0
 		this.context.translate(
 			x * this.hexDeltaX + this.translateX + this.gridThickness + offset,
 			y * this.hexDeltaY + this.translateY)
 		this.context.fill(this.hexPath)
-
-		this.context.restore()
-		this.context.save()
-		this.context.translate(
-			x * this.hexDeltaX + this.translateX + this.gridThickness + offset,
-			y * this.hexDeltaY + this.translateY)
-
 		if (this.isSelected(x, y)) {
 			this.context.lineWidth = 2.0
 			this.context.strokeStyle = "white"
@@ -145,6 +131,7 @@ export class KingdomsDisplayComponent implements OnInit {
 		const { x, y } = this.gridPositionFromMousePosition(event)
 		const field = this.game.state.board.get(x, y)
 		this.clickField.emit({ x, y, field })
+		console.log(x, y)
 		this.drawEverything()
 	}
 
@@ -167,7 +154,7 @@ export class KingdomsDisplayComponent implements OnInit {
 	}
 
 	private distanceToHex(canvasX: number, canvasY: number, hex: { x: number, y: number }) {
-		const offset = hex.y % 2 === 0 ? 0 : this.oddRowOffset
+		const offset = hex.y % 2 === 0 ? this.evenRowOffset : 0
 		const baseX = hex.x * this.hexDeltaX + this.hexDeltaX / 2 + offset
 		const baseY = hex.y * this.hexDeltaY + this.hexDeltaY * 2 / 3
 		const x = canvasX - this.translateX - baseX
@@ -200,6 +187,18 @@ export class KingdomsDisplayComponent implements OnInit {
 	mouseenter() {
 		this.mouseIsDown = false
 		this.isDragging = false
+	}
+
+	scroll(event: WheelEvent) {
+		event.preventDefault()
+		if (event.deltaY > 0)
+			this.fieldSize -= 5
+		else
+			this.fieldSize += 5
+		if (this.fieldSize < 10)
+			this.fieldSize = 10
+		this.setupHexagons()
+		this.drawEverything()
 	}
 }
 
