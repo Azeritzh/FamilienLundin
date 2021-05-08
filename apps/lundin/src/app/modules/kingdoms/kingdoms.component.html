@@ -7,5 +7,7 @@
 </div>
 
 <lundin-kingdoms-display [game]="game"
+	[displayState]="displayState"
+	(clickField)="clickField($event)"
 	class="game-area">
 </lundin-kingdoms-display>

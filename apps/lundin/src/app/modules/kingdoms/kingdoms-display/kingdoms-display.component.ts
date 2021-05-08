@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core"
 import { Field, FieldType, Kingdoms } from "@lundin/kingdoms"
 import { hexesAdjacentTo } from "@lundin/utility"
+import { DisplayState } from "./display-state"
 
 @Component({
 	selector: "lundin-kingdoms-display",
@@ -8,6 +9,7 @@ import { hexesAdjacentTo } from "@lundin/utility"
 })
 export class KingdomsDisplayComponent implements OnInit {
 	@Input() game = new Kingdoms()
+	@Input() displayState = new DisplayState()
 	@Output() clickField = new EventEmitter<FieldSelection>()
 	@ViewChild("canvas", { static: true }) canvasElement: ElementRef<HTMLCanvasElement>
 	get canvas() {
@@ -19,7 +21,7 @@ export class KingdomsDisplayComponent implements OnInit {
 	private gridColor = "black"
 	private outerBorder = 3
 	private hexPath = new Path2D()
-	private hexPathOffset = new Path2D()
+	private oddRowOffset = (this.gridThickness + this.fieldSize) / 2
 	private hexDeltaX = 0
 	private hexDeltaY = 0
 	private translateX = 0
@@ -53,12 +55,11 @@ export class KingdomsDisplayComponent implements OnInit {
 	}
 
 	private drawBackground() {
-		const offset = (this.gridThickness + this.fieldSize) / 2
 		const extraY = this.fieldSize / (2 * Math.sqrt(3))
 
 		const left = this.translateX + this.gridThickness - this.outerBorder
 		const top = this.translateY + this.gridThickness - this.outerBorder
-		const width = this.game.config.width * this.hexDeltaX - this.gridThickness + this.outerBorder * 2 + offset
+		const width = this.game.config.width * this.hexDeltaX - this.gridThickness + this.outerBorder * 2 + this.oddRowOffset
 		const height = this.game.config.height * this.hexDeltaY - this.gridThickness + this.outerBorder * 2 + extraY
 
 		this.context.fillStyle = this.gridColor
@@ -84,31 +85,51 @@ export class KingdomsDisplayComponent implements OnInit {
 
 	private setupHexagons() {
 		this.hexDeltaX = this.fieldSize + this.gridThickness
-		this.hexDeltaY = 3 * (this.fieldSize / (2 * Math.sqrt(3.0))) + this.gridThickness / Math.sqrt(3.0)
-		this.hexPath = this.createHexagonPath(false)
-		this.hexPathOffset = this.createHexagonPath(true)
+		this.hexDeltaY = 3 * (this.fieldSize / (2 * Math.sqrt(3))) + this.gridThickness / Math.sqrt(3)
+		this.oddRowOffset = this.hexDeltaX / 2
+		this.hexPath = this.createHexagonPath()
 	}
 
-	private createHexagonPath(offset: boolean): Path2D {
+	private createHexagonPath(): Path2D {
 		const halfWidth = this.fieldSize / 2
 		const fourthHeight = this.fieldSize / (2 * Math.sqrt(3))
-		const offsetWidth = offset ? 0 : (halfWidth + this.gridThickness / 2)
 		const path = new Path2D()
-		path.moveTo(0.0 + offsetWidth, fourthHeight)
-		path.lineTo(halfWidth + offsetWidth, 0)
-		path.lineTo(halfWidth * 2 + offsetWidth, fourthHeight)
-		path.lineTo(halfWidth * 2 + offsetWidth, fourthHeight * 3)
-		path.lineTo(halfWidth + offsetWidth, fourthHeight * 4)
-		path.lineTo(0.0 + offsetWidth, fourthHeight * 3)
+		path.moveTo(0, fourthHeight)
+		path.lineTo(halfWidth, 0)
+		path.lineTo(halfWidth * 2, fourthHeight)
+		path.lineTo(halfWidth * 2, fourthHeight * 3)
+		path.lineTo(halfWidth, fourthHeight * 4)
+		path.lineTo(0, fourthHeight * 3)
 		path.closePath()
 		return path
 	}
 
 	private drawHexagon(x: number, y: number) {
 		this.context.save()
-		this.context.translate(x * this.hexDeltaX + this.translateX + this.gridThickness, y * this.hexDeltaY + this.translateY)
-		this.context.fill(y % 2 === 0 ? this.hexPath : this.hexPathOffset)
+		const offset = y % 2 === 0 ? 0 : this.oddRowOffset
+		this.context.translate(
+			x * this.hexDeltaX + this.translateX + this.gridThickness + offset,
+			y * this.hexDeltaY + this.translateY)
+		this.context.fill(this.hexPath)
+
 		this.context.restore()
+		this.context.save()
+		this.context.translate(
+			x * this.hexDeltaX + this.translateX + this.gridThickness + offset,
+			y * this.hexDeltaY + this.translateY)
+
+		if (this.isSelected(x, y)) {
+			this.context.lineWidth = 2.0
+			this.context.strokeStyle = "white"
+			this.context.stroke(this.hexPath)
+		}
+		this.context.restore()
+	}
+
+	private isSelected(x: number, y: number) {
+		if (!this.displayState.selectedField)
+			return false
+		return this.displayState.selectedField.x === x && this.displayState.selectedField.y === y
 	}
 
 	mousedown(event: MouseEvent) {
@@ -146,9 +167,12 @@ export class KingdomsDisplayComponent implements OnInit {
 	}
 
 	private distanceToHex(canvasX: number, canvasY: number, hex: { x: number, y: number }) {
-		const baseX = hex.x * this.hexDeltaX + this.hexDeltaX / 2 + ((hex.y % 2 == 0) ? this.hexDeltaX / 2 : 0)
+		const offset = hex.y % 2 === 0 ? 0 : this.oddRowOffset
+		const baseX = hex.x * this.hexDeltaX + this.hexDeltaX / 2 + offset
 		const baseY = hex.y * this.hexDeltaY + this.hexDeltaY * 2 / 3
-		return (canvasX - this.translateX - baseX) * (canvasX - this.translateX - baseX) + (canvasY - this.translateY - baseY) * (canvasY - this.translateY - baseY)
+		const x = canvasX - this.translateX - baseX
+		const y = canvasY - this.translateY - baseY
+		return x * x + y * y
 	}
 
 	mousemove(event: MouseEvent) {
@@ -166,6 +190,16 @@ export class KingdomsDisplayComponent implements OnInit {
 	private updateLastMousePosition(event: MouseEvent) {
 		this.lastMouseX = event.clientX
 		this.lastMouseY = event.clientY
+	}
+
+	mouseleave() {
+		this.mouseIsDown = false
+		this.isDragging = false
+	}
+
+	mouseenter() {
+		this.mouseIsDown = false
+		this.isDragging = false
 	}
 }
 
