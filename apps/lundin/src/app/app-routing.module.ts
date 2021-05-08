@@ -1,22 +1,23 @@
 import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
+import { AgentiaComponent } from "./modules/agentia/agentia.component"
 import { AncestryTreeComponent } from "./modules/ancestry/ancestry-tree/ancestry-tree.component"
 import { PersonComponent } from "./modules/ancestry/person/person.component"
 import { CryptComponent } from "./modules/crypt/crypt.component"
+import { GalleryComponent } from "./modules/gallery/gallery/gallery.component"
+import { KingdomsComponent } from "./modules/kingdoms/kingdoms.component"
 import { MessageThreadComponent } from "./modules/message/message-thread/message-thread.component"
 import { MinestrygerComponent } from "./modules/minestryger/minestryger.component"
 import { NoughtsAndCrossesComponent } from "./modules/noughts-and-crosses/noughts-and-crosses.component"
+import { RecipesComponent } from "./modules/recipes/recipes/recipes.component"
 import { VirusComponent } from "./modules/virus/virus.component"
 import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
-import { GalleryComponent } from "./modules/gallery/gallery/gallery.component"
 import { HomeComponent } from "./pages/home/home.component"
 import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
 import { ProfileComponent } from "./pages/profile/profile.component"
-import { RecipesComponent } from "./modules/recipes/recipes/recipes.component"
 import { VariousComponent } from "./pages/various/various.component"
 import { IsAuthenticatedGuard } from "./services/is-authenticated.guard"
-import { AgentiaComponent } from "./modules/agentia/agentia.component"
 
 const routes: Routes = [
 	{ path: "", component: HomeComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
 	{ path: "calendar", component: CalendarComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "gallery", component: GalleryComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "games/iframe/:game", component: IframeGameComponent },
+	{ path: "games/kingdoms", component: KingdomsComponent },
 	{ path: "games/minestryger", component: MinestrygerComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "games/noughts-and-crosses", component: NoughtsAndCrossesComponent },
 	{ path: "games/virus", component: VirusComponent },

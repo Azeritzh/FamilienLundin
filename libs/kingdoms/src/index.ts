@@ -1,1 +1,2 @@
-export * from "./lib/kingdoms.module"
+export * from "./lib/kingdoms"
+export * from "./lib/kingdoms-state"

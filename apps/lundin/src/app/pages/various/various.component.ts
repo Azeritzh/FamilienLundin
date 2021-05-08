@@ -15,6 +15,7 @@ export class VariousComponent {
 
 	games: Entry[] = [
 		{ title: "Minestryger", link: "/games/minestryger", mustBeLoggedIn: true },
+		{ title: "Unavngivet spil", link: "/games/kingdoms" },
 		{ title: "Virus", link: "/games/virus" },
 		{ title: "Kryds og Bolle", link: "/games/noughts-and-crosses" },
 		{ title: "Piong", link: "/games/iframe/piong" },
