@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core"
-import { Kingdoms } from "@lundin/kingdoms"
+import { Fertility, Kingdoms, Terrain } from "@lundin/kingdoms"
 import { DisplayState } from "./kingdoms-display/display-state"
 import { FieldSelection } from "./kingdoms-display/kingdoms-display.component"
 
@@ -20,14 +20,33 @@ export class KingdomsComponent implements OnInit {
 	}
 
 	clickField(selection: FieldSelection) {
-		this.displayState.selectedField = { x: selection.x, y: selection.y }
-		if (!this.game.state.board.isWithinBounds(selection.x, selection.y))
+		const { x, y } = selection
+		this.displayState.selectedField = { x, y }
+		if (!this.game.state.board.isWithinBounds(x, y))
 			return
-		const field = this.game.state.board.get(selection.x, selection.y)
-		this.terrain = field.terrain.toString()
-		this.fertility = field.fertility.toString()
+		const field = this.game.state.board.get(x, y)
+		this.terrain = Terrain[field.terrain]
+		this.fertility = Fertility[field.fertility]
 		this.blabla = field.controller
 			? this.game.state.players.find(x => x.id === field.controller).name
 			: ""
+	}
+
+	changeTerrain(terrain: Terrain) {
+		const { x, y } = this.displayState.selectedField
+		this.displayState.selectedField = { x, y }
+		if (!this.game.state.board.isWithinBounds(x, y))
+			return
+		const field = this.game.state.board.get(x, y)
+		field.terrain = terrain
+	}
+
+	changeFertility(fertility: Fertility) {
+		const { x, y } = this.displayState.selectedField
+		this.displayState.selectedField = { x, y }
+		if (!this.game.state.board.isWithinBounds(x, y))
+			return
+		const field = this.game.state.board.get(x, y)
+		field.fertility = fertility
 	}
 }

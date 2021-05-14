@@ -33,6 +33,7 @@ h1 {
 .setting * { line-height: 2rem; }
 .setting label,
 .setting button { flex: 1; }
+.setting button + button { margin-left: 0.2rem; }
 .setting input { width: 4rem; }
 
 .code-setting { margin-bottom: 0.2rem; }
