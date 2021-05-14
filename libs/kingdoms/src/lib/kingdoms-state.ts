@@ -6,7 +6,7 @@ export class KingdomsState implements GameState {
 
 	constructor(
 		config: KingdomsConfig,
-		public players: Player[] = [new Player(1, "Kristjan")],
+		public players: Player[] = [new Player(1, "Kristjan", "blue"), new Player(2, "Daniel", "red")],
 		public board = createNewBoard(config.width, config.height, players),
 		public tick = 0,
 	) { }
@@ -25,7 +25,7 @@ export class Field {
 	) { }
 }
 
-function createNewBoard(height: number, width: number, players: Player[]) {
+function createNewBoard(width: number, height: number, players: Player[]) {
 	const board = new GameGrid<Field>(width, height, () => new Field())
 	for (const player of players)
 		setupStartFieldFor(player, board)
@@ -69,5 +69,6 @@ export class Player {
 	constructor(
 		public id: number,
 		public name: string,
+		public color: string,
 	) { }
 }

@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { Fertility, Field, Kingdoms, Terrain } from "@lundin/kingdoms"
 import { hexesAdjacentTo } from "@lundin/utility"
 import { DisplayState } from "./display-state"
+import { DisplayConfig } from "./display-config"
 
 @Component({
 	selector: "lundin-kingdoms-display",
@@ -16,12 +17,10 @@ export class KingdomsDisplayComponent implements OnInit {
 		return this.canvasElement.nativeElement
 	}
 	private context: CanvasRenderingContext2D
+	private config = new DisplayConfig()
 	private fieldSize = 40
-	private gridThickness = 1
-	private gridColor = "black"
-	private outerBorder = 3
 	private hexPath = new Path2D()
-	private evenRowOffset = (this.gridThickness + this.fieldSize) / 2
+	private get evenRowOffset() { return this.hexDeltaX / 2 }
 	private hexDeltaX = 0
 	private hexDeltaY = 0
 	private translateX = 0
@@ -49,9 +48,8 @@ export class KingdomsDisplayComponent implements OnInit {
 	}
 
 	private setupHexagons() {
-		this.hexDeltaX = this.fieldSize + this.gridThickness
-		this.hexDeltaY = 3 * (this.fieldSize / (2 * Math.sqrt(3))) + this.gridThickness / Math.sqrt(3)
-		this.evenRowOffset = this.hexDeltaX / 2
+		this.hexDeltaX = this.fieldSize + this.config.gridThickness
+		this.hexDeltaY = 3 * (this.fieldSize / (2 * Math.sqrt(3))) + this.config.gridThickness / Math.sqrt(3)
 		this.hexPath = this.createHexagonPath()
 	}
 
@@ -76,60 +74,82 @@ export class KingdomsDisplayComponent implements OnInit {
 	}
 
 	private drawBackground() {
-		this.context.fillStyle = this.gridColor
+		this.context.fillStyle = this.config.gridColor
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 	}
 
-	private drawField(x: number, y: number, field: any) {
-		this.context.fillStyle = this.colorForField(field)
-		this.drawHexagon(x, y)
+	private drawField(x: number, y: number, field: Field) {
+		this.context.save()
+		this.translateTo(x, y)
+		this.drawHexBase(field)
+		this.drawController(field)
+		this.drawSelection(x, y)
+		this.context.restore()
 	}
 
 	private colorForField(field: Field) {
 		if (field.terrain === Terrain.Water) {
 			switch (field.fertility) {
-				case Fertility.None: return "darkblue" // deep ocean
-				case Fertility.Low: return "blue" // coastal
-				case Fertility.High: return "lightblue" // freshwater
+				case Fertility.None: return this.config.colorWaterNone
+				case Fertility.Low: return this.config.colorWaterLow
+				case Fertility.High: return this.config.colorWaterHigh
 			}
 		}
 		else if (field.terrain === Terrain.Flat) {
 			switch (field.fertility) {
-				case Fertility.None: return "yellow" // desert
-				case Fertility.Low: return "lightgreen" // plains
-				case Fertility.High: return "green" // forest
+				case Fertility.None: return this.config.colorFlatNone
+				case Fertility.Low: return this.config.colorFlatLow
+				case Fertility.High: return this.config.colorFlatHigh
 			}
 		}
 		else if (field.terrain === Terrain.Hilly) {
 			switch (field.fertility) {
-				case Fertility.None: return "lightgrey" // desert hills
-				case Fertility.Low: return "beige" // highlands
-				case Fertility.High: return "darkgreen" // forest hills
+				case Fertility.None: return this.config.colorHillyNone
+				case Fertility.Low: return this.config.colorHillyLow
+				case Fertility.High: return this.config.colorHillyHigh
 			}
 		}
 		else if (field.terrain === Terrain.Mountainous) {
 			switch (field.fertility) {
-				case Fertility.None: return "darkgrey" // bare mountains
-				case Fertility.Low: return "orange" // mountains
-				case Fertility.High: return "red" // forested mountains
+				case Fertility.None: return this.config.colorMountainousNone
+				case Fertility.Low: return this.config.colorMountainousLow
+				case Fertility.High: return this.config.colorMountainousHigh
 			}
 		}
 		return "purple"
 	}
 
-	private drawHexagon(x: number, y: number) {
-		this.context.save()
+	translateTo(x: number, y: number) {
 		const offset = y % 2 === 0 ? this.evenRowOffset : 0
 		this.context.translate(
-			x * this.hexDeltaX + this.translateX + this.gridThickness + offset,
+			x * this.hexDeltaX + this.translateX + this.config.gridThickness + offset,
 			y * this.hexDeltaY + this.translateY)
+	}
+
+	drawHexBase(field: Field) {
+		this.context.fillStyle = this.colorForField(field)
 		this.context.fill(this.hexPath)
-		if (this.isSelected(x, y)) {
-			this.context.lineWidth = 2.0
-			this.context.strokeStyle = "white"
-			this.context.stroke(this.hexPath)
-		}
+	}
+
+	drawController(field: Field) {
+		if (!field.controller)
+			return
+		const lineWidth = 4
+		this.context.save()
+		this.context.translate(2, 2)
+		this.context.scale(this.fieldSize / (this.fieldSize + lineWidth), this.fieldSize / (this.fieldSize + lineWidth))
+		this.context.lineWidth = lineWidth
+		this.context.strokeStyle = this.game.state.players.find(x => x.id === field.controller).color
+		this.context.stroke(this.hexPath)
 		this.context.restore()
+	}
+
+	drawSelection(x: number, y: number) {
+		if (!this.isSelected(x, y))
+			return
+		this.context.lineWidth = 2.0
+		this.context.strokeStyle = "white"
+		this.context.stroke(this.hexPath)
 	}
 
 	private isSelected(x: number, y: number) {

@@ -8,7 +8,7 @@ export class Kingdoms {
 	private engine: AgEngine<any>
 
 	constructor(
-		public config = new KingdomsConfig(30, 16),
+		public config = new KingdomsConfig(10, 6),
 		public state = new KingdomsState(config),
 	) {
 		this.engine = new AgEngine<KingdomsAction>(
