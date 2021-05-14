@@ -117,3 +117,19 @@ export function hexSouthEastOf(x: number, y: number, distance = 1) {
 	const offset = ((y + distance) % 2 == 0) ? 0 : 1
 	return { x: x + Math.floor(distance / 2) + offset, y: y + distance }
 }
+
+export function randomInt(min: number, max: number) {
+	return Math.floor(Math.random() * (max - min) + min)
+}
+
+export function randomIntBelow(max: number) {
+	return Math.floor(Math.random() * max)
+}
+
+export function randomNumber(min: number, max: number) {
+	return Math.random() * (max - min) + min
+}
+
+export function randomNumberBelow(max: number) {
+	return Math.random() * max
+}
