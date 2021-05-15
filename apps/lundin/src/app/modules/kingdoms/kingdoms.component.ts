@@ -31,22 +31,4 @@ export class KingdomsComponent implements OnInit {
 			? this.game.state.players.find(x => x.id === field.controller).name
 			: ""
 	}
-
-	changeTerrain(terrain: Terrain) {
-		const { x, y } = this.displayState.selectedField
-		this.displayState.selectedField = { x, y }
-		if (!this.game.state.board.isWithinBounds(x, y))
-			return
-		const field = this.game.state.board.get(x, y)
-		field.terrain = terrain
-	}
-
-	changeFertility(fertility: Fertility) {
-		const { x, y } = this.displayState.selectedField
-		this.displayState.selectedField = { x, y }
-		if (!this.game.state.board.isWithinBounds(x, y))
-			return
-		const field = this.game.state.board.get(x, y)
-		field.fertility = fertility
-	}
 }

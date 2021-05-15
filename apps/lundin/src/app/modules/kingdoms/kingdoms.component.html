@@ -5,47 +5,19 @@
 		Terræn: {{terrain}}
 	</div>
 	<div class="setting">
-		<button type="button"
-			(click)="changeTerrain(0)">
-			Vand
-		</button>
-		<button type="button"
-			(click)="changeTerrain(1)">
-			Fladt
-		</button>
-		<button type="button"
-			(click)="changeTerrain(2)">
-			Bakket
-		</button>
-		<button type="button"
-			(click)="changeTerrain(3)">
-			Bjerge
-		</button>
-	</div>
-	<div class="setting">
 		Frodighed: {{fertility}}
-	</div>
-	<div class="setting">
-		<button type="button"
-			(click)="changeFertility(0)">
-			Øde
-		</button>
-		<button type="button"
-			(click)="changeFertility(1)">
-			Medium
-		</button>
-		<button type="button"
-			(click)="changeFertility(2)">
-			Frodigt
-		</button>
 	</div>
 	<div class="setting">
 		Bla: {{blabla}}
 	</div>
+
+	<lundin-kingdoms-editor #editor [game]="game"
+		[displayState]="displayState">
+	</lundin-kingdoms-editor>
 </div>
 
 <lundin-kingdoms-display [game]="game"
 	[displayState]="displayState"
-	(clickField)="clickField($event)"
+	(clickField)="clickField($event); editor.clickField()"
 	class="game-area">
 </lundin-kingdoms-display>

@@ -1,0 +1,50 @@
+<div class="settings-area">
+	<h1>Editor</h1>
+
+	<div class="setting">
+		Terræn
+	</div>
+	<div class="setting">
+		<button type="button"
+			(click)="changeTerrain(null)">
+			Ignorer
+		</button>
+		<button type="button"
+			(click)="changeTerrain(0)">
+			Vand
+		</button>
+		<button type="button"
+			(click)="changeTerrain(1)">
+			Fladt
+		</button>
+		<button type="button"
+			(click)="changeTerrain(2)">
+			Bakket
+		</button>
+		<button type="button"
+			(click)="changeTerrain(3)">
+			Bjerge
+		</button>
+	</div>
+	<div class="setting">
+		Frodighed
+	</div>
+	<div class="setting">
+		<button type="button"
+			(click)="changeFertility(null)">
+			Ignorer
+		</button>
+		<button type="button"
+			(click)="changeFertility(0)">
+			Øde
+		</button>
+		<button type="button"
+			(click)="changeFertility(1)">
+			Medium
+		</button>
+		<button type="button"
+			(click)="changeFertility(2)">
+			Frodigt
+		</button>
+	</div>
+</div>
