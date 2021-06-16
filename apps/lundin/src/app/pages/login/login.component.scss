@@ -24,7 +24,13 @@ input {
 	display: flex;
     justify-content: center;
     flex-direction: column;
-    height: 80%;
+    height: auto;
+	width: 25rem;
+	background-color: rgb(255 255 255 / 76%);
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2rem;
+	border-radius: var(--border-radius-full);
 }
 
 .login-header {
