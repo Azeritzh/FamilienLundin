@@ -1,57 +1,72 @@
-<form>
-	<label for="password">
-		Nuværende kode:
-	</label>
-	<input id="password"
-		type="password"
-		[(ngModel)]="password"
-		placeholder="Kode"
-		autocomplete="current-password"
-		name="password"
-		required>
+<section class="profile-content-container">
+	<section class="profile-container">
+		<header class="container-header">
+			<h1>Min profil</h1>
+		</header>
+		<form>
+			<label for="password">
+				Nuværende kode:
+			</label>
+			<input id="password"
+				type="password"
+				[(ngModel)]="password"
+				placeholder="Kode"
+				autocomplete="current-password"
+				name="password"
+				required>
 
-	<label for="new-password">
-		Ny kode:
-	</label>
-	<input id="new-password"
-		type="password"
-		[(ngModel)]="newPassword"
-		placeholder="Ny kode"
-		autocomplete="new-password"
-		name="new-password"
-		required>
+			<label for="new-password">
+				Ny kode:
+			</label>
+			<input id="new-password"
+				type="password"
+				[(ngModel)]="newPassword"
+				placeholder="Ny kode"
+				autocomplete="new-password"
+				name="new-password"
+				required>
 
-	<label for="repeat-password">
-		Gentag den nye kode:
-	</label>
-	<input id="repeat-password"
-		type="password"
-		[(ngModel)]="repeatNewPassword"
-		placeholder="Gentag ny kode"
-		autocomplete="new-password"
-		name="repeat-password"
-		required>
-	<button type="button"
-		(click)="changePassword()"
-		[disabled]="!password || !newPassword || newPassword !== repeatNewPassword">
-		Skift kode
-	</button>
-</form>
+			<label for="repeat-password">
+				Gentag den nye kode:
+			</label>
+			<input id="repeat-password"
+				type="password"
+				[(ngModel)]="repeatNewPassword"
+				placeholder="Gentag ny kode"
+				autocomplete="new-password"
+				name="repeat-password"
+				required>
+			<button type="button"
+				(click)="changePassword()"
+				[disabled]="!password || !newPassword || newPassword !== repeatNewPassword">
+				Skift kode
+			</button>
+		</form>
+	</section>
 
-<ng-container *ngIf="authService.isAdmin()">
-	<label for="new-user">
-		Tilføj bruger:
-	</label>
-	<input #newUser
-		type="text"
-		id="new-user"
-		placeholder="Brugernavn">
-	<button type="button"
-		(click)="authService.addUser(newUser.value)">
-		Tilføj
-	</button>
-	<button type="button"
-		(click)="authService.resetPasswordFor(newUser.value)">
-		Reset kode
-	</button>
-</ng-container>
+	<section *ngIf="authService.isAdmin()"
+		class="admin-container">
+		<header class="container-header">
+			<h1>Admin panel</h1>
+		</header>
+		<section class="admin-content">
+			<label for="new-user">
+				Tilføj bruger:
+			</label>
+			<input #newUser
+				type="text"
+				id="new-user"
+				placeholder="Brugernavn">
+			<div class="btn-container">
+				<button type="button"
+					(click)="authService.addUser(newUser.value)">
+					Tilføj
+				</button>
+				<button type="button"
+					(click)="authService.resetPasswordFor(newUser.value)">
+					Reset kode
+				</button>
+			</div>
+		</section>
+	</section>
+</section>
