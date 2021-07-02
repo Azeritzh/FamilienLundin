@@ -36,6 +36,16 @@ export interface CalendarEvent {
 	participantIds: number[]
 }
 
+export interface Recipe {
+	_id: number
+	title: string
+	description: string
+	time: string
+	persons: string
+	ingredients: string
+	fileId: string
+}
+
 export interface Person {
 	_id: number
 	userId?: number

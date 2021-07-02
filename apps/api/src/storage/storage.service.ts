@@ -1,4 +1,4 @@
-import { CalendarEvent, MessageThread, Person, MinestrygerTopScoreSet, MinestrygerScoreSet } from "@lundin/api-interfaces"
+import { CalendarEvent, MessageThread, Person, MinestrygerTopScoreSet, MinestrygerScoreSet, Recipe } from "@lundin/api-interfaces"
 import { Injectable } from "@nestjs/common"
 import * as fs from "fs"
 import { StoredUser } from "../user/user.service"
@@ -9,6 +9,7 @@ export class StorageService {
 	calendarEventCollection = new Collection<CalendarEvent>("calendar-events", this)
 	cryptCollection = new Collection<{ _id?: number, userId: number, encrypted: string }>("crypt", this)
 	messageCollection = new Collection<MessageThread>("messages", this)
+	recipeCollection = new Collection<Recipe>("recipes", this)
 	userCollection = new Collection<StoredUser>("users", this)
 	ancestryCollection = new Collection<Person>("ancestry", this)
 	minestrygerTopScoreCollection = new Collection<MinestrygerTopScoreSet & { _id: number }>("minestryger-topscores", this)

@@ -1,28 +1,20 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { Message, MessageThread } from "@lundin/api-interfaces"
+import { Recipe } from "@lundin/api-interfaces"
 
 @Injectable()
 export class RecipesService {
 	constructor(private httpClient: HttpClient) { }
 
-	getThreads() {
-		return this.httpClient.get<MessageThread[]>("api/message/get-threads").toPromise()
+	getRecipes() {
+		return this.httpClient.get<Recipe[]>("api/recipe/get-recipes").toPromise()
 	}
 
-	addThread(thread: MessageThread){
-		return this.httpClient.post<MessageThread>("api/message/add-thread", thread).toPromise()
+	addRecipe(recipe: Recipe){
+		return this.httpClient.post<Recipe>("api/recipe/add-recipe", recipe).toPromise()
 	}
 
-	getFullThread(threadId: number) {
-		return this.httpClient.post<MessageThread>("api/message/get-full-thread", { threadId }).toPromise()
-	}
-
-	addResponse(threadId: number, message: Message) {
-		return this.httpClient.post("api/message/add-response", { threadId, message }).toPromise()
-	}
-
-	updateThread(threadId: number, title: string, content: string) {
-		return this.httpClient.post("api/message/update-thread", { threadId, title, content }).toPromise()
+	updateRecipe(recipe: Recipe) {
+		return this.httpClient.post("api/recipe/update-recipe", recipe).toPromise()
 	}
 }
