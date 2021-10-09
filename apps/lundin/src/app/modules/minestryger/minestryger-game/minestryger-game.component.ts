@@ -267,7 +267,7 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 
 	private handleLeftMouse(mouseDown: boolean, x: number, y: number) {
 		this.leftMouseDown = mouseDown
-		if (this.shouldClickField() && !this.rightMouseDown)
+		if (this.shouldClickField(this.leftMouseDown) && !this.rightMouseDown)
 			this.revealField(x, y)
 		if (!this.leftMouseDown && this.rightMouseDown)
 			this.revealSurroundings(x, y)
@@ -281,14 +281,14 @@ export class MinestrygerGameComponent implements OnInit, OnDestroy {
 
 	private handleRightMouse(mouseDown: boolean, x: number, y: number) {
 		this.rightMouseDown = mouseDown
+		if (this.shouldClickField(this.rightMouseDown) && !this.leftMouseDown)
+			this.flagField(x, y)
 		if (!this.rightMouseDown && this.leftMouseDown)
 			this.revealSurroundings(x, y)
-		else if (!this.rightMouseDown)
-			this.flagField(x, y)
 	}
 
-	private shouldClickField() {
-		return this.activateOnMouseDown === this.leftMouseDown
+	private shouldClickField(mouseDown: boolean) {
+		return this.activateOnMouseDown === mouseDown
 	}
 
 	private revealField(x: number, y: number) {
