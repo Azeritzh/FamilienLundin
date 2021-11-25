@@ -15,8 +15,9 @@ body {
 }
 
 .default-background {
-	background-image: url("../../assets/images/background.png");
+	background-image: url("../../assets/images/background.jpg");
 	background-size: cover;
+	background-position-y: center;
 }
 
 /* Custom styling for buttons */
