@@ -7,14 +7,18 @@ import { GalleryComponent } from "./gallery/gallery.component"
 import { AddImageComponent } from "./add-image/add-image.component"
 import { EditImageComponent } from "./edit-image/edit-image.component"
 import { GalleryService } from "./gallery.service"
+import { GalleryRootComponent } from "./gallery-root/gallery-root.component"
+import { AppRoutingModule } from "../../app-routing.module"
 
 @NgModule({
 	declarations: [
-		GalleryComponent,
 		AddImageComponent,
-		EditImageComponent
+		EditImageComponent,
+		GalleryComponent,
+		GalleryRootComponent,
 	],
 	imports: [
+		AppRoutingModule,
 		BrowserModule,
 		HttpClientModule,
 		MarkdownModule.forRoot(),
@@ -22,7 +26,7 @@ import { GalleryService } from "./gallery.service"
 	],
 	providers: [GalleryService],
 	exports: [
-		GalleryComponent,
+		GalleryRootComponent,
 	],
 })
 export class GalleryModule { }

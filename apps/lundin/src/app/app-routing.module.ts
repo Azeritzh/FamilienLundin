@@ -4,7 +4,8 @@ import { AgentiaComponent } from "./modules/agentia/agentia.component"
 import { AncestryRootComponent } from "./modules/ancestry/ancestry-root/ancestry-root.component"
 import { ancestryRoutes } from "./modules/ancestry/routes"
 import { CryptComponent } from "./modules/crypt/crypt.component"
-import { GalleryComponent } from "./modules/gallery/gallery/gallery.component"
+import { GalleryRootComponent } from "./modules/gallery/gallery-root/gallery-root.component"
+import { galleryRoutes } from "./modules/gallery/routes"
 import { KingdomsComponent } from "./modules/kingdoms/kingdoms.component"
 import { MessageRootComponent } from "./modules/message/message-root/message-root.component"
 import { messageRoutes } from "./modules/message/routes"
@@ -23,7 +24,7 @@ const routes: Routes = [
 	{ path: "", component: HomeComponent },
 	{ path: "ancestry", component: AncestryRootComponent, children: ancestryRoutes },
 	{ path: "calendar", component: CalendarComponent, canActivate: [IsAuthenticatedGuard] },
-	{ path: "gallery", component: GalleryComponent, canActivate: [IsAuthenticatedGuard] },
+	{ path: "gallery", component: GalleryRootComponent, canActivate: [IsAuthenticatedGuard], children: galleryRoutes },
 	{ path: "games/iframe/:game", component: IframeGameComponent },
 	{ path: "games/kingdoms", component: KingdomsComponent },
 	{ path: "games/minestryger", component: MinestrygerComponent, canActivate: [IsAuthenticatedGuard] },
