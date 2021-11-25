@@ -7,6 +7,18 @@
 	cursor: pointer;
 }
 
+.name {
+	font-weight: bold;
+}
+
+.male .name {
+	color: #008;
+}
+
+.female .name {
+	color: #800;
+}
+
 .parents {
 	display: grid;
 	height: 100%;

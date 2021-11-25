@@ -1,6 +1,6 @@
-import { Component, Input } from "@angular/core";
-import { Router } from "@angular/router";
-import { PersonNode } from "./ancestry-tree.component";
+import { Component, Input } from "@angular/core"
+import { Router } from "@angular/router"
+import { PersonNode } from "./ancestry-tree.component"
 
 @Component({
 	selector: "lundin-ancestry-tree-node",
