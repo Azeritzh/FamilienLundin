@@ -1,5 +1,7 @@
+@import "../../styles/general.scss";
+
 :host {
-	height: 100%;
+	@extend .default-page;
 }
 
 .game-container {

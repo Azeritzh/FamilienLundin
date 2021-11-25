@@ -1,5 +1,9 @@
 @import "../../styles/general.scss";
 
+:host {
+	@extend .default-page, .default-background;
+}
+
 .profile-content-container {
 	display: flex;
     gap: 1rem;
