@@ -6,6 +6,7 @@ import { SharedModule } from "../../shared/shared.module"
 import { AddFileComponent } from "./add-file/add-file.component"
 import { AddPersonComponent } from "./add-person/add-person.component"
 import { AncestryListComponent } from "./ancestry-list/ancestry-list.component"
+import { AncestryRootComponent } from "./ancestry-root/ancestry-root.component"
 import { AncestryTreeNodeComponent } from "./ancestry-tree/ancestry-tree-node.component"
 import { AncestryTreeComponent } from "./ancestry-tree/ancestry-tree.component"
 import { AncestryService } from "./ancestry.service"
@@ -21,6 +22,7 @@ import { PortraitComponent } from "./portrait/portrait.component"
 		AddFileComponent,
 		AddPersonComponent,
 		AncestryListComponent,
+		AncestryRootComponent,
 		EditFileComponent,
 		EditInfoComponent,
 		EditRelationsComponent,
@@ -37,6 +39,6 @@ import { PortraitComponent } from "./portrait/portrait.component"
 		HttpClientModule,
 	],
 	providers: [AncestryService],
-	exports: [AncestryListComponent]
+	exports: [AncestryRootComponent]
 })
 export class AncestryModule { }

@@ -1,5 +1,7 @@
+@import "../../styles/general.scss";
+
 :host {
-	height: 100%;
+	@extend .default-page;
 	display: grid;
 	grid-template-areas: "settings game highscores";
 	grid-template-columns: 15rem 1fr 15rem;

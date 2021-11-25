@@ -1,7 +1,9 @@
+@import "../../styles/general.scss";
+
 :host {
+	@extend .default-page;
 	display: flex;
 	flex-direction: column;
-	height: 100%;
 }
 
 textarea {

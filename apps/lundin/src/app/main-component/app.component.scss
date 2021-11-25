@@ -41,9 +41,8 @@ nav {
 }
 
 article {
-	height: calc(100vh - 5rem);
+	height: calc(100vh - 3rem);
 	overflow: auto;
-	margin: 1rem;
 }
 
 nav a { display: inline-flex; }

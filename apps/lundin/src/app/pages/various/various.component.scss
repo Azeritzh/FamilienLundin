@@ -1,6 +1,7 @@
+@import "../../styles/general.scss";
+
 :host {
-	display: flow-root;
-	height: 100%;
+	@extend .default-page;
 }
 
 h1 {
