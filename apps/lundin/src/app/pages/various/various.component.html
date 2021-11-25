@@ -1,9 +1,14 @@
 <h1>Spil</h1>
-<ng-container *ngFor="let game of shown(games)">
-	<a [routerLink]="game.link">{{game.title}}</a>
+<ng-container *ngFor="let entry of shown(games)">
+	<a [routerLink]="entry.link">{{entry.title}}</a>
 </ng-container>
 
 <h1>Diverse</h1>
-<ng-container *ngFor="let tool of shown(tools)">
-	<a [routerLink]="tool.link">{{tool.title}}</a>
+<ng-container *ngFor="let entry of shown(tools)">
+	<a [routerLink]="entry.link">{{entry.title}}</a>
+</ng-container>
+
+<h1>Ufærdigt</h1>
+<ng-container *ngFor="let entry of shown(wips)">
+	<a [routerLink]="entry.link">{{entry.title}}</a>
 </ng-container>
