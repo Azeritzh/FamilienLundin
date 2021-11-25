@@ -3,6 +3,8 @@ import { RouterModule, Routes } from "@angular/router"
 import { AgentiaComponent } from "./modules/agentia/agentia.component"
 import { AncestryRootComponent } from "./modules/ancestry/ancestry-root/ancestry-root.component"
 import { ancestryRoutes } from "./modules/ancestry/routes"
+import { CalendarRootComponent } from "./modules/calendar/calendar-root/calendar-root.component"
+import { calendarRoutes } from "./modules/calendar/routes"
 import { CryptComponent } from "./modules/crypt/crypt.component"
 import { GalleryRootComponent } from "./modules/gallery/gallery-root/gallery-root.component"
 import { galleryRoutes } from "./modules/gallery/routes"
@@ -13,7 +15,6 @@ import { MinestrygerComponent } from "./modules/minestryger/minestryger.componen
 import { NoughtsAndCrossesComponent } from "./modules/noughts-and-crosses/noughts-and-crosses.component"
 import { RecipesComponent } from "./modules/recipes/recipes/recipes.component"
 import { VirusComponent } from "./modules/virus/virus.component"
-import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { HomeComponent } from "./pages/home/home.component"
 import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
 import { ProfileComponent } from "./pages/profile/profile.component"
@@ -23,7 +24,7 @@ import { IsAuthenticatedGuard } from "./services/is-authenticated.guard"
 const routes: Routes = [
 	{ path: "", component: HomeComponent },
 	{ path: "ancestry", component: AncestryRootComponent, children: ancestryRoutes },
-	{ path: "calendar", component: CalendarComponent, canActivate: [IsAuthenticatedGuard] },
+	{ path: "calendar", component: CalendarRootComponent, canActivate: [IsAuthenticatedGuard], children: calendarRoutes },
 	{ path: "gallery", component: GalleryRootComponent, canActivate: [IsAuthenticatedGuard], children: galleryRoutes },
 	{ path: "games/iframe/:game", component: IframeGameComponent },
 	{ path: "games/kingdoms", component: KingdomsComponent },
