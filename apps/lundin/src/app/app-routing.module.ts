@@ -6,7 +6,8 @@ import { ancestryRoutes } from "./modules/ancestry/routes"
 import { CryptComponent } from "./modules/crypt/crypt.component"
 import { GalleryComponent } from "./modules/gallery/gallery/gallery.component"
 import { KingdomsComponent } from "./modules/kingdoms/kingdoms.component"
-import { MessageThreadComponent } from "./modules/message/message-thread/message-thread.component"
+import { MessageRootComponent } from "./modules/message/message-root/message-root.component"
+import { messageRoutes } from "./modules/message/routes"
 import { MinestrygerComponent } from "./modules/minestryger/minestryger.component"
 import { NoughtsAndCrossesComponent } from "./modules/noughts-and-crosses/noughts-and-crosses.component"
 import { RecipesComponent } from "./modules/recipes/recipes/recipes.component"
@@ -28,7 +29,7 @@ const routes: Routes = [
 	{ path: "games/minestryger", component: MinestrygerComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "games/noughts-and-crosses", component: NoughtsAndCrossesComponent },
 	{ path: "games/virus", component: VirusComponent },
-	{ path: "messages/:id", component: MessageThreadComponent, canActivate: [IsAuthenticatedGuard] },
+	{ path: "messages", component: MessageRootComponent, canActivate: [IsAuthenticatedGuard], children: messageRoutes },
 	{ path: "profile", component: ProfileComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "recipes", component: RecipesComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "various", component: VariousComponent },
