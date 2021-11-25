@@ -13,7 +13,8 @@ import { MessageRootComponent } from "./modules/message/message-root/message-roo
 import { messageRoutes } from "./modules/message/routes"
 import { MinestrygerComponent } from "./modules/minestryger/minestryger.component"
 import { NoughtsAndCrossesComponent } from "./modules/noughts-and-crosses/noughts-and-crosses.component"
-import { RecipesComponent } from "./modules/recipes/recipes/recipes.component"
+import { RecipesRootComponent } from "./modules/recipes/recipes-root/recipes-root.component"
+import { recipesRoutes } from "./modules/recipes/routes"
 import { VirusComponent } from "./modules/virus/virus.component"
 import { HomeComponent } from "./pages/home/home.component"
 import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
@@ -33,7 +34,7 @@ const routes: Routes = [
 	{ path: "games/virus", component: VirusComponent },
 	{ path: "messages", component: MessageRootComponent, canActivate: [IsAuthenticatedGuard], children: messageRoutes },
 	{ path: "profile", component: ProfileComponent, canActivate: [IsAuthenticatedGuard] },
-	{ path: "recipes", component: RecipesComponent, canActivate: [IsAuthenticatedGuard] },
+	{ path: "recipes", component: RecipesRootComponent, canActivate: [IsAuthenticatedGuard], children: recipesRoutes },
 	{ path: "various", component: VariousComponent },
 	{ path: "various/agentia", component: AgentiaComponent },
 	{ path: "various/crypt", component: CryptComponent, canActivate: [IsAuthenticatedGuard] },
