@@ -18,7 +18,7 @@ export class AncestryService {
 
 	load() {
 		this.httpClient.get<Person[]>("api/ancestry/load-all").toPromise().then(people => {
-			this.people = people
+			this.people = people.sortBy(x => x.name)
 			this.updatePeople$()
 		})
 		return this.people$
