@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
 import { AgentiaComponent } from "./modules/agentia/agentia.component"
-import { AncestryTreeComponent } from "./modules/ancestry/ancestry-tree/ancestry-tree.component"
-import { PersonComponent } from "./modules/ancestry/person/person.component"
+import { AncestryRootComponent } from "./modules/ancestry/ancestry-root/ancestry-root.component"
+import { ancestryRoutes } from "./modules/ancestry/routes"
 import { CryptComponent } from "./modules/crypt/crypt.component"
 import { GalleryComponent } from "./modules/gallery/gallery/gallery.component"
 import { KingdomsComponent } from "./modules/kingdoms/kingdoms.component"
@@ -11,7 +11,6 @@ import { MinestrygerComponent } from "./modules/minestryger/minestryger.componen
 import { NoughtsAndCrossesComponent } from "./modules/noughts-and-crosses/noughts-and-crosses.component"
 import { RecipesComponent } from "./modules/recipes/recipes/recipes.component"
 import { VirusComponent } from "./modules/virus/virus.component"
-import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { HomeComponent } from "./pages/home/home.component"
 import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
@@ -21,9 +20,7 @@ import { IsAuthenticatedGuard } from "./services/is-authenticated.guard"
 
 const routes: Routes = [
 	{ path: "", component: HomeComponent },
-	{ path: "ancestry", component: AncestryComponent },
-	{ path: "ancestry/person/:id", component: PersonComponent },
-	{ path: "ancestry/tree/:id", component: AncestryTreeComponent },
+	{ path: "ancestry", component: AncestryRootComponent, children: ancestryRoutes },
 	{ path: "calendar", component: CalendarComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "gallery", component: GalleryComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "games/iframe/:game", component: IframeGameComponent },

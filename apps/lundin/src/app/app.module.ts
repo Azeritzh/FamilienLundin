@@ -16,7 +16,6 @@ import { MinestrygerModule } from "./modules/minestryger/minestryger.module"
 import { NoughtsAndCrossesModule } from "./modules/noughts-and-crosses/noughts-and-crosses.module"
 import { RecipesModule } from "./modules/recipes/recipes.module"
 import { VirusModule } from "./modules/virus/virus.module"
-import { AncestryComponent } from "./pages/ancestry/ancestry.component"
 import { CalendarComponent } from "./pages/calendar/calendar.component"
 import { HomeComponent } from "./pages/home/home.component"
 import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
@@ -31,7 +30,6 @@ import { SharedModule } from "./shared/shared.module"
 
 @NgModule({
 	declarations: [
-		AncestryComponent,
 		AppComponent,
 		CalendarComponent,
 		HomeComponent,
