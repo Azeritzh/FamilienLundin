@@ -1,0 +1,92 @@
+@import "../../../styles/general.scss";
+
+.recipes-container {
+	@extend .container-box;
+	height: 100%;
+	min-width: 50rem;
+}
+
+.recipes-img-list {
+	@extend .scroll-container;
+	height: calc(100vh - 12rem);
+	padding: 0 1rem;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1rem;
+	text-align: center;
+}
+
+.recipes-list-item {
+	background-color: var(--color-secondary);
+	border-radius: var(--border-radius-full);
+	overflow: hidden;
+	height: 15rem;
+	display: flex;
+	position: relative;
+}
+
+.img-description {
+	position: absolute;
+    top: 87%;
+    width: 100%;
+    left: 0;
+    background-color: var(--color-primary);
+    padding: 0.5rem 0.2rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.search-container {
+	display: flex;
+	flex-direction: column;
+	margin: 1rem;
+}
+
+img {
+	position: relative;
+    max-height: 100%;
+    left: 50%;
+    transform: translate(-50%);
+    display: block;
+}
+
+
+.file-display { padding: 0.2rem; }
+lundin-file-input, .file-display { margin-bottom: 0.5rem; }
+
+.save {
+	background-color: var(--color-btn-positive);
+}
+
+#description {
+	margin-bottom: 0.5rem;
+}
+
+.top-content-container {
+	display: flex;
+}
+
+.top-content {
+	flex: 1;
+}
+
+#ingredients {
+	height: 20rem;
+}
+
+#steps {
+	height: 35.8rem;
+}
+
+#time {
+	margin-bottom: 0.5rem;
+}
+
+#amount {
+	margin-bottom: 0.5rem;
+}
+
+.left-content {
+	margin-top: 0.5rem;
+}

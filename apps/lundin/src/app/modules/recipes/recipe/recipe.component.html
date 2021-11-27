@@ -1,0 +1,60 @@
+<section class="recipes-container">
+	<header class="container-header">
+		<h1>{{recipe.title}}</h1>
+		<button type="button"
+			(click)="edit()">
+			Redigér
+		</button>
+	</header>
+	
+	<div class="top-content left-content">
+		<img [src]="recipe.fileId">
+		<div class="content-container">
+			<label for="time"
+				[labelling]="timeInput">
+				Tid det tager
+			</label>
+			<input #timeInput
+				type="text"
+				id="time"
+				autocomplete="off"
+				[value]="recipe.time"
+				disabled>
+
+			<label for="amount"
+				[labelling]="amountInput">
+				Til antal personer
+			</label>
+			<input #amountInput
+				type="text"
+				id="amount"
+				autocomplete="off"
+				[value]="recipe.persons"
+				disabled>
+
+			<label for="ingredients"
+				[labelling]="ingredientsInput">
+				Ingredienser
+			</label>
+			<textarea #ingredientsInput
+				type="text"
+				id="ingredients"
+				autocomplete="off"
+				[value]="recipe.ingredients"
+				disabled></textarea>
+		</div>
+	</div>
+
+	<div class="top-content content-container">
+		<label for="steps"
+			[labelling]="stepsInput">
+			Opskrift trin
+		</label>
+		<textarea #stepsInput
+			type="text"
+			id="steps"
+			autocomplete="off"
+			[value]="recipe.description"
+			disabled></textarea>
+	</div>
+</section>
