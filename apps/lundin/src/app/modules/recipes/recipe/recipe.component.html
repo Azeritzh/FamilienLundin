@@ -6,53 +6,51 @@
 			Redigér
 		</button>
 	</header>
-	
-	<div class="top-content left-content">
-		<img [src]="recipe.fileId">
-		<div class="content-container">
-			<label for="time"
-				[labelling]="timeInput">
-				Tid det tager
-			</label>
-			<input #timeInput
-				type="text"
-				id="time"
-				autocomplete="off"
-				[value]="recipe.time"
-				disabled>
 
-			<label for="amount"
-				[labelling]="amountInput">
-				Til antal personer
-			</label>
-			<input #amountInput
-				type="text"
-				id="amount"
-				autocomplete="off"
-				[value]="recipe.persons"
-				disabled>
+	<div class="left-content">
+		<img [src]="imagePath()">
+		<label for="time"
+			[labelling]="timeInput">
+			Tid det tager
+		</label>
+		<input #timeInput
+			type="text"
+			id="time"
+			autocomplete="off"
+			[value]="recipe.time"
+			disabled>
 
-			<label for="ingredients"
-				[labelling]="ingredientsInput">
-				Ingredienser
-			</label>
-			<textarea #ingredientsInput
-				type="text"
-				id="ingredients"
-				autocomplete="off"
-				[value]="recipe.ingredients"
-				disabled></textarea>
-		</div>
+		<label for="amount"
+			[labelling]="amountInput">
+			Til antal personer
+		</label>
+		<input #amountInput
+			type="text"
+			id="amount"
+			autocomplete="off"
+			[value]="recipe.persons"
+			disabled>
+
+		<label for="ingredients"
+			[labelling]="ingredientsInput">
+			Ingredienser
+		</label>
+		<textarea #ingredientsInput
+			type="text"
+			id="ingredients"
+			autocomplete="off"
+			[value]="recipe.ingredients"
+			disabled></textarea>
 	</div>
 
-	<div class="top-content content-container">
-		<label for="steps"
-			[labelling]="stepsInput">
+	<div class="right-content">
+		<label for="description"
+			[labelling]="descriptionInput">
 			Opskrift trin
 		</label>
-		<textarea #stepsInput
+		<textarea #descriptionInput
 			type="text"
-			id="steps"
+			id="description"
 			autocomplete="off"
 			[value]="recipe.description"
 			disabled></textarea>

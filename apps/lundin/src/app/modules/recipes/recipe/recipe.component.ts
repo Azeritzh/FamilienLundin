@@ -30,4 +30,8 @@ export class RecipeComponent implements OnInit {
 	edit() {
 		this.navigationService.openAsOverlay(EditRecipeComponent)
 	}
+
+	imagePath() {
+		return `api/recipe/file/${this.recipe.fileId}`
+	}
 }
