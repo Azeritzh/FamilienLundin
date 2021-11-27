@@ -30,7 +30,7 @@ export class RecipeController {
 	@Post("upload-file")
 	@UseInterceptors(FileInterceptor("file", { dest: "./recipe-uploads" }))
 	async uploadFile(@UploadedFile() file) {
-		return file.filename
+		return { id: file.filename }
 	}
 
 	@UseGuards(JwtAuthGuard)

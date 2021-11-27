@@ -19,7 +19,8 @@ export class RecipesService {
 	private async uploadFile(file: File) {
 		const formdata = new FormData()
 		formdata.set("file", file)
-		return await this.httpClient.post<string>("api/recipe/upload-file", formdata).toPromise()
+		const { id } = await this.httpClient.post<{ id: string }>("api/recipe/upload-file", formdata).toPromise()
+		return id
 	}
 
 	updateRecipe(recipe: Recipe) {

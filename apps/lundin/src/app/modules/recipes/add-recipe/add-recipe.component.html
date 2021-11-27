@@ -12,7 +12,7 @@
 
 	<div class="top-content-container">
 		<div class="top-content left-content">
-			<lundin-file-input></lundin-file-input>
+			<lundin-file-input (changeFile)="handleFile($event)"></lundin-file-input>
 			<div class="content-container">
 				<label for="time"
 					[labelling]="timeInput">

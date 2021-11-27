@@ -10,12 +10,17 @@ import { RecipesService } from "../recipes.service"
 	styleUrls: ["./add-recipe.component.scss", "../../../styles/popup-box.scss"],
 })
 export class AddRecipeComponent {
+	file: File = null
 
 	constructor(
 		private navigationService: NavigationService,
 		private recipeService: RecipesService,
 		private router: Router,
 	) { }
+
+	handleFile(file: File) {
+		this.file = file
+	}
 
 	async save() {
 		//await this.galleryService.addImage(this.personId, this.file)
@@ -29,7 +34,7 @@ export class AddRecipeComponent {
 			fileId: "",
 		}
 		this.navigationService.closeOverlay()
-		const { _id } = await this.recipeService.addRecipe(recipe)
+		const { _id } = await this.recipeService.addRecipe(recipe, this.file)
 		this.router.navigateByUrl("recipes/" + _id)
 	}
 
