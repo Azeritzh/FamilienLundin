@@ -3,7 +3,7 @@ import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { StorageService } from "../../storage/storage.service"
 
-@Controller("message")
+@Controller("recipe")
 export class RecipeController {
 	constructor(private readonly storageService: StorageService) { }
 
@@ -14,7 +14,7 @@ export class RecipeController {
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Post("add-recipes")
+	@Post("add-recipe")
 	async addRecipe(@Body() recipe: Recipe) {
 		return this.storageService.recipeCollection.insertOne(recipe)
 	}

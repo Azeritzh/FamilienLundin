@@ -1,4 +1,6 @@
 import { Component } from "@angular/core"
+import { Router } from "@angular/router"
+import { Recipe } from "@lundin/api-interfaces"
 import { NavigationService } from "../../../services/navigation.service"
 import { RecipesService } from "../recipes.service"
 
@@ -10,13 +12,25 @@ import { RecipesService } from "../recipes.service"
 export class AddRecipeComponent {
 
 	constructor(
-		private recipeService: RecipesService,
 		private navigationService: NavigationService,
+		private recipeService: RecipesService,
+		private router: Router,
 	) { }
 
 	async save() {
 		//await this.galleryService.addImage(this.personId, this.file)
+		const recipe: Recipe = {
+			_id: 0,
+			title: "string",
+			description: "string",
+			time: "string",
+			persons: "string",
+			ingredients: "string",
+			fileId: "",
+		}
 		this.navigationService.closeOverlay()
+		const { _id } = await this.recipeService.addRecipe(recipe)
+		this.router.navigateByUrl("recipes/" + _id)
 	}
 
 	cancel() {

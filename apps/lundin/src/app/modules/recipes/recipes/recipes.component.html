@@ -14,10 +14,10 @@
 	</section>
 
 	<ul class="recipes-img-list">
-		<li class="recipes-list-item"
+		<li *ngFor="let recipe of recipes" class="recipes-list-item"
 			(click)="edit()">
-			<img src="">
-			<span class="img-description">test</span>
+			<img [src]="recipe.fileId">
+			<span class="img-description">{{recipe.title}}</span>
 		</li>
 	</ul>
 </section>

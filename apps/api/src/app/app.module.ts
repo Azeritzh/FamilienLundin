@@ -10,6 +10,7 @@ import { CalendarController } from "./controllers/calendar.controller"
 import { CryptController } from "./controllers/crypt.controller"
 import { MessageController } from "./controllers/message.controller"
 import { MinestrygerController } from "./controllers/minestryger.controller"
+import { RecipeController } from "./controllers/recipe.controller"
 import { UserController } from "./controllers/user.controller"
 
 @Module({
@@ -28,6 +29,7 @@ import { UserController } from "./controllers/user.controller"
 		CryptController,
 		MessageController,
 		MinestrygerController,
+		RecipeController,
 		UserController,
 	],
 })
