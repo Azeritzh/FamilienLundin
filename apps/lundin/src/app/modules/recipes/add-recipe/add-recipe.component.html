@@ -7,6 +7,7 @@
 	</label>
 	<input #nameInput
 		type="text"
+		[(ngModel)]="recipe.title"
 		id="name"
 		autocomplete="off">
 
@@ -20,6 +21,7 @@
 				</label>
 				<input #timeInput
 					type="text"
+					[(ngModel)]="recipe.time"
 					id="time"
 					autocomplete="off">
 
@@ -29,6 +31,7 @@
 				</label>
 				<input #amountInput
 					type="text"
+					[(ngModel)]="recipe.persons"
 					id="amount"
 					autocomplete="off">
 
@@ -38,6 +41,7 @@
 				</label>
 				<textarea #ingredientsInput
 					type="text"
+					[(ngModel)]="recipe.ingredients"
 					id="ingredients"
 					autocomplete="off"></textarea>
 			</div>
@@ -49,7 +53,7 @@
 				Opskrift trin
 			</label>
 			<textarea #stepsInput
-				type="text"
+				[(ngModel)]="recipe.description"
 				id="steps"
 				autocomplete="off"></textarea>
 		</div>

@@ -11,6 +11,15 @@ import { RecipesService } from "../recipes.service"
 })
 export class AddRecipeComponent {
 	file: File = null
+	recipe: Recipe = {
+		_id: 0,
+		title: "",
+		description: "",
+		time: "",
+		persons: "",
+		ingredients: "",
+		fileId: "",
+	}
 
 	constructor(
 		private navigationService: NavigationService,
@@ -23,18 +32,8 @@ export class AddRecipeComponent {
 	}
 
 	async save() {
-		//await this.galleryService.addImage(this.personId, this.file)
-		const recipe: Recipe = {
-			_id: 0,
-			title: "string",
-			description: "string",
-			time: "string",
-			persons: "string",
-			ingredients: "string",
-			fileId: "",
-		}
 		this.navigationService.closeOverlay()
-		const { _id } = await this.recipeService.addRecipe(recipe, this.file)
+		const { _id } = await this.recipeService.addRecipe(this.recipe, this.file)
 		this.router.navigateByUrl("recipes/" + _id)
 	}
 
