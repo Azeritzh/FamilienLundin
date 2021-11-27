@@ -20,7 +20,7 @@ export class RecipesService {
 		const formdata = new FormData()
 		formdata.set("file", file)
 		const { id } = await this.httpClient.post<{ id: string }>("api/recipe/upload-file", formdata).toPromise()
-		return id
+		return id + "/" + file.name
 	}
 
 	updateRecipe(recipe: Recipe) {

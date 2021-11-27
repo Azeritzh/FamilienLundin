@@ -37,4 +37,8 @@ export class RecipesComponent {
 	open(recipe: Recipe){
 		this.router.navigateByUrl("recipes/" + recipe._id)
 	}
+
+	pathFor(fileId: string) {
+		return `api/recipe/file/${fileId}`
+	}
 }

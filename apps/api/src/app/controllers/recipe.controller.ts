@@ -36,6 +36,6 @@ export class RecipeController {
 	@UseGuards(JwtAuthGuard)
 	@Get("file/:fileId/:fileName")
 	async getFile(@Param("fileId") fileId, @Res() res) {
-		res.sendFile(fileId, { root: "ancestry-uploads" })
+		res.sendFile(fileId, { root: "recipe-uploads" })
 	}
 }

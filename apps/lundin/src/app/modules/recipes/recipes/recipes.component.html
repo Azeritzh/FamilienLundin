@@ -16,7 +16,7 @@
 	<ul class="recipes-img-list">
 		<li *ngFor="let recipe of recipes" class="recipes-list-item"
 			(click)="open(recipe)">
-			<img [src]="recipe.fileId">
+			<img [src]="pathFor(recipe.fileId)">
 			<span class="img-description">{{recipe.title}}</span>
 		</li>
 	</ul>
