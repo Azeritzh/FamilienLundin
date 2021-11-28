@@ -42,4 +42,10 @@ export class RecipeFormComponent {
 	cancel() {
 		this.navigationService.closeOverlay()
 	}
+
+	imagePath() {
+		return this.recipe.fileId
+			? "api/recipe/file/" + this.recipe.fileId
+			: ""
+	}
 }
