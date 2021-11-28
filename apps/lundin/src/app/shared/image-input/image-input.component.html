@@ -1,0 +1,12 @@
+<lundin-file-input *ngIf="!(existingImagePath || newImage)"
+	(changeFile)="handleFile($event)">
+</lundin-file-input>
+
+<img *ngIf="existingImagePath"
+	[src]="existingImagePath" />
+
+<button *ngIf="existingImagePath || newImage"
+	type="button"
+	(click)="resetImage()">
+	Skift billede
+</button>
