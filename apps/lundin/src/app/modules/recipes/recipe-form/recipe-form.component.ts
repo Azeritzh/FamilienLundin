@@ -5,11 +5,11 @@ import { NavigationService } from "../../../services/navigation.service"
 import { RecipesService } from "../recipes.service"
 
 @Component({
-	selector: "lundin-add-recipe",
-	templateUrl: "./add-recipe.component.html",
-	styleUrls: ["./add-recipe.component.scss", "../../../styles/popup-box.scss"],
+	selector: "lundin-recipe-form",
+	templateUrl: "./recipe-form.component.html",
+	styleUrls: ["./recipe-form.component.scss", "../../../styles/popup-box.scss"],
 })
-export class AddRecipeComponent {
+export class RecipeFormComponent {
 	file: File = null
 	recipe: Recipe = {
 		_id: 0,

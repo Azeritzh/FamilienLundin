@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { Recipe } from "@lundin/api-interfaces"
 import { NavigationService } from "../../../services/navigation.service"
-import { AddRecipeComponent } from "../add-recipe/add-recipe.component"
+import { RecipeFormComponent } from "../recipe-form/recipe-form.component"
 import { RecipesService } from "../recipes.service"
 
 @Component({
@@ -28,7 +28,7 @@ export class RecipeComponent implements OnInit {
 	}
 
 	async edit() {
-		const component = await this.navigationService.openAsOverlay(AddRecipeComponent)
+		const component = await this.navigationService.openAsOverlay(RecipeFormComponent)
 		component.recipe = { ...this.recipe }
 	}
 

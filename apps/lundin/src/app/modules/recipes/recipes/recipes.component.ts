@@ -2,7 +2,7 @@ import { Component } from "@angular/core"
 import { Router } from "@angular/router"
 import { Recipe } from "@lundin/api-interfaces"
 import { NavigationService } from "../../../services/navigation.service"
-import { AddRecipeComponent } from "../add-recipe/add-recipe.component"
+import { RecipeFormComponent } from "../recipe-form/recipe-form.component"
 import { RecipesService } from "../recipes.service"
 
 @Component({
@@ -26,7 +26,7 @@ export class RecipesComponent {
 	}
 
 	add() {
-		this.navigationService.openAsOverlay(AddRecipeComponent)
+		this.navigationService.openAsOverlay(RecipeFormComponent)
 	}
 
 	open(recipe: Recipe){
