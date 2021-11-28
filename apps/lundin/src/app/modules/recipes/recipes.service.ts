@@ -23,7 +23,9 @@ export class RecipesService {
 		return id + "/" + file.name
 	}
 
-	updateRecipe(recipe: Recipe) {
-		return this.httpClient.post("api/recipe/update-recipe", recipe).toPromise()
+	async updateRecipe(recipe: Recipe, file?: File) {
+		if (file)
+			recipe.fileId = await this.uploadFile(file)
+		return this.httpClient.post<Recipe>("api/recipe/update-recipe", recipe).toPromise()
 	}
 }

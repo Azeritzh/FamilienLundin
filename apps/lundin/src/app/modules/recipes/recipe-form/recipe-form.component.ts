@@ -5,11 +5,11 @@ import { NavigationService } from "../../../services/navigation.service"
 import { RecipesService } from "../recipes.service"
 
 @Component({
-	selector: "lundin-add-recipe",
-	templateUrl: "./add-recipe.component.html",
-	styleUrls: ["./add-recipe.component.scss", "../../../styles/popup-box.scss"],
+	selector: "lundin-recipe-form",
+	templateUrl: "./recipe-form.component.html",
+	styleUrls: ["./recipe-form.component.scss", "../../../styles/popup-box.scss"],
 })
-export class AddRecipeComponent {
+export class RecipeFormComponent {
 	file: File = null
 	recipe: Recipe = {
 		_id: 0,
@@ -33,7 +33,9 @@ export class AddRecipeComponent {
 
 	async save() {
 		this.navigationService.closeOverlay()
-		const { _id } = await this.recipeService.addRecipe(this.recipe, this.file)
+		const { _id } = this.recipe._id
+			? await this.recipeService.updateRecipe(this.recipe, this.file)
+			: await this.recipeService.addRecipe(this.recipe, this.file)
 		this.router.navigateByUrl("recipes/" + _id)
 	}
 
