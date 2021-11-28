@@ -33,7 +33,9 @@ export class AddRecipeComponent {
 
 	async save() {
 		this.navigationService.closeOverlay()
-		const { _id } = await this.recipeService.addRecipe(this.recipe, this.file)
+		const { _id } = this.recipe._id
+			? await this.recipeService.updateRecipe(this.recipe, this.file)
+			: await this.recipeService.addRecipe(this.recipe, this.file)
 		this.router.navigateByUrl("recipes/" + _id)
 	}
 
