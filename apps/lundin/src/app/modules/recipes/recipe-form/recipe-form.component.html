@@ -13,7 +13,9 @@
 
 	<div class="top-content-container">
 		<div class="top-content left-content">
-			<lundin-file-input (changeFile)="handleFile($event)"></lundin-file-input>
+			<lundin-image-input [imagePath]="imagePath()"
+				(changeFile)="handleFile($event)">
+			</lundin-image-input>
 			<div class="content-container">
 				<label for="time"
 					[labelling]="timeInput">
