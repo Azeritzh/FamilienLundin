@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { ActivatedRoute } from "@angular/router"
+import { ActivatedRoute, Router } from "@angular/router"
 import { Person } from "@lundin/api-interfaces"
 import { Subscription } from "rxjs"
 import { AncestryService } from "../ancestry.service"
@@ -10,12 +10,14 @@ import { AncestryService } from "../ancestry.service"
 	styleUrls: ["./ancestry-tree.component.scss"],
 })
 export class AncestryTreeComponent implements OnInit, OnDestroy {
-	rootPersonNode: PersonNode
+	generations: Person[][] = []
+	children: Person[] = []
 	private subscription: Subscription
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private ancestryService: AncestryService,
+		private router: Router,
 	) {
 		ancestryService.load()
 	}
@@ -33,31 +35,62 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 	}
 
 	private setup = (person: Person) => {
-		this.rootPersonNode = this.createPersonNode(person)
+		if (!person)
+			return
+		this.generations = []
+		this.generations.push([person])
+		this.loadChildren(person)
+		for (let depth = 1; this.generations.length === depth && depth < 8; depth++)
+			this.loadGeneration(depth)
 	}
 
-	createPersonNode(person: Person): PersonNode {
-		if (!person)
-			return null
-		const parents = person.relations
+	loadChildren(person: Person) {
+		this.children = person.relations
+			.filter(x => x.type === "child")
+			.map(x => this.ancestryService.person(x.id))
+	}
+
+	private loadGeneration(depth: number) {
+		const previousGeneration = this.generations[depth - 1]
+		const generation: Person[] = []
+		generation.length = Math.pow(2, depth)
+		for (const i in previousGeneration)
+			this.addParentsToNextGeneration(+i, previousGeneration[i], generation)
+		if (!this.isEmpty(generation))
+			this.generations.push(generation)
+	}
+
+	private addParentsToNextGeneration(index: number, person: Person, generation: Person[]) {
+		const father = this.parentOf(person, "male")
+		if (father)
+			generation[index * 2] = father
+		const mother = this.parentOf(person, "female")
+		if (mother)
+			generation[index * 2 + 1] = mother
+	}
+
+	private parentOf(person: Person, gender: "male" | "female") {
+		return person.relations
 			.filter(x => x.type === "parent")
 			.map(x => this.ancestryService.person(x.id))
-		const mother = parents.find(x => x.gender === "female")
-		const father = parents.find(x => x.gender === "male")
-		return new PersonNode(person,
-			this.createPersonNode(mother),
-			this.createPersonNode(father))
+			.find(x => x.gender === gender)
+	}
+
+	private isEmpty(list: any[]) {
+		for (const i in list)
+			return false
+		return true
+	}
+
+	get currentPerson() {
+		return this.generations[0]?.[0]
+	}
+
+	navigateToDetails() {
+		this.router.navigateByUrl("/ancestry/person/" + this.currentPerson._id)
 	}
 
 	ngOnDestroy() {
 		this.subscription?.unsubscribe()
 	}
-}
-
-export class PersonNode {
-	constructor(
-		public person: Person,
-		public mother: PersonNode,
-		public father: PersonNode
-	) { }
 }

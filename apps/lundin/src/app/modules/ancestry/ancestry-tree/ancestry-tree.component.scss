@@ -1,12 +1,24 @@
 @import "../../../styles/general.scss";
 
-.tree-container {
+:host {
 	@extend .container-box;
+	display: block;
 	height: calc(100% - 1.5rem);
 }
 
-.ancestry-tree {
-    padding: 0.5rem;
-    display: flex;
-    height: calc(100% - 3rem);
+.tree-container {
+	padding: 0.5rem;
+	display: flex;
+	height: calc(100% - 3rem);
+}
+
+.generation {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 20rem;
+}
+
+lundin-ancestry-tree-node {
+	flex: 1;
 }
