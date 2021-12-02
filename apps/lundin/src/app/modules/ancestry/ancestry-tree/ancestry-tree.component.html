@@ -1,8 +1,11 @@
-<ng-container *ngIf="rootPersonNode">
-	<section class="tree-container">
-		<header class="container-header">
-			<h1>{{rootPersonNode.person.name}} - stamtræ</h1>
-		</header>
-		<lundin-ancestry-tree-node [personNode]="rootPersonNode" class="ancestry-tree"></lundin-ancestry-tree-node>
-	</section>
-</ng-container>
+<header class="container-header">
+	<h1>{{currentPerson?.name}} - stamtræ</h1>
+</header>
+<section class="tree-container">
+	<div *ngFor="let generation of generations" class="generation">
+		<lundin-ancestry-tree-node *ngFor="let person of generation"
+			[person]="person"
+			class="ancestry-tree">
+		</lundin-ancestry-tree-node>
+	</div>
+</section>
