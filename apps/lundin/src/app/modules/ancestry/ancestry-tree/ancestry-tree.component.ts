@@ -11,6 +11,7 @@ import { AncestryService } from "../ancestry.service"
 })
 export class AncestryTreeComponent implements OnInit, OnDestroy {
 	generations: Person[][] = []
+	children: Person[] = []
 	private subscription: Subscription
 
 	constructor(
@@ -38,8 +39,15 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 			return
 		this.generations = []
 		this.generations.push([person])
+		this.loadChildren(person)
 		for (let depth = 1; this.generations.length === depth && depth < 8; depth++)
 			this.loadGeneration(depth)
+	}
+
+	loadChildren(person: Person) {
+		this.children = person.relations
+			.filter(x => x.type === "child")
+			.map(x => this.ancestryService.person(x.id))
 	}
 
 	private loadGeneration(depth: number) {
