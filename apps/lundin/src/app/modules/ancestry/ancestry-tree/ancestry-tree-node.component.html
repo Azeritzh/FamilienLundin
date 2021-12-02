@@ -1,10 +1,7 @@
-<div class="person"
-	(click)="navigateToPerson()">
-	<div class="person-info"
-		[class.male]="person?.gender === 'male'"
-		[class.female]="person?.gender === 'female'">
-		<div class="label name">{{person?.name || '-'}}</div>
-		<div class="label born">Født: {{bornText()}}</div>
-		<div class="label dead">Død: {{deadText()}}</div>
-	</div>
+<div class="person-info"
+	[class.male]="person?.gender === 'male'"
+	[class.female]="person?.gender === 'female'">
+	<div class="label name">{{person?.name || '-'}}</div>
+	<div class="label born">Født: {{bornText()}}</div>
+	<div class="label dead">Død: {{deadText()}}</div>
 </div>

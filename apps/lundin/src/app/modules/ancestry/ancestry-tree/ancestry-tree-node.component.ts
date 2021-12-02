@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core"
+import { Component, HostListener, Input } from "@angular/core"
 import { Router } from "@angular/router"
 import { Person } from "@lundin/api-interfaces"
 
@@ -10,21 +10,22 @@ import { Person } from "@lundin/api-interfaces"
 export class AncestryTreeNodeComponent {
 	@Input() person: Person
 
-	constructor (
+	@HostListener("click")
+	navigateToPerson() {
+		this.router.navigateByUrl("/ancestry/tree/" + this.person._id)
+	}
+
+	constructor(
 		private router: Router
 	) { }
 
-	bornText(){
+	bornText() {
 		const born = this.person?.information.find(x => x.title === "__born")
 		return born?.content || "Ukendt"
 	}
 
-	deadText(){
+	deadText() {
 		const dead = this.person?.information.find(x => x.title === "__dead")
 		return dead?.content || "-"
-	}
-
-	navigateToPerson() {
-		this.router.navigateByUrl("/ancestry/person/" + this.person._id)
 	}
 }

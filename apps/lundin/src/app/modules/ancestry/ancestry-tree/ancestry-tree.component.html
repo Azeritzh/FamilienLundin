@@ -2,10 +2,10 @@
 	<h1>{{currentPerson?.name}} - stamtræ</h1>
 </header>
 <section class="tree-container">
-	<div *ngFor="let generation of generations" class="generation">
+	<div *ngFor="let generation of generations"
+		class="generation">
 		<lundin-ancestry-tree-node *ngFor="let person of generation"
-			[person]="person"
-			class="ancestry-tree">
+			[person]="person">
 		</lundin-ancestry-tree-node>
 	</div>
 </section>

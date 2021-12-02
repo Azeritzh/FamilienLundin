@@ -1,8 +1,9 @@
-.person {
+:host {
 	height: 100%;
 	border: 1px solid black;
 	display: flex;
 	cursor: pointer;
+	overflow: hidden;
 }
 
 .name {
@@ -15,22 +16,6 @@
 
 .female .name {
 	color: #800;
-}
-
-.parents {
-	display: grid;
-	height: 100%;
-	float: left;
-}
-
-.mother {
-	height: 100%;
-	float: left;
-}
-
-.father {
-	height: 100%;
-	float: left;
 }
 
 .person-info {

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { ActivatedRoute } from "@angular/router"
+import { ActivatedRoute, Router } from "@angular/router"
 import { Person } from "@lundin/api-interfaces"
 import { Subscription } from "rxjs"
 import { AncestryService } from "../ancestry.service"
@@ -16,6 +16,7 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private ancestryService: AncestryService,
+		private router: Router,
 	) {
 		ancestryService.load()
 	}
@@ -37,7 +38,7 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 			return
 		this.generations = []
 		this.generations.push([person])
-		for (let depth = 1; this.generations.length === depth && depth < 15; depth++)
+		for (let depth = 1; this.generations.length === depth && depth < 8; depth++)
 			this.loadGeneration(depth)
 	}
 
@@ -74,7 +75,7 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 	}
 
 	get currentPerson() {
-		return this.generations[0][0]
+		return this.generations[0]?.[0]
 	}
 
 	ngOnDestroy() {
