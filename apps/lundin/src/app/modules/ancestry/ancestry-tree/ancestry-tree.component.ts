@@ -78,6 +78,10 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 		return this.generations[0]?.[0]
 	}
 
+	navigateToDetails() {
+		this.router.navigateByUrl("/ancestry/person/" + this.currentPerson._id)
+	}
+
 	ngOnDestroy() {
 		this.subscription?.unsubscribe()
 	}
