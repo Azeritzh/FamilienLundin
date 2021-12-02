@@ -21,7 +21,7 @@ export class AncestryTreeNodeComponent {
 
 	bornText() {
 		const born = this.person?.information.find(x => x.title === "__born")
-		return born?.content || "Ukendt"
+		return born?.content || "-"
 	}
 
 	deadText() {
