@@ -3,6 +3,7 @@ import { auditTime } from "rxjs/operators"
 import { StorageService } from "./storage.service"
 
 type Change<T> = ((e: T) => void) | { [key: string]: any }
+type Query<T> = ((e: T) => true) | { [key: string]: any }
 
 export class Collection<T extends { _id?: number }> {
 	private tempStore: { [id: string]: T } = {}
@@ -36,13 +37,13 @@ export class Collection<T extends { _id?: number }> {
 		return entries.map(x => this.insertOne(x))
 	}
 
-	updateOne(query, changes: Change<T>) {
+	updateOne(query: Query<T>, changes: Change<T>) {
 		const entry = this.findOne(query)
 		this.makeChanges(entry, changes)
 		return entry
 	}
 
-	updateMany(query, changes: Change<T>) {
+	updateMany(query: Query<T>, changes: Change<T>) {
 		const entries = this.find(query)
 		for (const entry of entries)
 			this.makeChanges(entry, changes)
@@ -58,41 +59,44 @@ export class Collection<T extends { _id?: number }> {
 		this.update$.next()
 	}
 
-	deleteOne(query) {
+	deleteOne(query: Query<T>) {
 		const entry = this.findOne(query)
 		delete this.tempStore[entry._id]
 		this.update$.next()
 	}
 
-	deleteMany(query) {
+	deleteMany(query: Query<T>) {
 		const entries = this.find(query)
 		for (const entry of entries)
 			delete this.tempStore[entry._id]
 		this.update$.next()
 	}
 
-	find(query?) {
+	find(query?: Query<T>) {
 		const entries = Object.values(this.tempStore)
 		if (!query)
 			return entries
-		return entries.filter(x => {
-			for (const key in query)
-				if (x[key] !== query[key])
-					return false
-			return true
-		})
+		const filterFunction = query instanceof Function
+			? query
+			: this.filterBy(query)
+		return entries.filter(filterFunction)
 	}
 
-	findOne(query?) {
+	findOne(query?: Query<T>) {
 		const entries = Object.values(this.tempStore)
 		if (!query)
 			return entries[0]
-		return entries.find(x => {
-			for (const key in query)
-				if (x[key] !== query[key])
-					return false
-			return true
-		})
+		const filterFunction = query instanceof Function
+			? query
+			: this.filterBy(query)
+		return entries.find(filterFunction)
+	}
+
+	private filterBy = (query: { [key: string]: any }) => (entry: T) => {
+		for (const key in query)
+			if (entry[key] !== query[key])
+				return false
+		return true
 	}
 
 	count() {
