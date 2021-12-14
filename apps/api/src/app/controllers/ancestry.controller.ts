@@ -84,6 +84,23 @@ export class AncestryController {
 	}
 
 	@UseGuards(JwtAuthGuard)
+	@Post("delete")
+	async delete(@Body() message: { personId: number }) {
+		this.storageService.ancestryCollection.deleteOne({ _id: message.personId })
+		return this.storageService.ancestryCollection.updateMany(
+			this.hasRelationTo(message.personId),
+			this.deleteRelationsTo(message.personId))
+	}
+
+	private hasRelationTo = (personId: number) => (entry: Person) => {
+		return entry.relations.some(x => x.id === personId)
+	}
+
+	private deleteRelationsTo = (personId: number) => (entry: Person) => {
+		entry.relations = entry.relations.filter(x => x.id !== personId)
+	}
+
+	@UseGuards(JwtAuthGuard)
 	@Post("upload-file")
 	@UseInterceptors(FileInterceptor("file", { dest: "./ancestry-uploads" }))
 	async uploadFile(@UploadedFile() file, @Body() message: { name: string, description: string, personId: string }) {
