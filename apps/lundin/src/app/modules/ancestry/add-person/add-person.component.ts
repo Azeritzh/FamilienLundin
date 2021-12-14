@@ -34,7 +34,7 @@ export class AddPersonComponent {
 			_id: 0,
 			name: this.name,
 			gender: this.gender,
-			relations: this.relations,
+			relations: this.relations.filter(x => x.id),
 			information: [{ title: "__born", content: this.born }, { title: "__dead", content: this.dead }],
 			files: [],
 		})

@@ -28,12 +28,14 @@ export class AncestryService {
 		const updatedPeople = await this.httpClient.post<Person[]>("api/ancestry/add", person).toPromise()
 		for (const person of updatedPeople)
 			this.updatePerson(person)
+		this.updatePeople$()
 		return updatedPeople[0]
 	}
 
 	async updateInfo(personId: number, name: string, gender: "male" | "female" | "other", information: { title: string, content: string }[]) {
 		const updatedPerson = await this.httpClient.post<Person>("api/ancestry/update-info", { personId, name, gender, information }).toPromise()
 		this.updatePerson(updatedPerson)
+		this.updatePeople$()
 		return updatedPerson
 	}
 
@@ -41,13 +43,16 @@ export class AncestryService {
 		const updatedPeople = await this.httpClient.post<Person[]>("api/ancestry/update-relations", { personId, relations }).toPromise()
 		for (const person of updatedPeople)
 			this.updatePerson(person)
+		this.updatePeople$()
 		return updatedPeople[0]
 	}
 
-	async delete(personId: number){
+	async delete(personId: number) {
 		const updatedPeople = await this.httpClient.post<Person[]>("api/ancestry/delete", { personId }).toPromise()
 		for (const person of updatedPeople)
 			this.updatePerson(person)
+		this.people.removeBy(x => x._id === personId)
+		this.updatePeople$()
 	}
 
 	async addFile(personId: number, file: { description: string, data: File }) {
@@ -67,7 +72,6 @@ export class AncestryService {
 			this.people.push(person)
 		else
 			this.people[index] = person
-		this.updatePeople$()
 	}
 
 	private updatePeople$() {
