@@ -87,7 +87,7 @@ export class AncestryController {
 	@Post("delete")
 	async delete(@Body() message: { personId: number }) {
 		this.storageService.ancestryCollection.deleteOne({ _id: message.personId })
-		this.storageService.ancestryCollection.updateMany(
+		return this.storageService.ancestryCollection.updateMany(
 			this.hasRelationTo(message.personId),
 			this.deleteRelationsTo(message.personId))
 	}

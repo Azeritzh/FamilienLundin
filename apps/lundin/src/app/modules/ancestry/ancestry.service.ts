@@ -44,6 +44,12 @@ export class AncestryService {
 		return updatedPeople[0]
 	}
 
+	async delete(personId: number){
+		const updatedPeople = await this.httpClient.post<Person[]>("api/ancestry/delete", { personId }).toPromise()
+		for (const person of updatedPeople)
+			this.updatePerson(person)
+	}
+
 	async addFile(personId: number, file: { description: string, data: File }) {
 		const formdata = new FormData()
 		formdata.set("file", file.data)
