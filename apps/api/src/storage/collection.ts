@@ -7,7 +7,7 @@ type Query<T> = ((e: T) => true) | { [key: string]: any }
 
 export class Collection<T extends { _id?: number }> {
 	private tempStore: { [id: string]: T } = {}
-	private update$ = new Subject()
+	private update$ = new Subject<void>()
 
 	constructor(
 		public readonly name: string,

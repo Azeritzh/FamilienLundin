@@ -5,7 +5,7 @@ import { ReplaySubject, Subject } from "rxjs"
 
 @Injectable()
 export class AuthService {
-	onLogin = new ReplaySubject(1)
+	onLogin = new ReplaySubject<void>(1)
 	onRefreshResponse = new Subject<boolean>()
 	loginInfo: AuthResponse
 
