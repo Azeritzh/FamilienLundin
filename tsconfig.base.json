@@ -1,31 +1,31 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@lundin/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@lundin/age": ["libs/age/src/index.ts"],
-      "@lundin/noughts-and-crosses": ["libs/noughts-and-crosses/src/index.ts"],
-      "@lundin/virus": ["libs/virus/src/index.ts"],
-      "@lundin/utility": ["libs/utility/src/index.ts"],
-      "@lundin/minestryger": ["libs/minestryger/src/index.ts"],
-      "@lundin/meld": ["libs/meld/src/index.ts"],
-      "@lundin/agentia": ["libs/agentia/src/index.ts"],
-      "@lundin/kingdoms": ["libs/kingdoms/src/index.ts"]
-    }
-  },
-  "exclude": ["node_modules", "tmp"]
+	"compileOnSave": false,
+	"compilerOptions": {
+		"rootDir": ".",
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"importHelpers": true,
+		"target": "es2015",
+		"module": "esnext",
+		"typeRoots": ["node_modules/@types"],
+		"lib": ["es2017", "dom"],
+		"skipLibCheck": true,
+		"skipDefaultLibCheck": true,
+		"baseUrl": ".",
+		"paths": {
+			"@lundin/age": ["libs/age/src/index.ts"],
+			"@lundin/agentia": ["libs/agentia/src/index.ts"],
+			"@lundin/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+			"@lundin/kingdoms": ["libs/kingdoms/src/index.ts"],
+			"@lundin/meld": ["libs/meld/src/index.ts"],
+			"@lundin/minestryger": ["libs/minestryger/src/index.ts"],
+			"@lundin/noughts-and-crosses": ["libs/noughts-and-crosses/src/index.ts"],
+			"@lundin/utility": ["libs/utility/src/index.ts"],
+			"@lundin/virus": ["libs/virus/src/index.ts"]
+		}
+	},
+	"exclude": ["node_modules", "tmp"]
 }
