@@ -1,50 +1,27 @@
+import { AgValues, Id, TypeMap } from "@lundin/age"
 import { EntitySize } from "../values/entity-size"
 import { Positioning } from "../values/positioning"
 
-export class EntityValues<TKey> {
-	private readonly allValueMaps: Map<TKey, any>[] = []
-
+export class EntityValues extends AgValues {
 	constructor(
-		public readonly entitySizeValues: Map<TKey, EntitySize> = new Map<TKey, EntitySize>(),
-		public readonly healthValues: Map<TKey, number> = new Map<TKey, number>(),
-		public readonly positioningValues: Map<TKey, Positioning> = new Map<TKey, Positioning>(),
+		public readonly entitySizeValues = new Map<Id, EntitySize>(),
+		public readonly healthValues = new Map<Id, number>(),
+		public readonly positioningValues = new Map<Id, Positioning>(),
 	) {
+		super()
 		this.register(entitySizeValues)
 		this.register(healthValues)
 		this.register(positioningValues)
 	}
 
-	private register<TValue>(map: Map<TKey, TValue>) {
-		this.allValueMaps.push(map)
-		return map
+	public static from(typeValues: { [type: string]: GroupedEntityValues }, typeMap: TypeMap) {
+		const values = new EntityValues()
+		for (const [type, typeId] of typeMap.types)
+			values.addValuesFrom(typeId, typeValues[type])
+		return values
 	}
 
-	clear() {
-		for (const map of this.allValueMaps)
-			map.clear()
-	}
-
-	removeValuesFor(key: TKey) {
-		for (const map of this.allValueMaps)
-			map.delete(key)
-	}
-
-	addValuesFromOther(otherValues: EntityValues<TKey>) {
-		for (let i = 0; i < this.allValueMaps.length; i++)
-			for (const [key, value] of otherValues.allValueMaps[i])
-				this.allValueMaps[i].set(key, value)
-	}
-
-	where(predicate: (key: TKey) => boolean): EntityValues<TKey> {
-		const newValues = new EntityValues<TKey>()
-		for (let i = 0; i < this.allValueMaps.length; i++)
-			for (const [key, value] of this.allValueMaps[i])
-				if (predicate(key))
-					newValues.allValueMaps[i].set(key, value)
-		return newValues
-	}
-
-	addValuesFrom(key: TKey, values: GroupedEntityValues) {
+	addValuesFrom(key: Id, values: GroupedEntityValues) {
 		if (values.entitySize !== undefined)
 			this.entitySizeValues.set(key, values.entitySize)
 		if (values.health !== undefined)
@@ -53,7 +30,7 @@ export class EntityValues<TKey> {
 			this.positioningValues.set(key, values.positioning)
 	}
 
-	groupFor(key: TKey) {
+	groupFor(key: Id) {
 		return new GroupedEntityValues(
 			this.entitySizeValues.get(key),
 			this.healthValues.get(key),

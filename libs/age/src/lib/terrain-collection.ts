@@ -1,19 +1,13 @@
 import { Vector3 } from "@lundin/utility"
-import { Block } from "./block"
+import { AgValues } from "./ag-values"
 import { BlockChunk } from "./block-chunk"
-import { NonSolidBlockValues } from "./non-solid-block-values"
-import { SolidBlockValues } from "./solid-block-values"
 
-export class TerrainCollection {
+export class TerrainCollection<Block, BlockValues extends AgValues> {
 	constructor(
-		public chunkSize: Vector3 = { x: 100, y: 100, z: 10 },
-		public readonly chunks = new Map<Vector3, BlockChunk>(), // Problem: Vector3 isn't a struct in js
-		public readonly solidBlockValues = new SolidBlockValues<number>(),
-		public readonly nonSolidBlockValues = new NonSolidBlockValues<number>(),
-		// TODO: BlockDecoration Collection
-		// TODO: TileEntity Collection
-		// TODO: Temperature Collection
-		private readonly defaultBlock = Block.newEmpty(0),
+		private readonly defaultBlock: Block,
+		public readonly blockValues: BlockValues,
+		public chunkSize: Vector3 = { x: 10, y: 10, z: 10 },
+		public readonly chunks = new Map<Vector3, BlockChunk<Block>>(), // Problem: Vector3 isn't a struct in js
 	) { }
 
 	getFromPosition(position: Vector3) {

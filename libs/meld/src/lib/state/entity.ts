@@ -1,5 +1,7 @@
 import { GroupedEntityValues } from "./entity-values"
 
+export type EntityId = number
+
 export interface Entity {
 	type: number
 	id: number

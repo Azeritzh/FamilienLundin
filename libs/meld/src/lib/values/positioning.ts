@@ -16,11 +16,11 @@ export class Positioning { // struct
 		return new Positioning({ x, y, z }, { x: 0, y: 0, z: 0 }, orientation)
 	}
 
-	HasVelocity() {
+	hasVelocity() {
 		return this.velocity.x != 0 || this.velocity.y != 0 || this.velocity.z != 0
 	}
 
-	With(
+	with(
 		position: Vector3 = null,
 		velocity: Vector3 = null,
 		orientation: number = null

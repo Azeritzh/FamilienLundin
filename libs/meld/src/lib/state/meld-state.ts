@@ -1,62 +1,74 @@
-import { PlayerEntity } from "../entities/player-entity"
+import { AgState, EntityCollection, Id, TerrainCollection, TypeMap } from "@lundin/age"
 import { MeldConfig } from "../meld-config"
-import { EntityCollection } from "./entity-collection"
-import { MeldAction } from "./meld-action"
-import { TerrainCollection } from "./terrain-collection"
+import { EntitySize } from "../values/entity-size"
+import { Block, BlockType } from "./block"
+import { BlockValues } from "./block-values"
+import { EntityValues } from "./entity-values"
 
-export class MeldState {
-	constructor(
-		public readonly terrain = new TerrainCollection(),
-		public readonly entities = new EntityCollection(),
-		public readonly typeMapping = new typeMapping(),
-		public readonly actions: MeldAction[] = [], // ephemeral, only full during game update
-		public seed = 1,
-		public tick = 0,
-		public nextId = 1,
-		private randomGenerator?: Random,
-	) { }
+export class MeldState extends AgState<Block, BlockValues, EntityValues> {
 
-	public static FromConfig(config: MeldConfig) {
-		const state = new MeldState()
-		state.loadConfig(config)
-		return state
+	public static fromConfig(config: MeldConfig) {
+		const typeMap = this.typeMapFor(config)
+		return new MeldState(
+			this.terrainCollectionFor(config, typeMap),
+			this.entityCollectionFor(config, typeMap),
+			this.typeMapFor(config),
+		)
 	}
 
-	public loadConfig(config: MeldConfig) {
-		this.terrain.chunkSize = config.constants.chunkSize
-		for (const type in config.typeValues)
-			this.entities.typeValues.addValuesFrom(this.typeMapping.CreateEntityTypeId(type), config.typeValues[type])
-		for (const type in config.classValues)
-			this.entities.classValues.addValuesFrom(this.typeMapping.ClassFor(type), config.classValues[type])
-		for (const type in config.solidBlockValues)
-			this.terrain.solidBlockValues.addValuesFrom(this.typeMapping.CreateSolidBlockTypeId(type), config.solidBlockValues[type])
-		for (const type in config.nonSolidBlockValues)
-			this.terrain.nonSolidBlockValues.addValuesFrom(this.typeMapping.CreateNonSolidBlockTypeId(type), config.nonSolidBlockValues[type])
+	private static typeMapFor(config: MeldConfig) {
+		// maybe the id generation should be split in two, so block ids aren't shifted, but type ids are?
+		const typeNames = [...Object.keys(config.typeValues), ...Object.keys(config.blockValues)]
+		return TypeMap.from(typeNames)
 	}
+
+	private static terrainCollectionFor(config: MeldConfig, typeMap: TypeMap) {
+		return new TerrainCollection(
+			new Block(BlockType.Empty, 0, 0),
+			BlockValues.from(config.blockValues, typeMap),
+			config.constants.chunkSize,
+		)
+	}
+
+	private static entityCollectionFor(config: MeldConfig, typeMap: TypeMap) {
+		return new EntityCollection(
+			new EntityValues(),
+			new EntityValues(),
+			EntityValues.from(config.typeValues, typeMap),
+		)
+	}
+
+	public size(entity: Id): EntitySize {
+		return this.entities.entityValues.entitySizeValues.get(entity)
+			?? this.entities.typeValues.entitySizeValues.get(this.typeOf(entity))
+	}
+
+	public sizeCurrently(entity: Id) {
+		return this.entities.updatedEntityValues.entitySizeValues.get(entity)
+			?? this.size(entity)
+	}
+
+	public positioning(entity: Id) {
+		return this.entities.entityValues.positioningValues.get(entity)
+			?? this.entities.typeValues.positioningValues.get(this.typeOf(entity))
+	}
+
+	public positioningCurrently(entity: Id) {
+		return this.entities.updatedEntityValues.positioningValues.get(entity)
+			?? this.positioning(entity)
+	}
+
+	public health(entity: Id) {
+		return this.entities.entityValues.healthValues.get(entity)
+			?? this.entities.typeValues.healthValues.get(this.typeOf(entity))
+	}
+
+	public healthCurrently(entity: Id) {
+		return this.entities.updatedEntityValues.healthValues.get(entity)
+			?? this.health(entity)
+	}
+
 	/*
-		public LoadBaseState(baseState: BaseState) {
-			Seed = baseState.Seed
-			Tick = baseState.Tick
-			for(const player of baseState.Players) {
-				var typeId = TypeMapping.CreateEntityTypeId(player.Type); // Maybe we don't want to create missing ids here?
-				Entities.Add(new PlayerEntity(typeId, player.EntityId, player.PlayerId));
-				Entities.EntityValues.AddValuesFrom(player.EntityId, player.Values);
-			}
-		}
-	
-		public void LoadChunk(Chunk chunk) {
-			//TODO: Not currently checking that type mapping is the same, but it should be
-			var chunkCoords = chunk.ChunkCoords;
-			var size = Terrain.ChunkSize;
-			var offset = (chunkCoords.x * size.x, chunkCoords.y * size.y, chunkCoords.z * size.z);
-			Terrain.Chunks[chunkCoords] = new BlockChunk(chunk.Blocks, offset);
-			Entities.EntityValues.AddValuesFrom(chunk.EntityValues);
-			foreach(var entity in chunk.Entities)
-			Entities.Add(entity);
-			foreach(var entity in chunk.NewEntities)
-			AddNewEntity(entity);
-		}
-	
 			void AddNewEntity(SerialisedEntity newEntity) {
 		var id = NextId++;
 		var entity = TypeMapping.CreateEntity(newEntity.Type, id);
@@ -66,29 +78,11 @@ export class MeldState {
 		Entities.UpdatedEntityValues.AddValuesFrom(entity.Id, newEntity.Values);
 	}*/
 
-	public EntityIdForPlayer(playerId: string): number {
+	/*public EntityIdForPlayer(playerId: string): number {
 		for(const entity of this.entities){
 			if(entity instanceof PlayerEntity && entity.playerId === playerId)
 				return entity.id
 		}
 		return null
-	}
-
-	public random() {
-		if (this.randomGenerator)
-			return this.randomGenerator
-		const newRandom = new Random(this.tick + this.seed)
-		this.randomGenerator = newRandom
-		return newRandom
-	}
-
-	public FinishUpdate() {
-		this.entities.applyUpdatedValues()
-		this.actions.splice(0, this.actions.length)
-		this.randomGenerator = null
-	}
-}
-
-class Random {
-	constructor(private seed: number) { }
+	}*/
 }
