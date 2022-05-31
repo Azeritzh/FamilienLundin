@@ -338,6 +338,30 @@
 			"schematics": {},
 			"tags": []
 		},
+		"renderend": {
+			"projectType": "library",
+			"root": "libs/renderend",
+			"sourceRoot": "libs/renderend/src",
+			"prefix": "lundin",
+			"architect": {
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": ["libs/renderend/src/**/*.ts"]
+					},
+					"outputs": ["{options.outputFile}"]
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"options": {
+						"jestConfig": "libs/renderend/jest.config.ts",
+						"passWithNoTests": true
+					}
+				}
+			},
+			"schematics": {},
+			"tags": []
+		},
 		"utility": {
 			"projectType": "library",
 			"root": "libs/utility",

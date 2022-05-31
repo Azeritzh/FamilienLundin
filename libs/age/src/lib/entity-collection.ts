@@ -50,7 +50,7 @@ export class EntityCollection<EntityValues extends AgValues> {
 	}
 
 	*[Symbol.iterator]() {
-		for (const [_, entity] of this.entities)
+		for (const [entity, _] of this.entities)
 			yield entity
 	}
 }

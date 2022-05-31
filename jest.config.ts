@@ -14,5 +14,6 @@ export default {
 		"<rootDir>/libs/meld",
 		"<rootDir>/libs/agentia",
 		"<rootDir>/libs/kingdoms",
+		"<rootDir>/libs/renderend",
 	],
 }

@@ -16,7 +16,7 @@ export class Renderend {
 			this.state)
 	}
 
-	update(action: RenderendAction) {
-		this.engine.update(action)
+	update(...actions: RenderendAction[]) {
+		this.engine.update(...actions)
 	}
 }

@@ -21,6 +21,7 @@ export class VariousComponent {
 	]
 
 	wips: Entry[] = [
+		{ title: "Renderend", link: "/games/renderend" },
 		{ title: "Unavngivet spil", link: "/games/kingdoms" },
 		{ title: "Kryds og Bolle", link: "/games/noughts-and-crosses" },
 		{ title: "Bilspil", link: "/games/iframe/bilspil" },
