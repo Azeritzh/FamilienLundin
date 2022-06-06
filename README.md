@@ -16,6 +16,8 @@ Dette er et såkaldt "monorepo", hvilket vil sige at det er et enkelt repository
 
 For at kunne køre og teste det kode man skriver, må man starte både backend og frontend. Kør backend med `yarn nx serve api` og frontend med `yarn nx serve lundin` (det kræver hver sin terminal. Ting der kører i en terminal kan stoppes igen med Ctrl+C). Derefter er siden tilgængelig på localhost:4200 i en browser. Siden kræver login, og der følger ingen data-filer med i projektet, så der skal oprettes en test bruger for at kunne logge ind. Det kan gør man ved at navigere til `localhost:3333/api/user/add-basic`.
 
+Testing sker via `yarn test [projektnavn]`, så for eksempel `yarn test lundin` for at teste frontenden. Alting testes på en gang med `yarn fulltest`.
+
 ## Produktion
 
 Production håndteres ved at clone projektet på serveren, navigere ind i mappen og køre `yarn install --production` og derefter køre `./deploy-production.sh` (det kræver at man har kørt `build-production.bat` og committed det). Serveren startes med `nohup node dist/apps/api/main.js &` (`&` starter det som en baggrundsprocess, og `nohup` sørger for den ikke stopper når sessionen gør). Process id'en kan findes med `ps -x`, som viser kørende processer, og serveren stoppes så med `kill 1234` (hvor 1234 er processens id).
