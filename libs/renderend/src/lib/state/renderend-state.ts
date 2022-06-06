@@ -1,6 +1,7 @@
 import { AgState, AgValues, EntityCollection, Id, TerrainCollection, TypeMap } from "@lundin/age"
 import { RenderendConfig } from "../renderend-config"
 import { EntitySize } from "../values/entity-size"
+import { Positioning } from "../values/positioning"
 import { EntityValues } from "./entity-values"
 
 export class RenderendState extends AgState<Block, BlockValues, EntityValues> {
@@ -34,7 +35,7 @@ export class RenderendState extends AgState<Block, BlockValues, EntityValues> {
 		)
 	}
 
-	public size(entity: Id): EntitySize {
+	public size(entity: Id) {
 		return this.entities.entityValues.entitySizeValues.get(entity)
 			?? this.entities.typeValues.entitySizeValues.get(this.typeOf(entity))
 	}
@@ -42,6 +43,10 @@ export class RenderendState extends AgState<Block, BlockValues, EntityValues> {
 	public sizeCurrently(entity: Id) {
 		return this.entities.updatedEntityValues.entitySizeValues.get(entity)
 			?? this.size(entity)
+	}
+
+	public setSize(entity: Id, size: EntitySize) {
+		this.entities.updatedEntityValues.entitySizeValues.set(entity, size)
 	}
 
 	public positioning(entity: Id) {
@@ -54,6 +59,10 @@ export class RenderendState extends AgState<Block, BlockValues, EntityValues> {
 			?? this.positioning(entity)
 	}
 
+	public setPositioning(entity: Id, positioning: Positioning) {
+		this.entities.updatedEntityValues.positioningValues.set(entity, positioning)
+	}
+
 	public health(entity: Id) {
 		return this.entities.entityValues.healthValues.get(entity)
 			?? this.entities.typeValues.healthValues.get(this.typeOf(entity))
@@ -62,6 +71,10 @@ export class RenderendState extends AgState<Block, BlockValues, EntityValues> {
 	public healthCurrently(entity: Id) {
 		return this.entities.updatedEntityValues.healthValues.get(entity)
 			?? this.health(entity)
+	}
+
+	public setHealth(entity: Id, health: number) {
+		this.entities.updatedEntityValues.healthValues.set(entity, health)
 	}
 }
 

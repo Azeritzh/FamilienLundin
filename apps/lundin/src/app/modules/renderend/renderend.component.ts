@@ -26,7 +26,8 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.game.state.entities.add(1)
 		this.game.state.entities.updatedEntityValues.healthValues.set(1, 1)
-		this.game.state.entities.updatedEntityValues.positioningValues.set(1, new Positioning(new Vector2(10, 10), new Vector2(0, 0), 0))
+		this.game.state.entities.updatedEntityValues.positioningValues.set(1, new Positioning(new Vector2(10, 10), new Vector2(1, 0), 0))
+		this.game.state.finishUpdate()
 		this.resetCanvas()
 		this.drawEverything()
 		this.startInterval()
@@ -64,13 +65,11 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	private drawEverything() {
 		this.context.fillStyle = "white"
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
-		console.log("Antal entities: " + this.game.state.entities.entities.size)
 		for (const entity of this.game.state.entities)
 			this.drawEntity(entity)
 	}
 
 	private drawEntity(entity: Id) {
-		console.log("Hej du")
 		const positioning = this.game.state.positioning(entity)
 		const forwardVector = Vector2.fromAngle(positioning.orientation).multiply(2)
 		const forwardPoint = forwardVector.multiply(2).add(positioning.position)

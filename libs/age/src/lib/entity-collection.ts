@@ -10,7 +10,7 @@ export class EntityCollection<EntityValues extends AgValues> {
 
 	public get(entityId: number) {
 		this.entities.has(entityId)
-			? this.entities[entityId]
+			? this.entities.get(entityId)
 			: null
 	}
 
@@ -19,20 +19,20 @@ export class EntityCollection<EntityValues extends AgValues> {
 	}
 
 	public existsCurrently(entityId: number) {
-		return this.entities[entityId] === true
+		return this.entities.get(entityId) === true
 	}
 
 	public add(entityId: number) {
-		this.entities[entityId] = true
+		this.entities.set(entityId, true)
 	}
 
 	public addWithValues(entityId: number, values: EntityValues) {
-		this.entities[entityId] = true
+		this.entities.set(entityId, true)
 		this.updatedEntityValues.addValuesFromOther(values)
 	}
 
 	public remove(entityId: number) {
-		this.entities[entityId] = false
+		this.entities.set(entityId, false)
 	}
 
 	public fullyRemove(entityId: number) {
