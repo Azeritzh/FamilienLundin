@@ -1,6 +1,6 @@
 import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { Id } from "@lundin/age"
-import { Positioning, Renderend } from "@lundin/renderend"
+import { Renderend, StartGameAction } from "@lundin/renderend"
 import { Vector2 } from "@lundin/utility"
 
 @Component({
@@ -24,10 +24,7 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	) { }
 
 	ngOnInit() {
-		this.game.state.entities.add(1)
-		this.game.state.entities.updatedEntityValues.healthValues.set(1, 1)
-		this.game.state.entities.updatedEntityValues.positioningValues.set(1, new Positioning(new Vector2(10, 10), new Vector2(1, 0), 0))
-		this.game.state.finishUpdate()
+		this.game.update(new StartGameAction())
 		this.resetCanvas()
 		this.drawEverything()
 		this.startInterval()

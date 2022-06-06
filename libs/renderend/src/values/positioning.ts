@@ -2,9 +2,9 @@ import { Vector2 } from "@lundin/utility"
 
 export class Positioning { // struct
 	constructor(
-		public readonly position: Vector2,
-		public readonly velocity: Vector2,
-		public readonly orientation: number,
+		public readonly position = new Vector2(0, 0),
+		public readonly velocity = new Vector2(0, 0),
+		public readonly orientation = 0,
 	) { }
 
 	static from(

@@ -1,42 +1,44 @@
-import { AgValues } from "./ag-values"
+import { AgValues, Id } from "./ag-values"
 
 export class EntityCollection<EntityValues extends AgValues> {
 	constructor(
 		public readonly entityValues: EntityValues,
 		public readonly updatedEntityValues: EntityValues,
 		public readonly typeValues: EntityValues,
-		public readonly entities = new Map<number, boolean>(), // true: alive; false: to be deleted
+		public readonly entities: Id[] = [],
+		public readonly createdEntities: Id[] = [],
+		public readonly removedEntities: Id[] = [],
 	) { }
 
-	public get(entityId: number) {
-		this.entities.has(entityId)
-			? this.entities.get(entityId)
-			: null
+	public exists(entityId: Id) {
+		return this.entities.includes(entityId)
 	}
 
-	public exists(entityId: number) {
-		return this.entities.has(entityId)
+	public existsCurrently(entityId: Id) {
+		if (this.createdEntities.includes(entityId))
+			return true
+		if (this.removedEntities.includes(entityId))
+			return false
+		return this.exists(entityId)
 	}
 
-	public existsCurrently(entityId: number) {
-		return this.entities.get(entityId) === true
+	public add(entityId: Id) {
+		this.createdEntities.push(entityId)
 	}
 
-	public add(entityId: number) {
-		this.entities.set(entityId, true)
-	}
-
-	public addWithValues(entityId: number, values: EntityValues) {
-		this.entities.set(entityId, true)
+	public addWithValues(entityId: Id, values: EntityValues) {
+		this.createdEntities.push(entityId)
 		this.updatedEntityValues.addValuesFromOther(values)
 	}
 
-	public remove(entityId: number) {
-		this.entities.set(entityId, false)
+	public remove(entityId: Id) {
+		this.removedEntities.push(entityId)
 	}
 
-	public fullyRemove(entityId: number) {
-		this.entities.delete(entityId)
+	public fullyRemove(entityId: Id) {
+		this.entities.remove(entityId)
+		this.removedEntities.remove(entityId)
+		this.createdEntities.remove(entityId)
 		this.entityValues.removeValuesFor(entityId)
 		this.updatedEntityValues.removeValuesFor(entityId)
 	}
@@ -44,13 +46,16 @@ export class EntityCollection<EntityValues extends AgValues> {
 	public applyUpdatedValues() {
 		this.entityValues.addValuesFromOther(this.updatedEntityValues)
 		this.updatedEntityValues.clear()
-		for (const [entity, exists] of this.entities.entries())
-			if (!exists)
-				this.fullyRemove(entity)
+		for (const entity of this.createdEntities)
+			this.entities.push(entity)
+		for (const entity of this.removedEntities)
+			this.fullyRemove(entity)
+		this.createdEntities.clear()
+		this.removedEntities.clear()
 	}
 
 	*[Symbol.iterator]() {
-		for (const [entity, _] of this.entities)
+		for (const entity of this.entities)
 			yield entity
 	}
 }

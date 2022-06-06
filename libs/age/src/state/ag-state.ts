@@ -22,6 +22,13 @@ export abstract class AgState<Block, BlockValues extends AgValues, EntityValues 
 		return entity & typeMask
 	}
 
+	public createEntity(type: string) {
+		const id = this.nextId | this.typeMap.typeIdFor(type)
+		this.nextId++
+		this.entities.add(id)
+		return id
+	}
+
 	public random() {
 		if (this.randomGenerator)
 			return this.randomGenerator
