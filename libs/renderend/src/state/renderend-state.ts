@@ -1,7 +1,5 @@
-import { AgState, AgValues, EntityCollection, Id, TerrainCollection, TypeMap } from "@lundin/age"
+import { AgState, AgValues, EntityCollection, TerrainCollection, TypeMap, ValueAccessor } from "@lundin/age"
 import { RenderendConfig } from "../renderend-config"
-import { EntitySize } from "../values/entity-size"
-import { Positioning } from "../values/positioning"
 import { EntityValues } from "./entity-values"
 
 export class RenderendState extends AgState<Block, BlockValues, EntityValues> {
@@ -35,47 +33,23 @@ export class RenderendState extends AgState<Block, BlockValues, EntityValues> {
 		)
 	}
 
-	public size(entity: Id) {
-		return this.entities.entityValues.entitySizeValues.get(entity)
-			?? this.entities.typeValues.entitySizeValues.get(this.typeOf(entity))
-	}
+	public size = new ValueAccessor(
+		this.entities.entityValues.entitySizeValues,
+		this.entities.updatedEntityValues.entitySizeValues,
+		this.entities.typeValues.entitySizeValues,
+	)
 
-	public sizeCurrently(entity: Id) {
-		return this.entities.updatedEntityValues.entitySizeValues.get(entity)
-			?? this.size(entity)
-	}
+	public positioning = new ValueAccessor(
+		this.entities.entityValues.positioningValues,
+		this.entities.updatedEntityValues.positioningValues,
+		this.entities.typeValues.positioningValues,
+	)
 
-	public setSize(entity: Id, size: EntitySize) {
-		this.entities.updatedEntityValues.entitySizeValues.set(entity, size)
-	}
-
-	public positioning(entity: Id) {
-		return this.entities.entityValues.positioningValues.get(entity)
-			?? this.entities.typeValues.positioningValues.get(this.typeOf(entity))
-	}
-
-	public positioningCurrently(entity: Id) {
-		return this.entities.updatedEntityValues.positioningValues.get(entity)
-			?? this.positioning(entity)
-	}
-
-	public setPositioning(entity: Id, positioning: Positioning) {
-		this.entities.updatedEntityValues.positioningValues.set(entity, positioning)
-	}
-
-	public health(entity: Id) {
-		return this.entities.entityValues.healthValues.get(entity)
-			?? this.entities.typeValues.healthValues.get(this.typeOf(entity))
-	}
-
-	public healthCurrently(entity: Id) {
-		return this.entities.updatedEntityValues.healthValues.get(entity)
-			?? this.health(entity)
-	}
-
-	public setHealth(entity: Id, health: number) {
-		this.entities.updatedEntityValues.healthValues.set(entity, health)
-	}
+	public health = new ValueAccessor(
+		this.entities.entityValues.healthValues,
+		this.entities.updatedEntityValues.healthValues,
+		this.entities.typeValues.healthValues,
+	)
 }
 
 export class Block {}

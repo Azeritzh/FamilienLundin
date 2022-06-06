@@ -13,10 +13,10 @@ export class VelocityLogic implements GameLogic<RenderendAction> {
 	}
 
 	private updateEntity(entity: Id) {
-		const positioning = this.state.positioning(entity)
+		const positioning = this.state.positioning.of(entity)
 		if (!positioning.hasVelocity())
 			return
 		const newPositioning = positioning.with(positioning.position.add(positioning.velocity))
-		this.state.setPositioning(entity, newPositioning)
+		this.state.positioning.setFor(entity, newPositioning)
 	}
 }

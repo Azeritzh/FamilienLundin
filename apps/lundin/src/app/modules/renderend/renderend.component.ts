@@ -70,7 +70,7 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	}
 
 	private drawEntity(entity: Id) {
-		const positioning = this.game.state.positioning(entity)
+		const positioning = this.game.state.positioning.of(entity)
 		const forwardVector = Vector2.fromAngle(positioning.orientation).multiply(2)
 		const forwardPoint = forwardVector.multiply(2).add(positioning.position)
 		const leftPoint = forwardVector.rotate(2).add(positioning.position)

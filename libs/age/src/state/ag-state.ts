@@ -18,7 +18,7 @@ export abstract class AgState<Block, BlockValues extends AgValues, EntityValues 
 		private randomGenerator?: Random,
 	) { }
 
-	public typeOf(entity: Id) {
+	public static typeOf(entity: Id) {
 		return entity & typeMask
 	}
 
