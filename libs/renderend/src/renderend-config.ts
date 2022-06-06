@@ -5,8 +5,8 @@ import { GroupedEntityValues } from "./state/entity-values"
 export class RenderendConfig {
 	constructor(
 		public readonly typeMap: TypeMap,
-		public readonly typeValues = new Map<Id, GroupedEntityValues>(),
-		public readonly constants: RenderendConstants = new RenderendConstants(typeMap.typeIdFor("ship")),
+		public readonly typeValues: Map<Id, GroupedEntityValues>,
+		public readonly constants: RenderendConstants,
 	) { }
 
 	public static from(constants: any, types: { [type: string]: GroupedEntityValues }) {

@@ -1,6 +1,5 @@
-import { AgState, EntityCollection, Id, TerrainCollection, TypeMap } from "@lundin/age"
+import { AgState, EntityCollection, TerrainCollection, ValueAccessor } from "@lundin/age"
 import { MeldConfig } from "../meld-config"
-import { EntitySize } from "../values/entity-size"
 import { Block, BlockType } from "./block"
 import { BlockValues } from "./block-values"
 import { EntityValues } from "./entity-values"
@@ -8,65 +7,31 @@ import { EntityValues } from "./entity-values"
 export class MeldState extends AgState<Block, BlockValues, EntityValues> {
 
 	public static fromConfig(config: MeldConfig) {
-		const typeMap = this.typeMapFor(config)
 		return new MeldState(
-			this.terrainCollectionFor(config, typeMap),
-			this.entityCollectionFor(config, typeMap),
-			this.typeMapFor(config),
+			this.terrainCollectionFor(config),
+			this.entityCollectionFor(config),
 		)
 	}
 
-	private static typeMapFor(config: MeldConfig) {
-		// maybe the id generation should be split in two, so block ids aren't shifted, but type ids are?
-		const typeNames = [...Object.keys(config.typeValues), ...Object.keys(config.blockValues)]
-		return TypeMap.from(typeNames)
-	}
-
-	private static terrainCollectionFor(config: MeldConfig, typeMap: TypeMap) {
+	private static terrainCollectionFor(config: MeldConfig) {
 		return new TerrainCollection(
 			new Block(BlockType.Empty, 0, 0),
-			BlockValues.from(config.blockValues, typeMap),
+			BlockValues.from(config.blockValues),
 			config.constants.chunkSize,
 		)
 	}
 
-	private static entityCollectionFor(config: MeldConfig, typeMap: TypeMap) {
+	private static entityCollectionFor(config: MeldConfig) {
 		return new EntityCollection(
 			new EntityValues(),
 			new EntityValues(),
-			EntityValues.from(config.typeValues, typeMap),
+			EntityValues.from(config.typeValues),
 		)
 	}
 
-	public size(entity: Id): EntitySize {
-		return this.entities.entityValues.entitySizeValues.get(entity)
-			?? this.entities.typeValues.entitySizeValues.get(this.typeOf(entity))
-	}
-
-	public sizeCurrently(entity: Id) {
-		return this.entities.updatedEntityValues.entitySizeValues.get(entity)
-			?? this.size(entity)
-	}
-
-	public positioning(entity: Id) {
-		return this.entities.entityValues.positioningValues.get(entity)
-			?? this.entities.typeValues.positioningValues.get(this.typeOf(entity))
-	}
-
-	public positioningCurrently(entity: Id) {
-		return this.entities.updatedEntityValues.positioningValues.get(entity)
-			?? this.positioning(entity)
-	}
-
-	public health(entity: Id) {
-		return this.entities.entityValues.healthValues.get(entity)
-			?? this.entities.typeValues.healthValues.get(this.typeOf(entity))
-	}
-
-	public healthCurrently(entity: Id) {
-		return this.entities.updatedEntityValues.healthValues.get(entity)
-			?? this.health(entity)
-	}
+	public readonly size = ValueAccessor.For(this, x => x.entitySizeValues)
+	public readonly positioning = ValueAccessor.For(this, x => x.positioningValues)
+	public readonly health = ValueAccessor.For(this, x => x.healthValues)
 
 	/*
 			void AddNewEntity(SerialisedEntity newEntity) {

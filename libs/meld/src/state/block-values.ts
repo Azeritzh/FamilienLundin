@@ -1,4 +1,4 @@
-import { AgValues, Id, TypeMap } from "@lundin/age"
+import { AgValues, Id } from "@lundin/age"
 
 export class BlockValues extends AgValues {
 
@@ -9,11 +9,11 @@ export class BlockValues extends AgValues {
 		this.register(hardnessValues)
 	}
 
-	public static from(typeValues: { [type: string]: GroupedBlockValues }, typeMap: TypeMap) {
-		const values = new BlockValues()
-		for (const [type, typeId] of typeMap.types)
-			values.addValuesFrom(typeId, typeValues[type])
-		return values
+	public static from(groupedValues: Map<Id, GroupedBlockValues>) {
+		const entityValues = new BlockValues()
+		for (const [id, values] of groupedValues)
+			entityValues.addValuesFrom(id, values)
+		return entityValues
 	}
 
 	addValuesFrom(key: Id, values: GroupedBlockValues) {
@@ -22,8 +22,6 @@ export class BlockValues extends AgValues {
 	}
 }
 
-export class GroupedBlockValues {
-	constructor(
-		public hardness?: number,
-	) { }
+export interface GroupedBlockValues {
+	hardness?: number
 }
