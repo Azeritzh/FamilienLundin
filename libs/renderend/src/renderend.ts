@@ -1,4 +1,4 @@
-import { AgEngine } from "@lundin/age"
+import { AgEngine, TypeMap } from "@lundin/age"
 import { StartLogic } from "./logic/start-logic"
 import { VelocityLogic } from "./logic/velocity-logic"
 import { RenderendConfig } from "./renderend-config"
@@ -9,7 +9,7 @@ export class Renderend {
 	private engine: AgEngine<RenderendAction>
 
 	constructor(
-		public config = new RenderendConfig(),
+		public config = new RenderendConfig(TypeMap.from(["ship", "obstacle"])),
 		public state = RenderendState.fromConfig(config),
 	) {
 		this.engine = new AgEngine<RenderendAction>(

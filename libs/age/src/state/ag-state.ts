@@ -1,7 +1,6 @@
 import { AgValues, Id } from "./ag-values"
 import { EntityCollection } from "./entity-collection"
 import { TerrainCollection } from "./terrain-collection"
-import { TypeMap } from "./type-map"
 
 // The type is a part of the entity id, and this is the mask for it
 export const typeMask = 0xFFFF00000000
@@ -11,7 +10,6 @@ export abstract class AgState<Block, BlockValues extends AgValues, EntityValues 
 	constructor(
 		public readonly terrain: TerrainCollection<Block, BlockValues>,
 		public readonly entities: EntityCollection<EntityValues>,
-		public readonly typeMap: TypeMap,
 		public seed = 1,
 		public tick = 0,
 		public nextId = 1,
@@ -22,8 +20,8 @@ export abstract class AgState<Block, BlockValues extends AgValues, EntityValues 
 		return entity & typeMask
 	}
 
-	public createEntity(type: string) {
-		const id = this.nextId | this.typeMap.typeIdFor(type)
+	public createEntity(type: Id) {
+		const id = this.nextId | type
 		this.nextId++
 		this.entities.add(id)
 		return id

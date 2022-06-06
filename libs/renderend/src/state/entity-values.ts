@@ -1,4 +1,4 @@
-import { AgValues, Id, TypeMap } from "@lundin/age"
+import { AgValues, Id } from "@lundin/age"
 import { EntitySize } from "../values/entity-size"
 import { Positioning } from "../values/positioning"
 
@@ -14,11 +14,11 @@ export class EntityValues extends AgValues {
 		this.register(positioningValues)
 	}
 
-	public static from(typeValues: { [type: string]: GroupedEntityValues }, typeMap: TypeMap) {
-		const values = new EntityValues()
-		for (const [type, typeId] of typeMap.types)
-			values.addValuesFrom(typeId, typeValues[type])
-		return values
+	public static from(groupedValues: Map<Id, GroupedEntityValues>) {
+		const entityValues = new EntityValues()
+		for (const [id, values] of groupedValues)
+			entityValues.addValuesFrom(id, values)
+		return entityValues
 	}
 
 	addValuesFrom(key: Id, values: GroupedEntityValues) {
