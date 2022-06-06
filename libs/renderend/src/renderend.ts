@@ -1,4 +1,5 @@
 import { AgEngine } from "@lundin/age"
+import { MoveShipLogic } from "./logic/move-ship-logic"
 import { ObstacleLogic } from "./logic/obstacle-logic"
 import { StartLogic } from "./logic/start-logic"
 import { VelocityLogic } from "./logic/velocity-logic"
@@ -17,6 +18,7 @@ export class Renderend {
 			[
 				new StartLogic(config, state),
 				new VelocityLogic(state),
+				new MoveShipLogic(config, state),
 				new ObstacleLogic(config, state),
 			],
 			[],

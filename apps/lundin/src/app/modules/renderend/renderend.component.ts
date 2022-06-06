@@ -1,6 +1,6 @@
 import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { Id } from "@lundin/age"
-import { Renderend, RenderendAction, StartGameAction } from "@lundin/renderend"
+import { MoveShipAction, Renderend, RenderendAction, StartGameAction } from "@lundin/renderend"
 import { Vector2 } from "@lundin/utility"
 
 @Component({
@@ -15,10 +15,10 @@ export class RenderendComponent implements OnInit, OnDestroy {
 		return this.canvasElement.nativeElement
 	}
 	private context: CanvasRenderingContext2D
-	timerId: number
+	private timerId: number
 	private sizeScaling = 4
-	updateInterval = 100
-	nextAction: RenderendAction = new StartGameAction()
+	private updateInterval = 30
+	private nextAction: RenderendAction = new StartGameAction()
 
 	constructor(
 		private ngZone: NgZone
@@ -26,6 +26,7 @@ export class RenderendComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.resetCanvas()
+		this.setupInput()
 		this.drawEverything()
 		this.startInterval()
 	}
@@ -34,22 +35,40 @@ export class RenderendComponent implements OnInit, OnDestroy {
 		window.clearInterval(this.timerId)
 	}
 
-	startInterval() {
+	private setupInput() {
+		window.addEventListener("keydown", x => {
+			this.nextAction = this.getActionFor(x.key)
+		})
+	}
+
+	private getActionFor(key: string) {
+		switch (key) {
+			case "ArrowUp":
+			case "w":
+				return new MoveShipAction(0, -1)
+			case "ArrowDown":
+			case "s":
+				return new MoveShipAction(0, 1)
+			case "ArrowRight":
+			case "d":
+				return new MoveShipAction(1, 0)
+			case "ArrowLeft":
+			case "a":
+				return new MoveShipAction(-1, 0)
+		}
+	}
+
+	private startInterval() {
 		this.stopInterval()
 		this.ngZone.runOutsideAngular(() =>
 			this.timerId = window.setInterval(this.step, this.updateInterval)
 		)
 	}
 
-	stopInterval() {
+	private stopInterval() {
 		if (this.timerId)
 			window.clearInterval(this.timerId)
 		this.timerId = null
-	}
-
-	setUpdateInterval(interval: number) {
-		this.updateInterval = interval >= 50 ? interval : 50
-		this.startInterval()
 	}
 
 	private resetCanvas() {
