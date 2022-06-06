@@ -30,19 +30,17 @@ export class EntityValues extends AgValues {
 			this.positioningValues.set(key, values.positioning)
 	}
 
-	groupFor(key: Id) {
-		return new GroupedEntityValues(
-			this.entitySizeValues.get(key),
-			this.healthValues.get(key),
-			this.positioningValues.get(key),
-		)
+	groupFor(key: Id): GroupedEntityValues {
+		return {
+			entitySize: this.entitySizeValues.get(key),
+			health: this.healthValues.get(key),
+			positioning: this.positioningValues.get(key),
+		}
 	}
 }
 
-export class GroupedEntityValues {
-	constructor(
-		public entitySize?: EntitySize,
-		public health?: number,
-		public positioning?: Positioning,
-	) { }
+export interface GroupedEntityValues {
+	entitySize?: EntitySize
+	health?: number
+	positioning?: Positioning
 }
