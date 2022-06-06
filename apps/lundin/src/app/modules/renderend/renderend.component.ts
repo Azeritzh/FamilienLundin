@@ -1,6 +1,6 @@
 import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { Id } from "@lundin/age"
-import { Renderend, StartGameAction } from "@lundin/renderend"
+import { Renderend, RenderendAction, StartGameAction } from "@lundin/renderend"
 import { Vector2 } from "@lundin/utility"
 
 @Component({
@@ -18,13 +18,13 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	timerId: number
 	private sizeScaling = 4
 	updateInterval = 100
+	nextAction: RenderendAction = new StartGameAction()
 
 	constructor(
 		private ngZone: NgZone
 	) { }
 
 	ngOnInit() {
-		this.game.update(new StartGameAction())
 		this.resetCanvas()
 		this.drawEverything()
 		this.startInterval()
@@ -91,7 +91,8 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	}
 
 	private step = () => {
-		this.game.update()
+		this.game.update(this.nextAction)
+		this.nextAction = undefined
 		this.drawEverything()
 	}
 
@@ -113,6 +114,6 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	}
 
 	restart() {
-		// TODO
+		this.nextAction = new StartGameAction()
 	}
 }

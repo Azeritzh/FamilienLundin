@@ -35,14 +35,6 @@ export class EntityCollection<EntityValues extends AgValues> {
 		this.removedEntities.push(entityId)
 	}
 
-	public fullyRemove(entityId: Id) {
-		this.entities.remove(entityId)
-		this.removedEntities.remove(entityId)
-		this.createdEntities.remove(entityId)
-		this.entityValues.removeValuesFor(entityId)
-		this.updatedEntityValues.removeValuesFor(entityId)
-	}
-
 	public applyUpdatedValues() {
 		this.entityValues.addValuesFromOther(this.updatedEntityValues)
 		this.updatedEntityValues.clear()
@@ -52,6 +44,13 @@ export class EntityCollection<EntityValues extends AgValues> {
 			this.fullyRemove(entity)
 		this.createdEntities.clear()
 		this.removedEntities.clear()
+	}
+
+	private fullyRemove(entityId: Id) {
+		this.entities.remove(entityId)
+		this.createdEntities.remove(entityId)
+		this.entityValues.removeValuesFor(entityId)
+		this.updatedEntityValues.removeValuesFor(entityId)
 	}
 
 	*[Symbol.iterator]() {
