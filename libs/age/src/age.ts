@@ -1,6 +1,6 @@
-import { GameLogic } from "./game-logic"
-import { GameState } from "./game-state"
-import { GameValidator, Validation } from "./game-validator"
+import { GameLogic } from "./interfaces/game-logic"
+import { GameState } from "./interfaces/game-state"
+import { GameValidator, Validation } from "./interfaces/game-validator"
 
 export class AgEngine<GameAction> {
 	constructor(

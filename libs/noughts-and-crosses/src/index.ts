@@ -1,3 +1,3 @@
-export * from "./lib/noughts-and-crosses"
-export * from "./lib/noughts-and-crosses-logic"
-export * from "./lib/noughts-and-crosses-state"
+export * from "./noughts-and-crosses"
+export * from "./noughts-and-crosses-logic"
+export * from "./noughts-and-crosses-state"

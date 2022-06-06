@@ -1,2 +1,2 @@
-export * from "./lib/renderend"
-export * from "./lib/values/positioning"
+export * from "./renderend"
+export * from "./values/positioning"

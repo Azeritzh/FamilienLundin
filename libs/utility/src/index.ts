@@ -1,2 +1,2 @@
-export * from "./lib/utility"
-export * from "./lib/array-extensions"
+export * from "./utility"
+export * from "./array-extensions"
