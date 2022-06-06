@@ -1,5 +1,5 @@
 import { AgState } from "./ag-state"
-import { Id } from "./ag-values"
+import { AgValues, Id } from "./ag-values"
 
 export class ValueAccessor<T>{
 	constructor(
@@ -7,6 +7,14 @@ export class ValueAccessor<T>{
 		private readonly updatedEntityValue: Map<Id, T>,
 		private readonly typeValue: Map<Id, T>,
 	) { }
+
+	public static For<V extends AgValues, T>(state: AgState<any, any, V>, getter: (collection: V) => Map<Id, T>) {
+		return new ValueAccessor(
+			getter(state.entities.entityValues),
+			getter(state.entities.updatedEntityValues),
+			getter(state.entities.typeValues),
+		)
+	}
 
 	public of(entity: Id) {
 		return this.entityValue.get(entity)

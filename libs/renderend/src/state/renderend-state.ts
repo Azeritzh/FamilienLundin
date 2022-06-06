@@ -33,23 +33,9 @@ export class RenderendState extends AgState<Block, BlockValues, EntityValues> {
 		)
 	}
 
-	public size = new ValueAccessor(
-		this.entities.entityValues.entitySizeValues,
-		this.entities.updatedEntityValues.entitySizeValues,
-		this.entities.typeValues.entitySizeValues,
-	)
-
-	public positioning = new ValueAccessor(
-		this.entities.entityValues.positioningValues,
-		this.entities.updatedEntityValues.positioningValues,
-		this.entities.typeValues.positioningValues,
-	)
-
-	public health = new ValueAccessor(
-		this.entities.entityValues.healthValues,
-		this.entities.updatedEntityValues.healthValues,
-		this.entities.typeValues.healthValues,
-	)
+	public readonly size = ValueAccessor.For(this, x => x.entitySizeValues)
+	public readonly positioning = ValueAccessor.For(this, x => x.positioningValues)
+	public readonly health = ValueAccessor.For(this, x => x.healthValues)
 }
 
 export class Block {}
