@@ -15,7 +15,7 @@ export class RenderendConfig {
 		return new RenderendConfig(
 			typeMap,
 			new Map(typeNames.map(x => [typeMap.typeIdFor(x), types[x]])),
-			new RenderendConstants(typeMap.typeIdFor(constants.shipType)),
+			new RenderendConstants(typeMap.typeIdFor(constants.shipType), typeMap.typeIdFor(constants.obstacleType)),
 		)
 	}
 }

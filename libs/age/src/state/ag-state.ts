@@ -3,8 +3,8 @@ import { EntityCollection } from "./entity-collection"
 import { TerrainCollection } from "./terrain-collection"
 
 // The type is a part of the entity id, and this is the mask for it
-export const typeMask = 0xFFFF00000000
-export const typeOffset = 32 // number of bits to the right of the type
+export const typeMask = 0xFF000000
+export const typeOffset = 24 // number of bits to the right of the type
 
 export abstract class AgState<Block, BlockValues extends AgValues, EntityValues extends AgValues> {
 	constructor(

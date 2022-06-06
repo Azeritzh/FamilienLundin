@@ -17,6 +17,15 @@ export class StartLogic implements GameLogic<RenderendAction> {
 	}
 
 	private initialiseGame() {
+		this.clearMap()
+		this.spawnPlayerShip()
+	}
+
+	private clearMap(){
+		this.state.entities.removedEntities.push(...this.state.entities)
+	}
+
+	private spawnPlayerShip(){
 		const entity = this.state.createEntity(this.config.constants.shipType)
 		this.state.positioning.setFor(entity, new Positioning(new Vector2(10, 50), new Vector2(1, 0)))
 	}

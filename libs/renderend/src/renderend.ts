@@ -1,4 +1,5 @@
 import { AgEngine } from "@lundin/age"
+import { ObstacleLogic } from "./logic/obstacle-logic"
 import { StartLogic } from "./logic/start-logic"
 import { VelocityLogic } from "./logic/velocity-logic"
 import { RenderendConfig } from "./renderend-config"
@@ -9,13 +10,14 @@ export class Renderend {
 	private engine: AgEngine<RenderendAction>
 
 	constructor(
-		public config = RenderendConfig.from({ shipType: "ship" }, { ship: {}, obstacle: {} }),
+		public config = RenderendConfig.from({ shipType: "ship", obstacleType: "obstacle" }, { ship: {}, obstacle: {} }),
 		public state = RenderendState.fromConfig(config),
 	) {
 		this.engine = new AgEngine<RenderendAction>(
 			[
 				new StartLogic(config, state),
 				new VelocityLogic(state),
+				new ObstacleLogic(config, state),
 			],
 			[],
 			this.state)
