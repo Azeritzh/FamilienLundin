@@ -1,14 +1,15 @@
 import { GameLogic } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { RenderendConfig } from "../renderend-config"
+import { RenderendConstants } from "../renderend-constants"
+import { RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { RenderendAction, StartGameAction } from "../state/renderend-action"
-import { RenderendState } from "../state/renderend-state"
 import { Positioning } from "../values/positioning"
 
 export class StartLogic implements GameLogic<RenderendAction> {
 	constructor(
-		private config: RenderendConfig,
-		private state: RenderendState,
+		private constants: RenderendConstants,
+		private positioning: RenderendEntityValues<Positioning>,
+		private entities: RenderendEntities,
 	) { }
 
 	update(actions: RenderendAction[]) {
@@ -22,11 +23,11 @@ export class StartLogic implements GameLogic<RenderendAction> {
 	}
 
 	private clearMap(){
-		this.state.entities.removedEntities.push(...this.state.entities)
+		this.entities.remove(...this.entities)
 	}
 
 	private spawnPlayerShip(){
-		const entity = this.state.createEntity(this.config.constants.shipType)
-		this.state.positioning.setFor(entity, new Positioning(new Vector2(10, 50)))
+		const entity = this.entities.create(this.constants.shipType)
+		this.positioning.setFor(entity, new Positioning(new Vector2(10, 50)))
 	}
 }

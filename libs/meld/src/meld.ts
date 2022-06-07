@@ -1,28 +1,38 @@
-import { AgEngine, GameState } from "@lundin/age"
+import { BaseChanges, BaseGame, BaseStateUpdater, EntityAccessor, Id, ValueAccessor } from "@lundin/age"
 import { MeldConfig } from "./meld-config"
+import { MeldConstants } from "./meld-constants"
+import { GroupedBlockValues } from "./state/block-values"
+import { EntityValues, GroupedEntityValues } from "./state/entity-values"
+import { MeldAction } from "./state/meld-action"
+import { MeldState } from "./state/meld-state"
 
-export class Meld {
-	private engine: AgEngine<MeldAction>
-
+export class Meld extends BaseGame<MeldAction> {
 	constructor(
-		public config = new MeldConfig(),
-		public state = new MeldState(),
+		public readonly config = new MeldConfig(new MeldConstants(), new Map<Id, GroupedEntityValues>(), new Map<Id, GroupedBlockValues>()),
+		public readonly state = MeldState.fromConfig(config),
+		public readonly changes = new BaseChanges(new EntityValues()),
+		public readonly access = new Access(config, state, changes),
+		private readonly stateUpdater = new BaseStateUpdater(state, changes),
 	) {
-		this.engine = new AgEngine<MeldAction>(
-			[],
-			[],
-			this.state)
+		super([
+			
+		])
 	}
 
-	update(action: MeldAction) {
-		this.engine.update(action)
+	finishUpdate() {
+		this.state.tick++
+		this.stateUpdater.applyUpdatedValues()
 	}
 }
 
-class MeldState implements GameState {
-	tick: number
-	finishUpdate?(): void {
-		throw new Error("Method not implemented.")
-	}
+class Access {
+	constructor(
+		config: MeldConfig,
+		state: MeldState,
+		changes: BaseChanges<EntityValues>,
+		public readonly entities = new EntityAccessor(config, state, changes),
+		public readonly size = ValueAccessor.For(config, state, changes, x => x.entitySizeValues, x=>x.entitySize),
+		public readonly positioning = ValueAccessor.For(config, state, changes, x => x.positioningValues, x => x.positioning),
+		public readonly health = ValueAccessor.For(config, state, changes, x => x.healthValues, x => x.health),
+	) { }
 }
-class MeldAction { }

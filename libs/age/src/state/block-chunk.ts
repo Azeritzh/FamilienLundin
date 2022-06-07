@@ -1,5 +1,5 @@
-import { GameGrid3d } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
+import { GameGrid3d } from "./game-grid-3d"
 
 export class BlockChunk<Block> {
 	constructor(

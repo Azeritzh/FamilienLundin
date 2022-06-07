@@ -1,6 +1,9 @@
-import { AgValues, Id } from "@lundin/age"
+import { AgValues, EntityAccessor, Id, ValueAccessor } from "@lundin/age"
 import { EntitySize } from "../values/entity-size"
 import { Positioning } from "../values/positioning"
+
+export type RenderendEntityValues<T> = ValueAccessor<T, GroupedEntityValues>
+export type RenderendEntities = EntityAccessor<EntityValues, GroupedEntityValues>
 
 export class EntityValues extends AgValues {
 	constructor(

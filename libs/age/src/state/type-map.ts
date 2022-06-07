@@ -1,4 +1,4 @@
-import { typeOffset } from "./ag-state"
+import { typeOffset } from "./base-state"
 import { Id } from "./ag-values"
 
 export class TypeMap {

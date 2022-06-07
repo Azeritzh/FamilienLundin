@@ -1,37 +1,25 @@
-import { AgState, EntityCollection, TerrainCollection, ValueAccessor } from "@lundin/age"
+import { BaseState, TerrainCollection } from "@lundin/age"
 import { MeldConfig } from "../meld-config"
 import { Block, BlockType } from "./block"
 import { BlockValues } from "./block-values"
 import { EntityValues } from "./entity-values"
 
-export class MeldState extends AgState<Block, BlockValues, EntityValues> {
+export class MeldState extends BaseState<Block, BlockValues, EntityValues> {
 
 	public static fromConfig(config: MeldConfig) {
 		return new MeldState(
 			this.terrainCollectionFor(config),
-			this.entityCollectionFor(config),
+			new EntityValues(),
 		)
 	}
 
 	private static terrainCollectionFor(config: MeldConfig) {
 		return new TerrainCollection(
 			new Block(BlockType.Empty, 0, 0),
-			BlockValues.from(config.blockValues),
+			new BlockValues(),
 			config.constants.chunkSize,
 		)
 	}
-
-	private static entityCollectionFor(config: MeldConfig) {
-		return new EntityCollection(
-			new EntityValues(),
-			new EntityValues(),
-			EntityValues.from(config.typeValues),
-		)
-	}
-
-	public readonly size = ValueAccessor.For(this, x => x.entitySizeValues)
-	public readonly positioning = ValueAccessor.For(this, x => x.positioningValues)
-	public readonly health = ValueAccessor.For(this, x => x.healthValues)
 
 	/*
 			void AddNewEntity(SerialisedEntity newEntity) {

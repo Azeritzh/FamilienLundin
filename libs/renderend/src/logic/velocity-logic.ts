@@ -1,22 +1,24 @@
 import { GameLogic, Id } from "@lundin/age"
+import { RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { RenderendAction } from "../state/renderend-action"
-import { RenderendState } from "../state/renderend-state"
+import { Positioning } from "../values/positioning"
 
 export class VelocityLogic implements GameLogic<RenderendAction> {
 	constructor(
-		private state: RenderendState,
+		private positioning: RenderendEntityValues<Positioning>,
+		private entities: RenderendEntities,
 	) { }
 
 	update() {
-		for (const entity of this.state.entities)
+		for (const entity of this.entities)
 			this.updateEntity(entity)
 	}
 
 	private updateEntity(entity: Id) {
-		const positioning = this.state.positioning.of(entity)
+		const positioning = this.positioning.of(entity)
 		if (!positioning.hasVelocity())
 			return
 		const newPositioning = positioning.with(positioning.position.add(positioning.velocity))
-		this.state.positioning.setFor(entity, newPositioning)
+		this.positioning.setFor(entity, newPositioning)
 	}
 }

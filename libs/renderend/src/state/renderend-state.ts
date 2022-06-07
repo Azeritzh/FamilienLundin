@@ -1,13 +1,13 @@
-import { AgState, AgValues, EntityCollection, TerrainCollection, ValueAccessor } from "@lundin/age"
+import { BaseState, AgValues, TerrainCollection } from "@lundin/age"
 import { RenderendConfig } from "../renderend-config"
 import { EntityValues } from "./entity-values"
 
-export class RenderendState extends AgState<Block, BlockValues, EntityValues> {
+export class RenderendState extends BaseState<Block, BlockValues, EntityValues> {
 
 	public static fromConfig(config: RenderendConfig) {
 		return new RenderendState(
 			this.terrainCollectionFor(config),
-			this.entityCollectionFor(config),
+			new EntityValues(),
 		)
 	}
 
@@ -18,18 +18,6 @@ export class RenderendState extends AgState<Block, BlockValues, EntityValues> {
 			config.constants.chunkSize,
 		)
 	}
-
-	private static entityCollectionFor(config: RenderendConfig) {
-		return new EntityCollection(
-			new EntityValues(),
-			new EntityValues(),
-			EntityValues.from(config.typeValues),
-		)
-	}
-
-	public readonly size = ValueAccessor.For(this, x => x.entitySizeValues)
-	public readonly positioning = ValueAccessor.For(this, x => x.positioningValues)
-	public readonly health = ValueAccessor.For(this, x => x.healthValues)
 }
 
 export class Block {}

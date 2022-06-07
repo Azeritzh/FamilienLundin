@@ -1,13 +1,15 @@
-import { AgState, GameLogic, Id } from "@lundin/age"
+import { BaseState, GameLogic, Id } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { RenderendConfig } from "../renderend-config"
+import { RenderendConstants } from "../renderend-constants"
+import { RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { MoveShipAction, RenderendAction } from "../state/renderend-action"
-import { RenderendState } from "../state/renderend-state"
+import { Positioning } from "../values/positioning"
 
 export class MoveShipLogic implements GameLogic<RenderendAction> {
 	constructor(
-		private config: RenderendConfig,
-		private state: RenderendState,
+		private constants: RenderendConstants,
+		private positioning: RenderendEntityValues<Positioning>,
+		private entities: RenderendEntities,
 	) { }
 
 	update(actions: RenderendAction[]) {
@@ -17,23 +19,23 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 	}
 
 	private changeSpeed(action: MoveShipAction) {
-		for (const entity of this.state.entities)
-			if (AgState.typeOf(entity) === this.config.constants.obstacleType)
+		for (const entity of this.entities)
+			if (BaseState.typeOf(entity) === this.constants.obstacleType)
 				this.updateHorisontalSpeed(entity, action.horisontalSpeed)
-		for (const entity of this.state.entities)
-			if (AgState.typeOf(entity) === this.config.constants.shipType)
+		for (const entity of this.entities)
+			if (BaseState.typeOf(entity) === this.constants.shipType)
 				this.updateVerticalSpeed(entity, action.verticalSpeed)
 	}
 
 	private updateHorisontalSpeed(entity: Id, speed: number) {
-		const positioning = this.state.positioning.currentlyOf(entity)
+		const positioning = this.positioning.currentlyOf(entity)
 		const newPositioning = positioning.with(null, positioning.velocity.add(new Vector2(-speed, 0)))
-		this.state.positioning.setFor(entity, newPositioning)
+		this.positioning.setFor(entity, newPositioning)
 	}
 
 	private updateVerticalSpeed(entity: Id, speed: number) {
-		const positioning = this.state.positioning.currentlyOf(entity)
+		const positioning = this.positioning.currentlyOf(entity)
 		const newPositioning = positioning.with(null, positioning.velocity.add(new Vector2(0, speed)))
-		this.state.positioning.setFor(entity, newPositioning)
+		this.positioning.setFor(entity, newPositioning)
 	}
 }
