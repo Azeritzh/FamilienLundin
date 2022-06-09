@@ -9,20 +9,5 @@ export abstract class BaseState<Globals extends BaseGlobals, Block, BlockValues 
 		public readonly terrain: TerrainCollection<Block, BlockValues>,
 		public readonly entityValues: EntityValues,
 		public readonly entities: Id[] = [],
-		public seed = 1,
-		private randomGenerator?: Random,
 	) { }
-
-	public random() {
-		if (this.randomGenerator)
-			return this.randomGenerator
-		const newRandom = new Random(this.globals.tick + this.seed)
-		this.randomGenerator = newRandom
-		return newRandom
-	}
-}
-
-export class Random {
-	constructor(private seed: number) { }
-	// TODO
 }
