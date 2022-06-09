@@ -3,7 +3,7 @@ import { EntitySize } from "../values/entity-size"
 import { Positioning } from "../values/positioning"
 
 export type RenderendEntityValues<T> = ValueAccessor<T, GroupedEntityValues>
-export type RenderendEntities = EntityAccessor<EntityValues, GroupedEntityValues>
+export type RenderendEntities = EntityAccessor<EntityValues, GroupedEntityValues, Behaviour>
 
 export class EntityValues extends AgValues {
 	constructor(
@@ -46,4 +46,10 @@ export interface GroupedEntityValues {
 	entitySize?: EntitySize
 	health?: number
 	positioning?: Positioning
+}
+
+export enum Behaviour {
+	Velocity,
+	Obstacle,
+	Ship,
 }

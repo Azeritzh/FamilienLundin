@@ -1,5 +1,5 @@
 import { GameLogic, Id } from "@lundin/age"
-import { RenderendEntities, RenderendEntityValues } from "../state/entity-values"
+import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { RenderendAction } from "../state/renderend-action"
 import { Positioning } from "../values/positioning"
 
@@ -10,7 +10,7 @@ export class VelocityLogic implements GameLogic<RenderendAction> {
 	) { }
 
 	update() {
-		for (const entity of this.entities)
+		for (const entity of this.entities.with(Behaviour.Velocity))
 			this.updateEntity(entity)
 	}
 

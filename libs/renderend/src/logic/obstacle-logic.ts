@@ -1,7 +1,7 @@
-import { BaseState, GameLogic, Id } from "@lundin/age"
+import { GameLogic, Id } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
-import { RenderendEntities, RenderendEntityValues } from "../state/entity-values"
+import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { RenderendAction } from "../state/renderend-action"
 import { RenderendState } from "../state/renderend-state"
 import { Positioning } from "../values/positioning"
@@ -15,10 +15,9 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	) { }
 
 	update() {
-		for (const entity of this.entities)
-			if (BaseState.typeOf(entity) === this.constants.obstacleType)
-				if (this.shouldDespawn(entity))
-					this.despawnObstacle(entity)
+		for (const entity of this.entities.with(Behaviour.Obstacle))
+			if (this.shouldDespawn(entity))
+				this.despawnObstacle(entity)
 
 		if (this.isTimeToSpawn())
 			this.spawnObstacle()
