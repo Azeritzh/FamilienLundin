@@ -13,6 +13,7 @@
 		"noughts-and-crosses": "libs/noughts-and-crosses",
 		"renderend": "libs/renderend",
 		"utility": "libs/utility",
-		"virus": "libs/virus"
+		"virus": "libs/virus",
+		"web-gl-display": "libs/web-gl-display"
 	}
 }

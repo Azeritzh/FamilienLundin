@@ -24,7 +24,8 @@
 			"@lundin/noughts-and-crosses": ["libs/noughts-and-crosses/src/index.ts"],
 			"@lundin/renderend": ["libs/renderend/src/index.ts"],
 			"@lundin/utility": ["libs/utility/src/index.ts"],
-			"@lundin/virus": ["libs/virus/src/index.ts"]
+			"@lundin/virus": ["libs/virus/src/index.ts"],
+			"@lundin/web-gl-display": ["libs/web-gl-display/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]
