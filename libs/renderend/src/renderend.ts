@@ -1,4 +1,4 @@
-import { BaseGame, EntityManager, ValueAccessor } from "@lundin/age"
+import { BaseGame, EntityManager, Random, ValueAccessor } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { MoveShipLogic } from "./logic/move-ship-logic"
 import { ObstacleLogic } from "./logic/obstacle-logic"
@@ -14,15 +14,16 @@ export class Renderend extends BaseGame<RenderendAction> {
 	constructor(
 		public readonly config = RenderendConfig.from({ shipType: "ship", obstacleType: "obstacle" }, { ship: { behaviours: [Behaviour.Ship, Behaviour.Velocity] }, obstacle: { behaviours: [Behaviour.Obstacle, Behaviour.Velocity] } }),
 		public readonly state = RenderendState.fromConfig(config),
-		public readonly changes = new RenderendChanges(),
+		readonly changes = new RenderendChanges(),
 		public readonly entities = new EntityManager(config, state, changes),
 		public readonly access = new Access(config, state, changes),
+		readonly random = new Random(state.globals),
 	) {
 		super([
 			new StartLogic(config.constants, entities, access.position),
 			new VelocityLogic(entities, access.position, access.velocity),
 			new MoveShipLogic(state.globals, entities, access.velocity),
-			new ObstacleLogic(config.constants, state.globals, entities, access.position, access.velocity),
+			new ObstacleLogic(config.constants, state.globals, entities, access.position, access.velocity, random),
 		])
 	}
 

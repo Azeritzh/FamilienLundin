@@ -7,7 +7,7 @@ export class RenderendState extends BaseState<Globals, Block, BlockValues, Entit
 
 	public static fromConfig(config: RenderendConfig) {
 		return new RenderendState(
-			new Globals(1),
+			new Globals(),
 			this.terrainCollectionFor(config),
 			new EntityValues(),
 		)

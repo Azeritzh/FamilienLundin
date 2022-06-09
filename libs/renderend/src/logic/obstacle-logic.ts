@@ -1,4 +1,4 @@
-import { GameLogic, Id } from "@lundin/age"
+import { GameLogic, Id, Random } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
 import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
@@ -12,6 +12,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		private entities: RenderendEntities,
 		private position: RenderendEntityValues<Vector2>,
 		private velocity: RenderendEntityValues<Vector2>,
+		private random: Random,
 	) { }
 
 	update() {
@@ -24,12 +25,16 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private isTimeToSpawn() {
-		return this.globals.tick % 20 === 0
+		this.globals.distanceToNextObstacle -= this.globals.speed
+		if (this.globals.distanceToNextObstacle > 0)
+			return false
+		this.globals.distanceToNextObstacle += 20
+		return true
 	}
 
 	private spawnObstacle() {
 		const entity = this.entities.create(this.constants.obstacleType)
-		this.position.setFor(entity, new Vector2(200, 30))
+		this.position.setFor(entity, new Vector2(200, this.random.get.int(100)))
 		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}
 
