@@ -1,9 +1,9 @@
-import { AgValues, Id } from "./ag-values"
+import { BaseValues } from "./base-values"
 import { BaseChanges } from "./base-changes"
-import { BaseConfig } from "./base-config"
+import { BaseConfig, Id, typeOf } from "./base-config"
 import { BaseState } from "./base-state"
 
-export class EntityAccessor<EntityValues extends AgValues, GroupedEntityValues, BehaviourType> {
+export class EntityManager<EntityValues extends BaseValues, GroupedEntityValues, BehaviourType> {
 	constructor(
 		private config: BaseConfig<GroupedEntityValues, BehaviourType>,
 		private state: BaseState<any, any, EntityValues>,
@@ -48,7 +48,7 @@ export class EntityAccessor<EntityValues extends AgValues, GroupedEntityValues, 
 
 	private add(entityId: Id) {
 		this.state.entities.push(entityId)
-		for (const behaviour of this.config.typeBehaviours.get(BaseState.typeOf(entityId)))
+		for (const behaviour of this.config.typeBehaviours.get(typeOf(entityId)))
 			this.behaviourLists.get(behaviour).push(entityId)
 	}
 
@@ -57,7 +57,7 @@ export class EntityAccessor<EntityValues extends AgValues, GroupedEntityValues, 
 		this.changes.createdEntities.remove(entityId)
 		this.state.entityValues.removeValuesFor(entityId)
 		this.changes.updatedEntityValues.removeValuesFor(entityId)
-		for (const behaviour of this.config.typeBehaviours.get(BaseState.typeOf(entityId)))
+		for (const behaviour of this.config.typeBehaviours.get(typeOf(entityId)))
 			this.behaviourLists.get(behaviour).remove(entityId)
 	}
 

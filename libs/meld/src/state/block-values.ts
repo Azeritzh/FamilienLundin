@@ -1,6 +1,6 @@
-import { AgValues, Id } from "@lundin/age"
+import { BaseValues, Id } from "@lundin/age"
 
-export class BlockValues extends AgValues {
+export class BlockValues extends BaseValues {
 
 	constructor(
 		public hardnessValues: Map<Id, number> = new Map<Id, number>()

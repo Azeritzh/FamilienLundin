@@ -66,6 +66,10 @@ export class Vector2 {
 		this.x = x
 		this.y = y
 	}
+
+	isZero(){
+		return this.x === 0 && this.y === 0
+	}
 }
 
 export interface Vector3 {

@@ -1,8 +1,8 @@
-import { AgValues, Id } from "@lundin/age"
+import { BaseValues, Id } from "@lundin/age"
 import { EntitySize } from "../values/entity-size"
 import { Positioning } from "../values/positioning"
 
-export class EntityValues extends AgValues {
+export class EntityValues extends BaseValues {
 	constructor(
 		public readonly entitySizeValues = new Map<Id, EntitySize>(),
 		public readonly healthValues = new Map<Id, number>(),

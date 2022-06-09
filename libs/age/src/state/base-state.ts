@@ -1,11 +1,8 @@
-import { AgValues, Id } from "./ag-values"
+import { Id } from "./base-config"
+import { BaseValues } from "./base-values"
 import { TerrainCollection } from "./terrain-collection"
 
-// The type is a part of the entity id, and this is the mask for it
-export const typeMask = 0xFF000000
-export const typeOffset = 24 // number of bits to the right of the type
-
-export abstract class BaseState<Block, BlockValues extends AgValues, EntityValues extends AgValues> {
+export abstract class BaseState<Block, BlockValues extends BaseValues, EntityValues extends BaseValues> {
 	constructor(
 		public readonly terrain: TerrainCollection<Block, BlockValues>,
 		public readonly entityValues: EntityValues,
@@ -15,10 +12,6 @@ export abstract class BaseState<Block, BlockValues extends AgValues, EntityValue
 		public nextId = 1,
 		private randomGenerator?: Random,
 	) { }
-
-	public static typeOf(entity: Id) {
-		return entity & typeMask
-	}
 
 	public random() {
 		if (this.randomGenerator)

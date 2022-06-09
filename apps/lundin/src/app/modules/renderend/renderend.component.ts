@@ -81,16 +81,17 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	private drawEverything() {
 		this.context.fillStyle = "white"
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
-		for (const entity of this.game.access.entities)
+		for (const entity of this.game.entities)
 			this.drawEntity(entity)
 	}
 
 	private drawEntity(entity: Id) {
-		const positioning = this.game.access.positioning.of(entity)
-		const forwardVector = Vector2.fromAngle(positioning.orientation).multiply(2)
-		const forwardPoint = forwardVector.multiply(2).add(positioning.position)
-		const leftPoint = forwardVector.rotate(2).add(positioning.position)
-		const rightPoint = forwardVector.rotate(-2).add(positioning.position)
+		const orientation = this.game.access.orientation.of(entity)
+		const position = this.game.access.position.of(entity)
+		const forwardVector = Vector2.fromAngle(orientation).multiply(2)
+		const forwardPoint = forwardVector.multiply(2).add(position)
+		const leftPoint = forwardVector.rotate(2).add(position)
+		const rightPoint = forwardVector.rotate(-2).add(position)
 
 		this.context.strokeStyle = "black"
 		this.context.beginPath()

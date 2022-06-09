@@ -1,4 +1,5 @@
-import { BaseGame, EntityAccessor, ValueAccessor } from "@lundin/age"
+import { BaseGame, EntityManager, ValueAccessor } from "@lundin/age"
+import { Vector2 } from "@lundin/utility"
 import { MoveShipLogic } from "./logic/move-ship-logic"
 import { ObstacleLogic } from "./logic/obstacle-logic"
 import { StartLogic } from "./logic/start-logic"
@@ -14,19 +15,20 @@ export class Renderend extends BaseGame<RenderendAction> {
 		public readonly config = RenderendConfig.from({ shipType: "ship", obstacleType: "obstacle" }, { ship: { behaviours: [Behaviour.Ship, Behaviour.Velocity] }, obstacle: { behaviours: [Behaviour.Obstacle, Behaviour.Velocity] } }),
 		public readonly state = RenderendState.fromConfig(config),
 		public readonly changes = new RenderendChanges(),
+		public readonly entities = new EntityManager(config, state, changes),
 		public readonly access = new Access(config, state, changes),
 	) {
 		super([
-			new StartLogic(config.constants, access.positioning, access.entities),
-			new VelocityLogic(access.positioning, access.entities),
-			new MoveShipLogic(access.positioning, access.entities),
-			new ObstacleLogic(config.constants, access.positioning, access.entities, state),
+			new StartLogic(config.constants, entities, access.position),
+			new VelocityLogic(entities, access.position, access.velocity),
+			new MoveShipLogic(entities, access.velocity),
+			new ObstacleLogic(config.constants, state, entities, access.position, access.velocity),
 		])
 	}
 
 	finishUpdate() {
 		this.state.tick++
-		this.access.entities.applyUpdatedValues()
+		this.entities.applyUpdatedValues()
 	}
 }
 
@@ -35,9 +37,10 @@ class Access {
 		config: RenderendConfig,
 		state: RenderendState,
 		changes: RenderendChanges,
-		public readonly entities = new EntityAccessor(config, state, changes),
-		public readonly size = ValueAccessor.For(config, state, changes, x => x.entitySizeValues, x => x.entitySize),
-		public readonly positioning = ValueAccessor.For(config, state, changes, x => x.positioningValues, x => x.positioning),
-		public readonly health = ValueAccessor.For(config, state, changes, x => x.healthValues, x => x.health),
+		public readonly size = ValueAccessor.For(config, state, changes, x => x.entitySize, x => x.entitySize),
+		public readonly health = ValueAccessor.For(config, state, changes, x => x.health, x => x.health),
+		public readonly orientation = ValueAccessor.For(config, state, changes, x => x.orientation, x => x.orientation, 0),
+		public readonly position = ValueAccessor.For(config, state, changes, x => x.position, x => x.position),
+		public readonly velocity = ValueAccessor.For(config, state, changes, x => x.velocity, x => x.velocity, new Vector2(0, 0)),
 	) { }
 }

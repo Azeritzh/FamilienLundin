@@ -1,7 +1,7 @@
-import { AgValues, Id } from "./ag-values"
 import { BaseChanges } from "./base-changes"
-import { BaseConfig } from "./base-config"
+import { BaseConfig, Id, typeOf } from "./base-config"
 import { BaseState } from "./base-state"
+import { BaseValues } from "./base-values"
 
 export class ValueAccessor<T, GroupedEntityValues>{
 	constructor(
@@ -9,20 +9,23 @@ export class ValueAccessor<T, GroupedEntityValues>{
 		private readonly entityValue: Map<Id, T>,
 		private readonly updatedEntityValue: Map<Id, T>,
 		private readonly getTypeValue: (collection: GroupedEntityValues) => T,
+		private readonly defaultValue: T = undefined
 	) { }
 
-	public static For<EntityValues extends AgValues, GroupedEntityValues, BehaviourType, T>(
+	public static For<EntityValues extends BaseValues, GroupedEntityValues, BehaviourType, T>(
 		config: BaseConfig<GroupedEntityValues, BehaviourType>,
 		state: BaseState<any, any, EntityValues>,
 		changes: BaseChanges<EntityValues>,
 		getValueMap: (collection: EntityValues) => Map<Id, T>,
 		getTypeValue: (collection: GroupedEntityValues) => T,
+		defaultValue: T = undefined,
 	) {
 		return new ValueAccessor(
 			config.typeValues,
 			getValueMap(state.entityValues),
 			getValueMap(changes.updatedEntityValues),
 			getTypeValue,
+			defaultValue,
 		)
 	}
 
@@ -37,8 +40,9 @@ export class ValueAccessor<T, GroupedEntityValues>{
 	}
 
 	public defaultOf(entity: Id) {
-		const type = BaseState.typeOf(entity)
+		const type = typeOf(entity)
 		return this.getTypeValue(this.typeValues.get(type))
+			?? this.defaultValue
 	}
 
 	public setFor(entity: Id, value: T) {

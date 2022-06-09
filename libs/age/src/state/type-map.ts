@@ -1,5 +1,4 @@
-import { typeOffset } from "./base-state"
-import { Id } from "./ag-values"
+import { Id, typeOffset } from "./base-config"
 
 export class TypeMap {
 	constructor(

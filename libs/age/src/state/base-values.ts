@@ -1,6 +1,6 @@
-export type Id = number
+import { Id } from "./base-config"
 
-export abstract class AgValues {
+export abstract class BaseValues {
 	protected readonly allValueMaps: Map<Id, any>[] = []
 
 	protected register<TValue>(map: Map<Id, TValue>) {
@@ -19,7 +19,7 @@ export abstract class AgValues {
 	}
 
 	// Should only be used with same classes, but don't know how to express that generically
-	addValuesFromOther(otherValues: AgValues) {
+	addValuesFromOther(otherValues: BaseValues) {
 		for (let i = 0; i < this.allValueMaps.length; i++)
 			for (const [key, value] of otherValues.allValueMaps[i])
 				this.allValueMaps[i].set(key, value)

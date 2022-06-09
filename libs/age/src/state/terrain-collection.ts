@@ -1,8 +1,8 @@
 import { Vector3 } from "@lundin/utility"
-import { AgValues } from "./ag-values"
+import { BaseValues } from "./base-values"
 import { BlockChunk } from "./block-chunk"
 
-export class TerrainCollection<Block, BlockValues extends AgValues> {
+export class TerrainCollection<Block, BlockValues extends BaseValues> {
 	constructor(
 		private readonly defaultBlock: Block,
 		public readonly blockValues: BlockValues,

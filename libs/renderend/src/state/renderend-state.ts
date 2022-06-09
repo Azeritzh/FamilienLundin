@@ -1,4 +1,4 @@
-import { BaseState, AgValues, TerrainCollection } from "@lundin/age"
+import { BaseState, BaseValues, TerrainCollection } from "@lundin/age"
 import { RenderendConfig } from "../renderend-config"
 import { EntityValues } from "./entity-values"
 
@@ -21,4 +21,4 @@ export class RenderendState extends BaseState<Block, BlockValues, EntityValues> 
 }
 
 export class Block {}
-export class BlockValues extends AgValues {}
+export class BlockValues extends BaseValues {}

@@ -2,12 +2,11 @@ import { GameLogic, Id } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { MoveShipAction, RenderendAction } from "../state/renderend-action"
-import { Positioning } from "../values/positioning"
 
 export class MoveShipLogic implements GameLogic<RenderendAction> {
 	constructor(
-		private positioning: RenderendEntityValues<Positioning>,
 		private entities: RenderendEntities,
+		private velocity: RenderendEntityValues<Vector2>,
 	) { }
 
 	update(actions: RenderendAction[]) {
@@ -24,14 +23,12 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 	}
 
 	private updateHorisontalSpeed(entity: Id, speed: number) {
-		const positioning = this.positioning.currentlyOf(entity)
-		const newPositioning = positioning.with(null, positioning.velocity.add(new Vector2(-speed, 0)))
-		this.positioning.setFor(entity, newPositioning)
+		const newVelocity = this.velocity.of(entity).add(new Vector2(-speed, 0))
+		this.velocity.setFor(entity, newVelocity)
 	}
 
 	private updateVerticalSpeed(entity: Id, speed: number) {
-		const positioning = this.positioning.currentlyOf(entity)
-		const newPositioning = positioning.with(null, positioning.velocity.add(new Vector2(0, speed)))
-		this.positioning.setFor(entity, newPositioning)
+		const newVelocity = this.velocity.of(entity).add(new Vector2(0, speed))
+		this.velocity.setFor(entity, newVelocity)
 	}
 }

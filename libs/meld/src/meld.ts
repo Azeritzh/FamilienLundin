@@ -1,4 +1,4 @@
-import { BaseChanges, BaseGame, EntityAccessor, Id, ValueAccessor } from "@lundin/age"
+import { BaseChanges, BaseGame, EntityManager, Id, ValueAccessor } from "@lundin/age"
 import { MeldConfig } from "./meld-config"
 import { MeldConstants } from "./meld-constants"
 import { GroupedBlockValues } from "./state/block-values"
@@ -11,6 +11,7 @@ export class Meld extends BaseGame<MeldAction> {
 		public readonly config = new MeldConfig(new MeldConstants(), new Map<Id, GroupedEntityValues>(), new Map<Id, Behaviour[]>(), new Map<Id, GroupedBlockValues>()),
 		public readonly state = MeldState.fromConfig(config),
 		public readonly changes = new BaseChanges(new EntityValues()),
+		public readonly entities = new EntityManager(config, state, changes),
 		public readonly access = new Access(config, state, changes),
 	) {
 		super([
@@ -20,7 +21,7 @@ export class Meld extends BaseGame<MeldAction> {
 
 	finishUpdate() {
 		this.state.tick++
-		this.access.entities.applyUpdatedValues()
+		this.entities.applyUpdatedValues()
 	}
 }
 
@@ -29,7 +30,6 @@ class Access {
 		config: MeldConfig,
 		state: MeldState,
 		changes: BaseChanges<EntityValues>,
-		public readonly entities = new EntityAccessor(config, state, changes),
 		public readonly size = ValueAccessor.For(config, state, changes, x => x.entitySizeValues, x=>x.entitySize),
 		public readonly positioning = ValueAccessor.For(config, state, changes, x => x.positioningValues, x => x.positioning),
 		public readonly health = ValueAccessor.For(config, state, changes, x => x.healthValues, x => x.health),
