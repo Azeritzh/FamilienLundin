@@ -2,11 +2,12 @@ import { BaseValues } from "./base-values"
 import { BaseChanges } from "./base-changes"
 import { BaseConfig, Id, typeOf } from "./base-config"
 import { BaseState } from "./base-state"
+import { BaseGlobals } from "./base-globals"
 
 export class EntityManager<EntityValues extends BaseValues, GroupedEntityValues, BehaviourType> {
 	constructor(
 		private config: BaseConfig<GroupedEntityValues, BehaviourType>,
-		private state: BaseState<any, any, EntityValues>,
+		private state: BaseState<BaseGlobals, any, any, EntityValues>,
 		private changes: BaseChanges<EntityValues>,
 		private behaviourLists = new Map<BehaviourType, Id[]>(),
 	) {
@@ -26,8 +27,8 @@ export class EntityManager<EntityValues extends BaseValues, GroupedEntityValues,
 	}
 
 	public create(type: Id) {
-		const id = this.state.nextId | type
-		this.state.nextId++
+		const id = this.state.globals.nextId | type
+		this.state.globals.nextId++
 		this.changes.createdEntities.push(id)
 		return id
 	}

@@ -14,7 +14,7 @@ export class ValueAccessor<T, GroupedEntityValues>{
 
 	public static For<EntityValues extends BaseValues, GroupedEntityValues, BehaviourType, T>(
 		config: BaseConfig<GroupedEntityValues, BehaviourType>,
-		state: BaseState<any, any, EntityValues>,
+		state: BaseState<any, any, any, EntityValues>,
 		changes: BaseChanges<EntityValues>,
 		getValueMap: (collection: EntityValues) => Map<Id, T>,
 		getTypeValue: (collection: GroupedEntityValues) => T,

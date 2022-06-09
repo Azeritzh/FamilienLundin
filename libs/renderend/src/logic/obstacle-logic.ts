@@ -2,13 +2,13 @@ import { GameLogic, Id } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
 import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
+import { Globals } from "../state/globals"
 import { RenderendAction } from "../state/renderend-action"
-import { RenderendState } from "../state/renderend-state"
 
 export class ObstacleLogic implements GameLogic<RenderendAction> {
 	constructor(
 		private constants: RenderendConstants,
-		private state: RenderendState,
+		private globals: Globals,
 		private entities: RenderendEntities,
 		private position: RenderendEntityValues<Vector2>,
 		private velocity: RenderendEntityValues<Vector2>,
@@ -24,13 +24,13 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private isTimeToSpawn() {
-		return this.state.tick % 20 === 0
+		return this.globals.tick % 20 === 0
 	}
 
 	private spawnObstacle() {
 		const entity = this.entities.create(this.constants.obstacleType)
 		this.position.setFor(entity, new Vector2(200, 30))
-		this.velocity.setFor(entity, new Vector2(-1, 0))
+		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private shouldDespawn(entity: Id) {

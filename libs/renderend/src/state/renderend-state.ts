@@ -1,11 +1,13 @@
 import { BaseState, BaseValues, TerrainCollection } from "@lundin/age"
 import { RenderendConfig } from "../renderend-config"
 import { EntityValues } from "./entity-values"
+import { Globals } from "./globals"
 
-export class RenderendState extends BaseState<Block, BlockValues, EntityValues> {
+export class RenderendState extends BaseState<Globals, Block, BlockValues, EntityValues> {
 
 	public static fromConfig(config: RenderendConfig) {
 		return new RenderendState(
+			new Globals(1),
 			this.terrainCollectionFor(config),
 			new EntityValues(),
 		)

@@ -21,13 +21,13 @@ export class Renderend extends BaseGame<RenderendAction> {
 		super([
 			new StartLogic(config.constants, entities, access.position),
 			new VelocityLogic(entities, access.position, access.velocity),
-			new MoveShipLogic(entities, access.velocity),
-			new ObstacleLogic(config.constants, state, entities, access.position, access.velocity),
+			new MoveShipLogic(state.globals, entities, access.velocity),
+			new ObstacleLogic(config.constants, state.globals, entities, access.position, access.velocity),
 		])
 	}
 
 	finishUpdate() {
-		this.state.tick++
+		this.state.globals.tick++
 		this.entities.applyUpdatedValues()
 	}
 }
