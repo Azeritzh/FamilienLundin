@@ -39,6 +39,7 @@ export class WebGl2Display {
 		this.gl.flush()
 	}
 
+	// Do sprites need to be recreated after this?
 	public resize(width: number, height: number) {
 		this.canvas.width = width
 		this.canvas.height = height

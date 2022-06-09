@@ -28,13 +28,13 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		this.globals.distanceToNextObstacle -= this.globals.speed
 		if (this.globals.distanceToNextObstacle > 0)
 			return false
-		this.globals.distanceToNextObstacle += 20
+		this.globals.distanceToNextObstacle += 1
 		return true
 	}
 
 	private spawnObstacle() {
 		const entity = this.entities.create(this.constants.obstacleType)
-		this.position.setFor(entity, new Vector2(200, this.random.get.int(100)))
+		this.position.setFor(entity, new Vector2(20, this.random.get.int(10)))
 		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}
 

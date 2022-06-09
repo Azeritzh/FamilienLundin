@@ -1,7 +1,7 @@
 import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core"
-import { Id } from "@lundin/age"
+import { Id, typeOf } from "@lundin/age"
 import { MoveShipAction, Renderend, RenderendAction, StartGameAction } from "@lundin/renderend"
-import { Vector2 } from "@lundin/utility"
+import { WebGl2Display } from "@lundin/web-gl-display"
 
 @Component({
 	selector: "lundin-renderend",
@@ -14,7 +14,7 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	get canvas() {
 		return this.canvasElement.nativeElement
 	}
-	private context: CanvasRenderingContext2D
+	private display: WebGl2Display
 	private timerId: number
 	private sizeScaling = 4
 	private updateInterval = 30
@@ -45,16 +45,16 @@ export class RenderendComponent implements OnInit, OnDestroy {
 		switch (key) {
 			case "ArrowUp":
 			case "w":
-				return new MoveShipAction(0, -1)
+				return new MoveShipAction(0, -0.1)
 			case "ArrowDown":
 			case "s":
-				return new MoveShipAction(0, 1)
+				return new MoveShipAction(0, 0.1)
 			case "ArrowRight":
 			case "d":
-				return new MoveShipAction(1, 0)
+				return new MoveShipAction(0.1, 0)
 			case "ArrowLeft":
 			case "a":
-				return new MoveShipAction(-1, 0)
+				return new MoveShipAction(-0.1, 0)
 		}
 	}
 
@@ -73,41 +73,31 @@ export class RenderendComponent implements OnInit, OnDestroy {
 
 	private resetCanvas() {
 		this.sizeToWindow()
-		this.context = this.canvas.getContext("2d")
-		this.context.fillStyle = "white"
-		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
+		this.display = new WebGl2Display(this.canvas, 16, 180)
+		this.display.addSprite("ship", "assets/images/ship.png", 16, 16)
+		this.display.addSprite("obstacle", "assets/images/obstacle.png", 16, 16)
 	}
 
-	private drawEverything() {
-		this.context.fillStyle = "white"
-		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
-		for (const entity of this.game.entities)
-			this.drawEntity(entity)
-	}
-
-	private drawEntity(entity: Id) {
-		const orientation = this.game.access.orientation.of(entity)
-		const position = this.game.access.position.of(entity)
-		const forwardVector = Vector2.fromAngle(orientation).multiply(2)
-		const forwardPoint = forwardVector.multiply(2).add(position)
-		const leftPoint = forwardVector.rotate(2).add(position)
-		const rightPoint = forwardVector.rotate(-2).add(position)
-
-		this.context.strokeStyle = "black"
-		this.context.beginPath()
-		this.context.moveTo(forwardPoint.x * this.sizeScaling, forwardPoint.y * this.sizeScaling)
-		this.context.lineTo(leftPoint.x * this.sizeScaling, leftPoint.y * this.sizeScaling)
-		this.context.lineTo(rightPoint.x * this.sizeScaling, rightPoint.y * this.sizeScaling)
-		this.context.lineTo(forwardPoint.x * this.sizeScaling, forwardPoint.y * this.sizeScaling)
-		this.context.closePath()
-		this.context.stroke()
-	}
-
-	sizeToWindow() {
+	private sizeToWindow() {
 		const availableWidth = this.canvasElement.nativeElement.parentElement.clientWidth
 		const availableHeight = this.canvasElement.nativeElement.parentElement.clientHeight
 		this.canvas.width = availableWidth
 		this.canvas.height = availableHeight
+	}
+
+	private drawEverything() {
+		this.display.startFrame()
+		for (const entity of this.game.entities)
+			this.drawEntity(entity)
+		this.display.endFrame()
+	}
+
+	private drawEntity(entity: Id) {
+		const pos = this.game.access.position.of(entity)
+		const sprite = typeOf(entity) == this.game.config.constants.shipType
+			? "ship"
+			: "obstacle"
+		this.display.drawSprite(sprite, pos.x, pos.y, 0, 0)
 	}
 
 	private step = () => {
@@ -121,7 +111,6 @@ export class RenderendComponent implements OnInit, OnDestroy {
 		const { x, y } = this.gridPositionFromMousePosition(event)
 		console.log("x: {0}, y: {1}", x, y)
 		// this.game.config.click(x, y)
-		this.drawEverything()
 	}
 
 	private gridPositionFromMousePosition(event: MouseEvent) {

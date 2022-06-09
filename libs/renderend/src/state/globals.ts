@@ -2,7 +2,7 @@ import { BaseGlobals } from "@lundin/age"
 
 export class Globals extends BaseGlobals {
 	constructor(
-		public speed = 1,
+		public speed = 0.1,
 		public distanceToNextObstacle = 0,
 		public tick = 0,
 		public nextId = 1,

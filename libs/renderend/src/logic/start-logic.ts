@@ -27,6 +27,6 @@ export class StartLogic implements GameLogic<RenderendAction> {
 
 	private spawnPlayerShip(){
 		const entity = this.entities.create(this.constants.shipType)
-		this.position.setFor(entity, new Vector2(10, 50))
+		this.position.setFor(entity, new Vector2(0, 10))
 	}
 }

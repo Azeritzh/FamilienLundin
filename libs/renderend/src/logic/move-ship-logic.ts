@@ -19,8 +19,8 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 
 	private changeSpeed(action: MoveShipAction) {
 		this.globals.speed += action.horisontalSpeed
-		if (this.globals.speed < 1)
-			this.globals.speed = 1
+		if (this.globals.speed < 0.1)
+			this.globals.speed = 0.1
 		for (const entity of this.entities.with(Behaviour.Obstacle))
 			this.updateHorisontalSpeed(entity)
 		for (const entity of this.entities.with(Behaviour.Ship))
