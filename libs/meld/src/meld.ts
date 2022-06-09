@@ -1,18 +1,17 @@
-import { BaseChanges, BaseGame, BaseStateUpdater, EntityAccessor, Id, ValueAccessor } from "@lundin/age"
+import { BaseChanges, BaseGame, EntityAccessor, Id, ValueAccessor } from "@lundin/age"
 import { MeldConfig } from "./meld-config"
 import { MeldConstants } from "./meld-constants"
 import { GroupedBlockValues } from "./state/block-values"
-import { EntityValues, GroupedEntityValues } from "./state/entity-values"
+import { Behaviour, EntityValues, GroupedEntityValues } from "./state/entity-values"
 import { MeldAction } from "./state/meld-action"
 import { MeldState } from "./state/meld-state"
 
 export class Meld extends BaseGame<MeldAction> {
 	constructor(
-		public readonly config = new MeldConfig(new MeldConstants(), new Map<Id, GroupedEntityValues>(), new Map<Id, GroupedBlockValues>()),
+		public readonly config = new MeldConfig(new MeldConstants(), new Map<Id, GroupedEntityValues>(), new Map<Id, Behaviour[]>(), new Map<Id, GroupedBlockValues>()),
 		public readonly state = MeldState.fromConfig(config),
 		public readonly changes = new BaseChanges(new EntityValues()),
 		public readonly access = new Access(config, state, changes),
-		private readonly stateUpdater = new BaseStateUpdater(state, changes),
 	) {
 		super([
 			
@@ -21,7 +20,7 @@ export class Meld extends BaseGame<MeldAction> {
 
 	finishUpdate() {
 		this.state.tick++
-		this.stateUpdater.applyUpdatedValues()
+		this.access.entities.applyUpdatedValues()
 	}
 }
 

@@ -5,7 +5,7 @@ import { BaseState } from "./base-state"
 
 export class EntityAccessor<EntityValues extends AgValues, GroupedEntityValues, BehaviourType> {
 	constructor(
-		private config: BaseConfig<GroupedEntityValues, BehaviourType>, // this is here in order to make behaviour based lists of entities later
+		private config: BaseConfig<GroupedEntityValues, BehaviourType>,
 		private state: BaseState<any, any, EntityValues>,
 		private changes: BaseChanges<EntityValues>,
 		private behaviourLists = new Map<BehaviourType, Id[]>(),

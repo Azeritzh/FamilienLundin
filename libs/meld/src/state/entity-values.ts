@@ -44,3 +44,7 @@ export interface GroupedEntityValues {
 	health?: number
 	positioning?: Positioning
 }
+
+export enum Behaviour {
+	Velocity,
+}
