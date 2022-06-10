@@ -1,6 +1,6 @@
 import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { Id, typeOf } from "@lundin/age"
-import { MoveShipAction, Renderend, RenderendAction, StartGameAction } from "@lundin/renderend"
+import { MoveShipHorisontallyAction, MoveShipVerticallyAction, Renderend, RenderendAction, StartGameAction } from "@lundin/renderend"
 import { InputState, KeyStates } from "@lundin/utility"
 import { WebGl2Display } from "@lundin/web-gl-display"
 
@@ -95,14 +95,14 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	private getVerticalAction(inputState: InputState) {
 		const up = this.changesFor(inputState, "w", "ArrowUp")
 		if (up === true)
-			return new MoveShipAction(0, -0.1)
+			return new MoveShipVerticallyAction(-0.1)
 		if (up === false)
-			return new MoveShipAction(0, 0)
+			return new MoveShipVerticallyAction(0)
 		const down = this.changesFor(inputState, "s", "ArrowDown")
 		if (down === true)
-			return new MoveShipAction(0, 0.1)
+			return new MoveShipVerticallyAction(0.1)
 		if (down === false)
-			return new MoveShipAction(0, 0)
+			return new MoveShipVerticallyAction(0)
 	}
 
 	private changesFor(inputState: InputState, ...keys: string[]) {
@@ -115,10 +115,10 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	private getHorisontalAction(inputState: InputState) {
 		const left = this.stateFor(inputState, "a", "ArrowLeft")
 		if (left)
-			return new MoveShipAction(-0.01, 0)
+			return new MoveShipHorisontallyAction(-0.01)
 		const right = this.stateFor(inputState, "d", "ArrowRight")
 		if (right)
-			return new MoveShipAction(0.01, 0)
+			return new MoveShipHorisontallyAction(0.01)
 	}
 
 	private stateFor(inputState: InputState, ...keys: string[]) {

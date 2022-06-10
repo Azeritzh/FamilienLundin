@@ -2,9 +2,14 @@ export abstract class RenderendAction { }
 
 export class StartGameAction extends RenderendAction { }
 
-export class MoveShipAction extends RenderendAction {
+export class MoveShipVerticallyAction extends RenderendAction {
 	constructor(
-		public horisontalSpeed: number,
-		public verticalSpeed: number,
+		public speed: number,
+	) { super() }
+}
+
+export class MoveShipHorisontallyAction extends RenderendAction {
+	constructor(
+		public speed: number,
 	) { super() }
 }
