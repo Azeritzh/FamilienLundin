@@ -34,12 +34,20 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 
 	private spawnObstacle() {
 		const entity = this.entities.create(this.constants.obstacleType)
-		this.position.setFor(entity, new Vector2(20, this.random.get.int(10)))
+		const topEntity = this.entities.create(this.constants.obstacleType)
+		const bottomEntity = this.entities.create(this.constants.obstacleType)
+
+		this.position.setFor(entity, new Vector2(20, 0))
+		this.position.setFor(topEntity, new Vector2(20, 1 + this.random.get.int(8)))
+		this.position.setFor(bottomEntity, new Vector2(20, 9))
+
 		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
+		this.velocity.setFor(topEntity, new Vector2(-this.globals.speed, 0))
+		this.velocity.setFor(bottomEntity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private shouldDespawn(entity: Id) {
-		return this.position.of(entity).x < 0
+		return this.position.of(entity).x < -1
 	}
 
 	private despawnObstacle(entity: Id) {
