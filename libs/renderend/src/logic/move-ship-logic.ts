@@ -21,6 +21,8 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 		this.globals.speed += action.horisontalSpeed
 		if (this.globals.speed < 0.1)
 			this.globals.speed = 0.1
+		if (0.5 < this.globals.speed)
+			this.globals.speed = 0.5
 		for (const entity of this.entities.with(Behaviour.Obstacle))
 			this.updateHorisontalSpeed(entity)
 		for (const entity of this.entities.with(Behaviour.Ship))
@@ -32,7 +34,6 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 	}
 
 	private updateVerticalSpeed(entity: Id, speed: number) {
-		const newVelocity = this.velocity.of(entity).add(new Vector2(0, speed))
-		this.velocity.setFor(entity, newVelocity)
+		this.velocity.setFor(entity, new Vector2(0, speed))
 	}
 }

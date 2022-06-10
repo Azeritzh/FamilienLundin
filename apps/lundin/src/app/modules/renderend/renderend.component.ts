@@ -1,6 +1,7 @@
 import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { Id, typeOf } from "@lundin/age"
 import { MoveShipAction, Renderend, RenderendAction, StartGameAction } from "@lundin/renderend"
+import { InputState, KeyStates } from "@lundin/utility"
 import { WebGl2Display } from "@lundin/web-gl-display"
 
 @Component({
@@ -18,7 +19,8 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	private timerId: number
 	private sizeScaling = 4
 	private updateInterval = 30
-	private nextAction: RenderendAction = new StartGameAction()
+	private nextActions: RenderendAction[] = [new StartGameAction()]
+	private keyStates = new KeyStates()
 
 	constructor(
 		private ngZone: NgZone
@@ -26,36 +28,12 @@ export class RenderendComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.resetCanvas()
-		this.setupInput()
 		this.drawEverything()
 		this.startInterval()
 	}
 
 	ngOnDestroy() {
 		window.clearInterval(this.timerId)
-	}
-
-	private setupInput() {
-		window.addEventListener("keydown", x => {
-			this.nextAction = this.getActionFor(x.key)
-		})
-	}
-
-	private getActionFor(key: string) {
-		switch (key) {
-			case "ArrowUp":
-			case "w":
-				return new MoveShipAction(0, -0.1)
-			case "ArrowDown":
-			case "s":
-				return new MoveShipAction(0, 0.1)
-			case "ArrowRight":
-			case "d":
-				return new MoveShipAction(0.1, 0)
-			case "ArrowLeft":
-			case "a":
-				return new MoveShipAction(-0.1, 0)
-		}
 	}
 
 	private startInterval() {
@@ -73,7 +51,7 @@ export class RenderendComponent implements OnInit, OnDestroy {
 
 	private resetCanvas() {
 		this.sizeToWindow()
-		this.display = new WebGl2Display(this.canvas, 16, 180)
+		this.display = new WebGl2Display(this.canvas, 16, 160)
 		this.display.addSprite("ship", "assets/images/ship.png", 16, 16)
 		this.display.addSprite("obstacle", "assets/images/obstacle.png", 16, 16)
 	}
@@ -101,9 +79,53 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	}
 
 	private step = () => {
-		this.game.update(this.nextAction)
-		this.nextAction = undefined
+		this.nextActions.push(...this.parseInputs(this.keyStates.getInputState()))
+		this.game.update(...this.nextActions)
+		this.nextActions = []
 		this.drawEverything()
+	}
+
+	private parseInputs(inputState: InputState) {
+		return [
+			this.getVerticalAction(inputState),
+			this.getHorisontalAction(inputState),
+		]
+	}
+
+	private getVerticalAction(inputState: InputState) {
+		const up = this.changesFor(inputState, "w", "ArrowUp")
+		if (up === true)
+			return new MoveShipAction(0, -0.1)
+		if (up === false)
+			return new MoveShipAction(0, 0)
+		const down = this.changesFor(inputState, "s", "ArrowDown")
+		if (down === true)
+			return new MoveShipAction(0, 0.1)
+		if (down === false)
+			return new MoveShipAction(0, 0)
+	}
+
+	private changesFor(inputState: InputState, ...keys: string[]) {
+		for (const key of keys)
+			if (inputState[key]?.hasChanged)
+				return inputState[key].state
+		return null
+	}
+
+	private getHorisontalAction(inputState: InputState) {
+		const left = this.stateFor(inputState, "a", "ArrowLeft")
+		if (left)
+			return new MoveShipAction(-0.01, 0)
+		const right = this.stateFor(inputState, "d", "ArrowRight")
+		if (right)
+			return new MoveShipAction(0.01, 0)
+	}
+
+	private stateFor(inputState: InputState, ...keys: string[]) {
+		for (const key of keys)
+			if (inputState[key]?.state)
+				return true
+		return false
 	}
 
 	clickCanvas(event: MouseEvent) {
@@ -123,6 +145,6 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	}
 
 	restart() {
-		this.nextAction = new StartGameAction()
+		this.nextActions.push(new StartGameAction())
 	}
 }
