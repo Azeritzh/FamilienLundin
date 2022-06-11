@@ -15,6 +15,7 @@ import { MinestrygerComponent } from "./modules/minestryger/minestryger.componen
 import { NoughtsAndCrossesComponent } from "./modules/noughts-and-crosses/noughts-and-crosses.component"
 import { RecipesRootComponent } from "./modules/recipes/recipes-root/recipes-root.component"
 import { recipesRoutes } from "./modules/recipes/routes"
+import { RenderendComponent } from "./modules/renderend/renderend.component"
 import { VirusComponent } from "./modules/virus/virus.component"
 import { HomeComponent } from "./pages/home/home.component"
 import { IframeGameComponent } from "./pages/iframe-game/iframe-game.component"
@@ -31,6 +32,7 @@ const routes: Routes = [
 	{ path: "games/kingdoms", component: KingdomsComponent },
 	{ path: "games/minestryger", component: MinestrygerComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "games/noughts-and-crosses", component: NoughtsAndCrossesComponent },
+	{ path: "games/renderend", component: RenderendComponent },
 	{ path: "games/virus", component: VirusComponent },
 	{ path: "messages", component: MessageRootComponent, canActivate: [IsAuthenticatedGuard], children: messageRoutes },
 	{ path: "profile", component: ProfileComponent, canActivate: [IsAuthenticatedGuard] },

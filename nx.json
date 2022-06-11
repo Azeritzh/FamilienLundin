@@ -3,15 +3,15 @@
   "affected": {
     "defaultBase": "master"
   },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
   "implicitDependencies": {
-    "angular.json": "*",
     "package.json": {
       "dependencies": "*",
       "devDependencies": "*"
     },
-    "tsconfig.base.json": "*",
-    ".eslintrc.json": "*",
-    "nx.json": "*"
+    ".eslintrc.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
@@ -35,28 +35,16 @@
       }
     ]
   },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "defaultProject": "lundin",
   "generators": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
     "@nrwl/angular:application": {
+      "linter": "eslint",
       "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"
     },
     "@nrwl/angular:library": {
+      "linter": "eslint",
       "unitTestRunner": "jest"
     }
-  }
+  },
+  "defaultProject": "lundin"
 }

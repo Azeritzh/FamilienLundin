@@ -1,0 +1,21 @@
+{
+	"sourceRoot": "libs/minestryger/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["libs/minestryger/src/**/*.ts"]
+			},
+			"outputs": ["{options.outputFile}"]
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"options": {
+				"jestConfig": "libs/minestryger/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}

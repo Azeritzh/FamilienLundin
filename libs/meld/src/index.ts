@@ -1,1 +1,1 @@
-export * from "./lib/meld"
+export * from "./meld"

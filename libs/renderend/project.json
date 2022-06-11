@@ -1,0 +1,21 @@
+{
+	"sourceRoot": "libs/renderend/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["libs/renderend/src/**/*.ts"]
+			},
+			"outputs": ["{options.outputFile}"]
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"options": {
+				"jestConfig": "libs/renderend/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}

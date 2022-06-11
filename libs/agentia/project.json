@@ -1,0 +1,21 @@
+{
+	"sourceRoot": "libs/agentia/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["libs/agentia/**/*.ts"]
+			},
+      "outputs": ["{options.outputFile}"]
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"options": {
+				"jestConfig": "libs/agentia/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}

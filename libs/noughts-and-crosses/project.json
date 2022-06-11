@@ -1,0 +1,21 @@
+{
+	"sourceRoot": "libs/noughts-and-crosses/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["libs/noughts-and-crosses/src/**/*.ts"]
+			},
+			"outputs": ["{options.outputFile}"]
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"options": {
+				"jestConfig": "libs/noughts-and-crosses/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}

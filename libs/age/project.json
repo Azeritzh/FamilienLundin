@@ -1,0 +1,21 @@
+{
+	"sourceRoot": "libs/age/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["libs/age/src/**/*.ts"]
+			},
+			"outputs": ["{options.outputFile}"]
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"options": {
+				"jestConfig": "libs/age/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}
