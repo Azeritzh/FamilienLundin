@@ -19,6 +19,8 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		for (const entity of this.entities.with(Behaviour.Obstacle))
 			if (this.shouldDespawn(entity))
 				this.despawnObstacle(entity)
+			else
+				this.updateSpeed(entity)
 
 		if (this.isTimeToSpawn())
 			this.spawnObstacle()
@@ -52,5 +54,9 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 
 	private despawnObstacle(entity: Id) {
 		this.entities.remove(entity)
+	}
+
+	private updateSpeed(entity: Id) {
+		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}
 }
