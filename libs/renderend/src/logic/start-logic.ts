@@ -35,7 +35,7 @@ export class StartLogic implements GameLogic<RenderendAction> {
 		this.globals.isAlive = true
 		this.globals.speed = 0.1
 		this.globals.distanceTravelled = 0
-		this.globals.lastObstacle = -1
+		this.globals.lastWall = -1
 	}
 
 	private spawnPlayerShip() {
