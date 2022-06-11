@@ -28,7 +28,6 @@ export class RenderendComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.resetCanvas()
-		this.drawEverything()
 		this.startInterval()
 	}
 
@@ -52,8 +51,9 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	private resetCanvas() {
 		this.sizeToWindow()
 		this.display = new WebGl2Display(this.canvas, 16, 160)
-		this.display.addSprite("ship", "assets/images/ship.png", 16, 16)
-		this.display.addSprite("obstacle", "assets/images/obstacle.png", 16, 16)
+		this.display.addSprite("ship", "assets/images/renderend/ship.png", 16, 16)
+		this.display.addSprite("obstacle", "assets/images/renderend/obstacle.png", 16, 16)
+		this.display.addSprite("background", "assets/images/renderend/starry-background.png", 220, 160)
 	}
 
 	private sizeToWindow() {
@@ -65,9 +65,19 @@ export class RenderendComponent implements OnInit, OnDestroy {
 
 	private drawEverything() {
 		this.display.startFrame()
+		this.drawBackground()
 		for (const entity of this.game.entities)
 			this.drawEntity(entity)
 		this.display.endFrame()
+	}
+
+	private drawBackground() {
+		const backgroundWidth = 220 / 16
+		const speedFactor = 0.5
+		const offset = (-this.game.state.globals.distanceTravelled * speedFactor) % backgroundWidth
+		this.display.drawSprite("background", offset, 0, 0, 0)
+		this.display.drawSprite("background", offset + backgroundWidth, 0, 0, 0)
+		this.display.drawSprite("background", offset + backgroundWidth * 2, 0, 0, 0)
 	}
 
 	private drawEntity(entity: Id) {
@@ -99,12 +109,12 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	private getVerticalAction(inputState: InputState) {
 		const up = this.changesFor(inputState, "w", "ArrowUp")
 		if (up === true)
-			return new MoveShipVerticallyAction(-0.1)
+			return new MoveShipVerticallyAction(-1)
 		if (up === false)
 			return new MoveShipVerticallyAction(0)
 		const down = this.changesFor(inputState, "s", "ArrowDown")
 		if (down === true)
-			return new MoveShipVerticallyAction(0.1)
+			return new MoveShipVerticallyAction(1)
 		if (down === false)
 			return new MoveShipVerticallyAction(0)
 	}
