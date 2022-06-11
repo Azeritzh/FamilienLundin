@@ -20,9 +20,8 @@ export class DieOnCollisionLogic implements GameLogic<RenderendAction> {
 	}
 
 	private updateEntity(entity: Id) {
-		if(!this.hasCollision(entity))
-			return
-		this.globals.speed = 0
+		if(this.hasCollision(entity))
+			this.globals.speed = 0
 	}
 
 	private hasCollision(entity: Id) {

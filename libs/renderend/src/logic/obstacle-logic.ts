@@ -22,26 +22,28 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 			else
 				this.updateSpeed(entity)
 
-		if (this.isTimeToSpawn())
-			this.spawnObstacle()
+		while (this.moreShouldBeSpawned())
+			this.spawnNextLine()
 	}
 
-	private isTimeToSpawn() {
-		this.globals.distanceToNextObstacle -= this.globals.speed
-		if (this.globals.distanceToNextObstacle > 0)
-			return false
-		this.globals.distanceToNextObstacle += 1
-		return true
+	private moreShouldBeSpawned() {
+		return this.globals.lastObstacle < this.globals.distanceTravelled + 20
 	}
 
-	private spawnObstacle() {
+	private spawnNextLine() {
+		this.globals.lastObstacle += 1
+		const nextPosition = this.globals.lastObstacle - this.globals.distanceTravelled
+		this.spawnObstaclesAt(nextPosition)
+	}
+
+	private spawnObstaclesAt(yPos: number) {
 		const entity = this.entities.create(this.constants.obstacleType)
 		const topEntity = this.entities.create(this.constants.obstacleType)
 		const bottomEntity = this.entities.create(this.constants.obstacleType)
 
-		this.position.setFor(entity, new Vector2(20, 0))
-		this.position.setFor(topEntity, new Vector2(20, 1 + this.random.get.int(8)))
-		this.position.setFor(bottomEntity, new Vector2(20, 9))
+		this.position.setFor(entity, new Vector2(yPos, 0))
+		this.position.setFor(topEntity, new Vector2(yPos, 1 + this.random.get.int(8)))
+		this.position.setFor(bottomEntity, new Vector2(yPos, 9))
 
 		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 		this.velocity.setFor(topEntity, new Vector2(-this.globals.speed, 0))
