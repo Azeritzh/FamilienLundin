@@ -3,7 +3,7 @@ import { RectangularSize } from "./values/rectangular-size"
 
 export const defaultConstants = {
 	shipType: "ship",
-	wallType: "obstacle",
+	wallType: "wall",
 	obstacleTypes: ["obstacle"],
 }
 
@@ -11,8 +11,12 @@ export const defaultValues = {
 	ship: {
 		behaviours: [Behaviour.Ship, Behaviour.Velocity, Behaviour.DieOnCollision]
 	},
+	wall: {
+		behaviours: [Behaviour.Obstacle, Behaviour.Velocity, Behaviour.HasRectangularSize],
+		rectangularSize: new RectangularSize(1, 1),
+	},
 	obstacle: {
 		behaviours: [Behaviour.Obstacle, Behaviour.Velocity, Behaviour.HasRectangularSize],
 		rectangularSize: new RectangularSize(1, 1),
-	}
+	},
 }
