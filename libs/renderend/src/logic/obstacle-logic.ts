@@ -80,10 +80,10 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private spawnObstacle() {
-		const obstacleType = this.constants.obstacleTypes[0]
+		const obstacleType = this.random.get.in(this.constants.obstacleTypes)
 		const size = this.rectangularSize.defaultOf(obstacleType)
 		const entity = this.entities.create(obstacleType)
-		this.position.setFor(entity, new Vector2(20 + size.width / 2, 2 + this.random.get.int(6) + size.height / 2))
+		this.position.setFor(entity, new Vector2(20, 2 + this.random.get.float(5) + size.height / 2))
 		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}
 }

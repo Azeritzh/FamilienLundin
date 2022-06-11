@@ -18,8 +18,17 @@ export class Random {
 
 class RandomGenerator {
 	constructor(private seed: number) { }
-	
+
 	int(max: number) {
 		return Math.floor(Math.random() * max) // TODO: make something based on the seed instead
+	}
+
+	float(max: number) {
+		return Math.random() * max // TODO: make something based on the seed instead
+	}
+
+	in<T>(list: T[]) {
+		const index = this.int(list.length)
+		return list[index]
 	}
 }
