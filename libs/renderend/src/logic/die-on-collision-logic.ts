@@ -12,6 +12,7 @@ export class DieOnCollisionLogic implements GameLogic<RenderendAction> {
 		private entities: RenderendEntities,
 		private position: RenderendEntityValues<Vector2>,
 		private rectangularSize: RenderendEntityValues<RectangularSize>,
+		private velocity: RenderendEntityValues<Vector2>,
 	) { }
 
 	update() {
@@ -24,6 +25,7 @@ export class DieOnCollisionLogic implements GameLogic<RenderendAction> {
 			return
 		this.globals.speed = 0
 		this.globals.isAlive = false
+		this.velocity.setFor(entity, new Vector2(0, 0))
 	}
 
 	private hasCollision(entity: Id) {

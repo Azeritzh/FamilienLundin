@@ -20,6 +20,7 @@ export class RenderendInput {
 		return [
 			this.getVerticalAction(inputState),
 			this.getHorisontalAction(inputState),
+			this.getRestartAction(inputState),
 		]
 	}
 
@@ -50,6 +51,12 @@ export class RenderendInput {
 		const right = this.stateFor(inputState, "d", "ArrowRight")
 		if (right)
 			return new MoveShipHorisontallyAction(0.01)
+	}
+
+	private getRestartAction(inputState: InputState) {
+		const restart = this.stateFor(inputState, "Enter", "Escape")
+		if (restart)
+			return new StartGameAction()
 	}
 
 	private stateFor(inputState: InputState, ...keys: string[]) {
