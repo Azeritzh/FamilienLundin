@@ -6,7 +6,7 @@ import { RenderendInput } from "./renderend-input"
 @Component({
 	selector: "lundin-renderend-game",
 	template: "<canvas #canvas (click)='clickCanvas($event)'></canvas>",
-	styles: [""],
+	styles: [":host{ position: relative } canvas{ position: absolute; }"],
 })
 export class RenderendGameComponent implements OnInit, OnDestroy {
 	game = new Renderend()
