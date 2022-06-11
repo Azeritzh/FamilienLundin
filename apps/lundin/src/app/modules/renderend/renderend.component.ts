@@ -28,7 +28,6 @@ export class RenderendComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.resetCanvas()
-		this.drawEverything()
 		this.startInterval()
 	}
 
@@ -52,8 +51,9 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	private resetCanvas() {
 		this.sizeToWindow()
 		this.display = new WebGl2Display(this.canvas, 16, 160)
-		this.display.addSprite("ship", "assets/images/ship.png", 16, 16)
-		this.display.addSprite("obstacle", "assets/images/obstacle.png", 16, 16)
+		this.display.addSprite("ship", "assets/images/renderend/ship.png", 16, 16)
+		this.display.addSprite("obstacle", "assets/images/renderend/obstacle.png", 16, 16)
+		this.display.addSprite("background", "assets/images/renderend/starry-background.png", 220, 160)
 	}
 
 	private sizeToWindow() {
@@ -65,9 +65,14 @@ export class RenderendComponent implements OnInit, OnDestroy {
 
 	private drawEverything() {
 		this.display.startFrame()
+		this.drawBackground()
 		for (const entity of this.game.entities)
 			this.drawEntity(entity)
 		this.display.endFrame()
+	}
+
+	private drawBackground(){
+		this.display.drawSprite("background", 0, 0, 0, 0)
 	}
 
 	private drawEntity(entity: Id) {
