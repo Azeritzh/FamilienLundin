@@ -44,8 +44,6 @@ export class RenderendDisplay {
 		element.style.backgroundColor = "rgba(0,0,0,0.5)"
 		element.style.textAlign = "center"
 		element.style.color = "white"
-		element.style.fontFamily = "'Vt323', Courier, monospace"
-		element.style.fontWeight = "bold"
 		element.style.left = this.screenPixelsFromTiles(this.gameWidthInTiles / 2 - 1.5) + "px"
 		element.style.top = this.screenPixelsFromTiles(9) + "px"
 		element.style.fontSize = this.screenPixelsFromTiles(0.5) + "px"
@@ -59,8 +57,6 @@ export class RenderendDisplay {
 		element.style.backgroundColor = "rgba(0,0,0,0.5)"
 		element.style.textAlign = "center"
 		element.style.color = "white"
-		element.style.fontFamily = "'Vt323', Courier, monospace"
-		element.style.fontWeight = "bold"
 		element.style.left = this.screenPixelsFromTiles(this.gameWidthInTiles / 2 - 3) + "px"
 		element.style.top = this.screenPixelsFromTiles(4) + "px"
 		element.style.fontSize = this.screenPixelsFromTiles(1) + "px"
@@ -120,7 +116,7 @@ export class RenderendDisplay {
 
 	private showGameOver() {
 		const gameOver = this.getTextElement("game-over")
-		gameOver.style.display = this.game.state.globals.speed ? "none" : "block"
+		gameOver.style.display = this.game.state.globals.isAlive ? "none" : "block"
 	}
 
 	private getTextElement(key: string) {
@@ -132,6 +128,8 @@ export class RenderendDisplay {
 	private createTextElement() {
 		const element = document.createElement("div")
 		element.style.position = "absolute"
+		element.style.fontFamily = "'Vt323', Courier, monospace"
+		element.style.fontWeight = "bold"
 		this.canvas.parentElement.appendChild(element)
 		return element
 	}
