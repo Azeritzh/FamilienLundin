@@ -4,6 +4,7 @@ import { RenderendConstants } from "../renderend-constants"
 import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction } from "../state/renderend-action"
+import { RectangularSize } from "../values/rectangular-size"
 
 export class ObstacleLogic implements GameLogic<RenderendAction> {
 	constructor(
@@ -12,6 +13,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		private entities: RenderendEntities,
 		private position: RenderendEntityValues<Vector2>,
 		private velocity: RenderendEntityValues<Vector2>,
+		private rectangularSize: RenderendEntityValues<RectangularSize>,
 		private random: Random,
 	) { }
 
@@ -36,14 +38,15 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		this.spawnObstaclesAt(nextPosition)
 	}
 
-	private spawnObstaclesAt(yPos: number) {
+	private spawnObstaclesAt(xPos: number) {
+		const size = this.rectangularSize.defaultOf(this.constants.obstacleType)
 		const entity = this.entities.create(this.constants.obstacleType)
 		const topEntity = this.entities.create(this.constants.obstacleType)
 		const bottomEntity = this.entities.create(this.constants.obstacleType)
 
-		this.position.setFor(entity, new Vector2(yPos, 0))
-		this.position.setFor(topEntity, new Vector2(yPos, 1 + this.random.get.int(8)))
-		this.position.setFor(bottomEntity, new Vector2(yPos, 9))
+		this.position.setFor(entity, new Vector2(xPos + size.width / 2, 0 + size.height / 2))
+		this.position.setFor(topEntity, new Vector2(xPos + size.width / 2, 1 + this.random.get.int(8) + size.height / 2))
+		this.position.setFor(bottomEntity, new Vector2(xPos + size.width / 2, 9 + size.height / 2))
 
 		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 		this.velocity.setFor(topEntity, new Vector2(-this.globals.speed, 0))

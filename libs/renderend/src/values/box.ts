@@ -28,6 +28,6 @@ export class Box { // struct
 	}
 
 	contains(point: Vector2) {
-		return this.minX < point.x && point.x < this.maxX && this.minY < point.y && point.y < this.maxY
+		return this.minX <= point.x && point.x <= this.maxX && this.minY <= point.y && point.y <= this.maxY
 	}
 }
