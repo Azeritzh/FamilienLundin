@@ -58,7 +58,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		this.spawnWallAt(xPos, 9, size)
 		if (this.random.get.int(2))
 			return
-		
+
 		if (this.random.get.int(2))
 			this.spawnWallAt(xPos, 1, size)
 		else
@@ -76,6 +76,8 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 			return false
 		if (this.globals.lastWall < 100)
 			return this.globals.tick % 20 === 0
+		if (this.globals.lastWall < 500)
+			return this.globals.tick % 10 === 0
 		return this.globals.tick % 5 === 0
 	}
 
@@ -83,7 +85,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		const obstacleType = this.random.get.in(this.constants.obstacleTypes)
 		const size = this.rectangularSize.defaultOf(obstacleType)
 		const entity = this.entities.create(obstacleType)
-		this.position.setFor(entity, new Vector2(20, 2 + this.random.get.float(5) + size.height / 2))
+		this.position.setFor(entity, new Vector2(20 + this.random.get.float(2), 1.5 + this.random.get.float(6) + size.height / 2))
 		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}
 }
