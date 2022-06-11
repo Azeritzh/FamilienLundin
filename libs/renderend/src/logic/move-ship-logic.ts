@@ -18,9 +18,7 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 			return
 		this.globals.distanceTravelled += this.globals.speed
 		for (const action of actions)
-			if (action instanceof MoveShipHorisontallyAction)
-				this.changeHorisontalSpeed(action)
-			else if (action instanceof MoveShipVerticallyAction)
+			if (action instanceof MoveShipVerticallyAction)
 				this.changeVerticalSpeed(action)
 	}
 

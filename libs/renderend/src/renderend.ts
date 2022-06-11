@@ -2,6 +2,7 @@ import { BaseGame, EntityManager, Random, ValueAccessor } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { defaultConstants, defaultValues } from "./defaults"
 import { DieOnCollisionLogic } from "./logic/die-on-collision-logic"
+import { DifficultyLogic } from "./logic/difficulty-logic"
 import { MoveShipLogic } from "./logic/move-ship-logic"
 import { ObstacleLogic } from "./logic/obstacle-logic"
 import { StartLogic } from "./logic/start-logic"
@@ -21,6 +22,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 		readonly random = new Random(state.globals),
 	) {
 		super([ // TODO: Right now the order matters, because globals are changed immediately
+			new DifficultyLogic(state.globals),
 			new MoveShipLogic(config.constants, state.globals, entities, access.velocity),
 			new DieOnCollisionLogic(state.globals, entities, access.position, access.rectangularSize, access.velocity),
 			new ObstacleLogic(config.constants, state.globals, entities, access.position, access.velocity, access.rectangularSize, random),
