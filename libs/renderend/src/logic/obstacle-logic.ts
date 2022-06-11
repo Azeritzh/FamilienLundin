@@ -4,6 +4,7 @@ import { RenderendConstants } from "../renderend-constants"
 import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction } from "../state/renderend-action"
+import { RectangularSize } from "../values/rectangular-size"
 
 export class ObstacleLogic implements GameLogic<RenderendAction> {
 	constructor(
@@ -12,6 +13,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		private entities: RenderendEntities,
 		private position: RenderendEntityValues<Vector2>,
 		private velocity: RenderendEntityValues<Vector2>,
+		private rectangularSize: RenderendEntityValues<RectangularSize>,
 		private random: Random,
 	) { }
 
@@ -22,30 +24,43 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 			else
 				this.updateSpeed(entity)
 
-		if (this.isTimeToSpawn())
-			this.spawnObstacle()
+		while (this.moreShouldBeSpawned())
+			this.spawnNextLine()
 	}
 
-	private isTimeToSpawn() {
-		this.globals.distanceToNextObstacle -= this.globals.speed
-		if (this.globals.distanceToNextObstacle > 0)
-			return false
-		this.globals.distanceToNextObstacle += 1
-		return true
+	private moreShouldBeSpawned() {
+		return this.globals.lastObstacle < this.globals.distanceTravelled + 20
 	}
 
-	private spawnObstacle() {
-		const entity = this.entities.create(this.constants.obstacleType)
+	private spawnNextLine() {
+		this.globals.lastObstacle += 1
+		const nextPosition = this.globals.lastObstacle - this.globals.distanceTravelled
+		this.spawnWallsAt(nextPosition)
+
+		if (this.globals.lastObstacle < 10)
+			return
+		if (this.globals.lastObstacle < 100 && this.globals.lastObstacle % 2)
+			return
+		this.spawnObstaclesAt(nextPosition)
+	}
+
+	private spawnWallsAt(xPos: number) {
+		const size = this.rectangularSize.defaultOf(this.constants.obstacleType)
 		const topEntity = this.entities.create(this.constants.obstacleType)
 		const bottomEntity = this.entities.create(this.constants.obstacleType)
 
-		this.position.setFor(entity, new Vector2(20, 0))
-		this.position.setFor(topEntity, new Vector2(20, 1 + this.random.get.int(8)))
-		this.position.setFor(bottomEntity, new Vector2(20, 9))
+		this.position.setFor(topEntity, new Vector2(xPos + size.width / 2, 0 + size.height / 2))
+		this.position.setFor(bottomEntity, new Vector2(xPos + size.width / 2, 9 + size.height / 2))
 
-		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 		this.velocity.setFor(topEntity, new Vector2(-this.globals.speed, 0))
 		this.velocity.setFor(bottomEntity, new Vector2(-this.globals.speed, 0))
+	}
+
+	private spawnObstaclesAt(xPos: number) {
+		const size = this.rectangularSize.defaultOf(this.constants.obstacleType)
+		const entity = this.entities.create(this.constants.obstacleType)
+		this.position.setFor(entity, new Vector2(xPos + size.width / 2, 1 + this.random.get.int(8) + size.height / 2))
+		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private shouldDespawn(entity: Id) {
