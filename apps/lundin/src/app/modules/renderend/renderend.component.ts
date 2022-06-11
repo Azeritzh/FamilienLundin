@@ -71,8 +71,13 @@ export class RenderendComponent implements OnInit, OnDestroy {
 		this.display.endFrame()
 	}
 
-	private drawBackground(){
-		this.display.drawSprite("background", 0, 0, 0, 0)
+	private drawBackground() {
+		const backgroundWidth = 220 / 16
+		const speedFactor = 0.5
+		const offset = (-this.game.state.globals.distanceTravelled * speedFactor) % backgroundWidth
+		this.display.drawSprite("background", offset, 0, 0, 0)
+		this.display.drawSprite("background", offset + backgroundWidth, 0, 0, 0)
+		this.display.drawSprite("background", offset + backgroundWidth * 2, 0, 0, 0)
 	}
 
 	private drawEntity(entity: Id) {
