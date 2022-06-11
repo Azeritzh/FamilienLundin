@@ -21,8 +21,4 @@ export class RenderendComponent implements AfterViewInit {
 			this.gameAreaElement.nativeElement.clientHeight,
 		)
 	}
-
-	restart() {
-		this.game.restart()
-	}
 }
