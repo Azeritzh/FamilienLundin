@@ -35,22 +35,32 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	private spawnNextLine() {
 		this.globals.lastObstacle += 1
 		const nextPosition = this.globals.lastObstacle - this.globals.distanceTravelled
+		this.spawnWallsAt(nextPosition)
+
+		if (this.globals.lastObstacle < 10)
+			return
+		if (this.globals.lastObstacle < 100 && this.globals.lastObstacle % 2)
+			return
 		this.spawnObstaclesAt(nextPosition)
+	}
+
+	private spawnWallsAt(xPos: number) {
+		const size = this.rectangularSize.defaultOf(this.constants.obstacleType)
+		const topEntity = this.entities.create(this.constants.obstacleType)
+		const bottomEntity = this.entities.create(this.constants.obstacleType)
+
+		this.position.setFor(topEntity, new Vector2(xPos + size.width / 2, 0 + size.height / 2))
+		this.position.setFor(bottomEntity, new Vector2(xPos + size.width / 2, 9 + size.height / 2))
+
+		this.velocity.setFor(topEntity, new Vector2(-this.globals.speed, 0))
+		this.velocity.setFor(bottomEntity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private spawnObstaclesAt(xPos: number) {
 		const size = this.rectangularSize.defaultOf(this.constants.obstacleType)
 		const entity = this.entities.create(this.constants.obstacleType)
-		const topEntity = this.entities.create(this.constants.obstacleType)
-		const bottomEntity = this.entities.create(this.constants.obstacleType)
-
-		this.position.setFor(entity, new Vector2(xPos + size.width / 2, 0 + size.height / 2))
-		this.position.setFor(topEntity, new Vector2(xPos + size.width / 2, 1 + this.random.get.int(8) + size.height / 2))
-		this.position.setFor(bottomEntity, new Vector2(xPos + size.width / 2, 9 + size.height / 2))
-
+		this.position.setFor(entity, new Vector2(xPos + size.width / 2, 1 + this.random.get.int(8) + size.height / 2))
 		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
-		this.velocity.setFor(topEntity, new Vector2(-this.globals.speed, 0))
-		this.velocity.setFor(bottomEntity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private shouldDespawn(entity: Id) {
