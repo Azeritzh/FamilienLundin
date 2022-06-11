@@ -45,9 +45,9 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private spawnWallsAt(xPos: number) {
-		const size = this.rectangularSize.defaultOf(this.constants.obstacleType)
-		const topEntity = this.entities.create(this.constants.obstacleType)
-		const bottomEntity = this.entities.create(this.constants.obstacleType)
+		const size = this.rectangularSize.defaultOf(this.constants.wallType)
+		const topEntity = this.entities.create(this.constants.wallType)
+		const bottomEntity = this.entities.create(this.constants.wallType)
 
 		this.position.setFor(topEntity, new Vector2(xPos + size.width / 2, 0 + size.height / 2))
 		this.position.setFor(bottomEntity, new Vector2(xPos + size.width / 2, 9 + size.height / 2))
@@ -57,8 +57,9 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private spawnObstaclesAt(xPos: number) {
-		const size = this.rectangularSize.defaultOf(this.constants.obstacleType)
-		const entity = this.entities.create(this.constants.obstacleType)
+		const obstacleType = this.constants.obstacleTypes[0]
+		const size = this.rectangularSize.defaultOf(obstacleType)
+		const entity = this.entities.create(obstacleType)
 		this.position.setFor(entity, new Vector2(xPos + size.width / 2, 1 + this.random.get.int(8) + size.height / 2))
 		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}

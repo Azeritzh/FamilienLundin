@@ -17,7 +17,11 @@ export class RenderendConfig extends BaseConfig<GroupedEntityValues, Behaviour> 
 			typeMap,
 			new Map(typeNames.map(x => [typeMap.typeIdFor(x), types[x]])),
 			new Map(typeNames.map(x => [typeMap.typeIdFor(x), types[x].behaviours])),
-			new RenderendConstants(typeMap.typeIdFor(constants.shipType), typeMap.typeIdFor(constants.obstacleType)),
+			new RenderendConstants(
+				typeMap.typeIdFor(constants.shipType),
+				typeMap.typeIdFor(constants.wallType),
+				constants.obstacleTypes.map(x => typeMap.typeIdFor(x)),
+			),
 		)
 	}
 }

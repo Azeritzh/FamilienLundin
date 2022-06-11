@@ -1,20 +1,19 @@
 import { BaseGame, EntityManager, Random, ValueAccessor } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
+import { defaultConstants, defaultValues } from "./defaults"
 import { DieOnCollisionLogic } from "./logic/die-on-collision-logic"
 import { MoveShipLogic } from "./logic/move-ship-logic"
 import { ObstacleLogic } from "./logic/obstacle-logic"
 import { StartLogic } from "./logic/start-logic"
 import { VelocityLogic } from "./logic/velocity-logic"
 import { RenderendConfig } from "./renderend-config"
-import { Behaviour } from "./state/entity-values"
 import { RenderendAction } from "./state/renderend-action"
 import { RenderendChanges } from "./state/renderend-changes"
 import { RenderendState } from "./state/renderend-state"
-import { RectangularSize } from "./values/rectangular-size"
 
 export class Renderend extends BaseGame<RenderendAction> {
 	constructor(
-		public readonly config = RenderendConfig.from({ shipType: "ship", obstacleType: "obstacle" }, { ship: { behaviours: [Behaviour.Ship, Behaviour.Velocity, Behaviour.DieOnCollision] }, obstacle: { behaviours: [Behaviour.Obstacle, Behaviour.Velocity, Behaviour.HasRectangularSize], rectangularSize: new RectangularSize(1, 1) } }),
+		public readonly config = RenderendConfig.from(defaultConstants, defaultValues),
 		public readonly state = RenderendState.fromConfig(config),
 		readonly changes = new RenderendChanges(),
 		public readonly entities = new EntityManager(config, state, changes),
