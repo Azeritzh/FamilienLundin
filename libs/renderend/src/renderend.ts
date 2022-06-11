@@ -22,11 +22,11 @@ export class Renderend extends BaseGame<RenderendAction> {
 		readonly random = new Random(state.globals),
 	) {
 		super([ // TODO: Right now the order matters, because globals are changed immediately
-			new StartLogic(config.constants, state.globals, entities, access.position),
 			new MoveShipLogic(state.globals, entities, access.velocity),
 			new DieOnCollisionLogic(state.globals, entities, access.position, access.rectangularSize),
 			new ObstacleLogic(config.constants, state.globals, entities, access.position, access.velocity, access.rectangularSize, random),
 			new VelocityLogic(entities, access.position, access.velocity),
+			new StartLogic(config.constants, state.globals, entities, access.position),
 		])
 	}
 
