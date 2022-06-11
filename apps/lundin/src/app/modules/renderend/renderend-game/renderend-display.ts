@@ -36,6 +36,7 @@ export class RenderendDisplay {
 
 	private setupTextElements() {
 		this.setupDistanceText()
+		this.setupGameOverText()
 	}
 
 	private setupDistanceText() {
@@ -50,6 +51,22 @@ export class RenderendDisplay {
 		element.style.fontSize = this.screenPixelsFromTiles(0.5) + "px"
 		element.style.width = this.screenPixelsFromTiles(3) + "px"
 		element.style.lineHeight = this.screenPixelsFromTiles(1) + "px"
+	}
+
+	private setupGameOverText() {
+		const element = this.getTextElement("game-over")
+		element.style.display = "none"
+		element.style.backgroundColor = "rgba(0,0,0,0.5)"
+		element.style.textAlign = "center"
+		element.style.color = "white"
+		element.style.fontFamily = "'Vt323', Courier, monospace"
+		element.style.fontWeight = "bold"
+		element.style.left = this.screenPixelsFromTiles(this.gameWidthInTiles / 2 - 3) + "px"
+		element.style.top = this.screenPixelsFromTiles(4) + "px"
+		element.style.fontSize = this.screenPixelsFromTiles(1) + "px"
+		element.style.width = this.screenPixelsFromTiles(6) + "px"
+		element.style.lineHeight = this.screenPixelsFromTiles(2) + "px"
+		element.innerText = "GAME OVER"
 	}
 
 	private screenPixelsFromTiles(tiles: number) {
@@ -96,8 +113,14 @@ export class RenderendDisplay {
 	}
 
 	private writeText() {
-		const element = this.getTextElement("distance")
-		element.innerText = "" + Math.floor(this.game.state.globals.distanceTravelled)
+		this.showGameOver()
+		const distance = this.getTextElement("distance")
+		distance.innerText = "" + Math.floor(this.game.state.globals.distanceTravelled)
+	}
+
+	private showGameOver() {
+		const gameOver = this.getTextElement("game-over")
+		gameOver.style.display = this.game.state.globals.speed ? "none" : "block"
 	}
 
 	private getTextElement(key: string) {
