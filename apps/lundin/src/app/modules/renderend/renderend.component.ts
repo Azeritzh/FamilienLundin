@@ -75,7 +75,11 @@ export class RenderendComponent implements OnInit, OnDestroy {
 		const sprite = typeOf(entity) == this.game.config.constants.shipType
 			? "ship"
 			: "obstacle"
-		this.display.drawSprite(sprite, pos.x, pos.y, 0, 0)
+		// These are how the sprite should be offset in comparison to the entity's center point
+		// It's just hardcoded for now, so sprites of size 1x1 will center on the entity's center point
+		const offsetX = -0.5
+		const offsetY = -0.5
+		this.display.drawSprite(sprite, pos.x + offsetX, pos.y + offsetY, 0, 0)
 	}
 
 	private step = () => {

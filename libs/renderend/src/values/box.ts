@@ -11,10 +11,10 @@ export class Box { // struct
 
 	static from(point: Vector2, size: RectangularSize) {
 		return new Box(
-			point.x,
-			point.x + size.width,
-			point.y,
-			point.y + size.height,
+			point.x - size.width / 2,
+			point.x + size.width / 2,
+			point.y - size.height / 2,
+			point.y + size.height / 2,
 		)
 	}
 
@@ -27,7 +27,7 @@ export class Box { // struct
 		)
 	}
 
-	contains(point: Vector2){
+	contains(point: Vector2) {
 		return this.minX < point.x && point.x < this.maxX && this.minY < point.y && point.y < this.maxY
 	}
 }
