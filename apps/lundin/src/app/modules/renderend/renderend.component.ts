@@ -109,12 +109,12 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	private getVerticalAction(inputState: InputState) {
 		const up = this.changesFor(inputState, "w", "ArrowUp")
 		if (up === true)
-			return new MoveShipVerticallyAction(-0.1)
+			return new MoveShipVerticallyAction(-1)
 		if (up === false)
 			return new MoveShipVerticallyAction(0)
 		const down = this.changesFor(inputState, "s", "ArrowDown")
 		if (down === true)
-			return new MoveShipVerticallyAction(0.1)
+			return new MoveShipVerticallyAction(1)
 		if (down === false)
 			return new MoveShipVerticallyAction(0)
 	}
