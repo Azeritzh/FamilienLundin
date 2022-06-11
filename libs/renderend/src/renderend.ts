@@ -23,7 +23,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 	) {
 		super([ // TODO: Right now the order matters, because globals are changed immediately
 			new DifficultyLogic(state.globals),
-			new MoveShipLogic(config.constants, state.globals, entities, access.velocity),
+			new MoveShipLogic(config.constants, state.globals, entities, access.position, access.velocity),
 			new DieOnCollisionLogic(state.globals, entities, access.position, access.rectangularSize, access.velocity),
 			new ObstacleLogic(config.constants, state.globals, entities, access.position, access.velocity, access.rectangularSize, random),
 			new VelocityLogic(entities, access.position, access.velocity),
