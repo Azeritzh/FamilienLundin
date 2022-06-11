@@ -29,8 +29,10 @@ export class RenderendDisplay {
 	private setupDisplay() {
 		this.display = new WebGl2Display(this.canvas, this.gamePixelsPerTile, this.gameHeightInTiles * this.gamePixelsPerTile)
 		this.display.addSprite("ship", "assets/images/renderend/ship.png", 16, 16)
+		this.display.addSprite("wall", "assets/images/renderend/wall.png", 16, 16)
 		this.display.addSprite("obstacle", "assets/images/renderend/obstacle.png", 16, 16)
-		this.display.addSprite("background", "assets/images/renderend/starry-background.png", 220, 160)
+		this.display.addSprite("big-obstacle", "assets/images/renderend/big-obstacle.png", 32, 32)
+		this.display.addSprite("background", "assets/images/renderend/starry-background.png", 220, 160, 0, 0)
 		this.setupTextElements()
 	}
 
@@ -98,13 +100,11 @@ export class RenderendDisplay {
 
 	private drawEntity(entity: Id) {
 		const pos = this.game.access.position.of(entity)
-		const sprite = typeOf(entity) == this.game.config.constants.shipType
-			? "ship"
-			: "obstacle"
+		const sprite = this.game.config.typeMap.typeFor(typeOf(entity))
 		// These are how the sprite should be offset in comparison to the entity's center point
 		// It's just hardcoded for now, so sprites of size 1x1 will center on the entity's center point
-		const offsetX = -0.5
-		const offsetY = -0.5
+		const offsetX = 0
+		const offsetY = 0
 		this.display.drawSprite(sprite, pos.x + offsetX, pos.y + offsetY, 0, 0)
 	}
 

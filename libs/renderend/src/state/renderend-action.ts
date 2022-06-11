@@ -1,15 +1,11 @@
+import { Vector2 } from "@lundin/utility"
+
 export abstract class RenderendAction { }
 
 export class StartGameAction extends RenderendAction { }
 
-export class MoveShipVerticallyAction extends RenderendAction {
+export class MoveShipAction extends RenderendAction {
 	constructor(
-		public speed: number,
-	) { super() }
-}
-
-export class MoveShipHorisontallyAction extends RenderendAction {
-	constructor(
-		public speed: number,
+		public velocity: Vector2,
 	) { super() }
 }

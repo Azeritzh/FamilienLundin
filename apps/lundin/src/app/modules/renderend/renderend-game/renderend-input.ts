@@ -1,5 +1,5 @@
-import { MoveShipHorisontallyAction, MoveShipVerticallyAction, RenderendAction, StartGameAction } from "@lundin/renderend"
-import { InputState, KeyStates } from "@lundin/utility"
+import { MoveShipAction, RenderendAction, StartGameAction } from "@lundin/renderend"
+import { InputState, KeyStates, Vector2 } from "@lundin/utility"
 
 export class RenderendInput {
 	private sizeScaling = 4
@@ -18,39 +18,31 @@ export class RenderendInput {
 
 	private parseInputs(inputState: InputState) {
 		return [
-			this.getVerticalAction(inputState),
-			this.getHorisontalAction(inputState),
+			this.getMoveAction(inputState),
 			this.getRestartAction(inputState),
 		]
 	}
 
-	private getVerticalAction(inputState: InputState) {
-		const up = this.changesFor(inputState, "w", "ArrowUp")
-		if (up === true)
-			return new MoveShipVerticallyAction(-1)
-		if (up === false)
-			return new MoveShipVerticallyAction(0)
-		const down = this.changesFor(inputState, "s", "ArrowDown")
-		if (down === true)
-			return new MoveShipVerticallyAction(1)
-		if (down === false)
-			return new MoveShipVerticallyAction(0)
+	private getMoveAction(inputState: InputState) {
+		const velocity = new Vector2(this.getVelocityX(inputState), this.getVelocityY(inputState))
+		if (!velocity.isZero())
+			return new MoveShipAction(velocity)
 	}
 
-	private changesFor(inputState: InputState, ...keys: string[]) {
-		for (const key of keys)
-			if (inputState[key]?.hasChanged)
-				return inputState[key].state
-		return null
+	private getVelocityY(inputState: InputState) {
+		if (this.stateFor(inputState, "w", "ArrowUp"))
+			return -1
+		if (this.stateFor(inputState, "s", "ArrowDown"))
+			return 1
+		return 0
 	}
 
-	private getHorisontalAction(inputState: InputState) {
-		const left = this.stateFor(inputState, "a", "ArrowLeft")
-		if (left)
-			return new MoveShipHorisontallyAction(-0.01)
-		const right = this.stateFor(inputState, "d", "ArrowRight")
-		if (right)
-			return new MoveShipHorisontallyAction(0.01)
+	private getVelocityX(inputState: InputState) {
+		if (this.stateFor(inputState, "a", "ArrowLeft"))
+			return -1
+		if (this.stateFor(inputState, "d", "ArrowRight"))
+			return 1
+		return 0
 	}
 
 	private getRestartAction(inputState: InputState) {

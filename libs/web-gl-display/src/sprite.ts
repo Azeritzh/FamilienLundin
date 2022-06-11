@@ -10,6 +10,8 @@ export class Sprite {
 		private texture: WebGLTexture,
 		private textureBuffer: WebGLBuffer,
 		private geometryBuffer: WebGLBuffer,
+		private centerX: number,
+		private centerY: number,
 		private uvX: number,
 		private uvY: number,
 	) {
@@ -32,7 +34,7 @@ export class Sprite {
 
 		const fX = frameX * this.uvX
 		const fY = frameY * this.uvY
-		const trans = new M3x3().transition(x * this.tileSize, y * this.tileSize)
+		const trans = new M3x3().transition(x * this.tileSize - this.centerX, y * this.tileSize - this.centerY)
 
 		gl.uniform2f(this.shader.uFrameLocation, fX, fY)
 		gl.uniformMatrix3fv(this.shader.uWorldLocation, false, this.worldSpaceMatrix.getFloatArray())
