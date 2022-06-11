@@ -26,7 +26,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 			new DieOnCollisionLogic(state.globals, entities, access.position, access.rectangularSize),
 			new ObstacleLogic(config.constants, state.globals, entities, access.position, access.velocity, access.rectangularSize, random),
 			new VelocityLogic(entities, access.position, access.velocity),
-			new StartLogic(config.constants, state.globals, entities, access.position),
+			new StartLogic(config.constants, changes, state.globals, entities, access.position),
 		])
 	}
 

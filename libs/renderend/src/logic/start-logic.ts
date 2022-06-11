@@ -4,10 +4,12 @@ import { RenderendConstants } from "../renderend-constants"
 import { RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction, StartGameAction } from "../state/renderend-action"
+import { RenderendChanges } from "../state/renderend-changes"
 
 export class StartLogic implements GameLogic<RenderendAction> {
 	constructor(
 		private constants: RenderendConstants,
+		private changes: RenderendChanges,
 		private globals: Globals,
 		private entities: RenderendEntities,
 		private position: RenderendEntityValues<Vector2>,
@@ -25,7 +27,8 @@ export class StartLogic implements GameLogic<RenderendAction> {
 	}
 
 	private clearMap() {
-		this.entities.remove(...this.entities)
+		this.changes.createdEntities
+		this.entities.remove(...this.entities, ...this.changes.createdEntities)
 	}
 
 	private resetGlobals() {
