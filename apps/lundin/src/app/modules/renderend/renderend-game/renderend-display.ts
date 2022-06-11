@@ -43,7 +43,7 @@ export class RenderendDisplay {
 		element.style.backgroundColor = "rgba(0,0,0,0.5)"
 		element.style.textAlign = "center"
 		element.style.color = "white"
-		element.style.fontFamily = "Courier, monospace"
+		element.style.fontFamily = "'Vt323', Courier, monospace"
 		element.style.fontWeight = "bold"
 		element.style.left = this.screenPixelsFromTiles(this.gameWidthInTiles / 2 - 1.5) + "px"
 		element.style.top = this.screenPixelsFromTiles(9) + "px"
