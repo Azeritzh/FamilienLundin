@@ -78,14 +78,14 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 			return this.globals.tick % 20 === 0
 		if (this.globals.lastWall < 500)
 			return this.globals.tick % 10 === 0
-		return this.globals.tick % 5 === 0
+		return this.globals.tick % 7 === 0
 	}
 
 	private spawnObstacle() {
 		const obstacleType = this.random.get.in(this.constants.obstacleTypes)
-		const size = this.rectangularSize.defaultOf(obstacleType)
+		const obstacleHeight = this.rectangularSize.defaultOf(obstacleType).height
 		const entity = this.entities.create(obstacleType)
-		this.position.setFor(entity, new Vector2(20 + this.random.get.float(2), 1.5 + this.random.get.float(6) + size.height / 2))
+		this.position.setFor(entity, new Vector2(20 + this.random.get.float(2), 1 + this.random.get.float(7 - obstacleHeight) + obstacleHeight))
 		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}
 }

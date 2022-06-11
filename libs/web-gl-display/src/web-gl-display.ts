@@ -1,4 +1,5 @@
 import { M3x3 } from "./m3x3"
+import { Sprite } from "./sprite"
 import { SpriteFactory } from "./sprite-factory"
 import { StandardShader } from "./standard-shader"
 
@@ -12,7 +13,7 @@ export class WebGl2Display {
 		private previousProgram = null,
 		private worldSpaceMatrix = buildWorldSpaceMatrix(canvas.width, canvas.height, virtualScreenHeight),
 		private spriteFactory = new SpriteFactory(gl, standardShader, tileSize, worldSpaceMatrix),
-		private sprites = {},
+		private sprites: { [index: string]: Sprite } = {},
 	) {
 		this.gl.enable(this.gl.BLEND)
 	}
@@ -49,8 +50,15 @@ export class WebGl2Display {
 		this.spriteFactory = new SpriteFactory(this.gl, this.standardShader, this.tileSize, this.worldSpaceMatrix)
 	}
 
-	public async addSprite(name: string, path: string, width = 12, height = 12) {
-		this.sprites[name] = await this.spriteFactory.createSprite(path, width, height)
+	public async addSprite(
+		name: string,
+		path: string,
+		width = 16,
+		height = 16,
+		centerX = width / 2,
+		centerY = height / 2,
+	) {
+		this.sprites[name] = await this.spriteFactory.createSprite(path, width, height, centerX, centerY)
 	}
 }
 

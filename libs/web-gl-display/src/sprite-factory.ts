@@ -10,7 +10,13 @@ export class SpriteFactory {
 		private worldSpaceMatrix: M3x3,
 	) { }
 
-	async createSprite(path: string, width: number, height: number) {
+	async createSprite(
+		path: string,
+		width: number,
+		height: number,
+		centerX: number,
+		centerY: number,
+	) {
 		const image = await this.loadImage(path)
 
 		const uvX = width / image.width
@@ -30,6 +36,8 @@ export class SpriteFactory {
 			texture,
 			textureBuffer,
 			geometryBuffer,
+			centerX,
+			centerY,
 			uvX,
 			uvY,
 		)
