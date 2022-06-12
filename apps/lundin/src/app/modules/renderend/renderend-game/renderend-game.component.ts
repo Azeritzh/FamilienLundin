@@ -15,6 +15,7 @@ export class RenderendGameComponent implements OnInit, OnDestroy {
 	private inputs: RenderendInput
 	private timerId: number
 	private updateInterval = 30
+	private lastUpdate = Date.now()
 	private stop = false
 
 	constructor(
@@ -47,9 +48,11 @@ export class RenderendGameComponent implements OnInit, OnDestroy {
 	}
 
 	private updateDisplay = () => {
+		const now = Date.now()
+		const fractionOfTick = (now - this.lastUpdate) / 30
+		this.display.show(fractionOfTick)
 		if (!this.stop)
-			this.display.show()
-		requestAnimationFrame(this.updateDisplay)
+			requestAnimationFrame(this.updateDisplay)
 	}
 
 	setSize(width: number, height: number) {
@@ -58,6 +61,7 @@ export class RenderendGameComponent implements OnInit, OnDestroy {
 
 	private step = () => {
 		this.game.update(...this.inputs.getNewActions())
+		this.lastUpdate = Date.now()
 	}
 
 	restart() {
