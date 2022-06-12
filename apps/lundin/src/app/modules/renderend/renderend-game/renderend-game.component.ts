@@ -15,6 +15,7 @@ export class RenderendGameComponent implements OnInit, OnDestroy {
 	private inputs: RenderendInput
 	private timerId: number
 	private updateInterval = 30
+	private stop = false
 
 	constructor(
 		private ngZone: NgZone
@@ -23,28 +24,32 @@ export class RenderendGameComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.display = new RenderendDisplay(this.game, this.canvasElement.nativeElement)
 		this.inputs = new RenderendInput(this.canvasElement.nativeElement)
-		this.ngZone.runOutsideAngular(() =>
-			this.display.startDisplayLoop()
-		)
 		this.startInterval()
 	}
 
 	ngOnDestroy() {
-		this.display.onDestroy()
+		this.stop = true
 		window.clearInterval(this.timerId)
 	}
 
 	private startInterval() {
 		this.stopInterval()
-		this.ngZone.runOutsideAngular(() =>
+		this.ngZone.runOutsideAngular(() => {
 			this.timerId = window.setInterval(this.step, this.updateInterval)
-		)
+			this.updateDisplay()
+		})
 	}
 
 	private stopInterval() {
 		if (this.timerId)
 			window.clearInterval(this.timerId)
 		this.timerId = null
+	}
+
+	private updateDisplay = () => {
+		if (!this.stop)
+			this.display.show()
+		requestAnimationFrame(this.updateDisplay)
 	}
 
 	setSize(width: number, height: number) {

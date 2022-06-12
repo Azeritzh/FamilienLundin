@@ -5,7 +5,6 @@ import { WebGl2Display } from "@lundin/web-gl-display"
 export class RenderendDisplay {
 	private display: WebGl2Display
 	private textElements: { [index: string]: HTMLDivElement } = {}
-	private stop = false
 	private readonly gameHeightInTiles = 10
 	private get gameWidthInTiles() { return this.canvas.width / this.screenPixelsPerTile }
 	private readonly gamePixelsPerTile = 16
@@ -16,14 +15,6 @@ export class RenderendDisplay {
 		private canvas: HTMLCanvasElement,
 	) {
 		this.setupDisplay()
-	}
-
-	onDestroy() {
-		this.stop = true
-	}
-
-	startDisplayLoop() {
-		requestAnimationFrame(this.drawEverything)
 	}
 
 	private setupDisplay() {
@@ -67,6 +58,21 @@ export class RenderendDisplay {
 		element.innerText = "GAME OVER"
 	}
 
+	private getTextElement(key: string) {
+		if (!this.textElements[key])
+			this.textElements[key] = this.createTextElement()
+		return this.textElements[key]
+	}
+
+	private createTextElement() {
+		const element = document.createElement("div")
+		element.style.position = "absolute"
+		element.style.fontFamily = "'Vt323', Courier, monospace"
+		element.style.fontWeight = "bold"
+		this.canvas.parentElement.appendChild(element)
+		return element
+	}
+
 	private screenPixelsFromTiles(tiles: number) {
 		return this.screenPixelsPerTile * tiles
 	}
@@ -78,15 +84,13 @@ export class RenderendDisplay {
 		this.setupDisplay()
 	}
 
-	private drawEverything = () => {
+	show() {
 		this.display.startFrame()
 		this.drawBackground()
 		for (const entity of this.game.entities)
 			this.drawEntity(entity)
 		this.display.endFrame()
 		this.writeText()
-		if (!this.stop)
-			requestAnimationFrame(this.drawEverything)
 	}
 
 	private drawBackground() {
@@ -101,11 +105,7 @@ export class RenderendDisplay {
 	private drawEntity(entity: Id) {
 		const pos = this.game.access.position.of(entity)
 		const sprite = this.game.config.typeMap.typeFor(typeOf(entity))
-		// These are how the sprite should be offset in comparison to the entity's center point
-		// It's just hardcoded for now, so sprites of size 1x1 will center on the entity's center point
-		const offsetX = 0
-		const offsetY = 0
-		this.display.drawSprite(sprite, pos.x + offsetX, pos.y + offsetY, 0, 0)
+		this.display.drawSprite(sprite, pos.x, pos.y, 0, 0)
 	}
 
 	private writeText() {
@@ -117,20 +117,5 @@ export class RenderendDisplay {
 	private showGameOver() {
 		const gameOver = this.getTextElement("game-over")
 		gameOver.style.display = this.game.state.globals.isAlive ? "none" : "block"
-	}
-
-	private getTextElement(key: string) {
-		if (!this.textElements[key])
-			this.textElements[key] = this.createTextElement()
-		return this.textElements[key]
-	}
-
-	private createTextElement() {
-		const element = document.createElement("div")
-		element.style.position = "absolute"
-		element.style.fontFamily = "'Vt323', Courier, monospace"
-		element.style.fontWeight = "bold"
-		this.canvas.parentElement.appendChild(element)
-		return element
 	}
 }
