@@ -1,5 +1,5 @@
 import { Id, typeOf } from "@lundin/age"
-import { Renderend } from "@lundin/renderend"
+import { Renderend } from "./renderend"
 import { WebGl2Display } from "@lundin/web-gl-display"
 
 export class RenderendDisplay {

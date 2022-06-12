@@ -1,7 +1,5 @@
 import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core"
-import { Renderend } from "@lundin/renderend"
-import { RenderendDisplay } from "./renderend-display"
-import { RenderendInput } from "./renderend-input"
+import { Renderend, RenderendDisplay, RenderendInput } from "@lundin/renderend"
 
 @Component({
 	selector: "lundin-renderend-game",

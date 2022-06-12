@@ -15,13 +15,13 @@ export class VariousComponent {
 
 	games: Entry[] = [
 		{ title: "Minestryger", link: "/games/minestryger", mustBeLoggedIn: true },
+		{ title: "Renderend", link: "/games/renderend" },
 		{ title: "Virus", link: "/games/virus" },
 		{ title: "Piong", link: "/games/iframe/piong" },
 		{ title: "Tern", link: "/games/iframe/tern" },
 	]
 
 	wips: Entry[] = [
-		{ title: "Renderend", link: "/games/renderend" },
 		{ title: "Unavngivet spil", link: "/games/kingdoms" },
 		{ title: "Kryds og Bolle", link: "/games/noughts-and-crosses" },
 		{ title: "Bilspil", link: "/games/iframe/bilspil" },

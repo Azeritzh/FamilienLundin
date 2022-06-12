@@ -28,7 +28,7 @@ export class WebGl2Display {
 	public drawSprite(name: string, x: number, y: number, frameX: number, frameY: number) {
 		const sprite = this.sprites[name]
 		if (!sprite)
-			return console.error("Could not load sprite {0}", name)
+			return console.warn("Could not load sprite {0}", name)
 		if (this.previousProgram != sprite.shader.program) {
 			this.gl.useProgram(sprite.shader.program)
 			this.previousProgram = sprite.shader.program
