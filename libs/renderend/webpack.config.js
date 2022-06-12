@@ -10,7 +10,7 @@ module.exports = (config) => {
 		optimization: { minimize: true },
 		output: {
 			...config.output,
-			filename: 'renderend.min.js',
+			filename: 'renderend.[contenthash].js',
 			libraryTarget: 'umd',
 		},
 	}

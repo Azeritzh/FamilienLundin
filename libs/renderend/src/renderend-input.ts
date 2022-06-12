@@ -1,5 +1,5 @@
-import { MoveShipAction, RenderendAction, StartGameAction } from "@lundin/renderend"
 import { InputState, KeyStates, Vector2 } from "@lundin/utility"
+import { MoveShipAction, RenderendAction, StartGameAction } from "./state/renderend-action"
 
 export class RenderendInput {
 	private sizeScaling = 4
