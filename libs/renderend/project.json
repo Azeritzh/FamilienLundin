@@ -15,6 +15,16 @@
 				"jestConfig": "libs/renderend/jest.config.ts",
 				"passWithNoTests": true
 			}
+		},
+		"build": {
+      "executor": "@nrwl/node:webpack",
+      "options": {
+        "outputPath": "dist/renderend",
+        "main": "libs/renderend/src/index.ts",
+        "tsConfig": "libs/renderend/tsconfig.lib.json",
+        "project": "libs/renderend/package.json",
+        "webpackConfig": "libs/renderend/webpack.config.js"
+      }
 		}
 	},
 	"tags": []
