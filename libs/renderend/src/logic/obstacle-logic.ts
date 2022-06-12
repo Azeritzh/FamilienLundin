@@ -72,6 +72,8 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private shouldSpawnObstacle() {
+		if (!this.globals.isAlive)
+			return false
 		if (this.globals.lastWall < 10)
 			return false
 		if (this.globals.lastWall < 100)

@@ -13,6 +13,7 @@ export class RenderendDisplay {
 	private fractionOfTick = 0
 
 	constructor(
+		private config: DisplayConfig,
 		private game: Renderend,
 		private canvas: HTMLCanvasElement,
 	) {
@@ -21,11 +22,8 @@ export class RenderendDisplay {
 
 	private setupDisplay() {
 		this.display = new WebGl2Display(this.canvas, this.gamePixelsPerTile, this.gameHeightInTiles * this.gamePixelsPerTile)
-		this.display.addSprite("ship", "assets/images/renderend/ship.png", 16, 16)
-		this.display.addSprite("wall", "assets/images/renderend/wall.png", 16, 16)
-		this.display.addSprite("obstacle", "assets/images/renderend/obstacle.png", 16, 16)
-		this.display.addSprite("big-obstacle", "assets/images/renderend/big-obstacle.png", 32, 32)
-		this.display.addSprite("background", "assets/images/renderend/starry-background.png", 220, 160, 0, 0)
+		for (const [name, sprite] of Object.entries(this.config.sprites))
+			this.display.addSprite(name, sprite.url, sprite.width, sprite.height, sprite.centerX, sprite.centerY)
 		this.setupTextElements()
 	}
 
@@ -69,7 +67,7 @@ export class RenderendDisplay {
 	private createTextElement() {
 		const element = document.createElement("div")
 		element.style.position = "absolute"
-		element.style.fontFamily = "'Vt323', Courier, monospace"
+		element.style.fontFamily = `'${this.config.font}', Courier, monospace`
 		element.style.fontWeight = "bold"
 		this.canvas.parentElement.appendChild(element)
 		return element
@@ -132,5 +130,18 @@ export class RenderendDisplay {
 	private showGameOver() {
 		const gameOver = this.getTextElement("game-over")
 		gameOver.style.display = this.game.state.globals.isAlive ? "none" : "block"
+	}
+}
+
+export interface DisplayConfig {
+	font: string,
+	sprites: {
+		[index: string]: {
+			url: string,
+			width?: number,
+			height?: number,
+			centerX?: number,
+			centerY?: number,
+		}
 	}
 }
