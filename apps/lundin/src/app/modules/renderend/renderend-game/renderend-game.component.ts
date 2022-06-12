@@ -1,7 +1,5 @@
 import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core"
-import { Renderend } from "@lundin/renderend"
-import { RenderendDisplay } from "./renderend-display"
-import { RenderendInput } from "./renderend-input"
+import { Renderend, RenderendDisplay, RenderendInput } from "@lundin/renderend"
 
 @Component({
 	selector: "lundin-renderend-game",
@@ -15,6 +13,8 @@ export class RenderendGameComponent implements OnInit, OnDestroy {
 	private inputs: RenderendInput
 	private timerId: number
 	private updateInterval = 30
+	private lastUpdate = Date.now()
+	private stop = false
 
 	constructor(
 		private ngZone: NgZone
@@ -23,22 +23,20 @@ export class RenderendGameComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.display = new RenderendDisplay(this.game, this.canvasElement.nativeElement)
 		this.inputs = new RenderendInput(this.canvasElement.nativeElement)
-		this.ngZone.runOutsideAngular(() =>
-			this.display.startDisplayLoop()
-		)
 		this.startInterval()
 	}
 
 	ngOnDestroy() {
-		this.display.onDestroy()
+		this.stop = true
 		window.clearInterval(this.timerId)
 	}
 
 	private startInterval() {
 		this.stopInterval()
-		this.ngZone.runOutsideAngular(() =>
+		this.ngZone.runOutsideAngular(() => {
 			this.timerId = window.setInterval(this.step, this.updateInterval)
-		)
+			this.updateDisplay()
+		})
 	}
 
 	private stopInterval() {
@@ -47,12 +45,21 @@ export class RenderendGameComponent implements OnInit, OnDestroy {
 		this.timerId = null
 	}
 
+	private updateDisplay = () => {
+		const now = Date.now()
+		const fractionOfTick = (now - this.lastUpdate) / 30
+		this.display.show(fractionOfTick)
+		if (!this.stop)
+			requestAnimationFrame(this.updateDisplay)
+	}
+
 	setSize(width: number, height: number) {
 		this.display?.setSize(width, height)
 	}
 
 	private step = () => {
 		this.game.update(...this.inputs.getNewActions())
+		this.lastUpdate = Date.now()
 	}
 
 	restart() {
