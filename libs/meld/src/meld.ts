@@ -1,5 +1,6 @@
 import { BaseChanges, BaseGame, EntityManager, Id, TerrainManager, ValueAccessor } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
+import { StartLogic } from "./logic/start-logic"
 import { MeldConfig } from "./meld-config"
 import { MeldConstants } from "./meld-constants"
 import { Block } from "./state/block"
@@ -19,7 +20,7 @@ export class Meld extends BaseGame<MeldAction> {
 		public readonly access = new Access(config, state, changes),
 	) {
 		super([
-
+			new StartLogic(config, terrain),
 		])
 	}
 

@@ -10,6 +10,10 @@ export class TerrainManager<Field, FieldValues> {
 		private changes: BaseChanges<any, Field>,
 	) { }
 
+	public addChunk(fields: Field[], x: number, y: number, z = 0) {
+		this.state.chunks.set({ x, y, z }, fields)
+	}
+
 	public get(x: number, y: number, z = 0) {
 		x = Math.floor(x)
 		y = Math.floor(y)
@@ -79,7 +83,7 @@ export class TerrainManager<Field, FieldValues> {
 					yield { i, j, k, field: this.get(i, j, k) }
 	}
 
-	public set(x: number, y: number, z: number, field: Field) {
+	public set(field: Field, x: number, y: number, z = 0) {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)

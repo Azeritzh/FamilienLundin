@@ -1,3 +1,3 @@
-export interface MeldAction {
-	entityId: number
-}
+export abstract class MeldAction { }
+
+export class GenerateAction extends MeldAction { }
