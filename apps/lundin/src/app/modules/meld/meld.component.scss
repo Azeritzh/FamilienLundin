@@ -1,0 +1,13 @@
+@import "../../styles/general.scss";
+
+:host {
+	@extend .default-page;
+	display: grid;
+	grid-template-areas: "game";
+	grid-template-columns: 1fr;
+	grid-template-rows: calc(100vh - 5rem);
+}
+
+.game-host {
+	grid-area: game;
+}

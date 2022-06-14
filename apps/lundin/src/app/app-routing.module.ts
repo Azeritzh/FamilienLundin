@@ -9,6 +9,7 @@ import { CryptComponent } from "./modules/crypt/crypt.component"
 import { GalleryRootComponent } from "./modules/gallery/gallery-root/gallery-root.component"
 import { galleryRoutes } from "./modules/gallery/routes"
 import { KingdomsComponent } from "./modules/kingdoms/kingdoms.component"
+import { MeldComponent } from "./modules/meld/meld.component"
 import { MessageRootComponent } from "./modules/message/message-root/message-root.component"
 import { messageRoutes } from "./modules/message/routes"
 import { MinestrygerComponent } from "./modules/minestryger/minestryger.component"
@@ -30,6 +31,7 @@ const routes: Routes = [
 	{ path: "gallery", component: GalleryRootComponent, canActivate: [IsAuthenticatedGuard], children: galleryRoutes },
 	{ path: "games/iframe/:game", component: IframeGameComponent },
 	{ path: "games/kingdoms", component: KingdomsComponent },
+	{ path: "games/meld", component: MeldComponent },
 	{ path: "games/minestryger", component: MinestrygerComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "games/noughts-and-crosses", component: NoughtsAndCrossesComponent },
 	{ path: "games/renderend", component: RenderendComponent },
