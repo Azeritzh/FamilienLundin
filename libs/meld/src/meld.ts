@@ -1,17 +1,19 @@
-import { BaseChanges, BaseGame, EntityManager, Id, ValueAccessor } from "@lundin/age"
+import { BaseChanges, BaseGame, EntityManager, Id, TerrainManager, ValueAccessor } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { MeldConfig } from "./meld-config"
 import { MeldConstants } from "./meld-constants"
-import { GroupedBlockValues } from "./state/block-values"
+import { BlockValues } from "./state/block-values"
 import { Behaviour, EntityValues, GroupedEntityValues } from "./state/entity-values"
+import { Globals } from "./state/globals"
 import { MeldAction } from "./state/meld-action"
 import { MeldState } from "./state/meld-state"
 
 export class Meld extends BaseGame<MeldAction> {
 	constructor(
-		public readonly config = new MeldConfig(new MeldConstants(), new Map<Id, GroupedEntityValues>(), new Map<Id, Behaviour[]>(), new Map<Id, GroupedBlockValues>()),
-		public readonly state = MeldState.fromConfig(config),
+		public readonly config = new MeldConfig(new MeldConstants(), new Map<Id, GroupedEntityValues>(), new Map<Id, Behaviour[]>(), new Map<Id, BlockValues>()),
+		public readonly state = new MeldState(new Globals(), new EntityValues()),
 		public readonly changes = new BaseChanges(new EntityValues()),
+		public readonly terrain = new TerrainManager(config, state, changes),
 		public readonly entities = new EntityManager(config, state, changes),
 		public readonly access = new Access(config, state, changes),
 	) {

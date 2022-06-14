@@ -1,3 +1,5 @@
+import { Vector3 } from "@lundin/utility"
+
 export type Id = number
 // The type is a part of the entity id, and this is the mask for it
 export const typeMask = 0xFF000000
@@ -7,9 +9,12 @@ export function typeOf(entity: Id) {
 	return entity & typeMask
 }
 
-export abstract class BaseConfig<GroupedEntityValues, BehaviourType> {
+export abstract class BaseConfig<BlockValues, GroupedEntityValues, BehaviourType> {
 	constructor(
 		public readonly typeValues: Map<Id, GroupedEntityValues>,
 		public readonly typeBehaviours: Map<Id, BehaviourType[]>,
+		// public readonly defaultBlock: Block,
+		public readonly blockValues = new Map<Id, BlockValues>(),
+		public chunkSize: Vector3 = { x: 10, y: 10, z: 10 },
 	) { }
 }

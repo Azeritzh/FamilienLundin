@@ -1,28 +1,9 @@
-import { BaseState, TerrainCollection } from "@lundin/age"
-import { MeldConfig } from "../meld-config"
-import { Block, BlockType } from "./block"
-import { BlockValues } from "./block-values"
+import { BaseState } from "@lundin/age"
+import { Block } from "./block"
 import { EntityValues } from "./entity-values"
 import { Globals } from "./globals"
 
-export class MeldState extends BaseState<Globals, Block, BlockValues, EntityValues> {
-
-	public static fromConfig(config: MeldConfig) {
-		return new MeldState(
-			new Globals(),
-			this.terrainCollectionFor(config),
-			new EntityValues(),
-		)
-	}
-
-	private static terrainCollectionFor(config: MeldConfig) {
-		return new TerrainCollection(
-			new Block(BlockType.Empty, 0, 0),
-			new BlockValues(),
-			config.constants.chunkSize,
-		)
-	}
-
+export class MeldState extends BaseState<Globals, Block, EntityValues> {
 	/*
 			void AddNewEntity(SerialisedEntity newEntity) {
 		var id = NextId++;

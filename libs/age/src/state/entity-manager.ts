@@ -6,8 +6,8 @@ import { BaseGlobals } from "./base-globals"
 
 export class EntityManager<EntityValues extends BaseValues, GroupedEntityValues, BehaviourType> {
 	constructor(
-		private config: BaseConfig<GroupedEntityValues, BehaviourType>,
-		private state: BaseState<BaseGlobals, any, any, EntityValues>,
+		private config: BaseConfig<any, GroupedEntityValues, BehaviourType>,
+		private state: BaseState<BaseGlobals, any, EntityValues>,
 		private changes: BaseChanges<EntityValues>,
 		private behaviourLists = new Map<BehaviourType, Id[]>(),
 	) {
@@ -21,9 +21,7 @@ export class EntityManager<EntityValues extends BaseValues, GroupedEntityValues,
 	}
 
 	public with(behaviour: BehaviourType) {
-		if (this.behaviourLists.has(behaviour))
-			return this.behaviourLists.get(behaviour)
-		return []
+		return this.behaviourLists.get(behaviour) ?? []
 	}
 
 	public create(type: Id) {

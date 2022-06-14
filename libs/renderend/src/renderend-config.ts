@@ -2,7 +2,7 @@ import { BaseConfig, Id, TypeMap } from "@lundin/age"
 import { RenderendConstants } from "./renderend-constants"
 import { Behaviour, GroupedEntityValues } from "./state/entity-values"
 
-export class RenderendConfig extends BaseConfig<GroupedEntityValues, Behaviour> {
+export class RenderendConfig extends BaseConfig<any, GroupedEntityValues, Behaviour> {
 	constructor(
 		public readonly typeMap: TypeMap,
 		public readonly typeValues: Map<Id, GroupedEntityValues>,

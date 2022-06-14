@@ -8,6 +8,8 @@ import { ObstacleLogic } from "./logic/obstacle-logic"
 import { StartLogic } from "./logic/start-logic"
 import { VelocityLogic } from "./logic/velocity-logic"
 import { RenderendConfig } from "./renderend-config"
+import { EntityValues } from "./state/entity-values"
+import { Globals } from "./state/globals"
 import { RenderendAction } from "./state/renderend-action"
 import { RenderendChanges } from "./state/renderend-changes"
 import { RenderendState } from "./state/renderend-state"
@@ -15,7 +17,7 @@ import { RenderendState } from "./state/renderend-state"
 export class Renderend extends BaseGame<RenderendAction> {
 	constructor(
 		public readonly config = RenderendConfig.from(defaultConstants, defaultValues),
-		public readonly state = RenderendState.fromConfig(config),
+		public readonly state = new RenderendState(new Globals(), new EntityValues()),
 		readonly changes = new RenderendChanges(),
 		public readonly entities = new EntityManager(config, state, changes),
 		public readonly access = new Access(config, state, changes),
