@@ -1,4 +1,4 @@
-import { BaseChanges, BaseGame, EntityManager, Id, TerrainManager, TypeMap, ValueAccessor } from "@lundin/age"
+import { BaseChanges, BaseGame, EntityManager, Id, Random, TerrainManager, TypeMap, ValueAccessor } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { StartLogic } from "./logic/start-logic"
 import { MeldConfig } from "./meld-config"
@@ -12,15 +12,16 @@ import { MeldState } from "./state/meld-state"
 
 export class Meld extends BaseGame<MeldAction> {
 	constructor(
-		public readonly config = new MeldConfig(new MeldConstants(), new TypeMap(), new Map<Id, GroupedEntityValues>(), new Map<Id, Behaviour[]>(), new Map<Id, BlockValues>()),
+		public readonly config = new MeldConfig(new MeldConstants(), TypeMap.from(["tile-dirt", "tile-earth", "tile-grass", "tile-slab", "tile-stone", "tile-wooden"]), new Map<Id, GroupedEntityValues>(), new Map<Id, Behaviour[]>(), new Map<Id, BlockValues>()),
 		public readonly state = new MeldState(new Globals(), new EntityValues()),
 		public readonly changes = new BaseChanges<EntityValues, Block>(new EntityValues()),
 		public readonly terrain = new TerrainManager(config, state, changes),
 		public readonly entities = new EntityManager(config, state, changes),
 		public readonly access = new Access(config, state, changes),
+		readonly random = new Random(state.globals),
 	) {
 		super([
-			new StartLogic(config, terrain),
+			new StartLogic(config, terrain, random),
 		])
 	}
 

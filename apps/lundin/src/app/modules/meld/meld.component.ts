@@ -1,6 +1,6 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core"
 import { GameRunner } from "@lundin/age"
-import { Meld, MeldDisplay, MeldInput } from "@lundin/meld"
+import { DisplayConfig, Meld, MeldDisplay, MeldInput } from "@lundin/meld"
 
 @Component({
 	selector: "lundin-meld",
@@ -38,35 +38,37 @@ export class MeldComponent implements OnInit {
 	}
 }
 
-const displayConfig = {
-	font: "Vt323",
+const displayConfig: DisplayConfig = {
 	sprites: {
-		"ship": {
-			url: "assets/images/renderend/ship.png",
+		"tile-dirt": {
+			url: "assets/images/meld/tile-dirt.png",
 			width: 16,
 			height: 16,
 		},
-		"wall": {
-			url: "assets/images/renderend/wall.png",
+		"tile-earth": {
+			url: "assets/images/meld/tile-earth.png",
 			width: 16,
 			height: 16,
 		},
-		"obstacle": {
-			url: "assets/images/renderend/obstacle.png",
+		"tile-grass": {
+			url: "assets/images/meld/tile-grass.png",
 			width: 16,
 			height: 16,
 		},
-		"big-obstacle": {
-			url: "assets/images/renderend/big-obstacle.png",
-			width: 32,
-			height: 32,
+		"tile-slab": {
+			url: "assets/images/meld/tile-slab.png",
+			width: 16,
+			height: 16,
 		},
-		"background": {
-			url: "assets/images/renderend/starry-background.png",
-			width: 220,
-			height: 160,
-			centerX: 0,
-			centerY: 0,
+		"tile-stone": {
+			url: "assets/images/meld/tile-stone.png",
+			width: 16,
+			height: 16,
+		},
+		"tile-wooden": {
+			url: "assets/images/meld/tile-wooden.png",
+			width: 16,
+			height: 16,
 		},
 	},
 }

@@ -1,4 +1,4 @@
-import { GameLogic, TerrainManager } from "@lundin/age"
+import { GameLogic, Random, TerrainManager } from "@lundin/age"
 import { MeldConfig } from "../meld-config"
 import { Block } from "../state/block"
 import { BlockValues } from "../state/block-values"
@@ -8,6 +8,7 @@ export class StartLogic implements GameLogic<MeldAction> {
 	constructor(
 		private config: MeldConfig,
 		private terrain: TerrainManager<Block, BlockValues>,
+		private random: Random,
 	) { }
 
 	update(actions: MeldAction[]) {
@@ -17,7 +18,8 @@ export class StartLogic implements GameLogic<MeldAction> {
 
 	private initialiseGame() {
 		this.terrain.addChunk([], 0, 0, 0)
+		const types = [...this.config.typeMap.types.values()]
 		for (const { x, y, z } of this.terrain.allFields())
-			this.terrain.set(Block.newFull(0), x, y, z)
+			this.terrain.set(Block.newFull(this.random.get.in(types)), x, y, z)
 	}
 }
