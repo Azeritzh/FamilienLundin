@@ -1,10 +1,8 @@
-import { GameLogic, Id } from "@lundin/age"
+import { Box, GameLogic, Id, RectangularSize } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction } from "../state/renderend-action"
-import { Box } from "../values/box"
-import { RectangularSize } from "../values/rectangular-size"
 
 export class DieOnCollisionLogic implements GameLogic<RenderendAction> {
 	constructor(

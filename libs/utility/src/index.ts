@@ -1,3 +1,5 @@
 export * from "./array-extensions"
 export * from "./key-states"
 export * from "./utility"
+export * from "./vector2"
+export * from "./vector3"

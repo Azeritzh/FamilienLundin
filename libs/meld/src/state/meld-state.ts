@@ -3,11 +3,13 @@ import { MeldConfig } from "../meld-config"
 import { Block, BlockType } from "./block"
 import { BlockValues } from "./block-values"
 import { EntityValues } from "./entity-values"
+import { Globals } from "./globals"
 
-export class MeldState extends BaseState<Block, BlockValues, EntityValues> {
+export class MeldState extends BaseState<Globals, Block, BlockValues, EntityValues> {
 
 	public static fromConfig(config: MeldConfig) {
 		return new MeldState(
+			new Globals(),
 			this.terrainCollectionFor(config),
 			new EntityValues(),
 		)

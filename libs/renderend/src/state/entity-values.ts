@@ -1,6 +1,5 @@
-import { BaseValues, EntityManager, Id, ValueAccessor } from "@lundin/age"
+import { BaseValues, EntityManager, Id, RectangularSize, ValueAccessor } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { RectangularSize } from "../values/rectangular-size"
 
 export type RenderendEntityValues<T> = ValueAccessor<T, GroupedEntityValues>
 export type RenderendEntities = EntityManager<EntityValues, GroupedEntityValues, Behaviour>

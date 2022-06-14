@@ -1,17 +1,23 @@
-import { BaseValues, Id } from "@lundin/age"
-import { EntitySize } from "../values/entity-size"
-import { Positioning } from "../values/positioning"
+import { BaseValues, EntityManager, Id, RectangularSize, ValueAccessor } from "@lundin/age"
+import { Vector2 } from "@lundin/utility"
+
+export type MeldEntityValues<T> = ValueAccessor<T, GroupedEntityValues>
+export type MeldEntities = EntityManager<EntityValues, GroupedEntityValues, Behaviour>
 
 export class EntityValues extends BaseValues {
 	constructor(
-		public readonly entitySizeValues = new Map<Id, EntitySize>(),
-		public readonly healthValues = new Map<Id, number>(),
-		public readonly positioningValues = new Map<Id, Positioning>(),
+		public readonly rectangularSize = new Map<Id, RectangularSize>(),
+		public readonly health = new Map<Id, number>(),
+		public readonly orientation = new Map<Id, number>(),
+		public readonly position = new Map<Id, Vector2>(),
+		public readonly velocity = new Map<Id, Vector2>(),
 	) {
 		super()
-		this.register(entitySizeValues)
-		this.register(healthValues)
-		this.register(positioningValues)
+		this.register(rectangularSize)
+		this.register(health)
+		this.register(orientation)
+		this.register(position)
+		this.register(velocity)
 	}
 
 	public static from(groupedValues: Map<Id, GroupedEntityValues>) {
@@ -22,29 +28,38 @@ export class EntityValues extends BaseValues {
 	}
 
 	addValuesFrom(key: Id, values: GroupedEntityValues) {
-		if (values.entitySize !== undefined)
-			this.entitySizeValues.set(key, values.entitySize)
+		if (values.rectangularSize !== undefined)
+			this.rectangularSize.set(key, values.rectangularSize)
 		if (values.health !== undefined)
-			this.healthValues.set(key, values.health)
-		if (values.positioning !== undefined)
-			this.positioningValues.set(key, values.positioning)
+			this.health.set(key, values.health)
+		if (values.orientation !== undefined)
+			this.orientation.set(key, values.orientation)
+		if (values.position !== undefined)
+			this.position.set(key, values.position)
+		if (values.velocity !== undefined)
+			this.velocity.set(key, values.velocity)
 	}
 
-	groupFor(key: Id) {
+	groupFor(key: Id): GroupedEntityValues {
 		return {
-			entitySize: this.entitySizeValues.get(key),
-			health: this.healthValues.get(key),
-			positioning: this.positioningValues.get(key),
+			rectangularSize: this.rectangularSize.get(key),
+			health: this.health.get(key),
+			orientation: this.orientation.get(key),
+			position: this.position.get(key),
+			velocity: this.velocity.get(key),
 		}
 	}
 }
 
 export interface GroupedEntityValues {
-	entitySize?: EntitySize
+	rectangularSize?: RectangularSize
 	health?: number
-	positioning?: Positioning
+	position?: Vector2
+	velocity?: Vector2
+	orientation?: number
 }
 
 export enum Behaviour {
 	Velocity,
+	HasRectangularSize,
 }
