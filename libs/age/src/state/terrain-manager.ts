@@ -11,7 +11,7 @@ export class TerrainManager<Field, FieldValues> {
 	) { }
 
 	public addChunk(fields: Field[], x: number, y: number, z = 0) {
-		this.state.chunks.set({ x, y, z }, fields)
+		this.state.chunks.set(this.convertChunkCoords(x, y, z), fields)
 	}
 
 	public get(x: number, y: number, z = 0) {
@@ -28,15 +28,17 @@ export class TerrainManager<Field, FieldValues> {
 
 	/** Takes a global position and returns the corresponding chunk coordinate and index within that chunk */
 	private getChunkPositionFor(x: number, y: number, z: number) {
-		const chunkCoords = this.getChunkCoords(x, y, z)
+		const properChunkCoords = this.getChunkCoords(x, y, z)
+		const chunkCoords = this.convertChunkCoords(properChunkCoords.x, properChunkCoords.y, properChunkCoords.z)
 		const index = this.chunkIndexFor(
-			x - chunkCoords.x * this.config.chunkSize.x,
-			y - chunkCoords.y * this.config.chunkSize.y,
-			z - chunkCoords.z * this.config.chunkSize.z
+			x - properChunkCoords.x * this.config.chunkSize.x,
+			y - properChunkCoords.y * this.config.chunkSize.y,
+			z - properChunkCoords.z * this.config.chunkSize.z
 		)
 		return { chunkCoords, index }
 	}
 
+	/** Takes a global position and returns the corresponding chunk coordinate */
 	private getChunkCoords(x: number, y: number, z: number): Vector3 {
 		return {
 			x: this.chunkCoord(x, this.config.chunkSize.x),
@@ -47,6 +49,11 @@ export class TerrainManager<Field, FieldValues> {
 
 	private chunkCoord(n: number, size: number) {
 		return Math.floor(n / size)
+	}
+
+	/** Takes chunk coordinates and converts them to a string for use with our stupid map */
+	private convertChunkCoords(x: number, y: number, z: number) {
+		return x + "," + y + "," + z
 	}
 
 	/** Takes a local position and returns the corresponding chunk index */
@@ -63,8 +70,8 @@ export class TerrainManager<Field, FieldValues> {
 	}
 
 	/** Iterates through all fields in a chunk, and returns the local position and field */
-	public *allFields(chunkCoords = { x: 0, y: 0, z: 0 }) {
-		const chunk = this.state.chunks.get(chunkCoords)
+	public *allFields(chunkX = 0, chunkY = 0, chunkZ = 0) {
+		const chunk = this.state.chunks.get(this.convertChunkCoords(chunkX, chunkY, chunkZ))
 		for (const z of range(0, this.config.chunkSize.z))
 			for (const y of range(0, this.config.chunkSize.y))
 				for (const x of range(0, this.config.chunkSize.x))

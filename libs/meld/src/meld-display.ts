@@ -1,0 +1,76 @@
+import { Id, typeOf } from "@lundin/age"
+import { WebGl2Display } from "@lundin/web-gl-display"
+import { Meld } from "./meld"
+import { Block } from "./state/block"
+
+export class MeldDisplay {
+	private display: WebGl2Display
+	private readonly gameHeightInTiles = 10
+	private get gameWidthInTiles() { return this.canvas.width / this.screenPixelsPerTile }
+	private readonly gamePixelsPerTile = 16
+	private screenPixelsPerTile = 100
+	private fractionOfTick = 0
+
+	constructor(
+		private config: DisplayConfig,
+		private game: Meld,
+		private canvas: HTMLCanvasElement,
+	) {
+		this.setupDisplay()
+	}
+
+	private setupDisplay() {
+		this.display = new WebGl2Display(this.canvas, this.gamePixelsPerTile, this.gameHeightInTiles * this.gamePixelsPerTile)
+		for (const [name, sprite] of Object.entries(this.config.sprites))
+			this.display.addSprite(name, sprite.url, sprite.width, sprite.height, sprite.centerX, sprite.centerY)
+	}
+
+	setSize(width: number, height: number) {
+		this.canvas.width = width
+		this.canvas.height = height
+		this.screenPixelsPerTile = height / this.gameHeightInTiles
+		this.setupDisplay()
+	}
+
+	show(fractionOfTick = 0) {
+		this.fractionOfTick = fractionOfTick
+		this.display.startFrame()
+		for (const entity of this.game.entities)
+			this.drawEntity(entity)
+		for (const { x, y, z, field } of this.game.terrain.allFields())
+			this.drawBlock(x, y, z, field)
+		this.display.endFrame()
+	}
+
+	private drawEntity(entity: Id) {
+		const pos = this.currentPositionOf(entity)
+		const sprite = this.game.config.typeMap.typeFor(typeOf(entity))
+		this.display.drawSprite(sprite, pos.x, pos.y, 0, 0)
+	}
+
+	private currentPositionOf(entity: Id) {
+		const position = this.game.access.position.of(entity)
+		const velocity = this.game.access.velocity.of(entity)
+		if (!velocity)
+			return position
+		return position.add(velocity.multiply(this.fractionOfTick))
+	}
+
+	private drawBlock(x: number, y: number, z: number, block: Block) {
+		const sprite = this.game.config.typeMap.typeFor(block.solidType) ?? "obstacle"
+		this.display.drawSprite(sprite, x, y, 0, 0)
+	}
+}
+
+export interface DisplayConfig {
+	font: string,
+	sprites: {
+		[index: string]: {
+			url: string,
+			width?: number,
+			height?: number,
+			centerX?: number,
+			centerY?: number,
+		}
+	}
+}

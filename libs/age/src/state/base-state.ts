@@ -1,4 +1,3 @@
-import { Vector3 } from "@lundin/utility"
 import { Id } from "./base-config"
 import { BaseGlobals } from "./base-globals"
 import { BaseValues } from "./base-values"
@@ -8,6 +7,6 @@ export abstract class BaseState<Globals extends BaseGlobals, Field, EntityValues
 		public readonly globals: Globals,
 		public readonly entityValues: EntityValues,
 		public readonly entities: Id[] = [],
-		public readonly chunks = new Map<Vector3, Field[]>(),
+		public readonly chunks = new Map<string, Field[]>(), // Optimally the key would be a Vector3, but it'll use the object reference, so we instead convert it to a string: 1,2,3
 	) { }
 }

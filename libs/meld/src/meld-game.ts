@@ -1,8 +1,10 @@
-import { DisplayConfig, Renderend, RenderendDisplay, RenderendInput } from "@lundin/renderend"
+import { Meld } from "./meld"
+import { DisplayConfig, MeldDisplay } from "./meld-display"
+import { MeldInput } from "./meld-input"
 
 export class MeldGame {
-	private display: RenderendDisplay
-	private inputs: RenderendInput
+	private display: MeldDisplay
+	private inputs: MeldInput
 	private timerId: number
 	private updateInterval = 30
 	private lastUpdate = Date.now()
@@ -11,14 +13,16 @@ export class MeldGame {
 	constructor(
 		hostElement: HTMLElement,
 		displayConfig: DisplayConfig,
-		public game = new Renderend(),
+		public game = new Meld(),
 	) {
 		hostElement.style.position = "relative"
 		const canvas = document.createElement("canvas")
 		canvas.style.position = "absolute"
 		hostElement.appendChild(canvas)
-		this.display = new RenderendDisplay(displayConfig, this.game, canvas)
-		this.inputs = new RenderendInput(canvas)
+		this.display = new MeldDisplay(displayConfig, this.game, canvas)
+		this.inputs = new MeldInput(canvas)
+		this.inputs.restart()
+		this.updateGame()
 	}
 
 	startGameLoop() {

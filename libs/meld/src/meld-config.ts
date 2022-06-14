@@ -1,11 +1,12 @@
 import { MeldConstants } from "./meld-constants"
 import { Behaviour, GroupedEntityValues } from "./state/entity-values"
 import { BlockValues } from "./state/block-values"
-import { BaseConfig, Id } from "@lundin/age"
+import { BaseConfig, Id, TypeMap } from "@lundin/age"
 
 export class MeldConfig extends BaseConfig<BlockValues, GroupedEntityValues, Behaviour> {
 	constructor(
 		public readonly constants: MeldConstants,
+		public readonly typeMap: TypeMap,
 		public readonly typeValues: Map<Id, GroupedEntityValues>,
 		public readonly typeBehaviours: Map<Id, Behaviour[]>,
 		public readonly fieldValues: Map<Id, BlockValues>,
