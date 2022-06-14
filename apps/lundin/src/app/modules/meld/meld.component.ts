@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from "@angular/core"
 import { MeldGame } from "@lundin/meld"
-import { DisplayConfig } from "@lundin/renderend"
 
 @Component({
 	selector: "lundin-meld",
@@ -31,7 +30,7 @@ export class MeldComponent implements AfterViewInit {
 	}
 }
 
-const displayConfig: DisplayConfig = {
+const displayConfig = {
 	font: "Vt323",
 	sprites: {
 		"ship": {
