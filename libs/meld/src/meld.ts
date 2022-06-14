@@ -26,6 +26,7 @@ export class Meld extends BaseGame<MeldAction> {
 	finishUpdate() {
 		this.state.globals.tick++
 		this.entities.applyUpdatedValues()
+		this.terrain.applyUpdatedValues()
 	}
 }
 

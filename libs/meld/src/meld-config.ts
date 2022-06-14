@@ -8,6 +8,6 @@ export class MeldConfig extends BaseConfig<BlockValues, GroupedEntityValues, Beh
 		public readonly constants: MeldConstants,
 		public readonly typeValues: Map<Id, GroupedEntityValues>,
 		public readonly typeBehaviours: Map<Id, Behaviour[]>,
-		public readonly blockValues: Map<Id, BlockValues>,
-	) { super(typeValues, typeBehaviours, blockValues) }
+		public readonly fieldValues: Map<Id, BlockValues>,
+	) { super(typeValues, typeBehaviours, fieldValues) }
 }

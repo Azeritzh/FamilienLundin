@@ -9,12 +9,12 @@ export function typeOf(entity: Id) {
 	return entity & typeMask
 }
 
-export abstract class BaseConfig<BlockValues, GroupedEntityValues, BehaviourType> {
+export abstract class BaseConfig<FieldValues, GroupedEntityValues, BehaviourType> {
 	constructor(
 		public readonly typeValues: Map<Id, GroupedEntityValues>,
 		public readonly typeBehaviours: Map<Id, BehaviourType[]>,
 		// public readonly defaultBlock: Block,
-		public readonly blockValues = new Map<Id, BlockValues>(),
-		public chunkSize: Vector3 = { x: 10, y: 10, z: 10 },
+		public readonly fieldValues = new Map<Id, FieldValues>(),
+		public chunkSize: Vector3 = { x: 10, y: 10, z: 1 },
 	) { }
 }
