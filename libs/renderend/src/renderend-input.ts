@@ -1,22 +1,15 @@
-import { InputState, KeyStates, Vector2 } from "@lundin/utility"
+import { BaseInput } from "@lundin/age"
+import { InputState, Vector2 } from "@lundin/utility"
 import { MoveShipAction, RenderendAction, StartGameAction } from "./state/renderend-action"
 
-export class RenderendInput {
+export class RenderendInput extends BaseInput<RenderendAction> {
 	private sizeScaling = 4
-	private nextActions: RenderendAction[] = [new StartGameAction()]
-	private keyStates = new KeyStates()
 
 	constructor(
 		private canvas: HTMLCanvasElement,
-	) { }
+	) { super() }
 
-	getNewActions() {
-		const actions = [...this.nextActions, ...this.parseInputs(this.keyStates.getInputState())]
-		this.nextActions = []
-		return actions
-	}
-
-	private parseInputs(inputState: InputState) {
+	protected parseInputs(inputState: InputState) {
 		return [
 			this.getMoveAction(inputState),
 			this.getRestartAction(inputState),
@@ -49,13 +42,6 @@ export class RenderendInput {
 		const restart = this.stateFor(inputState, "Enter", "Escape")
 		if (restart)
 			return new StartGameAction()
-	}
-
-	private stateFor(inputState: InputState, ...keys: string[]) {
-		for (const key of keys)
-			if (inputState[key]?.state)
-				return true
-		return false
 	}
 
 	clickCanvas(event: MouseEvent) {

@@ -3,6 +3,7 @@ import { Renderend } from "./renderend"
 import { WebGl2Display } from "@lundin/web-gl-display"
 
 export class RenderendDisplay {
+	public canvas: HTMLCanvasElement
 	private display: WebGl2Display
 	private textElements: { [index: string]: HTMLDivElement } = {}
 	private readonly gameHeightInTiles = 10
@@ -15,9 +16,17 @@ export class RenderendDisplay {
 	constructor(
 		private config: DisplayConfig,
 		private game: Renderend,
-		private canvas: HTMLCanvasElement,
+		private hostElement: HTMLElement,
 	) {
+		this.initialiseCanvas()
 		this.setupDisplay()
+	}
+
+	private initialiseCanvas() {
+		this.hostElement.style.position = "relative"
+		this.canvas = document.createElement("canvas")
+		this.canvas.style.position = "absolute"
+		this.hostElement.appendChild(this.canvas)
 	}
 
 	private setupDisplay() {

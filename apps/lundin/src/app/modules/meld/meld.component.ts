@@ -1,19 +1,27 @@
-import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from "@angular/core"
-import { MeldGame } from "@lundin/meld"
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core"
+import { GameRunner } from "@lundin/age"
+import { Meld, MeldDisplay, MeldInput } from "@lundin/meld"
 
 @Component({
 	selector: "lundin-meld",
 	templateUrl: "./meld.component.html",
 	styleUrls: ["./meld.component.scss"],
 })
-export class MeldComponent implements AfterViewInit {
-	@ViewChild("gameHost", { static: true }) gameHostElement: ElementRef<HTMLDivElement>
-	game: MeldGame
+export class MeldComponent implements OnInit {
+	@ViewChild("gameHost", { static: true }) gameHost: ElementRef<HTMLDivElement>
+	game: GameRunner<any>
 
 	constructor(private ngZone: NgZone) { }
 
-	ngAfterViewInit() {
-		this.game = new MeldGame(this.gameHostElement.nativeElement, displayConfig)
+	ngOnInit() {
+		const meld = new Meld()
+		const display = new MeldDisplay(displayConfig, meld, this.gameHost.nativeElement)
+		const input = new MeldInput(display.canvas)
+		this.game = new GameRunner(display, input, meld)
+
+		input.restart()
+		this.game.updateGame()
+		
 		this.sizeToAvailableSpace()
 		window.onresize = this.sizeToAvailableSpace
 		this.ngZone.runOutsideAngular(() => {
@@ -24,8 +32,8 @@ export class MeldComponent implements AfterViewInit {
 
 	private sizeToAvailableSpace = () => {
 		this.game.setSize(
-			this.gameHostElement.nativeElement.clientWidth,
-			this.gameHostElement.nativeElement.clientHeight,
+			this.gameHost.nativeElement.clientWidth,
+			this.gameHost.nativeElement.clientHeight,
 		)
 	}
 }

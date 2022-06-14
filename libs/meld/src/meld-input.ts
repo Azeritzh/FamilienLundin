@@ -1,22 +1,15 @@
-import { InputState, KeyStates, Vector2 } from "@lundin/utility"
+import { BaseInput } from "@lundin/age"
+import { InputState, Vector2 } from "@lundin/utility"
 import { GenerateAction, MeldAction } from "./state/meld-action"
 
-export class MeldInput {
+export class MeldInput extends BaseInput<MeldAction> {
 	private sizeScaling = 4
-	private nextActions: MeldAction[] = [new GenerateAction()]
-	private keyStates = new KeyStates()
 
 	constructor(
 		private canvas: HTMLCanvasElement,
-	) { }
+	) { super() }
 
-	getNewActions() {
-		const actions = [...this.nextActions, ...this.parseInputs(this.keyStates.getInputState())]
-		this.nextActions = []
-		return actions
-	}
-
-	private parseInputs(inputState: InputState) {
+	protected parseInputs(inputState: InputState) {
 		return [
 			this.getMoveAction(inputState),
 			this.getRestartAction(inputState),
@@ -49,13 +42,6 @@ export class MeldInput {
 		const restart = this.stateFor(inputState, "Enter", "Escape")
 		if (restart)
 			return new GenerateAction()
-	}
-
-	private stateFor(inputState: InputState, ...keys: string[]) {
-		for (const key of keys)
-			if (inputState[key]?.state)
-				return true
-		return false
 	}
 
 	clickCanvas(event: MouseEvent) {

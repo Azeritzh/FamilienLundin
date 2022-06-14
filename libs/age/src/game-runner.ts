@@ -1,30 +1,18 @@
-import { Renderend } from "./renderend"
-import { DisplayConfig, RenderendDisplay } from "./renderend-display"
-import { RenderendInput } from "./renderend-input"
+import { BaseDisplay } from "./base-display"
+import { BaseGame } from "./base-game"
+import { BaseInput } from "./base-input"
 
-
-export class RenderendGame {
-	private display: RenderendDisplay
-	private inputs: RenderendInput
+export class GameRunner<Action> {
 	private timerId: number
 	private updateInterval = 30
 	private lastUpdate = Date.now()
 	private stop = false
 
 	constructor(
-		hostElement: HTMLElement,
-		displayConfig: DisplayConfig,
-		public game = new Renderend(),
-	) {
-		hostElement.style.position = "relative"
-		const canvas = document.createElement("canvas")
-		canvas.style.position = "absolute"
-		hostElement.appendChild(canvas)
-		this.display = new RenderendDisplay(displayConfig, this.game, canvas)
-		this.inputs = new RenderendInput(canvas)
-		this.inputs.restart()
-		this.updateGame()
-	}
+		private display: BaseDisplay,
+		private inputs: BaseInput<Action>,
+		private game: BaseGame<Action>,
+	) { }
 
 	startGameLoop() {
 		this.stopInterval()

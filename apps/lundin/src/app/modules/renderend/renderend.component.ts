@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from "@angular/core"
-import { DisplayConfig, RenderendGame } from "@lundin/renderend"
+import { GameRunner } from "@lundin/age"
+import { DisplayConfig, Renderend, RenderendDisplay, RenderendInput } from "@lundin/renderend"
 
 @Component({
 	selector: "lundin-renderend",
@@ -7,13 +8,20 @@ import { DisplayConfig, RenderendGame } from "@lundin/renderend"
 	styleUrls: ["./renderend.component.scss"],
 })
 export class RenderendComponent implements AfterViewInit {
-	@ViewChild("gameHost", { static: true }) gameHostElement: ElementRef<HTMLDivElement>
-	game: RenderendGame
+	@ViewChild("gameHost", { static: true }) gameHost: ElementRef<HTMLDivElement>
+	game: GameRunner<any>
 
 	constructor(private ngZone: NgZone) { }
 
 	ngAfterViewInit() {
-		this.game = new RenderendGame(this.gameHostElement.nativeElement, displayConfig)
+		const meld = new Renderend()
+		const display = new RenderendDisplay(displayConfig, meld, this.gameHost.nativeElement)
+		const input = new RenderendInput(display.canvas)
+		this.game = new GameRunner(display, input, meld)
+
+		input.restart()
+		this.game.updateGame()
+
 		this.sizeToAvailableSpace()
 		window.onresize = this.sizeToAvailableSpace
 		this.ngZone.runOutsideAngular(() => {
@@ -24,8 +32,8 @@ export class RenderendComponent implements AfterViewInit {
 
 	private sizeToAvailableSpace = () => {
 		this.game.setSize(
-			this.gameHostElement.nativeElement.clientWidth,
-			this.gameHostElement.nativeElement.clientHeight,
+			this.gameHost.nativeElement.clientWidth,
+			this.gameHost.nativeElement.clientHeight,
 		)
 	}
 }

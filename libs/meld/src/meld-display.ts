@@ -1,9 +1,10 @@
-import { Id, typeOf } from "@lundin/age"
+import { BaseDisplay, Id, typeOf } from "@lundin/age"
 import { WebGl2Display } from "@lundin/web-gl-display"
 import { Meld } from "./meld"
 import { Block } from "./state/block"
 
-export class MeldDisplay {
+export class MeldDisplay implements BaseDisplay {
+	public canvas: HTMLCanvasElement
 	private display: WebGl2Display
 	private readonly gameHeightInTiles = 10
 	private get gameWidthInTiles() { return this.canvas.width / this.screenPixelsPerTile }
@@ -14,9 +15,17 @@ export class MeldDisplay {
 	constructor(
 		private config: DisplayConfig,
 		private game: Meld,
-		private canvas: HTMLCanvasElement,
+		private hostElement: HTMLElement,
 	) {
+		this.initialiseCanvas()
 		this.setupDisplay()
+	}
+
+	private initialiseCanvas(){
+		this.hostElement.style.position = "relative"
+		this.canvas = document.createElement("canvas")
+		this.canvas.style.position = "absolute"
+		this.hostElement.appendChild(this.canvas)
 	}
 
 	private setupDisplay() {
@@ -63,7 +72,6 @@ export class MeldDisplay {
 }
 
 export interface DisplayConfig {
-	font: string,
 	sprites: {
 		[index: string]: {
 			url: string,
