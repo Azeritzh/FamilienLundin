@@ -1,5 +1,5 @@
+import { RectangularSize } from "@lundin/age"
 import { Behaviour } from "./state/entity-values"
-import { RectangularSize } from "./values/rectangular-size"
 
 export const defaultConstants = {
 	shipType: "ship",

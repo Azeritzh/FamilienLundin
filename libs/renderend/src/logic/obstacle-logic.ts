@@ -1,10 +1,9 @@
-import { GameLogic, Id, Random } from "@lundin/age"
+import { GameLogic, Id, Random, RectangularSize } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
 import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction } from "../state/renderend-action"
-import { RectangularSize } from "../values/rectangular-size"
 
 export class ObstacleLogic implements GameLogic<RenderendAction> {
 	constructor(

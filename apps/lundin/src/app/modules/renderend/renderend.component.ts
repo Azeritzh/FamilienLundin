@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core"
-import { RenderendGameComponent } from "./renderend-game/renderend-game.component"
+import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from "@angular/core"
+import { GameRunner } from "@lundin/age"
+import { DisplayConfig, Renderend, RenderendDisplay, RenderendInput } from "@lundin/renderend"
 
 @Component({
 	selector: "lundin-renderend",
@@ -7,18 +8,65 @@ import { RenderendGameComponent } from "./renderend-game/renderend-game.componen
 	styleUrls: ["./renderend.component.scss"],
 })
 export class RenderendComponent implements AfterViewInit {
-	@ViewChild("gameArea", { static: true }) gameAreaElement: ElementRef<HTMLDivElement>
-	@ViewChild(RenderendGameComponent, { static: true }) game: RenderendGameComponent
+	@ViewChild("gameHost", { static: true }) gameHost: ElementRef<HTMLDivElement>
+	game: GameRunner<any>
+
+	constructor(private ngZone: NgZone) { }
 
 	ngAfterViewInit() {
+		const meld = new Renderend()
+		const display = new RenderendDisplay(displayConfig, meld, this.gameHost.nativeElement)
+		const input = new RenderendInput(display.canvas)
+		this.game = new GameRunner(display, input, meld)
+
+		input.restart()
+		this.game.updateGame()
+
 		this.sizeToAvailableSpace()
 		window.onresize = this.sizeToAvailableSpace
+		this.ngZone.runOutsideAngular(() => {
+			this.game.startDisplayLoop()
+			this.game.startGameLoop()
+		})
 	}
 
 	private sizeToAvailableSpace = () => {
 		this.game.setSize(
-			this.gameAreaElement.nativeElement.clientWidth,
-			this.gameAreaElement.nativeElement.clientHeight,
+			this.gameHost.nativeElement.clientWidth,
+			this.gameHost.nativeElement.clientHeight,
 		)
 	}
+}
+
+const displayConfig: DisplayConfig = {
+	font: "Vt323",
+	sprites: {
+		"ship": {
+			url: "assets/images/renderend/ship.png",
+			width: 16,
+			height: 16,
+		},
+		"wall": {
+			url: "assets/images/renderend/wall.png",
+			width: 16,
+			height: 16,
+		},
+		"obstacle": {
+			url: "assets/images/renderend/obstacle.png",
+			width: 16,
+			height: 16,
+		},
+		"big-obstacle": {
+			url: "assets/images/renderend/big-obstacle.png",
+			width: 32,
+			height: 32,
+		},
+		"background": {
+			url: "assets/images/renderend/starry-background.png",
+			width: 220,
+			height: 160,
+			centerX: 0,
+			centerY: 0,
+		},
+	},
 }

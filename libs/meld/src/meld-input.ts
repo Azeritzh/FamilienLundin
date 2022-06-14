@@ -1,8 +1,8 @@
 import { BaseInput } from "@lundin/age"
 import { InputState, Vector2 } from "@lundin/utility"
-import { MoveShipAction, RenderendAction, StartGameAction } from "./state/renderend-action"
+import { GenerateAction, MeldAction } from "./state/meld-action"
 
-export class RenderendInput extends BaseInput<RenderendAction> {
+export class MeldInput extends BaseInput<MeldAction> {
 	private sizeScaling = 4
 
 	constructor(
@@ -19,7 +19,7 @@ export class RenderendInput extends BaseInput<RenderendAction> {
 	private getMoveAction(inputState: InputState) {
 		const velocity = new Vector2(this.getVelocityX(inputState), this.getVelocityY(inputState))
 		if (!velocity.isZero())
-			return new MoveShipAction(velocity)
+			return new GenerateAction()
 	}
 
 	private getVelocityY(inputState: InputState) {
@@ -41,7 +41,7 @@ export class RenderendInput extends BaseInput<RenderendAction> {
 	private getRestartAction(inputState: InputState) {
 		const restart = this.stateFor(inputState, "Enter", "Escape")
 		if (restart)
-			return new StartGameAction()
+			return new GenerateAction()
 	}
 
 	clickCanvas(event: MouseEvent) {
@@ -61,6 +61,6 @@ export class RenderendInput extends BaseInput<RenderendAction> {
 	}
 
 	restart() {
-		this.nextActions.push(new StartGameAction())
+		this.nextActions.push(new GenerateAction())
 	}
 }

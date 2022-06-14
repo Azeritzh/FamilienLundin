@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
 import { SharedModule } from "../../shared/shared.module"
-import { RenderendComponent } from "./renderend.component"
+import { MeldComponent } from "./meld.component"
 
 @NgModule({
 	declarations: [
-		RenderendComponent,
+		MeldComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -13,4 +13,4 @@ import { RenderendComponent } from "./renderend.component"
 	],
 	providers: [],
 })
-export class RenderendModule { }
+export class MeldModule { }
