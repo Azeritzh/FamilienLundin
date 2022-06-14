@@ -1,15 +1,14 @@
-import { GameLogic } from "@lundin/age"
+import { BaseChanges, GameLogic } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
-import { RenderendEntities, RenderendEntityValues } from "../state/entity-values"
+import { EntityValues, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction, StartGameAction } from "../state/renderend-action"
-import { RenderendChanges } from "../state/renderend-changes"
 
 export class StartLogic implements GameLogic<RenderendAction> {
 	constructor(
 		private constants: RenderendConstants,
-		private changes: RenderendChanges,
+		private changes: BaseChanges<EntityValues, any>,
 		private globals: Globals,
 		private entities: RenderendEntities,
 		private position: RenderendEntityValues<Vector2>,

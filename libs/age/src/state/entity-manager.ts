@@ -8,7 +8,7 @@ export class EntityManager<EntityValues extends BaseValues, GroupedEntityValues,
 	constructor(
 		private config: BaseConfig<any, GroupedEntityValues, BehaviourType>,
 		private state: BaseState<BaseGlobals, any, EntityValues>,
-		private changes: BaseChanges<EntityValues>,
+		private changes: BaseChanges<EntityValues, any>,
 		private behaviourLists = new Map<BehaviourType, Id[]>(),
 	) {
 		this.setupBehaviours()

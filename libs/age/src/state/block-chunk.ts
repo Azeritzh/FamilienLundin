@@ -10,4 +10,8 @@ export class BlockChunk<Block> {
 	get(x: number, y: number, z: number) {
 		return this.blocks.get(x - this.offset.x, y - this.offset.y, z - this.offset.z)
 	}
+
+	set(x: number, y: number, z: number, block: Block) {
+		return this.blocks.set(x - this.offset.x, y - this.offset.y, z - this.offset.z, block)
+	}
 }
