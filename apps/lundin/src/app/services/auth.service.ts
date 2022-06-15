@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { AuthResponse } from "@lundin/api-interfaces"
-import { ReplaySubject, Subject } from "rxjs"
+import { firstValueFrom, ReplaySubject, Subject } from "rxjs"
 
 @Injectable()
 export class AuthService {
@@ -39,9 +39,7 @@ export class AuthService {
 	}
 
 	async login(username: string, password: string) {
-		this.loginInfo = await this.http
-			.post<AuthResponse>("/api/auth/login", { username, password })
-			.toPromise()
+		this.loginInfo = await firstValueFrom(this.http.post<AuthResponse>("/api/auth/login", { username, password }))
 			.catch(error => {
 				console.log("failed login: " + JSON.stringify(error))
 				return null
@@ -64,9 +62,7 @@ export class AuthService {
 
 	async refresh() {
 		const wasLoggedIn = this.isLoggedIn()
-		this.loginInfo = await this.http
-			.get<AuthResponse>("/api/auth/refresh")
-			.toPromise()
+		this.loginInfo = await firstValueFrom(this.http.get<AuthResponse>("/api/auth/refresh"))
 			.catch(error => {
 				console.log("failed login: " + JSON.stringify(error))
 				return null
@@ -77,9 +73,7 @@ export class AuthService {
 	}
 
 	async logout() {
-		await this.http
-			.get("/api/auth/refresh/logout")
-			.toPromise()
+		await firstValueFrom(this.http.get("/api/auth/refresh/logout"))
 		this.clearLoginInfo()
 	}
 
@@ -89,11 +83,11 @@ export class AuthService {
 	}
 
 	addUser(username: string) {
-		this.http.post("/api/user/add", { username }).toPromise()
+		firstValueFrom(this.http.post("/api/user/add", { username }))
 	}
 
 	resetPasswordFor(username: string) {
-		this.http.post("/api/auth/reset", { username }).toPromise()
+		firstValueFrom(this.http.post("/api/auth/reset", { username }))
 	}
 
 	isLoggedIn() {

@@ -1,16 +1,17 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { CalendarEvent } from "@lundin/api-interfaces"
+import { firstValueFrom } from "rxjs"
 
 @Injectable()
 export class CalendarService {
 	constructor(private httpClient: HttpClient) { }
 
 	getCalendarEvents() {
-		return this.httpClient.get<CalendarEvent[]>("api/calendar/get-calendar-events").toPromise()
+		return firstValueFrom(this.httpClient.get<CalendarEvent[]>("api/calendar/get-calendar-events"))
 	}
 
 	addCalendarEvent(event: CalendarEvent) {
-		return this.httpClient.post<CalendarEvent>("api/calendar/add-calendar-event", event).toPromise()
+		return firstValueFrom(this.httpClient.post<CalendarEvent>("api/calendar/add-calendar-event", event))
 	}
 }

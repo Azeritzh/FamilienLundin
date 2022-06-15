@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { User } from "@lundin/api-interfaces"
-import { BehaviorSubject } from "rxjs"
+import { BehaviorSubject, firstValueFrom } from "rxjs"
 import { AuthService } from "./auth.service"
 
 @Injectable()
@@ -16,7 +16,7 @@ export class UserService {
 	}
 
 	async getUsers() {
-		const users = await this.http.get<User[]>("api/user/get-all").toPromise()
+		const users = await firstValueFrom(this.http.get<User[]>("api/user/get-all"))
 		this.users$.next(users)
 	}
 }

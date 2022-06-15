@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { NewMinestrygerScore, MinestrygerTopScoreSet, MinestrygerScoreSet } from "@lundin/api-interfaces"
-import { BehaviorSubject } from "rxjs"
+import { BehaviorSubject, firstValueFrom } from "rxjs"
 
 @Injectable()
 export class MinestrygerService {
@@ -43,7 +43,7 @@ export class MinestrygerService {
 	constructor(private httpClient: HttpClient) { }
 
 	loadMyScores() {
-		this.httpClient.get<MinestrygerScoreSet>("api/minestryger/load-my-scores").toPromise().then(myScores => {
+		firstValueFrom(this.httpClient.get<MinestrygerScoreSet>("api/minestryger/load-my-scores")).then(myScores => {
 			this.myScores = myScores
 			this._myScores$.next(this.myScores)
 		})
@@ -51,7 +51,7 @@ export class MinestrygerService {
 	}
 
 	loadTopScores() {
-		this.httpClient.get<MinestrygerTopScoreSet>("api/minestryger/load-top-scores").toPromise().then(topScores => {
+		firstValueFrom(this.httpClient.get<MinestrygerTopScoreSet>("api/minestryger/load-top-scores")).then(topScores => {
 			this.topScores = topScores
 			this._topScores$.next(this.topScores)
 		})
@@ -59,7 +59,7 @@ export class MinestrygerService {
 	}
 
 	loadYearlyTopScores() {
-		this.httpClient.get<MinestrygerTopScoreSet>("api/minestryger/load-yearly-top-scores").toPromise().then(topScores => {
+		firstValueFrom(this.httpClient.get<MinestrygerTopScoreSet>("api/minestryger/load-yearly-top-scores")).then(topScores => {
 			this.yearlyTopScores = topScores
 			this._yearlyTopScores$.next(this.yearlyTopScores)
 		})
@@ -69,7 +69,7 @@ export class MinestrygerService {
 	async registerScore(score: NewMinestrygerScore) {
 		this.addToPersonalScore(score)
 		this._myScores$.next(this.myScores)
-		const topScores = await this.httpClient.post<[MinestrygerTopScoreSet,MinestrygerTopScoreSet]>("api/minestryger/register", score).toPromise()
+		const topScores = await firstValueFrom(this.httpClient.post<[MinestrygerTopScoreSet,MinestrygerTopScoreSet]>("api/minestryger/register", score))
 		this.topScores = topScores[0]
 		this.yearlyTopScores = topScores[1]
 		this._topScores$.next(this.topScores)

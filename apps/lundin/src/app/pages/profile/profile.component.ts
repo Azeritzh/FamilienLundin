@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http"
 import { Component } from "@angular/core"
+import { firstValueFrom } from "rxjs"
 import { AuthService } from "../../services/auth.service"
 
 @Component({
@@ -21,7 +22,7 @@ export class ProfileComponent {
 		const blob = btoa(JSON.stringify({ password: this.password, newPassword: this.newPassword }))
 		this.password = ""
 		this.newPassword = ""
-		const response = await this.http.post<{ success: string }>("/api/auth/change", { blob }).toPromise()
+		const response = await firstValueFrom(this.http.post<{ success: string }>("/api/auth/change", { blob }))
 		console.log(response)
 	}
 }

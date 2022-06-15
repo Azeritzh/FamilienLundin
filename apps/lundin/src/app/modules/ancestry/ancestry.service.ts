@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { Person, PersonalRelation } from "@lundin/api-interfaces"
-import { BehaviorSubject } from "rxjs"
+import { BehaviorSubject, firstValueFrom } from "rxjs"
 import { map } from "rxjs/operators"
 
 @Injectable()
@@ -17,7 +17,7 @@ export class AncestryService {
 	}
 
 	load() {
-		this.httpClient.get<Person[]>("api/ancestry/load-all").toPromise().then(people => {
+		firstValueFrom(this.httpClient.get<Person[]>("api/ancestry/load-all")).then(people => {
 			this.people = people.sortBy(x => x.name)
 			this.updatePeople$()
 		})
@@ -25,7 +25,7 @@ export class AncestryService {
 	}
 
 	async add(person: Person) {
-		const updatedPeople = await this.httpClient.post<Person[]>("api/ancestry/add", person).toPromise()
+		const updatedPeople = await firstValueFrom(this.httpClient.post<Person[]>("api/ancestry/add", person))
 		for (const person of updatedPeople)
 			this.updatePerson(person)
 		this.updatePeople$()
@@ -33,14 +33,14 @@ export class AncestryService {
 	}
 
 	async updateInfo(personId: number, name: string, gender: "male" | "female" | "other", information: { title: string, content: string }[]) {
-		const updatedPerson = await this.httpClient.post<Person>("api/ancestry/update-info", { personId, name, gender, information }).toPromise()
+		const updatedPerson = await firstValueFrom(this.httpClient.post<Person>("api/ancestry/update-info", { personId, name, gender, information }))
 		this.updatePerson(updatedPerson)
 		this.updatePeople$()
 		return updatedPerson
 	}
 
 	async updateRelations(personId: number, relations: PersonalRelation[]) {
-		const updatedPeople = await this.httpClient.post<Person[]>("api/ancestry/update-relations", { personId, relations }).toPromise()
+		const updatedPeople = await firstValueFrom(this.httpClient.post<Person[]>("api/ancestry/update-relations", { personId, relations }))
 		for (const person of updatedPeople)
 			this.updatePerson(person)
 		this.updatePeople$()
@@ -48,7 +48,7 @@ export class AncestryService {
 	}
 
 	async delete(personId: number) {
-		const updatedPeople = await this.httpClient.post<Person[]>("api/ancestry/delete", { personId }).toPromise()
+		const updatedPeople = await firstValueFrom(this.httpClient.post<Person[]>("api/ancestry/delete", { personId }))
 		for (const person of updatedPeople)
 			this.updatePerson(person)
 		this.people.removeBy(x => x._id === personId)
@@ -61,7 +61,7 @@ export class AncestryService {
 		formdata.set("name", file.data.name)
 		formdata.set("description", file.description)
 		formdata.set("personId", "" + personId)
-		const updatedPerson = await this.httpClient.post<Person>("api/ancestry/upload-file", formdata).toPromise()
+		const updatedPerson = await firstValueFrom(this.httpClient.post<Person>("api/ancestry/upload-file", formdata))
 		this.updatePerson(updatedPerson)
 		return updatedPerson
 	}
