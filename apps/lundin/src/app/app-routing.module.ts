@@ -32,7 +32,7 @@ const routes: Routes = [
 	{ path: "games/iframe/:game", component: IframeGameComponent },
 	{ path: "games/kingdoms", component: KingdomsComponent },
 	{ path: "games/meld", component: MeldComponent },
-	{ path: "games/minestryger", component: MinestrygerComponent, canActivate: [IsAuthenticatedGuard] },
+	{ path: "games/minestryger", component: MinestrygerComponent},//, canActivate: [IsAuthenticatedGuard] },
 	{ path: "games/noughts-and-crosses", component: NoughtsAndCrossesComponent },
 	{ path: "games/renderend", component: RenderendComponent },
 	{ path: "games/virus", component: VirusComponent },

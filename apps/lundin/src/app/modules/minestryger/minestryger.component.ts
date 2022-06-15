@@ -1,5 +1,5 @@
-import { Component, ViewChild } from "@angular/core"
-import { PlayState } from "@lundin/minestryger"
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core"
+import { Minestryger, MinestrygerDisplay, PlayState } from "@lundin/minestryger"
 import { MinestrygerGameComponent } from "./minestryger-game/minestryger-game.component"
 
 @Component({
@@ -7,7 +7,8 @@ import { MinestrygerGameComponent } from "./minestryger-game/minestryger-game.co
 	templateUrl: "./minestryger.component.html",
 	styleUrls: ["./minestryger.component.scss"],
 })
-export class MinestrygerComponent {
+export class MinestrygerComponent implements OnInit {
+	@ViewChild("gameHost", { static: true }) gameHost: ElementRef<HTMLDivElement>
 	@ViewChild(MinestrygerGameComponent) gameComponent: MinestrygerGameComponent
 	width = 30
 	height = 16
@@ -16,6 +17,12 @@ export class MinestrygerComponent {
 	activateOnMouseDown = false
 	fieldSize = 20
 	autoSize = true
+
+	ngOnInit(){
+		const game = new Minestryger()
+		const display = new MinestrygerDisplay(game, this.gameHost.nativeElement)
+		display.show()
+	}
 
 	currentCategory() {
 		return `${this.width}-${this.height}-${this.bombs}-${this.allowFlags ? "f" : "n"}`
