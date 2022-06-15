@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core"
 import { FlagAction, Minestryger, MinestrygerAction, MinestrygerConfig, MinestrygerDisplay, MinestrygerInput, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
 import { NavigationService } from "../../services/navigation.service"
-import { MinestrygerGameComponent } from "./minestryger-game/minestryger-game.component"
 import { MinestrygerService } from "./minestryger.service"
 
 @Component({
@@ -11,7 +10,6 @@ import { MinestrygerService } from "./minestryger.service"
 })
 export class MinestrygerComponent implements OnInit {
 	@ViewChild("gameHost", { static: true }) gameHost: ElementRef<HTMLDivElement>
-	@ViewChild(MinestrygerGameComponent) gameComponent: MinestrygerGameComponent
 	private game: Minestryger
 	private display: MinestrygerDisplay
 	private input: MinestrygerInput
@@ -80,16 +78,12 @@ export class MinestrygerComponent implements OnInit {
 	}
 
 	triggerNewGame() {
-		if (this.gameComponent.game.state.playState !== PlayState.Started)
-			setTimeout(() => this.gameComponent.startGame(), 1)
 		if (this.game.state.playState !== PlayState.Started)
 			setTimeout(() => this.startNewGame(), 1)
 	}
 
 	triggerRedraw() {
 		setTimeout(() => {
-			this.gameComponent.resetCanvas()
-			this.gameComponent.drawEverything()
 			this.updateSize()
 		}, 1)
 	}
