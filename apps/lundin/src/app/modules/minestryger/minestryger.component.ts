@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core"
-import { Minestryger, MinestrygerAction, MinestrygerConfig, MinestrygerDisplay, MinestrygerInput, PlayState } from "@lundin/minestryger"
+import { FlagAction, Minestryger, MinestrygerAction, MinestrygerConfig, MinestrygerDisplay, MinestrygerInput, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
 import { NavigationService } from "../../services/navigation.service"
 import { MinestrygerGameComponent } from "./minestryger-game/minestryger-game.component"
 import { MinestrygerService } from "./minestryger.service"
@@ -41,6 +41,7 @@ export class MinestrygerComponent implements OnInit {
 		this.input = new MinestrygerInput(this.game, this.display, this.startNewGame, this.onAction)
 		new ResizeObserver(this.updateSize).observe(this.gameHost.nativeElement)
 		this.display.show()
+		this.exposeGame()
 	}
 
 	private startNewGame = () => {
@@ -104,4 +105,32 @@ export class MinestrygerComponent implements OnInit {
 		const time = (this.game.state.finishTime / 1000).toLocaleString(undefined, { minimumFractionDigits: 2 })
 		this.navigationService.showMessage(`Du har vundet! Endelig tid: ${time} sekunder`)
 	}
+
+	private exposeGame = () => {
+		const exposed: any = {}
+		window["minestryger"] = exposed
+		exposed.game = this.game
+		exposed.board = this.game.state.board
+		exposed.startNewGame = (width?: number, height?: number, bombs?: number) => {
+			this.width = width ?? this.width
+			this.height = height ?? this.height
+			this.bombs = bombs ?? this.bombs
+			this.startNewGame()
+		}
+		exposed.revealField = (x: number, y: number) => {
+			this.enableRegistering = false
+			this.onAction(new RevealAction(x, y))
+		}
+		exposed.flagField = (x: number, y: number) => {
+			this.enableRegistering = false
+			this.onAction(new FlagAction(x, y))
+		}
+		exposed.revealSurroundings = (x: number, y: number) => {
+			this.enableRegistering = false
+			this.onAction(new RevealAreaAction(x, y))
+		}
+		exposed.hasWon = () => this.game.state.playState === PlayState.Won
+		exposed.hasLost = () => this.game.state.playState === PlayState.Lost
+	}
+
 }
