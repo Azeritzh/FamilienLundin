@@ -3,34 +3,19 @@ import { Minestryger } from "./minestryger"
 import { Field } from "./minestryger-state"
 
 export class MinestrygerDisplay implements BaseDisplay {
-	// public width = 30
-	// public height = 16
-	//public bombs = 99
-	//public allowFlags = true
-	//public activateOnMouseDown = false
-	//@Input("fieldSize") inputFieldSize = 20
-	public fieldSize = 20
-
 	public canvas: HTMLCanvasElement
 	private context: CanvasRenderingContext2D
 	public textElements: { [index: string]: HTMLElement } = {}
 	private timerId: number
-	// private display: WebGl2Display
-	//private readonly gameHeightInTiles = 10
-	//private get gameWidthInTiles() { return this.canvas.width / this.screenPixelsPerTile }
-	//private readonly gamePixelsPerTile = 16
-	//private screenPixelsPerTile = 100
+	public fieldSize = 20
 
 	constructor(
 		public game: Minestryger,
 		private hostElement: HTMLElement,
+		private newGameText = "New game",
 	) {
 		this.initialiseCanvas()
 		this.setSize(hostElement.clientWidth, hostElement.clientHeight)
-		new ResizeObserver(() => {
-			this.setSize(hostElement.clientWidth, hostElement.clientHeight)
-			this.show()
-		}).observe(hostElement)
 	}
 
 	private initialiseCanvas() {
@@ -46,6 +31,7 @@ export class MinestrygerDisplay implements BaseDisplay {
 		"time button bombs";
 	grid-template-rows: max-content 2rem;
 	grid-template-columns: 3rem max-content 3rem;
+	justify-content: center;
 }
 
 .game-host canvas { grid-area: game; }
@@ -99,7 +85,7 @@ export class MinestrygerDisplay implements BaseDisplay {
 
 	private setupNewGameButton() {
 		const element = this.getElement("button", "button")
-		element.innerText = "New Game"
+		element.innerText = this.newGameText
 	}
 
 	private getElement(key: string, tag = "div") {
@@ -137,16 +123,21 @@ export class MinestrygerDisplay implements BaseDisplay {
 		const verticalFields = Math.max(this.game.config.height, 16) // make size for at least the expert version
 		const horisontalFieldSize = Math.floor(width / horisontalFields)
 		const verticalFieldSize = Math.floor(height / verticalFields)
-		this.fieldSize = Math.min(horisontalFieldSize, verticalFieldSize)
-		this.fieldSize = Math.max(this.fieldSize, 15)
-		this.canvas.width = this.fieldSize * horisontalFields
-		this.canvas.height = this.fieldSize * verticalFields
+		const fieldSize = Math.min(horisontalFieldSize, verticalFieldSize)
+		this.setFieldSize(Math.max(fieldSize, 15))
+	}
+
+	setFieldSize(fieldSize: number) {
+		this.fieldSize = fieldSize
+		this.canvas.width = this.fieldSize * this.game.config.width
+		this.canvas.height = this.fieldSize * this.game.config.height
 	}
 
 	show() {
 		this.context.fillStyle = "black"
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 		this.countRemainingBombs()
+		this.updateTimeElement()
 		for (const { x, y } of this.game.state.board.allFields())
 			this.drawField(x, y)
 	}

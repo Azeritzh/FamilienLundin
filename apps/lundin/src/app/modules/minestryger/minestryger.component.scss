@@ -8,7 +8,10 @@
 	grid-template-rows: calc(100vh - 5rem);
 }
 
-.game-host { grid-area: game; }
+.game-host {
+	grid-area: game;
+	height: 60%;
+}
 lundin-minestryger-game {
 	grid-area: game;
 	margin: auto;
