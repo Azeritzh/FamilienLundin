@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core"
-import { Minestryger, MinestrygerDisplay, PlayState } from "@lundin/minestryger"
+import { Minestryger, MinestrygerDisplay, MinestrygerInput, PlayState } from "@lundin/minestryger"
 import { MinestrygerGameComponent } from "./minestryger-game/minestryger-game.component"
 
 @Component({
@@ -18,9 +18,19 @@ export class MinestrygerComponent implements OnInit {
 	fieldSize = 20
 	autoSize = true
 
-	ngOnInit(){
-		const game = new Minestryger()
+	ngOnInit() {
+		let game = new Minestryger()
 		const display = new MinestrygerDisplay(game, this.gameHost.nativeElement)
+		const startNewGame = () => {
+			game = new Minestryger()
+			display.game = game
+			input.game = game
+			display.show()
+		}
+		const input = new MinestrygerInput(game, display, startNewGame, action => {
+			game.update(action)
+			display.show()
+		})
 		display.show()
 	}
 

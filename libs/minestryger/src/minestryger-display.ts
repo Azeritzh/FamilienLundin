@@ -9,7 +9,7 @@ export class MinestrygerDisplay implements BaseDisplay {
 	//public allowFlags = true
 	//public activateOnMouseDown = false
 	//@Input("fieldSize") inputFieldSize = 20
-	private fieldSize = 20
+	public fieldSize = 20
 
 	public canvas: HTMLCanvasElement
 	private context: CanvasRenderingContext2D
