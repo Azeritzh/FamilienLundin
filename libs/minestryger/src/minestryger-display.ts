@@ -155,8 +155,7 @@ export class MinestrygerDisplay implements BaseDisplay {
 		if (!this.game.state.board.isWithinBounds(x, y))
 			return
 		const field = this.game.state.board.get(x, y)
-		const sprite = this.getSprite(field, hover)
-		this.drawBox(x, y, sprite.text, sprite.color, sprite.textcolor, sprite.textfont)
+		this.drawSprite(this.getSprite(field, hover), x, y)
 	}
 
 	private getSprite(field: Field, hover = false) {
@@ -171,6 +170,18 @@ export class MinestrygerDisplay implements BaseDisplay {
 		return hover
 			? displayConfig.sprites["hidden-hover"]
 			: displayConfig.sprites.hidden
+	}
+
+	drawSprite(sprite: Sprite, x: number, y: number) {
+		const fontScale = sprite.fontScale ?? 0.8
+		const fontWeight = sprite.fontWeight ?? "bold"
+		const font = sprite.font ?? "arial"
+		this.drawBox(x, y,
+			sprite.text ?? "",
+			sprite.color ?? "white",
+			sprite.textcolor ?? "black",
+			fontWeight + " " + (this.fieldSize * fontScale) + "px " + font
+		)
 	}
 
 	private drawBox(
@@ -193,99 +204,79 @@ export class MinestrygerDisplay implements BaseDisplay {
 const displayConfig: DisplayConfig = {
 	sprites: {
 		hidden: {
-			text: "",
 			color: "grey",
-			textcolor: "black",
-			textfont: "bold 10px arial",
 		},
 		"hidden-hover": {
-			text: "",
 			color: "lightgrey",
-			textcolor: "black",
-			textfont: "bold 10px arial",
 		},
 		flag: {
 			text: "⚑",
 			color: "grey",
 			textcolor: "red",
-			textfont: "10px serif",
+			font: "serif",
+			fontWeight: "",
 		},
 		"flag-hover": {
 			text: "⚑",
 			color: "lightgrey",
 			textcolor: "red",
-			textfont: "10px serif",
+			font: "serif",
+			fontWeight: "",
 		},
 		bomb: {
 			text: "💣",
 			color: "red",
-			textcolor: "black",
-			textfont: "bold 10px arial",
+			font: "serif",
+			fontWeight: "",
+			fontScale: 0.6,
 		},
-		"0": {
-			text: "",
-			color: "white",
-			textcolor: "black",
-			textfont: "bold 10px arial",
-		},
+		"0": {},
 		"1": {
 			text: "1",
-			color: "white",
 			textcolor: "#0100fe",
-			textfont: "bold 10px arial",
 		},
 		"2": {
 			text: "2",
-			color: "white",
 			textcolor: "#017f01",
-			textfont: "bold 10px arial",
 		},
 		"3": {
 			text: "3",
-			color: "white",
 			textcolor: "#fe0000",
-			textfont: "bold 10px arial",
 		},
 		"4": {
 			text: "4",
-			color: "white",
 			textcolor: "#010080",
-			textfont: "bold 10px arial",
 		},
 		"5": {
 			text: "5",
-			color: "white",
 			textcolor: "#810102",
-			textfont: "bold 10px arial",
 		},
 		"6": {
 			text: "6",
-			color: "white",
 			textcolor: "#008081",
-			textfont: "bold 10px arial",
 		},
 		"7": {
 			text: "7",
-			color: "white",
 			textcolor: "#000000",
-			textfont: "bold 10px arial",
 		},
 		"8": {
 			text: "8",
-			color: "white",
 			textcolor: "#808080",
-			textfont: "bold 10px arial",
 		},
 	},
 }
 
 export interface DisplayConfig {
 	sprites: {
-		[name: string]: {
-			text: string,
-			color: string,
-			textcolor: string,
-			textfont: string,
-		}
+		[name: string]: Sprite
 	}
+}
+
+interface Sprite {
+	text?: string
+	color?: string
+	textcolor?: string
+	fontScale?: number
+	fontWeight?: string
+	font?: string
 }
