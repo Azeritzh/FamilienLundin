@@ -18,6 +18,7 @@ export class FlagLogic implements GameLogic<MinestrygerAction> {
 	}
 
 	private flag(x: number, y: number) {
+		this.state.hasUsedFlags = true
 		const field = this.state.board.get(x, y)
 		if (field.revealed)
 			return

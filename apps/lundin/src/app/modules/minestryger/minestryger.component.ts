@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core"
 import { Minestryger, MinestrygerAction, MinestrygerConfig, MinestrygerDisplay, MinestrygerInput, PlayState } from "@lundin/minestryger"
+import { NavigationService } from "../../services/navigation.service"
 import { MinestrygerGameComponent } from "./minestryger-game/minestryger-game.component"
+import { MinestrygerService } from "./minestryger.service"
 
 @Component({
 	selector: "lundin-minestryger",
@@ -18,9 +20,20 @@ export class MinestrygerComponent implements OnInit {
 	height = 16
 	bombs = 99
 	allowFlags = true
-	activateOnMouseDown = false
+	set activateOnMouseDown(value: boolean){
+		this.input.activateOnMouseDown = value
+	}
+	get activateOnMouseDown(){
+		return this.input.activateOnMouseDown
+	}
 	fieldSize = 20
 	autoSize = true
+	private enableRegistering = true
+
+	constructor(
+		private minestrygerService: MinestrygerService,
+		private navigationService: NavigationService,
+	) { }
 
 	ngOnInit() {
 		this.game = new Minestryger()
@@ -41,6 +54,7 @@ export class MinestrygerComponent implements OnInit {
 		this.display.game = this.game
 		this.input.game = this.game
 		this.updateSize()
+		this.navigationService.closeMessage()
 	}
 
 	private onAction = (action: MinestrygerAction) => {
@@ -79,15 +93,15 @@ export class MinestrygerComponent implements OnInit {
 		}, 1)
 	}
 
-	private async registerScore() {
-		/*const score = {
+	private registerScore() {
+		const score = {
 			time: this.game.state.finishTime,
 			date: new Date().toISOString(),
-			type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.config.allowFlags && this.hasUsedFlags ? "f" : "n"}`,
+			type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.state.hasUsedFlags ? "f" : "n"}`,
 		}
 		if (this.enableRegistering)
 			this.minestrygerService.registerScore(score)
 		const time = (this.game.state.finishTime / 1000).toLocaleString(undefined, { minimumFractionDigits: 2 })
-		this.navigationService.showMessage(`Du har vundet! Endelig tid: ${time} sekunder`)*/
+		this.navigationService.showMessage(`Du har vundet! Endelig tid: ${time} sekunder`)
 	}
 }

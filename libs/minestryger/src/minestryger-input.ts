@@ -8,7 +8,7 @@ export class MinestrygerInput {
 	private middleMouseDown = false
 	private rightMouseDown = false
 	private lastHoverPosition?: { x: number, y: number }
-	private activateOnMouseDown = false
+	public activateOnMouseDown = false
 
 	constructor(
 		public game: Minestryger,

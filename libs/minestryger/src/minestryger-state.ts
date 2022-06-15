@@ -8,6 +8,7 @@ export class MinestrygerState {
 		public startTime: number = null,
 		public finishTime: number = null,
 		public board = new GameGrid<Field>(config.width, config.height, () => new Field()),
+		public hasUsedFlags = false,
 		public tick = 0,
 	) { }
 }
