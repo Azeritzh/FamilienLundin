@@ -1,13 +1,14 @@
 import { BaseDisplay } from "@lundin/age"
 import { defaultDisplayConfig } from "./defaults"
+import { GameElements } from "./display/game-elements"
 import { Minestryger } from "./minestryger"
 import { Field } from "./minestryger-state"
 
 export class MinestrygerDisplay implements BaseDisplay {
 	public canvas: HTMLCanvasElement
 	private context: CanvasRenderingContext2D
-	public textElements: { [index: string]: HTMLElement } = {}
-	private timerId: number
+	public elements: { [index: string]: HTMLElement } = {}
+	private gameElements: GameElements
 	public fieldSize = 20
 
 	constructor(
@@ -15,71 +16,32 @@ export class MinestrygerDisplay implements BaseDisplay {
 		private hostElement: HTMLElement,
 		public config: DisplayConfig = defaultDisplayConfig,
 	) {
+		this.gameElements = new GameElements(game, config, this.elements)
 		this.initialiseCanvas()
 		this.updateSize()
 	}
 
 	private initialiseCanvas() {
 		this.hostElement.className = "game-host"
+		this.hostElement.innerHTML = this.gameElements.getInitialElements()
 		this.canvas = document.createElement("canvas")
 		this.context = this.canvas.getContext("2d")
+		this.hostElement.appendChild(this.canvas)
 		const style = document.createElement("style")
 		style.innerText = this.config.styling
-		this.hostElement.appendChild(this.canvas)
 		this.hostElement.appendChild(style)
-		this.setupElements()
-		this.timerId = window.setInterval(this.updateTimeElement, 500)
-	}
-
-	private setupElements() {
-		this.setupTimeText()
-		this.setupBombsText()
-		this.setupNewGameButton()
-	}
-
-	private setupTimeText() {
-		const element = this.getElement("time")
-		element.className = "time"
-	}
-
-	private setupBombsText() {
-		const element = this.getElement("bombs")
-		element.className = "bombs"
-	}
-
-	private setupNewGameButton() {
-		const element = this.getElement("button", "button")
-		element.innerText = this.config.newGameText
-	}
-
-	private getElement(key: string, tag = "div") {
-		if (!this.textElements[key])
-			this.textElements[key] = this.createElement(tag)
-		return this.textElements[key]
-	}
-
-	private createElement(tag: string) {
-		const element = document.createElement(tag)
-		this.canvas.parentElement.appendChild(element)
-		return element
-	}
-
-	private updateTimeElement = () => {
-		const element = this.getElement("time")
-		element.innerText = "" + Math.floor(this.getCurrentTime())
-	}
-
-	private getCurrentTime() {
-		if (this.game.state.finishTime !== null)
-			return this.game.state.finishTime / 1000
-		else if (this.game.state.startTime)
-			return (Date.now() - this.game.state.startTime) / 1000
-		else
-			return 0
+		this.gameElements.initialise(this.hostElement)
 	}
 
 	onDestroy() {
-		window.clearInterval(this.timerId)
+		this.gameElements.onDestroy()
+	}
+
+	updateGame(game: Minestryger) {
+		this.game = game
+		this.gameElements.game = game
+		this.updateSize()
+		this.show()
 	}
 
 	updateSize() {
@@ -105,19 +67,9 @@ export class MinestrygerDisplay implements BaseDisplay {
 	show() {
 		this.context.fillStyle = "black"
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
-		this.countRemainingBombs()
-		this.updateTimeElement()
+		this.gameElements.show()
 		for (const { x, y } of this.game.state.board.allFields())
 			this.drawField(x, y)
-	}
-
-	private countRemainingBombs() {
-		const element = this.getElement("bombs")
-		const lockedFields = [...this.game.state.board.allFields()]
-			.map(x => x.field)
-			.filter(x => x.locked)
-			.length
-		element.innerText = "" + (this.game.config.bombs - lockedFields)
 	}
 
 	drawField(x: number, y: number, hover = false) {

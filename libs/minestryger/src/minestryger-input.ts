@@ -25,7 +25,7 @@ export class MinestrygerInput {
 		this.display.canvas.onmousedown = x => this.updateMouseClick(x, true)
 		this.display.canvas.onmouseup = x => this.updateMouseClick(x, false)
 		this.display.canvas.oncontextmenu = x => x.preventDefault()
-		this.display.textElements["button"].onclick = this.onNewGame
+		this.display.elements["button"].onclick = this.onNewGame
 	}
 
 	mouseMove = (event: MouseEvent) => {

@@ -54,9 +54,8 @@ export class MinestrygerComponent implements OnInit, OnDestroy {
 			this.allowFlags,
 		)
 		this.game = new Minestryger(config)
-		this.display.game = this.game
+		this.display.updateGame(this.game)
 		this.input.game = this.game
-		this.updateSize()
 		this.navigationService.closeMessage()
 	}
 
