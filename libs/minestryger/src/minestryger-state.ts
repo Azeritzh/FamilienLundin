@@ -1,14 +1,14 @@
-import { GameGrid, GameState } from "@lundin/age"
+import { GameGrid } from "@lundin/age"
 import { MinestrygerConfig } from "./minestryger-config"
 
-export class MinestrygerState implements GameState {
-
+export class MinestrygerState {
 	constructor(
 		config: MinestrygerConfig,
 		public playState: PlayState = PlayState.NotStarted,
 		public startTime: number = null,
 		public finishTime: number = null,
 		public board = new GameGrid<Field>(config.width, config.height, () => new Field()),
+		public hasUsedFlags = false,
 		public tick = 0,
 	) { }
 }

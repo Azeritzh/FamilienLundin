@@ -15,6 +15,16 @@
 				"jestConfig": "libs/minestryger/jest.config.ts",
 				"passWithNoTests": true
 			}
+		},
+		"build": {
+      "executor": "@nrwl/node:webpack",
+      "options": {
+        "outputPath": "dist/minestryger",
+        "main": "libs/minestryger/src/index.ts",
+        "tsConfig": "libs/minestryger/tsconfig.lib.json",
+        "project": "libs/minestryger/package.json",
+        "webpackConfig": "libs/minestryger/webpack.config.js"
+      }
 		}
 	},
 	"tags": []

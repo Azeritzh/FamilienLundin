@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { AES, enc } from "crypto-js"
+import { firstValueFrom } from "rxjs"
 
 @Injectable()
 export class CryptService {
@@ -15,11 +16,11 @@ export class CryptService {
 	}
 
 	async load() {
-		const response = await this.httpClient.get<{ encrypted: string }>("api/crypt/load").toPromise()
+		const response = await firstValueFrom(this.httpClient.get<{ encrypted: string }>("api/crypt/load"))
 		return response.encrypted
 	}
 
 	save(encrypted: string) {
-		return this.httpClient.post("api/crypt/save", { encrypted }).toPromise()
+		return firstValueFrom(this.httpClient.post("api/crypt/save", { encrypted }))
 	}
 }

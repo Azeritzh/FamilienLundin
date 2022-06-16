@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from "@angular/core"
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core"
 import { GameRunner } from "@lundin/age"
 import { DisplayConfig, Renderend, RenderendDisplay, RenderendInput } from "@lundin/renderend"
 
@@ -7,17 +7,17 @@ import { DisplayConfig, Renderend, RenderendDisplay, RenderendInput } from "@lun
 	templateUrl: "./renderend.component.html",
 	styleUrls: ["./renderend.component.scss"],
 })
-export class RenderendComponent implements AfterViewInit {
+export class RenderendComponent implements OnInit {
 	@ViewChild("gameHost", { static: true }) gameHost: ElementRef<HTMLDivElement>
 	game: GameRunner<any>
 
 	constructor(private ngZone: NgZone) { }
 
-	ngAfterViewInit() {
-		const meld = new Renderend()
-		const display = new RenderendDisplay(displayConfig, meld, this.gameHost.nativeElement)
+	ngOnInit() {
+		const renderend = new Renderend()
+		const display = new RenderendDisplay(displayConfig, renderend, this.gameHost.nativeElement)
 		const input = new RenderendInput(display.canvas)
-		this.game = new GameRunner(display, input, meld)
+		this.game = new GameRunner(display, input, renderend)
 
 		input.restart()
 		this.game.updateGame()

@@ -1,19 +1,2 @@
-<lundin-minestryger-game [width]="width"
-	[height]="height"
-	[bombs]="bombs"
-	[allowFlags]="allowFlags"
-	[activateOnMouseDown]="activateOnMouseDown"
-	[fieldSize]="fieldSize"
-	[autoSize]="autoSize">
-</lundin-minestryger-game>
-<lundin-minestryger-settings [(width)]="width"
-	[(height)]="height"
-	[(bombs)]="bombs"
-	[(allowFlags)]="allowFlags"
-	[(activateOnMouseDown)]="activateOnMouseDown"
-	[(fieldSize)]="fieldSize"
-	[(autoSize)]="autoSize"
-	(triggerNewGame)="triggerNewGame()"
-	(triggerRedraw)="triggerRedraw()">
-</lundin-minestryger-settings>
+<div #gameHost class="game-host"></div>
 <lundin-minestryger-highscores [category]="currentCategory()"></lundin-minestryger-highscores>
