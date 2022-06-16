@@ -23,7 +23,7 @@ export class GameElements {
 	initialise(hostElement: HTMLElement) {
 		this.elements["time"] = <HTMLElement>hostElement.getElementsByClassName("time")[0]
 		this.elements["button"] = <HTMLElement>hostElement.getElementsByClassName("button")[0]
-		this.elements["bombs"] = <HTMLElement>hostElement.getElementsByClassName("bombs")[0]
+		this.elements["remaining-bombs"] = <HTMLElement>hostElement.getElementsByClassName("bombs")[0]
 		this.timerId = window.setInterval(this.updateTime, 500)
 	}
 
@@ -41,7 +41,10 @@ export class GameElements {
 			.map(x => x.field)
 			.filter(x => x.locked)
 			.length
-		this.elements["bombs"].innerText = "" + (this.game.config.bombs - lockedFields)
+		console.log("locked and bombs:")
+		console.log(lockedFields)
+		console.log(this.game.config.bombs)
+		this.elements["remaining-bombs"].innerText = "" + (this.game.config.bombs - lockedFields)
 	}
 
 	private updateTime = () => {
