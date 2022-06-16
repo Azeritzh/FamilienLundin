@@ -1,6 +1,7 @@
 import { DisplayConfig } from "./minestryger-display"
 
 export const defaultDisplayConfig: DisplayConfig = {
+	allowFlags: true,
 	defaultFieldSize: 25,
 	useAvailableSize: false,
 	newGameText: "New game",

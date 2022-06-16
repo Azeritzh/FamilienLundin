@@ -118,7 +118,7 @@ export class SettingsElements {
 	}
 
 	show() {
-		this.getInput("flags").checked = this.displayState.desiredConfig.allowFlags
+		this.getInput("flags").checked = this.config.allowFlags
 		this.getInput("width").value = "" + this.displayState.desiredConfig.width
 		this.getInput("height").value = "" + this.displayState.desiredConfig.height
 		this.getInput("bombs").value = "" + this.displayState.desiredConfig.bombs

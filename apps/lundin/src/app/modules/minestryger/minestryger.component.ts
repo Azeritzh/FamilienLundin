@@ -51,7 +51,7 @@ export class MinestrygerComponent implements OnInit, OnDestroy {
 	}
 
 	currentCategory() {
-		return `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.config.allowFlags ? "f" : "n"}`
+		return `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.display.config.allowFlags ? "f" : "n"}`
 	}
 
 	private registerScore() {

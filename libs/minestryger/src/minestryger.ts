@@ -10,13 +10,13 @@ import { MinestrygerState } from "./minestryger-state"
 
 export class Minestryger extends BaseGame<MinestrygerAction> {
 	constructor(
-		public config = new MinestrygerConfig(30, 16, 99, true),
+		public config = new MinestrygerConfig(30, 16, 99),
 		public state = new MinestrygerState(config),
 	) {
 		super([
 			new StartLogic(config, state),
 			new RevealLogic(state),
-			new FlagLogic(config, state),
+			new FlagLogic(state),
 			new LoseLogic(state),
 			new WinLogic(state),
 		])

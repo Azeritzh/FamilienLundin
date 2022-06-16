@@ -139,6 +139,7 @@ export class MinestrygerDisplay implements BaseDisplay {
 }
 
 export interface DisplayConfig {
+	allowFlags: boolean
 	defaultFieldSize: number
 	useAvailableSize: boolean
 	newGameText: string
