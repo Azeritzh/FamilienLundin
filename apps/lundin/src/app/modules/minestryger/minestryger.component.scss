@@ -3,11 +3,10 @@
 :host {
 	@extend .default-page;
 	display: grid;
-	grid-template-areas: "settings game highscores";
-	grid-template-columns: 15rem 1fr 15rem;
+	grid-template-areas: "game highscores";
+	grid-template-columns: 1fr 15rem;
 	grid-template-rows: calc(100vh - 5rem);
 }
 
 .game-host { grid-area: game; }
-lundin-minestryger-settings { grid-area: settings; }
 lundin-minestryger-highscores { grid-area: highscores; }

@@ -70,13 +70,15 @@ export const defaultDisplayConfig: DisplayConfig = {
 .game-host {
 	position: relative;
 	display: grid;
-	grid-template-areas: "game game game"
-		"time button bombs";
+	grid-template-areas: "settings game game game aber"
+		"settings time button bombs aber"
+		"settings free free free aber";
 	grid-template-rows: max-content 2rem;
-	grid-template-columns: 3rem max-content 3rem;
+	grid-template-columns: 1fr 3rem max-content 3rem 1fr;
 	justify-content: center;
 }
 
+.game-host .settings-section { grid-area: settings; }
 .game-host canvas { grid-area: game; }
 
 .game-host .bombs, .game-host .time {
@@ -99,8 +101,33 @@ export const defaultDisplayConfig: DisplayConfig = {
 	margin-left: auto;
 }
 
-.game-host button {
+.game-host .button {
 	grid-area: button;
 	border-radius: 0;
-}`,
+}
+
+.settings-section {
+	margin-right: 0.5rem;
+	width: 250px;
+}
+
+.settings-section h1 {
+	font-size: 1.2rem;
+	font-weight: bold;
+	line-height: 2rem;
+	text-align: center;
+	margin-bottom: 0.5rem;
+	background-color: var(--color-primary);
+	color: var(--color-text-light);
+}
+
+.settings-section .setting {
+	display: flex;
+	margin-bottom: 0.2rem;
+}
+.settings-section .setting * { line-height: 2rem; }
+.settings-section .setting label { flex: 1; }
+.settings-section .setting input { width: 4rem; }
+.settings-section .setting button { flex: 1; }
+`,
 }

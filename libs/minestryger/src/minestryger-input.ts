@@ -1,5 +1,6 @@
 import { Minestryger } from "./minestryger"
 import { FlagAction, MinestrygerAction, RevealAction, RevealAreaAction } from "./minestryger-action"
+import { MinestrygerConfig } from "./minestryger-config"
 import { MinestrygerDisplay } from "./minestryger-display"
 import { PlayState } from "./minestryger-state"
 
@@ -13,7 +14,7 @@ export class MinestrygerInput {
 	constructor(
 		public game: Minestryger,
 		private display: MinestrygerDisplay,
-		private onNewGame: () => void,
+		private onNewGame: (config?: MinestrygerConfig) => void,
 		private onAction: (action: MinestrygerAction) => void,
 	) {
 		this.setupEvents()
@@ -25,7 +26,45 @@ export class MinestrygerInput {
 		this.display.canvas.onmousedown = x => this.updateMouseClick(x, true)
 		this.display.canvas.onmouseup = x => this.updateMouseClick(x, false)
 		this.display.canvas.oncontextmenu = x => x.preventDefault()
-		this.display.elements["button"].onclick = this.onNewGame
+		this.display.elements["button"].onclick = () => this.onNewGame()
+		this.display.elements["easy-button"].onclick = this.useEasySettings
+		this.display.elements["medium-button"].onclick = this.useMediumSettings
+		this.display.elements["hard-button"].onclick = this.useHardSettings
+		this.display.elements["flags"].onchange = x => this.updateConfig({ allowFlags: boolFrom(x) })
+		this.display.elements["width"].onchange = x => this.updateConfig({ width: numberFrom(x) })
+		this.display.elements["height"].onchange = x => this.updateConfig({ height: numberFrom(x) })
+		this.display.elements["bombs"].onchange = x => this.updateConfig({ bombs: numberFrom(x) })
+		this.display.elements["earlyClick"].onchange = x => this.activateOnMouseDown = boolFrom(x)
+		this.display.elements["fieldSize"].onchange = x => this.updateDisplayConfig({ defaultFieldSize: numberFrom(x) })
+		this.display.elements["autoSize"].onchange = x => this.updateDisplayConfig({ useAvailableSize: boolFrom(x) })
+	}
+
+	private useEasySettings = () => {
+		this.updateConfig({ width: 9, height: 9, bombs: 10 })
+	}
+
+	private useMediumSettings = () => {
+		this.updateConfig({ width: 16, height: 16, bombs: 40 })
+	}
+
+	private useHardSettings = () => {
+		this.updateConfig({ width: 30, height: 16, bombs: 99 })
+	}
+
+	private updateConfig(changes: any) {
+		this.display.state.desiredConfig = {...this.display.state.desiredConfig, ...changes}
+		this.display.show()
+		if (this.game.state.playState !== PlayState.Started)
+			setTimeout(() => this.onNewGame(), 1)
+		//this.desiredConfig = { ...this.game.config, ...changes }
+		// this.triggerNewGame.emit()
+	}
+
+	private updateDisplayConfig(changes: any) {
+		for (const key in changes)
+			this.display.config[key] = changes[key]
+		this.display.updateSize()
+		this.display.show()
 	}
 
 	mouseMove = (event: MouseEvent) => {
@@ -87,8 +126,8 @@ export class MinestrygerInput {
 		const rect = this.display.canvas.getBoundingClientRect()
 		const mx = event.clientX - rect.left
 		const my = event.clientY - rect.top
-		const x = Math.floor(mx / this.display.fieldSize)
-		const y = Math.floor(my / this.display.fieldSize)
+		const x = Math.floor(mx / this.display.state.fieldSize)
+		const y = Math.floor(my / this.display.state.fieldSize)
 		return { x: x, y: y }
 	}
 
@@ -145,4 +184,12 @@ export class MinestrygerInput {
 	private revealSurroundings(x: number, y: number) {
 		this.onAction(new RevealAreaAction(x, y))
 	}
+}
+
+function boolFrom(event: Event) {
+	return (<any>event.target).checked
+}
+
+function numberFrom(event: Event) {
+	return +(<any>event.target).value
 }
