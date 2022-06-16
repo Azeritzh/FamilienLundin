@@ -8,9 +8,6 @@
 	grid-template-rows: calc(100vh - 5rem);
 }
 
-.game-host {
-	grid-area: game;
-	height: 60%;
-}
+.game-host { grid-area: game; }
 lundin-minestryger-settings { grid-area: settings; }
 lundin-minestryger-highscores { grid-area: highscores; }

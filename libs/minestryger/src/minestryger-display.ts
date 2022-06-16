@@ -1,4 +1,5 @@
 import { BaseDisplay } from "@lundin/age"
+import { defaultDisplayConfig } from "./defaults"
 import { Minestryger } from "./minestryger"
 import { Field } from "./minestryger-state"
 
@@ -12,10 +13,10 @@ export class MinestrygerDisplay implements BaseDisplay {
 	constructor(
 		public game: Minestryger,
 		private hostElement: HTMLElement,
-		private newGameText = "New game",
+		public config: DisplayConfig = defaultDisplayConfig,
 	) {
 		this.initialiseCanvas()
-		this.setSize(hostElement.clientWidth, hostElement.clientHeight)
+		this.updateSize()
 	}
 
 	private initialiseCanvas() {
@@ -23,44 +24,7 @@ export class MinestrygerDisplay implements BaseDisplay {
 		this.canvas = document.createElement("canvas")
 		this.context = this.canvas.getContext("2d")
 		const style = document.createElement("style")
-		style.innerText = `
-.game-host {
-	position: relative;
-	display: grid;
-	grid-template-areas: "game game game"
-		"time button bombs";
-	grid-template-rows: max-content 2rem;
-	grid-template-columns: 3rem max-content 3rem;
-	justify-content: center;
-}
-
-.game-host canvas { grid-area: game; }
-
-.game-host .bombs, .game-host .time {
-	width: 3rem;
-	height: 2rem;
-	text-align: center;
-	line-height: 2rem;
-	font-weight: bold;
-	font-size: 1.2rem;
-	color: red;
-	background-color: black;
-}
-
-.game-host .time {
-	grid-area: time;
-}
-
-.game-host .bombs {
-	grid-area: bombs;
-	margin-left: auto;
-}
-
-.game-host button {
-	grid-area: button;
-	border-radius: 0;
-}
-`
+		style.innerText = this.config.styling
 		this.hostElement.appendChild(this.canvas)
 		this.hostElement.appendChild(style)
 		this.setupElements()
@@ -85,7 +49,7 @@ export class MinestrygerDisplay implements BaseDisplay {
 
 	private setupNewGameButton() {
 		const element = this.getElement("button", "button")
-		element.innerText = this.newGameText
+		element.innerText = this.config.newGameText
 	}
 
 	private getElement(key: string, tag = "div") {
@@ -118,19 +82,24 @@ export class MinestrygerDisplay implements BaseDisplay {
 		window.clearInterval(this.timerId)
 	}
 
-	setSize(width: number, height: number) {
-		const horisontalFields = Math.max(this.game.config.width, 30) // make size for at least the expert version
-		const verticalFields = Math.max(this.game.config.height, 16) // make size for at least the expert version
-		const horisontalFieldSize = Math.floor(width / horisontalFields)
-		const verticalFieldSize = Math.floor(height / verticalFields)
-		const fieldSize = Math.min(horisontalFieldSize, verticalFieldSize)
-		this.setFieldSize(Math.max(fieldSize, 15))
-	}
-
-	setFieldSize(fieldSize: number) {
-		this.fieldSize = fieldSize
+	updateSize() {
+		this.fieldSize = this.config.useAvailableSize
+			? this.availableFieldSize()
+			: this.config.defaultFieldSize
 		this.canvas.width = this.fieldSize * this.game.config.width
 		this.canvas.height = this.fieldSize * this.game.config.height
+	}
+
+	private availableFieldSize() {
+		const horisontalFields = Math.max(this.game.config.width, 30) // make size for at least the expert version
+		const verticalFields = Math.max(this.game.config.height, 16) // make size for at least the expert version
+		const horisontalFieldSize = Math.floor(this.hostElement.clientWidth / horisontalFields)
+		const verticalFieldSize = Math.floor(this.hostElement.clientHeight / verticalFields)
+		return Math.min(horisontalFieldSize, verticalFieldSize)
+	}
+
+	setSize() {
+		throw new Error("Method not implemented.")
 	}
 
 	show() {
@@ -161,15 +130,15 @@ export class MinestrygerDisplay implements BaseDisplay {
 	private getSprite(field: Field, hover = false) {
 		if (field.revealed)
 			return field.bomb
-				? displayConfig.sprites.bomb
-				: displayConfig.sprites[field.surroundingBombs.toString()]
+				? this.config.sprites.bomb
+				: this.config.sprites[field.surroundingBombs.toString()]
 		if (field.locked)
 			return hover
-				? displayConfig.sprites["flag-hover"]
-				: displayConfig.sprites.flag
+				? this.config.sprites["flag-hover"]
+				: this.config.sprites.flag
 		return hover
-			? displayConfig.sprites["hidden-hover"]
-			: displayConfig.sprites.hidden
+			? this.config.sprites["hidden-hover"]
+			: this.config.sprites.hidden
 	}
 
 	drawSprite(sprite: Sprite, x: number, y: number) {
@@ -201,75 +170,14 @@ export class MinestrygerDisplay implements BaseDisplay {
 	}
 }
 
-const displayConfig: DisplayConfig = {
-	sprites: {
-		hidden: {
-			color: "grey",
-		},
-		"hidden-hover": {
-			color: "lightgrey",
-		},
-		flag: {
-			text: "⚑",
-			color: "grey",
-			textcolor: "red",
-			font: "serif",
-			fontWeight: "",
-		},
-		"flag-hover": {
-			text: "⚑",
-			color: "lightgrey",
-			textcolor: "red",
-			font: "serif",
-			fontWeight: "",
-		},
-		bomb: {
-			text: "💣",
-			color: "red",
-			font: "serif",
-			fontWeight: "",
-			fontScale: 0.6,
-		},
-		"0": {},
-		"1": {
-			text: "1",
-			textcolor: "#0100fe",
-		},
-		"2": {
-			text: "2",
-			textcolor: "#017f01",
-		},
-		"3": {
-			text: "3",
-			textcolor: "#fe0000",
-		},
-		"4": {
-			text: "4",
-			textcolor: "#010080",
-		},
-		"5": {
-			text: "5",
-			textcolor: "#810102",
-		},
-		"6": {
-			text: "6",
-			textcolor: "#008081",
-		},
-		"7": {
-			text: "7",
-			textcolor: "#000000",
-		},
-		"8": {
-			text: "8",
-			textcolor: "#808080",
-		},
-	},
-}
-
 export interface DisplayConfig {
+	defaultFieldSize: number
+	useAvailableSize: boolean
+	newGameText: string
 	sprites: {
 		[name: string]: Sprite
 	}
+	styling: string
 }
 
 interface Sprite {

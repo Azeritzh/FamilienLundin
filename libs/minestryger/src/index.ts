@@ -1,3 +1,4 @@
+export * from "./defaults"
 export * from "./minestryger"
 export * from "./minestryger-action"
 export * from "./minestryger-config"

@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core"
-import { FlagAction, Minestryger, MinestrygerAction, MinestrygerConfig, MinestrygerDisplay, MinestrygerInput, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core"
+import { defaultDisplayConfig, FlagAction, Minestryger, MinestrygerAction, MinestrygerConfig, MinestrygerDisplay, MinestrygerInput, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
 import { NavigationService } from "../../services/navigation.service"
 import { MinestrygerService } from "./minestryger.service"
 
@@ -8,7 +8,7 @@ import { MinestrygerService } from "./minestryger.service"
 	templateUrl: "./minestryger.component.html",
 	styleUrls: ["./minestryger.component.scss"],
 })
-export class MinestrygerComponent implements OnInit {
+export class MinestrygerComponent implements OnInit, OnDestroy {
 	@ViewChild("gameHost", { static: true }) gameHost: ElementRef<HTMLDivElement>
 	private game: Minestryger
 	private display: MinestrygerDisplay
@@ -18,14 +18,14 @@ export class MinestrygerComponent implements OnInit {
 	height = 16
 	bombs = 99
 	allowFlags = true
-	set activateOnMouseDown(value: boolean){
+	set activateOnMouseDown(value: boolean) {
 		this.input.activateOnMouseDown = value
 	}
-	get activateOnMouseDown(){
+	get activateOnMouseDown() {
 		return this.input.activateOnMouseDown
 	}
-	fieldSize = 20
-	autoSize = true
+	fieldSize = 25
+	autoSize = false
 	private enableRegistering = true
 
 	constructor(
@@ -35,11 +35,15 @@ export class MinestrygerComponent implements OnInit {
 
 	ngOnInit() {
 		this.game = new Minestryger()
-		this.display = new MinestrygerDisplay(this.game, this.gameHost.nativeElement, "Nyt spil")
+		this.display = new MinestrygerDisplay(this.game, this.gameHost.nativeElement, { ...defaultDisplayConfig, newGameText: "Nyt spil" })
 		this.input = new MinestrygerInput(this.game, this.display, this.startNewGame, this.onAction)
 		new ResizeObserver(this.updateSize).observe(this.gameHost.nativeElement)
 		this.display.show()
 		this.exposeGame()
+	}
+
+	ngOnDestroy() {
+		this.display.onDestroy()
 	}
 
 	private startNewGame = () => {
@@ -66,10 +70,9 @@ export class MinestrygerComponent implements OnInit {
 	}
 
 	updateSize = () => {
-		if (this.autoSize)
-			this.display.setSize(this.gameHost.nativeElement.clientWidth, this.gameHost.nativeElement.clientHeight)
-		else
-			this.display.setFieldSize(this.fieldSize)
+		this.display.config.defaultFieldSize = this.fieldSize
+		this.display.config.useAvailableSize = this.autoSize
+		this.display.updateSize()
 		this.display.show()
 	}
 
