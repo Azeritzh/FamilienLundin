@@ -41,7 +41,7 @@ export class MinestrygerComponent implements OnInit, OnDestroy {
 			},
 		})
 		this.input = new MinestrygerInput(this.game, this.display, this.startNewGame, this.onAction)
-		new ResizeObserver(() => { this.display.updateSize() }).observe(this.gameHost.nativeElement)
+		new ResizeObserver(() => this.display.updateSize()).observe(this.gameHost.nativeElement)
 		this.display.show()
 		this.exposeGame()
 	}

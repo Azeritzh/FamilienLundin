@@ -43,7 +43,7 @@ export class MinestrygerDisplay implements BaseDisplay {
 		const style = document.createElement("style")
 		style.innerText = this.config.styling
 		this.hostElement.appendChild(style)
-		this.gameElements.initialise(this.hostElement)
+		this.gameElements.initialise()
 		this.settingsElements.initialise()
 	}
 

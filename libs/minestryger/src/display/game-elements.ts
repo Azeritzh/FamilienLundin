@@ -14,16 +14,16 @@ export class GameElements {
 
 	getInitialElements() {
 		return /*html*/`
-<div class="time"></div>
-<button type="button" class="button">${this.config.text.newGame}</button>
-<div class="bombs"></div>
+<div id="time"></div>
+<button type="button" id="new-game-button">${this.config.text.newGame}</button>
+<div id="remaining-bombs"></div>
 `
 	}
 
-	initialise(hostElement: HTMLElement) {
-		this.elements["time"] = <HTMLElement>hostElement.getElementsByClassName("time")[0]
-		this.elements["button"] = <HTMLElement>hostElement.getElementsByClassName("button")[0]
-		this.elements["remaining-bombs"] = <HTMLElement>hostElement.getElementsByClassName("bombs")[0]
+	initialise() {
+		this.elements["time"] = document.getElementById("time")
+		this.elements["button"] = document.getElementById("new-game-button")
+		this.elements["remaining-bombs"] = document.getElementById("remaining-bombs")
 		this.timerId = window.setInterval(this.updateTime, 500)
 	}
 

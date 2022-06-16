@@ -96,7 +96,7 @@ export const defaultDisplayConfig: DisplayConfig = {
 .game-host .settings-section { grid-area: settings; }
 .game-host canvas { grid-area: game; }
 
-.game-host .bombs, .game-host .time {
+.game-host #remaining-bombs, .game-host #time {
 	width: 3rem;
 	height: 2rem;
 	text-align: center;
@@ -107,22 +107,27 @@ export const defaultDisplayConfig: DisplayConfig = {
 	background-color: black;
 }
 
-.game-host .time {
+.game-host #time {
 	grid-area: time;
 }
 
-.game-host .bombs {
+.game-host #remaining-bombs {
 	grid-area: bombs;
 	margin-left: auto;
 }
 
-.game-host .button {
+.game-host #new-game-button {
 	grid-area: button;
 	border-radius: 0;
 }
 
+.game-host input[type="checkbox"] {
+	margin-top: 0.5rem;
+	height: 1rem;
+}
+
 .settings-section {
-	margin-right: 0.5rem;
+	margin: 0 0.5rem;
 	width: 250px;
 }
 
