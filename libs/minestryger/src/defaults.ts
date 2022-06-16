@@ -4,7 +4,21 @@ export const defaultDisplayConfig: DisplayConfig = {
 	allowFlags: true,
 	defaultFieldSize: 25,
 	useAvailableSize: false,
-	newGameText: "New game",
+	text: {
+		newGame: "New game",
+		settings: "Settings",
+		beginner: "Beginner",
+		intermediate: "Intermediate",
+		expert: "Expert",
+		allowFlags: "Allow flags",
+		advancedSettings: "Advanced Settings",
+		width: "Width",
+		height: "Height",
+		bombs: "Bombs",
+		earlyClick: "Early click",
+		fieldSize: "Field size",
+		autoSize: "Auto size",
+	},
 	sprites: {
 		hidden: {
 			color: "grey",

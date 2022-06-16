@@ -23,7 +23,23 @@ export class MinestrygerComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.game = new Minestryger()
-		this.display = new MinestrygerDisplay(this.game, this.gameHost.nativeElement, { ...defaultDisplayConfig, newGameText: "Nyt spil" })
+		this.display = new MinestrygerDisplay(this.game, this.gameHost.nativeElement, {
+			...defaultDisplayConfig, text: {
+				newGame: "Nyt spil",
+				settings: "Indstillinger",
+				beginner: "Begynder",
+				intermediate: "Øvet",
+				expert: "Ekspert",
+				allowFlags: "Tillad flag",
+				advancedSettings: "Avancerede Indstillinger",
+				width: "Vidde",
+				height: "Højde",
+				bombs: "Bomber",
+				earlyClick: "Tidligt klik",
+				fieldSize: "Feltstørrelse",
+				autoSize: "Automatisk feltstørrelse",
+			},
+		})
 		this.input = new MinestrygerInput(this.game, this.display, this.startNewGame, this.onAction)
 		new ResizeObserver(() => { this.display.updateSize() }).observe(this.gameHost.nativeElement)
 		this.display.show()

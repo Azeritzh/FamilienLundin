@@ -15,7 +15,7 @@ export class GameElements {
 	getInitialElements() {
 		return /*html*/`
 <div class="time"></div>
-<button type="button" class="button">${this.config.newGameText}</button>
+<button type="button" class="button">${this.config.text.newGame}</button>
 <div class="bombs"></div>
 `
 	}
@@ -41,9 +41,6 @@ export class GameElements {
 			.map(x => x.field)
 			.filter(x => x.locked)
 			.length
-		console.log("locked and bombs:")
-		console.log(lockedFields)
-		console.log(this.game.config.bombs)
 		this.elements["remaining-bombs"].innerText = "" + (this.game.config.bombs - lockedFields)
 	}
 

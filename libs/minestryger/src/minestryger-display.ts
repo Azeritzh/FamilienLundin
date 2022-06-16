@@ -142,7 +142,21 @@ export interface DisplayConfig {
 	allowFlags: boolean
 	defaultFieldSize: number
 	useAvailableSize: boolean
-	newGameText: string
+	text: {
+		newGame: string
+		settings: string
+		beginner: string
+		intermediate: string
+		expert: string
+		allowFlags: string
+		advancedSettings: string
+		width: string
+		height: string
+		bombs: string
+		earlyClick: string
+		fieldSize: string
+		autoSize: string
+	}
 	sprites: {
 		[name: string]: Sprite
 	}
