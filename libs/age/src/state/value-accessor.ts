@@ -1,6 +1,4 @@
-import { BaseChanges } from "./base-changes"
-import { BaseConfig, Id, typeOf } from "./base-config"
-import { BaseState } from "./base-state"
+import { Id, typeOf } from "./id"
 import { BaseValues } from "./base-values"
 
 export class ValueAccessor<T, GroupedEntityValues>{
@@ -12,18 +10,18 @@ export class ValueAccessor<T, GroupedEntityValues>{
 		private readonly defaultValue: T = undefined
 	) { }
 
-	public static For<EntityValues extends BaseValues, GroupedEntityValues, BehaviourType, T>(
-		config: BaseConfig<any, GroupedEntityValues, BehaviourType>,
-		state: BaseState<any, any, EntityValues>,
-		changes: BaseChanges<EntityValues, any>,
+	public static for<EntityValues extends BaseValues, GroupedEntityValues, T>(
+		typeValues: Map<Id, GroupedEntityValues>,
+		entityValues: EntityValues,
+		updatedEntityValues: EntityValues,
 		getValueMap: (collection: EntityValues) => Map<Id, T>,
 		getTypeValue: (collection: GroupedEntityValues) => T,
 		defaultValue: T = undefined,
 	) {
 		return new ValueAccessor(
-			config.typeValues,
-			getValueMap(state.entityValues),
-			getValueMap(changes.updatedEntityValues),
+			typeValues,
+			getValueMap(entityValues),
+			getValueMap(updatedEntityValues),
 			getTypeValue,
 			defaultValue,
 		)

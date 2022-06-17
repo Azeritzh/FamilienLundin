@@ -1,13 +1,12 @@
 import { GameLogic, Random, TerrainManager } from "@lundin/age"
 import { MeldConfig } from "../meld-config"
 import { Block } from "../state/block"
-import { BlockValues } from "../state/block-values"
 import { GenerateAction, MeldAction } from "../state/meld-action"
 
 export class StartLogic implements GameLogic<MeldAction> {
 	constructor(
 		private config: MeldConfig,
-		private terrain: TerrainManager<Block, BlockValues>,
+		private terrain: TerrainManager<Block>,
 		private random: Random,
 	) { }
 

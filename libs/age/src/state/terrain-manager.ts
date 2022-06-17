@@ -1,17 +1,14 @@
 import { range, Vector3 } from "@lundin/utility"
-import { BaseChanges } from "./base-changes"
-import { BaseConfig } from "./base-config"
-import { BaseState } from "./base-state"
 
-export class TerrainManager<Field, FieldValues> {
+export class TerrainManager<Field> {
 	constructor(
-		private config: BaseConfig<FieldValues, any, any>,
-		private state: BaseState<any, Field, any>,
-		private changes: BaseChanges<any, Field>,
+		private chunkSize: Vector3 = { x: 10, y: 10, z: 1 },
+		private chunks: Map<string, Field[]>,
+		private updatedBlocks = new Map<Vector3, Field>(),
 	) { }
 
 	public addChunk(fields: Field[], x: number, y: number, z = 0) {
-		this.state.chunks.set(this.convertChunkCoords(x, y, z), fields)
+		this.chunks.set(this.convertChunkCoords(x, y, z), fields)
 	}
 
 	public get(x: number, y: number, z = 0) {
@@ -19,7 +16,7 @@ export class TerrainManager<Field, FieldValues> {
 		y = Math.floor(y)
 		z = Math.floor(z)
 		const { chunkCoords, index } = this.getChunkPositionFor(x, y, z)
-		const chunk = this.state.chunks.get(chunkCoords)
+		const chunk = this.chunks.get(chunkCoords)
 		if (!chunk)
 			console.warn("Trying to access outside any chunk")
 		return chunk?.[index]
@@ -31,9 +28,9 @@ export class TerrainManager<Field, FieldValues> {
 		const properChunkCoords = this.getChunkCoords(x, y, z)
 		const chunkCoords = this.convertChunkCoords(properChunkCoords.x, properChunkCoords.y, properChunkCoords.z)
 		const index = this.chunkIndexFor(
-			x - properChunkCoords.x * this.config.chunkSize.x,
-			y - properChunkCoords.y * this.config.chunkSize.y,
-			z - properChunkCoords.z * this.config.chunkSize.z
+			x - properChunkCoords.x * this.chunkSize.x,
+			y - properChunkCoords.y * this.chunkSize.y,
+			z - properChunkCoords.z * this.chunkSize.z
 		)
 		return { chunkCoords, index }
 	}
@@ -41,9 +38,9 @@ export class TerrainManager<Field, FieldValues> {
 	/** Takes a global position and returns the corresponding chunk coordinate */
 	private getChunkCoords(x: number, y: number, z: number): Vector3 {
 		return {
-			x: this.chunkCoord(x, this.config.chunkSize.x),
-			y: this.chunkCoord(y, this.config.chunkSize.y),
-			z: this.chunkCoord(z, this.config.chunkSize.z),
+			x: this.chunkCoord(x, this.chunkSize.x),
+			y: this.chunkCoord(y, this.chunkSize.y),
+			z: this.chunkCoord(z, this.chunkSize.z),
 		}
 	}
 
@@ -58,23 +55,23 @@ export class TerrainManager<Field, FieldValues> {
 
 	/** Takes a local position and returns the corresponding chunk index */
 	private chunkIndexFor(x: number, y: number, z: number) {
-		return x + y * this.config.chunkSize.x + z * this.config.chunkSize.x * this.config.chunkSize.y
+		return x + y * this.chunkSize.x + z * this.chunkSize.x * this.chunkSize.y
 	}
 
 	public getCurrent(x: number, y: number, z = 0) {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
-		return this.changes.updatedBlocks.get({ x, y, z })
+		return this.updatedBlocks.get({ x, y, z })
 			?? this.get(x, y, z)
 	}
 
 	/** Iterates through all fields in a chunk, and returns the local position and field */
 	public *allFields(chunkX = 0, chunkY = 0, chunkZ = 0) {
-		const chunk = this.state.chunks.get(this.convertChunkCoords(chunkX, chunkY, chunkZ))
-		for (const z of range(0, this.config.chunkSize.z))
-			for (const y of range(0, this.config.chunkSize.y))
-				for (const x of range(0, this.config.chunkSize.x))
+		const chunk = this.chunks.get(this.convertChunkCoords(chunkX, chunkY, chunkZ))
+		for (const z of range(0, this.chunkSize.z))
+			for (const y of range(0, this.chunkSize.y))
+				for (const x of range(0, this.chunkSize.x))
 					yield { x, y, z, field: chunk[this.chunkIndexFor(x, y, z)] }
 	}
 
@@ -94,18 +91,18 @@ export class TerrainManager<Field, FieldValues> {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
-		this.changes.updatedBlocks.set({ x, y, z }, field)
+		this.updatedBlocks.set({ x, y, z }, field)
 	}
 
 	public applyUpdatedValues() {
-		for (const [{ x, y, z }, field] of this.changes.updatedBlocks)
+		for (const [{ x, y, z }, field] of this.updatedBlocks)
 			this.setField(x, y, z, field)
-		this.changes.updatedBlocks.clear()
+		this.updatedBlocks.clear()
 	}
 
 	private setField(x: number, y: number, z: number, field: Field) {
 		const { chunkCoords, index } = this.getChunkPositionFor(x, y, z)
-		const chunk = this.state.chunks.get(chunkCoords)
+		const chunk = this.chunks.get(chunkCoords)
 		if (chunk)
 			chunk[index] = field
 		else

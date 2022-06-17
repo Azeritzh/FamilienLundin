@@ -1,7 +1,11 @@
-import { Id } from "./base-config"
+import { Id } from "./id"
 
 export abstract class BaseValues {
 	protected readonly allValueMaps: Map<Id, any>[] = []
+
+	constructor(
+		public readonly entities = new Map<Id, boolean>(),
+	) { }
 
 	protected register<TValue>(map: Map<Id, TValue>) {
 		this.allValueMaps.push(map)

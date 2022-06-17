@@ -1,21 +1,19 @@
 import { BaseValues } from "./base-values"
-import { BaseChanges } from "./base-changes"
-import { BaseConfig, Id, typeOf } from "./base-config"
-import { BaseState } from "./base-state"
-import { BaseGlobals } from "./base-globals"
+import { Id, typeOf } from "./id"
 
-export class EntityManager<EntityValues extends BaseValues, GroupedEntityValues, BehaviourType> {
+export class EntityManager<EntityValues extends BaseValues, BehaviourType> {
 	constructor(
-		private config: BaseConfig<any, GroupedEntityValues, BehaviourType>,
-		private state: BaseState<BaseGlobals, any, EntityValues>,
-		private changes: BaseChanges<EntityValues, any>,
+		private typeBehaviours: Map<Id, BehaviourType[]>,
+		private entityValues: EntityValues,
+		private updatedEntityValues: EntityValues,
+		private idProvider: IdProvider,
 		private behaviourLists = new Map<BehaviourType, Id[]>(),
 	) {
 		this.setupBehaviours()
 	}
 
 	private setupBehaviours() {
-		for (const behaviours of this.config.typeBehaviours.values())
+		for (const behaviours of this.typeBehaviours.values())
 			for (const behaviour of behaviours)
 				this.behaviourLists.set(behaviour, [])
 	}
@@ -25,43 +23,49 @@ export class EntityManager<EntityValues extends BaseValues, GroupedEntityValues,
 	}
 
 	public create(type: Id) {
-		const id = this.state.globals.nextId | type
-		this.state.globals.nextId++
-		this.changes.createdEntities.push(id)
+		const id = this.idProvider.getNewId() | type
+		this.updatedEntityValues.entities.set(id, true)
 		return id
 	}
-	public remove(...entityId: Id[]) {
-		this.changes.removedEntities.push(...entityId)
+
+	public remove(...entities: Id[]) {
+		for(const entity of entities)
+			this.updatedEntityValues.entities.set(entity, false)
 	}
 
 	public applyUpdatedValues() {
-		this.state.entityValues.addValuesFromOther(this.changes.updatedEntityValues)
-		this.changes.updatedEntityValues.clear()
-		for (const entity of this.changes.createdEntities)
-			this.add(entity)
-		for (const entity of this.changes.removedEntities)
-			this.fullyRemove(entity)
-		this.changes.createdEntities.clear()
-		this.changes.removedEntities.clear()
+		this.entityValues.addValuesFromOther(this.updatedEntityValues)
+		this.updatedEntityValues.clear()
+		for (const [entity, add] of this.updatedEntityValues.entities)
+			if (add)
+				this.add(entity)
+			else
+				this.fullyRemove(entity)
+		this.updatedEntityValues.entities.clear()
+		this.updatedEntityValues.entities.clear()
 	}
 
 	private add(entityId: Id) {
-		this.state.entities.push(entityId)
-		for (const behaviour of this.config.typeBehaviours.get(typeOf(entityId)))
+		this.entityValues.entities.set(entityId, true)
+		for (const behaviour of this.typeBehaviours.get(typeOf(entityId)))
 			this.behaviourLists.get(behaviour).push(entityId)
 	}
 
 	private fullyRemove(entityId: Id) {
-		this.state.entities.remove(entityId)
-		this.changes.createdEntities.remove(entityId)
-		this.state.entityValues.removeValuesFor(entityId)
-		this.changes.updatedEntityValues.removeValuesFor(entityId)
-		for (const behaviour of this.config.typeBehaviours.get(typeOf(entityId)))
+		this.entityValues.entities.delete(entityId)
+		this.updatedEntityValues.entities.delete(entityId)
+		this.entityValues.removeValuesFor(entityId)
+		this.updatedEntityValues.removeValuesFor(entityId)
+		for (const behaviour of this.typeBehaviours.get(typeOf(entityId)))
 			this.behaviourLists.get(behaviour).remove(entityId)
 	}
 
 	*[Symbol.iterator]() {
-		for (const entity of this.state.entities)
+		for (const [entity] of this.entityValues.entities)
 			yield entity
 	}
+}
+
+interface IdProvider {
+	getNewId(): Id
 }

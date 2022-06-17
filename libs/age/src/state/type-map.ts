@@ -1,4 +1,4 @@
-import { Id, typeOffset } from "./base-config"
+import { Id, typeOffset } from "./id"
 
 export class TypeMap {
 	constructor(

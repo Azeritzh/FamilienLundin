@@ -1,6 +1,4 @@
-import { BaseGlobals } from "@lundin/age"
-
-export class Globals extends BaseGlobals {
+export class Globals {
 	constructor(
 		public isAlive = true,
 		public speed = 0.1,
@@ -9,7 +7,5 @@ export class Globals extends BaseGlobals {
 		public tick = 0,
 		public nextId = 1,
 		public seed = 1,
-	) {
-		super(tick, nextId, seed)
-	}
+	) { }
 }

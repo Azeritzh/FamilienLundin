@@ -2,7 +2,7 @@ import { BaseValues, EntityManager, Id, RectangularSize, ValueAccessor } from "@
 import { Vector2 } from "@lundin/utility"
 
 export type RenderendEntityValues<T> = ValueAccessor<T, GroupedEntityValues>
-export type RenderendEntities = EntityManager<EntityValues, GroupedEntityValues, Behaviour>
+export type RenderendEntities = EntityManager<EntityValues, Behaviour>
 
 export class EntityValues extends BaseValues {
 	constructor(
@@ -11,8 +11,9 @@ export class EntityValues extends BaseValues {
 		public readonly orientation = new Map<Id, number>(),
 		public readonly position = new Map<Id, Vector2>(),
 		public readonly velocity = new Map<Id, Vector2>(),
+		entities = new Map<Id, boolean>(),
 	) {
-		super()
+		super(entities)
 		this.register(rectangularSize)
 		this.register(health)
 		this.register(orientation)

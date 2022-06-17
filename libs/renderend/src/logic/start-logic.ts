@@ -1,14 +1,15 @@
-import { BaseChanges, GameLogic } from "@lundin/age"
+import { GameLogic } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
-import { EntityValues, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
+import { RenderendEntities, RenderendEntityValues } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction, StartGameAction } from "../state/renderend-action"
+import { RenderendChanges } from "../state/renderend-changes"
 
 export class StartLogic implements GameLogic<RenderendAction> {
 	constructor(
 		private constants: RenderendConstants,
-		private changes: BaseChanges<EntityValues, any>,
+		private changes: RenderendChanges,
 		private globals: Globals,
 		private entities: RenderendEntities,
 		private position: RenderendEntityValues<Vector2>,
@@ -26,8 +27,10 @@ export class StartLogic implements GameLogic<RenderendAction> {
 	}
 
 	private clearMap() {
-		this.changes.createdEntities
-		this.entities.remove(...this.entities, ...this.changes.createdEntities)
+		for (const [entity, add] of this.changes.updatedEntityValues.entities)
+			if (add)
+				this.entities.remove(entity)
+		this.entities.remove(...this.entities)
 	}
 
 	private resetGlobals() {

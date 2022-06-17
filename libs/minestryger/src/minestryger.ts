@@ -21,8 +21,4 @@ export class Minestryger extends BaseGame<MinestrygerAction> {
 			new WinLogic(state),
 		])
 	}
-
-	finishUpdate() {
-		this.state.tick++
-	}
 }

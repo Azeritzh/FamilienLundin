@@ -1,17 +1,16 @@
-import { BaseGlobals } from "../state/base-globals"
-
 export class Random {
 	constructor(
-		private globals: BaseGlobals,
-		private previousTick = -1,
+		private getSeed: () => number,
+		private previousSeed = -1,
 		private generator = new RandomGenerator(-1)
 	) { }
 
 	get get() {
-		if (this.previousTick === this.globals.tick)
+		const seed = this.getSeed()
+		if (this.previousSeed === seed)
 			return this.generator
-		this.previousTick = this.globals.tick
-		this.generator = new RandomGenerator(this.globals.seed + this.globals.tick)
+		this.previousSeed = seed
+		this.generator = new RandomGenerator(seed)
 		return this.generator
 	}
 }
