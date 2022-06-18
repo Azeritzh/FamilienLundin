@@ -1,4 +1,4 @@
-import { BaseGame, EntityManager, Id, Random, TerrainManager, TypeMap, ValueAccessor } from "@lundin/age"
+import { BaseGame, EntityManager, Id, Random, TerrainManager, TypeMap, ValueAccessBuilder, ValueAccessor } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { StartLogic } from "./logic/start-logic"
 import { UpdateStateLogic } from "./logic/update-state-logic"
@@ -33,10 +33,11 @@ class Access {
 		config: MeldConfig,
 		state: MeldState,
 		changes: MeldChanges,
-		public readonly size = ValueAccessor.for(config.typeValues, state.entityValues, changes.updatedEntityValues, x => x.rectangularSize, x => x.rectangularSize),
-		public readonly health = ValueAccessor.for(config.typeValues, state.entityValues, changes.updatedEntityValues, x => x.health, x => x.health),
-		public readonly orientation = ValueAccessor.for(config.typeValues, state.entityValues, changes.updatedEntityValues, x => x.orientation, x => x.orientation, 0),
-		public readonly position = ValueAccessor.for(config.typeValues, state.entityValues, changes.updatedEntityValues, x => x.position, x => x.position),
-		public readonly velocity = ValueAccessor.for(config.typeValues, state.entityValues, changes.updatedEntityValues, x => x.velocity, x => x.velocity, new Vector2(0, 0)),
+		accessor = new ValueAccessBuilder(config.typeValues, state.entityValues, changes.updatedEntityValues),
+		public readonly rectangularSize = accessor.for(x => x.rectangularSize, x => x.rectangularSize),
+		public readonly health = accessor.for(x => x.health, x => x.health),
+		public readonly orientation = accessor.for(x => x.orientation, x => x.orientation, 0),
+		public readonly position = accessor.for(x => x.position, x => x.position),
+		public readonly velocity = accessor.for(x => x.velocity, x => x.velocity, new Vector2(0, 0)),
 	) { }
 }

@@ -47,3 +47,25 @@ export class ValueAccessor<T, GroupedEntityValues>{
 		this.updatedEntityValue.set(entity, value)
 	}
 }
+
+export class ValueAccessBuilder<EntityValues extends BaseValues, GroupedEntityValues>{
+	constructor(
+		private typeValues: Map<Id, GroupedEntityValues>,
+		private entityValues: EntityValues,
+		private updatedEntityValues: EntityValues,
+	) { }
+
+	public for<T>(
+		getValueMap: (collection: EntityValues) => Map<Id, T>,
+		getTypeValue: (collection: GroupedEntityValues) => T,
+		defaultValue: T = undefined,
+	) {
+		return new ValueAccessor(
+			this.typeValues,
+			getValueMap(this.entityValues),
+			getValueMap(this.updatedEntityValues),
+			getTypeValue,
+			defaultValue,
+		)
+	}
+}
