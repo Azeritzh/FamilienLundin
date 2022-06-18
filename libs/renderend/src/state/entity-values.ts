@@ -8,6 +8,9 @@ export class EntityValues extends BaseValues {
 		public readonly orientation = new Map<Id, number>(),
 		public readonly position = new Map<Id, Vector2>(),
 		public readonly velocity = new Map<Id, Vector2>(),
+		public readonly shipBehaviour = new Map<Id, boolean>(),
+		public readonly obstacleBehaviour = new Map<Id, boolean>(),
+		public readonly dieOnCollisionBehaviour = new Map<Id, boolean>(),
 		entities = new Map<Id, boolean>(),
 	) {
 		super(entities)
@@ -16,6 +19,9 @@ export class EntityValues extends BaseValues {
 		this.register(orientation)
 		this.register(position)
 		this.register(velocity)
+		this.register(shipBehaviour)
+		this.register(obstacleBehaviour)
+		this.register(dieOnCollisionBehaviour)
 	}
 
 	public static from(groupedValues: Map<Id, GroupedEntityValues>) {
@@ -36,6 +42,12 @@ export class EntityValues extends BaseValues {
 			this.position.set(key, values.position)
 		if (values.velocity !== undefined)
 			this.velocity.set(key, values.velocity)
+		if (values.shipBehaviour !== undefined)
+			this.shipBehaviour.set(key, values.shipBehaviour)
+		if (values.obstacleBehaviour !== undefined)
+			this.obstacleBehaviour.set(key, values.obstacleBehaviour)
+		if (values.dieOnCollisionBehaviour !== undefined)
+			this.dieOnCollisionBehaviour.set(key, values.dieOnCollisionBehaviour)
 	}
 
 	groupFor(key: Id): GroupedEntityValues {
@@ -45,6 +57,9 @@ export class EntityValues extends BaseValues {
 			orientation: this.orientation.get(key),
 			position: this.position.get(key),
 			velocity: this.velocity.get(key),
+			shipBehaviour: this.shipBehaviour.get(key),
+			obstacleBehaviour: this.obstacleBehaviour.get(key),
+			dieOnCollisionBehaviour: this.dieOnCollisionBehaviour.get(key),
 		}
 	}
 }
@@ -55,6 +70,9 @@ export interface GroupedEntityValues {
 	position?: Vector2
 	velocity?: Vector2
 	orientation?: number
+	shipBehaviour?: boolean
+	obstacleBehaviour?: boolean
+	dieOnCollisionBehaviour?: boolean
 }
 
 export enum Behaviour {

@@ -21,11 +21,7 @@ export class EntityManager<EntityValues extends BaseValues, BehaviourType> {
 				this.behaviourLists.set(behaviour, [])
 	}
 
-	public with(behaviour: BehaviourType) {
-		return this.behaviourLists.get(behaviour) ?? []
-	}
-
-	get with2(){
+	get with(){
 		return this.entityValues
 	}
 

@@ -12,7 +12,7 @@ export class VelocityLogic implements GameLogic<RenderendAction> {
 	) { }
 
 	update() {
-		for (const [entity, velocity] of this.entities.with2.velocity)
+		for (const [entity, velocity] of this.entities.with.velocity)
 			this.updateEntity(entity, velocity)
 	}
 

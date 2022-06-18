@@ -13,7 +13,7 @@ export class CollisionLogic implements GameLogic<RenderendAction> {
 
 	update() {
 		for (const entity of this.entities)
-			for (const [otherEntity] of this.entities.with2.rectangularSize)
+			for (const [otherEntity] of this.entities.with.rectangularSize)
 				if (this.collides(entity, otherEntity))
 					this.notify(entity, otherEntity)
 	}

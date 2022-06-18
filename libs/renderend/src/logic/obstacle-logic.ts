@@ -1,7 +1,6 @@
 import { GameLogic, Id, Random, RectangularSize, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
-import { Behaviour } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction } from "../state/renderend-action"
 import { RenderendEntities } from "../state/renderend-entities"
@@ -19,7 +18,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	) { }
 
 	update() {
-		for (const entity of this.entities.with(Behaviour.Obstacle))
+		for (const [entity] of this.entities.with.obstacleBehaviour)
 			if (this.shouldDespawn(entity))
 				this.despawnObstacle(entity)
 			else

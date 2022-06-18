@@ -1,7 +1,6 @@
 import { GameLogic, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
-import { Behaviour } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { MoveShipAction, RenderendAction } from "../state/renderend-action"
 import { RenderendEntities } from "../state/renderend-entities"
@@ -31,7 +30,7 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 			? velocity.unitVector().multiply(this.constants.maxVerticalSpeed)
 			: velocity.multiply(this.constants.maxVerticalSpeed)
 
-		for (const entity of this.entities.with(Behaviour.Ship)) {
+		for (const [entity] of this.entities.with.shipBehaviour) {
 			const position = this.position.of(entity)
 			if (position.x < 1 && finalVelocity.x < 0)
 				finalVelocity.set(0, finalVelocity.y)

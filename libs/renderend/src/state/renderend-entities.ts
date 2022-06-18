@@ -14,6 +14,9 @@ export class RenderendEntities extends EntityManager<EntityValues, Behaviour> {
 		public readonly orientation = accessor.for(x => x.orientation, x => x.orientation, 0),
 		public readonly position = accessor.for(x => x.position, x => x.position),
 		public readonly velocity = accessor.for(x => x.velocity, x => x.velocity),
+		public readonly shipBehaviour = accessor.for(x => x.shipBehaviour, x => x.shipBehaviour),
+		public readonly obstacleBehaviour = accessor.for(x => x.obstacleBehaviour, x => x.obstacleBehaviour),
+		public readonly dieOnCollisionBehaviour = accessor.for(x => x.dieOnCollisionBehaviour, x => x.dieOnCollisionBehaviour),
 	) {
 		super(typeBehaviours, entityValues, updatedEntityValues, idProvider)
 		this.valueAccessors.push(
@@ -22,6 +25,9 @@ export class RenderendEntities extends EntityManager<EntityValues, Behaviour> {
 			orientation,
 			position,
 			velocity,
+			shipBehaviour,
+			obstacleBehaviour,
+			dieOnCollisionBehaviour,
 		)
 	}
 }

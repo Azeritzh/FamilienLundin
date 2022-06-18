@@ -41,8 +41,8 @@ export class Renderend extends BaseGame<RenderendAction> {
 				entities.rectangularSize.get,
 				[
 					new DeathLogic(
-						config.typeBehaviours,
 						state.globals,
+						entities.dieOnCollisionBehaviour.get,
 						entities.velocity.set,
 					)
 				],
