@@ -1,7 +1,7 @@
 import { BaseValues, EntityManager, Id, RectangularSize } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 
-export type MeldEntities = EntityManager<EntityValues, Behaviour>
+export type MeldEntities = EntityManager<EntityValues>
 
 export class EntityValues extends BaseValues {
 	constructor(
@@ -57,9 +57,4 @@ export interface GroupedEntityValues {
 	position?: Vector2
 	velocity?: Vector2
 	orientation?: number
-}
-
-export enum Behaviour {
-	Velocity,
-	HasRectangularSize,
 }

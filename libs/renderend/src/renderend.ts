@@ -21,7 +21,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 		public readonly config = RenderendConfig.from(defaultConstants, defaultValues),
 		public readonly state = new RenderendState(new Globals(), new EntityValues()),
 		readonly changes = new RenderendChanges(new EntityValues()),
-		public readonly entities = new RenderendEntities(config.typeValues, config.typeBehaviours, state.entityValues, changes.updatedEntityValues, state),
+		public readonly entities = new RenderendEntities(config.typeValues, state.entityValues, changes.updatedEntityValues, state),
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
 	) {
 		super([ // Order depends on usage of globals variables and priority of changes to same values

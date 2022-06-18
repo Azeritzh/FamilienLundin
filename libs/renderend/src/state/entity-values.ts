@@ -74,11 +74,3 @@ export interface GroupedEntityValues {
 	obstacleBehaviour?: boolean
 	dieOnCollisionBehaviour?: boolean
 }
-
-export enum Behaviour {
-	Velocity,
-	Obstacle,
-	Ship,
-	DieOnCollision,
-	HasRectangularSize,
-}

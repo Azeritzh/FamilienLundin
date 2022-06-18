@@ -1,25 +1,15 @@
 import { BaseValues } from "./base-values"
-import { Id, typeOf } from "./id"
+import { Id } from "./id"
 import { ValueAccessor } from "./value-accessor"
 
-export class EntityManager<EntityValues extends BaseValues, BehaviourType> {
+export class EntityManager<EntityValues extends BaseValues> {
 	protected valueAccessors: ValueAccessor<any>[] = []
 
 	constructor(
-		private typeBehaviours: Map<Id, BehaviourType[]>,
 		private entityValues: EntityValues,
 		private updatedEntityValues: EntityValues,
 		private idProvider: IdProvider,
-		private behaviourLists = new Map<BehaviourType, Id[]>(),
-	) {
-		this.setupBehaviours()
-	}
-
-	private setupBehaviours() {
-		for (const behaviours of this.typeBehaviours.values())
-			for (const behaviour of behaviours)
-				this.behaviourLists.set(behaviour, [])
-	}
+	) { }
 
 	get with(){
 		return this.entityValues
@@ -52,8 +42,6 @@ export class EntityManager<EntityValues extends BaseValues, BehaviourType> {
 
 	private add(entityId: Id) {
 		this.entityValues.entities.set(entityId, true)
-		for (const behaviour of this.typeBehaviours.get(typeOf(entityId)))
-			this.behaviourLists.get(behaviour).push(entityId)
 	}
 
 	private fullyRemove(entityId: Id) {
@@ -61,8 +49,6 @@ export class EntityManager<EntityValues extends BaseValues, BehaviourType> {
 		this.updatedEntityValues.entities.delete(entityId)
 		this.entityValues.removeValuesFor(entityId)
 		this.updatedEntityValues.removeValuesFor(entityId)
-		for (const behaviour of this.typeBehaviours.get(typeOf(entityId)))
-			this.behaviourLists.get(behaviour).remove(entityId)
 	}
 
 	*[Symbol.iterator]() {

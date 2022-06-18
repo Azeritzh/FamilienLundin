@@ -1,10 +1,9 @@
 import { EntityManager, Id, IdProvider, ValueAccessBuilder } from "@lundin/age"
-import { Behaviour, EntityValues, GroupedEntityValues } from "./entity-values"
+import { EntityValues, GroupedEntityValues } from "./entity-values"
 
-export class RenderendEntities extends EntityManager<EntityValues, Behaviour> {
+export class RenderendEntities extends EntityManager<EntityValues> {
 	constructor(
 		typeValues: Map<Id, GroupedEntityValues>,
-		typeBehaviours: Map<Id, Behaviour[]>,
 		entityValues: EntityValues,
 		updatedEntityValues: EntityValues,
 		idProvider: IdProvider,
@@ -18,7 +17,7 @@ export class RenderendEntities extends EntityManager<EntityValues, Behaviour> {
 		public readonly obstacleBehaviour = accessor.for(x => x.obstacleBehaviour, x => x.obstacleBehaviour),
 		public readonly dieOnCollisionBehaviour = accessor.for(x => x.dieOnCollisionBehaviour, x => x.dieOnCollisionBehaviour),
 	) {
-		super(typeBehaviours, entityValues, updatedEntityValues, idProvider)
+		super(entityValues, updatedEntityValues, idProvider)
 		this.valueAccessors.push(
 			rectangularSize,
 			health,

@@ -1,11 +1,11 @@
-import { BaseGame, EntityManager, Id, Random, TerrainManager, TypeMap, ValueAccessBuilder, ValueAccessor } from "@lundin/age"
+import { BaseGame, EntityManager, Id, Random, TerrainManager, TypeMap, ValueAccessBuilder } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { StartLogic } from "./logic/start-logic"
 import { UpdateStateLogic } from "./logic/update-state-logic"
 import { MeldConfig } from "./meld-config"
 import { MeldConstants } from "./meld-constants"
 import { BlockValues } from "./state/block-values"
-import { Behaviour, EntityValues, GroupedEntityValues } from "./state/entity-values"
+import { EntityValues, GroupedEntityValues } from "./state/entity-values"
 import { Globals } from "./state/globals"
 import { MeldAction } from "./state/meld-action"
 import { MeldChanges } from "./state/meld-changes"
@@ -13,11 +13,11 @@ import { MeldState } from "./state/meld-state"
 
 export class Meld extends BaseGame<MeldAction> {
 	constructor(
-		public readonly config = new MeldConfig(new MeldConstants(), TypeMap.from(["tile-dirt", "tile-earth", "tile-grass", "tile-slab", "tile-stone", "tile-wooden"]), new Map<Id, GroupedEntityValues>(), new Map<Id, Behaviour[]>(), new Map<Id, BlockValues>()),
+		public readonly config = new MeldConfig(new MeldConstants(), TypeMap.from(["tile-dirt", "tile-earth", "tile-grass", "tile-slab", "tile-stone", "tile-wooden"]), new Map<Id, GroupedEntityValues>(), new Map<Id, BlockValues>()),
 		public readonly state = new MeldState(new Globals(), new EntityValues()),
 		public readonly changes = new MeldChanges(new EntityValues()),
 		public readonly terrain = new TerrainManager(config.chunkSize, state.chunks, changes.updatedBlocks),
-		public readonly entities = new EntityManager(config.typeBehaviours, state.entityValues, changes.updatedEntityValues, state),
+		public readonly entities = new EntityManager(state.entityValues, changes.updatedEntityValues, state),
 		public readonly access = new Access(config, state, changes),
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
 	) {
