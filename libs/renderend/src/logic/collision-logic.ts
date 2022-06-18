@@ -8,7 +8,7 @@ export class CollisionLogic implements GameLogic<RenderendAction> {
 		private entities: RenderendEntities,
 		private position: ValueGetter<Vector2>,
 		private rectangularSize: ValueGetter<RectangularSize>,
-		private listeners: CollisionListener[]
+		private listeners: CollisionListener[],
 	) { }
 
 	update() {
@@ -19,13 +19,17 @@ export class CollisionLogic implements GameLogic<RenderendAction> {
 	}
 
 	private collides(entity: Id, otherEntity: Id) {
+		if (entity === otherEntity)
+			return false
 		const box = Box.from(this.position.of(otherEntity), this.rectangularSize.of(otherEntity))
 		return box.contains(this.position.of(entity))
 	}
 
 	private notify(entity: Id, otherEntity: Id) {
-		for (const listener of this.listeners)
+		for (const listener of this.listeners) {
 			listener.onCollision(entity, otherEntity)
+			listener.onCollision(otherEntity, entity)
+		}
 	}
 }
 

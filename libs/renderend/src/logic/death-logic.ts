@@ -1,20 +1,27 @@
-import { Id, ValueGetter, ValueSetter } from "@lundin/age"
-import { Vector2 } from "@lundin/utility"
-import { Globals } from "../state/globals"
-import { CollisionListener } from "./collision-logic"
+import { GameLogic, Id, ValueGetter } from "@lundin/age"
+import { RenderendAction } from "../state/renderend-action"
+import { RenderendEntities } from "../state/renderend-entities"
 
-export class DeathLogic implements CollisionListener {
+export class DeathLogic implements GameLogic<RenderendAction> {
 	constructor(
-		private globals: Globals,
-		private dieOnCollisionBehaviour: ValueGetter<boolean>,
-		private setVelocity: ValueSetter<Vector2>,
+		private entities: RenderendEntities,
+		private health: ValueGetter<number>,
+		private listeners: DeathListener[],
 	) { }
 
-	onCollision(entity: Id) {
-		if (!this.dieOnCollisionBehaviour.of(entity))
-			return
-		this.globals.speed = 0
-		this.globals.isAlive = false
-		this.setVelocity.for(entity, new Vector2(0, 0))
+	update() {
+		for (const [entity] of this.entities.with.health)
+			if (this.health.currentlyOf(entity) <= 0)
+				this.kill(entity)
 	}
+
+	private kill(entity: Id) {
+		for(const listener of this.listeners)
+			listener.onDeath(entity)
+		this.entities.remove(entity)
+	}
+}
+
+export interface DeathListener {
+	onDeath: (entity: Id) => void
 }

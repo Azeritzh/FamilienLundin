@@ -8,10 +8,11 @@ export class RenderendEntities extends EntityManager<EntityValues> {
 		updatedEntityValues: EntityValues,
 		idProvider: IdProvider,
 		accessor = new ValueAccessBuilder(typeValues, entityValues, updatedEntityValues),
-		public readonly rectangularSize = accessor.for(x => x.rectangularSize, x => x.rectangularSize),
+		public readonly damage = accessor.for(x => x.damage, x => x.damage),
 		public readonly health = accessor.for(x => x.health, x => x.health),
 		public readonly orientation = accessor.for(x => x.orientation, x => x.orientation, 0),
 		public readonly position = accessor.for(x => x.position, x => x.position),
+		public readonly rectangularSize = accessor.for(x => x.rectangularSize, x => x.rectangularSize),
 		public readonly velocity = accessor.for(x => x.velocity, x => x.velocity),
 		public readonly shipBehaviour = accessor.for(x => x.shipBehaviour, x => x.shipBehaviour),
 		public readonly obstacleBehaviour = accessor.for(x => x.obstacleBehaviour, x => x.obstacleBehaviour),
@@ -19,10 +20,11 @@ export class RenderendEntities extends EntityManager<EntityValues> {
 	) {
 		super(entityValues, updatedEntityValues, idProvider)
 		this.valueAccessors.push(
-			rectangularSize,
+			damage,
 			health,
 			orientation,
 			position,
+			rectangularSize,
 			velocity,
 			shipBehaviour,
 			obstacleBehaviour,

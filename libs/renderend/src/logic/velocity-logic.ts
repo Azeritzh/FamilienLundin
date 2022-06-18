@@ -7,7 +7,6 @@ export class VelocityLogic implements GameLogic<RenderendAction> {
 	constructor(
 		private entities: RenderendEntities,
 		private position: ValueGetter<Vector2>,
-		private velocity: ValueGetter<Vector2>,
 		private setPosition: ValueSetter<Vector2>,
 	) { }
 

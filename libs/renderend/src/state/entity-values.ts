@@ -3,10 +3,11 @@ import { Vector2 } from "@lundin/utility"
 
 export class EntityValues extends BaseValues {
 	constructor(
-		public readonly rectangularSize = new Map<Id, RectangularSize>(),
+		public readonly damage = new Map<Id, number>(),
 		public readonly health = new Map<Id, number>(),
 		public readonly orientation = new Map<Id, number>(),
 		public readonly position = new Map<Id, Vector2>(),
+		public readonly rectangularSize = new Map<Id, RectangularSize>(),
 		public readonly velocity = new Map<Id, Vector2>(),
 		public readonly shipBehaviour = new Map<Id, boolean>(),
 		public readonly obstacleBehaviour = new Map<Id, boolean>(),
@@ -14,10 +15,11 @@ export class EntityValues extends BaseValues {
 		entities = new Map<Id, boolean>(),
 	) {
 		super(entities)
-		this.register(rectangularSize)
+		this.register(damage)
 		this.register(health)
 		this.register(orientation)
 		this.register(position)
+		this.register(rectangularSize)
 		this.register(velocity)
 		this.register(shipBehaviour)
 		this.register(obstacleBehaviour)
@@ -32,14 +34,16 @@ export class EntityValues extends BaseValues {
 	}
 
 	addValuesFrom(key: Id, values: GroupedEntityValues) {
-		if (values.rectangularSize !== undefined)
-			this.rectangularSize.set(key, values.rectangularSize)
+		if (values.damage !== undefined)
+			this.damage.set(key, values.damage)
 		if (values.health !== undefined)
 			this.health.set(key, values.health)
 		if (values.orientation !== undefined)
 			this.orientation.set(key, values.orientation)
 		if (values.position !== undefined)
 			this.position.set(key, values.position)
+		if (values.rectangularSize !== undefined)
+			this.rectangularSize.set(key, values.rectangularSize)
 		if (values.velocity !== undefined)
 			this.velocity.set(key, values.velocity)
 		if (values.shipBehaviour !== undefined)
@@ -52,10 +56,10 @@ export class EntityValues extends BaseValues {
 
 	groupFor(key: Id): GroupedEntityValues {
 		return {
-			rectangularSize: this.rectangularSize.get(key),
 			health: this.health.get(key),
 			orientation: this.orientation.get(key),
 			position: this.position.get(key),
+			rectangularSize: this.rectangularSize.get(key),
 			velocity: this.velocity.get(key),
 			shipBehaviour: this.shipBehaviour.get(key),
 			obstacleBehaviour: this.obstacleBehaviour.get(key),
@@ -65,11 +69,12 @@ export class EntityValues extends BaseValues {
 }
 
 export interface GroupedEntityValues {
-	rectangularSize?: RectangularSize
+	damage?: number
 	health?: number
-	position?: Vector2
-	velocity?: Vector2
 	orientation?: number
+	position?: Vector2
+	rectangularSize?: RectangularSize
+	velocity?: Vector2
 	shipBehaviour?: boolean
 	obstacleBehaviour?: boolean
 	dieOnCollisionBehaviour?: boolean

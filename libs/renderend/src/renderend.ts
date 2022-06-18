@@ -1,8 +1,10 @@
 import { BaseGame, Random } from "@lundin/age"
 import { defaultConstants, defaultValues } from "./defaults"
 import { CollisionLogic } from "./logic/collision-logic"
+import { DamageLogic } from "./logic/damage-logic"
 import { DeathLogic } from "./logic/death-logic"
 import { DifficultyLogic } from "./logic/difficulty-logic"
+import { GameOverLogic } from "./logic/game-over-logic"
 import { MoveShipLogic } from "./logic/move-ship-logic"
 import { ObstacleLogic } from "./logic/obstacle-logic"
 import { StartLogic } from "./logic/start-logic"
@@ -40,11 +42,11 @@ export class Renderend extends BaseGame<RenderendAction> {
 				entities.position.get,
 				entities.rectangularSize.get,
 				[
-					new DeathLogic(
-						state.globals,
-						entities.dieOnCollisionBehaviour.get,
-						entities.velocity.set,
-					)
+					new DamageLogic(
+						entities.damage.get,
+						entities.health.get,
+						entities.health.set,
+					),
 				],
 			),
 			new ObstacleLogic(
@@ -60,8 +62,17 @@ export class Renderend extends BaseGame<RenderendAction> {
 			new VelocityLogic(
 				entities,
 				entities.position.get,
-				entities.velocity.get,
 				entities.position.set,
+			),
+			new DeathLogic(
+				entities,
+				entities.health.get,
+				[
+					new GameOverLogic(
+						state.globals,
+						entities.shipBehaviour.get,
+					),
+				],
 			),
 			new StartLogic(
 				config.constants,
