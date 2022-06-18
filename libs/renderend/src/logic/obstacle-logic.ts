@@ -1,9 +1,10 @@
 import { GameLogic, Id, Random, RectangularSize, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
-import { Behaviour, RenderendEntities } from "../state/entity-values"
+import { Behaviour } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction } from "../state/renderend-action"
+import { RenderendEntities } from "../state/renderend-entities"
 
 export class ObstacleLogic implements GameLogic<RenderendAction> {
 	constructor(
@@ -39,7 +40,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private updateSpeed(entity: Id) {
-		this.setVelocity.setFor(entity, new Vector2(-this.globals.speed, 0))
+		this.setVelocity.for(entity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private shouldSpawnWalls() {
@@ -67,8 +68,8 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 
 	private spawnWallAt(xPos: number, yPos: number, wallSize: RectangularSize) {
 		const entity = this.entities.create(this.constants.wallType)
-		this.setPosition.setFor(entity, new Vector2(xPos + wallSize.width / 2, yPos + wallSize.height / 2))
-		this.setVelocity.setFor(entity, new Vector2(-this.globals.speed, 0))
+		this.setPosition.for(entity, new Vector2(xPos + wallSize.width / 2, yPos + wallSize.height / 2))
+		this.setVelocity.for(entity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private shouldSpawnObstacle() {
@@ -87,7 +88,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		const obstacleType = this.random.get.in(this.constants.obstacleTypes)
 		const obstacleHeight = this.rectangularSize.defaultOf(obstacleType).height
 		const entity = this.entities.create(obstacleType)
-		this.setPosition.setFor(entity, new Vector2(20 + this.random.get.float(2), 1 + this.random.get.float(7 - obstacleHeight) + obstacleHeight))
-		this.setVelocity.setFor(entity, new Vector2(-this.globals.speed, 0))
+		this.setPosition.for(entity, new Vector2(20 + this.random.get.float(2), 1 + this.random.get.float(7 - obstacleHeight) + obstacleHeight))
+		this.setVelocity.for(entity, new Vector2(-this.globals.speed, 0))
 	}
 }

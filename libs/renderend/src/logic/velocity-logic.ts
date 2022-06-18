@@ -1,7 +1,7 @@
 import { GameLogic, Id, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { Behaviour, RenderendEntities } from "../state/entity-values"
 import { RenderendAction } from "../state/renderend-action"
+import { RenderendEntities } from "../state/renderend-entities"
 
 export class VelocityLogic implements GameLogic<RenderendAction> {
 	constructor(
@@ -12,15 +12,14 @@ export class VelocityLogic implements GameLogic<RenderendAction> {
 	) { }
 
 	update() {
-		for (const entity of this.entities.with(Behaviour.Velocity))
-			this.updateEntity(entity)
+		for (const [entity, velocity] of this.entities.with2.velocity)
+			this.updateEntity(entity, velocity)
 	}
 
-	private updateEntity(entity: Id) {
-		const velocity = this.velocity.of(entity)
+	private updateEntity(entity: Id, velocity: Vector2) {
 		if (velocity.isZero())
 			return
 		const position = this.position.of(entity)
-		this.setPosition.setFor(entity, position.add(velocity))
+		this.setPosition.for(entity, position.add(velocity))
 	}
 }

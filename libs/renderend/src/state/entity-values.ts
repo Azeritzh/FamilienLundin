@@ -1,7 +1,5 @@
-import { BaseValues, EntityManager, Id, RectangularSize, ValueAccessor } from "@lundin/age"
+import { BaseValues, Id, RectangularSize } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-
-export type RenderendEntities = EntityManager<EntityValues, Behaviour>
 
 export class EntityValues extends BaseValues {
 	constructor(

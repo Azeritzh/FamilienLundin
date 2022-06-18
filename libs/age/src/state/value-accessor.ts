@@ -1,11 +1,22 @@
 import { Id, typeOf } from "./id"
 import { BaseValues } from "./base-values"
 
+export interface ValueInitialiser {
+	/** This is supposed to take the default value for the type and copy it to the entity (or rather, to the value map) */
+	initialiseValueFor(entity: Id)
+}
+
 export class ValueAccessor<T>{
 	constructor(
 		public readonly get: ValueGetter<T>,
 		public readonly set: ValueSetter<T>,
 	) { }
+
+	public initialiseValueFor(entity: Id) {
+		const defaultValue = this.get.defaultOf(entity)
+		if (defaultValue != null)
+			this.set.for(entity, defaultValue)
+	}
 }
 
 export interface ValueGetter<T> {
@@ -30,7 +41,6 @@ export class StandardValueGetter<T, GroupedEntityValues> implements ValueGetter<
 
 	public of(entity: Id) {
 		return this.entityValue.get(entity)
-			?? this.defaultOf(entity)
 	}
 
 	public defaultOf(entity: Id) {
@@ -45,7 +55,7 @@ export class ValueSetter<T>{
 		private readonly updatedEntityValue: Map<Id, T>,
 	) { }
 
-	public setFor(entity: Id, value: T) {
+	public for(entity: Id, value: T) {
 		this.updatedEntityValue.set(entity, value)
 	}
 }

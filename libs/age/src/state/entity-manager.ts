@@ -1,7 +1,10 @@
 import { BaseValues } from "./base-values"
 import { Id, typeOf } from "./id"
+import { ValueAccessor } from "./value-accessor"
 
 export class EntityManager<EntityValues extends BaseValues, BehaviourType> {
+	protected valueAccessors: ValueAccessor<any>[] = []
+
 	constructor(
 		private typeBehaviours: Map<Id, BehaviourType[]>,
 		private entityValues: EntityValues,
@@ -22,14 +25,20 @@ export class EntityManager<EntityValues extends BaseValues, BehaviourType> {
 		return this.behaviourLists.get(behaviour) ?? []
 	}
 
+	get with2(){
+		return this.entityValues
+	}
+
 	public create(type: Id) {
 		const id = this.idProvider.getNewId() | type
 		this.updatedEntityValues.entities.set(id, true)
+		for (const accessor of this.valueAccessors)
+			accessor.initialiseValueFor(id)
 		return id
 	}
 
 	public remove(...entities: Id[]) {
-		for(const entity of entities)
+		for (const entity of entities)
 			this.updatedEntityValues.entities.set(entity, false)
 	}
 
@@ -66,6 +75,6 @@ export class EntityManager<EntityValues extends BaseValues, BehaviourType> {
 	}
 }
 
-interface IdProvider {
+export interface IdProvider {
 	getNewId(): Id
 }

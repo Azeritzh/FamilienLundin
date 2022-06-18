@@ -1,7 +1,7 @@
 import { Box, GameLogic, Id, RectangularSize, ValueGetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { Behaviour, RenderendEntities } from "../state/entity-values"
 import { RenderendAction } from "../state/renderend-action"
+import { RenderendEntities } from "../state/renderend-entities"
 
 export class CollisionLogic implements GameLogic<RenderendAction> {
 	constructor(
@@ -13,7 +13,7 @@ export class CollisionLogic implements GameLogic<RenderendAction> {
 
 	update() {
 		for (const entity of this.entities)
-			for (const otherEntity of this.entities.with(Behaviour.HasRectangularSize))
+			for (const [otherEntity] of this.entities.with2.rectangularSize)
 				if (this.collides(entity, otherEntity))
 					this.notify(entity, otherEntity)
 	}

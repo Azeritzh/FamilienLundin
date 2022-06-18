@@ -1,9 +1,10 @@
 import { GameLogic, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
-import { Behaviour, RenderendEntities } from "../state/entity-values"
+import { Behaviour } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { MoveShipAction, RenderendAction } from "../state/renderend-action"
+import { RenderendEntities } from "../state/renderend-entities"
 
 export class MoveShipLogic implements GameLogic<RenderendAction> {
 	constructor(
@@ -36,7 +37,7 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 				finalVelocity.set(0, finalVelocity.y)
 			if (position.x > 10 && finalVelocity.x > 0)
 				finalVelocity.set(0, finalVelocity.y)
-			this.setVelocity.setFor(entity, finalVelocity)
+			this.setVelocity.for(entity, finalVelocity)
 		}
 	}
 }

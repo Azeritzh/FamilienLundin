@@ -16,7 +16,7 @@ export class DeathLogic implements CollisionListener {
 			return
 		this.globals.speed = 0
 		this.globals.isAlive = false
-		this.setVelocity.setFor(entity, new Vector2(0, 0))
+		this.setVelocity.for(entity, new Vector2(0, 0))
 	}
 
 	private hasBehaviour(entity: Id, behaviour: Behaviour) { // TODO: there should be a value accessor

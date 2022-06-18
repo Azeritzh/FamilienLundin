@@ -1,5 +1,4 @@
-import { BaseGame, EntityManager, Random, ValueAccessBuilder } from "@lundin/age"
-import { Vector2 } from "@lundin/utility"
+import { BaseGame, Random } from "@lundin/age"
 import { defaultConstants, defaultValues } from "./defaults"
 import { CollisionLogic } from "./logic/collision-logic"
 import { DeathLogic } from "./logic/death-logic"
@@ -14,6 +13,7 @@ import { EntityValues } from "./state/entity-values"
 import { Globals } from "./state/globals"
 import { RenderendAction } from "./state/renderend-action"
 import { RenderendChanges } from "./state/renderend-changes"
+import { RenderendEntities } from "./state/renderend-entities"
 import { RenderendState } from "./state/renderend-state"
 
 export class Renderend extends BaseGame<RenderendAction> {
@@ -21,8 +21,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 		public readonly config = RenderendConfig.from(defaultConstants, defaultValues),
 		public readonly state = new RenderendState(new Globals(), new EntityValues()),
 		readonly changes = new RenderendChanges(new EntityValues()),
-		public readonly entities = new EntityManager(config.typeBehaviours, state.entityValues, changes.updatedEntityValues, state),
-		public readonly access = new Access(config, state, changes),
+		public readonly entities = new RenderendEntities(config.typeValues, config.typeBehaviours, state.entityValues, changes.updatedEntityValues, state),
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
 	) {
 		super([ // Order depends on usage of globals variables and priority of changes to same values
@@ -33,18 +32,18 @@ export class Renderend extends BaseGame<RenderendAction> {
 				config.constants,
 				state.globals,
 				entities,
-				access.position.get,
-				access.velocity.set,
+				entities.position.get,
+				entities.velocity.set,
 			),
 			new CollisionLogic(
 				entities,
-				access.position.get,
-				access.rectangularSize.get,
+				entities.position.get,
+				entities.rectangularSize.get,
 				[
 					new DeathLogic(
 						config.typeBehaviours,
 						state.globals,
-						access.velocity.set,
+						entities.velocity.set,
 					)
 				],
 			),
@@ -52,40 +51,26 @@ export class Renderend extends BaseGame<RenderendAction> {
 				config.constants,
 				state.globals,
 				entities,
-				access.position.get,
-				access.rectangularSize.get,
-				access.position.set,
-				access.velocity.set,
+				entities.position.get,
+				entities.rectangularSize.get,
+				entities.position.set,
+				entities.velocity.set,
 				random,
 			),
 			new VelocityLogic(
 				entities,
-				access.position.get,
-				access.velocity.get,
-				access.position.set,
+				entities.position.get,
+				entities.velocity.get,
+				entities.position.set,
 			),
 			new StartLogic(
 				config.constants,
 				changes,
 				state.globals,
 				entities,
-				access.position.set,
+				entities.position.set,
 			),
 			new UpdateStateLogic(state, entities),
 		])
 	}
-}
-
-class Access {
-	constructor(
-		config: RenderendConfig,
-		state: RenderendState,
-		changes: RenderendChanges,
-		accessor = new ValueAccessBuilder(config.typeValues, state.entityValues, changes.updatedEntityValues),
-		public readonly rectangularSize = accessor.for(x => x.rectangularSize, x => x.rectangularSize),
-		public readonly health = accessor.for(x => x.health, x => x.health),
-		public readonly orientation = accessor.for(x => x.orientation, x => x.orientation, 0),
-		public readonly position = accessor.for(x => x.position, x => x.position),
-		public readonly velocity = accessor.for(x => x.velocity, x => x.velocity, new Vector2(0, 0)),
-	) { }
 }
