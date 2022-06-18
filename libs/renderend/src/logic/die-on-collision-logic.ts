@@ -1,6 +1,6 @@
-import { Box, GameLogic, Id, RectangularSize } from "@lundin/age"
+import { Box, GameLogic, Id, RectangularSize, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
+import { Behaviour, RenderendEntities } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction } from "../state/renderend-action"
 
@@ -8,9 +8,9 @@ export class DieOnCollisionLogic implements GameLogic<RenderendAction> {
 	constructor(
 		private globals: Globals,
 		private entities: RenderendEntities,
-		private position: RenderendEntityValues<Vector2>,
-		private rectangularSize: RenderendEntityValues<RectangularSize>,
-		private velocity: RenderendEntityValues<Vector2>,
+		private position: ValueGetter<Vector2>,
+		private rectangularSize: ValueGetter<RectangularSize>,
+		private setVelocity: ValueSetter<Vector2>,
 	) { }
 
 	update() {
@@ -23,7 +23,7 @@ export class DieOnCollisionLogic implements GameLogic<RenderendAction> {
 			return
 		this.globals.speed = 0
 		this.globals.isAlive = false
-		this.velocity.setFor(entity, new Vector2(0, 0))
+		this.setVelocity.setFor(entity, new Vector2(0, 0))
 	}
 
 	private hasCollision(entity: Id) {

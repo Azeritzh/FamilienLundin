@@ -1,7 +1,20 @@
 import { Id, typeOf } from "./id"
 import { BaseValues } from "./base-values"
 
-export class ValueAccessor<T, GroupedEntityValues>{
+export class ValueAccessor<T>{
+	constructor(
+		public readonly get: ValueGetter<T>,
+		public readonly set: ValueSetter<T>,
+	) { }
+}
+
+export interface ValueGetter<T> {
+	currentlyOf(entity: Id): T
+	of(entity: Id): T
+	defaultOf(entity: Id): T
+}
+
+export class StandardValueGetter<T, GroupedEntityValues> implements ValueGetter<T> {
 	constructor(
 		private readonly typeValues: Map<Id, GroupedEntityValues>,
 		private readonly entityValue: Map<Id, T>,
@@ -9,23 +22,6 @@ export class ValueAccessor<T, GroupedEntityValues>{
 		private readonly getTypeValue: (collection: GroupedEntityValues) => T,
 		private readonly defaultValue: T = undefined
 	) { }
-
-	public static for<EntityValues extends BaseValues, GroupedEntityValues, T>(
-		typeValues: Map<Id, GroupedEntityValues>,
-		entityValues: EntityValues,
-		updatedEntityValues: EntityValues,
-		getValueMap: (collection: EntityValues) => Map<Id, T>,
-		getTypeValue: (collection: GroupedEntityValues) => T,
-		defaultValue: T = undefined,
-	) {
-		return new ValueAccessor(
-			typeValues,
-			getValueMap(entityValues),
-			getValueMap(updatedEntityValues),
-			getTypeValue,
-			defaultValue,
-		)
-	}
 
 	public currentlyOf(entity: Id) {
 		return this.updatedEntityValue.get(entity)
@@ -42,6 +38,12 @@ export class ValueAccessor<T, GroupedEntityValues>{
 		return this.getTypeValue(this.typeValues.get(type))
 			?? this.defaultValue
 	}
+}
+
+export class ValueSetter<T>{
+	constructor(
+		private readonly updatedEntityValue: Map<Id, T>,
+	) { }
 
 	public setFor(entity: Id, value: T) {
 		this.updatedEntityValue.set(entity, value)
@@ -61,11 +63,14 @@ export class ValueAccessBuilder<EntityValues extends BaseValues, GroupedEntityVa
 		defaultValue: T = undefined,
 	) {
 		return new ValueAccessor(
-			this.typeValues,
-			getValueMap(this.entityValues),
-			getValueMap(this.updatedEntityValues),
-			getTypeValue,
-			defaultValue,
+			new StandardValueGetter(
+				this.typeValues,
+				getValueMap(this.entityValues),
+				getValueMap(this.updatedEntityValues),
+				getTypeValue,
+				defaultValue,
+			),
+			new ValueSetter(getValueMap(this.updatedEntityValues)),
 		)
 	}
 }

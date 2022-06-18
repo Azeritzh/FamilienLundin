@@ -1,13 +1,14 @@
-import { GameLogic, Id } from "@lundin/age"
+import { GameLogic, Id, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
+import { Behaviour, RenderendEntities } from "../state/entity-values"
 import { RenderendAction } from "../state/renderend-action"
 
 export class VelocityLogic implements GameLogic<RenderendAction> {
 	constructor(
 		private entities: RenderendEntities,
-		private position: RenderendEntityValues<Vector2>,
-		private velocity: RenderendEntityValues<Vector2>,
+		private position: ValueGetter<Vector2>,
+		private velocity: ValueGetter<Vector2>,
+		private setPosition: ValueSetter<Vector2>,
 	) { }
 
 	update() {
@@ -20,6 +21,6 @@ export class VelocityLogic implements GameLogic<RenderendAction> {
 		if (velocity.isZero())
 			return
 		const position = this.position.of(entity)
-		this.position.setFor(entity, position.add(velocity))
+		this.setPosition.setFor(entity, position.add(velocity))
 	}
 }

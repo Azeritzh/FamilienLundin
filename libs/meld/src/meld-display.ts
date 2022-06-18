@@ -60,8 +60,8 @@ export class MeldDisplay implements BaseDisplay {
 	}
 
 	private currentPositionOf(entity: Id) {
-		const position = this.game.access.position.of(entity)
-		const velocity = this.game.access.velocity.of(entity)
+		const position = this.game.access.position.get.of(entity)
+		const velocity = this.game.access.velocity.get.of(entity)
 		if (!velocity)
 			return position
 		return position.add(velocity.multiply(this.fractionOfTick))

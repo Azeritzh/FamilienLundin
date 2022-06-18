@@ -1,7 +1,7 @@
-import { GameLogic } from "@lundin/age"
+import { GameLogic, ValueSetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
-import { RenderendEntities, RenderendEntityValues } from "../state/entity-values"
+import { RenderendEntities } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction, StartGameAction } from "../state/renderend-action"
 import { RenderendChanges } from "../state/renderend-changes"
@@ -12,7 +12,7 @@ export class StartLogic implements GameLogic<RenderendAction> {
 		private changes: RenderendChanges,
 		private globals: Globals,
 		private entities: RenderendEntities,
-		private position: RenderendEntityValues<Vector2>,
+		private setPosition: ValueSetter<Vector2>,
 	) { }
 
 	update(actions: RenderendAction[]) {
@@ -42,6 +42,6 @@ export class StartLogic implements GameLogic<RenderendAction> {
 
 	private spawnPlayerShip() {
 		const entity = this.entities.create(this.constants.shipType)
-		this.position.setFor(entity, new Vector2(1, 5))
+		this.setPosition.setFor(entity, new Vector2(1, 5))
 	}
 }

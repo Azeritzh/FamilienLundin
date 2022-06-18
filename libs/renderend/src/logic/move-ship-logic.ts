@@ -1,7 +1,7 @@
-import { GameLogic } from "@lundin/age"
+import { GameLogic, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
-import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
+import { Behaviour, RenderendEntities } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { MoveShipAction, RenderendAction } from "../state/renderend-action"
 
@@ -10,8 +10,8 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 		private constants: RenderendConstants,
 		private globals: Globals,
 		private entities: RenderendEntities,
-		private position: RenderendEntityValues<Vector2>,
-		private velocity: RenderendEntityValues<Vector2>,
+		private position: ValueGetter<Vector2>,
+		private setVelocity: ValueSetter<Vector2>,
 	) { }
 
 	update(actions: RenderendAction[]) {
@@ -36,7 +36,7 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 				finalVelocity.set(0, finalVelocity.y)
 			if (position.x > 10 && finalVelocity.x > 0)
 				finalVelocity.set(0, finalVelocity.y)
-			this.velocity.setFor(entity, finalVelocity)
+			this.setVelocity.setFor(entity, finalVelocity)
 		}
 	}
 }

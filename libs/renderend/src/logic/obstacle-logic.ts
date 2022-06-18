@@ -1,7 +1,7 @@
-import { GameLogic, Id, Random, RectangularSize } from "@lundin/age"
+import { GameLogic, Id, Random, RectangularSize, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendConstants } from "../renderend-constants"
-import { Behaviour, RenderendEntities, RenderendEntityValues } from "../state/entity-values"
+import { Behaviour, RenderendEntities } from "../state/entity-values"
 import { Globals } from "../state/globals"
 import { RenderendAction } from "../state/renderend-action"
 
@@ -10,9 +10,10 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		private constants: RenderendConstants,
 		private globals: Globals,
 		private entities: RenderendEntities,
-		private position: RenderendEntityValues<Vector2>,
-		private velocity: RenderendEntityValues<Vector2>,
-		private rectangularSize: RenderendEntityValues<RectangularSize>,
+		private position: ValueGetter<Vector2>,
+		private rectangularSize: ValueGetter<RectangularSize>,
+		private setPosition: ValueSetter<Vector2>,
+		private setVelocity: ValueSetter<Vector2>,
 		private random: Random,
 	) { }
 
@@ -38,7 +39,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private updateSpeed(entity: Id) {
-		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
+		this.setVelocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private shouldSpawnWalls() {
@@ -66,8 +67,8 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 
 	private spawnWallAt(xPos: number, yPos: number, wallSize: RectangularSize) {
 		const entity = this.entities.create(this.constants.wallType)
-		this.position.setFor(entity, new Vector2(xPos + wallSize.width / 2, yPos + wallSize.height / 2))
-		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
+		this.setPosition.setFor(entity, new Vector2(xPos + wallSize.width / 2, yPos + wallSize.height / 2))
+		this.setVelocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private shouldSpawnObstacle() {
@@ -86,7 +87,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		const obstacleType = this.random.get.in(this.constants.obstacleTypes)
 		const obstacleHeight = this.rectangularSize.defaultOf(obstacleType).height
 		const entity = this.entities.create(obstacleType)
-		this.position.setFor(entity, new Vector2(20 + this.random.get.float(2), 1 + this.random.get.float(7 - obstacleHeight) + obstacleHeight))
-		this.velocity.setFor(entity, new Vector2(-this.globals.speed, 0))
+		this.setPosition.setFor(entity, new Vector2(20 + this.random.get.float(2), 1 + this.random.get.float(7 - obstacleHeight) + obstacleHeight))
+		this.setVelocity.setFor(entity, new Vector2(-this.globals.speed, 0))
 	}
 }
