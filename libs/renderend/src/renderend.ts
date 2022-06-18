@@ -1,7 +1,8 @@
-import { BaseGame, EntityManager, Random, ValueAccessBuilder, ValueAccessor } from "@lundin/age"
+import { BaseGame, EntityManager, Random, ValueAccessBuilder } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { defaultConstants, defaultValues } from "./defaults"
-import { DieOnCollisionLogic } from "./logic/die-on-collision-logic"
+import { CollisionLogic } from "./logic/collision-logic"
+import { DeathLogic } from "./logic/death-logic"
 import { DifficultyLogic } from "./logic/difficulty-logic"
 import { MoveShipLogic } from "./logic/move-ship-logic"
 import { ObstacleLogic } from "./logic/obstacle-logic"
@@ -25,12 +26,51 @@ export class Renderend extends BaseGame<RenderendAction> {
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
 	) {
 		super([ // Order depends on usage of globals variables and priority of changes to same values
-			new DifficultyLogic(state.globals),
-			new MoveShipLogic(config.constants, state.globals, entities, access.position.get, access.velocity.set),
-			new DieOnCollisionLogic(state.globals, entities, access.position.get, access.rectangularSize.get, access.velocity.set),
-			new ObstacleLogic(config.constants, state.globals, entities, access.position.get, access.rectangularSize.get, access.position.set, access.velocity.set, random),
-			new VelocityLogic(entities, access.position.get, access.velocity.get, access.position.set),
-			new StartLogic(config.constants, changes, state.globals, entities, access.position.set),
+			new DifficultyLogic(
+				state.globals,
+			),
+			new MoveShipLogic(
+				config.constants,
+				state.globals,
+				entities,
+				access.position.get,
+				access.velocity.set,
+			),
+			new CollisionLogic(
+				entities,
+				access.position.get,
+				access.rectangularSize.get,
+				[
+					new DeathLogic(
+						config.typeBehaviours,
+						state.globals,
+						access.velocity.set,
+					)
+				],
+			),
+			new ObstacleLogic(
+				config.constants,
+				state.globals,
+				entities,
+				access.position.get,
+				access.rectangularSize.get,
+				access.position.set,
+				access.velocity.set,
+				random,
+			),
+			new VelocityLogic(
+				entities,
+				access.position.get,
+				access.velocity.get,
+				access.position.set,
+			),
+			new StartLogic(
+				config.constants,
+				changes,
+				state.globals,
+				entities,
+				access.position.set,
+			),
 			new UpdateStateLogic(state, entities),
 		])
 	}
