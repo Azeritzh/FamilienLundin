@@ -94,6 +94,8 @@ export class RenderendDisplay {
 	}
 
 	show(fractionOfTick = 0) {
+		if (this.display.isLoading())
+			return
 		this.fractionOfTick = fractionOfTick
 		this.display.startFrame()
 		this.drawBackground()

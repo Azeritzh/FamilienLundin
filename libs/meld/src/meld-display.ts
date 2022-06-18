@@ -42,6 +42,8 @@ export class MeldDisplay implements BaseDisplay {
 	}
 
 	show(fractionOfTick = 0) {
+		if (this.display.isLoading())
+			return
 		this.fractionOfTick = fractionOfTick
 		this.display.startFrame()
 		for (const entity of this.game.entities)

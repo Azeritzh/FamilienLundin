@@ -14,6 +14,7 @@ export class WebGl2Display {
 		private worldSpaceMatrix = buildWorldSpaceMatrix(canvas.width, canvas.height, virtualScreenHeight),
 		private spriteFactory = new SpriteFactory(gl, standardShader, tileSize, worldSpaceMatrix),
 		private sprites: { [index: string]: Sprite } = {},
+		private loadingSprites: string[] = []
 	) {
 		this.gl.enable(this.gl.BLEND)
 	}
@@ -58,7 +59,13 @@ export class WebGl2Display {
 		centerX = width / 2,
 		centerY = height / 2,
 	) {
+		this.loadingSprites.push(name)
 		this.sprites[name] = await this.spriteFactory.createSprite(path, width, height, centerX, centerY)
+		this.loadingSprites.splice(this.loadingSprites.indexOf(name), 1)
+	}
+
+	public isLoading() {
+		return this.loadingSprites.length > 0
 	}
 }
 
