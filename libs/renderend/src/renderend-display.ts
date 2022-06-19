@@ -119,19 +119,30 @@ export class RenderendDisplay {
 	}
 
 	private drawEntity(entity: Id) {
+		if (typeOf(entity) === this.game.config.constants.shipType)
+			this.drawShip(entity)
+		else
+			this.drawGeneralEntity(entity)
+	}
+
+	private drawGeneralEntity(entity: Id) {
 		const pos = this.currentPositionOf(entity)
-		const sprite = this.getSpriteName(entity)
+		const sprite = this.game.config.typeMap.typeFor(typeOf(entity))
 		this.display.drawSprite(sprite, pos.x, pos.y, 0, 0)
 	}
 
-	private getSpriteName(entity: Id) {
-		const entityType = this.game.config.typeMap.typeFor(typeOf(entity))
-		if (entityType !== "ship")
-			return entityType
-		switch(this.game.entities.health.get.of(entity)){
-			case 3: return "ship-full-shields"
-			case 2: return "ship-half-shields"
-			default: return "ship-no-shields"
+	private drawShip(entity: Id) {
+		const pos = this.currentPositionOf(entity)
+		this.display.drawSprite("ship", pos.x, pos.y, 0, 0)
+		const shields = this.shieldSpriteFor(entity)
+		if (shields)
+			this.display.drawSprite(shields, pos.x, pos.y, 0, 0)
+	}
+
+	private shieldSpriteFor(entity: Id) {
+		switch (this.game.entities.health.get.of(entity)) {
+			case 3: return "full-shield"
+			case 2: return "half-shield"
 		}
 	}
 

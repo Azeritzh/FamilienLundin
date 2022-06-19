@@ -36,18 +36,18 @@ export const defaultDisplayConfig: DisplayConfig = {
 	font: "Vt323",
 	assetFolder: "assets/",
 	sprites: {
-		"ship-full-shields": {
-			url: "ship-full-shields.png",
+		"full-shield": {
+			url: "full-shield.png",
 			width: 20,
 			height: 20,
 		},
-		"ship-half-shields": {
-			url: "ship-half-shields.png",
+		"half-shield": {
+			url: "half-shield.png",
 			width: 20,
 			height: 20,
 		},
-		"ship-no-shields": {
-			url: "ship-no-shields.png",
+		"ship": {
+			url: "ship.png",
 			width: 20,
 			height: 20,
 		},
