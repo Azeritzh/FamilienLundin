@@ -28,6 +28,8 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 			this.spawnNextWallSegment()
 		if (this.shouldSpawnObstacle())
 			this.spawnObstacle()
+		if (this.shouldSpawnAnnoyingObstacle())
+			this.spawnAnnoyingObstacle()
 	}
 
 	private shouldDespawn(entity: Id) {
@@ -89,5 +91,21 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		const entity = this.entities.create(obstacleType)
 		this.setPosition.for(entity, new Vector2(20 + this.random.get.float(2), 1 + this.random.get.float(7 - obstacleHeight) + obstacleHeight))
 		this.setVelocity.for(entity, new Vector2(-this.globals.speed, 0))
+	}
+
+	private shouldSpawnAnnoyingObstacle() {
+		return this.globals.tick % 105 === 0
+	}
+
+	private spawnAnnoyingObstacle() {
+		const obstacleType = this.random.get.in(this.constants.obstacleTypes)
+		const entity = this.entities.create(obstacleType)
+		this.setPosition.for(entity, new Vector2(20 + this.random.get.float(2), this.getShipHeight()))
+		this.setVelocity.for(entity, new Vector2(-this.globals.speed, 0))
+	}
+
+	private getShipHeight() {
+		for (const [ship] of this.entities.with.shipBehaviour)
+			return this.position.of(ship).y
 	}
 }

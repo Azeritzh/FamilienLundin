@@ -10,7 +10,7 @@ export class RenderendDisplay {
 	private get gameWidthInTiles() { return this.canvas.width / this.screenPixelsPerTile }
 	private readonly gamePixelsPerTile = 16
 	private screenPixelsPerTile = 100
-	private backgroundWidthInTiles = 220 / this.gamePixelsPerTile
+	private backgroundWidthInTiles = 450 / this.gamePixelsPerTile
 	private fractionOfTick = 0
 
 	constructor(
