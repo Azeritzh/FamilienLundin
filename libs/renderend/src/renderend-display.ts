@@ -32,7 +32,7 @@ export class RenderendDisplay {
 	private setupDisplay() {
 		this.display = new WebGl2Display(this.canvas, this.gamePixelsPerTile, this.gameHeightInTiles * this.gamePixelsPerTile)
 		for (const [name, sprite] of Object.entries(this.config.sprites))
-			this.display.addSprite(name, sprite.url, sprite.width, sprite.height, sprite.centerX, sprite.centerY)
+			this.display.addSprite(name, this.config.assetFolder + sprite.url, sprite.width, sprite.height, sprite.centerX, sprite.centerY)
 		this.setupTextElements()
 	}
 
@@ -120,8 +120,19 @@ export class RenderendDisplay {
 
 	private drawEntity(entity: Id) {
 		const pos = this.currentPositionOf(entity)
-		const sprite = this.game.config.typeMap.typeFor(typeOf(entity))
+		const sprite = this.getSpriteName(entity)
 		this.display.drawSprite(sprite, pos.x, pos.y, 0, 0)
+	}
+
+	private getSpriteName(entity: Id) {
+		const entityType = this.game.config.typeMap.typeFor(typeOf(entity))
+		if (entityType !== "ship")
+			return entityType
+		switch(this.game.entities.health.get.of(entity)){
+			case 3: return "ship-full-shields"
+			case 2: return "ship-half-shields"
+			default: return "ship-no-shields"
+		}
 	}
 
 	private currentPositionOf(entity: Id) {
@@ -146,6 +157,7 @@ export class RenderendDisplay {
 
 export interface DisplayConfig {
 	font: string,
+	assetFolder: string,
 	sprites: {
 		[index: string]: {
 			url: string,

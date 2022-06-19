@@ -1,4 +1,5 @@
 import { RectangularSize } from "@lundin/age"
+import { DisplayConfig } from "./renderend-display"
 
 export const defaultConstants = {
 	shipType: "ship",
@@ -28,5 +29,49 @@ export const defaultValues = {
 		rectangularSize: new RectangularSize(2, 2),
 		obstacleBehaviour: true,
 		damage: 3,
+	},
+}
+
+export const defaultDisplayConfig: DisplayConfig = {
+	font: "Vt323",
+	assetFolder: "assets/",
+	sprites: {
+		"ship-full-shields": {
+			url: "ship-full-shields.png",
+			width: 20,
+			height: 20,
+		},
+		"ship-half-shields": {
+			url: "ship-half-shields.png",
+			width: 20,
+			height: 20,
+		},
+		"ship-no-shields": {
+			url: "ship-no-shields.png",
+			width: 20,
+			height: 20,
+		},
+		"wall": {
+			url: "wall.png",
+			width: 16,
+			height: 16,
+		},
+		"obstacle": {
+			url: "obstacle.png",
+			width: 16,
+			height: 16,
+		},
+		"big-obstacle": {
+			url: "big-obstacle.png",
+			width: 32,
+			height: 32,
+		},
+		"background": {
+			url: "starry-background.png",
+			width: 220,
+			height: 160,
+			centerX: 0,
+			centerY: 0,
+		},
 	},
 }

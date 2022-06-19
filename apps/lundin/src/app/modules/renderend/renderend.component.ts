@@ -1,6 +1,6 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core"
 import { GameRunner } from "@lundin/age"
-import { DisplayConfig, Renderend, RenderendDisplay, RenderendInput } from "@lundin/renderend"
+import { defaultDisplayConfig, Renderend, RenderendDisplay, RenderendInput } from "@lundin/renderend"
 
 @Component({
 	selector: "lundin-renderend",
@@ -15,7 +15,7 @@ export class RenderendComponent implements OnInit {
 
 	ngOnInit() {
 		const renderend = new Renderend()
-		const display = new RenderendDisplay(displayConfig, renderend, this.gameHost.nativeElement)
+		const display = new RenderendDisplay({...defaultDisplayConfig, assetFolder: "assets/images/renderend/"}, renderend, this.gameHost.nativeElement)
 		const input = new RenderendInput(display.canvas)
 		this.game = new GameRunner(display, input, renderend)
 
@@ -36,37 +36,4 @@ export class RenderendComponent implements OnInit {
 			this.gameHost.nativeElement.clientHeight,
 		)
 	}
-}
-
-const displayConfig: DisplayConfig = {
-	font: "Vt323",
-	sprites: {
-		"ship": {
-			url: "assets/images/renderend/ship.png",
-			width: 16,
-			height: 16,
-		},
-		"wall": {
-			url: "assets/images/renderend/wall.png",
-			width: 16,
-			height: 16,
-		},
-		"obstacle": {
-			url: "assets/images/renderend/obstacle.png",
-			width: 16,
-			height: 16,
-		},
-		"big-obstacle": {
-			url: "assets/images/renderend/big-obstacle.png",
-			width: 32,
-			height: 32,
-		},
-		"background": {
-			url: "assets/images/renderend/starry-background.png",
-			width: 220,
-			height: 160,
-			centerX: 0,
-			centerY: 0,
-		},
-	},
 }
