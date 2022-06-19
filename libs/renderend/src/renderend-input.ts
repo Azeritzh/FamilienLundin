@@ -17,7 +17,9 @@ export class RenderendInput extends BaseInput<RenderendAction> {
 	}
 
 	private getMoveAction(inputState: InputState) {
+		const factor = this.stateFor(inputState, "Shift", "Control", "PadB") ? 0.5 : 1
 		const velocity = new Vector2(this.getVelocityX(inputState), this.getVelocityY(inputState))
+			.multiply(factor)
 		if (!velocity.isZero())
 			return new MoveShipAction(velocity)
 	}
