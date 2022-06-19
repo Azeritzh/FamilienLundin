@@ -49,6 +49,7 @@ export class KeyStates {
 	}
 
 	getInputState() {
+		this.updateGamePadStates()
 		const state = { ...this.pollableState }
 		for (const key in this.pollableState) {
 			const state = this.isPressed[key]
@@ -60,6 +61,29 @@ export class KeyStates {
 
 	private hasAlreadyBeenUnpressed(key: string) {
 		return this.inputChanges[key] && !this.isPressed[key]
+	}
+
+	private updateGamePadStates() {
+		const gamepad = navigator.getGamepads()?.[0]
+		if (!gamepad)
+			return
+		this.pollableState["PadUp"] = (gamepad.axes[9] < -0.7 || (0.8 < gamepad.axes[9] && gamepad.axes[9] < 1.1))
+			? { hasChanged: true, state: true }
+			: { hasChanged: true, state: false }
+		this.pollableState["PadRight"] = (-0.8 < gamepad.axes[9] && gamepad.axes[9] < 0)
+			? { hasChanged: true, state: true }
+			: { hasChanged: true, state: false }
+		this.pollableState["PadDown"] = (-0.2 < gamepad.axes[9] && gamepad.axes[9] < 0.5)
+			? { hasChanged: true, state: true }
+			: { hasChanged: true, state: false }
+		this.pollableState["PadLeft"] = (0.4 < gamepad.axes[9] && gamepad.axes[9] < 1.1)
+			? { hasChanged: true, state: true }
+			: { hasChanged: true, state: false }
+		this.pollableState["PadStart"] = { hasChanged: true, state: gamepad.buttons[9].pressed }
+		this.pollableState["PadA"] = { hasChanged: true, state: gamepad.buttons[1].pressed }
+		this.pollableState["PadB"] = { hasChanged: true, state: gamepad.buttons[0].pressed }
+		this.pollableState["PadX"] = { hasChanged: true, state: gamepad.buttons[3].pressed }
+		this.pollableState["PadY"] = { hasChanged: true, state: gamepad.buttons[2].pressed }
 	}
 }
 

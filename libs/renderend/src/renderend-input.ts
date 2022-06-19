@@ -23,23 +23,23 @@ export class RenderendInput extends BaseInput<RenderendAction> {
 	}
 
 	private getVelocityY(inputState: InputState) {
-		if (this.stateFor(inputState, "w", "ArrowUp"))
+		if (this.stateFor(inputState, "w", "ArrowUp", "PadUp"))
 			return -1
-		if (this.stateFor(inputState, "s", "ArrowDown"))
+		if (this.stateFor(inputState, "s", "ArrowDown", "PadDown"))
 			return 1
 		return 0
 	}
 
 	private getVelocityX(inputState: InputState) {
-		if (this.stateFor(inputState, "a", "ArrowLeft"))
+		if (this.stateFor(inputState, "a", "ArrowLeft", "PadLeft"))
 			return -1
-		if (this.stateFor(inputState, "d", "ArrowRight"))
+		if (this.stateFor(inputState, "d", "ArrowRight", "PadRight"))
 			return 1
 		return 0
 	}
 
 	private getRestartAction(inputState: InputState) {
-		const restart = this.stateFor(inputState, "Enter", "Escape")
+		const restart = this.stateFor(inputState, "Enter", "Escape", "PadStart")
 		if (restart)
 			return new StartGameAction()
 	}
