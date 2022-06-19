@@ -40,11 +40,17 @@ export const defaultDisplayConfig: DisplayConfig = {
 			url: "full-shield.png",
 			width: 20,
 			height: 20,
+			framesX: 4,
+			framesY: 1,
+			frameInterval: 5,
 		},
 		"half-shield": {
 			url: "half-shield.png",
 			width: 20,
 			height: 20,
+			framesX: 4,
+			framesY: 1,
+			frameInterval: 5,
 		},
 		"ship": {
 			url: "ship.png",

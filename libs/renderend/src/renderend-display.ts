@@ -1,6 +1,7 @@
 import { Id, typeOf } from "@lundin/age"
 import { Renderend } from "./renderend"
 import { WebGl2Display } from "@lundin/web-gl-display"
+import { Vector2 } from "@lundin/utility"
 
 export class RenderendDisplay {
 	public canvas: HTMLCanvasElement
@@ -107,9 +108,9 @@ export class RenderendDisplay {
 
 	private drawBackground() {
 		const offset = this.backgroundBasePosition() % this.backgroundWidthInTiles
-		this.display.drawSprite("background", offset, 0, 0, 0)
-		this.display.drawSprite("background", offset + this.backgroundWidthInTiles, 0, 0, 0)
-		this.display.drawSprite("background", offset + this.backgroundWidthInTiles * 2, 0, 0, 0)
+		this.drawSprite("background", new Vector2(offset, 0))
+		this.drawSprite("background", new Vector2(offset + this.backgroundWidthInTiles, 0))
+		this.drawSprite("background", new Vector2(offset + this.backgroundWidthInTiles * 2, 0))
 	}
 
 	private backgroundBasePosition() {
@@ -126,17 +127,17 @@ export class RenderendDisplay {
 	}
 
 	private drawGeneralEntity(entity: Id) {
-		const pos = this.currentPositionOf(entity)
+		const position = this.currentPositionOf(entity)
 		const sprite = this.game.config.typeMap.typeFor(typeOf(entity))
-		this.display.drawSprite(sprite, pos.x, pos.y, 0, 0)
+		this.drawSprite(sprite, position)
 	}
 
 	private drawShip(entity: Id) {
-		const pos = this.currentPositionOf(entity)
-		this.display.drawSprite("ship", pos.x, pos.y, 0, 0)
+		const position = this.currentPositionOf(entity)
+		this.drawSprite("ship", position)
 		const shields = this.shieldSpriteFor(entity)
 		if (shields)
-			this.display.drawSprite(shields, pos.x, pos.y, 0, 0)
+			this.drawSprite(shields, position)
 	}
 
 	private shieldSpriteFor(entity: Id) {
@@ -152,6 +153,19 @@ export class RenderendDisplay {
 		if (!velocity)
 			return position
 		return position.add(velocity.multiply(this.fractionOfTick))
+	}
+
+	private drawSprite(sprite: string, position: Vector2) {
+		const config = this.config.sprites[sprite]
+		if (!config.frameInterval)
+			return this.display.drawSprite(sprite, position.x, position.y, 0, 0)
+		const width = config.framesX ?? 1
+		const height = config.framesY ?? 1
+		const numberOfFrames = width * height
+		const frameIndex = Math.floor(this.game.state.globals.tick / config.frameInterval) % numberOfFrames
+		const frameX = frameIndex % width
+		const frameY = Math.floor(frameIndex / height)
+		this.display.drawSprite(sprite, position.x, position.y, frameX, frameY)
 	}
 
 	private writeText() {
@@ -176,6 +190,9 @@ export interface DisplayConfig {
 			height?: number,
 			centerX?: number,
 			centerY?: number,
+			framesX?: number,
+			framesY?: number,
+			frameInterval?: number,
 		}
 	}
 }
