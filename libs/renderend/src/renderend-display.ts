@@ -134,10 +134,10 @@ export class RenderendDisplay {
 
 	private drawShip(entity: Id) {
 		const position = this.currentPositionOf(entity)
-		this.drawSprite("ship", position)
 		const shields = this.shieldSpriteFor(entity)
 		if (shields)
 			this.drawSprite(shields, position)
+		this.drawSprite("ship", position)
 	}
 
 	private shieldSpriteFor(entity: Id) {
@@ -164,7 +164,7 @@ export class RenderendDisplay {
 		const numberOfFrames = width * height
 		const frameIndex = Math.floor(this.game.state.globals.tick / config.frameInterval) % numberOfFrames
 		const frameX = frameIndex % width
-		const frameY = Math.floor(frameIndex / height)
+		const frameY = Math.floor(frameIndex / width) % height
 		this.display.drawSprite(sprite, position.x, position.y, frameX, frameY)
 	}
 

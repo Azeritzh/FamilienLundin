@@ -56,6 +56,9 @@ export const defaultDisplayConfig: DisplayConfig = {
 			url: "ship.png",
 			width: 20,
 			height: 20,
+			framesX: 4,
+			framesY: 2,
+			frameInterval: 3,
 		},
 		"wall": {
 			url: "wall.png",
@@ -66,6 +69,14 @@ export const defaultDisplayConfig: DisplayConfig = {
 			url: "obstacle.png",
 			width: 16,
 			height: 16,
+		},
+		"obstacle-explosion": {
+			url: "obstacle-explosion.png",
+			width: 16,
+			height: 16,
+			framesX: 4,
+			framesY: 1,
+			frameInterval: 5,
 		},
 		"big-obstacle": {
 			url: "big-obstacle.png",
