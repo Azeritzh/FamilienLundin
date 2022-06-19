@@ -68,7 +68,7 @@ export const defaultDisplayConfig: DisplayConfig = {
 		},
 		"background": {
 			url: "starry-background.png",
-			width: 220,
+			width: 450,
 			height: 160,
 			centerX: 0,
 			centerY: 0,
