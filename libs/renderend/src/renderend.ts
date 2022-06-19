@@ -19,6 +19,8 @@ import { RenderendEntities } from "./state/renderend-entities"
 import { RenderendState } from "./state/renderend-state"
 
 export class Renderend extends BaseGame<RenderendAction> {
+	public deathLogic: DeathLogic
+
 	constructor(
 		public readonly config = RenderendConfig.from(defaultConstants, defaultValues),
 		public readonly state = new RenderendState(new Globals(), new EntityValues()),
@@ -83,5 +85,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 			),
 			new UpdateStateLogic(state, entities),
 		])
+		
+		this.deathLogic = <any>this.logics[5]
 	}
 }

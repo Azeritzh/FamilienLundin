@@ -13,6 +13,7 @@ export class RenderendDisplay {
 	private screenPixelsPerTile = 100
 	private backgroundWidthInTiles = 450 / this.gamePixelsPerTile
 	private fractionOfTick = 0
+	private displayEntities: DisplayEntity[] = []
 
 	constructor(
 		private config: DisplayConfig,
@@ -35,6 +36,7 @@ export class RenderendDisplay {
 		for (const [name, sprite] of Object.entries(this.config.sprites))
 			this.display.addSprite(name, this.config.assetFolder + sprite.url, sprite.width, sprite.height, sprite.centerX, sprite.centerY)
 		this.setupTextElements()
+		this.game.deathLogic.listeners.push(this)
 	}
 
 	private setupTextElements() {
@@ -83,6 +85,20 @@ export class RenderendDisplay {
 		return element
 	}
 
+	onDeath(entity: Id) {
+		const type = this.game.config.typeMap.typeFor(typeOf(entity))
+		if (type !== "obstacle")
+			return
+		this.displayEntities.push({
+			sprite: "obstacle-explosion",
+			position: this.game.entities.position.get.of(entity),
+			velocity: this.game.state.globals.isAlive ? this.game.entities.velocity.get.of(entity) : new Vector2(0, 0),
+			endTick: this.game.state.globals.tick + 20,
+			animationStart: this.game.state.globals.tick,
+			lastUpdate: this.game.state.globals.tick,
+		})
+	}
+
 	private screenPixelsFromTiles(tiles: number) {
 		return this.screenPixelsPerTile * tiles
 	}
@@ -102,6 +118,8 @@ export class RenderendDisplay {
 		this.drawBackground()
 		for (const entity of this.game.entities)
 			this.drawEntity(entity)
+		for (const entity of this.displayEntities.values())
+			this.drawDisplayEntity(entity)
 		this.display.endFrame()
 		this.writeText()
 	}
@@ -155,14 +173,25 @@ export class RenderendDisplay {
 		return position.add(velocity.multiply(this.fractionOfTick))
 	}
 
-	private drawSprite(sprite: string, position: Vector2) {
+	private drawDisplayEntity(entity: DisplayEntity) {
+		if (entity.lastUpdate !== this.game.state.globals.tick)
+			entity.position = entity.position.add(entity.velocity)
+		entity.lastUpdate = this.game.state.globals.tick
+		if (this.game.state.globals.tick < entity.endTick)
+			this.drawSprite(entity.sprite, entity.position, entity.animationStart)
+		else
+			this.displayEntities.remove(entity)
+	}
+
+	private drawSprite(sprite: string, position: Vector2, animationStart = 0) {
 		const config = this.config.sprites[sprite]
 		if (!config.frameInterval)
 			return this.display.drawSprite(sprite, position.x, position.y, 0, 0)
 		const width = config.framesX ?? 1
 		const height = config.framesY ?? 1
 		const numberOfFrames = width * height
-		const frameIndex = Math.floor(this.game.state.globals.tick / config.frameInterval) % numberOfFrames
+		const tick = this.game.state.globals.tick - animationStart
+		const frameIndex = Math.floor(tick / config.frameInterval) % numberOfFrames
 		const frameX = frameIndex % width
 		const frameY = Math.floor(frameIndex / width) % height
 		this.display.drawSprite(sprite, position.x, position.y, frameX, frameY)
@@ -195,4 +224,13 @@ export interface DisplayConfig {
 			frameInterval?: number,
 		}
 	}
+}
+
+interface DisplayEntity {
+	sprite: string
+	position: Vector2
+	velocity: Vector2
+	endTick: number
+	animationStart: number
+	lastUpdate: number
 }

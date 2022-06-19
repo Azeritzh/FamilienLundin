@@ -3,8 +3,8 @@ import { GameValidator, Validation } from "./interfaces/game-validator"
 
 export abstract class BaseGame<GameAction> {
 	constructor(
-		private readonly logics: GameLogic<GameAction>[] = [],
-		private readonly validators: GameValidator<GameAction>[] = [],
+		protected readonly logics: GameLogic<GameAction>[] = [],
+		protected readonly validators: GameValidator<GameAction>[] = [],
 	) { }
 
 	update(...actions: GameAction[]): Validation {
