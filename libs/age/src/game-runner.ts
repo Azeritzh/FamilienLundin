@@ -38,7 +38,7 @@ export class GameRunner<Action> {
 
 	updateDisplay() {
 		const now = Date.now()
-		const fractionOfTick = (now - this.lastUpdate) / 30
+		const fractionOfTick = (now - this.lastUpdate) / this.updateInterval
 		this.display.show(fractionOfTick)
 	}
 

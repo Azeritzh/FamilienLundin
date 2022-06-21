@@ -7,13 +7,10 @@ export class RenderendDisplay {
 	public canvas: HTMLCanvasElement
 	private display: WebGl2Display
 	private textElements: { [index: string]: HTMLDivElement } = {}
-	private readonly gameHeightInTiles = 10
-	private get gameWidthInTiles() { return this.canvas.width / this.screenPixelsPerTile }
-	private readonly gamePixelsPerTile = 16
-	private screenPixelsPerTile = 100
-	private backgroundWidthInTiles = 450 / this.gamePixelsPerTile
+
 	private fractionOfTick = 0
 	private displayEntities: DisplayEntity[] = []
+	private size = new ScreenSizes(true, 16, 100, 100, 160, 160)
 
 	constructor(
 		private config: DisplayConfig,
@@ -28,11 +25,15 @@ export class RenderendDisplay {
 		this.hostElement.style.position = "relative"
 		this.canvas = document.createElement("canvas")
 		this.canvas.style.position = "absolute"
+		if (this.size.renderToVirtualSize) {
+			this.canvas.style.width = "100%"
+			this.canvas.style.imageRendering = "pixelated"
+		}
 		this.hostElement.appendChild(this.canvas)
 	}
 
 	private setupDisplay() {
-		this.display = new WebGl2Display(this.canvas, this.gamePixelsPerTile, this.gameHeightInTiles * this.gamePixelsPerTile)
+		this.display = new WebGl2Display(this.canvas, this.size.virtualPixelsPerTile, this.size.virtualHeight, this.size.renderToVirtualSize)
 		for (const [name, sprite] of Object.entries(this.config.sprites))
 			this.display.addSprite(name, this.config.assetFolder + sprite.url, sprite.width, sprite.height, sprite.centerX, sprite.centerY)
 		this.setupTextElements()
@@ -49,11 +50,11 @@ export class RenderendDisplay {
 		element.style.backgroundColor = "rgba(0,0,0,0.5)"
 		element.style.textAlign = "center"
 		element.style.color = "white"
-		element.style.left = this.screenPixelsFromTiles(this.gameWidthInTiles / 2 - 1.5) + "px"
-		element.style.top = this.screenPixelsFromTiles(9) + "px"
-		element.style.fontSize = this.screenPixelsFromTiles(0.5) + "px"
-		element.style.width = this.screenPixelsFromTiles(3) + "px"
-		element.style.lineHeight = this.screenPixelsFromTiles(1) + "px"
+		element.style.left = (this.size.hostPixelsPerTile * (this.size.widthInTiles / 2 - 1.5)) + "px"
+		element.style.top = (this.size.hostPixelsPerTile * 9) + "px"
+		element.style.fontSize = (this.size.hostPixelsPerTile * 0.5) + "px"
+		element.style.width = (this.size.hostPixelsPerTile * 3) + "px"
+		element.style.lineHeight = (this.size.hostPixelsPerTile * 1) + "px"
 	}
 
 	private setupGameOverText() {
@@ -62,11 +63,11 @@ export class RenderendDisplay {
 		element.style.backgroundColor = "rgba(0,0,0,0.5)"
 		element.style.textAlign = "center"
 		element.style.color = "white"
-		element.style.left = this.screenPixelsFromTiles(this.gameWidthInTiles / 2 - 3) + "px"
-		element.style.top = this.screenPixelsFromTiles(4) + "px"
-		element.style.fontSize = this.screenPixelsFromTiles(1) + "px"
-		element.style.width = this.screenPixelsFromTiles(6) + "px"
-		element.style.lineHeight = this.screenPixelsFromTiles(2) + "px"
+		element.style.left = (this.size.hostPixelsPerTile * (this.size.widthInTiles / 2 - 3)) + "px"
+		element.style.top = (this.size.hostPixelsPerTile * 4) + "px"
+		element.style.fontSize = (this.size.hostPixelsPerTile * 1) + "px"
+		element.style.width = (this.size.hostPixelsPerTile * 6) + "px"
+		element.style.lineHeight = (this.size.hostPixelsPerTile * 2) + "px"
 		element.innerText = "GAME OVER"
 	}
 
@@ -99,14 +100,10 @@ export class RenderendDisplay {
 		})
 	}
 
-	private screenPixelsFromTiles(tiles: number) {
-		return this.screenPixelsPerTile * tiles
-	}
-
 	setSize(width: number, height: number) {
-		this.canvas.width = width
-		this.canvas.height = height
-		this.screenPixelsPerTile = height / this.gameHeightInTiles
+		this.size.updateHostSize(width, height)
+		this.canvas.width = this.size.canvasWidth
+		this.canvas.height = this.size.canvasHeight
 		this.setupDisplay()
 	}
 
@@ -125,10 +122,11 @@ export class RenderendDisplay {
 	}
 
 	private drawBackground() {
-		const offset = this.backgroundBasePosition() % this.backgroundWidthInTiles
+		const backgroundWidthInTiles = 450 / this.size.virtualPixelsPerTile
+		const offset = this.backgroundBasePosition() % backgroundWidthInTiles
 		this.drawSprite("background", new Vector2(offset, 0))
-		this.drawSprite("background", new Vector2(offset + this.backgroundWidthInTiles, 0))
-		this.drawSprite("background", new Vector2(offset + this.backgroundWidthInTiles * 2, 0))
+		this.drawSprite("background", new Vector2(offset + backgroundWidthInTiles, 0))
+		this.drawSprite("background", new Vector2(offset + backgroundWidthInTiles * 2, 0))
 	}
 
 	private backgroundBasePosition() {
@@ -233,4 +231,27 @@ interface DisplayEntity {
 	endTick: number
 	animationStart: number
 	lastUpdate: number
+}
+
+class ScreenSizes {
+	constructor(
+		public renderToVirtualSize: boolean,
+		public virtualPixelsPerTile: number,
+		public hostWidth: number,
+		public hostHeight: number,
+		public virtualWidth: number,
+		public virtualHeight: number,
+	) { }
+
+	get hostPixelsPerTile() { return (this.hostHeight / this.virtualHeight) * this.virtualPixelsPerTile }
+	get canvasWidth() { return this.renderToVirtualSize ? this.virtualWidth : this.hostWidth }
+	get canvasHeight() { return this.renderToVirtualSize ? this.virtualHeight : this.hostHeight }
+	get widthInTiles() { return this.virtualWidth / this.virtualPixelsPerTile }
+	get heightInTiles() { return this.virtualHeight / this.virtualPixelsPerTile }
+
+	updateHostSize(width: number, height: number){
+		this.hostWidth = width
+		this.hostHeight = height
+		this.virtualWidth = this.hostWidth * (this.virtualHeight / this.hostHeight)
+	}
 }

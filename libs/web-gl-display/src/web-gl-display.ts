@@ -8,6 +8,7 @@ export class WebGl2Display {
 		public canvas: HTMLCanvasElement,
 		private tileSize: number,
 		private virtualScreenHeight: number,
+		private alignToPixelGrid = false,
 		private gl = canvas.getContext("webgl2"),
 		private standardShader = new StandardShader(gl),
 		private previousProgram = null,
@@ -33,6 +34,10 @@ export class WebGl2Display {
 		if (this.previousProgram != sprite.shader.program) {
 			this.gl.useProgram(sprite.shader.program)
 			this.previousProgram = sprite.shader.program
+		}
+		if(this.alignToPixelGrid){
+			x = Math.floor(x * this.tileSize)/this.tileSize
+			y = Math.floor(y * this.tileSize)/this.tileSize
 		}
 		sprite.render(x, y, frameX, frameY)
 	}

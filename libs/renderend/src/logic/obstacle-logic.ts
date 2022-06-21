@@ -88,9 +88,11 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	private spawnObstacle() {
 		const obstacleType = this.random.get.in(this.constants.obstacleTypes)
 		const obstacleHeight = this.rectangularSize.defaultOf(obstacleType).height
-		const entity = this.entities.create(obstacleType)
-		this.setPosition.for(entity, new Vector2(20 + this.random.get.float(2), 1 + this.random.get.float(7 - obstacleHeight) + obstacleHeight))
-		this.setVelocity.for(entity, new Vector2(-this.globals.speed, 0))
+		this.spawnObstacleAt(
+			obstacleType,
+			this.random.get.float(2),
+			1 + this.random.get.float(7 - obstacleHeight) + obstacleHeight,
+		)
 	}
 
 	private shouldSpawnAnnoyingObstacle() {
@@ -99,8 +101,17 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 
 	private spawnAnnoyingObstacle() {
 		const obstacleType = this.random.get.in(this.constants.obstacleTypes)
-		const entity = this.entities.create(obstacleType)
-		this.setPosition.for(entity, new Vector2(20 + this.random.get.float(2), this.getShipHeight()))
+		this.spawnObstacleAt(
+			obstacleType,
+			this.random.get.float(2),
+			this.getShipHeight(),
+		)
+	}
+
+	private spawnObstacleAt(type: Id, deltaX: number, y: number) {
+		const previousWallX = this.globals.lastWall - this.globals.distanceTravelled
+		const entity = this.entities.create(type)
+		this.setPosition.for(entity, new Vector2(previousWallX + Math.floor(deltaX * 16) / 16, y)) // doing the 16 thing to align with pixel grid
 		this.setVelocity.for(entity, new Vector2(-this.globals.speed, 0))
 	}
 
