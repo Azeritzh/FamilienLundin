@@ -32,6 +32,7 @@ export class GameRunner<Action> {
 
 	startDisplayLoop = () => {
 		this.updateDisplay()
+		console.log("display")
 		if (!this.stop)
 			requestAnimationFrame(this.startDisplayLoop)
 	}
@@ -42,12 +43,9 @@ export class GameRunner<Action> {
 		this.display.show(fractionOfTick)
 	}
 
-	setSize(width: number, height: number) {
-		this.display?.setSize(width, height)
-	}
-
 	onDestroy() {
 		this.stop = true
 		window.clearInterval(this.timerId)
+		this.display.onDestroy?.()
 	}
 }

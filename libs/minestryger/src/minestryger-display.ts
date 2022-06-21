@@ -75,10 +75,6 @@ export class MinestrygerDisplay implements BaseDisplay {
 		return Math.min(horisontalFieldSize, verticalFieldSize)
 	}
 
-	setSize() {
-		throw new Error("Method not implemented.")
-	}
-
 	show() {
 		this.context.fillStyle = "black"
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)

@@ -10,14 +10,15 @@ import { DisplayConfig, Meld, MeldDisplay, MeldInput } from "@lundin/meld"
 export class MeldComponent implements OnInit {
 	@ViewChild("gameHost", { static: true }) gameHost: ElementRef<HTMLDivElement>
 	game: GameRunner<any>
+	display: MeldDisplay
 
 	constructor(private ngZone: NgZone) { }
 
 	ngOnInit() {
 		const meld = new Meld()
-		const display = new MeldDisplay(displayConfig, meld, this.gameHost.nativeElement)
-		const input = new MeldInput(display.canvas)
-		this.game = new GameRunner(display, input, meld)
+		this.display = new MeldDisplay(displayConfig, meld, this.gameHost.nativeElement)
+		const input = new MeldInput(this.display.canvas)
+		this.game = new GameRunner(this.display, input, meld)
 
 		input.restart()
 		this.game.updateGame()
@@ -31,7 +32,7 @@ export class MeldComponent implements OnInit {
 	}
 
 	private sizeToAvailableSpace = () => {
-		this.game.setSize(
+		this.display.setSize(
 			this.gameHost.nativeElement.clientWidth,
 			this.gameHost.nativeElement.clientHeight,
 		)

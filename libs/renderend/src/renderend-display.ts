@@ -11,6 +11,7 @@ export class RenderendDisplay {
 	private fractionOfTick = 0
 	private displayEntities: DisplayEntity[] = []
 	private size = new ScreenSizes(true, 16, 100, 100, 160, 160)
+	private resizeObserver: ResizeObserver
 
 	constructor(
 		private config: DisplayConfig,
@@ -30,6 +31,8 @@ export class RenderendDisplay {
 			this.canvas.style.imageRendering = "pixelated"
 		}
 		this.hostElement.appendChild(this.canvas)
+		this.resizeObserver = new ResizeObserver(() => this.updateSize())
+		this.resizeObserver.observe(this.hostElement)
 	}
 
 	private setupDisplay() {
@@ -98,6 +101,10 @@ export class RenderendDisplay {
 			animationStart: this.game.state.globals.tick,
 			lastUpdate: this.game.state.globals.tick,
 		})
+	}
+
+	updateSize() {
+		this.setSize(this.hostElement.clientWidth, this.hostElement.clientHeight)
 	}
 
 	setSize(width: number, height: number) {
@@ -205,6 +212,10 @@ export class RenderendDisplay {
 		const gameOver = this.getTextElement("game-over")
 		gameOver.style.display = this.game.state.globals.isAlive ? "none" : "block"
 	}
+
+	onDestroy() {
+		this.resizeObserver.disconnect()
+	}
 }
 
 export interface DisplayConfig {
@@ -249,7 +260,7 @@ class ScreenSizes {
 	get widthInTiles() { return this.virtualWidth / this.virtualPixelsPerTile }
 	get heightInTiles() { return this.virtualHeight / this.virtualPixelsPerTile }
 
-	updateHostSize(width: number, height: number){
+	updateHostSize(width: number, height: number) {
 		this.hostWidth = width
 		this.hostHeight = height
 		this.virtualWidth = this.hostWidth * (this.virtualHeight / this.hostHeight)
