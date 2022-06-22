@@ -17,7 +17,7 @@ export class RenderendInput extends BaseInput<RenderendAction> {
 	}
 
 	private getMoveAction(inputState: InputState) {
-		const factor = this.stateFor(inputState, "Shift", "Control", "PadB") ? 0.5 : 1
+		const factor = this.stateFor(inputState, "ShiftLeft", "PadB") ? 0.5 : 1
 		const velocity = new Vector2(this.getVelocityX(inputState), this.getVelocityY(inputState))
 			.multiply(factor)
 		if (!velocity.isZero())
@@ -25,17 +25,17 @@ export class RenderendInput extends BaseInput<RenderendAction> {
 	}
 
 	private getVelocityY(inputState: InputState) {
-		if (this.stateFor(inputState, "w", "ArrowUp", "PadUp"))
+		if (this.stateFor(inputState, "KeyW", "ArrowUp", "PadUp"))
 			return -1
-		if (this.stateFor(inputState, "s", "ArrowDown", "PadDown"))
+		if (this.stateFor(inputState, "KeyS", "ArrowDown", "PadDown"))
 			return 1
 		return 0
 	}
 
 	private getVelocityX(inputState: InputState) {
-		if (this.stateFor(inputState, "a", "ArrowLeft", "PadLeft"))
+		if (this.stateFor(inputState, "KeyA", "ArrowLeft", "PadLeft"))
 			return -1
-		if (this.stateFor(inputState, "d", "ArrowRight", "PadRight"))
+		if (this.stateFor(inputState, "KeyD", "ArrowRight", "PadRight"))
 			return 1
 		return 0
 	}

@@ -32,7 +32,6 @@ export class GameRunner<Action> {
 
 	startDisplayLoop = () => {
 		this.updateDisplay()
-		console.log("display")
 		if (!this.stop)
 			requestAnimationFrame(this.startDisplayLoop)
 	}

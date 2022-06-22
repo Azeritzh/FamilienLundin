@@ -10,6 +10,7 @@ export class RenderendGame extends GameRunner<RenderendAction> {
 		const renderend = new Renderend()
 		const display = new RenderendDisplay({ ...defaultDisplayConfig, ...displayConfig }, renderend, hostElement)
 		const input = new RenderendInput(display.canvas)
+		input.restart()
 		return new RenderendGame(display, input, renderend)
 	}
 }
