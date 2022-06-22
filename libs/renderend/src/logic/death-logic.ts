@@ -6,7 +6,7 @@ export class DeathLogic implements GameLogic<RenderendAction> {
 	constructor(
 		private entities: RenderendEntities,
 		private health: ValueGetter<number>,
-		public listeners: DeathListener[],
+		public listeners: DeathListener[] = [],
 	) { }
 
 	update() {

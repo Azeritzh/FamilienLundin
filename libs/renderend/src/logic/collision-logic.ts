@@ -8,7 +8,7 @@ export class CollisionLogic implements GameLogic<RenderendAction> {
 		private entities: RenderendEntities,
 		private position: ValueGetter<Vector2>,
 		private rectangularSize: ValueGetter<RectangularSize>,
-		private listeners: CollisionListener[],
+		public listeners: CollisionListener[] = [],
 	) { }
 
 	update() {
