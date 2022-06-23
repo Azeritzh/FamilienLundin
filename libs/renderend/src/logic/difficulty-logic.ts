@@ -10,6 +10,6 @@ export class DifficultyLogic implements GameLogic<RenderendAction> {
 	update() {
 		if (!this.globals.isAlive)
 			return
-		this.globals.speed += 0.0002
+		this.globals.speed += 0.0001
 	}
 }

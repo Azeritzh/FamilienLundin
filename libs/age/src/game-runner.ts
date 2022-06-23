@@ -4,7 +4,6 @@ import { BaseInput } from "./base-input"
 
 export class GameRunner<Action> {
 	private timerId: number
-	private updateInterval = 30
 	private lastUpdate = Date.now()
 	private stop = false
 
@@ -12,11 +11,12 @@ export class GameRunner<Action> {
 		private display: BaseDisplay,
 		private inputs: BaseInput<Action>,
 		private game: BaseGame<Action>,
+		private updatesPerSecond = 30,
 	) { }
 
 	startGameLoop() {
 		this.stopInterval()
-		this.timerId = window.setInterval(this.updateGame, this.updateInterval)
+		this.timerId = window.setInterval(this.updateGame, 1000 / this.updatesPerSecond)
 	}
 
 	private stopInterval() {
@@ -38,7 +38,8 @@ export class GameRunner<Action> {
 
 	updateDisplay() {
 		const now = Date.now()
-		const fractionOfTick = (now - this.lastUpdate) / this.updateInterval
+		const updateInterval = 1000 / this.updatesPerSecond
+		const fractionOfTick = (now - this.lastUpdate) / updateInterval
 		this.display.show(fractionOfTick)
 	}
 
