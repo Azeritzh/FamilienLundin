@@ -42,6 +42,7 @@ export class RenderendDisplay {
 			this.state.size.virtualHeight,
 			this.state.size.renderToVirtualSize,
 		)
+		this.entityDrawer.displayProvider = this.display // TODO
 		for (const [name, sprite] of Object.entries(this.config.sprites))
 			this.display.addSprite(name, this.config.assetFolder + sprite.url, sprite.width, sprite.height, sprite.centerX, sprite.centerY)
 		this.setupTextElements()
