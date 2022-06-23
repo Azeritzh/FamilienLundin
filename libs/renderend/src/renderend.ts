@@ -28,7 +28,6 @@ export class Renderend extends BaseGame<RenderendAction> {
 		public collisionLogic = new CollisionLogic(
 			entities,
 			entities.position.get,
-			entities.rectangularSize.get,
 		),
 		public damageLogic = new DamageLogic(
 			entities.damage.get,

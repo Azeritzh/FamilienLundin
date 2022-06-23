@@ -1,5 +1,4 @@
 import { Id } from "@lundin/age"
-import { Vector3 } from "@lundin/utility"
 
 export class RenderendConstants {
 	constructor(

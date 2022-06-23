@@ -7,22 +7,23 @@ export class CollisionLogic implements GameLogic<RenderendAction> {
 	constructor(
 		private entities: RenderendEntities,
 		private position: ValueGetter<Vector2>,
-		private rectangularSize: ValueGetter<RectangularSize>,
 		public listeners: CollisionListener[] = [],
 	) { }
 
 	update() {
-		for (const entity of this.entities)
-			for (const [otherEntity] of this.entities.with.rectangularSize)
-				if (this.collides(entity, otherEntity))
+		for (const [entity, position] of this.entities.with.position)
+			for (const [otherEntity, size] of this.entities.with.rectangularSize)
+				if (this.collides(entity, position, otherEntity, size))
 					this.notify(entity, otherEntity)
 	}
 
-	private collides(entity: Id, otherEntity: Id) {
+	private collides(entity: Id, point: Vector2, otherEntity: Id, size: RectangularSize) {
 		if (entity === otherEntity)
 			return false
-		const box = Box.from(this.position.of(otherEntity), this.rectangularSize.of(otherEntity))
-		return box.contains(this.position.of(entity))
+		const otherPosition = this.position.of(otherEntity)
+		if (!otherPosition)
+			return false
+		return Box.from(otherPosition, size).contains(point)
 	}
 
 	private notify(entity: Id, otherEntity: Id) {
