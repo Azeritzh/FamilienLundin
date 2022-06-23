@@ -42,7 +42,7 @@ export const defaultDisplayConfig: DisplayConfig = {
 			height: 20,
 			framesX: 4,
 			framesY: 1,
-			frameInterval: 5,
+			frameInterval: 10,
 		},
 		"half-shield": {
 			url: "half-shield.png",
@@ -50,7 +50,7 @@ export const defaultDisplayConfig: DisplayConfig = {
 			height: 20,
 			framesX: 4,
 			framesY: 1,
-			frameInterval: 5,
+			frameInterval: 10,
 		},
 		"ship": {
 			url: "ship.png",
@@ -58,7 +58,7 @@ export const defaultDisplayConfig: DisplayConfig = {
 			height: 20,
 			framesX: 4,
 			framesY: 2,
-			frameInterval: 3,
+			frameInterval: 6,
 		},
 		"wall": {
 			url: "wall.png",
@@ -76,7 +76,7 @@ export const defaultDisplayConfig: DisplayConfig = {
 			height: 16,
 			framesX: 4,
 			framesY: 1,
-			frameInterval: 5,
+			frameInterval: 10,
 		},
 		"big-obstacle": {
 			url: "big-obstacle.png",

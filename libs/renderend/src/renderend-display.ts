@@ -103,7 +103,7 @@ export class RenderendDisplay {
 			sprite: "obstacle-explosion",
 			position: this.game.entities.position.get.of(entity),
 			velocity: this.game.state.globals.isAlive ? this.game.entities.velocity.get.of(entity) : new Vector2(0, 0),
-			endTick: this.game.state.globals.tick + 20,
+			endTick: this.game.state.globals.tick + 40,
 			animationStart: this.game.state.globals.tick,
 			lastUpdate: this.game.state.globals.tick,
 		})
