@@ -5,7 +5,6 @@ export class DisplayState {
 	constructor(
 		public size: ScreenSize,
 		public fractionOfTick = 0,
-		public textElements: { [index: string]: HTMLDivElement } = {},
 		public displayEntities: DisplayEntity[] = [],
 	) { }
 

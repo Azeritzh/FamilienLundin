@@ -1,4 +1,3 @@
-import { Id, typeOf } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { DisplayConfig } from "./display/display-config"
 import { DisplayEntityDrawer } from "./display/display-entity-drawer"
@@ -18,21 +17,7 @@ export class RenderendDisplay {
 		private entityDrawer = new EntityDrawer(game, spriteDrawer),
 		private displayEntityDrawer = new DisplayEntityDrawer(game, state, spriteDrawer),
 	) {
-		this.game.deathLogic.listeners.push(this)
-	}
-
-	onDeath(entity: Id) {
-		const type = this.game.config.typeMap.typeFor(typeOf(entity))
-		if (type !== "obstacle")
-			return
-		this.state.displayEntities.push({
-			sprite: "obstacle-explosion",
-			position: this.game.entities.position.get.of(entity),
-			velocity: this.game.state.globals.isAlive ? this.game.entities.velocity.get.of(entity) : new Vector2(0, 0),
-			endTick: this.game.state.globals.tick + 40,
-			animationStart: this.game.state.globals.tick,
-			lastUpdate: this.game.state.globals.tick,
-		})
+		this.game.deathLogic.listeners.push(displayEntityDrawer)
 	}
 
 	setSize(width: number, height: number) {
@@ -52,9 +37,9 @@ export class RenderendDisplay {
 	private drawBackground() {
 		const backgroundWidthInTiles = 450 / this.state.size.virtualPixelsPerTile
 		const offset = this.backgroundBasePosition() % backgroundWidthInTiles
-		this.spriteDrawer.drawSprite("background", new Vector2(offset, 0))
-		this.spriteDrawer.drawSprite("background", new Vector2(offset + backgroundWidthInTiles, 0))
-		this.spriteDrawer.drawSprite("background", new Vector2(offset + backgroundWidthInTiles * 2, 0))
+		this.spriteDrawer.draw("background", new Vector2(offset, 0))
+		this.spriteDrawer.draw("background", new Vector2(offset + backgroundWidthInTiles, 0))
+		this.spriteDrawer.draw("background", new Vector2(offset + backgroundWidthInTiles * 2, 0))
 	}
 
 	private backgroundBasePosition() {

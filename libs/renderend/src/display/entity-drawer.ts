@@ -24,7 +24,7 @@ export class EntityDrawer {
 		const position = this.game.entities.position.get.of(entity)
 		const velocity = this.game.entities.velocity.get.of(entity)
 		const sprite = this.game.config.typeMap.typeFor(typeOf(entity))
-		this.spriteDrawer.drawSprite(sprite, position, velocity)
+		this.spriteDrawer.draw(sprite, position, velocity)
 	}
 
 	private drawShip(entity: Id) {
@@ -32,8 +32,8 @@ export class EntityDrawer {
 		const velocity = this.game.entities.velocity.get.of(entity)
 		const shields = this.shieldSpriteFor(entity)
 		if (shields)
-			this.spriteDrawer.drawSprite(shields, position, velocity)
-		this.spriteDrawer.drawSprite("ship", position, velocity)
+			this.spriteDrawer.draw(shields, position, velocity)
+		this.spriteDrawer.draw("ship", position, velocity)
 	}
 
 	private shieldSpriteFor(entity: Id) {
