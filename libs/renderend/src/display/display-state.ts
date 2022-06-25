@@ -1,12 +1,23 @@
 import { Vector2 } from "@lundin/utility"
+import { DisplayConfig } from "./display-config"
 
 export class DisplayState {
 	constructor(
-		public size = new ScreenSize(true, 16, 100, 100, 160, 160),
+		public size: ScreenSize,
 		public fractionOfTick = 0,
 		public textElements: { [index: string]: HTMLDivElement } = {},
 		public displayEntities: DisplayEntity[] = [],
 	) { }
+
+	public static from(config: DisplayConfig) {
+		return new DisplayState(new ScreenSize(
+			config.renderToVirtualSize,
+			config.virtualPixelsPerTile,
+			100,
+			100,
+			config.virtualHeight,
+			config.virtualHeight))
+	}
 }
 
 export interface DisplayEntity {

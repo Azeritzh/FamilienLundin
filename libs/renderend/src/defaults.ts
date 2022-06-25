@@ -1,5 +1,5 @@
 import { RectangularSize } from "@lundin/age"
-import { DisplayConfig } from "./renderend-display"
+import { DisplayConfig } from "./display/display-config"
 
 export const defaultConstants = {
 	shipType: "ship",
@@ -33,6 +33,9 @@ export const defaultValues = {
 }
 
 export const defaultDisplayConfig: DisplayConfig = {
+	renderToVirtualSize: true,
+	virtualPixelsPerTile: 16,
+	virtualHeight: 160,
 	font: "Vt323",
 	assetFolder: "assets/",
 	sprites: {

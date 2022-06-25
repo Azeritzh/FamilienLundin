@@ -1,14 +1,14 @@
 import { Id, typeOf } from "@lundin/age"
-import { Renderend } from "../renderend"
-import { WebGl2Display } from "@lundin/web-gl-display"
 import { Vector2 } from "@lundin/utility"
-import { DisplayConfig } from "../renderend-display"
+import { Renderend } from "../renderend"
+import { DisplayProvider } from "../renderend-game"
+import { DisplayConfig } from "./display-config"
 import { DisplayState } from "./display-state"
 
 export class EntityDrawer {
 	constructor(
 		private game: Renderend,
-		public displayProvider: WebGl2Display,
+		public displayProvider: DisplayProvider,
 		private config: DisplayConfig,
 		private state: DisplayState,
 	) { }
