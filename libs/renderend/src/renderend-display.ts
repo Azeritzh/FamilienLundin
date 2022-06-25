@@ -3,6 +3,7 @@ import { DisplayConfig } from "./display/display-config"
 import { DisplayEntityDrawer } from "./display/display-entity-drawer"
 import { DisplayState } from "./display/display-state"
 import { EntityDrawer } from "./display/entity-drawer"
+import { InputParser } from "./display/input-parser"
 import { SpriteDrawer } from "./display/sprite-drawer"
 import { Renderend } from "./renderend"
 import { DisplayProvider } from "./renderend-game"
@@ -13,6 +14,7 @@ export class RenderendDisplay {
 		private game: Renderend,
 		private display: DisplayProvider,
 		private state = DisplayState.from(config),
+		private inputParser = new InputParser(display),
 		private spriteDrawer = new SpriteDrawer(game, display, config, state),
 		private entityDrawer = new EntityDrawer(game, spriteDrawer),
 		private displayEntityDrawer = new DisplayEntityDrawer(game, state, spriteDrawer),
@@ -53,5 +55,9 @@ export class RenderendDisplay {
 		this.display.drawString(distance, this.state.size.widthInTiles / 2, 9, this.config.font, 0.5)
 		if (!this.game.state.globals.isAlive)
 			this.display.drawString("GAME OVER", this.state.size.widthInTiles / 2, 4, this.config.font, 1)
+	}
+
+	getNewActions() {
+		return this.inputParser.parseInputs()
 	}
 }

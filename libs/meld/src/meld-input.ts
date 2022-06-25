@@ -9,7 +9,7 @@ export class MeldInput extends BaseInput<MeldAction> {
 		private canvas: HTMLCanvasElement,
 	) { super() }
 
-	protected parseInputs(inputState: InputState) {
+	parseInputs(inputState: InputState) {
 		return [
 			this.getMoveAction(inputState),
 			this.getRestartAction(inputState),

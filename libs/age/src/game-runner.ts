@@ -1,15 +1,14 @@
 import { BaseDisplay } from "./base-display"
 import { BaseGame } from "./base-game"
-import { BaseInput } from "./base-input"
 
 export class GameRunner<Action> {
 	private timerId: number
 	private lastUpdate = Date.now()
 	private stop = false
+	actions: Action[] = []
 
 	constructor(
-		private display: BaseDisplay,
-		private inputs: BaseInput<Action>,
+		private display: BaseDisplay<Action>,
 		private game: BaseGame<Action>,
 		private updatesPerSecond = 30,
 	) { }
@@ -26,7 +25,7 @@ export class GameRunner<Action> {
 	}
 
 	updateGame = () => {
-		this.game.update(...this.inputs.getNewActions())
+		this.game.update(...this.actions.splice(0), ...this.display.getNewActions())
 		this.lastUpdate = Date.now()
 	}
 

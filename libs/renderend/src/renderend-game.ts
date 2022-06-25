@@ -5,21 +5,21 @@ import { DisplayConfig } from "./display/display-config"
 import { ScreenSize } from "./display/display-state"
 import { Renderend } from "./renderend"
 import { RenderendDisplay } from "./renderend-display"
-import { RenderendInput } from "./renderend-input"
-import { RenderendAction } from "./state/renderend-action"
+import { RenderendAction, StartGameAction } from "./state/renderend-action"
+import { KeyStates } from "@lundin/utility"
 
 export class RenderendGame extends GameRunner<RenderendAction> {
 	constructor(
 		hostElement: HTMLElement,
 		private renderendDisplay: RenderendDisplay,
 		private displayProvider: DisplayProvider,
-		inputs: RenderendInput,
 		game: Renderend,
 		updatesPerSecond = 60,
 		private resizeObserver = new ResizeObserver(() => this.setSize(hostElement.clientWidth, hostElement.clientHeight)),
 	) {
-		super(renderendDisplay, inputs, game, updatesPerSecond)
+		super(renderendDisplay, game, updatesPerSecond)
 		this.resizeObserver.observe(hostElement)
+		this.actions.push(new StartGameAction)
 	}
 
 	static createAt(hostElement: HTMLElement, displayConfig: any) {
@@ -27,9 +27,7 @@ export class RenderendGame extends GameRunner<RenderendAction> {
 		const renderend = new Renderend()
 		const displayProvider = new DisplayProvider(hostElement, displayConfig)
 		const display = new RenderendDisplay(displayConfig, renderend, displayProvider)
-		const input = new RenderendInput(displayProvider.canvas)
-		input.restart()
-		return new RenderendGame(hostElement, display, displayProvider, input, renderend)
+		return new RenderendGame(hostElement, display, displayProvider, renderend)
 	}
 
 	setSize(width: number, height: number) {
@@ -47,6 +45,7 @@ export class DisplayProvider {
 	private display: WebGl2Display
 	private size: ScreenSize
 	private textElements: { [index: string]: HTMLDivElement } = {}
+	private keyStates = new KeyStates()
 
 	constructor(
 		private hostElement: HTMLElement,
@@ -147,6 +146,10 @@ export class DisplayProvider {
 
 		this.hostElement.appendChild(element)
 		return element
+	}
+
+	getInputState(input: string) {
+		return this.keyStates.isPressed[input] ? 1 : 0
 	}
 
 	setSize(width: number, height: number) {

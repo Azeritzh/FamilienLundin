@@ -1,4 +1,3 @@
-import { BaseDisplay } from "@lundin/age"
 import { defaultDisplayConfig } from "./defaults"
 import { GameElements } from "./display/game-elements"
 import { SettingsElements } from "./display/settings-elements"
@@ -6,7 +5,7 @@ import { Minestryger } from "./minestryger"
 import { MinestrygerConfig } from "./minestryger-config"
 import { Field } from "./minestryger-state"
 
-export class MinestrygerDisplay implements BaseDisplay {
+export class MinestrygerDisplay {
 	public canvas: HTMLCanvasElement
 	private context: CanvasRenderingContext2D
 	public state: DisplayState

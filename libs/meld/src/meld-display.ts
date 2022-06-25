@@ -1,9 +1,11 @@
 import { BaseDisplay, Id, typeOf } from "@lundin/age"
 import { WebGl2Display } from "@lundin/web-gl-display"
 import { Meld } from "./meld"
+import { MeldInput } from "./meld-input"
 import { Block } from "./state/block"
+import { MeldAction } from "./state/meld-action"
 
-export class MeldDisplay implements BaseDisplay {
+export class MeldDisplay implements BaseDisplay<MeldAction> {
 	public canvas: HTMLCanvasElement
 	private display: WebGl2Display
 	private readonly gameHeightInTiles = 10
@@ -11,6 +13,7 @@ export class MeldDisplay implements BaseDisplay {
 	private readonly gamePixelsPerTile = 16
 	private screenPixelsPerTile = 100
 	private fractionOfTick = 0
+	private input: MeldInput
 
 	constructor(
 		private config: DisplayConfig,
@@ -19,6 +22,7 @@ export class MeldDisplay implements BaseDisplay {
 	) {
 		this.initialiseCanvas()
 		this.setupDisplay()
+		this.input = new MeldInput(this.display.canvas)
 	}
 
 	private initialiseCanvas(){
@@ -70,6 +74,10 @@ export class MeldDisplay implements BaseDisplay {
 	private drawBlock(x: number, y: number, z: number, block: Block) {
 		const sprite = this.game.config.typeMap.typeFor(block.solidType) ?? "obstacle"
 		this.display.drawSprite(sprite, x, y, 0, 0)
+	}
+
+	getNewActions() {
+		return [] //this.input.parseInputs()
 	}
 }
 

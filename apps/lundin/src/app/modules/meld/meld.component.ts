@@ -1,6 +1,6 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core"
 import { GameRunner } from "@lundin/age"
-import { DisplayConfig, Meld, MeldDisplay, MeldInput } from "@lundin/meld"
+import { DisplayConfig, GenerateAction, Meld, MeldDisplay } from "@lundin/meld"
 
 @Component({
 	selector: "lundin-meld",
@@ -17,10 +17,8 @@ export class MeldComponent implements OnInit {
 	ngOnInit() {
 		const meld = new Meld()
 		this.display = new MeldDisplay(displayConfig, meld, this.gameHost.nativeElement)
-		const input = new MeldInput(this.display.canvas)
-		this.game = new GameRunner(this.display, input, meld)
-
-		input.restart()
+		this.game = new GameRunner(this.display, meld)
+		this.game.actions.push(new GenerateAction())
 		this.game.updateGame()
 		
 		this.sizeToAvailableSpace()
