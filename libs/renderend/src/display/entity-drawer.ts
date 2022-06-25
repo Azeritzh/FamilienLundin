@@ -1,16 +1,11 @@
 import { Id, typeOf } from "@lundin/age"
-import { Vector2 } from "@lundin/utility"
 import { Renderend } from "../renderend"
-import { DisplayProvider } from "../renderend-game"
-import { DisplayConfig } from "./display-config"
-import { DisplayState } from "./display-state"
+import { SpriteDrawer } from "./sprite-drawer"
 
 export class EntityDrawer {
 	constructor(
 		private game: Renderend,
-		public displayProvider: DisplayProvider,
-		private config: DisplayConfig,
-		private state: DisplayState,
+		private spriteDrawer: SpriteDrawer,
 	) { }
 
 	drawEntities() {
@@ -26,17 +21,19 @@ export class EntityDrawer {
 	}
 
 	private drawGeneralEntity(entity: Id) {
-		const position = this.currentPositionOf(entity)
+		const position = this.game.entities.position.get.of(entity)
+		const velocity = this.game.entities.velocity.get.of(entity)
 		const sprite = this.game.config.typeMap.typeFor(typeOf(entity))
-		this.drawSprite(sprite, position)
+		this.spriteDrawer.drawSprite(sprite, position, velocity)
 	}
 
 	private drawShip(entity: Id) {
-		const position = this.currentPositionOf(entity)
+		const position = this.game.entities.position.get.of(entity)
+		const velocity = this.game.entities.velocity.get.of(entity)
 		const shields = this.shieldSpriteFor(entity)
 		if (shields)
-			this.drawSprite(shields, position)
-		this.drawSprite("ship", position)
+			this.spriteDrawer.drawSprite(shields, position, velocity)
+		this.spriteDrawer.drawSprite("ship", position, velocity)
 	}
 
 	private shieldSpriteFor(entity: Id) {
@@ -44,27 +41,5 @@ export class EntityDrawer {
 			case 3: return "full-shield"
 			case 2: return "half-shield"
 		}
-	}
-
-	private currentPositionOf(entity: Id) {
-		const position = this.game.entities.position.get.of(entity)
-		const velocity = this.game.entities.velocity.get.of(entity)
-		if (!velocity)
-			return position
-		return position.add(velocity.multiply(this.state.fractionOfTick))
-	}
-
-	private drawSprite(sprite: string, position: Vector2, animationStart = 0) {
-		const config = this.config.sprites[sprite]
-		if (!config.frameInterval)
-			return this.displayProvider.drawSprite(sprite, position.x, position.y, 0, 0)
-		const width = config.framesX ?? 1
-		const height = config.framesY ?? 1
-		const numberOfFrames = width * height
-		const tick = this.game.state.globals.tick - animationStart
-		const frameIndex = Math.floor(tick / config.frameInterval) % numberOfFrames
-		const frameX = frameIndex % width
-		const frameY = Math.floor(frameIndex / width) % height
-		this.displayProvider.drawSprite(sprite, position.x, position.y, frameX, frameY)
 	}
 }

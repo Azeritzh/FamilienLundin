@@ -15,7 +15,7 @@ export class RenderendGame extends GameRunner<RenderendAction> {
 		private displayProvider: DisplayProvider,
 		inputs: RenderendInput,
 		game: Renderend,
-		updatesPerSecond = 30,
+		updatesPerSecond = 60,
 		private resizeObserver = new ResizeObserver(() => this.setSize(hostElement.clientWidth, hostElement.clientHeight)),
 	) {
 		super(renderendDisplay, inputs, game, updatesPerSecond)
@@ -29,7 +29,7 @@ export class RenderendGame extends GameRunner<RenderendAction> {
 		const display = new RenderendDisplay(displayConfig, renderend, displayProvider)
 		const input = new RenderendInput(displayProvider.canvas)
 		input.restart()
-		return new RenderendGame(hostElement, display, displayProvider, input, renderend, 60)
+		return new RenderendGame(hostElement, display, displayProvider, input, renderend)
 	}
 
 	setSize(width: number, height: number) {
