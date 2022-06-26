@@ -10,6 +10,7 @@
 			"dieOnCollisionBehaviour": true,
 			"health": 3,
 			"damage": 1,
+			"charge": 0,
 			"bulletType": "bullet"
 		},
 		"wall": {

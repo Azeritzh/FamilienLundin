@@ -4,6 +4,7 @@ import { Vector2 } from "@lundin/utility"
 export class EntityValues extends BaseValues {
 	constructor(
 		public readonly bulletType = new Map<Id, Id>(),
+		public readonly charge = new Map<Id, number>(),
 		public readonly damage = new Map<Id, number>(),
 		public readonly health = new Map<Id, number>(),
 		public readonly orientation = new Map<Id, number>(),
@@ -17,6 +18,7 @@ export class EntityValues extends BaseValues {
 	) {
 		super(entities)
 		this.register(bulletType)
+		this.register(charge)
 		this.register(damage)
 		this.register(health)
 		this.register(orientation)
@@ -38,6 +40,8 @@ export class EntityValues extends BaseValues {
 	addValuesFrom(key: Id, values: GroupedEntityValues) {
 		if (values.bulletType !== undefined)
 			this.bulletType.set(key, values.bulletType)
+		if (values.charge !== undefined)
+			this.charge.set(key, values.charge)
 		if (values.damage !== undefined)
 			this.damage.set(key, values.damage)
 		if (values.health !== undefined)
@@ -61,6 +65,7 @@ export class EntityValues extends BaseValues {
 	groupFor(key: Id): GroupedEntityValues {
 		return {
 			bulletType: this.bulletType.get(key),
+			charge: this.charge.get(key),
 			damage: this.damage.get(key),
 			health: this.health.get(key),
 			orientation: this.orientation.get(key),
@@ -77,6 +82,7 @@ export class EntityValues extends BaseValues {
 // Remember to add class values to config mapping function in renderend-config.ts
 export interface GroupedEntityValues {
 	bulletType?: Id
+	charge?: number
 	damage?: number
 	health?: number
 	orientation?: number

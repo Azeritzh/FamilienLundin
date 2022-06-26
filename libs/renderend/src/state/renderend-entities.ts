@@ -9,6 +9,7 @@ export class RenderendEntities extends EntityManager<EntityValues> {
 		idProvider: IdProvider,
 		accessor = new ValueAccessBuilder(typeValues, entityValues, updatedEntityValues),
 		public readonly bulletType = accessor.for(x => x.bulletType, x => x.bulletType),
+		public readonly charge = accessor.for(x => x.charge, x => x.charge),
 		public readonly damage = accessor.for(x => x.damage, x => x.damage),
 		public readonly health = accessor.for(x => x.health, x => x.health),
 		public readonly orientation = accessor.for(x => x.orientation, x => x.orientation, 0),
@@ -22,6 +23,7 @@ export class RenderendEntities extends EntityManager<EntityValues> {
 		super(entityValues, updatedEntityValues, idProvider)
 		this.valueAccessors.push(
 			bulletType,
+			charge,
 			damage,
 			health,
 			orientation,
