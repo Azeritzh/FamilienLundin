@@ -103,6 +103,16 @@
 			"centerX": 16,
 			"centerY": 16
 		},
+		"big-obstacle-explosion": {
+			"path": "big-obstacle-explosion",
+			"width": 32,
+			"height": 32,
+			"centerX": 16,
+			"centerY": 16,
+			"framesX": 4,
+			"framesY": 1,
+			"frameInterval": 10
+		},
 		"bullet": {
 			"path": "bullet",
 			"width": 8,

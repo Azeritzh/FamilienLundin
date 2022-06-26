@@ -25,7 +25,7 @@ export class BulletLogic implements GameLogic<RenderendAction> {
 			return
 		const position = this.position.of(entity) ?? new Vector2(0, 0)
 		const bullet = this.entities.create(bulletType)
-		this.setPosition.for(bullet, position.add(new Vector2(1, 0)))
+		this.setPosition.for(bullet, position.add(new Vector2(0.5, 0)))
 		if (charge > 0)
 			this.setCharge.for(entity, charge - 1)
 	}

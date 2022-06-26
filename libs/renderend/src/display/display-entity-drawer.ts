@@ -31,12 +31,22 @@ export class DisplayEntityDrawer {
 		switch (type) {
 			case "bullet": return this.spawnBulletExplosion(entity)
 			case "obstacle": return this.spawnObstacleExplosion(entity)
+			case "big-obstacle": return this.spawnBigObstacleExplosion(entity)
 		}
 	}
 
 	private spawnObstacleExplosion(entity: Id) {
 		this.spawnExplosion(
 			"obstacle-explosion",
+			this.game.entities.position.get.of(entity),
+			this.game.entities.velocity.get.of(entity),
+			40,
+		)
+	}
+
+	private spawnBigObstacleExplosion(entity: Id) {
+		this.spawnExplosion(
+			"big-obstacle-explosion",
 			this.game.entities.position.get.of(entity),
 			this.game.entities.velocity.get.of(entity),
 			40,
