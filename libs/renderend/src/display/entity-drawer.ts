@@ -34,6 +34,9 @@ export class EntityDrawer {
 		if (shields)
 			this.spriteDrawer.draw(shields, position, velocity)
 		this.spriteDrawer.draw("ship", position, velocity)
+		const charge = this.chargeSpriteFor(entity)
+		if (charge)
+			this.spriteDrawer.draw(charge, position, velocity)
 	}
 
 	private shieldSpriteFor(entity: Id) {
@@ -41,5 +44,17 @@ export class EntityDrawer {
 			case 3: return "full-shield"
 			case 2: return "half-shield"
 		}
+	}
+
+	private chargeSpriteFor(entity: Id) {
+		const charge = this.game.entities.charge.get.of(entity) ?? 0
+		if (4 <= charge)
+			return "charge-4"
+		if (3 <= charge)
+			return "charge-3"
+		if (2 <= charge)
+			return "charge-2"
+		if (1 <= charge)
+			return "charge-1"
 	}
 }

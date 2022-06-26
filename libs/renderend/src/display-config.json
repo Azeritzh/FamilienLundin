@@ -44,6 +44,34 @@
 			"framesY": 2,
 			"frameInterval": 6
 		},
+		"charge-1": {
+			"path": "charge-1",
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10
+		},
+		"charge-2": {
+			"path": "charge-2",
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10
+		},
+		"charge-3": {
+			"path": "charge-3",
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10
+		},
+		"charge-4": {
+			"path": "charge-4",
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10
+		},
 		"wall": {
 			"path": "wall",
 			"width": 16,
