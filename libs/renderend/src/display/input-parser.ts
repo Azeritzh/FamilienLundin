@@ -8,6 +8,7 @@ export class InputParser {
 		private displayProvider: DisplayProvider,
 		private config: DisplayConfig,
 		private actionStates = new Map<Input, number>(),
+		private previousStates = new Map<Input, number>(),
 	) { }
 
 	parseInputs() {
@@ -16,7 +17,8 @@ export class InputParser {
 	}
 
 	private updateActionStates() {
-		this.actionStates.clear()
+		this.previousStates = this.actionStates
+		this.actionStates = new Map()
 		for (const [input, keys] of this.config.inputs)
 			this.actionStates.set(input, this.stateFor(...keys))
 	}
@@ -51,12 +53,17 @@ export class InputParser {
 	}
 
 	private parseShot() {
-		if (this.boolStateFor(Input.Shoot))
+		if (this.hasJustBeenPressed(Input.Shoot))
 			return new ShootBulletAction()
 	}
 
 	private boolStateFor(input: Input) {
 		return this.actionStates.get(input) > 0.5
+	}
+
+	private hasJustBeenPressed(input: Input) {
+		return this.actionStates.get(input) > 0.5
+			&& this.previousStates.get(input) <= 0.5
 	}
 }
 
