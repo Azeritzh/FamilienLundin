@@ -10,7 +10,7 @@
 			"dieOnCollisionBehaviour": true,
 			"health": 3,
 			"damage": 1,
-			"bulletType": "obstacle"
+			"bulletType": "bullet"
 		},
 		"wall": {
 			"rectangularSize": { "width": 1, "height": 1 },
@@ -27,6 +27,12 @@
 			"rectangularSize": { "width": 2, "height": 2 },
 			"obstacleBehaviour": true,
 			"damage": 3
+		},
+		"bullet": {
+			"rectangularSize": { "width": 0.25, "height": 0.25 },
+			"health": 1,
+			"damage": 1,
+			"velocity": { "x": 0.15, "y": 0 }
 		}
 	}
 }
