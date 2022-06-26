@@ -1,6 +1,6 @@
 import { Id, TypeMap } from "@lundin/age"
 import { RenderendConstants } from "./renderend-constants"
-import { GroupedEntityValues } from "./state/entity-values"
+import { GroupedEntityValues } from "../state/entity-values"
 
 export class RenderendConfig {
 	constructor(

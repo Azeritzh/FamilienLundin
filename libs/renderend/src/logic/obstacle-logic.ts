@@ -1,6 +1,6 @@
 import { GameLogic, Id, Random, RectangularSize, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { RenderendConstants } from "../renderend-constants"
+import { RenderendConstants } from "../config/renderend-constants"
 import { Globals } from "../state/globals"
 import { RenderendAction } from "../state/renderend-action"
 import { RenderendEntities } from "../state/renderend-entities"
