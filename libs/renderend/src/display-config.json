@@ -113,6 +113,16 @@
 			"framesY": 1,
 			"frameInterval": 5
 		},
+		"bullet-explosion": {
+			"path": "bullet-explosion",
+			"width": 8,
+			"height": 8,
+			"centerX": 4,
+			"centerY": 4,
+			"framesX": 4,
+			"framesY": 1,
+			"frameInterval": 5
+		},
 		"background": {
 			"path": "starry-background",
 			"width": 450,
