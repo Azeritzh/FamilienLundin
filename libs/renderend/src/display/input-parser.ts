@@ -1,6 +1,6 @@
 import { Vector2 } from "@lundin/utility"
 import { DisplayProvider } from "../renderend-game"
-import { MoveShipAction, StartGameAction } from "../state/renderend-action"
+import { MoveShipAction, ShootBulletAction, StartGameAction } from "../state/renderend-action"
 import { DisplayConfig } from "./display-config"
 
 export class InputParser {
@@ -29,6 +29,7 @@ export class InputParser {
 		return [
 			this.parseMovement(),
 			this.parseRestart(),
+			this.parseShot(),
 		].filter(x => x)
 	}
 
@@ -49,6 +50,11 @@ export class InputParser {
 			return new StartGameAction()
 	}
 
+	private parseShot() {
+		if (this.boolStateFor(Input.Shoot))
+			return new ShootBulletAction()
+	}
+
 	private boolStateFor(input: Input) {
 		return this.actionStates.get(input) > 0.5
 	}
@@ -61,4 +67,5 @@ export enum Input {
 	MoveLeft,
 	MoveRight,
 	MoveSlow,
+	Shoot,
 }

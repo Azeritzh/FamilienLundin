@@ -10,7 +10,8 @@
 		"MoveDown": [ "S", "Down", "PadDown", "PadLeftStickDown" ],
 		"MoveLeft": [ "A", "Left", "PadLeft", "PadLeftStickLeft" ],
 		"MoveRight": [ "D", "Right", "PadRight", "PadLeftStickRight" ],
-		"MoveSlow": [ "LeftShift", "PadA" ]
+		"MoveSlow": [ "LeftShift", "PadA" ],
+		"Shoot": [ "Space", "PadB" ]
 	},
 	"sprites": {
 		"full-shield": {

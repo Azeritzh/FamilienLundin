@@ -9,7 +9,8 @@
 			"shipBehaviour": true,
 			"dieOnCollisionBehaviour": true,
 			"health": 3,
-			"damage": 1
+			"damage": 1,
+			"bulletType": "obstacle"
 		},
 		"wall": {
 			"rectangularSize": { "width": 1, "height": 1 },

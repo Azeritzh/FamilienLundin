@@ -29,7 +29,7 @@ export class RenderendConfig {
 		const typeMap = TypeMap.from(typeNames)
 		return new RenderendConfig(
 			typeMap,
-			new Map(typeNames.map(x => [typeMap.typeIdFor(x), groupedEntityValuesFrom(jsonConfig.types[x])])),
+			new Map(typeNames.map(x => [typeMap.typeIdFor(x), groupedEntityValuesFrom(jsonConfig.types[x], typeMap)])),
 			new RenderendConstants(
 				typeMap.typeIdFor(jsonConfig.constants.shipType),
 				typeMap.typeIdFor(jsonConfig.constants.wallType),
@@ -39,7 +39,7 @@ export class RenderendConfig {
 	}
 }
 
-function groupedEntityValuesFrom(jsonObject: any) {
+function groupedEntityValuesFrom(jsonObject: any, typeMap: TypeMap) {
 	const values: GroupedEntityValues = { ...jsonObject }
 	if (jsonObject.position)
 		values.position = Object.assign(new Vector2(0, 0), jsonObject.position)
@@ -47,5 +47,7 @@ function groupedEntityValuesFrom(jsonObject: any) {
 		values.rectangularSize = Object.assign(new RectangularSize(0, 0), jsonObject.rectangularSize)
 	if (jsonObject.velocity)
 		values.velocity = Object.assign(new Vector2(0, 0), jsonObject.velocity)
+	if (jsonObject.bulletType)
+		values.bulletType = typeMap.typeIdFor(jsonObject.bulletType)
 	return values
 }

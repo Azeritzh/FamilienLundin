@@ -1,5 +1,6 @@
 import { BaseGame, Random } from "@lundin/age"
 import { RenderendConfig } from "./config/renderend-config"
+import { BulletLogic } from "./logic/bullet-logic"
 import { CollisionLogic } from "./logic/collision-logic"
 import { DamageLogic } from "./logic/damage-logic"
 import { DeathLogic } from "./logic/death-logic"
@@ -24,6 +25,11 @@ export class Renderend extends BaseGame<RenderendAction> {
 		readonly changes = new RenderendChanges(new EntityValues()),
 		public readonly entities = new RenderendEntities(config.typeValues, state.entityValues, changes.updatedEntityValues, state),
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
+		public bulletLogic = new BulletLogic(
+			entities,
+			entities.position.get,
+			entities.position.set,
+		),
 		public collisionLogic = new CollisionLogic(
 			entities,
 			entities.position.get,
@@ -81,6 +87,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 		super([ // Order depends on usage of globals variables and priority of changes to same values
 			difficultyLogic,
 			moveShipLogic,
+			bulletLogic,
 			collisionLogic,
 			obstacleLogic,
 			velocityLogic,
