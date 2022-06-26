@@ -7,6 +7,8 @@ import { Renderend } from "./renderend"
 import { RenderendDisplay } from "./renderend-display"
 import { RenderendAction, StartGameAction } from "./state/renderend-action"
 import { KeyStates } from "@lundin/utility"
+import * as gameConfig from "./game-config.json"
+import { RenderendConfig } from "./config/renderend-config"
 
 export class RenderendGame extends GameRunner<RenderendAction> {
 	constructor(
@@ -24,7 +26,7 @@ export class RenderendGame extends GameRunner<RenderendAction> {
 
 	static createAt(hostElement: HTMLElement, displayConfig: any) {
 		displayConfig = { ...defaultDisplayConfig, ...displayConfig }
-		const renderend = new Renderend()
+		const renderend = new Renderend(RenderendConfig.read(gameConfig))
 		const displayProvider = new DisplayProvider(hostElement, displayConfig)
 		const display = new RenderendDisplay(displayConfig, renderend, displayProvider)
 		return new RenderendGame(hostElement, display, displayProvider, renderend)

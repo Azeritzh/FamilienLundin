@@ -68,6 +68,7 @@ export class EntityValues extends BaseValues {
 	}
 }
 
+// Remember to add class values to config mapping function in renderend-config.ts
 export interface GroupedEntityValues {
 	damage?: number
 	health?: number

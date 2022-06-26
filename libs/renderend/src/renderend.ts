@@ -1,5 +1,5 @@
 import { BaseGame, Random } from "@lundin/age"
-import { defaultConstants, defaultValues } from "./defaults"
+import { RenderendConfig } from "./config/renderend-config"
 import { CollisionLogic } from "./logic/collision-logic"
 import { DamageLogic } from "./logic/damage-logic"
 import { DeathLogic } from "./logic/death-logic"
@@ -10,7 +10,6 @@ import { ObstacleLogic } from "./logic/obstacle-logic"
 import { StartLogic } from "./logic/start-logic"
 import { UpdateStateLogic } from "./logic/update-state-logic"
 import { VelocityLogic } from "./logic/velocity-logic"
-import { RenderendConfig } from "./config/renderend-config"
 import { EntityValues } from "./state/entity-values"
 import { Globals } from "./state/globals"
 import { RenderendAction } from "./state/renderend-action"
@@ -20,7 +19,7 @@ import { RenderendState } from "./state/renderend-state"
 
 export class Renderend extends BaseGame<RenderendAction> {
 	constructor(
-		public readonly config = RenderendConfig.from(defaultConstants, defaultValues),
+		public readonly config: RenderendConfig,
 		public readonly state = new RenderendState(new Globals(), new EntityValues()),
 		readonly changes = new RenderendChanges(new EntityValues()),
 		public readonly entities = new RenderendEntities(config.typeValues, state.entityValues, changes.updatedEntityValues, state),

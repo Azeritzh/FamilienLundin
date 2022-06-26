@@ -1,0 +1,31 @@
+{
+	"constants": {
+		"shipType": "ship",
+		"wallType": "wall",
+		"obstacleTypes": ["obstacle", "obstacle", "obstacle", "obstacle", "obstacle", "obstacle", "big-obstacle"]
+	},
+	"types":{
+		"ship": {
+			"shipBehaviour": true,
+			"dieOnCollisionBehaviour": true,
+			"health": 3,
+			"damage": 1
+		},
+		"wall": {
+			"rectangularSize": { "width": 1, "height": 1 },
+			"obstacleBehaviour": true,
+			"damage": 3
+		},
+		"obstacle": {
+			"rectangularSize": { "width": 1, "height": 1 },
+			"obstacleBehaviour": true,
+			"health": 1,
+			"damage": 1
+		},
+		"big-obstacle": {
+			"rectangularSize": { "width": 2, "height": 2 },
+			"obstacleBehaviour": true,
+			"damage": 3
+		}
+	}
+}
