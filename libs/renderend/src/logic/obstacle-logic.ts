@@ -19,10 +19,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 
 	update() {
 		for (const [entity] of this.entities.with.obstacleBehaviour)
-			if (this.shouldDespawn(entity))
-				this.despawnObstacle(entity)
-			else
-				this.updateSpeed(entity)
+			this.updateSpeed(entity)
 
 		while (this.shouldSpawnWalls())
 			this.spawnNextWallSegment()
@@ -30,14 +27,6 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 			this.spawnObstacle()
 		if (this.shouldSpawnAnnoyingObstacle())
 			this.spawnAnnoyingObstacle()
-	}
-
-	private shouldDespawn(entity: Id) {
-		return this.position.of(entity).x < -1
-	}
-
-	private despawnObstacle(entity: Id) {
-		this.entities.remove(entity)
 	}
 
 	private updateSpeed(entity: Id) {

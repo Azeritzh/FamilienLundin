@@ -4,6 +4,7 @@ import { BulletLogic } from "./logic/bullet-logic"
 import { CollisionLogic } from "./logic/collision-logic"
 import { DamageLogic } from "./logic/damage-logic"
 import { DeathLogic } from "./logic/death-logic"
+import { DespawnLogic } from "./logic/despawn-logic"
 import { DifficultyLogic } from "./logic/difficulty-logic"
 import { GameOverLogic } from "./logic/game-over-logic"
 import { MoveShipLogic } from "./logic/move-ship-logic"
@@ -42,6 +43,9 @@ export class Renderend extends BaseGame<RenderendAction> {
 		public deathLogic = new DeathLogic(
 			entities,
 			entities.health.get,
+		),
+		public despawnLogic = new DespawnLogic(
+			entities,
 		),
 		public difficultyLogic = new DifficultyLogic(
 			state.globals,
@@ -89,6 +93,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 			moveShipLogic,
 			bulletLogic,
 			collisionLogic,
+			despawnLogic,
 			obstacleLogic,
 			velocityLogic,
 			deathLogic,
