@@ -35,6 +35,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 			entities.position.set,
 		),
 		public chargeLogic = new ChargeLogic(
+			config.constants,
 			entities,
 			entities.charge.set,
 		),

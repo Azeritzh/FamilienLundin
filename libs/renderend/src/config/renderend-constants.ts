@@ -8,5 +8,7 @@ export class RenderendConstants {
 		public maxVerticalSpeed = 0.1,
 		public minHorisontalSpeed = 0.05,
 		public maxHorisontalSpeed = 0.25,
+		public maxCharge = 4,
+		public chargeSpeed = 1/64
 	) { }
 }
