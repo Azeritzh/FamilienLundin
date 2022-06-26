@@ -1,4 +1,3 @@
-export * from "./defaults"
 export * from "./renderend"
 export * from "./renderend-display"
 export * from "./renderend-game"

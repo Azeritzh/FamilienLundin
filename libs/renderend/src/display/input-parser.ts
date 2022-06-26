@@ -38,7 +38,7 @@ export class InputParser {
 		const down = this.actionStates.get(Input.MoveDown) ?? 0
 		const left = this.actionStates.get(Input.MoveLeft) ?? 0
 		const right = this.actionStates.get(Input.MoveRight) ?? 0
-		const velocity = new Vector2(down - up, right - left)
+		const velocity = new Vector2(right - left, down - up)
 			.multiply(factor)
 		if (!velocity.isZero())
 			return new MoveShipAction(velocity)

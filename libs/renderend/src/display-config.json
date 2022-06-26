@@ -1,0 +1,83 @@
+{
+	"renderToVirtualSize": true,
+	"virtualPixelsPerTile": 16,
+	"virtualHeight": 160,
+	"font": "Vt323",
+	"assetFolder": "assets/",
+	"inputs": {
+		"Restart": [ "Escape", "Enter", "PadStart" ],
+		"MoveUp": [ "W", "Up", "PadUp" ],
+		"MoveDown": [ "S", "Down", "PadDown" ],
+		"MoveLeft": [ "A", "Left", "PadLeft" ],
+		"MoveRight": [ "D", "Right", "PadRight" ],
+		"MoveSlow": [ "ShiftLeft", "PadB" ]
+	},
+	"sprites": {
+		"full-shield": {
+			"path": "full-shield",
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10,
+			"framesX": 4,
+			"framesY": 1,
+			"frameInterval": 10
+		},
+		"half-shield": {
+			"path": "half-shield",
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10,
+			"framesX": 4,
+			"framesY": 1,
+			"frameInterval": 10
+		},
+		"ship": {
+			"path": "ship",
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10,
+			"framesX": 4,
+			"framesY": 2,
+			"frameInterval": 6
+		},
+		"wall": {
+			"path": "wall",
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
+		},
+		"obstacle": {
+			"path": "obstacle",
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
+		},
+		"obstacle-explosion": {
+			"path": "obstacle-explosion",
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8,
+			"framesX": 4,
+			"framesY": 1,
+			"frameInterval": 10
+		},
+		"big-obstacle": {
+			"path": "big-obstacle",
+			"width": 32,
+			"height": 32,
+			"centerX": 16,
+			"centerY": 16
+		},
+		"background": {
+			"path": "starry-background",
+			"width": 450,
+			"height": 160
+		}
+	}
+}

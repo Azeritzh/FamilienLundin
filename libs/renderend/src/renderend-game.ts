@@ -1,13 +1,13 @@
 import { GameRunner } from "@lundin/age"
 import { WebGl2Display } from "@lundin/web-gl-display"
-import { defaultDisplayConfig } from "./defaults"
-import { DisplayConfig } from "./display/display-config"
+import { DisplayConfig, readDisplayConfig } from "./display/display-config"
 import { ScreenSize } from "./display/display-state"
 import { Renderend } from "./renderend"
 import { RenderendDisplay } from "./renderend-display"
 import { RenderendAction, StartGameAction } from "./state/renderend-action"
 import { KeyStates } from "@lundin/utility"
 import * as gameConfig from "./game-config.json"
+import * as defaultDisplayConfig from "./display-config.json"
 import { RenderendConfig } from "./config/renderend-config"
 
 export class RenderendGame extends GameRunner<RenderendAction> {
@@ -25,7 +25,7 @@ export class RenderendGame extends GameRunner<RenderendAction> {
 	}
 
 	static createAt(hostElement: HTMLElement, displayConfig: any) {
-		displayConfig = { ...defaultDisplayConfig, ...displayConfig }
+		displayConfig = { ...readDisplayConfig(defaultDisplayConfig), ...displayConfig }
 		const renderend = new Renderend(RenderendConfig.read(gameConfig))
 		const displayProvider = new DisplayProvider(hostElement, displayConfig)
 		const display = new RenderendDisplay(displayConfig, renderend, displayProvider)
@@ -84,7 +84,7 @@ export class DisplayProvider {
 			this.config.renderToVirtualSize,
 		)
 		for (const [name, sprite] of Object.entries(this.config.sprites))
-			this.display.addSprite(name, this.config.assetFolder + sprite.url, sprite.width, sprite.height, sprite.centerX, sprite.centerY)
+			this.display.addSprite(name, this.config.assetFolder + sprite.path + ".png", sprite.width, sprite.height, sprite.centerX, sprite.centerY)
 	}
 
 	public startFrame() {
@@ -151,7 +151,20 @@ export class DisplayProvider {
 	}
 
 	getInputState(input: string) {
+		input = this.translateInputString(input)
 		return this.keyStates.isPressed[input] ? 1 : 0
+	}
+
+	private translateInputString(input: string) {
+		if (input.length === 1)
+			return "Key" + input
+		switch (input) {
+			case "Up": return "ArrowUp"
+			case "Down": return "ArrowDown"
+			case "Left": return "ArrowLeft"
+			case "Right": return "ArrowRight"
+		}
+		return input
 	}
 
 	setSize(width: number, height: number) {

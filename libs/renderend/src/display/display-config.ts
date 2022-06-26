@@ -9,7 +9,7 @@ export interface DisplayConfig {
 	inputs: Map<Input, string[]>,
 	sprites: {
 		[index: string]: {
-			url: string
+			path: string
 			width?: number
 			height?: number
 			centerX?: number
@@ -19,4 +19,12 @@ export interface DisplayConfig {
 			frameInterval?: number
 		}
 	}
+}
+
+export function readDisplayConfig(jsonConfig: any) {
+	const config: DisplayConfig = { ...jsonConfig }
+	config.inputs = new Map<Input, string[]>()// jsonConfig.inputs
+	for (const key in jsonConfig.inputs)
+		config.inputs.set(Input[key], jsonConfig.inputs[key])
+	return config
 }
