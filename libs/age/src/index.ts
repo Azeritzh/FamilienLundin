@@ -1,7 +1,6 @@
 export * from "./age"
 export * from "./base-display"
 export * from "./base-game"
-export * from "./base-input"
 export * from "./game-runner"
 export * from "./interfaces/game-ai"
 export * from "./interfaces/game-logic"

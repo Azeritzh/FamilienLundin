@@ -2,9 +2,7 @@ export class KeyStates {
 	constructor(
 		public onDown: { [key: string]: (key: string) => void } = {},
 		public onUp: { [key: string]: (key: string) => void } = {},
-		public isPressed: { [key: string]: boolean } = {},
-		private inputChanges: { [key: string]: boolean } = {},
-		private pollableState: InputState = {},
+		private states: { [key: string]: number } = {},
 	) {
 		window.addEventListener("keydown", this.onKeyDown, { capture: true })
 		window.addEventListener("keyup", this.onKeyUp)
@@ -16,131 +14,89 @@ export class KeyStates {
 	}
 
 	private onKeyDown = (event: KeyboardEvent) => {
-		if (this.isPressed[event.code])
+		if (this.states[event.code])
 			return
-		this.isPressed[event.code] = true
-		this.inputChanges[event.code] = true
-		this.updateStateFor(event.code, true)
+		this.states[event.code] = 1
 		this.onDown[event.code]?.(event.code)
 	}
 
 	private onKeyUp = (event: KeyboardEvent) => {
-		if (!this.isPressed[event.code])
+		if (!this.states[event.code])
 			return
-		this.isPressed[event.code] = false
-		this.updateStateFor(event.code, false)
-		if (!this.wasPressedSinceLastRequest(event.code))
-			this.inputChanges[event.code] = false
+		this.states[event.code] = 0
 		this.onUp[event.code]?.(event.code)
 	}
 
-	private updateStateFor(key: string, state: boolean) {
-		if (!this.pollableState[key])
-			return this.pollableState[key] = { hasChanged: true, state }
-		if (this.pollableState[key].hasChanged)
-			return // delay
-		this.pollableState[key].hasChanged = true
-		this.pollableState[key].state = state
+	getInputState(input: string) {
+		const state = this.states[input]
+		if (state !== null && state !== undefined)
+			return state
+		return this.getFirstGamepadState(input)
 	}
 
-	private wasPressedSinceLastRequest(key: string) {
-		return this.inputChanges[key]
+	private getFirstGamepadState(input: string) {
+		const gamepads = (navigator.getGamepads?.() ?? []).filter(x => x)
+		if (gamepads.length === 0)
+			return 0
+		const gamepad = gamepads.first()
+		if (gamepad?.mapping === "standard")
+			return this.getStandardGamepadState(input, gamepad)
+		else
+			return this.getNonStandardGamepadState(input, gamepad)
 	}
 
-	getInputChanges() {
-		const changes = this.inputChanges
-		const newChanges = {}
-		for (const key in this.inputChanges)
-			if (this.hasAlreadyBeenUnpressed(key))
-				newChanges[key] = false
-		this.inputChanges = newChanges
-		return changes
+	private getStandardGamepadState(input: string, gamepad: Gamepad) {
+		return this.getStandardButtonState(input, gamepad)
+			?? this.getStandardAnalogStickState(input, gamepad)
 	}
 
-	getInputState() {
-		this.updateGamePadStates()
-		const state = { ...this.pollableState }
-		for (const key in this.pollableState) {
-			const state = this.isPressed[key]
-			const hasChanged = state !== this.pollableState[key].state
-			this.pollableState[key] = { hasChanged, state }
+	private getStandardButtonState(input: string, gamepad: Gamepad) {
+		switch (input) {
+			case "PadA": return gamepad.buttons[0].pressed ? 1 : 0
+			case "PadB": return gamepad.buttons[1].pressed ? 1 : 0
+			case "PadX": return gamepad.buttons[2].pressed ? 1 : 0
+			case "PadY": return gamepad.buttons[3].pressed ? 1 : 0
+			case "PadLeftShoulder": return gamepad.buttons[4].pressed ? 1 : 0
+			case "PadRightShoulder": return gamepad.buttons[5].pressed ? 1 : 0
+			case "PadSelect": return gamepad.buttons[8].pressed ? 1 : 0
+			case "PadStart": return gamepad.buttons[9].pressed ? 1 : 0
+			case "PadUp": return gamepad.buttons[12].pressed ? 1 : 0
+			case "PadDown": return gamepad.buttons[13].pressed ? 1 : 0
+			case "PadLeft": return gamepad.buttons[14].pressed ? 1 : 0
+			case "PadRight": return gamepad.buttons[15].pressed ? 1 : 0
 		}
-		return state
 	}
 
-	private hasAlreadyBeenUnpressed(key: string) {
-		return this.inputChanges[key] && !this.isPressed[key]
+	private getStandardAnalogStickState(input: string, gamepad: Gamepad) {
+		switch (input) {
+			case "PadLeftStickUp": return Math.max(0, -gamepad.axes[1]) * 1.2 - 0.2
+			case "PadLeftStickDown": return Math.max(0, gamepad.axes[1]) * 1.2 - 0.2
+			case "PadLeftStickLeft": return Math.max(0, -gamepad.axes[0]) * 1.2 - 0.2
+			case "PadLeftStickRight": return Math.max(0, gamepad.axes[0]) * 1.2 - 0.2
+		}
 	}
 
-	private updateGamePadStates() {
-		this.initialiseGamepadStates()
-		const gamepads = navigator.getGamepads?.() ?? []
-		for (const gamepad of gamepads)
-			if (gamepad?.mapping === "standard")
-				this.updateStandardGamePadStates(gamepad)
-			else if (gamepad)
-				this.updateNonStandardGamePadStates(gamepad)
+	private getNonStandardGamepadState(input: string, gamepad: Gamepad) {
+		return this.getNonStandardDpadState(input, gamepad)
+			?? this.getStandardButtonState(input, gamepad)
+			?? this.getNonStandardEmulatedLeftAnalogState(input, gamepad)
 	}
 
-	private initialiseGamepadStates() {
-		this.pollableState["PadB"] = { hasChanged: true, state: false } // xbox A
-		this.pollableState["PadA"] = { hasChanged: true, state: false } // xbox B
-		this.pollableState["PadY"] = { hasChanged: true, state: false } // xbox X
-		this.pollableState["PadX"] = { hasChanged: true, state: false } // xbox Y
-		this.pollableState["PadLeftShoulder"] = { hasChanged: true, state: false }
-		this.pollableState["PadRightShoulder"] = { hasChanged: true, state: false }
-		this.pollableState["PadStart"] = { hasChanged: true, state: false }
-		this.pollableState["PadSelect"] = { hasChanged: true, state: false }
-		this.pollableState["PadUp"] = { hasChanged: true, state: false }
-		this.pollableState["PadRight"] = { hasChanged: true, state: false }
-		this.pollableState["PadDown"] = { hasChanged: true, state: false }
-		this.pollableState["PadLeft"] = { hasChanged: true, state: false }
+	private getNonStandardDpadState(input: string, gamepad: Gamepad) {
+		switch (input) {
+			case "PadUp": return (gamepad.axes[9] < -0.7 || (0.8 < gamepad.axes[9] && gamepad.axes[9] < 1.1)) ? 1 : 0
+			case "PadDown": return (-0.2 < gamepad.axes[9] && gamepad.axes[9] < 0.5) ? 1 : 0
+			case "PadLeft": return (0.4 < gamepad.axes[9] && gamepad.axes[9] < 1.1) ? 1 : 0
+			case "PadRight": return (-0.8 < gamepad.axes[9] && gamepad.axes[9] < 0) ? 1 : 0
+		}
 	}
 
-	private updateStandardGamePadStates(gamepad: Gamepad) {
-		this.readStandardButtons(gamepad)
-		this.readLeftAnalogAsDpad(gamepad)
+	private getNonStandardEmulatedLeftAnalogState(input: string, gamepad: Gamepad) {
+		switch (input) {
+			case "PadLeftStickUp": return (gamepad.axes[9] < -0.7 || (0.8 < gamepad.axes[9] && gamepad.axes[9] < 1.1)) ? 1 : 0
+			case "PadLeftStickDown": return (-0.2 < gamepad.axes[9] && gamepad.axes[9] < 0.5) ? 1 : 0
+			case "PadLeftStickLeft": return (0.4 < gamepad.axes[9] && gamepad.axes[9] < 1.1) ? 1 : 0
+			case "PadLeftStickRight": return (-0.8 < gamepad.axes[9] && gamepad.axes[9] < 0) ? 1 : 0
+		}
 	}
-
-	private readStandardButtons(gamepad: Gamepad) {
-		this.setState("PadB", gamepad.buttons[0].pressed)
-		this.setState("PadA", gamepad.buttons[1].pressed)
-		this.setState("PadY", gamepad.buttons[2].pressed)
-		this.setState("PadX", gamepad.buttons[3].pressed)
-		this.setState("PadLeftShoulder", gamepad.buttons[4].pressed)
-		this.setState("PadRightShoulder", gamepad.buttons[5].pressed)
-		this.setState("PadSelect", gamepad.buttons[8].pressed)
-		this.setState("PadStart", gamepad.buttons[9].pressed)
-		this.setState("PadUp", gamepad.buttons[12].pressed)
-		this.setState("PadDown", gamepad.buttons[13].pressed)
-		this.setState("PadLeft", gamepad.buttons[14].pressed)
-		this.setState("PadRight", gamepad.buttons[15].pressed)
-	}
-
-	private readLeftAnalogAsDpad(gamepad: Gamepad) {
-		this.setState("PadUp", -0.5 > gamepad.axes[1])
-		this.setState("PadDown", 0.5 < gamepad.axes[1])
-		this.setState("PadLeft", -0.5 > gamepad.axes[0])
-		this.setState("PadRight", 0.5 < gamepad.axes[0])
-	}
-
-	private updateNonStandardGamePadStates(gamepad: Gamepad) {
-		this.readStandardButtons(gamepad)
-		this.readNonStandardDpad(gamepad)
-	}
-
-	private readNonStandardDpad(gamepad: Gamepad) {
-		this.setState("PadUp", gamepad.axes[9] < -0.7 || (0.8 < gamepad.axes[9] && gamepad.axes[9] < 1.1))
-		this.setState("PadDown", -0.2 < gamepad.axes[9] && gamepad.axes[9] < 0.5)
-		this.setState("PadLeft", 0.4 < gamepad.axes[9] && gamepad.axes[9] < 1.1)
-		this.setState("PadRight", -0.8 < gamepad.axes[9] && gamepad.axes[9] < 0)
-	}
-
-	private setState(button: string, state: boolean) {
-		this.pollableState[button].state = state || this.pollableState[button].state
-	}
-}
-
-export interface InputState {
-	[key: string]: { hasChanged: boolean, state: boolean }
 }

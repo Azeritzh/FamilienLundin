@@ -152,7 +152,7 @@ export class DisplayProvider {
 
 	getInputState(input: string) {
 		input = this.translateInputString(input)
-		return this.keyStates.isPressed[input] ? 1 : 0
+		return this.keyStates.getInputState(input)
 	}
 
 	private translateInputString(input: string) {
@@ -163,6 +163,7 @@ export class DisplayProvider {
 			case "Down": return "ArrowDown"
 			case "Left": return "ArrowLeft"
 			case "Right": return "ArrowRight"
+			case "LeftShift": return "ShiftLeft"
 		}
 		return input
 	}

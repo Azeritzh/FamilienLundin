@@ -6,11 +6,11 @@
 	"assetFolder": "assets/",
 	"inputs": {
 		"Restart": [ "Escape", "Enter", "PadStart" ],
-		"MoveUp": [ "W", "Up", "PadUp" ],
-		"MoveDown": [ "S", "Down", "PadDown" ],
-		"MoveLeft": [ "A", "Left", "PadLeft" ],
-		"MoveRight": [ "D", "Right", "PadRight" ],
-		"MoveSlow": [ "ShiftLeft", "PadB" ]
+		"MoveUp": [ "W", "Up", "PadUp", "PadLeftStickUp" ],
+		"MoveDown": [ "S", "Down", "PadDown", "PadLeftStickDown" ],
+		"MoveLeft": [ "A", "Left", "PadLeft", "PadLeftStickLeft" ],
+		"MoveRight": [ "D", "Right", "PadRight", "PadLeftStickRight" ],
+		"MoveSlow": [ "LeftShift", "PadA" ]
 	},
 	"sprites": {
 		"full-shield": {
