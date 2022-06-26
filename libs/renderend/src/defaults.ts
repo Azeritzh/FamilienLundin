@@ -1,5 +1,6 @@
 import { RectangularSize } from "@lundin/age"
 import { DisplayConfig } from "./display/display-config"
+import { Input } from "./display/input-parser"
 
 export const defaultConstants = {
 	shipType: "ship",
@@ -38,6 +39,14 @@ export const defaultDisplayConfig: DisplayConfig = {
 	virtualHeight: 160,
 	font: "Vt323",
 	assetFolder: "assets/",
+	inputs: new Map([
+		[Input.Restart, ["Escape", "Enter", "PadStart"]],
+		[Input.MoveUp, ["KeyW", "ArrowUp", "PadUp"]],
+		[Input.MoveDown, ["KeyS", "ArrowDown", "PadDown"]],
+		[Input.MoveLeft, ["KeyA", "ArrowLeft", "PadLeft"]],
+		[Input.MoveRight, ["KeyD", "ArrowRight", "PadRight"]],
+		[Input.MoveSlow, ["ShiftLeft", "PadB"]],
+	]),
 	sprites: {
 		"full-shield": {
 			url: "full-shield.png",
