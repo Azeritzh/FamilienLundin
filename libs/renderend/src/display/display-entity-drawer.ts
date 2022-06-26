@@ -1,4 +1,5 @@
 import { Id, typeOf } from "@lundin/age"
+import { Vector2 } from "@lundin/utility"
 import { Renderend } from "../renderend"
 import { DisplayEntity, DisplayState } from "./display-state"
 import { SpriteDrawer } from "./sprite-drawer"
@@ -27,13 +28,46 @@ export class DisplayEntityDrawer {
 
 	onDeath(entity: Id) {
 		const type = this.game.config.typeMap.typeFor(typeOf(entity))
-		if (type !== "obstacle")
-			return
+		switch (type) {
+			case "bullet": return this.spawnBulletExplosion(entity)
+			case "obstacle": return this.spawnObstacleExplosion(entity)
+			case "big-obstacle": return this.spawnBigObstacleExplosion(entity)
+		}
+	}
+
+	private spawnObstacleExplosion(entity: Id) {
+		this.spawnExplosion(
+			"obstacle-explosion",
+			this.game.entities.position.get.of(entity),
+			this.game.entities.velocity.get.of(entity),
+			40,
+		)
+	}
+
+	private spawnBigObstacleExplosion(entity: Id) {
+		this.spawnExplosion(
+			"big-obstacle-explosion",
+			this.game.entities.position.get.of(entity),
+			this.game.entities.velocity.get.of(entity),
+			40,
+		)
+	}
+
+	private spawnBulletExplosion(entity: Id) {
+		this.spawnExplosion(
+			"bullet-explosion",
+			this.game.entities.position.get.of(entity),
+			new Vector2(-this.game.state.globals.speed, 0),
+			20,
+		)
+	}
+
+	private spawnExplosion(sprite: string, position: Vector2, velocity: Vector2, timeToLive: number) {
 		this.state.displayEntities.push({
-			sprite: "obstacle-explosion",
-			position: this.game.entities.position.get.of(entity),
-			velocity: this.game.state.globals.isAlive ? this.game.entities.velocity.get.of(entity) : null,
-			endTick: this.game.state.globals.tick + 40,
+			sprite,
+			position,
+			velocity: this.game.state.globals.isAlive ? velocity : null,
+			endTick: this.game.state.globals.tick + timeToLive,
 			animationStart: this.game.state.globals.tick,
 			lastUpdate: this.game.state.globals.tick,
 		})

@@ -10,7 +10,8 @@
 		"MoveDown": [ "S", "Down", "PadDown", "PadLeftStickDown" ],
 		"MoveLeft": [ "A", "Left", "PadLeft", "PadLeftStickLeft" ],
 		"MoveRight": [ "D", "Right", "PadRight", "PadLeftStickRight" ],
-		"MoveSlow": [ "LeftShift", "PadA" ]
+		"MoveSlow": [ "LeftShift", "PadA" ],
+		"Shoot": [ "Space", "PadB" ]
 	},
 	"sprites": {
 		"full-shield": {
@@ -43,6 +44,34 @@
 			"framesY": 2,
 			"frameInterval": 6
 		},
+		"charge-1": {
+			"path": "charge-1",
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10
+		},
+		"charge-2": {
+			"path": "charge-2",
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10
+		},
+		"charge-3": {
+			"path": "charge-3",
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10
+		},
+		"charge-4": {
+			"path": "charge-4",
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10
+		},
 		"wall": {
 			"path": "wall",
 			"width": 16,
@@ -73,6 +102,36 @@
 			"height": 32,
 			"centerX": 16,
 			"centerY": 16
+		},
+		"big-obstacle-explosion": {
+			"path": "big-obstacle-explosion",
+			"width": 32,
+			"height": 32,
+			"centerX": 16,
+			"centerY": 16,
+			"framesX": 4,
+			"framesY": 1,
+			"frameInterval": 10
+		},
+		"bullet": {
+			"path": "bullet",
+			"width": 8,
+			"height": 8,
+			"centerX": 4,
+			"centerY": 4,
+			"framesX": 3,
+			"framesY": 1,
+			"frameInterval": 5
+		},
+		"bullet-explosion": {
+			"path": "bullet-explosion",
+			"width": 8,
+			"height": 8,
+			"centerX": 4,
+			"centerY": 4,
+			"framesX": 4,
+			"framesY": 1,
+			"frameInterval": 5
 		},
 		"background": {
 			"path": "starry-background",

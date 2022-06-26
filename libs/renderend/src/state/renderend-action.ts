@@ -9,3 +9,5 @@ export class MoveShipAction extends RenderendAction {
 		public velocity: Vector2,
 	) { super() }
 }
+
+export class ShootBulletAction extends RenderendAction { }

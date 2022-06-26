@@ -1,8 +1,11 @@
 import { BaseGame, Random } from "@lundin/age"
 import { RenderendConfig } from "./config/renderend-config"
+import { BulletLogic } from "./logic/bullet-logic"
+import { ChargeLogic } from "./logic/charge-logic"
 import { CollisionLogic } from "./logic/collision-logic"
 import { DamageLogic } from "./logic/damage-logic"
 import { DeathLogic } from "./logic/death-logic"
+import { DespawnLogic } from "./logic/despawn-logic"
 import { DifficultyLogic } from "./logic/difficulty-logic"
 import { GameOverLogic } from "./logic/game-over-logic"
 import { MoveShipLogic } from "./logic/move-ship-logic"
@@ -24,6 +27,18 @@ export class Renderend extends BaseGame<RenderendAction> {
 		readonly changes = new RenderendChanges(new EntityValues()),
 		public readonly entities = new RenderendEntities(config.typeValues, state.entityValues, changes.updatedEntityValues, state),
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
+		public bulletLogic = new BulletLogic(
+			entities,
+			entities.charge.get,
+			entities.position.get,
+			entities.charge.set,
+			entities.position.set,
+		),
+		public chargeLogic = new ChargeLogic(
+			config.constants,
+			entities,
+			entities.charge.set,
+		),
 		public collisionLogic = new CollisionLogic(
 			entities,
 			entities.position.get,
@@ -36,6 +51,9 @@ export class Renderend extends BaseGame<RenderendAction> {
 		public deathLogic = new DeathLogic(
 			entities,
 			entities.health.get,
+		),
+		public despawnLogic = new DespawnLogic(
+			entities,
 		),
 		public difficultyLogic = new DifficultyLogic(
 			state.globals,
@@ -81,7 +99,10 @@ export class Renderend extends BaseGame<RenderendAction> {
 		super([ // Order depends on usage of globals variables and priority of changes to same values
 			difficultyLogic,
 			moveShipLogic,
+			chargeLogic, // needs to be before bulletlogic due to charge changes
+			bulletLogic,
 			collisionLogic,
+			despawnLogic,
 			obstacleLogic,
 			velocityLogic,
 			deathLogic,

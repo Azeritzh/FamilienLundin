@@ -1,6 +1,6 @@
 import { Vector2 } from "@lundin/utility"
 import { DisplayProvider } from "../renderend-game"
-import { MoveShipAction, StartGameAction } from "../state/renderend-action"
+import { MoveShipAction, ShootBulletAction, StartGameAction } from "../state/renderend-action"
 import { DisplayConfig } from "./display-config"
 
 export class InputParser {
@@ -8,6 +8,7 @@ export class InputParser {
 		private displayProvider: DisplayProvider,
 		private config: DisplayConfig,
 		private actionStates = new Map<Input, number>(),
+		private previousStates = new Map<Input, number>(),
 	) { }
 
 	parseInputs() {
@@ -16,7 +17,8 @@ export class InputParser {
 	}
 
 	private updateActionStates() {
-		this.actionStates.clear()
+		this.previousStates = this.actionStates
+		this.actionStates = new Map()
 		for (const [input, keys] of this.config.inputs)
 			this.actionStates.set(input, this.stateFor(...keys))
 	}
@@ -29,6 +31,7 @@ export class InputParser {
 		return [
 			this.parseMovement(),
 			this.parseRestart(),
+			this.parseShot(),
 		].filter(x => x)
 	}
 
@@ -49,8 +52,18 @@ export class InputParser {
 			return new StartGameAction()
 	}
 
+	private parseShot() {
+		if (this.hasJustBeenPressed(Input.Shoot))
+			return new ShootBulletAction()
+	}
+
 	private boolStateFor(input: Input) {
 		return this.actionStates.get(input) > 0.5
+	}
+
+	private hasJustBeenPressed(input: Input) {
+		return this.actionStates.get(input) > 0.5
+			&& this.previousStates.get(input) <= 0.5
 	}
 }
 
@@ -61,4 +74,5 @@ export enum Input {
 	MoveLeft,
 	MoveRight,
 	MoveSlow,
+	Shoot,
 }
