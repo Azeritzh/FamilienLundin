@@ -1,11 +1,12 @@
 import { ScreenSize } from "@lundin/age"
-import { Vector2 } from "@lundin/utility"
+import { Vector2, Vector3 } from "@lundin/utility"
 import { DisplayConfig } from "./display-config"
 
 export class DisplayState {
 	constructor(
 		public size: ScreenSize,
 		public fractionOfTick = 0,
+		public focusPoint = new Vector3(0, 0, 0),
 		public displayEntities: DisplayEntity[] = [],
 	) { }
 
