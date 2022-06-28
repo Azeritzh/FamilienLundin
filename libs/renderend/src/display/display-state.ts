@@ -25,7 +25,6 @@ export interface DisplayEntity {
 	velocity: Vector2
 	endTick: number
 	animationStart: number
-	lastUpdate: number
 }
 
 export class ScreenSize {

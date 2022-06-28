@@ -22,43 +22,43 @@ export class RenderendConfig {
 	}
 }
 
-function constantsFrom(jsonObject: any, typeMap: TypeMap) {
-	const constants = Object.assign(new RenderendConstants(0, 0, []), jsonObject)
-	constants.shipType = typeMap.typeIdFor(jsonObject.shipType)
-	constants.wallType = typeMap.typeIdFor(jsonObject.wallType)
-	constants.obstacleTypes = jsonObject.obstacleTypes.map(x => typeMap.typeIdFor(x))
-	if (jsonObject.initialSpeed)
-		constants.initialSpeed = jsonObject.initialSpeed / updatesPerSecond
-	if (jsonObject.acceleration)
-		constants.acceleration = jsonObject.acceleration / updatesPerSecond
-	if (jsonObject.maxVerticalSpeed)
-		constants.maxVerticalSpeed = jsonObject.maxVerticalSpeed / updatesPerSecond
-	if (jsonObject.minHorisontalSpeed)
-		constants.minHorisontalSpeed = jsonObject.minHorisontalSpeed / updatesPerSecond
-	if (jsonObject.maxHorisontalSpeed)
-		constants.maxHorisontalSpeed = jsonObject.maxHorisontalSpeed / updatesPerSecond
-	if (jsonObject.chargeSpeed)
-		constants.chargeSpeed = jsonObject.chargeSpeed / updatesPerSecond
-	if (jsonObject.easyObstacleInterval)
-		constants.easyObstacleInterval = Math.floor(jsonObject.easyObstacleInterval * updatesPerSecond)
-	if (jsonObject.mediumObstacleInterval)
-		constants.mediumObstacleInterval = Math.floor(jsonObject.mediumObstacleInterval * updatesPerSecond)
-	if (jsonObject.hardObstacleInterval)
-		constants.hardObstacleInterval = Math.floor(jsonObject.hardObstacleInterval * updatesPerSecond)
-	if (jsonObject.annoyingObstacleInterval)
-		constants.annoyingObstacleInterval = Math.floor(jsonObject.annoyingObstacleInterval * updatesPerSecond)
+function constantsFrom(serialised: any, typeMap: TypeMap) {
+	const constants = Object.assign(new RenderendConstants(0, 0, []), serialised)
+	constants.shipType = typeMap.typeIdFor(serialised.shipType)
+	constants.wallType = typeMap.typeIdFor(serialised.wallType)
+	constants.obstacleTypes = serialised.obstacleTypes.map(x => typeMap.typeIdFor(x))
+	if (serialised.initialSpeed)
+		constants.initialSpeed = serialised.initialSpeed / updatesPerSecond
+	if (serialised.acceleration)
+		constants.acceleration = serialised.acceleration / updatesPerSecond
+	if (serialised.maxVerticalSpeed)
+		constants.maxVerticalSpeed = serialised.maxVerticalSpeed / updatesPerSecond
+	if (serialised.minHorisontalSpeed)
+		constants.minHorisontalSpeed = serialised.minHorisontalSpeed / updatesPerSecond
+	if (serialised.maxHorisontalSpeed)
+		constants.maxHorisontalSpeed = serialised.maxHorisontalSpeed / updatesPerSecond
+	if (serialised.chargeSpeed)
+		constants.chargeSpeed = serialised.chargeSpeed / updatesPerSecond
+	if (serialised.easyObstacleInterval)
+		constants.easyObstacleInterval = Math.floor(serialised.easyObstacleInterval * updatesPerSecond)
+	if (serialised.mediumObstacleInterval)
+		constants.mediumObstacleInterval = Math.floor(serialised.mediumObstacleInterval * updatesPerSecond)
+	if (serialised.hardObstacleInterval)
+		constants.hardObstacleInterval = Math.floor(serialised.hardObstacleInterval * updatesPerSecond)
+	if (serialised.annoyingObstacleInterval)
+		constants.annoyingObstacleInterval = Math.floor(serialised.annoyingObstacleInterval * updatesPerSecond)
 	return constants
 }
 
-function groupedEntityValuesFrom(jsonObject: any, typeMap: TypeMap) {
-	const values: GroupedEntityValues = { ...jsonObject }
-	if (jsonObject.position)
-		values.position = Object.assign(new Vector2(0, 0), jsonObject.position)
-	if (jsonObject.rectangularSize)
-		values.rectangularSize = Object.assign(new RectangularSize(0, 0), jsonObject.rectangularSize)
-	if (jsonObject.velocity)
-		values.velocity = Object.assign(new Vector2(0, 0), jsonObject.velocity).multiply(1 / updatesPerSecond)
-	if (jsonObject.bulletType)
-		values.bulletType = typeMap.typeIdFor(jsonObject.bulletType)
+function groupedEntityValuesFrom(serialised: any, typeMap: TypeMap) {
+	const values: GroupedEntityValues = { ...serialised }
+	if (serialised.position)
+		values.position = Object.assign(new Vector2(0, 0), serialised.position)
+	if (serialised.rectangularSize)
+		values.rectangularSize = Object.assign(new RectangularSize(0, 0), serialised.rectangularSize)
+	if (serialised.velocity)
+		values.velocity = Object.assign(new Vector2(0, 0), serialised.velocity).multiply(1 / updatesPerSecond)
+	if (serialised.bulletType)
+		values.bulletType = typeMap.typeIdFor(serialised.bulletType)
 	return values
 }
