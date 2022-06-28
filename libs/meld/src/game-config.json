@@ -1,0 +1,11 @@
+{
+	"constants": {},
+	"types": {
+		"tile-dirt": {},
+		"tile-earth": {},
+		"tile-grass": {},
+		"tile-slab": {},
+		"tile-stone": {},
+		"tile-wooden": {}
+	}
+}

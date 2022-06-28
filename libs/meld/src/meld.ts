@@ -14,7 +14,7 @@ export class Meld extends BaseGame<MeldAction> {
 		public readonly config: MeldConfig,
 		public readonly state = new MeldState(new Globals(), new EntityValues()),
 		public readonly changes = new MeldChanges(new EntityValues()),
-		public readonly terrain = new TerrainManager(config.chunkSize, state.chunks, changes.updatedBlocks),
+		public readonly terrain = new TerrainManager(config.constants.chunkSize, state.chunks, changes.updatedBlocks),
 		public readonly entities = new MeldEntities(config.typeValues, state.entityValues, changes.updatedEntityValues, state),
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
 	) {

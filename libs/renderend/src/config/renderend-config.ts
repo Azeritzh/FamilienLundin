@@ -5,36 +5,22 @@ import { Vector2 } from "@lundin/utility"
 
 export class RenderendConfig {
 	constructor(
+		public readonly constants: RenderendConstants,
 		public readonly typeMap: TypeMap,
 		public readonly typeValues: Map<Id, GroupedEntityValues>,
-		public readonly constants: RenderendConstants,
 	) { }
-
-	public static from(constants: any, types: { [type: string]: GroupedEntityValues }) {
-		const typeNames = Object.keys(types)
-		const typeMap = TypeMap.from(typeNames)
-		return new RenderendConfig(
-			typeMap,
-			new Map(typeNames.map(x => [typeMap.typeIdFor(x), types[x]])),
-			new RenderendConstants(
-				typeMap.typeIdFor(constants.shipType),
-				typeMap.typeIdFor(constants.wallType),
-				constants.obstacleTypes.map(x => typeMap.typeIdFor(x)),
-			),
-		)
-	}
 
 	public static read(jsonConfig: any) {
 		const typeNames = Object.keys(jsonConfig.types)
 		const typeMap = TypeMap.from(typeNames)
+		const constants = Object.assign(new RenderendConstants(0, 0, []), jsonConfig.constants)
+		constants.shipType = typeMap.typeIdFor(jsonConfig.constants.shipType)
+		constants.wallType = typeMap.typeIdFor(jsonConfig.constants.wallType)
+		constants.obstacleTypes = jsonConfig.constants.obstacleTypes.map(x => typeMap.typeIdFor(x))
 		return new RenderendConfig(
+			constants,
 			typeMap,
 			new Map(typeNames.map(x => [typeMap.typeIdFor(x), groupedEntityValuesFrom(jsonConfig.types[x], typeMap)])),
-			new RenderendConstants(
-				typeMap.typeIdFor(jsonConfig.constants.shipType),
-				typeMap.typeIdFor(jsonConfig.constants.wallType),
-				jsonConfig.constants.obstacleTypes.map(x => typeMap.typeIdFor(x)),
-			),
 		)
 	}
 }
