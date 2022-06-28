@@ -2,7 +2,7 @@ import { range, Vector3 } from "@lundin/utility"
 
 export class TerrainManager<Field> {
 	constructor(
-		private chunkSize: Vector3 = { x: 10, y: 10, z: 1 },
+		private chunkSize = new Vector3(10, 10, 1),
 		private chunks: Map<string, Field[]>,
 		private updatedBlocks = new Map<Vector3, Field>(),
 	) { }
@@ -37,11 +37,11 @@ export class TerrainManager<Field> {
 
 	/** Takes a global position and returns the corresponding chunk coordinate */
 	private getChunkCoords(x: number, y: number, z: number): Vector3 {
-		return {
-			x: this.chunkCoord(x, this.chunkSize.x),
-			y: this.chunkCoord(y, this.chunkSize.y),
-			z: this.chunkCoord(z, this.chunkSize.z),
-		}
+		return new Vector3(
+			this.chunkCoord(x, this.chunkSize.x),
+			this.chunkCoord(y, this.chunkSize.y),
+			this.chunkCoord(z, this.chunkSize.z),
+		)
 	}
 
 	private chunkCoord(n: number, size: number) {
@@ -62,7 +62,7 @@ export class TerrainManager<Field> {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
-		return this.updatedBlocks.get({ x, y, z })
+		return this.updatedBlocks.get(new Vector3(x, y, z))
 			?? this.get(x, y, z)
 	}
 
@@ -93,7 +93,7 @@ export class TerrainManager<Field> {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
-		this.updatedBlocks.set({ x, y, z }, field)
+		this.updatedBlocks.set(new Vector3(x, y, z), field)
 	}
 
 	public applyUpdatedValues() {

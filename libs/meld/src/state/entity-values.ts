@@ -1,5 +1,5 @@
 import { BaseValues, EntityManager, Id, RectangularSize } from "@lundin/age"
-import { Vector2 } from "@lundin/utility"
+import { Vector3 } from "@lundin/utility"
 
 export type MeldEntities = EntityManager<EntityValues>
 
@@ -8,8 +8,8 @@ export class EntityValues extends BaseValues {
 		public readonly rectangularSize = new Map<Id, RectangularSize>(),
 		public readonly health = new Map<Id, number>(),
 		public readonly orientation = new Map<Id, number>(),
-		public readonly position = new Map<Id, Vector2>(),
-		public readonly velocity = new Map<Id, Vector2>(),
+		public readonly position = new Map<Id, Vector3>(),
+		public readonly velocity = new Map<Id, Vector3>(),
 		entities = new Map<Id, boolean>(),
 	) {
 		super(entities)
@@ -54,7 +54,7 @@ export class EntityValues extends BaseValues {
 export interface GroupedEntityValues {
 	rectangularSize?: RectangularSize
 	health?: number
-	position?: Vector2
-	velocity?: Vector2
+	position?: Vector3
+	velocity?: Vector3
 	orientation?: number
 }

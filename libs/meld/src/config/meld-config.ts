@@ -1,5 +1,5 @@
 import { Id, RectangularSize, TypeMap } from "@lundin/age"
-import { Vector2 } from "@lundin/utility"
+import { Vector3 } from "@lundin/utility"
 import { MeldConstants } from "./meld-constants"
 import { BlockValues } from "../state/block-values"
 import { GroupedEntityValues } from "../state/entity-values"
@@ -27,10 +27,10 @@ export class MeldConfig {
 function groupedEntityValuesFrom(jsonObject: any) {
 	const values: GroupedEntityValues = { ...jsonObject }
 	if (jsonObject.position)
-		values.position = Object.assign(new Vector2(0, 0), jsonObject.position)
+		values.position = Object.assign(new Vector3(0, 0,0), jsonObject.position)
 	if (jsonObject.rectangularSize)
 		values.rectangularSize = Object.assign(new RectangularSize(0, 0), jsonObject.rectangularSize)
 	if (jsonObject.velocity)
-		values.velocity = Object.assign(new Vector2(0, 0), jsonObject.velocity)
+		values.velocity = Object.assign(new Vector3(0, 0,0), jsonObject.velocity)
 	return values
 }
