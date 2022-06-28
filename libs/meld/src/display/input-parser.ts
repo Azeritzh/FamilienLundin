@@ -1,6 +1,6 @@
 import { BaseInputParser } from "@lundin/age"
-import { Vector2 } from "@lundin/utility"
-import { GenerateAction, MoveAction } from "../state/meld-action"
+import { Vector2, Vector3 } from "@lundin/utility"
+import { GenerateAction, MoveAction, RandomiseAction } from "../state/meld-action"
 
 export class InputParser extends BaseInputParser<Input> {
 	parseInputs() {
@@ -8,6 +8,7 @@ export class InputParser extends BaseInputParser<Input> {
 		return [
 			this.parseMovement(),
 			this.parseGenerate(),
+			this.parseRandomise(),
 		].filter(x => x)
 	}
 
@@ -27,6 +28,11 @@ export class InputParser extends BaseInputParser<Input> {
 		if (this.hasJustBeenPressed(Input.Generate))
 			return new GenerateAction()
 	}
+
+	private parseRandomise() {
+		if (this.hasJustBeenPressed(Input.Randomise))
+			return new RandomiseAction(new Vector3(Math.random() * 10, Math.random() * 10, 0))
+	}
 }
 
 export enum Input {
@@ -35,5 +41,6 @@ export enum Input {
 	MoveDown,
 	MoveLeft,
 	MoveRight,
+	Randomise,
 	Run,
 }

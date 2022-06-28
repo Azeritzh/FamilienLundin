@@ -9,6 +9,7 @@
 		"MoveDown": [ "S", "Down", "PadDown", "PadLeftStickDown" ],
 		"MoveLeft": [ "A", "Left", "PadLeft", "PadLeftStickLeft" ],
 		"MoveRight": [ "D", "Right", "PadRight", "PadLeftStickRight" ],
+		"Randomise": [ "Space", "PadB" ],
 		"Run": [ "LeftShift", "PadA" ]
 	},
 	"sprites": {
