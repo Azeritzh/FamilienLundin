@@ -1,6 +1,6 @@
+import { DisplayProvider } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { Renderend } from "../renderend"
-import { DisplayProvider } from "../renderend-game"
 import { DisplayConfig } from "./display-config"
 import { DisplayState } from "./display-state"
 

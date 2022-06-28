@@ -1,5 +1,5 @@
+import { DisplayProvider } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { DisplayProvider } from "../renderend-game"
 import { MoveShipAction, ShootBulletAction, StartGameAction } from "../state/renderend-action"
 import { DisplayConfig } from "./display-config"
 
@@ -48,7 +48,7 @@ export class InputParser {
 	}
 
 	private parseRestart() {
-		if (this.boolStateFor(Input.Restart))
+		if (this.hasJustBeenPressed(Input.Restart))
 			return new StartGameAction()
 	}
 

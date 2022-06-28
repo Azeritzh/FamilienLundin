@@ -1,3 +1,4 @@
+import { DisplayProvider } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { DisplayConfig } from "./display/display-config"
 import { DisplayEntityDrawer } from "./display/display-entity-drawer"
@@ -6,7 +7,6 @@ import { EntityDrawer } from "./display/entity-drawer"
 import { InputParser } from "./display/input-parser"
 import { SpriteDrawer } from "./display/sprite-drawer"
 import { Renderend } from "./renderend"
-import { DisplayProvider } from "./renderend-game"
 
 export class RenderendDisplay {
 	constructor(

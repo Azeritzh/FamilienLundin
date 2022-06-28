@@ -69,6 +69,8 @@ export class TerrainManager<Field> {
 	/** Iterates through all fields in a chunk, and returns the local position and field */
 	public *allFields(chunkX = 0, chunkY = 0, chunkZ = 0) {
 		const chunk = this.chunks.get(this.convertChunkCoords(chunkX, chunkY, chunkZ))
+		if (!chunk)
+			return // TODO: should there be notification or something here?
 		for (const z of range(0, this.chunkSize.z))
 			for (const y of range(0, this.chunkSize.y))
 				for (const x of range(0, this.chunkSize.x))
