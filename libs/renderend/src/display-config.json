@@ -13,6 +13,11 @@
 		"MoveSlow": [ "LeftShift", "PadA" ],
 		"Shoot": [ "Space", "PadB" ]
 	},
+	"deathAnimations": {
+		"obstacle": "obstacle-explosion",
+		"big-obstacle": "big-obstacle-explosion",
+		"bullet": "bullet-explosion"
+	},
 	"sprites": {
 		"full-shield": {
 			"path": "full-shield",

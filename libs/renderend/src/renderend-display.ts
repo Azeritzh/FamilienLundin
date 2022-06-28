@@ -17,7 +17,7 @@ export class RenderendDisplay {
 		private inputParser = new InputParser(display, config),
 		private spriteDrawer = new SpriteDrawer(game, display, config, state),
 		private entityDrawer = new EntityDrawer(game, spriteDrawer),
-		private displayEntityDrawer = new DisplayEntityDrawer(game, state, spriteDrawer),
+		private displayEntityDrawer = new DisplayEntityDrawer(game, config, state, spriteDrawer),
 	) {
 		this.game.deathLogic.listeners.push(displayEntityDrawer)
 	}

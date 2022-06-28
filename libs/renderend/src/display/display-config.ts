@@ -7,6 +7,7 @@ export interface DisplayConfig {
 	font: string
 	assetFolder: string
 	inputs: Map<Input, string[]>,
+	deathAnimations: { [type: string]: string },
 	sprites: {
 		[index: string]: {
 			path: string
@@ -18,12 +19,12 @@ export interface DisplayConfig {
 			framesY?: number
 			frameInterval?: number
 		}
-	}
+	},
 }
 
 export function readDisplayConfig(jsonConfig: any) {
 	const config: DisplayConfig = { ...jsonConfig }
-	config.inputs = new Map<Input, string[]>()// jsonConfig.inputs
+	config.inputs = new Map<Input, string[]>()
 	for (const key in jsonConfig.inputs)
 		config.inputs.set(Input[key], jsonConfig.inputs[key])
 	return config
