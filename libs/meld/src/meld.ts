@@ -1,7 +1,7 @@
 import { BaseGame, Random, TerrainManager } from "@lundin/age"
 import { StartLogic } from "./logic/start-logic"
 import { UpdateStateLogic } from "./logic/update-state-logic"
-import { MeldConfig } from "./meld-config"
+import { MeldConfig } from "./config/meld-config"
 import { EntityValues } from "./state/entity-values"
 import { Globals } from "./state/globals"
 import { MeldAction } from "./state/meld-action"

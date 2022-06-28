@@ -1,5 +1,5 @@
 import { GameLogic, Random, TerrainManager } from "@lundin/age"
-import { MeldConfig } from "../meld-config"
+import { MeldConfig } from "../config/meld-config"
 import { Block } from "../state/block"
 import { GenerateAction, MeldAction } from "../state/meld-action"
 

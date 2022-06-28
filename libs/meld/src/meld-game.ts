@@ -3,9 +3,11 @@ import * as defaultDisplayConfig from "./display-config.json"
 import { readDisplayConfig } from "./display/display-config"
 import * as gameConfig from "./game-config.json"
 import { Meld } from "./meld"
-import { MeldConfig } from "./meld-config"
+import { MeldConfig } from "./config/meld-config"
 import { MeldDisplay } from "./meld-display"
 import { GenerateAction, MeldAction } from "./state/meld-action"
+
+export const updatesPerSecond = 30
 
 export class MeldGame extends GameRunner<MeldAction> {
 	constructor(
@@ -13,7 +15,6 @@ export class MeldGame extends GameRunner<MeldAction> {
 		private meldDisplay: MeldDisplay,
 		private displayProvider: HtmlDisplayProvider,
 		game: Meld,
-		updatesPerSecond = 60,
 		private resizeObserver = new ResizeObserver(() => this.setSize(hostElement.clientWidth, hostElement.clientHeight)),
 	) {
 		super(meldDisplay, game, updatesPerSecond)

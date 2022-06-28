@@ -1,8 +1,8 @@
 import { Id, RectangularSize, TypeMap } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { MeldConstants } from "./meld-constants"
-import { BlockValues } from "./state/block-values"
-import { GroupedEntityValues } from "./state/entity-values"
+import { BlockValues } from "../state/block-values"
+import { GroupedEntityValues } from "../state/entity-values"
 
 export class MeldConfig {
 	constructor(

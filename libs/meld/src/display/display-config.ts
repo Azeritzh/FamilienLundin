@@ -1,3 +1,4 @@
+import { updatesPerSecond } from "../meld-game"
 import { Input } from "./input-parser"
 
 export interface DisplayConfig {
@@ -25,5 +26,8 @@ export function readDisplayConfig(jsonConfig: any) {
 	config.inputs = new Map<Input, string[]>()
 	for (const key in jsonConfig.inputs)
 		config.inputs.set(Input[key], jsonConfig.inputs[key])
+	for (const key in config.sprites)
+		if (config.sprites[key].frameInterval)
+			config.sprites[key].frameInterval = config.sprites[key].frameInterval * updatesPerSecond
 	return config
 }
