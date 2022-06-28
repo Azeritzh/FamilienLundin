@@ -23,7 +23,7 @@ export class RenderendConfig {
 }
 
 function constantsFrom(serialised: any, typeMap: TypeMap) {
-	const constants = Object.assign(new RenderendConstants(0, 0, []), serialised)
+	const constants: RenderendConstants = Object.assign(new RenderendConstants(0, 0, []), serialised)
 	constants.shipType = typeMap.typeIdFor(serialised.shipType)
 	constants.wallType = typeMap.typeIdFor(serialised.wallType)
 	constants.obstacleTypes = serialised.obstacleTypes.map(x => typeMap.typeIdFor(x))

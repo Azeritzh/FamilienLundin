@@ -8,6 +8,7 @@ import { MeldAction } from "./state/meld-action"
 import { MeldChanges } from "./state/meld-changes"
 import { MeldEntities } from "./state/meld-entities"
 import { MeldState } from "./state/meld-state"
+import { MovementLogic } from "./logic/movement-logic"
 
 export class Meld extends BaseGame<MeldAction> {
 	constructor(
@@ -17,10 +18,29 @@ export class Meld extends BaseGame<MeldAction> {
 		public readonly terrain = new TerrainManager(config.constants.chunkSize, state.chunks, changes.updatedBlocks),
 		public readonly entities = new MeldEntities(config.typeValues, state.entityValues, changes.updatedEntityValues, state),
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
+		public readonly movementLogic = new MovementLogic(
+			config.constants,
+			entities,
+			entities.velocity.set,
+		),
+		public readonly startLogic = new StartLogic(
+			config,
+			changes,
+			entities,
+			terrain,
+			entities.position.set,
+			random,
+		),
+		public readonly updateStateLogic = new UpdateStateLogic(
+			state,
+			entities,
+			terrain,
+		),
 	) {
 		super([
-			new StartLogic(config, terrain, random),
-			new UpdateStateLogic(state, entities, terrain),
+			movementLogic,
+			startLogic,
+			updateStateLogic,
 		])
 	}
 }

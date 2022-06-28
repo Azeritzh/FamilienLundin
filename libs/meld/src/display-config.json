@@ -12,6 +12,13 @@
 		"Run": [ "LeftShift", "PadA" ]
 	},
 	"sprites": {
+		"player": {
+			"path": "tile-slab",
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
+		},
 		"tile-dirt": {
 			"path": "tile-dirt",
 			"width": 16,

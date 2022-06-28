@@ -1,6 +1,9 @@
 {
-	"constants": {},
+	"constants": {
+		"playerType": "player"
+	},
 	"types": {
+		"player": {},
 		"tile-dirt": {},
 		"tile-earth": {},
 		"tile-grass": {},

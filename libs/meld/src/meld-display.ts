@@ -13,19 +13,19 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 		private game: Meld,
 		private display: HtmlDisplayProvider,
 		private inputParser = new InputParser(display, config.inputs),
-	) {	}
+	) { }
 
-	setSize(width: number, height: number) { 
+	setSize(width: number, height: number) {
 		console.log(width, height)
 	}
 
 	show(fractionOfTick = 0) {
 		this.fractionOfTick = fractionOfTick
 		this.display.startFrame()
-		for (const entity of this.game.entities)
-			this.drawEntity(entity)
 		for (const { x, y, z, field } of this.game.terrain.allFields())
 			this.drawBlock(x, y, z, field)
+		for (const entity of this.game.entities)
+			this.drawEntity(entity)
 		this.display.endFrame()
 	}
 
@@ -44,6 +44,8 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 	}
 
 	private drawBlock(x: number, y: number, z: number, block: Block) {
+		if (z !== 0)
+			return
 		const sprite = this.game.config.typeMap.typeFor(block.solidType) ?? "obstacle"
 		this.display.drawSprite(sprite, x, y, 0, 0)
 	}
