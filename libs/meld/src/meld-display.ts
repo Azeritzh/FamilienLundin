@@ -1,20 +1,19 @@
 import { BaseDisplay, HtmlDisplayProvider, Id, typeOf } from "@lundin/age"
+import { DisplayConfig } from "./display/display-config"
+import { InputParser } from "./display/input-parser"
 import { Meld } from "./meld"
-import { MeldInput } from "./meld-input"
 import { Block } from "./state/block"
 import { MeldAction } from "./state/meld-action"
 
 export class MeldDisplay implements BaseDisplay<MeldAction> {
 	private fractionOfTick = 0
-	private input: MeldInput
 
 	constructor(
 		private config: DisplayConfig,
 		private game: Meld,
 		private display: HtmlDisplayProvider,
-	) {
-		this.input = new MeldInput(this.display.canvas)
-	}
+		private inputParser = new InputParser(display, config.inputs),
+	) {	}
 
 	setSize(width: number, height: number) { 
 		console.log(width, height)
@@ -50,18 +49,6 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 	}
 
 	getNewActions() {
-		return [] //this.input.parseInputs()
-	}
-}
-
-export interface DisplayConfig {
-	sprites: {
-		[index: string]: {
-			url: string,
-			width?: number,
-			height?: number,
-			centerX?: number,
-			centerY?: number,
-		}
+		return this.inputParser.parseInputs()
 	}
 }

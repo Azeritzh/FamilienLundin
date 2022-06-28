@@ -1,0 +1,46 @@
+{
+	"renderToVirtualSize": false,
+	"virtualPixelsPerTile": 16,
+	"virtualHeight": 160,
+	"assetFolder": "assets/",
+	"inputs": {
+		"Generate": [ "Escape", "Enter", "PadStart" ],
+		"MoveUp": [ "W", "Up", "PadUp", "PadLeftStickUp" ],
+		"MoveDown": [ "S", "Down", "PadDown", "PadLeftStickDown" ],
+		"MoveLeft": [ "A", "Left", "PadLeft", "PadLeftStickLeft" ],
+		"MoveRight": [ "D", "Right", "PadRight", "PadLeftStickRight" ],
+		"Run": [ "LeftShift", "PadA" ]
+	},
+	"sprites": {
+		"tile-dirt": {
+			"path": "tile-dirt",
+			"width": 16,
+			"height": 16
+		},
+		"tile-earth": {
+			"path": "tile-earth",
+			"width": 16,
+			"height": 16
+		},
+		"tile-grass": {
+			"path": "tile-grass",
+			"width": 16,
+			"height": 16
+		},
+		"tile-slab": {
+			"path": "tile-slab",
+			"width": 16,
+			"height": 16
+		},
+		"tile-stone": {
+			"path": "tile-stone",
+			"width": 16,
+			"height": 16
+		},
+		"tile-wooden": {
+			"path": "tile-wooden",
+			"width": 16,
+			"height": 16
+		}
+	}
+}

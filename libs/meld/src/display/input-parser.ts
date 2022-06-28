@@ -1,19 +1,18 @@
 import { BaseInputParser } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { MoveShipAction, ShootBulletAction, StartGameAction } from "../state/renderend-action"
+import { GenerateAction, MoveAction } from "../state/meld-action"
 
 export class InputParser extends BaseInputParser<Input> {
 	parseInputs() {
 		this.updateActionStates()
 		return [
 			this.parseMovement(),
-			this.parseRestart(),
-			this.parseShot(),
+			this.parseGenerate(),
 		].filter(x => x)
 	}
 
 	private parseMovement() {
-		const factor = this.boolStateFor(Input.MoveSlow) ? 0.5 : 1
+		const factor = this.boolStateFor(Input.Run) ? 1 : 0.5
 		const up = this.floatStateFor(Input.MoveUp) ?? 0
 		const down = this.floatStateFor(Input.MoveDown) ?? 0
 		const left = this.floatStateFor(Input.MoveLeft) ?? 0
@@ -21,26 +20,20 @@ export class InputParser extends BaseInputParser<Input> {
 		const velocity = new Vector2(right - left, down - up)
 			.multiply(factor)
 		if (!velocity.isZero())
-			return new MoveShipAction(velocity)
+			return new MoveAction(velocity)
 	}
 
-	private parseRestart() {
-		if (this.hasJustBeenPressed(Input.Restart))
-			return new StartGameAction()
-	}
-
-	private parseShot() {
-		if (this.hasJustBeenPressed(Input.Shoot))
-			return new ShootBulletAction()
+	private parseGenerate() {
+		if (this.hasJustBeenPressed(Input.Generate))
+			return new GenerateAction()
 	}
 }
 
 export enum Input {
-	Restart,
+	Generate,
 	MoveUp,
 	MoveDown,
 	MoveLeft,
 	MoveRight,
-	MoveSlow,
-	Shoot,
+	Run,
 }

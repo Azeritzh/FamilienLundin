@@ -14,7 +14,7 @@ export class RenderendDisplay {
 		private game: Renderend,
 		private display: DisplayProvider,
 		private state = DisplayState.from(config),
-		private inputParser = new InputParser(display, config),
+		private inputParser = new InputParser(display, config.inputs),
 		private spriteDrawer = new SpriteDrawer(game, display, config, state),
 		private entityDrawer = new EntityDrawer(game, spriteDrawer),
 		private displayEntityDrawer = new DisplayEntityDrawer(game, config, state, spriteDrawer),
