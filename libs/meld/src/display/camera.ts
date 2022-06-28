@@ -1,16 +1,30 @@
-import { DisplayProvider } from "@lundin/age"
+import { DisplayProvider, Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Meld } from "../meld"
 import { DisplayConfig } from "./display-config"
 import { DisplayState } from "./display-state"
 
-export class SpriteDrawer {
+export class Camera {
 	constructor(
 		private game: Meld,
 		private displayProvider: DisplayProvider,
 		private config: DisplayConfig,
 		private state: DisplayState,
 	) { }
+
+	public focusOn(entity: Id) {
+		this.state.focusPoint = this.currentPositionFrom(
+			this.game.entities.position.get.of(entity) ?? new Vector3(0, 0, 0),
+			this.game.entities.velocity.get.of(entity),
+		)
+	}
+
+	private currentPositionFrom(position: Vector3, velocity: Vector3 = null) {
+		return velocity
+			? position.add(velocity.multiply(this.state.fractionOfTick))
+			: position
+	}
+
 	public draw(sprite: string, position: Vector3, velocity: Vector3 = null, animationStart = 0) {
 		position = this.calculateSpritePosition(position, velocity)
 		const config = this.config.sprites[sprite]
@@ -27,9 +41,9 @@ export class SpriteDrawer {
 	}
 
 	private calculateSpritePosition(position: Vector3, velocity: Vector3 = null) {
-		if (velocity)
-			position = position.add(velocity.multiply(this.state.fractionOfTick))
 		const screenCenter = new Vector3(this.state.size.widthInTiles / 2, this.state.size.heightInTiles / 2, 0)
-		return position.subtract(this.state.focusPoint).add(screenCenter)
+		return this.currentPositionFrom(position, velocity)
+			.subtract(this.state.focusPoint)
+			.add(screenCenter)
 	}
 }
