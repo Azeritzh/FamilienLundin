@@ -10,6 +10,6 @@ export class MeldConstants {
 		public collisionAreaWidth = 1 / 1024,
 		public gravityAcceleration = 0.001,
 		public terminalVerticalVelocity = 0.05,
-		public maxMoveSpeed = 5 / updatesPerSecond
+		public maxMoveSpeed = 10 / updatesPerSecond
 	) { }
 }

@@ -1,14 +1,15 @@
 import { BaseGame, Random, TerrainManager } from "@lundin/age"
+import { MeldConfig } from "./config/meld-config"
+import { MovementLogic } from "./logic/movement-logic"
 import { StartLogic } from "./logic/start-logic"
 import { UpdateStateLogic } from "./logic/update-state-logic"
-import { MeldConfig } from "./config/meld-config"
+import { VelocityLogic } from "./logic/velocity-logic"
 import { EntityValues } from "./state/entity-values"
 import { Globals } from "./state/globals"
 import { MeldAction } from "./state/meld-action"
 import { MeldChanges } from "./state/meld-changes"
 import { MeldEntities } from "./state/meld-entities"
 import { MeldState } from "./state/meld-state"
-import { MovementLogic } from "./logic/movement-logic"
 
 export class Meld extends BaseGame<MeldAction> {
 	constructor(
@@ -36,9 +37,15 @@ export class Meld extends BaseGame<MeldAction> {
 			entities,
 			terrain,
 		),
+		public velocityLogic = new VelocityLogic(
+			entities,
+			entities.position.get,
+			entities.position.set,
+		),
 	) {
 		super([
 			movementLogic,
+			velocityLogic,
 			startLogic,
 			updateStateLogic,
 		])
