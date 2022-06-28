@@ -11,27 +11,22 @@ export class DisplayEntityDrawer {
 		private config: DisplayConfig,
 		private state: DisplayState,
 		private spriteDrawer: SpriteDrawer,
-		private previousTick = -1
+		private updatedToTick = game.state.globals.tick
 	) { }
 
 	drawDisplayEntities() {
+		this.updateDisplayEntities()
 		for (const entity of this.state.displayEntities.values())
 			this.drawDisplayEntity(entity)
-		this.previousTick = this.game.state.globals.tick
+		this.updatedToTick = this.game.state.globals.tick
 	}
 
-	private drawDisplayEntity(entity: DisplayEntity) {
-		if (this.isNewTick())
-			this.updateDisplayEntity(entity)
-		entity.lastUpdate = this.game.state.globals.tick
-		if (this.game.state.globals.tick < entity.endTick)
-			this.spriteDrawer.draw(entity.sprite, entity.position, null, entity.animationStart)
-		else
-			this.state.displayEntities.remove(entity)
-	}
-
-	private isNewTick() {
-		return this.previousTick !== this.game.state.globals.tick
+	private updateDisplayEntities() {
+		while(this.updatedToTick < this.game.state.globals.tick){
+			this.updatedToTick++
+			for (const entity of this.state.displayEntities.values())
+				this.updateDisplayEntity(entity)
+		}
 	}
 
 	private updateDisplayEntity(entity: DisplayEntity) {
@@ -39,6 +34,13 @@ export class DisplayEntityDrawer {
 			entity.velocity = new Vector2(0, 0)
 		entity.velocity.x = -this.game.state.globals.speed
 		entity.position = entity.position.add(entity.velocity)
+	}
+
+	private drawDisplayEntity(entity: DisplayEntity) {
+		if (this.game.state.globals.tick < entity.endTick)
+			this.spriteDrawer.draw(entity.sprite, entity.position, entity.velocity, entity.animationStart)
+		else
+			this.state.displayEntities.remove(entity)
 	}
 
 	onDeath(entity: Id) {

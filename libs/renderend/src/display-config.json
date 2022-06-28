@@ -27,7 +27,7 @@
 			"centerY": 10,
 			"framesX": 4,
 			"framesY": 1,
-			"frameInterval": 10
+			"frameInterval": 0.16
 		},
 		"half-shield": {
 			"path": "half-shield",
@@ -37,7 +37,7 @@
 			"centerY": 10,
 			"framesX": 4,
 			"framesY": 1,
-			"frameInterval": 10
+			"frameInterval": 0.16
 		},
 		"ship": {
 			"path": "ship",
@@ -47,7 +47,7 @@
 			"centerY": 10,
 			"framesX": 4,
 			"framesY": 2,
-			"frameInterval": 6
+			"frameInterval": 0.1
 		},
 		"charge-1": {
 			"path": "charge-1",
@@ -99,7 +99,7 @@
 			"centerY": 8,
 			"framesX": 4,
 			"framesY": 1,
-			"frameInterval": 10
+			"frameInterval": 0.16
 		},
 		"big-obstacle": {
 			"path": "big-obstacle",
@@ -116,7 +116,7 @@
 			"centerY": 16,
 			"framesX": 4,
 			"framesY": 1,
-			"frameInterval": 10
+			"frameInterval": 0.16
 		},
 		"bullet": {
 			"path": "bullet",
@@ -126,7 +126,7 @@
 			"centerY": 4,
 			"framesX": 3,
 			"framesY": 1,
-			"frameInterval": 5
+			"frameInterval": 0.1
 		},
 		"bullet-explosion": {
 			"path": "bullet-explosion",
@@ -136,7 +136,7 @@
 			"centerY": 4,
 			"framesX": 4,
 			"framesY": 1,
-			"frameInterval": 5
+			"frameInterval": 0.1
 		},
 		"background": {
 			"path": "starry-background",

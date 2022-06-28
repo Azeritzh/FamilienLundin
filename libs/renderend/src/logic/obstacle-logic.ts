@@ -68,10 +68,10 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		if (this.globals.lastWall < 10)
 			return false
 		if (this.globals.lastWall < 100)
-			return this.globals.tick % 40 === 0
+			return this.globals.tick % this.constants.easyObstacleInterval === 0
 		if (this.globals.lastWall < 500)
-			return this.globals.tick % 20 === 0
-		return this.globals.tick % 15 === 0
+			return this.globals.tick % this.constants.mediumObstacleInterval === 0
+		return this.globals.tick % this.constants.hardObstacleInterval === 0
 	}
 
 	private spawnObstacle() {
@@ -85,7 +85,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private shouldSpawnAnnoyingObstacle() {
-		return this.globals.tick % 205 === 0
+		return this.globals.tick % this.constants.annoyingObstacleInterval === 0
 	}
 
 	private spawnAnnoyingObstacle() {

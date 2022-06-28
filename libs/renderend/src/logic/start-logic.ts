@@ -35,7 +35,7 @@ export class StartLogic implements GameLogic<RenderendAction> {
 
 	private resetGlobals() {
 		this.globals.isAlive = true
-		this.globals.speed = 0.1
+		this.globals.speed = this.constants.initialSpeed
 		this.globals.distanceTravelled = 0
 		this.globals.lastWall = -1
 	}

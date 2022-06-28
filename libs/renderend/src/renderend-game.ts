@@ -7,13 +7,14 @@ import { Renderend } from "./renderend"
 import { RenderendDisplay } from "./renderend-display"
 import { RenderendAction, StartGameAction } from "./state/renderend-action"
 
+export const updatesPerSecond = 30
+
 export class RenderendGame extends GameRunner<RenderendAction> {
 	constructor(
 		hostElement: HTMLElement,
 		private renderendDisplay: RenderendDisplay,
 		private displayProvider: HtmlDisplayProvider,
 		game: Renderend,
-		updatesPerSecond = 60,
 		private resizeObserver = new ResizeObserver(() => this.setSize(hostElement.clientWidth, hostElement.clientHeight)),
 	) {
 		super(renderendDisplay, game, updatesPerSecond)

@@ -56,6 +56,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 			entities,
 		),
 		public difficultyLogic = new DifficultyLogic(
+			config.constants,
 			state.globals,
 		),
 		public gameOverLogic = new GameOverLogic(
