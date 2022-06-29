@@ -2,13 +2,15 @@
 	"constants": {
 		"playerType": "player"
 	},
-	"types": {
-		"player": {},
-		"tile-dirt": {},
-		"tile-earth": {},
-		"tile-grass": {},
-		"tile-slab": {},
-		"tile-stone": {},
-		"tile-wooden": {}
+	"entityTypes": {
+		"player": {}
+	},
+	"blockTypes": {
+		"dirt": {},
+		"earth": {},
+		"grass": {},
+		"slab": {},
+		"stone": {},
+		"wooden": {}
 	}
 }

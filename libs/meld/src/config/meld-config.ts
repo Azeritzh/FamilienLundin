@@ -8,19 +8,23 @@ import { updatesPerSecond } from "../meld-game"
 export class MeldConfig {
 	constructor(
 		public readonly constants: MeldConstants,
-		public readonly typeMap: TypeMap,
-		public readonly typeValues: Map<Id, GroupedEntityValues>,
-		public readonly fieldValues: Map<Id, BlockValues>,
+		public readonly entityTypeMap: TypeMap,
+		public readonly entityTypeValues: Map<Id, GroupedEntityValues>,
+		public readonly blockTypeMap: TypeMap,
+		public readonly blockTypeValues: Map<Id, BlockValues>,
 	) { }
 
 	public static read(jsonConfig: any) {
-		const typeNames = Object.keys(jsonConfig.types)
-		const typeMap = TypeMap.from(typeNames)
+		const entityTypeNames = Object.keys(jsonConfig.entityTypes)
+		const entityTypeMap = TypeMap.from(entityTypeNames)
+		const blockTypeNames = Object.keys(jsonConfig.blockTypes)
+		const blockTypeMap = TypeMap.from(blockTypeNames)
 		return new MeldConfig(
-			constantsFrom(jsonConfig.constants, typeMap),
-			typeMap,
-			new Map(typeNames.map(x => [typeMap.typeIdFor(x), groupedEntityValuesFrom(jsonConfig.types[x])])),
-			new Map(),
+			constantsFrom(jsonConfig.constants, entityTypeMap),
+			entityTypeMap,
+			new Map(entityTypeNames.map(x => [entityTypeMap.typeIdFor(x), groupedEntityValuesFrom(jsonConfig.entityTypes[x])])),
+			blockTypeMap,
+			new Map(blockTypeNames.map(x => [blockTypeMap.typeIdFor(x), { hardness: 0 }])),
 		)
 	}
 }

@@ -37,14 +37,14 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 	private drawEntity(entity: Id) {
 		const position = this.game.entities.position.get.of(entity)
 		const velocity = this.game.entities.velocity.get.of(entity)
-		const sprite = this.game.config.typeMap.typeFor(typeOf(entity))
+		const sprite = this.game.config.entityTypeMap.typeFor(typeOf(entity))
 		this.camera.draw(sprite, position, velocity)
 	}
 
 	private drawBlock(x: number, y: number, z: number, block: Block) {
 		if (z !== 0)
 			return
-		const sprite = this.game.config.typeMap.typeFor(block.solidType) ?? "obstacle"
+		const sprite = this.game.config.blockTypeMap.typeFor(block.solidType) ?? "obstacle"
 		this.camera.draw(sprite, new Vector3(x, y, z))
 	}
 

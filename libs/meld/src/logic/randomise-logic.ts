@@ -18,8 +18,7 @@ export class RandomiseLogic implements GameLogic<MeldAction> {
 	}
 
 	private randomiseBlock(block: Vector3) {
-		const types = [...this.config.typeMap.types.values()]
-		types.splice(0, 1)
+		const types = [...this.config.blockTypeMap.types.values()]
 		this.terrain.set(Block.newFull(this.random.get.in(types)), block.x, block.y, block.z)
 	}
 }

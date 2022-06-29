@@ -20,32 +20,32 @@
 			"centerX": 8,
 			"centerY": 8
 		},
-		"tile-dirt": {
+		"dirt": {
 			"path": "tile-dirt",
 			"width": 16,
 			"height": 16
 		},
-		"tile-earth": {
+		"earth": {
 			"path": "tile-earth",
 			"width": 16,
 			"height": 16
 		},
-		"tile-grass": {
+		"grass": {
 			"path": "tile-grass",
 			"width": 16,
 			"height": 16
 		},
-		"tile-slab": {
+		"slab": {
 			"path": "tile-slab",
 			"width": 16,
 			"height": 16
 		},
-		"tile-stone": {
+		"stone": {
 			"path": "tile-stone",
 			"width": 16,
 			"height": 16
 		},
-		"tile-wooden": {
+		"wooden": {
 			"path": "tile-wooden",
 			"width": 16,
 			"height": 16
