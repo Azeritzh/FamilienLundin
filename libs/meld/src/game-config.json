@@ -3,7 +3,9 @@
 		"playerType": "player"
 	},
 	"entityTypes": {
-		"player": {}
+		"player": {
+			"selectedBlock": "grass"
+		}
 	},
 	"blockTypes": {
 		"dirt": {},

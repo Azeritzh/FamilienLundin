@@ -27,6 +27,7 @@ export class Meld extends BaseGame<MeldAction> {
 		),
 		public readonly randomiseLogic = new RandomiseLogic(
 			config,
+			entities,
 			terrain,
 			random,
 		),

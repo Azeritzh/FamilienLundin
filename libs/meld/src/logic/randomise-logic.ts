@@ -2,11 +2,13 @@ import { GameLogic, Random, TerrainManager } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { MeldConfig } from "../config/meld-config"
 import { Block } from "../state/block"
+import { MeldEntities } from "../state/entity-values"
 import { MeldAction, RandomiseAction } from "../state/meld-action"
 
 export class RandomiseLogic implements GameLogic<MeldAction> {
 	constructor(
 		private config: MeldConfig,
+		private entities: MeldEntities,
 		private terrain: TerrainManager<Block>,
 		private random: Random,
 	) { }
@@ -19,6 +21,8 @@ export class RandomiseLogic implements GameLogic<MeldAction> {
 
 	private randomiseBlock(block: Vector3) {
 		const types = [...this.config.blockTypeMap.types.values()]
-		this.terrain.set(Block.newFull(this.random.get.in(types)), block.x, block.y, block.z)
+		const selectedBlocks = [...this.entities.with.selectedBlock.values()]
+		const blockType = selectedBlocks[0] ?? this.random.get.in(types)
+		this.terrain.set(Block.newFull(blockType), block.x, block.y, block.z)
 	}
 }

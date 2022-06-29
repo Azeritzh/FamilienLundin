@@ -22,7 +22,7 @@ export class MeldConfig {
 		return new MeldConfig(
 			constantsFrom(jsonConfig.constants, entityTypeMap),
 			entityTypeMap,
-			new Map(entityTypeNames.map(x => [entityTypeMap.typeIdFor(x), groupedEntityValuesFrom(jsonConfig.entityTypes[x])])),
+			new Map(entityTypeNames.map(x => [entityTypeMap.typeIdFor(x), groupedEntityValuesFrom(jsonConfig.entityTypes[x], blockTypeMap)])),
 			blockTypeMap,
 			new Map(blockTypeNames.map(x => [blockTypeMap.typeIdFor(x), { hardness: 0 }])),
 		)
@@ -39,12 +39,14 @@ function constantsFrom(serialised: any, typeMap: TypeMap) {
 	return constants
 }
 
-function groupedEntityValuesFrom(jsonObject: any) {
+function groupedEntityValuesFrom(jsonObject: any, blockTypeMap: TypeMap) {
 	const values: GroupedEntityValues = { ...jsonObject }
 	if (jsonObject.position)
 		values.position = Object.assign(new Vector3(0, 0, 0), jsonObject.position)
 	if (jsonObject.rectangularSize)
 		values.rectangularSize = Object.assign(new RectangularSize(0, 0), jsonObject.rectangularSize)
+	if (jsonObject.selectedBlock)
+		values.selectedBlock = blockTypeMap.typeIdFor(jsonObject.selectedBlock)
 	if (jsonObject.velocity)
 		values.velocity = Object.assign(new Vector3(0, 0, 0), jsonObject.velocity)
 	return values
