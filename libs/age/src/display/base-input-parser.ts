@@ -2,7 +2,7 @@ import { DisplayProvider } from "./html-display-provider"
 
 export abstract class BaseInputParser<Input> {
 	constructor(
-		private displayProvider: DisplayProvider,
+		protected displayProvider: DisplayProvider,
 		private inputs: Map<Input, string[]>,
 		private actionStates = new Map<Input, number>(),
 		private previousStates = new Map<Input, number>(),

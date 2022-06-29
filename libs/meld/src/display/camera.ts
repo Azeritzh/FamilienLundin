@@ -41,9 +41,17 @@ export class Camera {
 	}
 
 	private calculateSpritePosition(position: Vector3, velocity: Vector3 = null) {
-		const screenCenter = new Vector3(this.state.size.widthInTiles / 2, this.state.size.heightInTiles / 2, 0)
 		return this.currentPositionFrom(position, velocity)
+			.add(new Vector3(this.state.size.widthInTiles / 2, this.state.size.heightInTiles / 2, 0))
 			.subtract(this.state.focusPoint)
-			.add(screenCenter)
+	}
+
+	public tilePositionFor(x: number, y: number) {
+		return new Vector3(x * this.state.size.widthInTiles, y * this.state.size.heightInTiles, 0)
+			.add(this.topLeftCornerPosition())
+	}
+
+	private topLeftCornerPosition() {
+		return this.state.focusPoint.subtract(new Vector3(this.state.size.widthInTiles / 2, this.state.size.heightInTiles / 2, 0))
 	}
 }

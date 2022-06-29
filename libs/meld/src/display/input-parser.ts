@@ -1,8 +1,17 @@
-import { BaseInputParser } from "@lundin/age"
-import { Vector2, Vector3 } from "@lundin/utility"
+import { BaseInputParser, DisplayProvider } from "@lundin/age"
+import { Vector2 } from "@lundin/utility"
 import { GenerateAction, MoveAction, RandomiseAction } from "../state/meld-action"
+import { Camera } from "./camera"
 
 export class InputParser extends BaseInputParser<Input> {
+	constructor(
+		private camera: Camera,
+		displayProvider: DisplayProvider,
+		inputs: Map<Input, string[]>,
+	) {
+		super(displayProvider, inputs)
+	}
+
 	parseInputs() {
 		this.updateActionStates()
 		return [
@@ -30,8 +39,12 @@ export class InputParser extends BaseInputParser<Input> {
 	}
 
 	private parseRandomise() {
+		const position = this.camera.tilePositionFor(
+			this.displayProvider.getInputState("MouseX"),
+			this.displayProvider.getInputState("MouseY"),
+		)
 		if (this.hasJustBeenPressed(Input.Randomise))
-			return new RandomiseAction(new Vector3(Math.random() * 10, Math.random() * 10, 0))
+			return new RandomiseAction(position)
 	}
 }
 

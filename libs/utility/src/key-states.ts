@@ -6,11 +6,13 @@ export class KeyStates {
 	) {
 		window.addEventListener("keydown", this.onKeyDown, { capture: true })
 		window.addEventListener("keyup", this.onKeyUp)
+		window.addEventListener("mousemove", this.onMouseMove)
 	}
 
 	onDestroy() {
 		window.removeEventListener("keydown", this.onKeyDown)
 		window.removeEventListener("keyup", this.onKeyUp)
+		window.removeEventListener("mousemove", this.onMouseMove)
 	}
 
 	private onKeyDown = (event: KeyboardEvent) => {
@@ -27,11 +29,13 @@ export class KeyStates {
 		this.onUp[event.code]?.(event.code)
 	}
 
+	private onMouseMove = (event: MouseEvent) => {
+		this.states["MouseX"] = event.clientX
+		this.states["MouseY"] = event.clientY
+	}
+
 	getInputState(input: string) {
-		const state = this.states[input]
-		if (state !== null && state !== undefined)
-			return state
-		return this.getFirstGamepadState(input)
+		return this.states[input] ?? this.getFirstGamepadState(input)
 	}
 
 	private getFirstGamepadState(input: string) {

@@ -14,8 +14,8 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 		private game: Meld,
 		private display: HtmlDisplayProvider,
 		private state = DisplayState.from(config),
-		private inputParser = new InputParser(display, config.inputs),
 		private camera = new Camera(game, display, config, state),
+		private inputParser = new InputParser(camera, display, config.inputs),
 	) { }
 
 	setSize(width: number, height: number) {

@@ -122,7 +122,22 @@ export class HtmlDisplayProvider implements DisplayProvider {
 
 	getInputState(input: string) {
 		input = this.translateInputString(input)
-		return this.keyStates.getInputState(input)
+		const state = this.keyStates.getInputState(input)
+		switch (input) {
+			case "MouseX": return this.modifyMouseX(state)
+			case "MouseY": return this.modifyMouseY(state)
+			default: return state
+		}
+	}
+
+	private modifyMouseX(x: number) {
+		const box = this.hostElement.getBoundingClientRect()
+		return (x - box.x) / box.width
+	}
+
+	private modifyMouseY(y: number) {
+		const box = this.hostElement.getBoundingClientRect()
+		return (y - box.y) / box.height
 	}
 
 	private translateInputString(input: string) {
