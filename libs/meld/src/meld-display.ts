@@ -1,11 +1,11 @@
-import { BaseDisplay, HtmlDisplayProvider, Id } from "@lundin/age"
-import { Vector3 } from "@lundin/utility"
+import { BaseDisplay, HtmlDisplayProvider } from "@lundin/age"
 import { Camera } from "./display/camera"
 import { DisplayConfig } from "./display/display-config"
 import { DisplayState } from "./display/display-state"
+import { EntityDrawer } from "./display/entity-drawer"
 import { InputParser } from "./display/input-parser"
+import { TerrainDrawer } from "./display/terrain-drawer"
 import { Meld } from "./meld"
-import { Block } from "./state/block"
 import { MeldAction } from "./state/meld-action"
 
 export class MeldDisplay implements BaseDisplay<MeldAction> {
@@ -16,6 +16,8 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 		private state = DisplayState.from(config),
 		private camera = new Camera(game, display, config, state),
 		private inputParser = new InputParser(camera, display, config.inputs),
+		private terrainDrawer = new TerrainDrawer(game, camera),
+		private entityDrawer = new EntityDrawer(game, camera),
 	) { }
 
 	setSize(width: number, height: number) {
@@ -27,27 +29,9 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 		const firstEntity = [...this.game.entities.with.position.keys()][0]
 		this.camera.focusOn(firstEntity)
 		this.display.startFrame()
-		for (const { position, field } of this.game.terrain.allFields())
-			this.drawBlock(position.x, position.y, position.z, field)
-		for (const entity of this.game.entities)
-			this.drawEntity(entity)
+		this.terrainDrawer.drawBlocks()
+		this.entityDrawer.drawEntities()
 		this.display.endFrame()
-	}
-
-	private drawEntity(entity: Id) {
-		const position = this.game.entities.position.get.of(entity)
-		const velocity = this.game.entities.velocity.get.of(entity)
-		//const sprite = this.game.config.entityTypeMap.typeFor(typeOf(entity))
-		const selectedBlock = this.game.entities.selectedBlock.get.of(entity)
-		const selectedBlockName = this.game.config.blockTypeMap.typeFor(selectedBlock)
-		this.camera.draw(selectedBlockName, position, velocity)
-	}
-
-	private drawBlock(x: number, y: number, z: number, block: Block) {
-		if (z !== 0)
-			return
-		const sprite = this.game.config.blockTypeMap.typeFor(block.solidType) ?? "obstacle"
-		this.camera.draw(sprite, new Vector3(x, y, z))
 	}
 
 	getNewActions() {
