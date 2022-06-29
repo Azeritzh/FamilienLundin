@@ -28,11 +28,13 @@ export class StartLogic implements GameLogic<MeldAction> {
 	}
 
 	private generateRandomTerrain() {
-		this.terrain.addChunk([], 0, 0, 0)
 		const types = [...this.config.blockTypeMap.types.values()]
-		types.splice(0, 1)
-		for (const { x, y, z } of this.terrain.allFields())
-			this.terrain.set(Block.newFull(this.random.get.in(types)), x, y, z)
+		this.terrain.addChunk([], 0, 0, 0)
+		this.terrain.addChunk([], 0, -1, 0)
+		this.terrain.addChunk([], -1, 0, 0)
+		this.terrain.addChunk([], -1, -1, 0)
+		for (const { position } of this.terrain.allFields())
+			this.terrain.set(Block.newFull(this.random.get.in(types)), position.x, position.y, position.z)
 	}
 
 	private clearEntities() {

@@ -66,15 +66,26 @@ export class TerrainManager<Field> {
 			?? this.get(x, y, z)
 	}
 
-	/** Iterates through all fields in a chunk, and returns the local position and field */
-	public *allFields(chunkX = 0, chunkY = 0, chunkZ = 0) {
+	/** Iterates through all fields, and returns the position and field */
+	public *allFields() {
+		for (const [coords, chunk] of this.chunks) {
+			const [chunkX, chunkY, chunkZ] = coords.split(",").map(x => +x)
+			for (const z of range(0, this.chunkSize.z))
+				for (const y of range(0, this.chunkSize.y))
+					for (const x of range(0, this.chunkSize.x))
+						yield { position: this.getGlobalPosition(x, y, z, chunkX, chunkY, chunkZ), field: chunk[this.chunkIndexFor(x, y, z)] }
+		}
+	}
+
+	/** Iterates through all fields in a chunk, and returns the local (and global) position and field */
+	public *allFieldsInChunk(chunkX = 0, chunkY = 0, chunkZ = 0) {
 		const chunk = this.chunks.get(this.convertChunkCoords(chunkX, chunkY, chunkZ))
 		if (!chunk)
 			return // TODO: should there be notification or something here?
 		for (const z of range(0, this.chunkSize.z))
 			for (const y of range(0, this.chunkSize.y))
 				for (const x of range(0, this.chunkSize.x))
-					yield { x, y, z, field: chunk[this.chunkIndexFor(x, y, z)] }
+					yield { global: this.getGlobalPosition(x, y, z, chunkX, chunkY, chunkZ), x, y, z, field: chunk[this.chunkIndexFor(x, y, z)] }
 	}
 
 	public fieldsAround(x: number, y: number, z = 0) {
@@ -87,6 +98,14 @@ export class TerrainManager<Field> {
 				for (const k of range(z - radiusZ, z + radiusZ + 1))
 					//if (this.isWithinBounds(i, j, k))
 					yield { i, j, k, field: this.get(i, j, k) }
+	}
+
+	private getGlobalPosition(x: number, y: number, z: number, chunkX: number, chunkY: number, chunkZ = 0): Vector3 {
+		return new Vector3(
+			x + chunkX * this.chunkSize.x,
+			y + chunkY * this.chunkSize.y,
+			z + chunkZ * this.chunkSize.z,
+		)
 	}
 
 	public set(field: Field, x: number, y: number, z = 0) {

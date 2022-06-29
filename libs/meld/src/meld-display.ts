@@ -27,8 +27,8 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 		const firstEntity = [...this.game.entities.with.position.keys()][0]
 		this.camera.focusOn(firstEntity)
 		this.display.startFrame()
-		for (const { x, y, z, field } of this.game.terrain.allFields())
-			this.drawBlock(x, y, z, field)
+		for (const { position, field } of this.game.terrain.allFields())
+			this.drawBlock(position.x, position.y, position.z, field)
 		for (const entity of this.game.entities)
 			this.drawEntity(entity)
 		this.display.endFrame()
