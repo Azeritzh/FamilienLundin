@@ -7,12 +7,16 @@ export class KeyStates {
 		window.addEventListener("keydown", this.onKeyDown, { capture: true })
 		window.addEventListener("keyup", this.onKeyUp)
 		window.addEventListener("mousemove", this.onMouseMove)
+		window.addEventListener("mousedown", this.onMouseDown)
+		window.addEventListener("mouseup", this.onMouseUp)
 	}
 
 	onDestroy() {
 		window.removeEventListener("keydown", this.onKeyDown)
 		window.removeEventListener("keyup", this.onKeyUp)
 		window.removeEventListener("mousemove", this.onMouseMove)
+		window.removeEventListener("mousedown", this.onMouseDown)
+		window.removeEventListener("mouseup", this.onMouseUp)
 	}
 
 	private onKeyDown = (event: KeyboardEvent) => {
@@ -32,6 +36,30 @@ export class KeyStates {
 	private onMouseMove = (event: MouseEvent) => {
 		this.states["MouseX"] = event.clientX
 		this.states["MouseY"] = event.clientY
+	}
+
+	private onMouseDown = (event: MouseEvent) => {
+		const code = this.getMouseButtonCode(event)
+		if (this.states[code])
+			return
+		this.states[code] = 1
+		this.onDown[code]?.(code)
+	}
+
+	private onMouseUp = (event: MouseEvent) => {
+		const code = this.getMouseButtonCode(event)
+		if (!this.states[code])
+			return
+		this.states[code] = 0
+		this.onUp[code]?.(code)
+	}
+
+	private getMouseButtonCode(event: MouseEvent) {
+		switch (event.button) {
+			case 0: return "MouseLeft"
+			case 1: return "MouseMiddle"
+			case 2: return "MouseRight"
+		}
 	}
 
 	getInputState(input: string) {
