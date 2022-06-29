@@ -1,6 +1,6 @@
 import { BaseInputParser, DisplayProvider } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { GenerateAction, MoveAction, RandomiseAction } from "../state/meld-action"
+import { GenerateAction, MoveAction, NextSelectedBlockAction, RandomiseAction } from "../state/meld-action"
 import { Camera } from "./camera"
 
 export class InputParser extends BaseInputParser<Input> {
@@ -15,8 +15,9 @@ export class InputParser extends BaseInputParser<Input> {
 	parseInputs() {
 		this.updateActionStates()
 		return [
-			this.parseMovement(),
 			this.parseGenerate(),
+			this.parseMovement(),
+			this.parseNextSelectedBlock(),
 			this.parseRandomise(),
 		].filter(x => x)
 	}
@@ -46,6 +47,11 @@ export class InputParser extends BaseInputParser<Input> {
 		if (this.hasJustBeenPressed(Input.Randomise))
 			return new RandomiseAction(position)
 	}
+
+	private parseNextSelectedBlock() {
+		if (this.hasJustBeenPressed(Input.NextSelectedBlock))
+			return new NextSelectedBlockAction()
+	}
 }
 
 export enum Input {
@@ -54,6 +60,7 @@ export enum Input {
 	MoveDown,
 	MoveLeft,
 	MoveRight,
+	NextSelectedBlock,
 	Randomise,
 	Run,
 }

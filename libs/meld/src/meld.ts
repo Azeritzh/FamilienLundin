@@ -2,6 +2,7 @@ import { BaseGame, Random, TerrainManager } from "@lundin/age"
 import { MeldConfig } from "./config/meld-config"
 import { MovementLogic } from "./logic/movement-logic"
 import { RandomiseLogic } from "./logic/randomise-logic"
+import { SelectedBlockLogic } from "./logic/selected-block-logic"
 import { StartLogic } from "./logic/start-logic"
 import { UpdateStateLogic } from "./logic/update-state-logic"
 import { VelocityLogic } from "./logic/velocity-logic"
@@ -31,6 +32,11 @@ export class Meld extends BaseGame<MeldAction> {
 			terrain,
 			random,
 		),
+		public readonly selectedBlockLogic = new SelectedBlockLogic(
+			config,
+			entities,
+			entities.selectedBlock.set,
+		),
 		public readonly startLogic = new StartLogic(
 			config,
 			changes,
@@ -54,6 +60,7 @@ export class Meld extends BaseGame<MeldAction> {
 			movementLogic,
 			velocityLogic,
 			randomiseLogic,
+			selectedBlockLogic,
 			startLogic,
 			updateStateLogic,
 		])

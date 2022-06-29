@@ -1,9 +1,9 @@
-import { BaseDisplay, HtmlDisplayProvider, Id, typeOf } from "@lundin/age"
+import { BaseDisplay, HtmlDisplayProvider, Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
+import { Camera } from "./display/camera"
 import { DisplayConfig } from "./display/display-config"
 import { DisplayState } from "./display/display-state"
 import { InputParser } from "./display/input-parser"
-import { Camera } from "./display/camera"
 import { Meld } from "./meld"
 import { Block } from "./state/block"
 import { MeldAction } from "./state/meld-action"
@@ -37,8 +37,10 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 	private drawEntity(entity: Id) {
 		const position = this.game.entities.position.get.of(entity)
 		const velocity = this.game.entities.velocity.get.of(entity)
-		const sprite = this.game.config.entityTypeMap.typeFor(typeOf(entity))
-		this.camera.draw(sprite, position, velocity)
+		//const sprite = this.game.config.entityTypeMap.typeFor(typeOf(entity))
+		const selectedBlock = this.game.entities.selectedBlock.get.of(entity)
+		const selectedBlockName = this.game.config.blockTypeMap.typeFor(selectedBlock)
+		this.camera.draw(selectedBlockName, position, velocity)
 	}
 
 	private drawBlock(x: number, y: number, z: number, block: Block) {
