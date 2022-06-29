@@ -5,6 +5,7 @@ import { DisplayState } from "./display/display-state"
 import { EntityDrawer } from "./display/entity-drawer"
 import { InputParser } from "./display/input-parser"
 import { TerrainDrawer } from "./display/terrain-drawer"
+import { WorldDrawer } from "./display/world-drawer"
 import { Meld } from "./meld"
 import { MeldAction } from "./state/meld-action"
 
@@ -16,8 +17,9 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 		private state = DisplayState.from(config),
 		private camera = new Camera(game, display, config, state),
 		private inputParser = new InputParser(camera, display, config.inputs),
-		private terrainDrawer = new TerrainDrawer(game, camera),
+		private terrainDrawer = new TerrainDrawer(game, config, camera),
 		private entityDrawer = new EntityDrawer(game, camera),
+		private worldDrawer = new WorldDrawer(game, config, camera, terrainDrawer, entityDrawer),
 	) { }
 
 	setSize(width: number, height: number) {
@@ -29,8 +31,7 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 		const firstEntity = [...this.game.entities.with.position.keys()][0]
 		this.camera.focusOn(firstEntity)
 		this.display.startFrame()
-		this.terrainDrawer.drawBlocks()
-		this.entityDrawer.drawEntities()
+		this.worldDrawer.drawWorld()
 		this.display.endFrame()
 	}
 

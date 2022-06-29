@@ -5,6 +5,7 @@ export interface DisplayConfig {
 	renderToVirtualSize: boolean
 	virtualPixelsPerTile: number
 	virtualHeight: number
+	wallDisplayHeight: number
 	assetFolder: string
 	inputs: Map<Input, string[]>,
 	sprites: {

@@ -13,7 +13,7 @@ export class EntityDrawer {
 			this.drawEntity(entity)
 	}
 
-	private drawEntity(entity: Id) {
+	drawEntity(entity: Id) {
 		if (typeOf(entity) === this.game.config.constants.playerType)
 			this.drawPlayer(entity)
 		else
