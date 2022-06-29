@@ -16,8 +16,6 @@ export class WorldDrawer {
 	) { }
 
 	drawWorld() {
-		this.terrainDrawer.drawBlocks()
-		this.entityDrawer.drawEntities()
 		for (const { layer, area } of this.camera.shownLayers)
 			this.drawLayer(layer, area)
 	}

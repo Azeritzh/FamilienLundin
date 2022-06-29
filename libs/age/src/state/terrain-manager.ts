@@ -17,8 +17,6 @@ export class TerrainManager<Field> {
 		z = Math.floor(z)
 		const { chunkCoords, index } = this.getChunkPositionFor(x, y, z)
 		const chunk = this.chunks.get(chunkCoords)
-		if (!chunk)
-			console.warn("Trying to access outside any chunk")
 		return chunk?.[index]
 		// ?? this.defaultTile
 	}

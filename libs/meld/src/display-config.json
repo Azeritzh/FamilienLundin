@@ -2,6 +2,7 @@
 	"renderToVirtualSize": false,
 	"virtualPixelsPerTile": 16,
 	"virtualHeight": 360,
+	"wallDisplayHeight": 2,
 	"assetFolder": "assets/",
 	"inputs": {
 		"Generate": [ "Escape", "Enter", "PadStart" ],

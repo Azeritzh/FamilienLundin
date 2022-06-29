@@ -31,7 +31,9 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 		const firstEntity = [...this.game.entities.with.position.keys()][0]
 		this.camera.focusOn(firstEntity)
 		this.display.startFrame()
+		//const start = performance.now()
 		this.worldDrawer.drawWorld()
+		//console.log(performance.now() - start)
 		this.display.endFrame()
 	}
 

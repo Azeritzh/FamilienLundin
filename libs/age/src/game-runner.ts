@@ -25,7 +25,9 @@ export class GameRunner<Action> {
 	}
 
 	updateGame = () => {
+		//const start = performance.now()
 		this.game.update(...this.actions.splice(0), ...this.display.getNewActions())
+		//console.log(performance.now() - start)
 		this.lastUpdate = Date.now()
 	}
 

@@ -11,21 +11,10 @@ export class TerrainDrawer {
 		private camera: Camera,
 	) { }
 
-	drawBlocks() {
-		for (const { position, field } of this.game.terrain.allFields())
-			this.drawBlock(position, field)
-	}
-
-
-	private drawBlock(position: Vector3, block: Block) {
-		if (position.z !== 0)
-			return
-		const sprite = this.game.config.blockTypeMap.typeFor(block.solidType) ?? "obstacle"
-		this.camera.draw(sprite, position)
-	}
-
 	public drawBlockContent(x: number, y: number, z: number) {
 		const block = this.game.terrain.get(x, y, z)
+		if (!block)
+			return
 		if (block.blockType == BlockType.Empty)
 			this.drawEmpty(block, x, y, z)
 		else if (block.blockType == BlockType.Half)
@@ -36,6 +25,8 @@ export class TerrainDrawer {
 
 	public drawBlockBottom(x: number, y: number, z: number) {
 		const block = this.game.terrain.get(x, y, z)
+		if (!block)
+			return
 		if (block.blockType == BlockType.Floor)
 			this.drawFloor(block, x, y, z)
 	}
@@ -56,7 +47,7 @@ export class TerrainDrawer {
 		const blockType = this.game.config.blockTypeMap.typeFor(block.solidType)
 		if (blockType == null)
 			return
-		const random = this.RandomFor(x, y, z);
+		const random = this.RandomFor(x, y, z)
 		this.drawBlockTop(blockType, new Vector3(x, y, z + 0.5), random)
 	}
 

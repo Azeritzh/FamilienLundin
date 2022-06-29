@@ -23,6 +23,6 @@ export class RandomiseLogic implements GameLogic<MeldAction> {
 		const types = [...this.config.blockTypeMap.types.values()]
 		const selectedBlocks = [...this.entities.with.selectedBlock.values()]
 		const blockType = selectedBlocks[0] ?? this.random.get.in(types)
-		this.terrain.set(Block.newFull(blockType), block.x, block.y, block.z)
+		this.terrain.set(Block.newFloor(blockType, 0), block.x, block.y, block.z)
 	}
 }
