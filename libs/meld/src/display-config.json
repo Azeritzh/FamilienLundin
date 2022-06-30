@@ -16,41 +16,71 @@
 	},
 	"sprites": {
 		"player": {
-			"path": "tile-slab",
-			"width": 16,
-			"height": 16,
-			"centerX": 8,
-			"centerY": 8
+			"path": "base-character",
+			"width": 32,
+			"height": 48,
+			"centerX": 16,
+			"centerY": 40
 		},
-		"dirt": {
+		"dirt-tile": {
 			"path": "tile-dirt",
 			"width": 16,
 			"height": 16
 		},
-		"earth": {
+		"dirt-wall": {
+			"path": "wall-dirt",
+			"width": 16,
+			"height": 32
+		},
+		"earth-tile": {
 			"path": "tile-earth",
 			"width": 16,
 			"height": 16
 		},
-		"grass": {
+		"earth-wall": {
+			"path": "wall-earth",
+			"width": 16,
+			"height": 32
+		},
+		"grass-tile": {
 			"path": "tile-grass",
 			"width": 16,
 			"height": 16
 		},
-		"slab": {
+		"grass-wall": {
+			"path": "wall-grass",
+			"width": 16,
+			"height": 32
+		},
+		"slab-tile": {
 			"path": "tile-slab",
 			"width": 16,
 			"height": 16
 		},
-		"stone": {
+		"slab-wall": {
+			"path": "wall-slab",
+			"width": 16,
+			"height": 32
+		},
+		"stone-tile": {
 			"path": "tile-stone",
 			"width": 16,
 			"height": 16
 		},
-		"wooden": {
+		"stone-wall": {
+			"path": "wall-stone",
+			"width": 16,
+			"height": 32
+		},
+		"wooden-tile": {
 			"path": "tile-wooden",
 			"width": 16,
 			"height": 16
+		},
+		"wooden-wall": {
+			"path": "wall-wooden",
+			"width": 16,
+			"height": 32
 		}
 	}
 }

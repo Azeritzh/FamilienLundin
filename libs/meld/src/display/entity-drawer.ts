@@ -32,7 +32,7 @@ export class EntityDrawer {
 		const velocity = this.game.entities.velocity.get.of(entity)
 		//const sprite = this.game.config.entityTypeMap.typeFor(typeOf(entity))
 		const selectedBlock = this.game.entities.selectedBlock.get.of(entity)
-		const selectedBlockName = this.game.config.blockTypeMap.typeFor(selectedBlock)
+		const selectedBlockName = this.game.config.blockTypeMap.typeFor(selectedBlock) + "-tile"
 		this.camera.drawAnimated(selectedBlockName, position, velocity)
 	}
 }

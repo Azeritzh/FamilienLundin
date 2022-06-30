@@ -35,7 +35,10 @@ export class StartLogic implements GameLogic<MeldAction> {
 		this.terrain.addChunk([], -1, -1, 0)
 		for (const { position } of this.terrain.allFields())
 			if (position.z === 0)
-				this.terrain.set(Block.newFloor(this.random.get.in(types), 0), position.x, position.y, position.z)
+				if (Math.random() < 0.9)
+					this.terrain.set(Block.newFloor(this.random.get.in(types), 0), position.x, position.y, position.z)
+				else
+					this.terrain.set(Block.newFull(this.random.get.in(types)), position.x, position.y, position.z)
 	}
 
 	private clearEntities() {

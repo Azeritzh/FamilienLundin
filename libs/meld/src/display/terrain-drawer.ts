@@ -58,11 +58,11 @@ export class TerrainDrawer {
 	}
 
 	private drawBlockTop(blockType: string, position: Vector3) { //, variant: number) {
-		this.camera.drawVaried(blockType, position) // , null, variant)
+		this.camera.drawVaried(blockType + "-tile", position) // , null, variant)
 	}
 
 	private drawBlockFullSide(blockType: string, position: Vector3) { //, variant: number) {
-		this.camera.drawVaried(blockType, position) // , null, variant)
+		this.camera.drawVaried(blockType + "-wall", position) // , null, variant)
 	}
 
 	private fullWallOffset(): number {
