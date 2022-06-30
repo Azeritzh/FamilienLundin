@@ -45,7 +45,10 @@
 		"grass-tile": {
 			"path": "tile-grass",
 			"width": 16,
-			"height": 16
+			"height": 16,
+			"framesX": 4,
+			"framesY": 3,
+			"frameWeights": [1,1,1,1,1,1,1,1,10]
 		},
 		"grass-wall": {
 			"path": "wall-grass",
