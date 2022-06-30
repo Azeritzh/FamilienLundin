@@ -26,7 +26,7 @@ export class MeldGame extends GameRunner<MeldAction> {
 		displayConfig = { ...readDisplayConfig(defaultDisplayConfig), ...displayConfig }
 		const meld = new Meld(readGameConfig(gameConfig))
 		const displayProvider = new HtmlDisplayProvider(hostElement, displayConfig)
-		const display = new MeldDisplay(displayConfig, meld, displayProvider)
+		const display = new MeldDisplay(displayConfig, meld, displayProvider, "insertPlayerName")
 		return new MeldGame(hostElement, display, displayProvider, meld)
 	}
 

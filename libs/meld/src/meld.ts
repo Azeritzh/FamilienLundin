@@ -23,22 +23,21 @@ export class Meld extends BaseGame<MeldAction> {
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
 		public readonly movementLogic = new MovementLogic(
 			config.constants,
-			entities,
+			entities.velocity.get,
 			entities.velocity.set,
 		),
 		public readonly placeBlockLogic = new PlaceBlockLogic(
-			config,
-			entities,
 			terrain,
-			random,
+			entities.selectedBlock.get,
 		),
 		public readonly selectedItemLogic = new SelectedItemLogic(
 			config,
-			entities,
+			entities.selectedBlock.get,
 			entities.selectedBlock.set,
 		),
 		public readonly startLogic = new StartLogic(
 			config,
+			state,
 			changes,
 			entities,
 			terrain,

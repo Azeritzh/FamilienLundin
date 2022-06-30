@@ -1,3 +1,4 @@
+import { Id } from "@lundin/age"
 import { Block } from "./block"
 import { EntityValues } from "./entity-values"
 import { Globals } from "./globals"
@@ -7,6 +8,7 @@ export class GameState {
 		public readonly globals: Globals,
 		public readonly entityValues: EntityValues,
 		public readonly chunks = new Map<string, Block[]>(), // Optimally the key would be a Vector3, but it'll use the object reference, so we instead convert it to a string: 1,2,3
+		public readonly players = new Map<string, Id>()
 	) { }
 
 	getNewId() {

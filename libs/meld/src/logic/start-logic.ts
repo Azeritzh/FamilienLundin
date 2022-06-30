@@ -5,10 +5,12 @@ import { Block } from "../state/block"
 import { MeldEntities } from "../state/entity-values"
 import { GenerateAction, MeldAction } from "../state/meld-action"
 import { Changes } from "../state/changes"
+import { GameState } from "../state/game-state"
 
 export class StartLogic implements GameLogic<MeldAction> {
 	constructor(
 		private config: GameConfig,
+		private state: GameState,
 		private changes: Changes,
 		private entities: MeldEntities,
 		private terrain: TerrainManager<Block>,
@@ -46,10 +48,12 @@ export class StartLogic implements GameLogic<MeldAction> {
 			if (add)
 				this.entities.remove(entity)
 		this.entities.remove(...this.entities)
+		this.state.players.clear()
 	}
 
 	private spawnPlayer() {
 		const entity = this.entities.create(this.config.constants.playerType)
 		this.setPosition.for(entity, new Vector3(5, 5, 0))
+		this.state.players.set("insertPlayerName", entity)
 	}
 }

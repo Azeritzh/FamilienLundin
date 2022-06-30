@@ -1,10 +1,14 @@
 import { BaseInputParser, DisplayProvider } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
+import { Meld } from "../meld"
 import { GenerateAction, MoveAction, SelectNextItemAction, PlaceBlockAction } from "../state/meld-action"
 import { Camera } from "./camera"
+import { DisplayState } from "./display-state"
 
 export class InputParser extends BaseInputParser<Input> {
 	constructor(
+		private game: Meld,
+		private state: DisplayState,
 		private camera: Camera,
 		displayProvider: DisplayProvider,
 		inputs: Map<Input, string[]>,
@@ -30,8 +34,7 @@ export class InputParser extends BaseInputParser<Input> {
 		const right = this.floatStateFor(Input.MoveRight) ?? 0
 		const velocity = new Vector2(right - left, down - up)
 			.multiply(factor)
-		if (!velocity.isZero())
-			return new MoveAction(velocity)
+		return new MoveAction(this.game.state.players.get(this.state.playerName), velocity)
 	}
 
 	private parseGenerate() {
@@ -45,12 +48,12 @@ export class InputParser extends BaseInputParser<Input> {
 			this.displayProvider.getInputState("MouseY"),
 		)
 		if (this.hasJustBeenPressed(Input.UseItem))
-			return new PlaceBlockAction(position)
+			return new PlaceBlockAction(this.game.state.players.get(this.state.playerName), position)
 	}
 
 	private parseSelectNextItem() {
 		if (this.hasJustBeenPressed(Input.SelectNextItem))
-			return new SelectNextItemAction()
+			return new SelectNextItemAction(this.game.state.players.get(this.state.playerName))
 	}
 }
 
