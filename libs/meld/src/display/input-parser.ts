@@ -1,6 +1,6 @@
 import { BaseInputParser, DisplayProvider } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { GenerateAction, MoveAction, NextSelectedBlockAction, RandomiseAction } from "../state/meld-action"
+import { GenerateAction, MoveAction, SelectNextItemAction, PlaceBlockAction } from "../state/meld-action"
 import { Camera } from "./camera"
 
 export class InputParser extends BaseInputParser<Input> {
@@ -17,8 +17,8 @@ export class InputParser extends BaseInputParser<Input> {
 		return [
 			this.parseGenerate(),
 			this.parseMovement(),
-			this.parseNextSelectedBlock(),
-			this.parseRandomise(),
+			this.parseSelectNextItem(),
+			this.parsePlaceBlock(),
 		].filter(x => x)
 	}
 
@@ -39,18 +39,18 @@ export class InputParser extends BaseInputParser<Input> {
 			return new GenerateAction()
 	}
 
-	private parseRandomise() {
+	private parsePlaceBlock() {
 		const position = this.camera.tilePositionFor(
 			this.displayProvider.getInputState("MouseX"),
 			this.displayProvider.getInputState("MouseY"),
 		)
-		if (this.hasJustBeenPressed(Input.Randomise))
-			return new RandomiseAction(position)
+		if (this.hasJustBeenPressed(Input.UseItem))
+			return new PlaceBlockAction(position)
 	}
 
-	private parseNextSelectedBlock() {
-		if (this.hasJustBeenPressed(Input.NextSelectedBlock))
-			return new NextSelectedBlockAction()
+	private parseSelectNextItem() {
+		if (this.hasJustBeenPressed(Input.SelectNextItem))
+			return new SelectNextItemAction()
 	}
 }
 
@@ -60,7 +60,7 @@ export enum Input {
 	MoveDown,
 	MoveLeft,
 	MoveRight,
-	NextSelectedBlock,
-	Randomise,
+	SelectNextItem,
+	UseItem,
 	Run,
 }

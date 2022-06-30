@@ -3,9 +3,9 @@ import { Vector3 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
 import { Block } from "../state/block"
 import { MeldEntities } from "../state/entity-values"
-import { MeldAction, RandomiseAction } from "../state/meld-action"
+import { MeldAction, PlaceBlockAction } from "../state/meld-action"
 
-export class RandomiseLogic implements GameLogic<MeldAction> {
+export class PlaceBlockLogic implements GameLogic<MeldAction> {
 	constructor(
 		private config: GameConfig,
 		private entities: MeldEntities,
@@ -15,11 +15,11 @@ export class RandomiseLogic implements GameLogic<MeldAction> {
 
 	update(actions: MeldAction[]) {
 		for (const action of actions)
-			if (action instanceof RandomiseAction)
-				this.randomiseBlock(action.block)
+			if (action instanceof PlaceBlockAction)
+				this.placeBlock(action.block)
 	}
 
-	private randomiseBlock(block: Vector3) {
+	private placeBlock(block: Vector3) {
 		const types = [...this.config.solidTypeMap.types.values()]
 		const selectedBlocks = [...this.entities.with.selectedBlock.values()]
 		const blockType = selectedBlocks[0] ?? this.random.get.in(types)

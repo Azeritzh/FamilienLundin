@@ -10,9 +10,9 @@ export class MoveAction extends MeldAction {
 	) { super() }
 }
 
-export class NextSelectedBlockAction extends MeldAction { }
+export class SelectNextItemAction extends MeldAction { }
 
-export class RandomiseAction extends MeldAction {
+export class PlaceBlockAction extends MeldAction {
 	constructor(
 		public block: Vector3,
 	) { super() }

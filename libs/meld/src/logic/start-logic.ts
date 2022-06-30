@@ -4,12 +4,12 @@ import { GameConfig } from "../config/game-config"
 import { Block } from "../state/block"
 import { MeldEntities } from "../state/entity-values"
 import { GenerateAction, MeldAction } from "../state/meld-action"
-import { MeldChanges } from "../state/meld-changes"
+import { Changes } from "../state/changes"
 
 export class StartLogic implements GameLogic<MeldAction> {
 	constructor(
 		private config: GameConfig,
-		private changes: MeldChanges,
+		private changes: Changes,
 		private entities: MeldEntities,
 		private terrain: TerrainManager<Block>,
 		private setPosition: ValueSetter<Vector3>,

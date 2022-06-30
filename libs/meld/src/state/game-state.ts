@@ -2,7 +2,7 @@ import { Block } from "./block"
 import { EntityValues } from "./entity-values"
 import { Globals } from "./globals"
 
-export class MeldState {
+export class GameState {
 	constructor(
 		public readonly globals: Globals,
 		public readonly entityValues: EntityValues,

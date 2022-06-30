@@ -1,23 +1,23 @@
 import { BaseGame, Random, TerrainManager } from "@lundin/age"
 import { GameConfig } from "./config/game-config"
 import { MovementLogic } from "./logic/movement-logic"
-import { RandomiseLogic } from "./logic/randomise-logic"
-import { SelectedBlockLogic } from "./logic/selected-block-logic"
+import { PlaceBlockLogic } from "./logic/place-block-logic"
+import { SelectedItemLogic } from "./logic/selected-item-logic"
 import { StartLogic } from "./logic/start-logic"
 import { UpdateStateLogic } from "./logic/update-state-logic"
 import { VelocityLogic } from "./logic/velocity-logic"
 import { EntityValues } from "./state/entity-values"
 import { Globals } from "./state/globals"
 import { MeldAction } from "./state/meld-action"
-import { MeldChanges } from "./state/meld-changes"
+import { Changes } from "./state/changes"
 import { MeldEntities } from "./state/meld-entities"
-import { MeldState } from "./state/meld-state"
+import { GameState } from "./state/game-state"
 
 export class Meld extends BaseGame<MeldAction> {
 	constructor(
 		public readonly config: GameConfig,
-		public readonly state = new MeldState(new Globals(), new EntityValues()),
-		public readonly changes = new MeldChanges(new EntityValues()),
+		public readonly state = new GameState(new Globals(), new EntityValues()),
+		public readonly changes = new Changes(new EntityValues()),
 		public readonly terrain = new TerrainManager(config.constants.chunkSize, state.chunks, changes.updatedBlocks),
 		public readonly entities = new MeldEntities(config.entityTypeValues, state.entityValues, changes.updatedEntityValues, state),
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
@@ -26,13 +26,13 @@ export class Meld extends BaseGame<MeldAction> {
 			entities,
 			entities.velocity.set,
 		),
-		public readonly randomiseLogic = new RandomiseLogic(
+		public readonly placeBlockLogic = new PlaceBlockLogic(
 			config,
 			entities,
 			terrain,
 			random,
 		),
-		public readonly selectedBlockLogic = new SelectedBlockLogic(
+		public readonly selectedItemLogic = new SelectedItemLogic(
 			config,
 			entities,
 			entities.selectedBlock.set,
@@ -59,8 +59,8 @@ export class Meld extends BaseGame<MeldAction> {
 		super([
 			movementLogic,
 			velocityLogic,
-			randomiseLogic,
-			selectedBlockLogic,
+			placeBlockLogic,
+			selectedItemLogic,
 			startLogic,
 			updateStateLogic,
 		])

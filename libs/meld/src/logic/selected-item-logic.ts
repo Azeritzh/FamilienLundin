@@ -1,9 +1,9 @@
 import { GameLogic, Id, ValueSetter } from "@lundin/age"
 import { GameConfig } from "../config/game-config"
 import { MeldEntities } from "../state/entity-values"
-import { MeldAction, NextSelectedBlockAction } from "../state/meld-action"
+import { MeldAction, SelectNextItemAction } from "../state/meld-action"
 
-export class SelectedBlockLogic implements GameLogic<MeldAction> {
+export class SelectedItemLogic implements GameLogic<MeldAction> {
 	constructor(
 		private config: GameConfig,
 		private entities: MeldEntities,
@@ -12,11 +12,11 @@ export class SelectedBlockLogic implements GameLogic<MeldAction> {
 
 	update(actions: MeldAction[]) {
 		for (const action of actions)
-			if (action instanceof NextSelectedBlockAction)
-				this.incrementSelectedBlock()
+			if (action instanceof SelectNextItemAction)
+				this.incrementSelectedItem()
 	}
 
-	private incrementSelectedBlock() {
+	private incrementSelectedItem() {
 		const blockTypes = [...this.config.solidTypeMap.types.values()]
 		for (const [entity, previous] of this.entities.with.selectedBlock) {
 			const previousIndex = blockTypes.indexOf(previous)
