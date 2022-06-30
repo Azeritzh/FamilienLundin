@@ -12,13 +12,13 @@ export class PlaceBlockLogic implements GameLogic<MeldAction> {
 	update(actions: MeldAction[]) {
 		for (const action of actions)
 			if (action instanceof PlaceBlockAction)
-				this.placeBlock(action.entity, action.block)
+				this.placeBlock(action.entity, action.position)
 	}
 
-	private placeBlock(entity: Id, block: Vector3) {
+	private placeBlock(entity: Id, position: Vector3) {
 		const selectedBlock = this.selectedItem.of(entity)
 		if(!(selectedBlock > -1))
 			return
-		this.terrain.set(Block.newFloor(selectedBlock, 0), block.x, block.y, block.z)
+		this.terrain.set(Block.newFloor(selectedBlock, 0), position.x, position.y, position.z)
 	}
 }

@@ -1,7 +1,7 @@
 import { GameLogic, Id, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
 import { Constants } from "../config/constants"
-import { MeldAction, MoveAction } from "../state/meld-action"
+import { MeldAction, MovementAction } from "../state/meld-action"
 
 export class MovementLogic implements GameLogic<MeldAction> {
 	constructor(
@@ -12,7 +12,7 @@ export class MovementLogic implements GameLogic<MeldAction> {
 
 	update(actions: MeldAction[]) {
 		for (const action of actions)
-			if (action instanceof MoveAction)
+			if (action instanceof MovementAction)
 				this.move(action.entity, action.velocity)
 	}
 

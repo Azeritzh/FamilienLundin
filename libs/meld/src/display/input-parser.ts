@@ -1,7 +1,7 @@
 import { BaseInputParser, DisplayProvider } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { Meld } from "../meld"
-import { GenerateAction, MoveAction, SelectNextItemAction, PlaceBlockAction } from "../state/meld-action"
+import { GenerateAction, MovementAction, SelectNextItemAction, PlaceBlockAction } from "../state/meld-action"
 import { Camera } from "./camera"
 import { DisplayState } from "./display-state"
 
@@ -21,8 +21,8 @@ export class InputParser extends BaseInputParser<Input> {
 		return [
 			this.parseGenerate(),
 			this.parseMovement(),
-			this.parseSelectNextItem(),
 			this.parsePlaceBlock(),
+			this.parseSelectNextItem(),
 		].filter(x => x)
 	}
 
@@ -34,7 +34,7 @@ export class InputParser extends BaseInputParser<Input> {
 		const right = this.floatStateFor(Input.MoveRight) ?? 0
 		const velocity = new Vector2(right - left, down - up)
 			.multiply(factor)
-		return new MoveAction(this.game.state.players.get(this.state.playerName), velocity)
+		return new MovementAction(this.game.state.players.get(this.state.playerName), velocity)
 	}
 
 	private parseGenerate() {
@@ -63,7 +63,7 @@ export enum Input {
 	MoveDown,
 	MoveLeft,
 	MoveRight,
+	Run,
 	SelectNextItem,
 	UseItem,
-	Run,
 }

@@ -31,14 +31,14 @@ export class WorldDrawer {
 
 		for (let y = startY; y <= endY; y++) {
 			while (entitiesInLayer.length > 0 && entitiesInLayer[0].position.y < y) {
-				this.entityDrawer.drawEntity(entitiesInLayer[0].entity)
+				this.entityDrawer.draw(entitiesInLayer[0].entity)
 				entitiesInLayer.splice(0, 1)
 			}
 			for (let x = Math.floor(area.left - 1); x <= Math.floor(area.right + 1); x++)
 				this.terrainDrawer.drawBlockContent(x, y, layer)
 		}
 		for (const { entity } of entitiesInLayer)
-			this.entityDrawer.drawEntity(entity)
+			this.entityDrawer.draw(entity)
 	}
 
 	private entitiesInArea(layer: number, area: DisplayArea) {

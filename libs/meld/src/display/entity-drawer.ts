@@ -8,12 +8,7 @@ export class EntityDrawer {
 		private camera: Camera,
 	) { }
 
-	drawEntities() {
-		for (const entity of this.game.entities)
-			this.drawEntity(entity)
-	}
-
-	drawEntity(entity: Id) {
+	draw(entity: Id) {
 		if (typeOf(entity) === this.game.config.constants.playerType)
 			this.drawPlayer(entity)
 		else

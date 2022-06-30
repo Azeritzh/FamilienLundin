@@ -5,7 +5,7 @@ export abstract class MeldAction { }
 
 export class GenerateAction extends MeldAction { }
 
-export class MoveAction extends MeldAction {
+export class MovementAction extends MeldAction {
 	constructor(
 		public entity: Id,
 		public velocity: Vector2,
@@ -21,6 +21,6 @@ export class SelectNextItemAction extends MeldAction {
 export class PlaceBlockAction extends MeldAction {
 	constructor(
 		public entity: Id,
-		public block: Vector3,
+		public position: Vector3,
 	) { super() }
 }
