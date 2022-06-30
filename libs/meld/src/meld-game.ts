@@ -1,10 +1,10 @@
 import { GameRunner, HtmlDisplayProvider } from "@lundin/age"
+import { GameConfig } from "./config/game-config"
 import * as defaultDisplayConfig from "./display-config.json"
-import { readDisplayConfig } from "./display/display-config"
 import * as gameConfig from "./game-config.json"
 import { Meld } from "./meld"
-import { GameConfig } from "./config/game-config"
 import { MeldDisplay } from "./meld-display"
+import { readDisplayConfig } from "./serialisation/serialisation-display-config"
 import { GenerateAction, MeldAction } from "./state/meld-action"
 
 export const updatesPerSecond = 30
