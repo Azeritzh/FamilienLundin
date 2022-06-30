@@ -25,9 +25,7 @@ export class EntityDrawer {
 	private drawPlayer(entity: Id) {
 		const position = this.game.entities.position.get.of(entity)
 		const velocity = this.game.entities.velocity.get.of(entity)
-		//const sprite = this.game.config.entityTypeMap.typeFor(typeOf(entity))
-		const selectedBlock = this.game.entities.selectedBlock.get.of(entity)
-		const selectedBlockName = this.game.config.solidTypeMap.typeFor(selectedBlock) + "-tile"
-		this.camera.drawAnimated(selectedBlockName, position, velocity)
+		const sprite = this.game.config.entityTypeMap.typeFor(typeOf(entity))
+		this.camera.drawAnimated(sprite, position, velocity)
 	}
 }

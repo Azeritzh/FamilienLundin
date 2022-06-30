@@ -3,6 +3,7 @@ import { Camera } from "./display/camera"
 import { DisplayConfig } from "./display/display-config"
 import { DisplayState } from "./display/display-state"
 import { EntityDrawer } from "./display/entity-drawer"
+import { HudDrawer } from "./display/hud-drawer"
 import { InputParser } from "./display/input-parser"
 import { TerrainDrawer } from "./display/terrain-drawer"
 import { WorldDrawer } from "./display/world-drawer"
@@ -21,6 +22,7 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 		private terrainDrawer = new TerrainDrawer(game, config, camera),
 		private entityDrawer = new EntityDrawer(game, camera),
 		private worldDrawer = new WorldDrawer(game, config, camera, terrainDrawer, entityDrawer),
+		private hudDrawer = new HudDrawer(game, state, display),
 	) { }
 
 	setSize(width: number, height: number) {
@@ -34,6 +36,7 @@ export class MeldDisplay implements BaseDisplay<MeldAction> {
 		this.display.startFrame()
 		//const start = performance.now()
 		this.worldDrawer.drawWorld()
+		this.hudDrawer.draw()
 		//console.log(performance.now() - start)
 		this.display.endFrame()
 	}
