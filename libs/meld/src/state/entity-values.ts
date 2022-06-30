@@ -1,4 +1,4 @@
-import { BaseValues, EntityManager, Id, RectangularSize } from "@lundin/age"
+import { BaseValues, CircularSize, EntityManager, Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 
 export type MeldEntities = EntityManager<EntityValues>
@@ -8,7 +8,7 @@ export class EntityValues extends BaseValues {
 		public readonly health = new Map<Id, number>(),
 		public readonly orientation = new Map<Id, number>(),
 		public readonly position = new Map<Id, Vector3>(),
-		public readonly rectangularSize = new Map<Id, RectangularSize>(),
+		public readonly circularSize = new Map<Id, CircularSize>(),
 		public readonly selectedBlock = new Map<Id, Id>(),
 		public readonly velocity = new Map<Id, Vector3>(),
 		entities = new Map<Id, boolean>(),
@@ -17,7 +17,7 @@ export class EntityValues extends BaseValues {
 		this.register(health)
 		this.register(orientation)
 		this.register(position)
-		this.register(rectangularSize)
+		this.register(circularSize)
 		this.register(selectedBlock)
 		this.register(velocity)
 	}
@@ -36,8 +36,8 @@ export class EntityValues extends BaseValues {
 			this.orientation.set(key, values.orientation)
 		if (values.position !== undefined)
 			this.position.set(key, values.position)
-		if (values.rectangularSize !== undefined)
-			this.rectangularSize.set(key, values.rectangularSize)
+		if (values.circularSize !== undefined)
+			this.circularSize.set(key, values.circularSize)
 		if (values.selectedBlock !== undefined)
 			this.selectedBlock.set(key, values.selectedBlock)
 		if (values.velocity !== undefined)
@@ -49,7 +49,7 @@ export class EntityValues extends BaseValues {
 			health: this.health.get(key),
 			orientation: this.orientation.get(key),
 			position: this.position.get(key),
-			rectangularSize: this.rectangularSize.get(key),
+			circularSize: this.circularSize.get(key),
 			selectedBlock: this.selectedBlock.get(key),
 			velocity: this.velocity.get(key),
 		}
@@ -60,7 +60,7 @@ export interface GroupedEntityValues {
 	health?: number
 	orientation?: number
 	position?: Vector3
-	rectangularSize?: RectangularSize
+	circularSize?: CircularSize
 	selectedBlock?: Id
 	velocity?: Vector3
 }

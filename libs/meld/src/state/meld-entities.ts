@@ -11,7 +11,7 @@ export class MeldEntities extends EntityManager<EntityValues> {
 		public readonly health = accessor.for(x => x.health, x => x.health),
 		public readonly orientation = accessor.for(x => x.orientation, x => x.orientation, 0),
 		public readonly position = accessor.for(x => x.position, x => x.position),
-		public readonly rectangularSize = accessor.for(x => x.rectangularSize, x => x.rectangularSize),
+		public readonly circularSize = accessor.for(x => x.circularSize, x => x.circularSize),
 		public readonly selectedBlock = accessor.for(x => x.selectedBlock, x => x.selectedBlock),
 		public readonly velocity = accessor.for(x => x.velocity, x => x.velocity),
 	) {
@@ -20,7 +20,7 @@ export class MeldEntities extends EntityManager<EntityValues> {
 			health,
 			orientation,
 			position,
-			rectangularSize,
+			circularSize,
 			selectedBlock,
 			velocity,
 		)

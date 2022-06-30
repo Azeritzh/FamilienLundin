@@ -44,7 +44,7 @@ function groupedEntityValuesFrom(jsonObject: any, blockTypeMap: TypeMap) {
 	if (jsonObject.position)
 		values.position = Object.assign(new Vector3(0, 0, 0), jsonObject.position)
 	if (jsonObject.rectangularSize)
-		values.rectangularSize = Object.assign(new RectangularSize(0, 0), jsonObject.rectangularSize)
+		values.circularSize = Object.assign(new RectangularSize(0, 0), jsonObject.rectangularSize)
 	if (jsonObject.selectedBlock)
 		values.selectedBlock = blockTypeMap.typeIdFor(jsonObject.selectedBlock)
 	if (jsonObject.velocity)
