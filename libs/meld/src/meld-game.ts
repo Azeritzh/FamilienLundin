@@ -1,10 +1,10 @@
 import { GameRunner, HtmlDisplayProvider } from "@lundin/age"
-import { GameConfig } from "./config/game-config"
 import * as defaultDisplayConfig from "./display-config.json"
 import * as gameConfig from "./game-config.json"
 import { Meld } from "./meld"
 import { MeldDisplay } from "./meld-display"
 import { readDisplayConfig } from "./serialisation/serialisation-display-config"
+import { readGameConfig } from "./serialisation/serialisation-game-config"
 import { GenerateAction, MeldAction } from "./state/meld-action"
 
 export const updatesPerSecond = 30
@@ -24,7 +24,7 @@ export class MeldGame extends GameRunner<MeldAction> {
 
 	static createAt(hostElement: HTMLElement, displayConfig: any) {
 		displayConfig = { ...readDisplayConfig(defaultDisplayConfig), ...displayConfig }
-		const meld = new Meld(GameConfig.read(gameConfig))
+		const meld = new Meld(readGameConfig(gameConfig))
 		const displayProvider = new HtmlDisplayProvider(hostElement, displayConfig)
 		const display = new MeldDisplay(displayConfig, meld, displayProvider)
 		return new MeldGame(hostElement, display, displayProvider, meld)

@@ -7,12 +7,15 @@
 			"selectedBlock": "grass"
 		}
 	},
-	"blockTypes": {
+	"solidTypes": {
 		"dirt": {},
 		"earth": {},
 		"grass": {},
 		"slab": {},
 		"stone": {},
 		"wooden": {}
+	},
+	"nonSolidTypes": {
+		"air": {}
 	}
 }
