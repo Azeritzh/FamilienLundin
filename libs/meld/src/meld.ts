@@ -1,5 +1,5 @@
 import { BaseGame, Random, TerrainManager } from "@lundin/age"
-import { MeldConfig } from "./config/meld-config"
+import { GameConfig } from "./config/game-config"
 import { MovementLogic } from "./logic/movement-logic"
 import { RandomiseLogic } from "./logic/randomise-logic"
 import { SelectedBlockLogic } from "./logic/selected-block-logic"
@@ -15,7 +15,7 @@ import { MeldState } from "./state/meld-state"
 
 export class Meld extends BaseGame<MeldAction> {
 	constructor(
-		public readonly config: MeldConfig,
+		public readonly config: GameConfig,
 		public readonly state = new MeldState(new Globals(), new EntityValues()),
 		public readonly changes = new MeldChanges(new EntityValues()),
 		public readonly terrain = new TerrainManager(config.constants.chunkSize, state.chunks, changes.updatedBlocks),

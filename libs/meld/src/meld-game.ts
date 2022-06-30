@@ -3,7 +3,7 @@ import * as defaultDisplayConfig from "./display-config.json"
 import { readDisplayConfig } from "./display/display-config"
 import * as gameConfig from "./game-config.json"
 import { Meld } from "./meld"
-import { MeldConfig } from "./config/meld-config"
+import { GameConfig } from "./config/game-config"
 import { MeldDisplay } from "./meld-display"
 import { GenerateAction, MeldAction } from "./state/meld-action"
 
@@ -24,7 +24,7 @@ export class MeldGame extends GameRunner<MeldAction> {
 
 	static createAt(hostElement: HTMLElement, displayConfig: any) {
 		displayConfig = { ...readDisplayConfig(defaultDisplayConfig), ...displayConfig }
-		const meld = new Meld(MeldConfig.read(gameConfig))
+		const meld = new Meld(GameConfig.read(gameConfig))
 		const displayProvider = new HtmlDisplayProvider(hostElement, displayConfig)
 		const display = new MeldDisplay(displayConfig, meld, displayProvider)
 		return new MeldGame(hostElement, display, displayProvider, meld)

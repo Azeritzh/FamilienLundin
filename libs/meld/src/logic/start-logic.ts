@@ -1,6 +1,6 @@
 import { GameLogic, Random, TerrainManager, ValueSetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
-import { MeldConfig } from "../config/meld-config"
+import { GameConfig } from "../config/game-config"
 import { Block } from "../state/block"
 import { MeldEntities } from "../state/entity-values"
 import { GenerateAction, MeldAction } from "../state/meld-action"
@@ -8,7 +8,7 @@ import { MeldChanges } from "../state/meld-changes"
 
 export class StartLogic implements GameLogic<MeldAction> {
 	constructor(
-		private config: MeldConfig,
+		private config: GameConfig,
 		private changes: MeldChanges,
 		private entities: MeldEntities,
 		private terrain: TerrainManager<Block>,
@@ -28,7 +28,7 @@ export class StartLogic implements GameLogic<MeldAction> {
 	}
 
 	private generateRandomTerrain() {
-		const types = [...this.config.blockTypeMap.types.values()]
+		const types = [...this.config.solidTypeMap.types.values()]
 		this.terrain.addChunk([], 0, 0, 0)
 		this.terrain.addChunk([], 0, -1, 0)
 		this.terrain.addChunk([], -1, 0, 0)

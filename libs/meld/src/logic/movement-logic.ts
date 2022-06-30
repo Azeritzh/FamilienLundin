@@ -1,12 +1,12 @@
 import { GameLogic, ValueSetter } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
-import { MeldConstants } from "../config/meld-constants"
+import { Constants } from "../config/constants"
 import { MeldEntities } from "../state/entity-values"
 import { MeldAction, MoveAction } from "../state/meld-action"
 
 export class MovementLogic implements GameLogic<MeldAction> {
 	constructor(
-		private constants: MeldConstants,
+		private constants: Constants,
 		private entities: MeldEntities,
 		private setVelocity: ValueSetter<Vector3>,
 	) { }

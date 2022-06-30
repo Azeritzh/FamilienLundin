@@ -49,7 +49,7 @@ export class WorldDrawer {
 	}
 
 	private orderingPositionFor(entity: Id, position: Vector3) {
-		const size = this.game.entities.rectangularSize.get.of(entity)
+		const size = this.game.entities.circularSize.get.of(entity)
 		if (size)
 			position = position.add(new Vector3(0, 0, 1)) // size.Height))
 		return position

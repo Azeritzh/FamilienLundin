@@ -2,7 +2,7 @@ import { Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { updatesPerSecond } from "../meld-game"
 
-export class MeldConstants {
+export class Constants {
 	constructor(
 		public playerType: Id,
 		public chunkSize = new Vector3(10, 10, 5),

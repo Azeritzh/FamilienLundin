@@ -1,36 +1,42 @@
 import { Id, RectangularSize, TypeMap } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
-import { MeldConstants } from "./meld-constants"
+import { Constants } from "./constants"
 import { BlockValues } from "../state/block-values"
 import { GroupedEntityValues } from "../state/entity-values"
 import { updatesPerSecond } from "../meld-game"
 
-export class MeldConfig {
+export class GameConfig {
 	constructor(
-		public readonly constants: MeldConstants,
+		public readonly constants: Constants,
 		public readonly entityTypeMap: TypeMap,
 		public readonly entityTypeValues: Map<Id, GroupedEntityValues>,
-		public readonly blockTypeMap: TypeMap,
-		public readonly blockTypeValues: Map<Id, BlockValues>,
+		public readonly solidTypeMap: TypeMap,
+		public readonly solidTypeValues: Map<Id, BlockValues>,
+		public readonly nonSolidTypeMap: TypeMap,
+		public readonly nonSolidTypeValues: Map<Id, BlockValues>,
 	) { }
 
 	public static read(jsonConfig: any) {
 		const entityTypeNames = Object.keys(jsonConfig.entityTypes)
 		const entityTypeMap = TypeMap.from(entityTypeNames)
-		const blockTypeNames = Object.keys(jsonConfig.blockTypes)
-		const blockTypeMap = TypeMap.from(blockTypeNames)
-		return new MeldConfig(
+		const solidTypeNames = Object.keys(jsonConfig.blockTypes)
+		const solidTypeMap = TypeMap.from(solidTypeNames)
+		const nonSolidTypeNames = Object.keys(jsonConfig.blockTypes)
+		const nonSolidTypeMap = TypeMap.from(nonSolidTypeNames)
+		return new GameConfig(
 			constantsFrom(jsonConfig.constants, entityTypeMap),
 			entityTypeMap,
-			new Map(entityTypeNames.map(x => [entityTypeMap.typeIdFor(x), groupedEntityValuesFrom(jsonConfig.entityTypes[x], blockTypeMap)])),
-			blockTypeMap,
-			new Map(blockTypeNames.map(x => [blockTypeMap.typeIdFor(x), { hardness: 0 }])),
+			new Map(entityTypeNames.map(x => [entityTypeMap.typeIdFor(x), groupedEntityValuesFrom(jsonConfig.entityTypes[x], solidTypeMap)])),
+			solidTypeMap,
+			new Map(solidTypeNames.map(x => [solidTypeMap.typeIdFor(x), { hardness: 0 }])),
+			nonSolidTypeMap,
+			new Map(nonSolidTypeNames.map(x => [nonSolidTypeMap.typeIdFor(x), { hardness: 0 }])),
 		)
 	}
 }
 
 function constantsFrom(serialised: any, typeMap: TypeMap) {
-	const constants: MeldConstants = Object.assign(new MeldConstants(0), serialised)
+	const constants: Constants = Object.assign(new Constants(0), serialised)
 	constants.playerType = typeMap.typeIdFor(serialised.playerType)
 	if (serialised.chunkSize)
 		constants.chunkSize = new Vector3(serialised.chunkSize.x, serialised.chunkSize.y, serialised.chunkSize.z)

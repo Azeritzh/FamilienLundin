@@ -36,21 +36,21 @@ export class TerrainDrawer {
 	}
 
 	private drawFloor(block: Block, x: number, y: number, z: number) {
-		const blockType = this.game.config.blockTypeMap.typeFor(block.solidType)
+		const blockType = this.game.config.solidTypeMap.typeFor(block.solidType)
 		if (blockType == null)
 			return
 		this.drawBlockTop(blockType, new Vector3(x, y, z))
 	}
 
 	private drawHalfWall(block: Block, x: number, y: number, z: number) {
-		const blockType = this.game.config.blockTypeMap.typeFor(block.solidType)
+		const blockType = this.game.config.solidTypeMap.typeFor(block.solidType)
 		if (blockType == null)
 			return
 		this.drawBlockTop(blockType, new Vector3(x, y, z + 0.5))
 	}
 
 	private drawFullWall(block: Block, x: number, y: number, z: number) {
-		const blockType = this.game.config.blockTypeMap.typeFor(block.solidType)
+		const blockType = this.game.config.solidTypeMap.typeFor(block.solidType)
 		if (blockType == null)
 			return
 		this.drawBlockFullSide(blockType, new Vector3(x, y, z + this.fullWallOffset()))
