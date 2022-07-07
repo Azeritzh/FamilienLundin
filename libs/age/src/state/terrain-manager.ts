@@ -4,11 +4,11 @@ export class TerrainManager<Field> {
 	constructor(
 		private chunkSize = new Vector3(10, 10, 1),
 		private chunks: Map<string, Field[]>,
-		private updatedBlocks = new Map<Vector3, Field>(),
+		private updatedBlocks = new Map<string, Field>(),
 	) { }
 
 	public addChunk(fields: Field[], x: number, y: number, z = 0) {
-		this.chunks.set(this.convertChunkCoords(x, y, z), fields)
+		this.chunks.set(Vector3.stringify(x, y, z), fields)
 	}
 
 	public get(x: number, y: number, z = 0) {
@@ -21,10 +21,17 @@ export class TerrainManager<Field> {
 		// ?? this.defaultTile
 	}
 
+	public getAt(position: Vector3) {
+		const { chunkCoords, index } = this.getChunkPositionFor(Math.floor(position.x), Math.floor(position.y), Math.floor(position.z))
+		const chunk = this.chunks.get(chunkCoords)
+		return chunk?.[index]
+		// ?? this.defaultTile
+	}
+
 	/** Takes a global position and returns the corresponding chunk coordinate and index within that chunk */
 	private getChunkPositionFor(x: number, y: number, z: number) {
 		const properChunkCoords = this.getChunkCoords(x, y, z)
-		const chunkCoords = this.convertChunkCoords(properChunkCoords.x, properChunkCoords.y, properChunkCoords.z)
+		const chunkCoords = properChunkCoords.stringify()
 		const index = this.chunkIndexFor(
 			x - properChunkCoords.x * this.chunkSize.x,
 			y - properChunkCoords.y * this.chunkSize.y,
@@ -46,11 +53,6 @@ export class TerrainManager<Field> {
 		return Math.floor(n / size)
 	}
 
-	/** Takes chunk coordinates and converts them to a string for use with our stupid map */
-	private convertChunkCoords(x: number, y: number, z: number) {
-		return x + "," + y + "," + z
-	}
-
 	/** Takes a local position and returns the corresponding chunk index */
 	private chunkIndexFor(x: number, y: number, z: number) {
 		return x + y * this.chunkSize.x + z * this.chunkSize.x * this.chunkSize.y
@@ -60,7 +62,7 @@ export class TerrainManager<Field> {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
-		return this.updatedBlocks.get(new Vector3(x, y, z))
+		return this.updatedBlocks.get(Vector3.stringify(x, y, z))
 			?? this.get(x, y, z)
 	}
 
@@ -77,7 +79,7 @@ export class TerrainManager<Field> {
 
 	/** Iterates through all fields in a chunk, and returns the local (and global) position and field */
 	public *allFieldsInChunk(chunkX = 0, chunkY = 0, chunkZ = 0) {
-		const chunk = this.chunks.get(this.convertChunkCoords(chunkX, chunkY, chunkZ))
+		const chunk = this.chunks.get(Vector3.stringify(chunkX, chunkY, chunkZ))
 		if (!chunk)
 			return // TODO: should there be notification or something here?
 		for (const z of range(0, this.chunkSize.z))
@@ -110,21 +112,26 @@ export class TerrainManager<Field> {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
-		this.updatedBlocks.set(new Vector3(x, y, z), field)
+		this.updatedBlocks.set(Vector3.stringify(x, y, z), field)
+	}
+
+	public setAt(position: Vector3, field: Field) {
+		const pos = Vector3.stringify(Math.floor(position.x), Math.floor(position.y), Math.floor(position.z))
+		this.updatedBlocks.set(pos, field)
 	}
 
 	public applyUpdatedValues() {
-		for (const [{ x, y, z }, field] of this.updatedBlocks)
-			this.setField(x, y, z, field)
+		for (const [position, field] of this.updatedBlocks)
+			this.setField(Vector3.parse(position), field)
 		this.updatedBlocks.clear()
 	}
 
-	private setField(x: number, y: number, z: number, field: Field) {
-		const { chunkCoords, index } = this.getChunkPositionFor(x, y, z)
+	private setField(position: Vector3, field: Field) {
+		const { chunkCoords, index } = this.getChunkPositionFor(position.x, position.y, position.z)
 		const chunk = this.chunks.get(chunkCoords)
 		if (chunk)
 			chunk[index] = field
 		else
-			console.error("Can't set field outside chunks at ({0}, {1}, {2})", x, y, z)
+			console.error(`Can't set field outside chunks at (${position.x}, ${position.y}, ${position.z})`)
 	}
 }

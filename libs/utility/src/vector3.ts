@@ -34,7 +34,20 @@ export class Vector3 {
 		return Math.sqrt(this.lengthSquared())
 	}
 
-	isZero(){
+	isZero() {
 		return this.x === 0 && this.y === 0 && this.z === 0
+	}
+
+	stringify() {
+		return this.x + "," + this.y + "," + this.z
+	}
+
+	static parse(text: string) {
+		const [x, y, z] = text.split(",")
+		return new Vector3(+x, +y, +z)
+	}
+
+	static stringify(x: number, y: number, z: number) {
+		return x + "," + y + "," + z
 	}
 }
