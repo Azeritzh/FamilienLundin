@@ -30,7 +30,7 @@ export class EntityManager<EntityValues extends BaseValues> {
 
 	public applyUpdatedValues() {
 		this.entityValues.addValuesFromOther(this.updatedEntityValues)
-		this.updatedEntityValues.clear()
+		this.updatedEntityValues.clearValues()
 		for (const [entity, add] of this.updatedEntityValues.entities)
 			if (add)
 				this.add(entity)

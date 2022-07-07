@@ -12,7 +12,7 @@ export abstract class BaseValues {
 		return map
 	}
 
-	clear() {
+	clearValues() {
 		for (const map of this.allValueMaps)
 			map.clear()
 	}

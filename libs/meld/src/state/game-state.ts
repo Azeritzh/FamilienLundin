@@ -14,21 +14,24 @@ export class GameState {
 	getNewId() {
 		return this.globals.nextId++
 	}
-	/*
-			void AddNewEntity(SerialisedEntity newEntity) {
-		var id = NextId++;
-		var entity = TypeMapping.CreateEntity(newEntity.Type, id);
-		// The next two calls would do well to be a single call to Entities, and should probably
-		// also store the entity in a list for new entities like with the values
-		Entities.Add(entity);
-		Entities.UpdatedEntityValues.AddValuesFrom(entity.Id, newEntity.Values);
-	}*/
 
-	/*public EntityIdForPlayer(playerId: string): number {
-		for(const entity of this.entities){
-			if(entity instanceof PlayerEntity && entity.playerId === playerId)
-				return entity.id
-		}
-		return null
-	}*/
+	loadFrom(state: GameState) {
+		this.globals.tick = state.globals.tick
+		this.globals.seed = state.globals.seed
+		this.globals.nextId = state.globals.nextId
+
+		this.entityValues.clearValues()
+		this.entityValues.entities.clear()
+		for (const [id, value] of state.entityValues.entities)
+			this.entityValues.entities.set(id, value)
+		this.entityValues.addValuesFromOther(state.entityValues)
+
+		this.chunks.clear()
+		for (const [position, blocks] of state.chunks)
+			this.chunks.set(position, blocks)
+
+		this.players.clear()
+		for (const [playerId, entityId] of state.players)
+			this.players.set(playerId, entityId)
+	}
 }
