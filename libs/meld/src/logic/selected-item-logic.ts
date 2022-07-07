@@ -1,15 +1,15 @@
 import { GameLogic, Id, ValueGetter, ValueSetter } from "@lundin/age"
 import { GameConfig } from "../config/game-config"
-import { MeldAction, SelectNextItemAction } from "../state/meld-action"
+import { GameUpdate, SelectNextItemAction } from "../state/game-update"
 
-export class SelectedItemLogic implements GameLogic<MeldAction> {
+export class SelectedItemLogic implements GameLogic<GameUpdate> {
 	constructor(
 		private config: GameConfig,
 		private selectedBlock: ValueGetter<Id>,
 		private setSelectedBlock: ValueSetter<Id>,
 	) { }
 
-	update(actions: MeldAction[]) {
+	update(actions: GameUpdate[]) {
 		for (const action of actions)
 			if (action instanceof SelectNextItemAction)
 				this.incrementSelectedItemFor(action.entity)

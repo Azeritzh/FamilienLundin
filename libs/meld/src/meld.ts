@@ -8,12 +8,12 @@ import { UpdateStateLogic } from "./logic/update-state-logic"
 import { VelocityLogic } from "./logic/velocity-logic"
 import { EntityValues } from "./state/entity-values"
 import { Globals } from "./state/globals"
-import { MeldAction } from "./state/meld-action"
+import { GameUpdate } from "./state/game-update"
 import { Changes } from "./state/changes"
 import { MeldEntities } from "./state/meld-entities"
 import { GameState } from "./state/game-state"
 
-export class Meld extends BaseGame<MeldAction> {
+export class Meld extends BaseGame<GameUpdate> {
 	constructor(
 		public readonly config: GameConfig,
 		public readonly state = new GameState(new Globals(), new EntityValues()),

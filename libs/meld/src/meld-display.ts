@@ -8,9 +8,9 @@ import { InputParser } from "./display/input-parser"
 import { TerrainDrawer } from "./display/terrain-drawer"
 import { WorldDrawer } from "./display/world-drawer"
 import { Meld } from "./meld"
-import { MeldAction } from "./state/meld-action"
+import { GameUpdate } from "./state/game-update"
 
-export class MeldDisplay implements BaseDisplay<MeldAction> {
+export class MeldDisplay implements BaseDisplay<GameUpdate> {
 	constructor(
 		private config: DisplayConfig,
 		private game: Meld,

@@ -5,11 +5,11 @@ import { Meld } from "./meld"
 import { MeldDisplay } from "./meld-display"
 import { readDisplayConfig } from "./serialisation/serialisation-display-config"
 import { readGameConfig } from "./serialisation/serialisation-game-config"
-import { GenerateAction, MeldAction } from "./state/meld-action"
+import { GenerateAction, GameUpdate } from "./state/game-update"
 
 export const updatesPerSecond = 30
 
-export class MeldGame extends GameRunner<MeldAction> {
+export class MeldGame extends GameRunner<GameUpdate> {
 	constructor(
 		hostElement: HTMLElement,
 		private meldDisplay: MeldDisplay,

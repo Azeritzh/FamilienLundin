@@ -2,9 +2,9 @@ import { GameLogic, Id, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Constants } from "../config/constants"
 import { MeldEntities } from "../state/entity-values"
-import { MeldAction } from "../state/meld-action"
+import { GameUpdate } from "../state/game-update"
 
-export class VelocityLogic implements GameLogic<MeldAction> {
+export class VelocityLogic implements GameLogic<GameUpdate> {
 	constructor(
 		private constants: Constants,
 		private entities: MeldEntities,

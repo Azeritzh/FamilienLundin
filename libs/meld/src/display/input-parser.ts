@@ -1,7 +1,7 @@
 import { BaseInputParser, DisplayProvider } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { Meld } from "../meld"
-import { GenerateAction, MovementAction, SelectNextItemAction, PlaceBlockAction } from "../state/meld-action"
+import { GenerateAction, MovementAction, SelectNextItemAction, PlaceBlockAction } from "../state/game-update"
 import { Camera } from "./camera"
 import { DisplayState } from "./display-state"
 

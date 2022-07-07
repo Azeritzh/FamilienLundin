@@ -1,15 +1,15 @@
 import { GameLogic, Id, TerrainManager, ValueGetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Block, BlockType } from "../state/block"
-import { MeldAction, PlaceBlockAction } from "../state/meld-action"
+import { GameUpdate, PlaceBlockAction } from "../state/game-update"
 
-export class PlaceBlockLogic implements GameLogic<MeldAction> {
+export class PlaceBlockLogic implements GameLogic<GameUpdate> {
 	constructor(
 		private terrain: TerrainManager<Block>,
 		private selectedItem: ValueGetter<Id>
 	) { }
 
-	update(actions: MeldAction[]) {
+	update(actions: GameUpdate[]) {
 		for (const action of actions)
 			if (action instanceof PlaceBlockAction)
 				this.placeBlock(action.entity, action.position)

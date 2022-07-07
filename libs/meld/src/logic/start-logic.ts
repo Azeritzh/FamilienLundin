@@ -3,11 +3,11 @@ import { Vector3 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
 import { Block } from "../state/block"
 import { MeldEntities } from "../state/entity-values"
-import { GenerateAction, MeldAction } from "../state/meld-action"
+import { GenerateAction, GameUpdate } from "../state/game-update"
 import { Changes } from "../state/changes"
 import { GameState } from "../state/game-state"
 
-export class StartLogic implements GameLogic<MeldAction> {
+export class StartLogic implements GameLogic<GameUpdate> {
 	constructor(
 		private config: GameConfig,
 		private state: GameState,
@@ -18,7 +18,7 @@ export class StartLogic implements GameLogic<MeldAction> {
 		private random: Random,
 	) { }
 
-	update(actions: MeldAction[]) {
+	update(actions: GameUpdate[]) {
 		if (actions.some(x => x instanceof GenerateAction))
 			this.initialiseGame()
 	}
