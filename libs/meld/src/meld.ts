@@ -50,9 +50,12 @@ export class Meld extends BaseGame<MeldAction> {
 			terrain,
 		),
 		public velocityLogic = new VelocityLogic(
+			config.constants,
 			entities,
 			entities.position.get,
 			entities.position.set,
+			entities.velocity.get,
+			entities.velocity.set,
 		),
 	) {
 		super([
