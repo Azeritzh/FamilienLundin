@@ -31,10 +31,10 @@ export class StartLogic implements GameLogic<GameUpdate> {
 
 	private generateRandomTerrain() {
 		const types = [...this.config.solidTypeMap.types.values()]
-		this.terrain.addChunk([], 0, 0, 0)
-		this.terrain.addChunk([], 0, -1, 0)
-		this.terrain.addChunk([], -1, 0, 0)
-		this.terrain.addChunk([], -1, -1, 0)
+		this.terrain.addChunk(0, 0, 0)
+		this.terrain.addChunk(0, -1, 0)
+		this.terrain.addChunk(-1, 0, 0)
+		this.terrain.addChunk(-1, -1, 0)
 		for (const { position } of this.terrain.allFields())
 			if (position.z === 0)
 				if (Math.random() < 0.9)
