@@ -28,8 +28,9 @@ function constantsFrom(serialised: any, typeMap: TypeMap) {
 	constants.playerType = typeMap.typeIdFor(serialised.playerType)
 	if (serialised.chunkSize)
 		constants.chunkSize = new Vector3(serialised.chunkSize.x, serialised.chunkSize.y, serialised.chunkSize.z)
-	if (serialised.maxMoveSpeed)
-		constants.maxMoveSpeed = serialised.maxMoveSpeed / updatesPerSecond
+	constants.gravityAcceleration = (serialised.gravityAcceleration ?? 0.5) / updatesPerSecond
+	constants.terminalVerticalVelocity = (serialised.terminalVerticalVelocity ?? 10) / updatesPerSecond
+	constants.maxMoveSpeed = (serialised.maxMoveSpeed ?? 10) / updatesPerSecond
 	return constants
 }
 

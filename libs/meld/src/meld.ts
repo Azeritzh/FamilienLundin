@@ -14,6 +14,7 @@ import { MeldEntities } from "./state/meld-entities"
 import { GameState } from "./state/game-state"
 import { LoadStateLogic } from "./logic/load-state-logic"
 import { BlockCollisionLogic } from "./logic/block-collision-logic"
+import { GravityLogic } from "./logic/gravity-logic"
 
 export class Meld extends BaseGame<GameUpdate> {
 	constructor(
@@ -28,6 +29,14 @@ export class Meld extends BaseGame<GameUpdate> {
 			entities,
 			terrain,
 			entities.circularSize.get,
+			entities.position.get,
+			entities.velocity.get,
+			entities.velocity.set,
+		),
+		public readonly gravityLogic = new GravityLogic(
+			config.constants,
+			entities,
+			terrain,
 			entities.position.get,
 			entities.velocity.get,
 			entities.velocity.set,
@@ -74,6 +83,7 @@ export class Meld extends BaseGame<GameUpdate> {
 	) {
 		super([
 			movementLogic,
+			gravityLogic,
 			blockCollisionLogic,
 			velocityLogic,
 			placeBlockLogic,

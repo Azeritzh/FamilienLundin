@@ -15,6 +15,7 @@ export class MeldEntities extends EntityManager<EntityValues> {
 		public readonly selectedBlock = accessor.for(x => x.selectedBlock, x => x.selectedBlock),
 		public readonly velocity = accessor.for(x => x.velocity, x => x.velocity),
 		public readonly blockCollisionBehaviour = accessor.for(x => x.blockCollisionBehaviour, x => x.blockCollisionBehaviour),
+		public readonly gravityBehaviour = accessor.for(x => x.gravityBehaviour, x => x.gravityBehaviour),
 	) {
 		super(entityValues, updatedEntityValues, idProvider)
 		this.valueAccessors.push(
@@ -25,6 +26,7 @@ export class MeldEntities extends EntityManager<EntityValues> {
 			selectedBlock,
 			velocity,
 			blockCollisionBehaviour,
+			gravityBehaviour,
 		)
 	}
 }
