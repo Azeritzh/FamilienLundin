@@ -50,4 +50,16 @@ export class Vector3 {
 	static stringify(x: number, y: number, z: number) {
 		return x + "," + y + "," + z
 	}
+
+	withX(x: number) {
+		return new Vector3(x, this.y, this.z)
+	}
+
+	withY(y: number) {
+		return new Vector3(this.x, y, this.z)
+	}
+
+	withZ(z: number) {
+		return new Vector3(this.x, this.y, z)
+	}
 }

@@ -13,6 +13,7 @@ import { Changes } from "./state/changes"
 import { MeldEntities } from "./state/meld-entities"
 import { GameState } from "./state/game-state"
 import { LoadStateLogic } from "./logic/load-state-logic"
+import { BlockCollisionLogic } from "./logic/block-collision-logic"
 
 export class Meld extends BaseGame<GameUpdate> {
 	constructor(
@@ -22,6 +23,15 @@ export class Meld extends BaseGame<GameUpdate> {
 		public readonly terrain = new TerrainManager(config.constants.chunkSize, state.chunks, changes.updatedBlocks),
 		public readonly entities = new MeldEntities(config.entityTypeValues, state.entityValues, changes.updatedEntityValues, state),
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
+		public readonly blockCollisionLogic = new BlockCollisionLogic(
+			config.constants,
+			entities,
+			terrain,
+			entities.circularSize.get,
+			entities.position.get,
+			entities.velocity.get,
+			entities.velocity.set,
+		),
 		public readonly loadStateLogic = new LoadStateLogic(
 			state,
 		),
@@ -64,6 +74,7 @@ export class Meld extends BaseGame<GameUpdate> {
 	) {
 		super([
 			movementLogic,
+			blockCollisionLogic,
 			velocityLogic,
 			placeBlockLogic,
 			selectedItemLogic,

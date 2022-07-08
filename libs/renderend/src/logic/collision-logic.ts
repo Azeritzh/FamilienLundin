@@ -1,4 +1,4 @@
-import { Box, GameLogic, Id, RectangularSize, ValueGetter } from "@lundin/age"
+import { Box2d, GameLogic, Id, RectangularSize, ValueGetter } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { RenderendAction } from "../state/renderend-action"
 import { RenderendEntities } from "../state/renderend-entities"
@@ -23,7 +23,7 @@ export class CollisionLogic implements GameLogic<RenderendAction> {
 		const otherPosition = this.position.of(otherEntity)
 		if (!otherPosition)
 			return false
-		return Box.from(otherPosition, size).contains(point)
+		return Box2d.from(otherPosition, size).contains(point)
 	}
 
 	private notify(entity: Id, otherEntity: Id) {

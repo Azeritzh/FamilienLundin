@@ -4,6 +4,8 @@
 	},
 	"entityTypes": {
 		"player": {
+			"blockCollisionBehaviour": true,
+			"circularSize": { "radius": 0.625, "height": 0.875 },
 			"selectedBlock": "grass"
 		}
 	},
