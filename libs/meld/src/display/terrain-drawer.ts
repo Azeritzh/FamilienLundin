@@ -26,6 +26,7 @@ export class TerrainDrawer {
 		this.drawBlockWall(block, position)
 		this.drawTileOverlays(block, position)
 		this.drawWallOverlays(block, position, rightPosition)
+		// this.drawWallShadows(block, position, rightPosition) // disabled because transparency with webgl seem to be weird
 	}
 
 	private drawBlockTile(block: Block, position: Vector3) {
@@ -184,6 +185,44 @@ export class TerrainDrawer {
 	private WallOverlayHalfLeftFor(block: Block) {
 		if (!block) return ""
 		return "default-wall-overlay-half-left"
+	}
+
+	private drawWallShadows(leftBlock: Block, leftPosition: Vector3, rightPosition: Vector3) {
+		const rightBlock = this.game.terrain.getAt(rightPosition)
+		if (!rightBlock)
+			return
+		const leftCenter = leftPosition.add(TerrainDrawer.BlockCenter)
+		const rightCenter = rightPosition.add(TerrainDrawer.BlockCenter)
+		const below = new Vector3(0, 0, -1)
+
+		if (leftBlock.blockType == BlockType.Full) {
+			if (rightBlock.blockType == BlockType.Empty && this.game.terrain.getAt(rightPosition.add(below))?.blockType == BlockType.Full)
+				this.camera.draw("default-wall-shadow-full-right", Layer.Bottom + Layer.OverlayWestAdjustment, leftCenter)
+			else if (rightBlock.blockType == BlockType.Floor)
+				this.camera.draw("default-wall-shadow-full-right", Layer.Floor + Layer.OverlayWestAdjustment, leftCenter.add(TerrainDrawer.FloorHeight))
+			else if (rightBlock.blockType == BlockType.Half)
+				this.camera.draw("default-wall-shadow-half-right", Layer.Middle + Layer.OverlayWestAdjustment, leftCenter.add(TerrainDrawer.HalfHeight))
+		}
+		else if (leftBlock.blockType == BlockType.Half) {
+			if (rightBlock.blockType == BlockType.Empty && this.game.terrain.getAt(rightPosition.add(below))?.blockType == BlockType.Full)
+				this.camera.draw("default-wall-shadow-half-right", Layer.Bottom + Layer.OverlayWestAdjustment, leftCenter)
+			else if (rightBlock.blockType == BlockType.Floor)
+				this.camera.draw("default-wall-shadow-half-right", Layer.Floor + Layer.OverlayWestAdjustment, leftCenter.add(TerrainDrawer.FloorHeight))
+			else if (rightBlock.blockType == BlockType.Full)
+				this.camera.draw("default-wall-shadow-half-left", Layer.Middle + Layer.OverlayEastAdjustment, rightCenter.add(TerrainDrawer.HalfHeight))
+		}
+		else if (leftBlock.blockType == BlockType.Floor) {
+			if (rightBlock.blockType == BlockType.Full)
+				this.camera.draw("default-wall-shadow-full-left", Layer.Floor + Layer.OverlayEastAdjustment, rightCenter.add(TerrainDrawer.FloorHeight))
+			else if (rightBlock.blockType == BlockType.Half)
+				this.camera.draw("default-wall-shadow-half-left", Layer.Floor + Layer.OverlayEastAdjustment, rightCenter.add(TerrainDrawer.FloorHeight))
+		}
+		else if (leftBlock.blockType == BlockType.Empty && this.game.terrain.getAt(leftPosition.add(below))?.blockType == BlockType.Full) {
+			if (rightBlock.blockType == BlockType.Full)
+				this.camera.draw("default-wall-shadow-full-left", Layer.Bottom + Layer.OverlayEastAdjustment, rightCenter)
+			else if (rightBlock.blockType == BlockType.Half)
+				this.camera.draw("default-wall-shadow-half-left", Layer.Bottom + Layer.OverlayEastAdjustment, rightCenter)
+		}
 	}
 
 	private variantFor(position: Vector3) {
