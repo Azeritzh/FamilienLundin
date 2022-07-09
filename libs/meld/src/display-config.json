@@ -22,6 +22,90 @@
 			"centerX": 16,
 			"centerY": 40
 		},
+		"default-tile-overlay-left": {
+			"path": "default-tile-overlay-left",
+			"width": 16,
+			"height": 16,
+			"centerX": 24,
+			"centerY": 8
+		},
+		"default-tile-overlay-right": {
+			"path": "default-tile-overlay-right",
+			"width": 16,
+			"height": 16,
+			"centerX": -8,
+			"centerY": 8
+		},
+		"default-tile-overlay-top": {
+			"path": "default-tile-overlay-top",
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": 24
+		},
+		"default-tile-overlay-bottom": {
+			"path": "default-tile-overlay-bottom",
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": -8
+		},
+		"default-wall-overlay-full-left": {
+			"path": "default-wall-overlay-full-left",
+			"width": 16,
+			"height": 32,
+			"centerX": 24,
+			"centerY": 24
+		},
+		"default-wall-overlay-full-right": {
+			"path": "default-wall-overlay-full-right",
+			"width": 16,
+			"height": 32,
+			"centerX": -8,
+			"centerY": 24
+		},
+		"default-wall-overlay-half-left": {
+			"path": "default-wall-overlay-half-left",
+			"width": 16,
+			"height": 16,
+			"centerX": 24,
+			"centerY": 8
+		},
+		"default-wall-overlay-half-right": {
+			"path": "default-wall-overlay-half-right",
+			"width": 16,
+			"height": 16,
+			"centerX": -8,
+			"centerY": 8
+		},
+		"default-wall-shadow-full-left": {
+			"path": "default-wall-shadow-full-left",
+			"width": 16,
+			"height": 16,
+			"centerX": 24,
+			"centerY": 8
+		},
+		"default-wall-shadow-full-right": {
+			"path": "default-wall-shadow-full-right",
+			"width": 16,
+			"height": 16,
+			"centerX": -8,
+			"centerY": 8
+		},
+		"default-wall-shadow-half-left": {
+			"path": "default-wall-shadow-half-left",
+			"width": 16,
+			"height": 16,
+			"centerX": 24,
+			"centerY": 8
+		},
+		"default-wall-shadow-half-right": {
+			"path": "default-wall-shadow-half-right",
+			"width": 16,
+			"height": 16,
+			"centerX": -8,
+			"centerY": 8
+		},
 		"dirt-tile": {
 			"path": "tile-dirt",
 			"width": 16,
@@ -66,6 +150,34 @@
 			"height": 32,
 			"centerX": 8,
 			"centerY": 24
+		},
+		"grass-tile-overlay-left": {
+			"path": "grass-tile-overlay-left",
+			"width": 16,
+			"height": 16,
+			"centerX": 24,
+			"centerY": 8
+		},
+		"grass-tile-overlay-right": {
+			"path": "grass-tile-overlay-right",
+			"width": 16,
+			"height": 16,
+			"centerX": -8,
+			"centerY": 8
+		},
+		"grass-tile-overlay-top": {
+			"path": "grass-tile-overlay-top",
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": 24
+		},
+		"grass-tile-overlay-bottom": {
+			"path": "grass-tile-overlay-bottom",
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": -8
 		},
 		"slab-tile": {
 			"path": "tile-slab",

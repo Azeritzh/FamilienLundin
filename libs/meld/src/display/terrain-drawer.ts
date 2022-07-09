@@ -23,6 +23,7 @@ export class TerrainDrawer {
 		const position = new Vector3(x, y, z)
 		this.drawBlockTile(block, position)
 		this.drawBlockWall(block, position)
+		this.drawTileOverlays(block, position)
 	}
 
 	private drawBlockTile(block: Block, position: Vector3) {
@@ -69,6 +70,73 @@ export class TerrainDrawer {
 			this.camera.drawVaried(solidType + "-wall", Layer.Middle, position.add(TerrainDrawer.BlockCenter), null, this.variantFor(position))
 	}
 
+	private drawTileOverlays(block: Block, position: Vector3) {
+		const rightPosition = position.add(this.camera.RightPosition)
+		const bottomPosition = position.add(this.camera.BottomPosition)
+		const rightBlock = this.game.terrain.getAt(rightPosition)
+		if (rightBlock)
+			this.drawRightLeftTileOverlay(block, position, rightBlock, rightPosition)
+		const bottomBlock = this.game.terrain.getAt(bottomPosition)
+		if (bottomBlock)
+			this.drawTopBottomTileOverlay(block, position, bottomBlock, bottomPosition)
+	}
+
+	private drawTopBottomTileOverlay(topBlock: Block, topPosition: Vector3, bottomBlock: Block, bottomPosition: Vector3) {
+		if (topBlock.blockType == bottomBlock.blockType)
+			return
+		if (topBlock.blockType < bottomBlock.blockType)
+			this.drawTileOverlay(bottomBlock, Side.Top, bottomPosition)
+		else if (topBlock.blockType == BlockType.Floor) // only case with overlay from top block
+			this.drawTileOverlay(topBlock, Side.Bottom, topPosition)
+	}
+
+	private drawRightLeftTileOverlay(leftBlock: Block, leftPosition: Vector3, rightBlock: Block, rightPosition: Vector3) {
+		if (leftBlock.blockType == rightBlock.blockType)
+			return
+		if (leftBlock.blockType < rightBlock.blockType)
+			this.drawTileOverlay(rightBlock, Side.Left, rightPosition)
+		else
+			this.drawTileOverlay(leftBlock, Side.Right, leftPosition)
+	}
+
+	private drawTileOverlay(block: Block, direction: Side, position: Vector3) {
+		const blockLayer = this.tileLayerFor(block.blockType)
+		const layerAdjustment = this.layerForSide(direction)
+		const center = this.heightFor(block.blockType).add(TerrainDrawer.BlockCenter)
+		const sprite = this.tileOverlayFor(block, direction)
+		this.camera.draw(sprite, blockLayer + layerAdjustment, position.add(center))
+	}
+
+
+	private tileLayerFor(blockType: BlockType) {
+		switch (blockType) {
+			case BlockType.Floor: return Layer.Floor
+			case BlockType.Half: return Layer.Middle
+			case BlockType.Full: return Layer.Bottom
+			default: return Layer.Bottom
+		}
+	}
+
+	private layerForSide(direction: Side) {
+		switch (direction) {
+			case Side.Bottom: return Layer.OverlayNorthAdjustment
+			case Side.Top: return Layer.OverlaySouthAdjustment
+			case Side.Left: return Layer.OverlayEastAdjustment
+			default: return Layer.OverlayWestAdjustment
+		}
+	}
+
+	private tileOverlayFor(block: Block, direction: Side) {
+		const typeName = this.game.config.solidTypeMap.typeFor(block.solidType) ?? ""
+		const aber = typeName == "grass" ? "grass" : "default"
+		switch (direction) {
+			case Side.Bottom: return aber + "-tile-overlay-bottom"
+			case Side.Top: return aber + "-tile-overlay-top"
+			case Side.Left: return aber + "-tile-overlay-left"
+			case Side.Right: return aber + "-tile-overlay-right"
+		}
+	}
+
 	private variantFor(position: Vector3) {
 		let x = position.x
 		let y = position.y
@@ -83,3 +151,5 @@ export class TerrainDrawer {
 		return Math.floor(10000 * (number - Math.floor(number)))
 	}
 }
+
+enum Side { Bottom, Top, Left, Right }

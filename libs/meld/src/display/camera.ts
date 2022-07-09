@@ -18,6 +18,11 @@ export class Camera {
 	get left() { return this.state.focusPoint.x - this.state.size.widthInTiles / 2 }
 	get right() { return this.state.focusPoint.x + this.state.size.widthInTiles / 2 }
 
+	get TopPosition() { return new Vector3(0, -1, 0) }
+	get BottomPosition() { return new Vector3(0, 1, 0) }
+	get LeftPosition() { return new Vector3(-1, 0, 0) }
+	get RightPosition() { return new Vector3(1, 0, 0) }
+
 	public focusOn(entity: Id) {
 		this.state.focusPoint = this.currentPositionFrom(
 			this.game.entities.position.get.of(entity) ?? new Vector3(0, 0, 0),
