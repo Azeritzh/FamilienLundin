@@ -25,10 +25,6 @@ export class WorldDrawer {
 		const startY = Math.floor(area.top - this.config.wallDisplayHeight)
 		const endY = Math.floor(area.bottom + this.config.wallDisplayHeight)
 
-		for (let y = startY; y <= endY; y++)
-			for (let x = Math.floor(area.left - 1); x <= Math.floor(area.right + 1); x++)
-				this.terrainDrawer.drawBlockBottom(x, y, layer)
-
 		for (let y = startY; y <= endY; y++) {
 			while (entitiesInLayer.length > 0 && entitiesInLayer[0].position.y < y) {
 				this.entityDrawer.draw(entitiesInLayer[0].entity)

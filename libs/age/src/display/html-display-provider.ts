@@ -6,7 +6,7 @@ import { ScreenSize } from "./screen-size"
 export interface DisplayProvider {
 	sortByDepth: boolean
 	startFrame()
-	draw(name: string, x: number, y: number, frameX: number, frameY: number)
+	draw(name: string, x: number, y: number, frameX: number, frameY: number, depth?: number)
 	endFrame()
 	drawString(text: string, x: number, y: number, font: string, fontSize: number, color?: string)
 	getInputState(input: string): number
@@ -50,12 +50,14 @@ export class HtmlDisplayProvider implements DisplayProvider {
 	}
 
 	private initialiseDisplay() {
+		const sortByDepth = this.display?.sortByDepth ?? false
 		this.display = new WebGl2Display(
 			this.canvas,
 			this.config.virtualPixelsPerTile,
 			this.config.virtualHeight,
 			this.config.renderToVirtualSize,
 		)
+		this.display.sortByDepth = sortByDepth
 		for (const [name, sprite] of Object.entries(this.config.sprites))
 			this.display.addSprite(name, this.config.assetFolder + sprite.path + ".png", sprite.width, sprite.height, sprite.centerX, sprite.centerY)
 	}
@@ -79,10 +81,10 @@ export class HtmlDisplayProvider implements DisplayProvider {
 		delete this.textElements[key]
 	}
 
-	public draw(name: string, x: number, y: number, frameX: number, frameY: number) {
+	public draw(name: string, x: number, y: number, frameX: number, frameY: number, depth = 1) {
 		if (this.display.isLoading())
 			return
-		this.display.draw(name, x, y, frameX, frameY)
+		this.display.draw(name, x, y, frameX, frameY, depth)
 	}
 
 	public endFrame() {

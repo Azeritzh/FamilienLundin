@@ -5,6 +5,7 @@ export interface DisplayConfig {
 	virtualPixelsPerTile: number
 	virtualHeight: number
 	wallDisplayHeight: number
+	displayDepth: number,
 	assetFolder: string
 	inputs: Map<Input, string[]>,
 	sprites: {

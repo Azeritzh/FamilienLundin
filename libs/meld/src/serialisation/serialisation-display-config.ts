@@ -11,6 +11,11 @@ export function readDisplayConfig(jsonConfig: any): DisplayConfig {
 	for (const key in config.sprites)
 		sprites[key] = spriteInfoFrom(config.sprites[key])
 	return {
+		renderToVirtualSize: true,
+		virtualPixelsPerTile: 16,
+		virtualHeight: 360,
+		wallDisplayHeight: 2,
+		displayDepth: 4,
 		...config,
 		inputs,
 		sprites,
@@ -42,6 +47,7 @@ export interface SerialisableDisplayConfig {
 	virtualPixelsPerTile: number
 	virtualHeight: number
 	wallDisplayHeight: number
+	displayDepth: number
 	assetFolder: string
 	inputs: { [input: string]: string[] }
 	sprites: {

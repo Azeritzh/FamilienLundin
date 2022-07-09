@@ -23,7 +23,9 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		private entityDrawer = new EntityDrawer(game, camera),
 		private worldDrawer = new WorldDrawer(game, config, camera, terrainDrawer, entityDrawer),
 		private hudDrawer = new HudDrawer(game, state, display),
-	) { }
+	) {
+		display.sortByDepth = true
+	}
 
 	setSize(width: number, height: number) {
 		this.state.size.updateHostSize(width, height)

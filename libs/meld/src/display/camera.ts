@@ -28,7 +28,7 @@ export class Camera {
 
 	private updateShownLayers() {
 		this.shownLayers.clear()
-		for (let layer = -1; layer <= 1; layer++)
+		for (let layer = -this.config.displayDepth; layer <= this.config.displayDepth; layer++)
 			this.shownLayers.push({ layer: layer + Math.floor(this.state.focusPoint.z), area: this.displayAreaFor(layer) })
 	}
 
@@ -47,10 +47,10 @@ export class Camera {
 			: position
 	}
 
-	drawAnimated(sprite: string, position: Vector3, velocity: Vector3 = null, animationStart = 0) {
+	drawAnimated(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, animationStart = 0) {
 		const config = this.config.sprites[sprite]
 		const frame = this.animationFrame(config.frameInterval, config.framesX, config.framesY, animationStart)
-		this.draw(sprite, position, velocity, frame)
+		this.draw(sprite, layer, position, velocity, frame)
 	}
 
 	private animationFrame(frameInterval: number, framesX: number, framesY: number, animationStart: number) {
@@ -62,7 +62,7 @@ export class Camera {
 		return frameIndex
 	}
 
-	drawVaried(sprite: string, position: Vector3, velocity: Vector3 = null, variation = 0) {
+	drawVaried(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, variation = 0) {
 		const config = this.config.sprites[sprite]
 		const sumOfWeights = config.frameWeights.sum()
 		let frameIndex = 0
@@ -73,22 +73,36 @@ export class Camera {
 				break
 			frameIndex++
 		}
-		this.draw(sprite, position, velocity, frameIndex)
+		this.draw(sprite, layer, position, velocity, frameIndex)
 	}
 
-	draw(sprite: string, position: Vector3, velocity: Vector3 = null, frameIndex = 0) {
-		const screenPosition = this.screenPositionFor(position, velocity)
+	draw(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, frameIndex = 0) {
+		const currentPosition = this.currentPositionFrom(position, velocity)
+		const screenPosition = this.screenPositionFor(currentPosition)
 		const config = this.config.sprites[sprite]
 		const frameX = frameIndex % config.framesX
 		const frameY = Math.floor(frameIndex / config.framesX) % config.framesY
-		this.displayProvider.draw(sprite, screenPosition.x, screenPosition.y, frameX, frameY)
+		this.displayProvider.draw(sprite, screenPosition.x, screenPosition.y, frameX, frameY, this.sortingNumberFor(currentPosition, layer))
 	}
 
-	private screenPositionFor(position: Vector3, velocity: Vector3 = null) {
-		const currentPosition = this.currentPositionFrom(position, velocity)
+	private screenPositionFor(position: Vector3) {
 		return new Vector2(
-			currentPosition.x - this.left,
-			currentPosition.y - this.top - this.config.wallDisplayHeight * (currentPosition.z - this.state.focusPoint.z))
+			position.x - this.left,
+			position.y - this.top - this.config.wallDisplayHeight * (position.z - this.state.focusPoint.z))
+	}
+
+	private sortingNumberFor(position: Vector3, layer: number) {
+		const z = Math.floor(position.z) + layer
+		const rangeZ = (this.config.displayDepth * 2 + 3) // adding 3 rather than 1 just to be on the safe side
+		const minZ = this.state.focusPoint.z - rangeZ / 2
+		const normalisedZ = (z - minZ) / rangeZ
+
+		const rangeY = this.state.size.heightInTiles + (this.config.displayDepth * 2 + 1) * this.config.wallDisplayHeight
+		const minY = this.state.focusPoint.y - rangeY / 2
+		const normalisedY = (position.y - minY) / rangeY
+		const ySortingComponent = (normalisedY / Layer.NumberOfLayers) / rangeZ
+
+		return normalisedZ + ySortingComponent
 	}
 
 	public tilePositionFor(x: number, y: number) {
@@ -104,4 +118,17 @@ export class DisplayArea {
 		public left: number,
 		public right: number,
 	) { }
+}
+
+export class Layer {
+	public static NumberOfLayers = 4
+	public static Bottom = 0
+	public static Floor = 1 / Layer.NumberOfLayers
+	public static Middle = 2 / Layer.NumberOfLayers
+	public static Top = 3 / Layer.NumberOfLayers
+	public static ZFightingAdjustment = 0.0001
+	public static OverlayNorthAdjustment = Layer.ZFightingAdjustment * 1
+	public static OverlayEastAdjustment = Layer.ZFightingAdjustment * 2
+	public static OverlayWestAdjustment = Layer.ZFightingAdjustment * 3
+	public static OverlaySouthAdjustment = Layer.ZFightingAdjustment * 4
 }

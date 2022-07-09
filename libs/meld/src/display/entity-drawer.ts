@@ -1,6 +1,6 @@
 import { Id, typeOf } from "@lundin/age"
 import { Meld } from "../meld"
-import { Camera } from "./camera"
+import { Camera, Layer } from "./camera"
 
 export class EntityDrawer {
 	constructor(
@@ -19,13 +19,13 @@ export class EntityDrawer {
 		const position = this.game.entities.position.get.of(entity)
 		const velocity = this.game.entities.velocity.get.of(entity)
 		const sprite = this.game.config.entityTypeMap.typeFor(typeOf(entity))
-		this.camera.drawAnimated(sprite, position, velocity)
+		this.camera.drawAnimated(sprite, Layer.Middle, position, velocity)
 	}
 
 	private drawPlayer(entity: Id) {
 		const position = this.game.entities.position.get.of(entity)
 		const velocity = this.game.entities.velocity.get.of(entity)
 		const sprite = this.game.config.entityTypeMap.typeFor(typeOf(entity))
-		this.camera.drawAnimated(sprite, position, velocity)
+		this.camera.drawAnimated(sprite, Layer.Middle, position, velocity)
 	}
 }

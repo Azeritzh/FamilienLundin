@@ -29,9 +29,9 @@ export class WebGl2Display {
 		this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA)
 	}
 
-	public draw(sprite: string, x: number, y: number, frameX: number, frameY: number) {
+	public draw(sprite: string, x: number, y: number, frameX: number, frameY: number, depth = 1) {
 		if (this.sortByDepth)
-			this.spritesToDraw.push(new SpriteDrawInfo(sprite, x, y, frameX, frameY, 1))
+			this.spritesToDraw.push(new SpriteDrawInfo(sprite, x, y, frameX, frameY, depth))
 		else
 			this.drawSprite(sprite, x, y, frameX, frameY)
 	}

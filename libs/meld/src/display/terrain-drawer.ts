@@ -1,10 +1,15 @@
 import { Vector3 } from "@lundin/utility"
 import { Meld } from "../meld"
 import { Block, BlockType } from "../state/block"
-import { Camera } from "./camera"
+import { Camera, Layer } from "./camera"
 import { DisplayConfig } from "./display-config"
 
 export class TerrainDrawer {
+	static BlockCenter = new Vector3(0.5, 0.5, 0)
+	static FloorHeight = new Vector3(0, 0, 1 / 32) // should look like one pixel, so: 1/(WallHeight * PixelsPerTile)
+	static HalfHeight = new Vector3(0, 0, 0.5)
+	static FullHeight = new Vector3(0, 0, 1)
+
 	constructor(
 		private game: Meld,
 		private config: DisplayConfig,
@@ -15,58 +20,53 @@ export class TerrainDrawer {
 		const block = this.game.terrain.get(x, y, z)
 		if (!block)
 			return
-		if (block.blockType == BlockType.Empty)
-			this.drawEmpty() // (block, x, y, z)
-		else if (block.blockType == BlockType.Half)
-			this.drawHalfWall(block, x, y, z)
-		else if (block.blockType == BlockType.Full)
-			this.drawFullWall(block, x, y, z)
+		const position = new Vector3(x, y, z)
+		this.drawBlockTile(block, position)
+		this.drawBlockWall(block, position)
 	}
 
-	public drawBlockBottom(x: number, y: number, z: number) {
-		const block = this.game.terrain.get(x, y, z)
-		if (!block)
+	private drawBlockTile(block: Block, position: Vector3) {
+		if (block.blockType === BlockType.Empty)
 			return
-		if (block.blockType == BlockType.Floor)
-			this.drawFloor(block, x, y, z)
-	}
-
-	private drawEmpty() { //block: Block, x: number, y: number, z: number) {
-		return
-	}
-
-	private drawFloor(block: Block, x: number, y: number, z: number) {
-		const blockType = this.game.config.solidTypeMap.typeFor(block.solidType)
-		if (blockType == null)
+		const solidType = this.game.config.solidTypeMap.typeFor(block.solidType)
+		if (solidType == null)
 			return
-		this.drawBlockTop(blockType, new Vector3(x, y, z))
+
+		const layer = this.layerFor(block.blockType)
+		const height = this.heightFor(block.blockType)
+
+		this.camera.drawVaried(solidType + "-tile", layer, position.add(height).add(TerrainDrawer.BlockCenter), null, this.variantFor(position))
 	}
 
-	private drawHalfWall(block: Block, x: number, y: number, z: number) {
-		const blockType = this.game.config.solidTypeMap.typeFor(block.solidType)
-		if (blockType == null)
+	private layerFor(blockType: BlockType) {
+		switch (blockType) {
+			case BlockType.Floor: return Layer.Floor
+			case BlockType.Half: return Layer.Middle
+			case BlockType.Full: return Layer.Top
+			default: throw new Error("Invalid argument: No layer for empty blocks")
+		}
+	}
+
+	private heightFor(blockType: BlockType) {
+		switch (blockType) {
+			case BlockType.Floor: return TerrainDrawer.FloorHeight
+			case BlockType.Half: return TerrainDrawer.HalfHeight
+			case BlockType.Full: return TerrainDrawer.FullHeight
+			default: throw new Error("Invalid argument: No layer for empty blocks")
+		}
+	}
+
+	private drawBlockWall(block: Block, position: Vector3) {
+		if (block.blockType === BlockType.Empty || block.blockType === BlockType.Floor)
 			return
-		this.drawBlockTop(blockType, new Vector3(x, y, z + 0.5))
-	}
-
-	private drawFullWall(block: Block, x: number, y: number, z: number) {
-		const blockType = this.game.config.solidTypeMap.typeFor(block.solidType)
-		if (blockType == null)
+		const solidType = this.game.config.solidTypeMap.typeFor(block.solidType)
+		if (solidType == null)
 			return
-		this.drawBlockFullSide(blockType, new Vector3(x, y, z + this.fullWallOffset()))
-		this.drawBlockTop(blockType, new Vector3(x, y, z + 1))
-	}
 
-	private drawBlockTop(blockType: string, position: Vector3) { //, variant: number) {
-		this.camera.drawVaried(blockType + "-tile", position, null, this.variantFor(position))
-	}
-
-	private drawBlockFullSide(blockType: string, position: Vector3) { //, variant: number) {
-		this.camera.drawVaried(blockType + "-wall", position, null, this.variantFor(position))
-	}
-
-	private fullWallOffset(): number {
-		return (this.config.wallDisplayHeight - 1) / this.config.wallDisplayHeight
+		if (block.blockType === BlockType.Half)
+			this.camera.drawVaried(solidType + "-wall", Layer.Middle - Layer.ZFightingAdjustment, position.add(TerrainDrawer.BlockCenter), null, this.variantFor(position))
+		if (block.blockType === BlockType.Full)
+			this.camera.drawVaried(solidType + "-wall", Layer.Middle, position.add(TerrainDrawer.BlockCenter), null, this.variantFor(position))
 	}
 
 	private variantFor(position: Vector3) {

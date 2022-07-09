@@ -25,65 +25,89 @@
 		"dirt-tile": {
 			"path": "tile-dirt",
 			"width": 16,
-			"height": 16
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
 		},
 		"dirt-wall": {
 			"path": "wall-dirt",
 			"width": 16,
-			"height": 32
+			"height": 32,
+			"centerX": 8,
+			"centerY": 24
 		},
 		"earth-tile": {
 			"path": "tile-earth",
 			"width": 16,
-			"height": 16
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
 		},
 		"earth-wall": {
 			"path": "wall-earth",
 			"width": 16,
-			"height": 32
+			"height": 32,
+			"centerX": 8,
+			"centerY": 24
 		},
 		"grass-tile": {
 			"path": "tile-grass",
 			"width": 16,
 			"height": 16,
+			"centerX": 8,
+			"centerY": 8,
 			"framesX": 4,
 			"framesY": 3,
-			"frameWeights": [1,1,1,1,1,1,1,1,10]
+			"frameWeights": [ 1, 1, 1, 1, 1, 1, 1, 1, 10 ]
 		},
 		"grass-wall": {
 			"path": "wall-grass",
 			"width": 16,
-			"height": 32
+			"height": 32,
+			"centerX": 8,
+			"centerY": 24
 		},
 		"slab-tile": {
 			"path": "tile-slab",
 			"width": 16,
-			"height": 16
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
 		},
 		"slab-wall": {
 			"path": "wall-slab",
 			"width": 16,
-			"height": 32
+			"height": 32,
+			"centerX": 8,
+			"centerY": 24
 		},
 		"stone-tile": {
 			"path": "tile-stone",
 			"width": 16,
-			"height": 16
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
 		},
 		"stone-wall": {
 			"path": "wall-stone",
 			"width": 16,
-			"height": 32
+			"height": 32,
+			"centerX": 8,
+			"centerY": 24
 		},
 		"wooden-tile": {
 			"path": "tile-wooden",
 			"width": 16,
-			"height": 16
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
 		},
 		"wooden-wall": {
 			"path": "wall-wooden",
 			"width": 16,
-			"height": 32
+			"height": 32,
+			"centerX": 8,
+			"centerY": 24
 		}
 	}
 }
