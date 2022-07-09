@@ -21,9 +21,11 @@ export class TerrainDrawer {
 		if (!block)
 			return
 		const position = new Vector3(x, y, z)
+		const rightPosition = position.add(this.camera.rightPosition)
 		this.drawBlockTile(block, position)
 		this.drawBlockWall(block, position)
 		this.drawTileOverlays(block, position)
+		this.drawWallOverlays(block, position, rightPosition)
 	}
 
 	private drawBlockTile(block: Block, position: Vector3) {
@@ -71,8 +73,8 @@ export class TerrainDrawer {
 	}
 
 	private drawTileOverlays(block: Block, position: Vector3) {
-		const rightPosition = position.add(this.camera.RightPosition)
-		const bottomPosition = position.add(this.camera.BottomPosition)
+		const rightPosition = position.add(this.camera.rightPosition)
+		const bottomPosition = position.add(this.camera.bottomPosition)
 		const rightBlock = this.game.terrain.getAt(rightPosition)
 		if (rightBlock)
 			this.drawRightLeftTileOverlay(block, position, rightBlock, rightPosition)
@@ -135,6 +137,53 @@ export class TerrainDrawer {
 			case Side.Left: return aber + "-tile-overlay-left"
 			case Side.Right: return aber + "-tile-overlay-right"
 		}
+	}
+
+	private drawWallOverlays(leftBlock: Block, leftPosition: Vector3, rightPosition: Vector3) {
+		const rightBlock = this.game.terrain.getAt(rightPosition)
+		if (!rightBlock)
+			return
+		const leftCenter = leftPosition.add(TerrainDrawer.BlockCenter)
+		const rightCenter = rightPosition.add(TerrainDrawer.BlockCenter)
+
+		if (leftBlock.blockType == BlockType.Full) {
+			if (rightBlock.blockType == BlockType.Empty || rightBlock.blockType == BlockType.Floor)
+				this.camera.draw(this.WallOverlayFullRightFor(leftBlock), Layer.Middle + Layer.OverlayWestAdjustment, leftCenter)
+			else if (rightBlock.blockType == BlockType.Half)
+				this.camera.draw(this.WallOverlayHalfRightFor(leftBlock), Layer.Middle + Layer.OverlayWestAdjustment, leftCenter.add(TerrainDrawer.HalfHeight))
+		}
+		else if (leftBlock.blockType == BlockType.Half) {
+			if (rightBlock.blockType == BlockType.Empty || rightBlock.blockType == BlockType.Floor)
+				this.camera.draw(this.WallOverlayHalfRightFor(leftBlock), Layer.Middle + Layer.OverlayWestAdjustment, leftCenter)
+			else if (rightBlock.blockType == BlockType.Full)
+				this.camera.draw(this.WallOverlayHalfLeftFor(rightBlock), Layer.Middle + Layer.OverlayEastAdjustment, rightCenter.add(TerrainDrawer.HalfHeight))
+		}
+		else if (leftBlock.blockType == BlockType.Floor || leftBlock.blockType == BlockType.Empty) {
+			if (rightBlock.blockType == BlockType.Half)
+				this.camera.draw(this.WallOverlayHalfLeftFor(rightBlock), Layer.Middle + Layer.OverlayEastAdjustment, rightCenter)
+			else if (rightBlock.blockType == BlockType.Full)
+				this.camera.draw(this.WallOverlayFullLeftFor(rightBlock), Layer.Middle + Layer.OverlayEastAdjustment, rightCenter)
+		}
+	}
+
+	private WallOverlayFullRightFor(block: Block) {
+		if (!block) return "" // To make it not complain for now
+		return "default-wall-overlay-full-right"
+	}
+
+	private WallOverlayFullLeftFor(block: Block) {
+		if (!block) return ""
+		return "default-wall-overlay-full-left"
+	}
+
+	private WallOverlayHalfRightFor(block: Block) {
+		if (!block) return ""
+		return "default-wall-overlay-half-right"
+	}
+
+	private WallOverlayHalfLeftFor(block: Block) {
+		if (!block) return ""
+		return "default-wall-overlay-half-left"
 	}
 
 	private variantFor(position: Vector3) {
