@@ -4,6 +4,9 @@ import { Meld } from "../meld"
 import { DisplayState } from "./display-state"
 
 export class HudDrawer {
+	static BottomLayer = 0.9998
+	static TopLayer = 0.9999
+
 	constructor(
 		private game: Meld,
 		private state: DisplayState,
@@ -14,14 +17,20 @@ export class HudDrawer {
 		const playerId = this.game.state.players.get(this.state.playerName)
 		if (!(playerId > -1))
 			return
+		this.drawHud()
 		const selectedBlock = this.game.entities.selectedBlock.get.of(playerId)
 		if (selectedBlock > -1)
 			this.drawSelectedBlock(selectedBlock)
 	}
 
+	private drawHud() {
+		this.displayProvider.draw("hud-life-energy", 0, 0, 0, 0, HudDrawer.BottomLayer)
+		this.displayProvider.draw("hud-tool-items", this.state.size.widthInTiles, 0, 0, 0, HudDrawer.BottomLayer)
+	}
+
 	private drawSelectedBlock(block: Id) {
-		const position = new Vector2(this.state.size.widthInTiles - 1.5, 0.5)
+		const position = new Vector2(this.state.size.widthInTiles - 1, 1)
 		const sprite = this.game.config.solidTypeMap.typeFor(block) + "-tile"
-		this.displayProvider.draw(sprite, position.x, position.y, 0, 0)
+		this.displayProvider.draw(sprite, position.x, position.y, 0, 0, HudDrawer.TopLayer)
 	}
 }

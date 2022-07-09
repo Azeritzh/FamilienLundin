@@ -220,6 +220,17 @@
 			"height": 32,
 			"centerX": 8,
 			"centerY": 24
+		},
+		"hud-life-energy": {
+			"path": "hud-life-energy",
+			"width": 26,
+			"height": 173
+		},
+		"hud-tool-items": {
+			"path": "hud-tool-items",
+			"width": 46,
+			"height": 166,
+			"centerX": 46
 		}
 	}
 }
