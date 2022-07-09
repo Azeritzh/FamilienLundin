@@ -4,8 +4,9 @@ import { BaseDisplayConfig } from "./base-display-config"
 import { ScreenSize } from "./screen-size"
 
 export interface DisplayProvider {
+	sortByDepth: boolean
 	startFrame()
-	drawSprite(name: string, x: number, y: number, frameX: number, frameY: number)
+	draw(name: string, x: number, y: number, frameX: number, frameY: number)
 	endFrame()
 	drawString(text: string, x: number, y: number, font: string, fontSize: number, color?: string)
 	getInputState(input: string): number
@@ -18,6 +19,8 @@ export class HtmlDisplayProvider implements DisplayProvider {
 	private size: ScreenSize
 	private textElements: { [index: string]: HTMLDivElement } = {}
 	private keyStates = new KeyStates()
+	get sortByDepth() { return this.display.sortByDepth }
+	set sortByDepth(value: boolean) { this.display.sortByDepth = value }
 
 	constructor(
 		private hostElement: HTMLElement,
@@ -76,10 +79,10 @@ export class HtmlDisplayProvider implements DisplayProvider {
 		delete this.textElements[key]
 	}
 
-	public drawSprite(name: string, x: number, y: number, frameX: number, frameY: number) {
+	public draw(name: string, x: number, y: number, frameX: number, frameY: number) {
 		if (this.display.isLoading())
 			return
-		this.display.drawSprite(name, x, y, frameX, frameY)
+		this.display.draw(name, x, y, frameX, frameY)
 	}
 
 	public endFrame() {

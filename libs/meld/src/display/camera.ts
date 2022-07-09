@@ -81,7 +81,7 @@ export class Camera {
 		const config = this.config.sprites[sprite]
 		const frameX = frameIndex % config.framesX
 		const frameY = Math.floor(frameIndex / config.framesX) % config.framesY
-		this.displayProvider.drawSprite(sprite, screenPosition.x, screenPosition.y, frameX, frameY)
+		this.displayProvider.draw(sprite, screenPosition.x, screenPosition.y, frameX, frameY)
 	}
 
 	private screenPositionFor(position: Vector3, velocity: Vector3 = null) {

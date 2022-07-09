@@ -22,6 +22,6 @@ export class HudDrawer {
 	private drawSelectedBlock(block: Id) {
 		const position = new Vector2(this.state.size.widthInTiles - 1.5, 0.5)
 		const sprite = this.game.config.solidTypeMap.typeFor(block) + "-tile"
-		this.displayProvider.drawSprite(sprite, position.x, position.y, 0, 0)
+		this.displayProvider.draw(sprite, position.x, position.y, 0, 0)
 	}
 }

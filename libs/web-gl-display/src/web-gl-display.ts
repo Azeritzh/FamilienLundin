@@ -15,7 +15,9 @@ export class WebGl2Display {
 		private worldSpaceMatrix = buildWorldSpaceMatrix(canvas.width, canvas.height, virtualScreenHeight),
 		private spriteFactory = new SpriteFactory(gl, standardShader, tileSize, worldSpaceMatrix),
 		private sprites: { [index: string]: Sprite } = {},
-		private loadingSprites: string[] = []
+		private loadingSprites: string[] = [],
+		public sortByDepth = false,
+		private spritesToDraw: SpriteDrawInfo[] = [],
 	) {
 		this.gl.enable(this.gl.BLEND)
 	}
@@ -27,7 +29,26 @@ export class WebGl2Display {
 		this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA)
 	}
 
-	public drawSprite(name: string, x: number, y: number, frameX: number, frameY: number) {
+	public draw(sprite: string, x: number, y: number, frameX: number, frameY: number) {
+		if (this.sortByDepth)
+			this.spritesToDraw.push(new SpriteDrawInfo(sprite, x, y, frameX, frameY, 1))
+		else
+			this.drawSprite(sprite, x, y, frameX, frameY)
+	}
+
+	public endFrame() {
+		if (this.sortByDepth) {
+			this.spritesToDraw.sort((a, b) => a.depth - b.depth)
+			for (const sprite of this.spritesToDraw)
+				this.drawSprite(sprite.sprite, sprite.x, sprite.y, sprite.frameX, sprite.frameY)
+			this.spritesToDraw = []
+		}
+		this.previousProgram = null
+		this.gl.useProgram(null)
+		this.gl.flush()
+	}
+
+	private drawSprite(name: string, x: number, y: number, frameX: number, frameY: number) {
 		const sprite = this.sprites[name]
 		if (!sprite)
 			return console.warn("Could not load sprite {0}", name)
@@ -35,17 +56,11 @@ export class WebGl2Display {
 			this.gl.useProgram(sprite.shader.program)
 			this.previousProgram = sprite.shader.program
 		}
-		if(this.alignToPixelGrid){
-			x = Math.floor(x * this.tileSize)/this.tileSize
-			y = Math.floor(y * this.tileSize)/this.tileSize
+		if (this.alignToPixelGrid) {
+			x = Math.floor(x * this.tileSize) / this.tileSize
+			y = Math.floor(y * this.tileSize) / this.tileSize
 		}
 		sprite.render(x, y, frameX, frameY)
-	}
-
-	public endFrame() {
-		this.previousProgram = null
-		this.gl.useProgram(null)
-		this.gl.flush()
 	}
 
 	// Do sprites need to be recreated after this?
@@ -77,4 +92,15 @@ export class WebGl2Display {
 function buildWorldSpaceMatrix(width: number, height: number, virtualScreenHeight: number) {
 	const widthRatio = width / (height / virtualScreenHeight)
 	return new M3x3().transition(-1, 1).scale(2 / widthRatio, -2 / virtualScreenHeight)
+}
+
+class SpriteDrawInfo {
+	constructor(
+		public sprite: string,
+		public x: number,
+		public y: number,
+		public frameX: number,
+		public frameY: number,
+		public depth: number,
+	) { }
 }
