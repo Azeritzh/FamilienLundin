@@ -44,6 +44,21 @@ export class Block { // struct
 				return false
 		}
 	}
+
+	serialise(): Id {
+		return this.solidType | this.nonSolidType | (this.blockType.valueOf() << 28)
+	}
+
+	static deserialise(serialised: Id) {
+		const solid = serialised & 0x0FFFFFFF // should probably eventually be 0x0000FFFF
+		const nonSolid = serialised & 0x0FFF0000
+		const type = serialised & 0xF0000000
+		return new Block(
+			type >> 28,
+			solid,
+			nonSolid
+		)
+	}
 }
 
-export enum BlockType { Empty, Floor, Half, Full }
+export enum BlockType { Empty = 0, Floor = 1, Half = 2, Full = 3 }

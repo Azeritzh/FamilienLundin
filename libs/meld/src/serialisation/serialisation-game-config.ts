@@ -1,4 +1,4 @@
-import { RectangularSize, TypeMap } from "@lundin/age"
+import { CircularSize, TypeMap } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Constants } from "../config/constants"
 import { GameConfig } from "../config/game-config"
@@ -38,8 +38,8 @@ function groupedEntityValuesFrom(jsonObject: any, blockTypeMap: TypeMap) {
 	const values: GroupedEntityValues = { ...jsonObject }
 	if (jsonObject.position)
 		values.position = Object.assign(new Vector3(0, 0, 0), jsonObject.position)
-	if (jsonObject.rectangularSize)
-		values.circularSize = Object.assign(new RectangularSize(0, 0), jsonObject.rectangularSize)
+	if (jsonObject.circularSize)
+		values.circularSize = Object.assign(new CircularSize(0, 0), jsonObject.circularSize)
 	if (jsonObject.selectedBlock)
 		values.selectedBlock = blockTypeMap.typeIdFor(jsonObject.selectedBlock)
 	if (jsonObject.velocity)

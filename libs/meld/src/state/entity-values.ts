@@ -34,6 +34,7 @@ export class EntityValues extends BaseValues {
 	}
 
 	addValuesFrom(key: Id, values: GroupedEntityValues) {
+		this.entities.set(key, true)
 		if (values.health !== undefined)
 			this.health.set(key, values.health)
 		if (values.orientation !== undefined)

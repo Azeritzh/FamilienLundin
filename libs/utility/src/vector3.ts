@@ -38,6 +38,10 @@ export class Vector3 {
 		return this.x === 0 && this.y === 0 && this.z === 0
 	}
 
+	static copy(vector: Vector3) {
+		return new Vector3(vector.x, vector.y, vector.z)
+	}
+
 	stringify() {
 		return this.x + "," + this.y + "," + this.z
 	}

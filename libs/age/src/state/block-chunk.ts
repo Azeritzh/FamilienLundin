@@ -3,7 +3,7 @@ import { Vector3 } from "@lundin/utility"
 export class BlockChunk<Field> {
 	constructor(
 		public blocks: Field[],
-		private chunkSize = new Vector3(10, 10, 1),
+		public chunkSize = new Vector3(10, 10, 1),
 		public offset: Vector3 = new Vector3(0, 0, 0),
 	) { }
 
