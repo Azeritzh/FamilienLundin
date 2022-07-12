@@ -19,7 +19,7 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		private State = DisplayState.from(Config, PlayerName),
 		private camera = new Camera(Game, Display, Config, State),
 		private inputParser = new InputParser(Game, State, camera, Display, Config.Inputs),
-		private terrainDrawer = new TerrainDrawer(Game, Config, camera),
+		private terrainDrawer = new TerrainDrawer(Game, Config, State, camera),
 		private entityDrawer = new EntityDrawer(Game, camera),
 		private worldDrawer = new WorldDrawer(Game, Config, camera, terrainDrawer, entityDrawer),
 		private hudDrawer = new HudDrawer(Game, State, Display),
@@ -33,7 +33,7 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 
 	show(fractionOfTick = 0) {
 		this.State.FractionOfTick = fractionOfTick
-		const firstEntity = [...this.Game.entities.with.Position.keys()][0]
+		const firstEntity = [...this.Game.Entities.with.Position.keys()][0]
 		if (firstEntity !== undefined && firstEntity !== null)
 			this.camera.FocusOn(firstEntity)
 		this.Display.startFrame()

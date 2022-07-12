@@ -22,7 +22,7 @@ export class MeldGame extends GameRunner<GameUpdate> {
 		this.resizeObserver.observe(hostElement)
 		const saved = localStorage["meld-save"]
 		if (saved)
-			this.actions.push(new LoadState(readGameState(meld.config, JSON.parse(saved))))
+			this.actions.push(new LoadState(readGameState(meld.Config, JSON.parse(saved))))
 		else
 			this.actions.push(new GenerateAction())
 		window.addEventListener("unload", this.onUnload)
@@ -33,13 +33,13 @@ export class MeldGame extends GameRunner<GameUpdate> {
 	}
 
 	private saveGame() {
-		const saved = createGameState(this.meld.config, this.meld.state)
+		const saved = createGameState(this.meld.Config, this.meld.State)
 		localStorage["meld-save"] = JSON.stringify(saved)
 	}
 
 	static createAt(hostElement: HTMLElement, displayConfig: any) {
-		displayConfig = { ...readDisplayConfig(defaultDisplayConfig), ...displayConfig }
 		const meld = new Meld(readGameConfig(gameConfig))
+		displayConfig = { ...readDisplayConfig(meld.Config, defaultDisplayConfig), ...displayConfig }
 		const displayProvider = new HtmlDisplayProvider(hostElement, displayConfig)
 		const display = new MeldDisplay(displayConfig, meld, displayProvider, "insertPlayerName")
 		return new MeldGame(hostElement, display, displayProvider, meld)

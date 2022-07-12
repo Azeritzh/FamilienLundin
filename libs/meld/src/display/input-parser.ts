@@ -34,7 +34,7 @@ export class InputParser extends BaseInputParser<Input> {
 		const right = this.floatStateFor(Input.MoveRight) ?? 0
 		const velocity = new Vector2(right - left, down - up)
 			.multiply(factor)
-		return new MovementAction(this.Game.state.Players.get(this.State.PlayerName), velocity)
+		return new MovementAction(this.Game.State.Players.get(this.State.PlayerName), velocity)
 	}
 
 	private parseGenerate() {
@@ -48,12 +48,12 @@ export class InputParser extends BaseInputParser<Input> {
 			this.displayProvider.getInputState("MouseY"),
 		)
 		if (this.hasJustBeenPressed(Input.UseItem))
-			return new PlaceBlockAction(this.Game.state.Players.get(this.State.PlayerName), position)
+			return new PlaceBlockAction(this.Game.State.Players.get(this.State.PlayerName), position)
 	}
 
 	private parseSelectNextItem() {
 		if (this.hasJustBeenPressed(Input.SelectNextItem))
-			return new SelectNextItemAction(this.Game.state.Players.get(this.State.PlayerName))
+			return new SelectNextItemAction(this.Game.State.Players.get(this.State.PlayerName))
 	}
 }
 

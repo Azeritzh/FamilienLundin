@@ -14,220 +14,301 @@
 		"SelectNextItem": [ "Space" ],
 		"UseItem": [ "MouseLeft", "PadB" ]
 	},
+	
+	"defaultSpriteTypes": {
+		"defaultTile": {
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
+		},
+		"defaultDiagonalTile": {
+			"width": 24,
+			"height": 24,
+			"centerX": 12,
+			"centerY": 12
+		},
+		"defaultFullWall": {
+			"width": 16,
+			"height": 32,
+			"centerX": 8,
+			"centerY": 24
+		},
+		"defaultDiagonalFullWall": {
+			"width": 24,
+			"height": 44,
+			"centerX": 12,
+			"centerY": 32
+		},
+		"defaultHalfWall": {
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
+		}
+	},
+
+	"blockSprites": {
+		"grass": [
+			{
+				"straightTile": "grass-tile",
+				"straightFullWall": "grass-wall",
+				"diagonalTile": "grass-tile-diagonal",
+				"diagonalFullWall": "grass-wall-diagonal"
+			}
+		],
+		"dirt": [
+			{
+				"straightTile": "dirt-tile",
+				"straightFullWall": "dirt-wall",
+				"diagonalTile": "dirt-tile",
+				"diagonalFullWall": "dirt-wall"
+			}
+		],
+		"earth": [
+			{
+				"straightTile": "earth-tile",
+				"straightFullWall": "earth-wall",
+				"diagonalTile": "earth-tile",
+				"diagonalFullWall": "earth-wall"
+			}
+		],
+		"stone": [
+			{
+				"straightTile": "stone-tile",
+				"straightFullWall": "stone-wall",
+				"diagonalTile": "stone-tile-diagonal",
+				"diagonalFullWall": "stone-wall-diagonal"
+			}
+		],
+		"slab": [
+			{
+				"straightTile": "slab-tile",
+				"straightFullWall": "slab-wall",
+				"diagonalTile": "slab-tile",
+				"diagonalFullWall": "slab-wall"
+			}
+		],
+		"wooden": [
+			{
+				"straightTile": "wood-tile",
+				"straightFullWall": "wood-wall",
+				"diagonalTile": "wood-tile-diagonal",
+				"diagonalFullWall": "wood-wall-diagonal"
+			}
+		]
+	},
+	"blockTileOverlays": {
+		"grass": {
+			"tileOverlayTop": "grass-tile-top",
+			"tileOverlayBottom": "grass-tile-bottom",
+			"tileOverlayLeft": "grass-tile-left",
+			"tileOverlayRight": "grass-tile-right",
+			"tileOverlayTopLeft": "grass-tile-left",
+			"tileOverlayTopRight": "grass-tile-top",
+			"tileOverlayBottomLeft": "grass-tile-bottom",
+			"tileOverlayBottomRight": "grass-tile-right"
+		}
+	},
+
 	"sprites": {
+		"missing-sprite": {
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
+		},
 		"player": {
-			"path": "base-character",
-			"width": 32,
+			"path": "character-box-x32",
+			"width": 20,
 			"height": 48,
-			"centerX": 16,
+			"centerX": 10,
 			"centerY": 40
 		},
-		"default-tile-overlay-left": {
-			"path": "default-tile-overlay-left",
+		"default-tile-left": {
 			"width": 16,
 			"height": 16,
 			"centerX": 24,
 			"centerY": 8
 		},
-		"default-tile-overlay-right": {
-			"path": "default-tile-overlay-right",
+		"default-tile-right": {
 			"width": 16,
 			"height": 16,
 			"centerX": -8,
 			"centerY": 8
 		},
-		"default-tile-overlay-top": {
-			"path": "default-tile-overlay-top",
+		"default-tile-top": {
 			"width": 16,
 			"height": 16,
 			"centerX": 8,
 			"centerY": 24
 		},
-		"default-tile-overlay-bottom": {
-			"path": "default-tile-overlay-bottom",
+		"default-tile-bottom": {
 			"width": 16,
 			"height": 16,
 			"centerX": 8,
 			"centerY": -8
 		},
-		"default-wall-overlay-full-left": {
-			"path": "default-wall-overlay-full-left",
+		"default-tile-top-left": {
+			"width": 24,
+			"height": 24,
+			"centerX": 24,
+			"centerY": 24
+		},
+		"default-tile-top-right": {
+			"width": 24,
+			"height": 24,
+			"centerX": 0,
+			"centerY": 24
+		},
+		"default-tile-bottom-left": {
+			"width": 24,
+			"height": 24,
+			"centerX": 24,
+			"centerY": 0
+		},
+		"default-tile-bottom-right": {
+			"width": 24,
+			"height": 24,
+			"centerX": 0,
+			"centerY": 0
+		},
+		"default-straight-full-wall-left": {
+			"path": "default-wall-full-left",
 			"width": 16,
 			"height": 32,
 			"centerX": 24,
 			"centerY": 24
 		},
-		"default-wall-overlay-full-right": {
-			"path": "default-wall-overlay-full-right",
+		"default-straight-full-wall-right": {
+			"path": "default-wall-full-right",
 			"width": 16,
 			"height": 32,
 			"centerX": -8,
 			"centerY": 24
 		},
-		"default-wall-overlay-half-left": {
-			"path": "default-wall-overlay-half-left",
+		"default-straight-half-wall-left": {
+			"path": "default-wall-half-left",
 			"width": 16,
 			"height": 16,
 			"centerX": 24,
 			"centerY": 8
 		},
-		"default-wall-overlay-half-right": {
-			"path": "default-wall-overlay-half-right",
+		"default-straight-half-wall-right": {
+			"path": "default-wall-half-right",
 			"width": 16,
 			"height": 16,
 			"centerX": -8,
 			"centerY": 8
+		},
+		"default-diagonal-full-wall-left": {
+			"path": "default-wall-full-left",
+			"width": 16,
+			"height": 32,
+			"centerX": 28,
+			"centerY": 32
+		},
+		"default-diagonal-full-wall-right": {
+			"path": "default-wall-full-right",
+			"width": 16,
+			"height": 32,
+			"centerX": -12,
+			"centerY": 32
+		},
+		"default-diagonal-half-wall-left": {
+			"path": "default-wall-half-left",
+			"width": 16,
+			"height": 16,
+			"centerX": 28,
+			"centerY": 16
+		},
+		"default-diagonal-half-wall-right": {
+			"path": "default-wall-half-right",
+			"width": 16,
+			"height": 16,
+			"centerX": -12,
+			"centerY": 16
 		},
 		"default-wall-shadow-full-left": {
-			"path": "default-wall-shadow-full-left",
 			"width": 16,
 			"height": 16,
 			"centerX": 24,
 			"centerY": 8
 		},
 		"default-wall-shadow-full-right": {
-			"path": "default-wall-shadow-full-right",
 			"width": 16,
 			"height": 16,
 			"centerX": -8,
 			"centerY": 8
 		},
 		"default-wall-shadow-half-left": {
-			"path": "default-wall-shadow-half-left",
 			"width": 16,
 			"height": 16,
 			"centerX": 24,
 			"centerY": 8
 		},
 		"default-wall-shadow-half-right": {
-			"path": "default-wall-shadow-half-right",
 			"width": 16,
 			"height": 16,
 			"centerX": -8,
 			"centerY": 8
 		},
-		"dirt-tile": {
-			"path": "tile-dirt",
-			"width": 16,
-			"height": 16,
-			"centerX": 8,
-			"centerY": 8
-		},
-		"dirt-wall": {
-			"path": "wall-dirt",
-			"width": 16,
-			"height": 32,
-			"centerX": 8,
-			"centerY": 24
-		},
-		"earth-tile": {
-			"path": "tile-earth",
-			"width": 16,
-			"height": 16,
-			"centerX": 8,
-			"centerY": 8
-		},
-		"earth-wall": {
-			"path": "wall-earth",
-			"width": 16,
-			"height": 32,
-			"centerX": 8,
-			"centerY": 24
-		},
+		"dirt-tile": { "type": "defaultTile" },
+		"dirt-wall": { "type": "defaultFullWall" },
+		"earth-tile": { "type": "defaultTile" },
+		"earth-wall": { "type": "defaultFullWall" },
 		"grass-tile": {
-			"path": "tile-grass",
-			"width": 16,
-			"height": 16,
-			"centerX": 8,
-			"centerY": 8,
+			"type": "defaultTile",
 			"framesX": 4,
 			"framesY": 3,
-			"frameWeights": [ 1, 1, 1, 1, 1, 1, 1, 1, 10 ]
+			"frameInterval": 20
 		},
-		"grass-wall": {
-			"path": "wall-grass",
-			"width": 16,
-			"height": 32,
-			"centerX": 8,
-			"centerY": 24
+		"grass-tile-diagonal": {
+			"type": "defaultDiagonalTile",
+			"framesX": 2,
+			"framesY": 2
 		},
-		"grass-tile-overlay-left": {
-			"path": "grass-tile-overlay-left",
+		"grass-wall": { "type": "defaultFullWall" },
+		"grass-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"grass-tile-left": {
 			"width": 16,
 			"height": 16,
 			"centerX": 24,
 			"centerY": 8
 		},
-		"grass-tile-overlay-right": {
-			"path": "grass-tile-overlay-right",
+		"grass-tile-right": {
 			"width": 16,
 			"height": 16,
 			"centerX": -8,
 			"centerY": 8
 		},
-		"grass-tile-overlay-top": {
-			"path": "grass-tile-overlay-top",
+		"grass-tile-top": {
 			"width": 16,
 			"height": 16,
 			"centerX": 8,
 			"centerY": 24
 		},
-		"grass-tile-overlay-bottom": {
-			"path": "grass-tile-overlay-bottom",
+		"grass-tile-bottom": {
 			"width": 16,
 			"height": 16,
 			"centerX": 8,
 			"centerY": -8
 		},
-		"slab-tile": {
-			"path": "tile-slab",
-			"width": 16,
-			"height": 16,
-			"centerX": 8,
-			"centerY": 8
-		},
-		"slab-wall": {
-			"path": "wall-slab",
-			"width": 16,
-			"height": 32,
-			"centerX": 8,
-			"centerY": 24
-		},
-		"stone-tile": {
-			"path": "tile-stone",
-			"width": 16,
-			"height": 16,
-			"centerX": 8,
-			"centerY": 8
-		},
-		"stone-wall": {
-			"path": "wall-stone",
-			"width": 16,
-			"height": 32,
-			"centerX": 8,
-			"centerY": 24
-		},
-		"wooden-tile": {
-			"path": "tile-wooden",
-			"width": 16,
-			"height": 16,
-			"centerX": 8,
-			"centerY": 8
-		},
-		"wooden-wall": {
-			"path": "wall-wooden",
-			"width": 16,
-			"height": 32,
-			"centerX": 8,
-			"centerY": 24
-		},
+		"slab-tile": { "type": "defaultTile" },
+		"slab-wall": { "type": "defaultFullWall" },
+		"stone-tile": { "type": "defaultTile" },
+		"stone-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"stone-wall": { "type": "defaultFullWall" },
+		"stone-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"wood-tile": { "type": "defaultTile" },
+		"wood-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"wood-wall": { "type": "defaultFullWall" },
+		"wood-wall-diagonal": { "type": "defaultDiagonalFullWall" },
 		"hud-life-energy": {
-			"path": "hud-life-energy",
 			"width": 26,
 			"height": 173
 		},
 		"hud-tool-items": {
-			"path": "hud-tool-items",
 			"width": 46,
 			"height": 166,
 			"centerX": 46

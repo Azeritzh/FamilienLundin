@@ -13,11 +13,6 @@ export class Camera {
 		public ShownLayers: { layer: number, area: DisplayArea }[] = []
 	) { }
 
-	get topPosition() { return new Vector3(0, -1, 0) }
-	get bottomPosition() { return new Vector3(0, 1, 0) }
-	get leftPosition() { return new Vector3(-1, 0, 0) }
-	get rightPosition() { return new Vector3(1, 0, 0) }
-
 	public TopTile = new Vector3(0, -1, 0) //apparent north tile
 	public TopRightTile = new Vector3(1, -1, 0) //apparent north-east tile
 	public RightTile = new Vector3(1, 0, 0) //apparent east tile
@@ -29,8 +24,8 @@ export class Camera {
 
 	public FocusOn(entity: Id) {
 		this.State.FocusPoint = this.CurrentPositionFrom(
-			this.Game.entities.Position.get.of(entity) ?? new Vector3(0, 0, 0),
-			this.Game.entities.Velocity.get.of(entity),
+			this.Game.Entities.Position.get.of(entity) ?? new Vector3(0, 0, 0),
+			this.Game.Entities.Velocity.get.of(entity),
 		)
 		this.UpdateShownLayers()
 	}
@@ -87,23 +82,9 @@ export class Camera {
 		if (!frameInterval)
 			return 0
 		const numberOfFrames = framesX * framesY
-		const tick = this.Game.state.Globals.Tick - animationStart
+		const tick = this.Game.State.Globals.Tick - animationStart
 		const frameIndex = Math.floor(tick / frameInterval) % numberOfFrames
 		return frameIndex
-	}
-
-	DrawVaried(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, variation = 0) {
-		const config = this.Config.Sprites[sprite]
-		const sumOfWeights = config.frameWeights.sum()
-		let frameIndex = 0
-		let sum = 0
-		for (const weight of config.frameWeights) {
-			sum += weight
-			if (sum > variation % sumOfWeights)
-				break
-			frameIndex++
-		}
-		this.Draw(sprite, layer, position, velocity, frameIndex)
 	}
 
 	Draw(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, frameIndex = 0) {
