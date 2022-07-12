@@ -6,15 +6,78 @@
 	"assetFolder": "assets/",
 	"inputs": {
 		"Generate": [ "Escape", "Enter", "PadStart" ],
+		
+		"ToggleInventory": [ "Tab", "Start" ],
+		"ToggleMenu": [ "Escape", "Select" ],
+		"ToggleChat": [ "Enter" ],
+		
 		"MoveUp": [ "W", "Up", "PadUp", "PadLeftStickUp" ],
 		"MoveDown": [ "S", "Down", "PadDown", "PadLeftStickDown" ],
 		"MoveLeft": [ "A", "Left", "PadLeft", "PadLeftStickLeft" ],
 		"MoveRight": [ "D", "Right", "PadRight", "PadLeftStickRight" ],
-		"Run": [ "LeftShift", "PadA" ],
+
+		"UseItem": [ "F", "PadY" ],
+		"ToolA": [ "MouseLeft", "PadA", "PadRightTrigger" ],
+		"ToolB": [ "MouseRight", "PadX", "PadLeftTrigger" ],
+		"Action": [ "Space", "PadB" ],
+
+		"SelectTopItem": [ "2", "PadUp" ],
+		"SelectBottomItem": [ "4", "PadDown" ],
+		"SelectLeftItem": [ "1", "PadLeft" ],
+		"SelectRightItem": [ "3", "PadRight" ],
+
+		"SelectTopItemSet": [],
+		"SelectBottomItemSet": [],
+		"SelectLeftItemSet": [],
+		"SelectRightItemSet": [],
+
+		"SelectTopTool": [],
+		"SelectBottomTool": [],
+		"SelectLeftTool": [],
+		"SelectRightTool": [],
+
+		"MoveCameraUp": [],
+		"MoveCameraDown": [],
+		"MoveCameraLeft": [],
+		"MoveCameraRight": [],
+
+		"LookUp": [],
+		"LookDown": [],
+		"RotateCameraLeft": [ "E" ],
+		"RotateCameraRight": [ "Q" ],
+
+		"ToggleSelection": [],
+		"HoldSelection": [ "PadLeftShoulder" ],
+
+		"SelectionModeSelectTopItem": [ "PadLeftStickUp" ],
+		"SelectionModeSelectBottomItem": [ "PadLeftStickDown" ],
+		"SelectionModeSelectLeftItem": [ "PadLeftStickLeft" ],
+		"SelectionModeSelectRightItem": [ "PadLeftStickRight" ],
+
+		"SelectionModeSelectTopTool": [ "PadY" ],
+		"SelectionModeSelectBottomTool": [ "PadA" ],
+		"SelectionModeSelectLeftTool": [ "PadX" ],
+		"SelectionModeSelectRightTool": [ "PadB" ],
+
+		"ToggleCamera": [],
+		"HoldCamera": [ "PadRightShoulder" ],
+
+		"CameraModeMoveCameraUp": [ "PadLeftStickUp" ],
+		"CameraModeMoveCameraDown": [ "PadLeftStickDown" ],
+		"CameraModeMoveCameraLeft": [ "PadLeftStickLeft" ],
+		"CameraModeMoveCameraRight": [ "PadLeftStickRight" ],
+
+		"CameraModeLookUp": [ "PadY" ],
+		"CameraModeLookDown": [ "PadA" ],
+		"CameraModeRotateCameraLeft": [ "PadX" ],
+		"CameraModeRotateCameraRight": [ "PadB" ],
+
 		"SelectNextItem": [ "Space" ],
-		"UseItem": [ "MouseLeft", "PadB" ]
+		"SelectPreviousItem": [ "MouseScrollDown" ],
+		"HoldWalk": [ "LeftControl" ],
+		"ToggleWalk": []
 	},
-	
+
 	"defaultSpriteTypes": {
 		"defaultTile": {
 			"width": 16,

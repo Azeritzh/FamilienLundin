@@ -16,6 +16,8 @@ export abstract class BaseInputParser<Input> {
 	}
 
 	private stateFor(...keys: string[]) {
+		if (keys.length === 0)
+			return 0
 		return keys.map(x => this.displayProvider.getInputState(x)).max()
 	}
 

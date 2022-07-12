@@ -17,6 +17,7 @@ export class InputParser extends BaseInputParser<Input> {
 	}
 
 	ParseInputs() {
+		this.UpdateCamera()
 		this.updateActionStates()
 		return [
 			this.parseGenerate(),
@@ -26,8 +27,15 @@ export class InputParser extends BaseInputParser<Input> {
 		].filter(x => x)
 	}
 
+	private UpdateCamera() {
+		if (this.hasJustBeenPressed(Input.RotateCameraRight))
+			this.Camera.RotateCamera(1)
+		if (this.hasJustBeenPressed(Input.RotateCameraLeft))
+			this.Camera.RotateCamera(-1)
+	}
+
 	private parseMovement() {
-		const factor = this.boolStateFor(Input.Run) ? 1 : 0.5
+		const factor = this.boolStateFor(Input.HoldWalk) ? 0.5 : 1
 		const up = this.floatStateFor(Input.MoveUp) ?? 0
 		const down = this.floatStateFor(Input.MoveDown) ?? 0
 		const left = this.floatStateFor(Input.MoveLeft) ?? 0
@@ -59,11 +67,76 @@ export class InputParser extends BaseInputParser<Input> {
 
 export enum Input {
 	Generate,
+	ToggleInventory,
+	ToggleMenu,
+	ToggleChat,
+
 	MoveUp,
 	MoveDown,
 	MoveLeft,
 	MoveRight,
-	Run,
-	SelectNextItem,
+
 	UseItem,
+	ToolA,
+	ToolB,
+	Action,
+
+	SelectTopItem,
+	SelectBottomItem,
+	SelectLeftItem,
+	SelectRightItem,
+
+	SelectTopItemSet,
+	SelectBottomItemSet,
+	SelectLeftItemSet,
+	SelectRightItemSet,
+
+	SelectTopTool,
+	SelectBottomTool,
+	SelectLeftTool,
+	SelectRightTool,
+
+	MoveCameraUp,
+	MoveCameraDown,
+	MoveCameraLeft,
+	MoveCameraRight,
+
+	LookUp,
+	LookDown,
+	RotateCameraLeft,
+	RotateCameraRight,
+
+	// Selection mode:
+	ToggleSelection,
+	HoldSelection,
+
+	SelectionModeSelectTopItem,
+	SelectionModeSelectBottomItem,
+	SelectionModeSelectLeftItem,
+	SelectionModeSelectRightItem,
+
+	SelectionModeSelectTopTool,
+	SelectionModeSelectBottomTool,
+	SelectionModeSelectLeftTool,
+	SelectionModeSelectRightTool,
+
+	// Camera mode:
+	ToggleCamera,
+	HoldCamera,
+
+	CameraModeMoveCameraUp,
+	CameraModeMoveCameraDown,
+	CameraModeMoveCameraLeft,
+	CameraModeMoveCameraRight,
+
+	CameraModeLookUp,
+	CameraModeLookDown,
+	CameraModeRotateCameraLeft,
+	CameraModeRotateCameraRight,
+
+	// Extra:
+	SelectNextItem,
+	SelectPreviousItem,
+	HoldWalk,
+	ToggleWalk,
 }
