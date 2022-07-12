@@ -43,7 +43,7 @@ export class InputParser extends BaseInputParser<Input> {
 	}
 
 	private parsePlaceBlock() {
-		const position = this.Camera.tilePositionFor(
+		const position = this.Camera.TilePositionFor(
 			this.displayProvider.getInputState("MouseX"),
 			this.displayProvider.getInputState("MouseY"),
 		)
