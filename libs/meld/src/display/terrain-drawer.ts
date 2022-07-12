@@ -32,7 +32,7 @@ export class TerrainDrawer {
 	private drawBlockTile(block: Block, position: Vector3) {
 		if (Blocks.TypeOf(block) === BlockType.Empty)
 			return
-		const solidType = this.game.config.solidTypeMap.typeFor(Blocks.SolidOf(block))
+		const solidType = this.game.config.solidTypeMap.TypeFor(Blocks.SolidOf(block))
 		if (solidType == null)
 			return
 
@@ -63,7 +63,7 @@ export class TerrainDrawer {
 	private drawBlockWall(block: Block, position: Vector3) {
 		if (Blocks.TypeOf(block) === BlockType.Empty || Blocks.TypeOf(block) === BlockType.Floor)
 			return
-		const solidType = this.game.config.solidTypeMap.typeFor(Blocks.SolidOf(block))
+		const solidType = this.game.config.solidTypeMap.TypeFor(Blocks.SolidOf(block))
 		if (solidType == null)
 			return
 
@@ -130,7 +130,7 @@ export class TerrainDrawer {
 	}
 
 	private tileOverlayFor(block: Block, direction: Side) {
-		const typeName = this.game.config.solidTypeMap.typeFor(Blocks.SolidOf(block)) ?? ""
+		const typeName = this.game.config.solidTypeMap.TypeFor(Blocks.SolidOf(block)) ?? ""
 		const aber = typeName == "grass" ? "grass" : "default"
 		switch (direction) {
 			case Side.Bottom: return aber + "-tile-overlay-bottom"

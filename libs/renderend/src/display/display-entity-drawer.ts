@@ -1,4 +1,4 @@
-import { Id, entityTypeOf } from "@lundin/age"
+import { Id, EntityTypeOf } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { Renderend } from "../renderend"
 import { DisplayConfig } from "./display-config"
@@ -40,7 +40,7 @@ export class DisplayEntityDrawer {
 	}
 
 	onDeath(entity: Id) {
-		const type = this.game.config.typeMap.typeFor(entityTypeOf(entity))
+		const type = this.game.config.typeMap.TypeFor(EntityTypeOf(entity))
 		const deathSprite = this.config.deathAnimations[type]
 		if (!deathSprite)
 			return

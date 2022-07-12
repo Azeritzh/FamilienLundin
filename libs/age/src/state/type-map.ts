@@ -1,25 +1,28 @@
-import { Id, entityTypeOffset } from "../values/entity"
+import { Id } from "../values/entity"
 
 export class TypeMap {
 	constructor(
-		public types = new Map<string, Id>(),
+		public Types = new Map<string, Id>(),
 	) { }
 
 	// maybe the id generation should be split in two, so not all ids are shifted?
-	public static from(types: string[]) {
+	public static From(
+		offset: number,
+		types: string[]
+	) {
 		const typeMapping = new TypeMap()
 		for (const [index, type] of types.entries())
-			typeMapping.types.set(type, index << entityTypeOffset)
+			typeMapping.Types.set(type, index << offset)
 		return typeMapping
 	}
 
-	public typeFor(typeId: Id) {
-		for (const [type, id] of this.types.entries())
+	public TypeFor(typeId: Id) {
+		for (const [type, id] of this.Types.entries())
 			if (typeId === id)
 				return type
 	}
 
-	public typeIdFor(type: string): Id {
-		return this.types.get(type)
+	public TypeIdFor(type: string): Id {
+		return this.Types.get(type)
 	}
 }

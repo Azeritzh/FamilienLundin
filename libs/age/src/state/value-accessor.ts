@@ -1,4 +1,4 @@
-import { Id, entityTypeOf } from "../values/entity"
+import { Id, EntityTypeOf } from "../values/entity"
 import { BaseValues } from "./base-values"
 
 export interface ValueInitialiser {
@@ -44,7 +44,7 @@ export class StandardValueGetter<T, GroupedEntityValues> implements ValueGetter<
 	}
 
 	public defaultOf(entity: Id) {
-		const type = entityTypeOf(entity)
+		const type = EntityTypeOf(entity)
 		return this.getTypeValue(this.typeValues.get(type))
 			?? this.defaultValue
 	}

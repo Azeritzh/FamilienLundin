@@ -1,4 +1,4 @@
-import { Id, entityTypeOf } from "@lundin/age"
+import { Id, EntityTypeOf } from "@lundin/age"
 import { Meld } from "../meld"
 import { Camera, Layer } from "./camera"
 
@@ -9,7 +9,7 @@ export class EntityDrawer {
 	) { }
 
 	draw(entity: Id) {
-		if (entityTypeOf(entity) === this.game.config.constants.playerType)
+		if (EntityTypeOf(entity) === this.game.config.constants.playerType)
 			this.drawPlayer(entity)
 		else
 			this.drawGeneralEntity(entity)
@@ -18,14 +18,14 @@ export class EntityDrawer {
 	private drawGeneralEntity(entity: Id) {
 		const position = this.game.entities.position.get.of(entity)
 		const velocity = this.game.entities.velocity.get.of(entity)
-		const sprite = this.game.config.entityTypeMap.typeFor(entityTypeOf(entity))
+		const sprite = this.game.config.entityTypeMap.TypeFor(EntityTypeOf(entity))
 		this.camera.drawAnimated(sprite, Layer.Middle, position, velocity)
 	}
 
 	private drawPlayer(entity: Id) {
 		const position = this.game.entities.position.get.of(entity)
 		const velocity = this.game.entities.velocity.get.of(entity)
-		const sprite = this.game.config.entityTypeMap.typeFor(entityTypeOf(entity))
+		const sprite = this.game.config.entityTypeMap.TypeFor(EntityTypeOf(entity))
 		this.camera.drawAnimated(sprite, Layer.Middle, position, velocity)
 	}
 }

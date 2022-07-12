@@ -30,7 +30,7 @@ export class StartLogic implements GameLogic<GameUpdate> {
 	}
 
 	private generateRandomTerrain() {
-		const types = [...this.config.solidTypeMap.types.values()]
+		const types = [...this.config.solidTypeMap.Types.values()]
 		this.terrain.addChunk(0, 0, 0)
 		this.terrain.addChunk(0, -1, 0)
 		this.terrain.addChunk(-1, 0, 0)

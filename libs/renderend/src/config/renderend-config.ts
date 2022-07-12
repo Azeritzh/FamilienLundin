@@ -1,4 +1,4 @@
-import { Id, RectangularSize, TypeMap } from "@lundin/age"
+import { EntityTypeOffset, Id, RectangularSize, TypeMap } from "@lundin/age"
 import { RenderendConstants } from "./renderend-constants"
 import { GroupedEntityValues } from "../state/entity-values"
 import { Vector2 } from "@lundin/utility"
@@ -13,20 +13,20 @@ export class RenderendConfig {
 
 	public static read(jsonConfig: any) {
 		const typeNames = Object.keys(jsonConfig.types)
-		const typeMap = TypeMap.from(typeNames)
+		const typeMap = TypeMap.From(EntityTypeOffset, typeNames)
 		return new RenderendConfig(
 			constantsFrom(jsonConfig.constants, typeMap),
 			typeMap,
-			new Map(typeNames.map(x => [typeMap.typeIdFor(x), groupedEntityValuesFrom(jsonConfig.types[x], typeMap)])),
+			new Map(typeNames.map(x => [typeMap.TypeIdFor(x), groupedEntityValuesFrom(jsonConfig.types[x], typeMap)])),
 		)
 	}
 }
 
 function constantsFrom(serialised: any, typeMap: TypeMap) {
 	const constants: RenderendConstants = Object.assign(new RenderendConstants(0, 0, []), serialised)
-	constants.shipType = typeMap.typeIdFor(serialised.shipType)
-	constants.wallType = typeMap.typeIdFor(serialised.wallType)
-	constants.obstacleTypes = serialised.obstacleTypes.map(x => typeMap.typeIdFor(x))
+	constants.shipType = typeMap.TypeIdFor(serialised.shipType)
+	constants.wallType = typeMap.TypeIdFor(serialised.wallType)
+	constants.obstacleTypes = serialised.obstacleTypes.map(x => typeMap.TypeIdFor(x))
 	if (serialised.initialSpeed)
 		constants.initialSpeed = serialised.initialSpeed / updatesPerSecond
 	if (serialised.acceleration)
@@ -59,6 +59,6 @@ function groupedEntityValuesFrom(serialised: any, typeMap: TypeMap) {
 	if (serialised.velocity)
 		values.velocity = Object.assign(new Vector2(0, 0), serialised.velocity).multiply(1 / updatesPerSecond)
 	if (serialised.bulletType)
-		values.bulletType = typeMap.typeIdFor(serialised.bulletType)
+		values.bulletType = typeMap.TypeIdFor(serialised.bulletType)
 	return values
 }
