@@ -26,24 +26,24 @@ export function readGameConfig(jsonConfig: any) {
 
 function constantsFrom(serialised: any, typeMap: TypeMap) {
 	const constants: Constants = Object.assign(new Constants(0), serialised)
-	constants.playerType = typeMap.TypeIdFor(serialised.playerType)
+	constants.PlayerType = typeMap.TypeIdFor(serialised.playerType)
 	if (serialised.chunkSize)
-		constants.chunkSize = new Vector3(serialised.chunkSize.x, serialised.chunkSize.y, serialised.chunkSize.z)
-	constants.gravityAcceleration = (serialised.gravityAcceleration ?? 0.5) / updatesPerSecond
-	constants.terminalVerticalVelocity = (serialised.terminalVerticalVelocity ?? 10) / updatesPerSecond
-	constants.maxMoveSpeed = (serialised.maxMoveSpeed ?? 10) / updatesPerSecond
+		constants.ChunkSize = new Vector3(serialised.chunkSize.x, serialised.chunkSize.y, serialised.chunkSize.z)
+	constants.GravityAcceleration = (serialised.gravityAcceleration ?? 0.5) / updatesPerSecond
+	constants.TerminalVerticalVelocity = (serialised.terminalVerticalVelocity ?? 10) / updatesPerSecond
+	constants.MaxMoveSpeed = (serialised.maxMoveSpeed ?? 10) / updatesPerSecond
 	return constants
 }
 
 function groupedEntityValuesFrom(jsonObject: any, blockTypeMap: TypeMap) {
 	const values: GroupedEntityValues = { ...jsonObject }
 	if (jsonObject.position)
-		values.position = Object.assign(new Vector3(0, 0, 0), jsonObject.position)
+		values.Position = Object.assign(new Vector3(0, 0, 0), jsonObject.position)
 	if (jsonObject.circularSize)
-		values.circularSize = Object.assign(new CircularSize(0, 0), jsonObject.circularSize)
+		values.CircularSize = Object.assign(new CircularSize(0, 0), jsonObject.circularSize)
 	if (jsonObject.selectedBlock)
-		values.selectedBlock = blockTypeMap.TypeIdFor(jsonObject.selectedBlock)
+		values.SelectedBlock = blockTypeMap.TypeIdFor(jsonObject.selectedBlock)
 	if (jsonObject.velocity)
-		values.velocity = Object.assign(new Vector3(0, 0, 0), jsonObject.velocity)
+		values.Velocity = Object.assign(new Vector3(0, 0, 0), jsonObject.velocity)
 	return values
 }

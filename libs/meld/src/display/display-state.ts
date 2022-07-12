@@ -4,21 +4,21 @@ import { DisplayConfig } from "./display-config"
 
 export class DisplayState {
 	constructor(
-		public size: ScreenSize,
-		public playerName: string = "",
-		public fractionOfTick = 0,
-		public focusPoint = new Vector3(0, 0, 0),
-		public displayEntities: DisplayEntity[] = [],
+		public Size: ScreenSize,
+		public PlayerName: string = "",
+		public FractionOfTick = 0,
+		public FocusPoint = new Vector3(0, 0, 0),
+		public DisplayEntities: DisplayEntity[] = [],
 	) { }
 
 	public static from(config: DisplayConfig, playerName: string) {
 		return new DisplayState(new ScreenSize(
-			config.renderToVirtualSize,
-			config.virtualPixelsPerTile,
+			config.RenderToVirtualSize,
+			config.VirtualPixelsPerTile,
 			100,
 			100,
-			config.virtualHeight,
-			config.virtualHeight),
+			config.VirtualHeight,
+			config.VirtualHeight),
 		playerName)
 	}
 }

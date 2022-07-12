@@ -6,14 +6,14 @@ import { GameState } from "../state/game-state"
 
 export class UpdateStateLogic implements GameLogic<GameUpdate> {
 	constructor(
-		private state: GameState,
-		private entities: EntityManager<EntityValues>,
-		private terrain: TerrainManager<Block>
+		private State: GameState,
+		private Entities: EntityManager<EntityValues>,
+		private Terrain: TerrainManager<Block>
 	) { }
 
 	update() {
-		this.state.globals.tick++
-		this.entities.applyUpdatedValues()
-		this.terrain.applyUpdatedValues()
+		this.State.Globals.Tick++
+		this.Entities.applyUpdatedValues()
+		this.Terrain.applyUpdatedValues()
 	}
 }

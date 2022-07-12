@@ -4,24 +4,24 @@ import { GameUpdate, SelectNextItemAction } from "../state/game-update"
 
 export class SelectedItemLogic implements GameLogic<GameUpdate> {
 	constructor(
-		private config: GameConfig,
-		private selectedBlock: ValueGetter<Id>,
-		private setSelectedBlock: ValueSetter<Id>,
+		private Config: GameConfig,
+		private SelectedBlock: ValueGetter<Id>,
+		private SetSelectedBlock: ValueSetter<Id>,
 	) { }
 
 	update(actions: GameUpdate[]) {
 		for (const action of actions)
 			if (action instanceof SelectNextItemAction)
-				this.incrementSelectedItemFor(action.entity)
+				this.incrementSelectedItemFor(action.Entity)
 	}
 
 	private incrementSelectedItemFor(entity: Id) {
-		const blockTypes = [...this.config.solidTypeMap.Types.values()]
-		const previous = this.selectedBlock.of(entity)
+		const blockTypes = [...this.Config.SolidTypeMap.Types.values()]
+		const previous = this.SelectedBlock.of(entity)
 		const previousIndex = blockTypes.indexOf(previous)
 		const nextIndex = previousIndex + 1 < blockTypes.length
 			? previousIndex + 1
 			: 0
-		this.setSelectedBlock.for(entity, blockTypes[nextIndex])
+		this.SetSelectedBlock.for(entity, blockTypes[nextIndex])
 	}
 }

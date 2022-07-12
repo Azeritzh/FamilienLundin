@@ -1,4 +1,4 @@
-import { DisplayConfig } from "../display/display-config"
+import { DisplayConfig, SpriteInfo } from "../display/display-config"
 import { Input } from "../display/input-parser"
 import { updatesPerSecond } from "../meld-game"
 
@@ -11,18 +11,18 @@ export function readDisplayConfig(jsonConfig: any): DisplayConfig {
 	for (const key in config.sprites)
 		sprites[key] = spriteInfoFrom(config.sprites[key])
 	return {
-		renderToVirtualSize: true,
-		virtualPixelsPerTile: 16,
-		virtualHeight: 360,
-		wallDisplayHeight: 2,
-		displayDepth: 4,
-		...config,
-		inputs,
-		sprites,
+		RenderToVirtualSize: true,
+		VirtualPixelsPerTile: 16,
+		VirtualHeight: 360,
+		WallDisplayHeight: 2,
+		DisplayDepth: 4,
+		AssetFolder: config.assetFolder,
+		Inputs: inputs,
+		Sprites: sprites,
 	}
 }
 
-function spriteInfoFrom(serialised: SerialisedSpriteInfo) {
+function spriteInfoFrom(serialised: SerialisedSpriteInfo): SpriteInfo {
 	const framesX = serialised.framesX ?? 1
 	const framesY = serialised.framesY ?? 1
 	const frameWeights = serialised.frameWeights ?? [1]

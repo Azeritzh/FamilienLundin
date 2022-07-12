@@ -13,7 +13,7 @@ export class MeldComponent implements OnInit {
 	constructor(private ngZone: NgZone) { }
 
 	ngOnInit() {
-		this.game = MeldGame.createAt(this.gameHost.nativeElement, { assetFolder: "assets/images/meld/" })
+		this.game = MeldGame.createAt(this.gameHost.nativeElement, { AssetFolder: "assets/images/meld/" })
 
 		this.ngZone.runOutsideAngular(() => {
 			this.game.startDisplayLoop()

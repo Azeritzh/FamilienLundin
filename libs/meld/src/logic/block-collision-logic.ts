@@ -7,33 +7,33 @@ import { GameUpdate } from "../state/game-update"
 
 export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	constructor(
-		private constants: Constants,
-		private entities: MeldEntities,
-		private terrain: TerrainManager<Block>,
-		private circularSize: ValueGetter<CircularSize>,
-		private position: ValueGetter<Vector3>,
-		private velocity: ValueGetter<Vector3>,
-		private setVelocity: ValueSetter<Vector3>,
+		private Constants: Constants,
+		private Entities: MeldEntities,
+		private Terrain: TerrainManager<Block>,
+		private CircularSize: ValueGetter<CircularSize>,
+		private Position: ValueGetter<Vector3>,
+		private Velocity: ValueGetter<Vector3>,
+		private SetVelocity: ValueSetter<Vector3>,
 	) { }
 
 	update() {
-		for (const [entity] of this.entities.with.blockCollisionBehaviour)
+		for (const [entity] of this.Entities.with.BlockCollisionBehaviour)
 			this.updateEntity(entity)
 	}
 
 	private updateEntity(entity: Id) {
-		const velocity = this.velocity.currentlyOf(entity)
+		const velocity = this.Velocity.currentlyOf(entity)
 		if (velocity?.isZero() ?? true)
 			return
 		const newVelocity = this.CollisionVelocityChange(entity, velocity)
 		if (newVelocity)
-			this.setVelocity.for(entity, newVelocity)
+			this.SetVelocity.for(entity, newVelocity)
 	}
 
 
 	private CollisionVelocityChange(entity: Id, velocity: Vector3) {
-		const position = this.position.currentlyOf(entity) ?? new Vector3(0, 0, 0)
-		const circularSize = this.circularSize.currentlyOf(entity)
+		const position = this.Position.currentlyOf(entity) ?? new Vector3(0, 0, 0)
+		const circularSize = this.CircularSize.currentlyOf(entity)
 		const area = circularSize
 			? Box.occupiedArea(position, circularSize)
 			: Box.from(position)
@@ -47,7 +47,7 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 
 		velocity = this.updateVelocitiesInOrder(timeToCollisionX, timeToCollisionY, timeToCollisionZ, area, velocity)
 
-		if (velocity == this.velocity.currentlyOf(entity))
+		if (velocity == this.Velocity.currentlyOf(entity))
 			return null
 		return velocity
 	}
@@ -157,11 +157,11 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	}
 
 	private truncatedDistance(remainingDistance: number) {
-		if (remainingDistance > this.constants.collisionAreaWidth)
-			return remainingDistance - this.constants.collisionAreaWidth / 8
-		if (remainingDistance > -this.constants.collisionAreaWidth)
+		if (remainingDistance > this.Constants.CollisionAreaWidth)
+			return remainingDistance - this.Constants.CollisionAreaWidth / 8
+		if (remainingDistance > -this.Constants.CollisionAreaWidth)
 			return 0
-		return remainingDistance + this.constants.collisionAreaWidth / 8
+		return remainingDistance + this.Constants.CollisionAreaWidth / 8
 	}
 
 	private collisionAtX(area: Box, velocity: number) {
@@ -195,7 +195,7 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	private collisionAtZ(area: Box, velocity: number) {
 		const z = velocity > 0
 			? area.maxZ + 0.5
-			: area.minZ + this.constants.collisionAreaWidth / 8
+			: area.minZ + this.Constants.CollisionAreaWidth / 8
 		for (const x of this.blockPositionsX(area))
 			for (const y of this.blockPositionsY(area))
 				if (velocity > 0
@@ -206,12 +206,12 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	}
 
 	private isSolidGoingDown(x: number, y: number, z: number) {
-		const blockType = Blocks.TypeOf(this.terrain.get(x, y, z)) ?? BlockType.Empty
+		const blockType = Blocks.TypeOf(this.Terrain.get(x, y, z)) ?? BlockType.Empty
 		const zAboveFloor = z < 0 ? 1 + (z % 1) : z % 1
-		if (0.5 < zAboveFloor && zAboveFloor < 0.5 + this.constants.collisionAreaWidth)
+		if (0.5 < zAboveFloor && zAboveFloor < 0.5 + this.Constants.CollisionAreaWidth)
 			return blockType == BlockType.Half
-		if (0 < zAboveFloor && zAboveFloor < this.constants.collisionAreaWidth)
-			return blockType == BlockType.Floor || Blocks.TypeOf(this.terrain.get(x, y, z - 1)) == BlockType.Full
+		if (0 < zAboveFloor && zAboveFloor < this.Constants.CollisionAreaWidth)
+			return blockType == BlockType.Floor || Blocks.TypeOf(this.Terrain.get(x, y, z - 1)) == BlockType.Full
 		return false
 	}
 
@@ -235,7 +235,7 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	}
 
 	private isSolidAtPoint(x: number, y: number, z: number) {
-		const blockType = Blocks.TypeOf(this.terrain.get(x, y, z)) ?? BlockType.Empty
+		const blockType = Blocks.TypeOf(this.Terrain.get(x, y, z)) ?? BlockType.Empty
 		const zAboveFloor = z < 0 ? 1 - (z % 1) : z % 1
 		switch (blockType) {
 			case BlockType.Empty: return false
@@ -246,6 +246,6 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	}
 
 	private isSolidInBlock(x: number, y: number, z: number) {
-		return Blocks.HasSolid(this.terrain.get(x, y, z)) ?? false
+		return Blocks.HasSolid(this.Terrain.get(x, y, z)) ?? false
 	}
 }

@@ -4,12 +4,12 @@ import { GameUpdate, LoadState } from "../state/game-update"
 
 export class LoadStateLogic implements GameLogic<GameUpdate> {
 	constructor(
-		private state: GameState,
+		private State: GameState,
 	) { }
 
 	update(updates: GameUpdate[]) {
 		const update = updates.find(x => x instanceof LoadState) as LoadState
 		if (update)
-			this.state.loadFrom(update.state)
+			this.State.LoadFrom(update.State)
 	}
 }

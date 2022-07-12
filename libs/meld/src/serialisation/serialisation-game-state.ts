@@ -9,58 +9,77 @@ export function createGameState(config: GameConfig, state: GameState) {
 	return serialiseGameState(state, config)
 }
 
-export function readGameState(deserialisedJson: any) {
-	return gameStateFrom(deserialisedJson)
+export function readGameState(config: GameConfig, deserialisedJson: any) {
+	return gameStateFrom(config, deserialisedJson)
 }
 
 interface SerialisableGameState {
-	entityTypeMap: TypeMap
-	solidTypeMap: TypeMap
-	nonSolidTypeMap: TypeMap
-	globals: any
-	entityValues: { [id: string]: GroupedEntityValues }
-	chunks: SerialisableBlockChunk[],
-	players: { [playerName: string]: Id }
+	EntityTypeMap: TypeMap
+	SolidTypeMap: TypeMap
+	NonSolidTypeMap: TypeMap
+	Globals: any
+	EntityValues: { [id: string]: GroupedEntityValues }
+	Chunks: SerialisableBlockChunk[],
+	Players: { [playerName: string]: Id }
 }
 
-function serialiseGameState(state: GameState, config: GameConfig = null) {
+function serialiseGameState(state: GameState, config: GameConfig = null): SerialisableGameState {
 	const chunks = []
-	for (const [key, value] of state.chunks)
+	for (const [key, value] of state.Chunks)
 		chunks.push(serialiseBlockChunk(value, Vector3.parse(key)))
 	const entityValues = {}
-	for (const [entity] of state.entityValues.entities)
-		entityValues[entity] = state.entityValues.groupFor(entity)
+	for (const [entity] of state.EntityValues.entities)
+		entityValues[entity] = state.EntityValues.GroupFor(entity)
 	return {
-		entityTypeMap: config?.entityTypeMap ?? new TypeMap(),
-		solidTypeMap: config?.solidTypeMap ?? new TypeMap(),
-		nonSolidTypeMap: config?.nonSolidTypeMap ?? new TypeMap(),
-		globals: state.globals,
-		entityValues: entityValues,
-		chunks: chunks,
-		players: Object.fromEntries(state.players.entries()),
+		EntityTypeMap: config?.EntityTypeMap ?? new TypeMap(),
+		SolidTypeMap: config?.SolidTypeMap ?? new TypeMap(),
+		NonSolidTypeMap: config?.NonSolidTypeMap ?? new TypeMap(),
+		Globals: state.Globals,
+		EntityValues: entityValues,
+		Chunks: chunks,
+		Players: Object.fromEntries(state.Players.entries()),
 	}
 }
 
-function gameStateFrom(deserialised: SerialisableGameState) {
+function gameStateFrom(config: GameConfig, deserialised: SerialisableGameState) {
 	const entityValues = new EntityValues()
-	for (const key in deserialised.entityValues)
-		entityValues.addValuesFrom(+key, groupedEntityValuesFrom(deserialised.entityValues[key]))
+	for (const key in deserialised.EntityValues)
+		entityValues.AddValuesFrom(+key, groupedEntityValuesFrom(deserialised.EntityValues[key]))
 
 	const chunks = new Map<string, BlockChunk<Block>>()
-	for (const chunk of deserialised.chunks)
+	for (const chunk of deserialised.Chunks)
 		chunks.set(Vector3.stringify(chunk.coords.x, chunk.coords.y, chunk.coords.z), blockChunkFrom(chunk))
 
 	const players = new Map<string, Id>()
-	for (const playerId in deserialised.players)
-		players.set(playerId, deserialised.players[playerId])
+	for (const playerId in deserialised.Players)
+		players.set(playerId, deserialised.Players[playerId])
 
 	return new GameState(
-		deserialised.globals,
+		deserialised.Globals,
 		entityValues,
 		chunks,
 		players,
 	)
 }
+
+/*function TypeMapsAreSame( config: GameConfig, deserialised: SerialisableGameState) {
+	if (deserialised.EntityTypeMap.Count != config.EntityTypeMap.Count)
+		return false;
+	if (deserialised.SolidTypeMap.Count != config.SolidTypeMap.Count)
+		return false;
+	if (deserialised.NonSolidTypeMap.Count != config.NonSolidTypeMap.Count)
+		return false;
+	foreach (var (key, value) in EntityTypeMap)
+		if (!config.EntityTypeMap.ContainsKey(key) || config.EntityTypeMap[key] != value)
+			return false;
+	foreach (var (key, value) in SolidTypeMap)
+		if (!config.SolidTypeMap.ContainsKey(key) || config.SolidTypeMap[key] != value)
+			return false;
+	foreach (var (key, value) in NonSolidTypeMap)
+		if (!config.NonSolidTypeMap.ContainsKey(key) || config.NonSolidTypeMap[key] != value)
+			return false;
+	return true;
+}*/
 
 interface SerialisableBlockChunk {
 	size: Vector3
@@ -82,11 +101,11 @@ function serialiseBlockChunk(chunk: BlockChunk<Block>, coords: Vector3): Seriali
 
 function groupedEntityValuesFrom(jsonObject: any) {
 	const values: GroupedEntityValues = { ...jsonObject }
-	if (jsonObject.position)
-		values.position = Object.assign(new Vector3(0, 0, 0), jsonObject.position)
-	if (jsonObject.circularSize)
-		values.circularSize = Object.assign(new CircularSize(0, 0), jsonObject.circularSize)
-	if (jsonObject.velocity)
-		values.velocity = Object.assign(new Vector3(0, 0, 0), jsonObject.velocity)
+	if (jsonObject.Position)
+		values.Position = Object.assign(new Vector3(0, 0, 0), jsonObject.Position)
+	if (jsonObject.CircularSize)
+		values.CircularSize = Object.assign(new CircularSize(0, 0), jsonObject.CircularSize)
+	if (jsonObject.Velocity)
+		values.Velocity = Object.assign(new Vector3(0, 0, 0), jsonObject.Velocity)
 	return values
 }

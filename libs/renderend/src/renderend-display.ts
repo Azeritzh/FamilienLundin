@@ -14,7 +14,7 @@ export class RenderendDisplay {
 		private game: Renderend,
 		private display: DisplayProvider,
 		private state = DisplayState.from(config),
-		private inputParser = new InputParser(display, config.inputs),
+		private inputParser = new InputParser(display, config.Inputs),
 		private spriteDrawer = new SpriteDrawer(game, display, config, state),
 		private entityDrawer = new EntityDrawer(game, spriteDrawer),
 		private displayEntityDrawer = new DisplayEntityDrawer(game, config, state, spriteDrawer),
@@ -52,9 +52,9 @@ export class RenderendDisplay {
 
 	private writeText() {
 		const distance = "" + Math.floor(this.game.state.globals.distanceTravelled)
-		this.display.drawString(distance, this.state.size.widthInTiles / 2, 9, this.config.font, 0.5)
+		this.display.drawString(distance, this.state.size.widthInTiles / 2, 9, this.config.Font, 0.5)
 		if (!this.game.state.globals.isAlive)
-			this.display.drawString("GAME OVER", this.state.size.widthInTiles / 2, 4, this.config.font, 1)
+			this.display.drawString("GAME OVER", this.state.size.widthInTiles / 2, 4, this.config.Font, 1)
 	}
 
 	getNewActions() {

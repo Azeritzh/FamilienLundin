@@ -9,29 +9,29 @@ export class HudDrawer {
 	static TopLayer = 0.9999
 
 	constructor(
-		private game: Meld,
-		private state: DisplayState,
-		private displayProvider: DisplayProvider,
+		private Game: Meld,
+		private State: DisplayState,
+		private DisplayProvider: DisplayProvider,
 	) { }
 
-	draw() {
-		const playerId = this.game.state.players.get(this.state.playerName)
+	Draw() {
+		const playerId = this.Game.state.Players.get(this.State.PlayerName)
 		if (!(playerId > -1))
 			return
 		this.drawHud()
-		const selectedBlock = this.game.entities.selectedBlock.get.of(playerId)
+		const selectedBlock = this.Game.entities.SelectedBlock.get.of(playerId)
 		if (selectedBlock > -1)
 			this.drawSelectedBlock(selectedBlock)
 	}
 
 	private drawHud() {
-		this.displayProvider.draw("hud-life-energy", 0, 0, 0, 0, HudDrawer.BottomLayer)
-		this.displayProvider.draw("hud-tool-items", this.state.size.widthInTiles, 0, 0, 0, HudDrawer.BottomLayer)
+		this.DisplayProvider.draw("hud-life-energy", 0, 0, 0, 0, HudDrawer.BottomLayer)
+		this.DisplayProvider.draw("hud-tool-items", this.State.Size.widthInTiles, 0, 0, 0, HudDrawer.BottomLayer)
 	}
 
 	private drawSelectedBlock(solid: SolidId) {
-		const position = new Vector2(this.state.size.widthInTiles - 1, 1)
-		const sprite = this.game.config.solidTypeMap.TypeFor(solid) + "-tile"
-		this.displayProvider.draw(sprite, position.x, position.y, 0, 0, HudDrawer.TopLayer)
+		const position = new Vector2(this.State.Size.widthInTiles - 1, 1)
+		const sprite = this.Game.config.SolidTypeMap.TypeFor(solid) + "-tile"
+		this.DisplayProvider.draw(sprite, position.x, position.y, 0, 0, HudDrawer.TopLayer)
 	}
 }

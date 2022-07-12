@@ -3,7 +3,7 @@ import { EntityValues } from "./entity-values"
 
 export class Changes {
 	constructor(
-		public readonly updatedEntityValues: EntityValues,
-		public readonly updatedBlocks = new Map<string, Block>(),
+		public readonly UpdatedEntityValues: EntityValues,
+		public readonly UpdatedBlocks = new Map<string, Block>(),
 	) { }
 }

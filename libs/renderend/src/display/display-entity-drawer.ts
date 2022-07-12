@@ -41,10 +41,10 @@ export class DisplayEntityDrawer {
 
 	onDeath(entity: Id) {
 		const type = this.game.config.typeMap.TypeFor(EntityTypeOf(entity))
-		const deathSprite = this.config.deathAnimations[type]
+		const deathSprite = this.config.DeathAnimations[type]
 		if (!deathSprite)
 			return
-		const info = this.config.sprites[deathSprite]
+		const info = this.config.Sprites[deathSprite]
 		this.state.displayEntities.push({
 			sprite: deathSprite,
 			position: this.game.entities.position.get.of(entity),

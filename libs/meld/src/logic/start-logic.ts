@@ -9,13 +9,13 @@ import { GameState } from "../state/game-state"
 
 export class StartLogic implements GameLogic<GameUpdate> {
 	constructor(
-		private config: GameConfig,
-		private state: GameState,
-		private changes: Changes,
-		private entities: MeldEntities,
-		private terrain: TerrainManager<Block>,
-		private setPosition: ValueSetter<Vector3>,
-		private random: Random,
+		private Config: GameConfig,
+		private State: GameState,
+		private Changes: Changes,
+		private Entities: MeldEntities,
+		private Terrain: TerrainManager<Block>,
+		private SetPosition: ValueSetter<Vector3>,
+		private Random: Random,
 	) { }
 
 	update(actions: GameUpdate[]) {
@@ -30,30 +30,30 @@ export class StartLogic implements GameLogic<GameUpdate> {
 	}
 
 	private generateRandomTerrain() {
-		const types = [...this.config.solidTypeMap.Types.values()]
-		this.terrain.addChunk(0, 0, 0)
-		this.terrain.addChunk(0, -1, 0)
-		this.terrain.addChunk(-1, 0, 0)
-		this.terrain.addChunk(-1, -1, 0)
-		for (const { position } of this.terrain.allFields())
+		const types = [...this.Config.SolidTypeMap.Types.values()]
+		this.Terrain.addChunk(0, 0, 0)
+		this.Terrain.addChunk(0, -1, 0)
+		this.Terrain.addChunk(-1, 0, 0)
+		this.Terrain.addChunk(-1, -1, 0)
+		for (const { position } of this.Terrain.allFields())
 			if (position.z === 0)
 				if (Math.random() < 0.9)
-					this.terrain.set(Blocks.NewFloor(this.random.get.in(types), 0), position.x, position.y, position.z)
+					this.Terrain.set(Blocks.NewFloor(this.Random.get.in(types), 0), position.x, position.y, position.z)
 				else
-					this.terrain.set(Blocks.NewFull(this.random.get.in(types)), position.x, position.y, position.z)
+					this.Terrain.set(Blocks.NewFull(this.Random.get.in(types)), position.x, position.y, position.z)
 	}
 
 	private clearEntities() {
-		for (const [entity, add] of this.changes.updatedEntityValues.entities)
+		for (const [entity, add] of this.Changes.UpdatedEntityValues.entities)
 			if (add)
-				this.entities.remove(entity)
-		this.entities.remove(...this.entities)
-		this.state.players.clear()
+				this.Entities.remove(entity)
+		this.Entities.remove(...this.Entities)
+		this.State.Players.clear()
 	}
 
 	private spawnPlayer() {
-		const entity = this.entities.create(this.config.constants.playerType)
-		this.setPosition.for(entity, new Vector3(5, 5, 0))
-		this.state.players.set("insertPlayerName", entity)
+		const entity = this.Entities.create(this.Config.Constants.PlayerType)
+		this.SetPosition.for(entity, new Vector3(5, 5, 0))
+		this.State.Players.set("insertPlayerName", entity)
 	}
 }

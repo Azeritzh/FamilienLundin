@@ -22,7 +22,7 @@ export class MeldGame extends GameRunner<GameUpdate> {
 		this.resizeObserver.observe(hostElement)
 		const saved = localStorage["meld-save"]
 		if (saved)
-			this.actions.push(new LoadState(readGameState(JSON.parse(saved))))
+			this.actions.push(new LoadState(readGameState(meld.config, JSON.parse(saved))))
 		else
 			this.actions.push(new GenerateAction())
 		window.addEventListener("unload", this.onUnload)

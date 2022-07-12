@@ -11,12 +11,12 @@ export class DisplayState {
 
 	public static from(config: DisplayConfig) {
 		return new DisplayState(new ScreenSize(
-			config.renderToVirtualSize,
-			config.virtualPixelsPerTile,
+			config.RenderToVirtualSize,
+			config.VirtualPixelsPerTile,
 			100,
 			100,
-			config.virtualHeight,
-			config.virtualHeight))
+			config.VirtualHeight,
+			config.VirtualHeight))
 	}
 }
 

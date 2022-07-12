@@ -7,16 +7,16 @@ import { DisplayState } from "./display-state"
 
 export class InputParser extends BaseInputParser<Input> {
 	constructor(
-		private game: Meld,
-		private state: DisplayState,
-		private camera: Camera,
-		displayProvider: DisplayProvider,
-		inputs: Map<Input, string[]>,
+		private Game: Meld,
+		private State: DisplayState,
+		private Camera: Camera,
+		DisplayProvider: DisplayProvider,
+		Inputs: Map<Input, string[]>,
 	) {
-		super(displayProvider, inputs)
+		super(DisplayProvider, Inputs)
 	}
 
-	parseInputs() {
+	ParseInputs() {
 		this.updateActionStates()
 		return [
 			this.parseGenerate(),
@@ -34,7 +34,7 @@ export class InputParser extends BaseInputParser<Input> {
 		const right = this.floatStateFor(Input.MoveRight) ?? 0
 		const velocity = new Vector2(right - left, down - up)
 			.multiply(factor)
-		return new MovementAction(this.game.state.players.get(this.state.playerName), velocity)
+		return new MovementAction(this.Game.state.Players.get(this.State.PlayerName), velocity)
 	}
 
 	private parseGenerate() {
@@ -43,17 +43,17 @@ export class InputParser extends BaseInputParser<Input> {
 	}
 
 	private parsePlaceBlock() {
-		const position = this.camera.tilePositionFor(
+		const position = this.Camera.tilePositionFor(
 			this.displayProvider.getInputState("MouseX"),
 			this.displayProvider.getInputState("MouseY"),
 		)
 		if (this.hasJustBeenPressed(Input.UseItem))
-			return new PlaceBlockAction(this.game.state.players.get(this.state.playerName), position)
+			return new PlaceBlockAction(this.Game.state.Players.get(this.State.PlayerName), position)
 	}
 
 	private parseSelectNextItem() {
 		if (this.hasJustBeenPressed(Input.SelectNextItem))
-			return new SelectNextItemAction(this.game.state.players.get(this.state.playerName))
+			return new SelectNextItemAction(this.Game.state.Players.get(this.State.PlayerName))
 	}
 }
 

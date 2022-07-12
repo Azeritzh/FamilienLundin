@@ -4,28 +4,28 @@ import { Camera, Layer } from "./camera"
 
 export class EntityDrawer {
 	constructor(
-		private game: Meld,
-		private camera: Camera,
+		private Game: Meld,
+		private Camera: Camera,
 	) { }
 
-	draw(entity: Id) {
-		if (EntityTypeOf(entity) === this.game.config.constants.playerType)
+	Draw(entity: Id) {
+		if (EntityTypeOf(entity) === this.Game.config.Constants.PlayerType)
 			this.drawPlayer(entity)
 		else
 			this.drawGeneralEntity(entity)
 	}
 
 	private drawGeneralEntity(entity: Id) {
-		const position = this.game.entities.position.get.of(entity)
-		const velocity = this.game.entities.velocity.get.of(entity)
-		const sprite = this.game.config.entityTypeMap.TypeFor(EntityTypeOf(entity))
-		this.camera.drawAnimated(sprite, Layer.Middle, position, velocity)
+		const position = this.Game.entities.Position.get.of(entity)
+		const velocity = this.Game.entities.Velocity.get.of(entity)
+		const sprite = this.Game.config.EntityTypeMap.TypeFor(EntityTypeOf(entity))
+		this.Camera.DrawAnimated(sprite, Layer.Middle, position, velocity)
 	}
 
 	private drawPlayer(entity: Id) {
-		const position = this.game.entities.position.get.of(entity)
-		const velocity = this.game.entities.velocity.get.of(entity)
-		const sprite = this.game.config.entityTypeMap.TypeFor(EntityTypeOf(entity))
-		this.camera.drawAnimated(sprite, Layer.Middle, position, velocity)
+		const position = this.Game.entities.Position.get.of(entity)
+		const velocity = this.Game.entities.Velocity.get.of(entity)
+		const sprite = this.Game.config.EntityTypeMap.TypeFor(EntityTypeOf(entity))
+		this.Camera.DrawAnimated(sprite, Layer.Middle, position, velocity)
 	}
 }

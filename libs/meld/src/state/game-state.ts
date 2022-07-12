@@ -5,33 +5,33 @@ import { Globals } from "./globals"
 
 export class GameState {
 	constructor(
-		public readonly globals: Globals,
-		public readonly entityValues: EntityValues,
-		public readonly chunks = new Map<string, BlockChunk<Block>>(), // Optimally the key would be a Vector3, but it'll use the object reference, so we instead convert it to a string: 1,2,3
-		public readonly players = new Map<string, Id>()
+		public readonly Globals: Globals,
+		public readonly EntityValues: EntityValues,
+		public readonly Chunks = new Map<string, BlockChunk<Block>>(), // Optimally the key would be a Vector3, but it'll use the object reference, so we instead convert it to a string: 1,2,3
+		public readonly Players = new Map<string, Id>()
 	) { }
 
 	getNewId() {
-		return this.globals.nextId++
+		return this.Globals.NextId++
 	}
 
-	loadFrom(state: GameState) {
-		this.globals.tick = state.globals.tick
-		this.globals.seed = state.globals.seed
-		this.globals.nextId = state.globals.nextId
+	LoadFrom(state: GameState) {
+		this.Globals.Tick = state.Globals.Tick
+		this.Globals.Seed = state.Globals.Seed
+		this.Globals.NextId = state.Globals.NextId
 
-		this.entityValues.clearValues()
-		this.entityValues.entities.clear()
-		for (const [id, value] of state.entityValues.entities)
-			this.entityValues.entities.set(id, value)
-		this.entityValues.addValuesFromOther(state.entityValues)
+		this.EntityValues.clearValues()
+		this.EntityValues.entities.clear()
+		for (const [id, value] of state.EntityValues.entities)
+			this.EntityValues.entities.set(id, value)
+		this.EntityValues.addValuesFromOther(state.EntityValues)
 
-		this.chunks.clear()
-		for (const [position, blocks] of state.chunks)
-			this.chunks.set(position, blocks)
+		this.Chunks.clear()
+		for (const [position, blocks] of state.Chunks)
+			this.Chunks.set(position, blocks)
 
-		this.players.clear()
-		for (const [playerId, entityId] of state.players)
-			this.players.set(playerId, entityId)
+		this.Players.clear()
+		for (const [playerId, entityId] of state.Players)
+			this.Players.set(playerId, entityId)
 	}
 }

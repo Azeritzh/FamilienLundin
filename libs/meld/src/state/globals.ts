@@ -1,7 +1,7 @@
 export class Globals{
 	constructor(
-		public tick = 0,
-		public nextId = 1,
-		public seed = 1,
+		public Tick = 0,
+		public NextId = 1,
+		public Seed = 1,
 	) { }
 }

@@ -7,32 +7,32 @@ import { TerrainDrawer } from "./terrain-drawer"
 
 export class WorldDrawer {
 	constructor(
-		private game: Meld,
-		private config: DisplayConfig,
-		private camera: Camera,
-		private terrainDrawer: TerrainDrawer,
-		private entityDrawer: EntityDrawer,
+		private Game: Meld,
+		private Config: DisplayConfig,
+		private Camera: Camera,
+		private TerrainDrawer: TerrainDrawer,
+		private EntityDrawer: EntityDrawer,
 	) { }
 
-	drawWorld() {
-		for (const { layer, area } of this.camera.shownLayers)
+	DrawWorld() {
+		for (const { layer, area } of this.Camera.ShownLayers)
 			this.drawLayer(layer, area)
 	}
 
 	private drawLayer(layer: number, area: DisplayArea) {
 		const entitiesInLayer = this.entitiesInArea(layer, area)
-		const startY = Math.floor(area.top - this.config.wallDisplayHeight)
-		const endY = Math.floor(area.bottom + this.config.wallDisplayHeight)
+		const startY = Math.floor(area.top - this.Config.WallDisplayHeight)
+		const endY = Math.floor(area.bottom + this.Config.WallDisplayHeight)
 
 		for (let y = startY; y <= endY; y++)
 			for (let x = Math.floor(area.left - 1); x <= Math.floor(area.right + 1); x++)
-				this.terrainDrawer.drawBlockContent(x, y, layer)
+				this.TerrainDrawer.DrawBlockContent(x, y, layer)
 		for (const entity of entitiesInLayer)
-			this.entityDrawer.draw(entity)
+			this.EntityDrawer.Draw(entity)
 	}
 
 	private entitiesInArea(layer: number, area: DisplayArea) {
-		return [...this.game.entities.with.position]
+		return [...this.Game.entities.with.Position]
 			.filter(([, position]) => this.isInArea(layer, area, position))
 			.map(x => x[0])
 	}

@@ -6,41 +6,41 @@ import { DisplayState } from "./display-state"
 
 export class Camera {
 	constructor(
-		private game: Meld,
-		private displayProvider: DisplayProvider,
-		private config: DisplayConfig,
-		private state: DisplayState,
-		public shownLayers: { layer: number, area: DisplayArea }[] = []
+		private Game: Meld,
+		private DisplayProvider: DisplayProvider,
+		private Config: DisplayConfig,
+		private State: DisplayState,
+		public ShownLayers: { layer: number, area: DisplayArea }[] = []
 	) { }
 
-	get top() { return this.state.focusPoint.y - this.state.size.heightInTiles / 2 }
-	get bottom() { return this.state.focusPoint.y + this.state.size.heightInTiles / 2 }
-	get left() { return this.state.focusPoint.x - this.state.size.widthInTiles / 2 }
-	get right() { return this.state.focusPoint.x + this.state.size.widthInTiles / 2 }
+	get top() { return this.State.FocusPoint.y - this.State.Size.heightInTiles / 2 }
+	get bottom() { return this.State.FocusPoint.y + this.State.Size.heightInTiles / 2 }
+	get left() { return this.State.FocusPoint.x - this.State.Size.widthInTiles / 2 }
+	get right() { return this.State.FocusPoint.x + this.State.Size.widthInTiles / 2 }
 
 	get topPosition() { return new Vector3(0, -1, 0) }
 	get bottomPosition() { return new Vector3(0, 1, 0) }
 	get leftPosition() { return new Vector3(-1, 0, 0) }
 	get rightPosition() { return new Vector3(1, 0, 0) }
 
-	public focusOn(entity: Id) {
-		this.state.focusPoint = this.currentPositionFrom(
-			this.game.entities.position.get.of(entity) ?? new Vector3(0, 0, 0),
-			this.game.entities.velocity.get.of(entity),
+	public FocusOn(entity: Id) {
+		this.State.FocusPoint = this.currentPositionFrom(
+			this.Game.entities.Position.get.of(entity) ?? new Vector3(0, 0, 0),
+			this.Game.entities.Velocity.get.of(entity),
 		)
 		this.updateShownLayers()
 	}
 
 	private updateShownLayers() {
-		this.shownLayers.clear()
-		for (let layer = -this.config.displayDepth; layer <= this.config.displayDepth; layer++)
-			this.shownLayers.push({ layer: layer + Math.floor(this.state.focusPoint.z), area: this.displayAreaFor(layer) })
+		this.ShownLayers.clear()
+		for (let layer = -this.Config.DisplayDepth; layer <= this.Config.DisplayDepth; layer++)
+			this.ShownLayers.push({ layer: layer + Math.floor(this.State.FocusPoint.z), area: this.displayAreaFor(layer) })
 	}
 
 	private displayAreaFor(layer: number) {
 		return new DisplayArea(
-			this.top + layer * this.config.wallDisplayHeight,
-			this.bottom + layer * this.config.wallDisplayHeight,
+			this.top + layer * this.Config.WallDisplayHeight,
+			this.bottom + layer * this.Config.WallDisplayHeight,
 			this.left,
 			this.right,
 		)
@@ -48,27 +48,27 @@ export class Camera {
 
 	private currentPositionFrom(position: Vector3, velocity: Vector3 = null) {
 		return velocity
-			? position.add(velocity.multiply(this.state.fractionOfTick))
+			? position.add(velocity.multiply(this.State.FractionOfTick))
 			: position
 	}
 
-	drawAnimated(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, animationStart = 0) {
-		const config = this.config.sprites[sprite]
+	DrawAnimated(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, animationStart = 0) {
+		const config = this.Config.Sprites[sprite]
 		const frame = this.animationFrame(config.frameInterval, config.framesX, config.framesY, animationStart)
-		this.draw(sprite, layer, position, velocity, frame)
+		this.Draw(sprite, layer, position, velocity, frame)
 	}
 
 	private animationFrame(frameInterval: number, framesX: number, framesY: number, animationStart: number) {
 		if (!frameInterval)
 			return 0
 		const numberOfFrames = framesX * framesY
-		const tick = this.game.state.globals.tick - animationStart
+		const tick = this.Game.state.Globals.Tick - animationStart
 		const frameIndex = Math.floor(tick / frameInterval) % numberOfFrames
 		return frameIndex
 	}
 
-	drawVaried(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, variation = 0) {
-		const config = this.config.sprites[sprite]
+	DrawVaried(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, variation = 0) {
+		const config = this.Config.Sprites[sprite]
 		const sumOfWeights = config.frameWeights.sum()
 		let frameIndex = 0
 		let sum = 0
@@ -78,32 +78,32 @@ export class Camera {
 				break
 			frameIndex++
 		}
-		this.draw(sprite, layer, position, velocity, frameIndex)
+		this.Draw(sprite, layer, position, velocity, frameIndex)
 	}
 
-	draw(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, frameIndex = 0) {
+	Draw(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, frameIndex = 0) {
 		const currentPosition = this.currentPositionFrom(position, velocity)
 		const screenPosition = this.screenPositionFor(currentPosition)
-		const config = this.config.sprites[sprite]
+		const config = this.Config.Sprites[sprite]
 		const frameX = frameIndex % config.framesX
 		const frameY = Math.floor(frameIndex / config.framesX) % config.framesY
-		this.displayProvider.draw(sprite, screenPosition.x, screenPosition.y, frameX, frameY, this.sortingNumberFor(currentPosition, layer))
+		this.DisplayProvider.draw(sprite, screenPosition.x, screenPosition.y, frameX, frameY, this.sortingNumberFor(currentPosition, layer))
 	}
 
 	private screenPositionFor(position: Vector3) {
 		return new Vector2(
 			position.x - this.left,
-			position.y - this.top - this.config.wallDisplayHeight * (position.z - this.state.focusPoint.z))
+			position.y - this.top - this.Config.WallDisplayHeight * (position.z - this.State.FocusPoint.z))
 	}
 
 	private sortingNumberFor(position: Vector3, layer: number) {
 		const z = Math.floor(position.z) + layer
-		const rangeZ = (this.config.displayDepth * 2 + 3) // adding 3 rather than 1 just to be on the safe side
-		const minZ = this.state.focusPoint.z - rangeZ / 2
+		const rangeZ = (this.Config.DisplayDepth * 2 + 3) // adding 3 rather than 1 just to be on the safe side
+		const minZ = this.State.FocusPoint.z - rangeZ / 2
 		const normalisedZ = (z - minZ) / rangeZ
 
-		const rangeY = this.state.size.heightInTiles + (this.config.displayDepth * 2 + 1) * this.config.wallDisplayHeight
-		const minY = this.state.focusPoint.y - rangeY / 2
+		const rangeY = this.State.Size.heightInTiles + (this.Config.DisplayDepth * 2 + 1) * this.Config.WallDisplayHeight
+		const minY = this.State.FocusPoint.y - rangeY / 2
 		const normalisedY = (position.y - minY) / rangeY
 		const ySortingComponent = (normalisedY / Layer.NumberOfLayers) / rangeZ
 
@@ -111,7 +111,7 @@ export class Camera {
 	}
 
 	public tilePositionFor(x: number, y: number) {
-		return new Vector3(x * this.state.size.widthInTiles, y * this.state.size.heightInTiles, 0)
+		return new Vector3(x * this.State.Size.widthInTiles, y * this.State.Size.heightInTiles, 0)
 			.add(new Vector3(this.left, this.top, 0))
 	}
 }

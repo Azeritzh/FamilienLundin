@@ -1,19 +1,19 @@
 import { Input } from "./input-parser"
 
 export interface DisplayConfig {
-	renderToVirtualSize: boolean
-	virtualPixelsPerTile: number
-	virtualHeight: number
-	wallDisplayHeight: number
-	displayDepth: number,
-	assetFolder: string
-	inputs: Map<Input, string[]>,
-	sprites: {
+	RenderToVirtualSize: boolean
+	VirtualPixelsPerTile: number
+	VirtualHeight: number
+	WallDisplayHeight: number
+	DisplayDepth: number,
+	AssetFolder: string
+	Inputs: Map<Input, string[]>,
+	Sprites: {
 		[index: string]: SpriteInfo
 	},
 }
 
-interface SpriteInfo {
+export interface SpriteInfo {
 	path: string
 	width: number
 	height: number

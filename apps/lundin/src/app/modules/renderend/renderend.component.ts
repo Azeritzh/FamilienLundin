@@ -13,7 +13,7 @@ export class RenderendComponent implements OnInit, OnDestroy {
 	constructor(private ngZone: NgZone) { }
 
 	ngOnInit() {
-		this.game = RenderendGame.createAt(this.gameHost.nativeElement, { assetFolder: "assets/images/renderend/" })
+		this.game = RenderendGame.createAt(this.gameHost.nativeElement, { AssetFolder: "assets/images/renderend/" })
 
 		this.ngZone.runOutsideAngular(() => {
 			this.game.startDisplayLoop()

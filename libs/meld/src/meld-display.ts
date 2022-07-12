@@ -12,38 +12,39 @@ import { GameUpdate } from "./state/game-update"
 
 export class MeldDisplay implements BaseDisplay<GameUpdate> {
 	constructor(
-		private config: DisplayConfig,
-		private game: Meld,
-		private display: HtmlDisplayProvider,
-		playerName: string,
-		private state = DisplayState.from(config, playerName),
-		private camera = new Camera(game, display, config, state),
-		private inputParser = new InputParser(game, state, camera, display, config.inputs),
-		private terrainDrawer = new TerrainDrawer(game, config, camera),
-		private entityDrawer = new EntityDrawer(game, camera),
-		private worldDrawer = new WorldDrawer(game, config, camera, terrainDrawer, entityDrawer),
-		private hudDrawer = new HudDrawer(game, state, display),
+		private Config: DisplayConfig,
+		private Game: Meld,
+		private Display: HtmlDisplayProvider,
+		PlayerName: string,
+		private State = DisplayState.from(Config, PlayerName),
+		private camera = new Camera(Game, Display, Config, State),
+		private inputParser = new InputParser(Game, State, camera, Display, Config.Inputs),
+		private terrainDrawer = new TerrainDrawer(Game, Config, camera),
+		private entityDrawer = new EntityDrawer(Game, camera),
+		private worldDrawer = new WorldDrawer(Game, Config, camera, terrainDrawer, entityDrawer),
+		private hudDrawer = new HudDrawer(Game, State, Display),
 	) {
-		display.sortByDepth = true
+		Display.sortByDepth = true
 	}
 
 	setSize(width: number, height: number) {
-		this.state.size.updateHostSize(width, height)
+		this.State.Size.updateHostSize(width, height)
 	}
 
 	show(fractionOfTick = 0) {
-		this.state.fractionOfTick = fractionOfTick
-		const firstEntity = [...this.game.entities.with.position.keys()][0]
-		this.camera.focusOn(firstEntity)
-		this.display.startFrame()
+		this.State.FractionOfTick = fractionOfTick
+		const firstEntity = [...this.Game.entities.with.Position.keys()][0]
+		if (firstEntity !== undefined && firstEntity !== null)
+			this.camera.FocusOn(firstEntity)
+		this.Display.startFrame()
 		//const start = performance.now()
-		this.worldDrawer.drawWorld()
-		this.hudDrawer.draw()
+		this.worldDrawer.DrawWorld()
+		this.hudDrawer.Draw()
 		//console.log(performance.now() - start)
-		this.display.endFrame()
+		this.Display.endFrame()
 	}
 
 	getNewActions() {
-		return this.inputParser.parseInputs()
+		return this.inputParser.ParseInputs()
 	}
 }

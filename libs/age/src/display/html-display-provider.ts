@@ -27,12 +27,12 @@ export class HtmlDisplayProvider implements DisplayProvider {
 		private config: BaseDisplayConfig,
 	) {
 		this.size = new ScreenSize(
-			config.renderToVirtualSize,
-			config.virtualPixelsPerTile,
+			config.RenderToVirtualSize,
+			config.VirtualPixelsPerTile,
 			100,
 			100,
-			config.virtualHeight,
-			config.virtualHeight,
+			config.VirtualHeight,
+			config.VirtualHeight,
 		)
 		this.initialiseCanvas()
 		this.initialiseDisplay()
@@ -42,7 +42,7 @@ export class HtmlDisplayProvider implements DisplayProvider {
 		this.hostElement.style.position = "relative"
 		this.canvas = document.createElement("canvas")
 		this.canvas.style.position = "absolute"
-		if (this.config.renderToVirtualSize) {
+		if (this.config.RenderToVirtualSize) {
 			this.canvas.style.width = "100%"
 			this.canvas.style.imageRendering = "pixelated"
 		}
@@ -53,13 +53,13 @@ export class HtmlDisplayProvider implements DisplayProvider {
 		const sortByDepth = this.display?.sortByDepth ?? false
 		this.display = new WebGl2Display(
 			this.canvas,
-			this.config.virtualPixelsPerTile,
-			this.config.virtualHeight,
-			this.config.renderToVirtualSize,
+			this.config.VirtualPixelsPerTile,
+			this.config.VirtualHeight,
+			this.config.RenderToVirtualSize,
 		)
 		this.display.sortByDepth = sortByDepth
-		for (const [name, sprite] of Object.entries(this.config.sprites))
-			this.display.addSprite(name, this.config.assetFolder + sprite.path + ".png", sprite.width, sprite.height, sprite.centerX, sprite.centerY)
+		for (const [name, sprite] of Object.entries(this.config.Sprites))
+			this.display.addSprite(name, this.config.AssetFolder + sprite.path + ".png", sprite.width, sprite.height, sprite.centerX, sprite.centerY)
 	}
 
 	public startFrame() {

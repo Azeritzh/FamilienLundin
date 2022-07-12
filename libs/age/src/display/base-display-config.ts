@@ -1,9 +1,9 @@
 export interface BaseDisplayConfig {
-	renderToVirtualSize: boolean
-	virtualPixelsPerTile: number
-	virtualHeight: number
-	assetFolder: string
-	sprites: {
+	RenderToVirtualSize: boolean
+	VirtualPixelsPerTile: number
+	VirtualHeight: number
+	AssetFolder: string
+	Sprites: {
 		[index: string]: {
 			path: string
 			width?: number
