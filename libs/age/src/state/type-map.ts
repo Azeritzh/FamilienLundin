@@ -1,4 +1,4 @@
-import { Id, typeOffset } from "./id"
+import { Id, entityTypeOffset } from "../values/entity"
 
 export class TypeMap {
 	constructor(
@@ -9,7 +9,7 @@ export class TypeMap {
 	public static from(types: string[]) {
 		const typeMapping = new TypeMap()
 		for (const [index, type] of types.entries())
-			typeMapping.types.set(type, index << typeOffset)
+			typeMapping.types.set(type, index << entityTypeOffset)
 		return typeMapping
 	}
 

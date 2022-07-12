@@ -1,5 +1,5 @@
 import { BaseValues } from "./base-values"
-import { Id } from "./id"
+import { Id } from "../values/entity"
 import { ValueAccessor } from "./value-accessor"
 
 export class EntityManager<EntityValues extends BaseValues> {

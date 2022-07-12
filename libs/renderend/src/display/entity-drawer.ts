@@ -1,4 +1,4 @@
-import { Id, typeOf } from "@lundin/age"
+import { Id, entityTypeOf } from "@lundin/age"
 import { Renderend } from "../renderend"
 import { SpriteDrawer } from "./sprite-drawer"
 
@@ -14,7 +14,7 @@ export class EntityDrawer {
 	}
 
 	private drawEntity(entity: Id) {
-		if (typeOf(entity) === this.game.config.constants.shipType)
+		if (entityTypeOf(entity) === this.game.config.constants.shipType)
 			this.drawShip(entity)
 		else
 			this.drawGeneralEntity(entity)
@@ -23,7 +23,7 @@ export class EntityDrawer {
 	private drawGeneralEntity(entity: Id) {
 		const position = this.game.entities.position.get.of(entity)
 		const velocity = this.game.entities.velocity.get.of(entity)
-		const sprite = this.game.config.typeMap.typeFor(typeOf(entity))
+		const sprite = this.game.config.typeMap.typeFor(entityTypeOf(entity))
 		this.spriteDrawer.draw(sprite, position, velocity)
 	}
 

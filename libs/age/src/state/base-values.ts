@@ -1,4 +1,4 @@
-import { Id } from "./id"
+import { Id } from "../values/entity"
 
 export abstract class BaseValues {
 	protected readonly allValueMaps: Map<Id, any>[] = []
