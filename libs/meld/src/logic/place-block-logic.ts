@@ -1,6 +1,6 @@
 import { GameLogic, Id, TerrainManager, ValueGetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
-import { Block, BlockType } from "../state/block"
+import { Block, Blocks, BlockType } from "../state/block"
 import { GameUpdate, PlaceBlockAction } from "../state/game-update"
 
 export class PlaceBlockLogic implements GameLogic<GameUpdate> {
@@ -19,16 +19,16 @@ export class PlaceBlockLogic implements GameLogic<GameUpdate> {
 		const block = this.selectedItem.of(entity)
 		if (!(block > -1))
 			return
-		const currentBlock = this.terrain.getAt(position) ?? Block.newEmpty(0)
-		if (currentBlock.solidType != block)
-			this.terrain.setAt(position, Block.newFloor(block, 0))
-		else if (currentBlock.blockType == BlockType.Empty)
-			this.terrain.setAt(position, Block.newFloor(block, 0))
-		else if (currentBlock.blockType == BlockType.Floor)
-			this.terrain.setAt(position, Block.newHalf(block, 0))
-		else if (currentBlock.blockType == BlockType.Half)
-			this.terrain.setAt(position, Block.newFull(block))
-		else if (currentBlock.blockType == BlockType.Full)
-			this.terrain.setAt(position, Block.newFloor(block, 0))
+		const currentBlock = this.terrain.getAt(position) ?? Blocks.NewEmpty(0)
+		if (Blocks.SolidOf(currentBlock) != block)
+			this.terrain.setAt(position, Blocks.NewFloor(block, 0))
+		else if (Blocks.TypeOf(currentBlock) == BlockType.Empty)
+			this.terrain.setAt(position, Blocks.NewFloor(block, 0))
+		else if (Blocks.TypeOf(currentBlock) == BlockType.Floor)
+			this.terrain.setAt(position, Blocks.NewHalf(block, 0))
+		else if (Blocks.TypeOf(currentBlock) == BlockType.Half)
+			this.terrain.setAt(position, Blocks.NewFull(block))
+		else if (Blocks.TypeOf(currentBlock) == BlockType.Full)
+			this.terrain.setAt(position, Blocks.NewFloor(block, 0))
 	}
 }

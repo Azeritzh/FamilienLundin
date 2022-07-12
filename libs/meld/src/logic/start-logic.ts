@@ -1,7 +1,7 @@
 import { GameLogic, Random, TerrainManager, ValueSetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
-import { Block } from "../state/block"
+import { Block, Blocks } from "../state/block"
 import { MeldEntities } from "../state/entity-values"
 import { GenerateAction, GameUpdate } from "../state/game-update"
 import { Changes } from "../state/changes"
@@ -38,9 +38,9 @@ export class StartLogic implements GameLogic<GameUpdate> {
 		for (const { position } of this.terrain.allFields())
 			if (position.z === 0)
 				if (Math.random() < 0.9)
-					this.terrain.set(Block.newFloor(this.random.get.in(types), 0), position.x, position.y, position.z)
+					this.terrain.set(Blocks.NewFloor(this.random.get.in(types), 0), position.x, position.y, position.z)
 				else
-					this.terrain.set(Block.newFull(this.random.get.in(types)), position.x, position.y, position.z)
+					this.terrain.set(Blocks.NewFull(this.random.get.in(types)), position.x, position.y, position.z)
 	}
 
 	private clearEntities() {

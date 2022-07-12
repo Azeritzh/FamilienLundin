@@ -1,6 +1,6 @@
 import { Vector3 } from "@lundin/utility"
 import { Meld } from "../meld"
-import { Block, BlockType } from "../state/block"
+import { Block, Blocks, BlockType } from "../state/block"
 import { Camera, Layer } from "./camera"
 import { DisplayConfig } from "./display-config"
 
@@ -30,14 +30,14 @@ export class TerrainDrawer {
 	}
 
 	private drawBlockTile(block: Block, position: Vector3) {
-		if (block.blockType === BlockType.Empty)
+		if (Blocks.TypeOf(block) === BlockType.Empty)
 			return
-		const solidType = this.game.config.solidTypeMap.typeFor(block.solidType)
+		const solidType = this.game.config.solidTypeMap.typeFor(Blocks.SolidOf(block))
 		if (solidType == null)
 			return
 
-		const layer = this.layerFor(block.blockType)
-		const height = this.heightFor(block.blockType)
+		const layer = this.layerFor(Blocks.TypeOf(block))
+		const height = this.heightFor(Blocks.TypeOf(block))
 
 		this.camera.drawVaried(solidType + "-tile", layer, position.add(height).add(TerrainDrawer.BlockCenter), null, this.variantFor(position))
 	}
@@ -61,15 +61,15 @@ export class TerrainDrawer {
 	}
 
 	private drawBlockWall(block: Block, position: Vector3) {
-		if (block.blockType === BlockType.Empty || block.blockType === BlockType.Floor)
+		if (Blocks.TypeOf(block) === BlockType.Empty || Blocks.TypeOf(block) === BlockType.Floor)
 			return
-		const solidType = this.game.config.solidTypeMap.typeFor(block.solidType)
+		const solidType = this.game.config.solidTypeMap.typeFor(Blocks.SolidOf(block))
 		if (solidType == null)
 			return
 
-		if (block.blockType === BlockType.Half)
+		if (Blocks.TypeOf(block) === BlockType.Half)
 			this.camera.drawVaried(solidType + "-wall", Layer.Middle - Layer.ZFightingAdjustment, position.add(TerrainDrawer.BlockCenter), null, this.variantFor(position))
-		if (block.blockType === BlockType.Full)
+		if (Blocks.TypeOf(block) === BlockType.Full)
 			this.camera.drawVaried(solidType + "-wall", Layer.Middle, position.add(TerrainDrawer.BlockCenter), null, this.variantFor(position))
 	}
 
@@ -85,27 +85,27 @@ export class TerrainDrawer {
 	}
 
 	private drawTopBottomTileOverlay(topBlock: Block, topPosition: Vector3, bottomBlock: Block, bottomPosition: Vector3) {
-		if (topBlock.blockType == bottomBlock.blockType)
+		if (Blocks.TypeOf(topBlock) == Blocks.TypeOf(bottomBlock))
 			return
-		if (topBlock.blockType < bottomBlock.blockType)
+		if (Blocks.TypeOf(topBlock) < Blocks.TypeOf(bottomBlock))
 			this.drawTileOverlay(bottomBlock, Side.Top, bottomPosition)
-		else if (topBlock.blockType == BlockType.Floor) // only case with overlay from top block
+		else if (Blocks.TypeOf(topBlock) == BlockType.Floor) // only case with overlay from top block
 			this.drawTileOverlay(topBlock, Side.Bottom, topPosition)
 	}
 
 	private drawRightLeftTileOverlay(leftBlock: Block, leftPosition: Vector3, rightBlock: Block, rightPosition: Vector3) {
-		if (leftBlock.blockType == rightBlock.blockType)
+		if (Blocks.TypeOf(leftBlock) == Blocks.TypeOf(rightBlock))
 			return
-		if (leftBlock.blockType < rightBlock.blockType)
+		if (Blocks.TypeOf(leftBlock) < Blocks.TypeOf(rightBlock))
 			this.drawTileOverlay(rightBlock, Side.Left, rightPosition)
 		else
 			this.drawTileOverlay(leftBlock, Side.Right, leftPosition)
 	}
 
 	private drawTileOverlay(block: Block, direction: Side, position: Vector3) {
-		const blockLayer = this.tileLayerFor(block.blockType)
+		const blockLayer = this.tileLayerFor(Blocks.TypeOf(block))
 		const layerAdjustment = this.layerForSide(direction)
-		const center = this.heightFor(block.blockType).add(TerrainDrawer.BlockCenter)
+		const center = this.heightFor(Blocks.TypeOf(block)).add(TerrainDrawer.BlockCenter)
 		const sprite = this.tileOverlayFor(block, direction)
 		this.camera.draw(sprite, blockLayer + layerAdjustment, position.add(center))
 	}
@@ -130,7 +130,7 @@ export class TerrainDrawer {
 	}
 
 	private tileOverlayFor(block: Block, direction: Side) {
-		const typeName = this.game.config.solidTypeMap.typeFor(block.solidType) ?? ""
+		const typeName = this.game.config.solidTypeMap.typeFor(Blocks.SolidOf(block)) ?? ""
 		const aber = typeName == "grass" ? "grass" : "default"
 		switch (direction) {
 			case Side.Bottom: return aber + "-tile-overlay-bottom"
@@ -147,22 +147,22 @@ export class TerrainDrawer {
 		const leftCenter = leftPosition.add(TerrainDrawer.BlockCenter)
 		const rightCenter = rightPosition.add(TerrainDrawer.BlockCenter)
 
-		if (leftBlock.blockType == BlockType.Full) {
-			if (rightBlock.blockType == BlockType.Empty || rightBlock.blockType == BlockType.Floor)
+		if (Blocks.TypeOf(leftBlock) == BlockType.Full) {
+			if (Blocks.TypeOf(rightBlock) == BlockType.Empty || Blocks.TypeOf(rightBlock) == BlockType.Floor)
 				this.camera.draw(this.WallOverlayFullRightFor(leftBlock), Layer.Middle + Layer.OverlayWestAdjustment, leftCenter)
-			else if (rightBlock.blockType == BlockType.Half)
+			else if (Blocks.TypeOf(rightBlock) == BlockType.Half)
 				this.camera.draw(this.WallOverlayHalfRightFor(leftBlock), Layer.Middle + Layer.OverlayWestAdjustment, leftCenter.add(TerrainDrawer.HalfHeight))
 		}
-		else if (leftBlock.blockType == BlockType.Half) {
-			if (rightBlock.blockType == BlockType.Empty || rightBlock.blockType == BlockType.Floor)
+		else if (Blocks.TypeOf(leftBlock) == BlockType.Half) {
+			if (Blocks.TypeOf(rightBlock) == BlockType.Empty || Blocks.TypeOf(rightBlock) == BlockType.Floor)
 				this.camera.draw(this.WallOverlayHalfRightFor(leftBlock), Layer.Middle + Layer.OverlayWestAdjustment, leftCenter)
-			else if (rightBlock.blockType == BlockType.Full)
+			else if (Blocks.TypeOf(rightBlock) == BlockType.Full)
 				this.camera.draw(this.WallOverlayHalfLeftFor(rightBlock), Layer.Middle + Layer.OverlayEastAdjustment, rightCenter.add(TerrainDrawer.HalfHeight))
 		}
-		else if (leftBlock.blockType == BlockType.Floor || leftBlock.blockType == BlockType.Empty) {
-			if (rightBlock.blockType == BlockType.Half)
+		else if (Blocks.TypeOf(leftBlock) == BlockType.Floor || Blocks.TypeOf(leftBlock) == BlockType.Empty) {
+			if (Blocks.TypeOf(rightBlock) == BlockType.Half)
 				this.camera.draw(this.WallOverlayHalfLeftFor(rightBlock), Layer.Middle + Layer.OverlayEastAdjustment, rightCenter)
-			else if (rightBlock.blockType == BlockType.Full)
+			else if (Blocks.TypeOf(rightBlock) == BlockType.Full)
 				this.camera.draw(this.WallOverlayFullLeftFor(rightBlock), Layer.Middle + Layer.OverlayEastAdjustment, rightCenter)
 		}
 	}
@@ -195,32 +195,32 @@ export class TerrainDrawer {
 		const rightCenter = rightPosition.add(TerrainDrawer.BlockCenter)
 		const below = new Vector3(0, 0, -1)
 
-		if (leftBlock.blockType == BlockType.Full) {
-			if (rightBlock.blockType == BlockType.Empty && this.game.terrain.getAt(rightPosition.add(below))?.blockType == BlockType.Full)
+		if (Blocks.TypeOf(leftBlock) == BlockType.Full) {
+			if (Blocks.TypeOf(rightBlock) == BlockType.Empty && Blocks.TypeOf(this.game.terrain.getAt(rightPosition.add(below))) == BlockType.Full)
 				this.camera.draw("default-wall-shadow-full-right", Layer.Bottom + Layer.OverlayWestAdjustment, leftCenter)
-			else if (rightBlock.blockType == BlockType.Floor)
+			else if (Blocks.TypeOf(rightBlock) == BlockType.Floor)
 				this.camera.draw("default-wall-shadow-full-right", Layer.Floor + Layer.OverlayWestAdjustment, leftCenter.add(TerrainDrawer.FloorHeight))
-			else if (rightBlock.blockType == BlockType.Half)
+			else if (Blocks.TypeOf(rightBlock) == BlockType.Half)
 				this.camera.draw("default-wall-shadow-half-right", Layer.Middle + Layer.OverlayWestAdjustment, leftCenter.add(TerrainDrawer.HalfHeight))
 		}
-		else if (leftBlock.blockType == BlockType.Half) {
-			if (rightBlock.blockType == BlockType.Empty && this.game.terrain.getAt(rightPosition.add(below))?.blockType == BlockType.Full)
+		else if (Blocks.TypeOf(leftBlock) == BlockType.Half) {
+			if (Blocks.TypeOf(rightBlock) == BlockType.Empty && Blocks.TypeOf(this.game.terrain.getAt(rightPosition.add(below)))== BlockType.Full)
 				this.camera.draw("default-wall-shadow-half-right", Layer.Bottom + Layer.OverlayWestAdjustment, leftCenter)
-			else if (rightBlock.blockType == BlockType.Floor)
+			else if (Blocks.TypeOf(rightBlock) == BlockType.Floor)
 				this.camera.draw("default-wall-shadow-half-right", Layer.Floor + Layer.OverlayWestAdjustment, leftCenter.add(TerrainDrawer.FloorHeight))
-			else if (rightBlock.blockType == BlockType.Full)
+			else if (Blocks.TypeOf(rightBlock) == BlockType.Full)
 				this.camera.draw("default-wall-shadow-half-left", Layer.Middle + Layer.OverlayEastAdjustment, rightCenter.add(TerrainDrawer.HalfHeight))
 		}
-		else if (leftBlock.blockType == BlockType.Floor) {
-			if (rightBlock.blockType == BlockType.Full)
+		else if (Blocks.TypeOf(leftBlock) == BlockType.Floor) {
+			if (Blocks.TypeOf(rightBlock) == BlockType.Full)
 				this.camera.draw("default-wall-shadow-full-left", Layer.Floor + Layer.OverlayEastAdjustment, rightCenter.add(TerrainDrawer.FloorHeight))
-			else if (rightBlock.blockType == BlockType.Half)
+			else if (Blocks.TypeOf(rightBlock) == BlockType.Half)
 				this.camera.draw("default-wall-shadow-half-left", Layer.Floor + Layer.OverlayEastAdjustment, rightCenter.add(TerrainDrawer.FloorHeight))
 		}
-		else if (leftBlock.blockType == BlockType.Empty && this.game.terrain.getAt(leftPosition.add(below))?.blockType == BlockType.Full) {
-			if (rightBlock.blockType == BlockType.Full)
+		else if (Blocks.TypeOf(leftBlock) == BlockType.Empty && Blocks.TypeOf(this.game.terrain.getAt(leftPosition.add(below))) == BlockType.Full) {
+			if (Blocks.TypeOf(rightBlock) == BlockType.Full)
 				this.camera.draw("default-wall-shadow-full-left", Layer.Bottom + Layer.OverlayEastAdjustment, rightCenter)
-			else if (rightBlock.blockType == BlockType.Half)
+			else if (Blocks.TypeOf(rightBlock) == BlockType.Half)
 				this.camera.draw("default-wall-shadow-half-left", Layer.Bottom + Layer.OverlayEastAdjustment, rightCenter)
 		}
 	}

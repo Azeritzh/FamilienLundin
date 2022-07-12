@@ -1,7 +1,7 @@
 import { Box, CircularSize, GameLogic, Id, TerrainManager, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Constants } from "../config/constants"
-import { Block, BlockType } from "../state/block"
+import { Block, Blocks, BlockType } from "../state/block"
 import { MeldEntities } from "../state/entity-values"
 import { GameUpdate } from "../state/game-update"
 
@@ -206,12 +206,12 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	}
 
 	private isSolidGoingDown(x: number, y: number, z: number) {
-		const blockType = this.terrain.get(x, y, z)?.blockType ?? BlockType.Empty
+		const blockType = Blocks.TypeOf(this.terrain.get(x, y, z)) ?? BlockType.Empty
 		const zAboveFloor = z < 0 ? 1 + (z % 1) : z % 1
 		if (0.5 < zAboveFloor && zAboveFloor < 0.5 + this.constants.collisionAreaWidth)
 			return blockType == BlockType.Half
 		if (0 < zAboveFloor && zAboveFloor < this.constants.collisionAreaWidth)
-			return blockType == BlockType.Floor || this.terrain.get(x, y, z - 1)?.blockType == BlockType.Full
+			return blockType == BlockType.Floor || Blocks.TypeOf(this.terrain.get(x, y, z - 1)) == BlockType.Full
 		return false
 	}
 
@@ -235,7 +235,7 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	}
 
 	private isSolidAtPoint(x: number, y: number, z: number) {
-		const blockType = this.terrain.get(x, y, z)?.blockType ?? BlockType.Empty
+		const blockType = Blocks.TypeOf(this.terrain.get(x, y, z)) ?? BlockType.Empty
 		const zAboveFloor = z < 0 ? 1 - (z % 1) : z % 1
 		switch (blockType) {
 			case BlockType.Empty: return false
@@ -246,6 +246,6 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	}
 
 	private isSolidInBlock(x: number, y: number, z: number) {
-		return this.terrain.get(x, y, z)?.hasSolid() ?? false
+		return Blocks.HasSolid(this.terrain.get(x, y, z)) ?? false
 	}
 }

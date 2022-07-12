@@ -1,5 +1,6 @@
 import { BaseValues, CircularSize, EntityManager, Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
+import { SolidId } from "./block"
 
 export type MeldEntities = EntityManager<EntityValues>
 
@@ -9,7 +10,7 @@ export class EntityValues extends BaseValues {
 		public readonly orientation = new Map<Id, number>(),
 		public readonly position = new Map<Id, Vector3>(),
 		public readonly circularSize = new Map<Id, CircularSize>(),
-		public readonly selectedBlock = new Map<Id, Id>(),
+		public readonly selectedBlock = new Map<Id, SolidId>(),
 		public readonly velocity = new Map<Id, Vector3>(),
 		public readonly blockCollisionBehaviour = new Map<Id, boolean>(),
 		public readonly gravityBehaviour = new Map<Id, boolean>(),
@@ -72,7 +73,7 @@ export interface GroupedEntityValues {
 	orientation?: number
 	position?: Vector3
 	circularSize?: CircularSize
-	selectedBlock?: Id
+	selectedBlock?: SolidId
 	velocity?: Vector3
 	blockCollisionBehaviour: boolean
 	gravityBehaviour: boolean

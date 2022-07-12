@@ -1,6 +1,7 @@
-import { DisplayProvider, Id } from "@lundin/age"
+import { DisplayProvider } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
 import { Meld } from "../meld"
+import { SolidId } from "../state/block"
 import { DisplayState } from "./display-state"
 
 export class HudDrawer {
@@ -28,9 +29,9 @@ export class HudDrawer {
 		this.displayProvider.draw("hud-tool-items", this.state.size.widthInTiles, 0, 0, 0, HudDrawer.BottomLayer)
 	}
 
-	private drawSelectedBlock(block: Id) {
+	private drawSelectedBlock(solid: SolidId) {
 		const position = new Vector2(this.state.size.widthInTiles - 1, 1)
-		const sprite = this.game.config.solidTypeMap.typeFor(block) + "-tile"
+		const sprite = this.game.config.solidTypeMap.typeFor(solid) + "-tile"
 		this.displayProvider.draw(sprite, position.x, position.y, 0, 0, HudDrawer.TopLayer)
 	}
 }

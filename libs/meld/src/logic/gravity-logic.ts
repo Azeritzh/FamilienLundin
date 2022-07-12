@@ -1,7 +1,7 @@
 import { GameLogic, Id, TerrainManager, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Constants } from "../config/constants"
-import { Block, BlockType } from "../state/block"
+import { Block, Blocks, BlockType } from "../state/block"
 import { MeldEntities } from "../state/entity-values"
 import { GameUpdate } from "../state/game-update"
 
@@ -37,16 +37,16 @@ export class GravityLogic implements GameLogic<GameUpdate> {
 		if (position.z < Math.floor(position.z) + 0.5 + this.constants.collisionAreaWidth)
 			return this.isInHalfOrFullBlock(position)
 
-		return this.terrain.getAt(position)?.blockType == BlockType.Full
+		return Blocks.TypeOf(this.terrain.getAt(position)) == BlockType.Full
 	}
 
 	private isInOrAboveSolidBlock(position: Vector3) {
-		return this.terrain.getAt(position)?.blockType != BlockType.Empty // TODO: Probably needs different handling of null block
-			|| this.terrain.get(position.x, position.y, position.z - 1)?.blockType == BlockType.Full
+		return Blocks.TypeOf(this.terrain.getAt(position)) != BlockType.Empty // TODO: Probably needs different handling of null block
+			|| Blocks.TypeOf(this.terrain.get(position.x, position.y, position.z - 1)) == BlockType.Full
 	}
 
 	private isInHalfOrFullBlock(position: Vector3) {
-		switch (this.terrain.getAt(position)?.blockType) {
+		switch (Blocks.TypeOf(this.terrain.getAt(position))) {
 			case BlockType.Half:
 			case BlockType.Full:
 				return true

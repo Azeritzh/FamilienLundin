@@ -69,17 +69,15 @@ interface SerialisableBlockChunk {
 }
 
 function blockChunkFrom(serialised: SerialisableBlockChunk): BlockChunk<Block> {
-	const blocks = serialised.blocks.map(x => Block.deserialise(x))
 	return new BlockChunk<Block>(
-		blocks,
+		serialised.blocks,
 		new Vector3(serialised.size.x, serialised.size.y, serialised.size.z),
 		new Vector3(serialised.size.x * serialised.coords.x, serialised.size.y * serialised.coords.y, serialised.size.z * serialised.coords.z),
 	)
 }
 
 function serialiseBlockChunk(chunk: BlockChunk<Block>, coords: Vector3): SerialisableBlockChunk {
-	const blocks = chunk.blocks.map(x => x.serialise())
-	return { size: chunk.chunkSize, coords, blocks }
+	return { size: chunk.chunkSize, coords, blocks: chunk.blocks }
 }
 
 function groupedEntityValuesFrom(jsonObject: any) {
