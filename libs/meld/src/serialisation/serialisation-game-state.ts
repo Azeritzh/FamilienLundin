@@ -165,13 +165,13 @@ function serialiseBlockChunk(chunk: BlockChunk<Block>, coords: Vector3): Seriali
 	return { size: chunk.chunkSize, coords, blocks: chunk.blocks }
 }
 
-function groupedEntityValuesFrom(jsonObject: any) {
-	const values: GroupedEntityValues = { ...jsonObject }
-	if (jsonObject.Position)
-		values.Position = Object.assign(new Vector3(0, 0, 0), jsonObject.Position)
-	if (jsonObject.CircularSize)
-		values.CircularSize = Object.assign(new CircularSize(0, 0), jsonObject.CircularSize)
-	if (jsonObject.Velocity)
-		values.Velocity = Object.assign(new Vector3(0, 0, 0), jsonObject.Velocity)
+function groupedEntityValuesFrom(serialised: any) {
+	const values: GroupedEntityValues = { ...serialised }
+	if (serialised.Position)
+		values.Position = Object.assign(new Vector3(0, 0, 0), serialised.Position)
+	if (serialised.CircularSize)
+		values.CircularSize = Object.assign(new CircularSize(0, 0), serialised.CircularSize)
+	if (serialised.Velocity)
+		values.Velocity = Object.assign(new Vector3(0, 0, 0), serialised.Velocity)
 	return values
 }

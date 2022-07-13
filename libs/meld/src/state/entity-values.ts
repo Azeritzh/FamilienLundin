@@ -75,6 +75,6 @@ export interface GroupedEntityValues {
 	CircularSize?: CircularSize
 	SelectedBlock?: SolidId
 	Velocity?: Vector3
-	BlockCollisionBehaviour: boolean
-	GravityBehaviour: boolean
+	BlockCollisionBehaviour?: boolean
+	GravityBehaviour?: boolean
 }

@@ -35,15 +35,15 @@ function constantsFrom(serialised: any, typeMap: TypeMap) {
 	return constants
 }
 
-function groupedEntityValuesFrom(jsonObject: any, blockTypeMap: TypeMap) {
-	const values: GroupedEntityValues = { ...jsonObject }
-	if (jsonObject.position)
-		values.Position = Object.assign(new Vector3(0, 0, 0), jsonObject.position)
-	if (jsonObject.circularSize)
-		values.CircularSize = Object.assign(new CircularSize(0, 0), jsonObject.circularSize)
-	if (jsonObject.selectedBlock)
-		values.SelectedBlock = blockTypeMap.TypeIdFor(jsonObject.selectedBlock)
-	if (jsonObject.velocity)
-		values.Velocity = Object.assign(new Vector3(0, 0, 0), jsonObject.velocity)
-	return values
+function groupedEntityValuesFrom(serialised: any, blockTypeMap: TypeMap): GroupedEntityValues {
+	return {
+		Health: serialised.health,
+		Orientation: serialised.orientation,
+		Position: serialised.position ? Object.assign(new Vector3(0, 0, 0), serialised.position) : null,
+		CircularSize: serialised.circularSize ? Object.assign(new CircularSize(0, 0), serialised.circularSize) : null,
+		SelectedBlock: serialised.selectedBlock ? blockTypeMap.TypeIdFor(serialised.selectedBlock) : null,
+		Velocity: serialised.velocity ? Object.assign(new Vector3(0, 0, 0), serialised.velocity) : null,
+		BlockCollisionBehaviour: serialised.blockCollisionBehaviour,
+		GravityBehaviour: serialised.gravityBehaviour,
+	}
 }
