@@ -11,12 +11,12 @@ export class ChargeLogic implements GameLogic<RenderendAction> {
 	) { }
 
 	update() {
-		for (const [entity, charge] of this.entities.with.charge)
+		for (const [entity, charge] of this.entities.With.charge)
 			this.chargeEntity(entity, charge)
 	}
 
 	private chargeEntity(entity: Id, charge: number) {
 		if (charge < this.constants.maxCharge)
-			this.setCharge.for(entity, charge + this.constants.chargeSpeed)
+			this.setCharge.For(entity, charge + this.constants.chargeSpeed)
 	}
 }

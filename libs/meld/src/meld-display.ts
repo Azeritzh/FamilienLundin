@@ -33,7 +33,7 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 
 	show(fractionOfTick = 0) {
 		this.State.FractionOfTick = fractionOfTick
-		const firstEntity = [...this.Game.Entities.with.Position.keys()][0]
+		const firstEntity = [...this.Game.Entities.With.Position.keys()][0]
 		if (firstEntity !== undefined && firstEntity !== null)
 			this.camera.FocusOn(firstEntity)
 		this.Display.startFrame()

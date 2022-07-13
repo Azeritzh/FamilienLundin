@@ -11,52 +11,52 @@ export class EntityManager<EntityValues extends BaseValues> {
 		private idProvider: IdProvider,
 	) { }
 
-	get with(){
+	get With(){
 		return this.entityValues
 	}
 
-	public create(type: Id) {
-		const id = this.idProvider.getNewId() | type
-		this.updatedEntityValues.entities.set(id, true)
+	public Create(type: Id) {
+		const id = this.idProvider.GetNewId() | type
+		this.updatedEntityValues.Entities.set(id, true)
 		for (const accessor of this.valueAccessors)
-			accessor.initialiseValueFor(id)
+			accessor.InitialiseValueFor(id)
 		return id
 	}
 
-	public remove(...entities: Id[]) {
+	public Remove(...entities: Id[]) {
 		for (const entity of entities)
-			this.updatedEntityValues.entities.set(entity, false)
+			this.updatedEntityValues.Entities.set(entity, false)
 	}
 
-	public applyUpdatedValues() {
-		this.entityValues.addValuesFromOther(this.updatedEntityValues)
-		this.updatedEntityValues.clearValues()
-		for (const [entity, add] of this.updatedEntityValues.entities)
+	public ApplyUpdatedValues() {
+		this.entityValues.AddValuesFromOther(this.updatedEntityValues)
+		this.updatedEntityValues.ClearValues()
+		for (const [entity, add] of this.updatedEntityValues.Entities)
 			if (add)
 				this.add(entity)
 			else
 				this.fullyRemove(entity)
-		this.updatedEntityValues.entities.clear()
-		this.updatedEntityValues.entities.clear()
+		this.updatedEntityValues.Entities.clear()
+		this.updatedEntityValues.Entities.clear()
 	}
 
 	private add(entityId: Id) {
-		this.entityValues.entities.set(entityId, true)
+		this.entityValues.Entities.set(entityId, true)
 	}
 
 	private fullyRemove(entityId: Id) {
-		this.entityValues.entities.delete(entityId)
-		this.updatedEntityValues.entities.delete(entityId)
-		this.entityValues.removeValuesFor(entityId)
-		this.updatedEntityValues.removeValuesFor(entityId)
+		this.entityValues.Entities.delete(entityId)
+		this.updatedEntityValues.Entities.delete(entityId)
+		this.entityValues.RemoveValuesFor(entityId)
+		this.updatedEntityValues.RemoveValuesFor(entityId)
 	}
 
 	*[Symbol.iterator]() {
-		for (const [entity] of this.entityValues.entities)
+		for (const [entity] of this.entityValues.Entities)
 			yield entity
 	}
 }
 
 export interface IdProvider {
-	getNewId(): Id
+	GetNewId(): Id
 }

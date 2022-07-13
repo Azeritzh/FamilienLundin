@@ -13,7 +13,7 @@ export class UpdateStateLogic implements GameLogic<GameUpdate> {
 
 	update() {
 		this.State.Globals.Tick++
-		this.Entities.applyUpdatedValues()
-		this.Terrain.applyUpdatedValues()
+		this.Entities.ApplyUpdatedValues()
+		this.Terrain.ApplyUpdatedValues()
 	}
 }

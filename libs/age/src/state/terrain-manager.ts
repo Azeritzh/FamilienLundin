@@ -8,22 +8,22 @@ export class TerrainManager<Field> {
 		private updatedBlocks = new Map<string, Field>(),
 	) { }
 
-	public addChunk(x: number, y: number, z: number) {
+	public AddChunk(x: number, y: number, z: number) {
 		const offset = new Vector3(this.chunkSize.x * x, this.chunkSize.y * y, this.chunkSize.z * z)
 		this.chunks.set(Vector3.stringify(x, y, z), new BlockChunk([], this.chunkSize, offset))
 	}
 
-	public get(x: number, y: number, z = 0) {
+	public Get(x: number, y: number, z = 0) {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
 		const chunk = this.chunks.get(this.getChunkCoords(x, y, z))
-		return chunk?.get(x, y, z)
+		return chunk?.Get(x, y, z)
 		// ?? this.defaultTile
 	}
 
-	public getAt(position: Vector3) {
-		return this.get(position.x, position.y, position.z)
+	public GetAt(position: Vector3) {
+		return this.Get(position.x, position.y, position.z)
 	}
 
 	/** Takes a global position and returns the corresponding chunk coordinate */
@@ -44,16 +44,16 @@ export class TerrainManager<Field> {
 		return x + y * this.chunkSize.x + z * this.chunkSize.x * this.chunkSize.y
 	}
 
-	public getCurrent(x: number, y: number, z = 0) {
+	public GetCurrent(x: number, y: number, z = 0) {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
 		return this.updatedBlocks.get(Vector3.stringify(x, y, z))
-			?? this.get(x, y, z)
+			?? this.Get(x, y, z)
 	}
 
 	/** Iterates through all fields, and returns the position and field */
-	public *allFields() {
+	public *AllFields() {
 		for (const [coords, chunk] of this.chunks) {
 			const [chunkX, chunkY, chunkZ] = coords.split(",").map(x => +x)
 			for (const z of range(0, this.chunkSize.z))
@@ -64,7 +64,7 @@ export class TerrainManager<Field> {
 	}
 
 	/** Iterates through all fields in a chunk, and returns the local (and global) position and field */
-	public *allFieldsInChunk(chunkX = 0, chunkY = 0, chunkZ = 0) {
+	public *AllFieldsInChunk(chunkX = 0, chunkY = 0, chunkZ = 0) {
 		const chunk = this.chunks.get(Vector3.stringify(chunkX, chunkY, chunkZ))
 		if (!chunk)
 			return // TODO: should there be notification or something here?
@@ -74,16 +74,16 @@ export class TerrainManager<Field> {
 					yield { global: this.getGlobalPosition(x, y, z, chunkX, chunkY, chunkZ), x, y, z, field: chunk[this.chunkIndexFor(x, y, z)] }
 	}
 
-	public fieldsAround(x: number, y: number, z = 0) {
-		return this.fieldsWithinRadius(x, y, z, 1, 1, 0)
+	public FieldsAround(x: number, y: number, z = 0) {
+		return this.FieldsWithinRadius(x, y, z, 1, 1, 0)
 	}
 
-	public *fieldsWithinRadius(x: number, y: number, z: number, radiusX = 1, radiusY = 1, radiusZ = 1) {
+	public *FieldsWithinRadius(x: number, y: number, z: number, radiusX = 1, radiusY = 1, radiusZ = 1) {
 		for (const i of range(x - radiusX, x + radiusX + 1))
 			for (const j of range(y - radiusY, y + radiusY + 1))
 				for (const k of range(z - radiusZ, z + radiusZ + 1))
 					//if (this.isWithinBounds(i, j, k))
-					yield { i, j, k, field: this.get(i, j, k) }
+					yield { i, j, k, field: this.Get(i, j, k) }
 	}
 
 	private getGlobalPosition(x: number, y: number, z: number, chunkX: number, chunkY: number, chunkZ = 0): Vector3 {
@@ -94,19 +94,19 @@ export class TerrainManager<Field> {
 		)
 	}
 
-	public set(field: Field, x: number, y: number, z = 0) {
+	public Set(field: Field, x: number, y: number, z = 0) {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
 		this.updatedBlocks.set(Vector3.stringify(x, y, z), field)
 	}
 
-	public setAt(position: Vector3, field: Field) {
+	public SetAt(position: Vector3, field: Field) {
 		const pos = Vector3.stringify(Math.floor(position.x), Math.floor(position.y), Math.floor(position.z))
 		this.updatedBlocks.set(pos, field)
 	}
 
-	public applyUpdatedValues() {
+	public ApplyUpdatedValues() {
 		for (const [position, field] of this.updatedBlocks)
 			this.setField(Vector3.parse(position), field)
 		this.updatedBlocks.clear()
@@ -115,7 +115,7 @@ export class TerrainManager<Field> {
 	private setField(position: Vector3, field: Field) {
 		const chunk = this.chunks.get(this.getChunkCoords(position.x, position.y, position.z))
 		if (chunk)
-			chunk.set(position.x, position.y, position.z, field)
+			chunk.Set(position.x, position.y, position.z, field)
 		else
 			console.error(`Can't set field outside chunks at (${position.x}, ${position.y}, ${position.z})`)
 	}

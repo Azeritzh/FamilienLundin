@@ -9,7 +9,7 @@ export class DespawnLogic implements GameLogic<RenderendAction> {
 	) { }
 
 	update() {
-		for (const [entity, position] of this.entities.with.position)
+		for (const [entity, position] of this.entities.With.position)
 			if (this.shouldDespawn(position))
 				this.despawn(entity)
 	}
@@ -20,7 +20,7 @@ export class DespawnLogic implements GameLogic<RenderendAction> {
 	}
 
 	private despawn(entity: Id) {
-		this.entities.remove(entity)
+		this.entities.Remove(entity)
 	}
 
 }

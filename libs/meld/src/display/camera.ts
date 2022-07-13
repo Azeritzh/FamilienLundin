@@ -24,8 +24,8 @@ export class Camera {
 
 	public FocusOn(entity: Id) {
 		this.State.FocusPoint = this.CurrentPositionFrom(
-			this.Game.Entities.Position.get.of(entity) ?? new Vector3(0, 0, 0),
-			this.Game.Entities.Velocity.get.of(entity),
+			this.Game.Entities.Position.Get.Of(entity) ?? new Vector3(0, 0, 0),
+			this.Game.Entities.Velocity.Get.Of(entity),
 		)
 		this.UpdateShownLayers()
 	}

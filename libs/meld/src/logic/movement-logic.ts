@@ -20,8 +20,8 @@ export class MovementLogic implements GameLogic<GameUpdate> {
 		const cappedVelocity = velocity.lengthSquared() > 1
 			? velocity.unitVector().multiply(this.Constants.MaxMoveSpeed)
 			: velocity.multiply(this.Constants.MaxMoveSpeed)
-		const oldVelocity = this.Velocity.of(entity) ?? new Vector3(0,0,0)
+		const oldVelocity = this.Velocity.Of(entity) ?? new Vector3(0,0,0)
 		const finalVelocity = new Vector3(cappedVelocity.x, cappedVelocity.y, oldVelocity.z)
-		this.SetVelocity.for(entity, finalVelocity)
+		this.SetVelocity.For(entity, finalVelocity)
 	}
 }

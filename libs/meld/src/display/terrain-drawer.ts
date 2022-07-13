@@ -19,7 +19,7 @@ export class TerrainDrawer {
 	) { }
 
 	public DrawBlockContent(x: number, y: number, z: number) {
-		const block = this.Game.Terrain.get(x, y, z)
+		const block = this.Game.Terrain.Get(x, y, z)
 		if (!block)
 			return
 		const position = new Vector3(x, y, z)
@@ -71,10 +71,10 @@ export class TerrainDrawer {
 	private DrawDiagonalTileOverlays(block: Block, position: Vector3) {
 		const bottomRightPosition = position.add(this.Camera.BottomRightTile)
 		const bottomLeftPosition = position.add(this.Camera.BottomLeftTile)
-		const bottomRightBlock = this.Game.Terrain.getAt(bottomRightPosition)
+		const bottomRightBlock = this.Game.Terrain.GetAt(bottomRightPosition)
 		if (bottomRightBlock !== null && bottomRightBlock != undefined)
 			this.DrawNeighbourTileOverlay(block, position, Side.TopLeft, bottomRightBlock, bottomRightPosition, Side.BottomRight)
-		const bottomLeftBlock = this.Game.Terrain.getAt(bottomLeftPosition)
+		const bottomLeftBlock = this.Game.Terrain.GetAt(bottomLeftPosition)
 		if (bottomLeftBlock !== null && bottomLeftBlock != undefined)
 			this.DrawNeighbourTileOverlay(block, position, Side.TopRight, bottomLeftBlock, bottomLeftPosition, Side.BottomLeft)
 	}
@@ -82,10 +82,10 @@ export class TerrainDrawer {
 	private DrawTileOverlays(block: Block, position: Vector3) {
 		const rightPosition = position.add(this.Camera.RightTile)
 		const bottomPosition = position.add(this.Camera.BottomTile)
-		const rightBlock = this.Game.Terrain.getAt(rightPosition)
+		const rightBlock = this.Game.Terrain.GetAt(rightPosition)
 		if (rightBlock !== null && rightBlock != undefined)
 			this.DrawNeighbourTileOverlay(block, position, Side.Left, rightBlock, rightPosition, Side.Right)
-		const bottomBlock = this.Game.Terrain.getAt(bottomPosition)
+		const bottomBlock = this.Game.Terrain.GetAt(bottomPosition)
 		if (bottomBlock !== null && bottomBlock != undefined)
 			this.DrawNeighbourTileOverlay(block, position, Side.Top, bottomBlock, bottomPosition, Side.Bottom)
 	}
@@ -146,13 +146,13 @@ export class TerrainDrawer {
 		const center = position.add(TerrainDrawer.BlockCenter)
 		const rightType = this.Camera.IsDiagonalView()
 			? this.HighestBlockAmong(position.add(this.Camera.TopRightTile), position.add(this.Camera.RightTile), position.add(this.Camera.BottomRightTile))
-			: Blocks.TypeOf(this.Game.Terrain.getAt(position.add(this.Camera.RightTile))) ?? BlockType.Empty
+			: Blocks.TypeOf(this.Game.Terrain.GetAt(position.add(this.Camera.RightTile))) ?? BlockType.Empty
 		if (rightType != BlockType.Full)
 			this.DrawWallOverlaysFor(block, center, rightType, Side.Right)
 
 		const leftType = this.Camera.IsDiagonalView()
 			? this.HighestBlockAmong(position.add(this.Camera.TopLeftTile), position.add(this.Camera.LeftTile), position.add(this.Camera.BottomLeftTile))
-			: Blocks.TypeOf(this.Game.Terrain.getAt(position.add(this.Camera.LeftTile))) ?? BlockType.Empty
+			: Blocks.TypeOf(this.Game.Terrain.GetAt(position.add(this.Camera.LeftTile))) ?? BlockType.Empty
 		if (leftType != BlockType.Full)
 			this.DrawWallOverlaysFor(block, center, leftType, Side.Left)
 	}
@@ -167,12 +167,12 @@ export class TerrainDrawer {
 	}
 
 	private HighestBlockAmong(tileA: Vector3, tileB: Vector3, tileC: Vector3) {
-		let blockType = Blocks.TypeOf(this.Game.Terrain.getAt(tileA)) ?? BlockType.Empty
-		const nextBlock = this.Game.Terrain.getAt(tileB)
+		let blockType = Blocks.TypeOf(this.Game.Terrain.GetAt(tileA)) ?? BlockType.Empty
+		const nextBlock = this.Game.Terrain.GetAt(tileB)
 		if (nextBlock !== null && nextBlock !== undefined)
 			if (Blocks.TypeOf(nextBlock) > blockType)
 				blockType = Blocks.TypeOf(nextBlock)
-		const lastBlock = this.Game.Terrain.getAt(tileC)
+		const lastBlock = this.Game.Terrain.GetAt(tileC)
 		if (lastBlock !== null && lastBlock !== undefined)
 			if (Blocks.TypeOf(lastBlock) > blockType)
 				blockType = Blocks.TypeOf(lastBlock)
@@ -180,7 +180,7 @@ export class TerrainDrawer {
 	}
 
 	private DrawWallShadows(leftBlock: Block, leftPosition: Vector3, rightPosition: Vector3) {
-		const rightBlock = this.Game.Terrain.getAt(rightPosition)
+		const rightBlock = this.Game.Terrain.GetAt(rightPosition)
 		if (!rightBlock)
 			return
 		const leftCenter = leftPosition.add(TerrainDrawer.BlockCenter)
@@ -188,7 +188,7 @@ export class TerrainDrawer {
 		const below = new Vector3(0, 0, -1)
 
 		if (Blocks.TypeOf(leftBlock) == BlockType.Full) {
-			if (Blocks.TypeOf(rightBlock) == BlockType.Empty && Blocks.TypeOf(this.Game.Terrain.getAt(rightPosition.add(below))) == BlockType.Full)
+			if (Blocks.TypeOf(rightBlock) == BlockType.Empty && Blocks.TypeOf(this.Game.Terrain.GetAt(rightPosition.add(below))) == BlockType.Full)
 				this.Camera.Draw("default-wall-shadow-full-right", Layer.Bottom + Layer.OverlayWestAdjustment, leftCenter)
 			else if (Blocks.TypeOf(rightBlock) == BlockType.Floor)
 				this.Camera.Draw("default-wall-shadow-full-right", Layer.Floor + Layer.OverlayWestAdjustment, leftCenter.add(TerrainDrawer.FloorHeight))
@@ -196,7 +196,7 @@ export class TerrainDrawer {
 				this.Camera.Draw("default-wall-shadow-half-right", Layer.Middle + Layer.OverlayWestAdjustment, leftCenter.add(TerrainDrawer.HalfHeight))
 		}
 		else if (Blocks.TypeOf(leftBlock) == BlockType.Half) {
-			if (Blocks.TypeOf(rightBlock) == BlockType.Empty && Blocks.TypeOf(this.Game.Terrain.getAt(rightPosition.add(below))) == BlockType.Full)
+			if (Blocks.TypeOf(rightBlock) == BlockType.Empty && Blocks.TypeOf(this.Game.Terrain.GetAt(rightPosition.add(below))) == BlockType.Full)
 				this.Camera.Draw("default-wall-shadow-half-right", Layer.Bottom + Layer.OverlayWestAdjustment, leftCenter)
 			else if (Blocks.TypeOf(rightBlock) == BlockType.Floor)
 				this.Camera.Draw("default-wall-shadow-half-right", Layer.Floor + Layer.OverlayWestAdjustment, leftCenter.add(TerrainDrawer.FloorHeight))
@@ -209,7 +209,7 @@ export class TerrainDrawer {
 			else if (Blocks.TypeOf(rightBlock) == BlockType.Half)
 				this.Camera.Draw("default-wall-shadow-half-left", Layer.Floor + Layer.OverlayEastAdjustment, rightCenter.add(TerrainDrawer.FloorHeight))
 		}
-		else if (Blocks.TypeOf(leftBlock) == BlockType.Empty && Blocks.TypeOf(this.Game.Terrain.getAt(leftPosition.add(below))) == BlockType.Full) {
+		else if (Blocks.TypeOf(leftBlock) == BlockType.Empty && Blocks.TypeOf(this.Game.Terrain.GetAt(leftPosition.add(below))) == BlockType.Full) {
 			if (Blocks.TypeOf(rightBlock) == BlockType.Full)
 				this.Camera.Draw("default-wall-shadow-full-left", Layer.Bottom + Layer.OverlayEastAdjustment, rightCenter)
 			else if (Blocks.TypeOf(rightBlock) == BlockType.Half)

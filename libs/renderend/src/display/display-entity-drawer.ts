@@ -47,7 +47,7 @@ export class DisplayEntityDrawer {
 		const info = this.config.Sprites[deathSprite]
 		this.state.displayEntities.push({
 			sprite: deathSprite,
-			position: this.game.entities.position.get.of(entity),
+			position: this.game.entities.position.Get.Of(entity),
 			velocity: new Vector2(0, 0),
 			endTick: this.game.state.globals.tick + info.frameInterval * info.framesX * info.framesY,
 			animationStart: this.game.state.globals.tick,

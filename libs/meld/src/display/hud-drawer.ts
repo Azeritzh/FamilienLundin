@@ -19,7 +19,7 @@ export class HudDrawer {
 		if (!(playerId > -1))
 			return
 		this.drawHud()
-		const selectedBlock = this.Game.Entities.SelectedBlock.get.of(playerId)
+		const selectedBlock = this.Game.Entities.SelectedBlock.Get.Of(playerId)
 		if (selectedBlock > -1)
 			this.drawSelectedBlock(selectedBlock)
 	}

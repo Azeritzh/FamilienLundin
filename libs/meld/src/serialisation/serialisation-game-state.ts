@@ -28,7 +28,7 @@ function serialiseGameState(state: GameState, config: GameConfig = null): Serial
 	for (const [key, value] of state.Chunks)
 		chunks.push(serialiseBlockChunk(value, Vector3.parse(key)))
 	const entityValues = {}
-	for (const [entity] of state.EntityValues.entities)
+	for (const [entity] of state.EntityValues.Entities)
 		entityValues[entity] = state.EntityValues.GroupFor(entity)
 	return {
 		EntityTypeMap: [...config?.EntityTypeMap.Types.entries() ?? []],
@@ -162,7 +162,7 @@ function MapBlock(block: Block, solidMapping: Map<Id, Id>, nonSolidMapping: Map<
 }
 
 function serialiseBlockChunk(chunk: BlockChunk<Block>, coords: Vector3): SerialisableBlockChunk {
-	return { size: chunk.chunkSize, coords, blocks: chunk.blocks }
+	return { size: chunk.ChunkSize, coords, blocks: chunk.Blocks }
 }
 
 function groupedEntityValuesFrom(serialised: any) {

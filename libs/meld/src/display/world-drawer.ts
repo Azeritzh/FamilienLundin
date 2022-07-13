@@ -32,7 +32,7 @@ export class WorldDrawer {
 	}
 
 	private entitiesInArea(layer: number, area: DisplayArea) {
-		return [...this.Game.Entities.with.Position]
+		return [...this.Game.Entities.With.Position]
 			.filter(([, position]) => this.isInArea(layer, area, position))
 			.map(x => x[0])
 	}

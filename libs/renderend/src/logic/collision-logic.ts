@@ -11,8 +11,8 @@ export class CollisionLogic implements GameLogic<RenderendAction> {
 	) { }
 
 	update() {
-		for (const [entity, position] of this.entities.with.position)
-			for (const [otherEntity, size] of this.entities.with.rectangularSize)
+		for (const [entity, position] of this.entities.With.position)
+			for (const [otherEntity, size] of this.entities.With.rectangularSize)
 				if (this.collides(entity, position, otherEntity, size))
 					this.notify(entity, otherEntity)
 	}
@@ -20,7 +20,7 @@ export class CollisionLogic implements GameLogic<RenderendAction> {
 	private collides(entity: Id, point: Vector2, otherEntity: Id, size: RectangularSize) {
 		if (entity === otherEntity)
 			return false
-		const otherPosition = this.position.of(otherEntity)
+		const otherPosition = this.position.Of(otherEntity)
 		if (!otherPosition)
 			return false
 		return Box2d.from(otherPosition, size).contains(point)

@@ -8,14 +8,14 @@ export class MeldEntities extends EntityManager<EntityValues> {
 		updatedEntityValues: EntityValues,
 		idProvider: IdProvider,
 		accessor = new ValueAccessBuilder(typeValues, entityValues, updatedEntityValues),
-		public readonly Health = accessor.for(x => x.Health, x => x.Health),
-		public readonly Orientation = accessor.for(x => x.Orientation, x => x.Orientation, 0),
-		public readonly Position = accessor.for(x => x.Position, x => x.Position),
-		public readonly CircularSize = accessor.for(x => x.CircularSize, x => x.CircularSize),
-		public readonly SelectedBlock = accessor.for(x => x.SelectedBlock, x => x.SelectedBlock),
-		public readonly Velocity = accessor.for(x => x.Velocity, x => x.Velocity),
-		public readonly BlockCollisionBehaviour = accessor.for(x => x.BlockCollisionBehaviour, x => x.BlockCollisionBehaviour),
-		public readonly GravityBehaviour = accessor.for(x => x.GravityBehaviour, x => x.GravityBehaviour),
+		public readonly Health = accessor.For(x => x.Health, x => x.Health),
+		public readonly Orientation = accessor.For(x => x.Orientation, x => x.Orientation, 0),
+		public readonly Position = accessor.For(x => x.Position, x => x.Position),
+		public readonly CircularSize = accessor.For(x => x.CircularSize, x => x.CircularSize),
+		public readonly SelectedBlock = accessor.For(x => x.SelectedBlock, x => x.SelectedBlock),
+		public readonly Velocity = accessor.For(x => x.Velocity, x => x.Velocity),
+		public readonly BlockCollisionBehaviour = accessor.For(x => x.BlockCollisionBehaviour, x => x.BlockCollisionBehaviour),
+		public readonly GravityBehaviour = accessor.For(x => x.GravityBehaviour, x => x.GravityBehaviour),
 	) {
 		super(entityValues, updatedEntityValues, idProvider)
 		this.valueAccessors.push(

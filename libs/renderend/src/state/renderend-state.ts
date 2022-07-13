@@ -7,7 +7,7 @@ export class RenderendState {
 		public readonly entityValues: EntityValues,
 	) { }
 
-	getNewId() {
+	GetNewId() {
 		return this.globals.nextId++
 	}
 }

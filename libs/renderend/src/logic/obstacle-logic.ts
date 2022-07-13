@@ -18,7 +18,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	) { }
 
 	update() {
-		for (const [entity] of this.entities.with.obstacleBehaviour)
+		for (const [entity] of this.entities.With.obstacleBehaviour)
 			this.updateSpeed(entity)
 
 		while (this.shouldSpawnWalls())
@@ -30,7 +30,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private updateSpeed(entity: Id) {
-		this.setVelocity.for(entity, new Vector2(-this.globals.speed, 0))
+		this.setVelocity.For(entity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private shouldSpawnWalls() {
@@ -44,7 +44,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private spawnWallsAt(xPos: number) {
-		const size = this.rectangularSize.defaultOf(this.constants.wallType)
+		const size = this.rectangularSize.DefaultOf(this.constants.wallType)
 		this.spawnWallAt(xPos, 0, size)
 		this.spawnWallAt(xPos, 9, size)
 		if (this.random.get.int(2))
@@ -57,9 +57,9 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private spawnWallAt(xPos: number, yPos: number, wallSize: RectangularSize) {
-		const entity = this.entities.create(this.constants.wallType)
-		this.setPosition.for(entity, new Vector2(xPos + wallSize.width / 2, yPos + wallSize.height / 2))
-		this.setVelocity.for(entity, new Vector2(-this.globals.speed, 0))
+		const entity = this.entities.Create(this.constants.wallType)
+		this.setPosition.For(entity, new Vector2(xPos + wallSize.width / 2, yPos + wallSize.height / 2))
+		this.setVelocity.For(entity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private shouldSpawnObstacle() {
@@ -76,7 +76,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 
 	private spawnObstacle() {
 		const obstacleType = this.random.get.in(this.constants.obstacleTypes)
-		const obstacleHeight = this.rectangularSize.defaultOf(obstacleType).height
+		const obstacleHeight = this.rectangularSize.DefaultOf(obstacleType).height
 		this.spawnObstacleAt(
 			obstacleType,
 			this.random.get.float(2),
@@ -99,13 +99,13 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 
 	private spawnObstacleAt(type: Id, deltaX: number, y: number) {
 		const previousWallX = this.globals.lastWall - this.globals.distanceTravelled
-		const entity = this.entities.create(type)
-		this.setPosition.for(entity, new Vector2(previousWallX + Math.floor(deltaX * 16) / 16, y)) // doing the 16 thing to align with pixel grid
-		this.setVelocity.for(entity, new Vector2(-this.globals.speed, 0))
+		const entity = this.entities.Create(type)
+		this.setPosition.For(entity, new Vector2(previousWallX + Math.floor(deltaX * 16) / 16, y)) // doing the 16 thing to align with pixel grid
+		this.setVelocity.For(entity, new Vector2(-this.globals.speed, 0))
 	}
 
 	private getShipHeight() {
-		for (const [ship] of this.entities.with.shipBehaviour)
-			return this.position.of(ship).y
+		for (const [ship] of this.entities.With.shipBehaviour)
+			return this.position.Of(ship).y
 	}
 }

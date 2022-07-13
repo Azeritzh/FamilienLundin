@@ -11,7 +11,7 @@ export class GameState {
 		public readonly Players = new Map<string, Id>()
 	) { }
 
-	getNewId() {
+	GetNewId() {
 		return this.Globals.NextId++
 	}
 
@@ -20,11 +20,11 @@ export class GameState {
 		this.Globals.Seed = state.Globals.Seed
 		this.Globals.NextId = state.Globals.NextId
 
-		this.EntityValues.clearValues()
-		this.EntityValues.entities.clear()
-		for (const [id, value] of state.EntityValues.entities)
-			this.EntityValues.entities.set(id, value)
-		this.EntityValues.addValuesFromOther(state.EntityValues)
+		this.EntityValues.ClearValues()
+		this.EntityValues.Entities.clear()
+		for (const [id, value] of state.EntityValues.Entities)
+			this.EntityValues.Entities.set(id, value)
+		this.EntityValues.AddValuesFromOther(state.EntityValues)
 
 		this.Chunks.clear()
 		for (const [position, blocks] of state.Chunks)

@@ -9,7 +9,7 @@ export class GameOverLogic implements DeathListener {
 	) { }
 
 	onDeath(entity: Id) {
-		if (!this.shipBehaviour.of(entity))
+		if (!this.shipBehaviour.Of(entity))
 			return
 		this.globals.speed = 0
 		this.globals.isAlive = false

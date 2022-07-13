@@ -11,6 +11,6 @@ export class UpdateStateLogic implements GameLogic<RenderendAction> {
 
 	update() {
 		this.state.globals.tick++
-		this.entities.applyUpdatedValues()
+		this.entities.ApplyUpdatedValues()
 	}
 }

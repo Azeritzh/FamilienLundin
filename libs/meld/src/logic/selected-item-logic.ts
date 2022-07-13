@@ -17,11 +17,11 @@ export class SelectedItemLogic implements GameLogic<GameUpdate> {
 
 	private incrementSelectedItemFor(entity: Id) {
 		const blockTypes = [...this.Config.SolidTypeMap.Types.values()]
-		const previous = this.SelectedBlock.of(entity)
+		const previous = this.SelectedBlock.Of(entity)
 		const previousIndex = blockTypes.indexOf(previous)
 		const nextIndex = previousIndex + 1 < blockTypes.length
 			? previousIndex + 1
 			: 0
-		this.SetSelectedBlock.for(entity, blockTypes[nextIndex])
+		this.SetSelectedBlock.For(entity, blockTypes[nextIndex])
 	}
 }

@@ -10,15 +10,15 @@ export class DeathLogic implements GameLogic<RenderendAction> {
 	) { }
 
 	update() {
-		for (const [entity] of this.entities.with.health)
-			if (this.health.currentlyOf(entity) <= 0)
+		for (const [entity] of this.entities.With.health)
+			if (this.health.CurrentlyOf(entity) <= 0)
 				this.kill(entity)
 	}
 
 	private kill(entity: Id) {
 		for(const listener of this.listeners)
 			listener.onDeath(entity)
-		this.entities.remove(entity)
+		this.entities.Remove(entity)
 	}
 }
 

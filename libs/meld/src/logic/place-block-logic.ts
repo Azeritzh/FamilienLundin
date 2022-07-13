@@ -16,19 +16,19 @@ export class PlaceBlockLogic implements GameLogic<GameUpdate> {
 	}
 
 	private placeBlock(entity: Id, position: Vector3) {
-		const block = this.SelectedItem.of(entity)
+		const block = this.SelectedItem.Of(entity)
 		if (!(block > -1))
 			return
-		const currentBlock = this.Terrain.getAt(position) ?? Blocks.NewEmpty(0)
+		const currentBlock = this.Terrain.GetAt(position) ?? Blocks.NewEmpty(0)
 		if (Blocks.SolidOf(currentBlock) != block)
-			this.Terrain.setAt(position, Blocks.NewFloor(block, 0))
+			this.Terrain.SetAt(position, Blocks.NewFloor(block, 0))
 		else if (Blocks.TypeOf(currentBlock) == BlockType.Empty)
-			this.Terrain.setAt(position, Blocks.NewFloor(block, 0))
+			this.Terrain.SetAt(position, Blocks.NewFloor(block, 0))
 		else if (Blocks.TypeOf(currentBlock) == BlockType.Floor)
-			this.Terrain.setAt(position, Blocks.NewHalf(block, 0))
+			this.Terrain.SetAt(position, Blocks.NewHalf(block, 0))
 		else if (Blocks.TypeOf(currentBlock) == BlockType.Half)
-			this.Terrain.setAt(position, Blocks.NewFull(block))
+			this.Terrain.SetAt(position, Blocks.NewFull(block))
 		else if (Blocks.TypeOf(currentBlock) == BlockType.Full)
-			this.Terrain.setAt(position, Blocks.NewFloor(block, 0))
+			this.Terrain.SetAt(position, Blocks.NewFloor(block, 0))
 	}
 }

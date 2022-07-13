@@ -27,10 +27,10 @@ export class StartLogic implements GameLogic<RenderendAction> {
 	}
 
 	private clearMap() {
-		for (const [entity, add] of this.changes.updatedEntityValues.entities)
+		for (const [entity, add] of this.changes.updatedEntityValues.Entities)
 			if (add)
-				this.entities.remove(entity)
-		this.entities.remove(...this.entities)
+				this.entities.Remove(entity)
+		this.entities.Remove(...this.entities)
 	}
 
 	private resetGlobals() {
@@ -41,7 +41,7 @@ export class StartLogic implements GameLogic<RenderendAction> {
 	}
 
 	private spawnPlayerShip() {
-		const entity = this.entities.create(this.constants.shipType)
-		this.setPosition.for(entity, new Vector2(1, 5))
+		const entity = this.entities.Create(this.constants.shipType)
+		this.setPosition.For(entity, new Vector2(1, 5))
 	}
 }

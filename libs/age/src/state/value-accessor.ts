@@ -8,21 +8,21 @@ export interface ValueInitialiser {
 
 export class ValueAccessor<T>{
 	constructor(
-		public readonly get: ValueGetter<T>,
-		public readonly set: ValueSetter<T>,
+		public readonly Get: ValueGetter<T>,
+		public readonly Set: ValueSetter<T>,
 	) { }
 
-	public initialiseValueFor(entity: Id) {
-		const defaultValue = this.get.defaultOf(entity)
+	public InitialiseValueFor(entity: Id) {
+		const defaultValue = this.Get.DefaultOf(entity)
 		if (defaultValue != null)
-			this.set.for(entity, defaultValue)
+			this.Set.For(entity, defaultValue)
 	}
 }
 
 export interface ValueGetter<T> {
-	currentlyOf(entity: Id): T
-	of(entity: Id): T
-	defaultOf(entity: Id): T
+	CurrentlyOf(entity: Id): T
+	Of(entity: Id): T
+	DefaultOf(entity: Id): T
 }
 
 export class StandardValueGetter<T, GroupedEntityValues> implements ValueGetter<T> {
@@ -34,16 +34,16 @@ export class StandardValueGetter<T, GroupedEntityValues> implements ValueGetter<
 		private readonly defaultValue: T = undefined
 	) { }
 
-	public currentlyOf(entity: Id) {
+	public CurrentlyOf(entity: Id) {
 		return this.updatedEntityValue.get(entity)
-			?? this.of(entity)
+			?? this.Of(entity)
 	}
 
-	public of(entity: Id) {
+	public Of(entity: Id) {
 		return this.entityValue.get(entity)
 	}
 
-	public defaultOf(entity: Id) {
+	public DefaultOf(entity: Id) {
 		const type = EntityTypeOf(entity)
 		return this.getTypeValue(this.typeValues.get(type))
 			?? this.defaultValue
@@ -55,7 +55,7 @@ export class ValueSetter<T>{
 		private readonly updatedEntityValue: Map<Id, T>,
 	) { }
 
-	public for(entity: Id, value: T) {
+	public For(entity: Id, value: T) {
 		this.updatedEntityValue.set(entity, value)
 	}
 }
@@ -67,7 +67,7 @@ export class ValueAccessBuilder<EntityValues extends BaseValues, GroupedEntityVa
 		private updatedEntityValues: EntityValues,
 	) { }
 
-	public for<T>(
+	public For<T>(
 		getValueMap: (collection: EntityValues) => Map<Id, T>,
 		getTypeValue: (collection: GroupedEntityValues) => T,
 		defaultValue: T = undefined,

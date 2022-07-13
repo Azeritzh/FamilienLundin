@@ -21,15 +21,15 @@ export class EntityDrawer {
 	}
 
 	private drawGeneralEntity(entity: Id) {
-		const position = this.game.entities.position.get.of(entity)
-		const velocity = this.game.entities.velocity.get.of(entity)
+		const position = this.game.entities.position.Get.Of(entity)
+		const velocity = this.game.entities.velocity.Get.Of(entity)
 		const sprite = this.game.config.typeMap.TypeFor(EntityTypeOf(entity))
 		this.spriteDrawer.draw(sprite, position, velocity)
 	}
 
 	private drawShip(entity: Id) {
-		const position = this.game.entities.position.get.of(entity)
-		const velocity = this.game.entities.velocity.get.of(entity)
+		const position = this.game.entities.position.Get.Of(entity)
+		const velocity = this.game.entities.velocity.Get.Of(entity)
 		const shields = this.shieldSpriteFor(entity)
 		if (shields)
 			this.spriteDrawer.draw(shields, position, velocity)
@@ -40,14 +40,14 @@ export class EntityDrawer {
 	}
 
 	private shieldSpriteFor(entity: Id) {
-		switch (this.game.entities.health.get.of(entity)) {
+		switch (this.game.entities.health.Get.Of(entity)) {
 			case 3: return "full-shield"
 			case 2: return "half-shield"
 		}
 	}
 
 	private chargeSpriteFor(entity: Id) {
-		const charge = this.game.entities.charge.get.of(entity) ?? 0
+		const charge = this.game.entities.charge.Get.Of(entity) ?? 0
 		if (4 <= charge)
 			return "charge-4"
 		if (3 <= charge)

@@ -29,28 +29,28 @@ export class Renderend extends BaseGame<RenderendAction> {
 		readonly random = new Random(() => state.globals.seed + state.globals.tick),
 		public bulletLogic = new BulletLogic(
 			entities,
-			entities.charge.get,
-			entities.position.get,
-			entities.charge.set,
-			entities.position.set,
+			entities.charge.Get,
+			entities.position.Get,
+			entities.charge.Set,
+			entities.position.Set,
 		),
 		public chargeLogic = new ChargeLogic(
 			config.constants,
 			entities,
-			entities.charge.set,
+			entities.charge.Set,
 		),
 		public collisionLogic = new CollisionLogic(
 			entities,
-			entities.position.get,
+			entities.position.Get,
 		),
 		public damageLogic = new DamageLogic(
-			entities.damage.get,
-			entities.health.get,
-			entities.health.set,
+			entities.damage.Get,
+			entities.health.Get,
+			entities.health.Set,
 		),
 		public deathLogic = new DeathLogic(
 			entities,
-			entities.health.get,
+			entities.health.Get,
 		),
 		public despawnLogic = new DespawnLogic(
 			entities,
@@ -61,23 +61,23 @@ export class Renderend extends BaseGame<RenderendAction> {
 		),
 		public gameOverLogic = new GameOverLogic(
 			state.globals,
-			entities.shipBehaviour.get,
+			entities.shipBehaviour.Get,
 		),
 		public moveShipLogic = new MoveShipLogic(
 			config.constants,
 			state.globals,
 			entities,
-			entities.position.get,
-			entities.velocity.set,
+			entities.position.Get,
+			entities.velocity.Set,
 		),
 		public obstacleLogic = new ObstacleLogic(
 			config.constants,
 			state.globals,
 			entities,
-			entities.position.get,
-			entities.rectangularSize.get,
-			entities.position.set,
-			entities.velocity.set,
+			entities.position.Get,
+			entities.rectangularSize.Get,
+			entities.position.Set,
+			entities.velocity.Set,
 			random,
 		),
 		public startLogic = new StartLogic(
@@ -85,7 +85,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 			changes,
 			state.globals,
 			entities,
-			entities.position.set,
+			entities.position.Set,
 		),
 		public updateStateLogic = new UpdateStateLogic(
 			state,
@@ -93,8 +93,8 @@ export class Renderend extends BaseGame<RenderendAction> {
 		),
 		public velocityLogic = new VelocityLogic(
 			entities,
-			entities.position.get,
-			entities.position.set,
+			entities.position.Get,
+			entities.position.Set,
 		),
 	) {
 		super([ // Order depends on usage of globals variables and priority of changes to same values

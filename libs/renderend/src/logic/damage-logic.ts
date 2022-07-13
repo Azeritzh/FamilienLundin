@@ -9,12 +9,12 @@ export class DamageLogic implements CollisionListener {
 	) { }
 
 	onCollision(entity: Id, otherEntity: Id) {
-		const damage = this.damage.of(entity) ?? 0
+		const damage = this.damage.Of(entity) ?? 0
 		if (damage === 0)
 			return
-		const health = this.health.of(otherEntity) ?? null
+		const health = this.health.Of(otherEntity) ?? null
 		if (health === null || health < 0)
 			return
-		this.setHealth.for(otherEntity, health - damage)
+		this.setHealth.For(otherEntity, health - damage)
 	}
 }

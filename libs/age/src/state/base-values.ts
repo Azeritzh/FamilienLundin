@@ -4,7 +4,7 @@ export abstract class BaseValues {
 	protected readonly allValueMaps: Map<Id, any>[] = []
 
 	constructor(
-		public readonly entities = new Map<Id, boolean>(),
+		public readonly Entities = new Map<Id, boolean>(),
 	) { }
 
 	protected register<TValue>(map: Map<Id, TValue>) {
@@ -12,18 +12,18 @@ export abstract class BaseValues {
 		return map
 	}
 
-	clearValues() {
+	ClearValues() {
 		for (const map of this.allValueMaps)
 			map.clear()
 	}
 
-	removeValuesFor(key: Id) {
+	RemoveValuesFor(key: Id) {
 		for (const map of this.allValueMaps)
 			map.delete(key)
 	}
 
 	// Should only be used with same classes, but don't know how to express that generically
-	addValuesFromOther(otherValues: BaseValues) {
+	AddValuesFromOther(otherValues: BaseValues) {
 		for (let i = 0; i < this.allValueMaps.length; i++)
 			for (const [key, value] of otherValues.allValueMaps[i])
 				this.allValueMaps[i].set(key, value)
