@@ -2,8 +2,8 @@ import { GameLogic, Id, TerrainManager, ValueGetter, ValueSetter } from "@lundin
 import { Vector3 } from "@lundin/utility"
 import { Constants } from "../config/constants"
 import { Block, Blocks, BlockType } from "../state/block"
-import { MeldEntities } from "../state/entity-values"
 import { GameUpdate } from "../state/game-update"
+import { MeldEntities } from "../state/meld-entities"
 
 export class GravityLogic implements GameLogic<GameUpdate> {
 	constructor(

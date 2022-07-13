@@ -3,9 +3,11 @@ import { Vector2 } from "@lundin/utility"
 import { Meld } from "../meld"
 import { GenerateAction, MovementAction, SelectNextItemAction, PlaceBlockAction } from "../state/game-update"
 import { Camera } from "./camera"
-import { DisplayState } from "./display-state"
+import { AngleOf, DisplayState } from "./display-state"
 
 export class InputParser extends BaseInputParser<Input> {
+	PreviousMovement = new Vector2(0, 0)
+
 	constructor(
 		private Game: Meld,
 		private State: DisplayState,
@@ -40,9 +42,15 @@ export class InputParser extends BaseInputParser<Input> {
 		const down = this.floatStateFor(Input.MoveDown) ?? 0
 		const left = this.floatStateFor(Input.MoveLeft) ?? 0
 		const right = this.floatStateFor(Input.MoveRight) ?? 0
-		const velocity = new Vector2(right - left, down - up)
-			.multiply(factor)
-		return new MovementAction(this.Game.State.Players.get(this.State.PlayerName), velocity)
+
+		const baseMovement = new Vector2(right - left, down - up).rotate(AngleOf(this.State.ViewDirection))
+		const movement = baseMovement.lengthSquared() > 1
+			? baseMovement.unitVector().multiply(factor)
+			: baseMovement.multiply(factor)
+		if (movement.x === this.PreviousMovement.x && movement.y === this.PreviousMovement.y)
+			return null
+		this.PreviousMovement = movement
+		return new MovementAction(this.Game.State.Players.get(this.State.PlayerName), movement)
 	}
 
 	private parseGenerate() {

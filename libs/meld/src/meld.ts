@@ -46,6 +46,10 @@ export class Meld extends BaseGame<GameUpdate> {
 		),
 		public readonly movementLogic = new MovementLogic(
 			Config.Constants,
+			Entities,
+			Entities.Orientation.Set,
+			Entities.TargetVelocity.Get,
+			Entities.TargetVelocity.Set,
 			Entities.Velocity.Get,
 			Entities.Velocity.Set,
 		),

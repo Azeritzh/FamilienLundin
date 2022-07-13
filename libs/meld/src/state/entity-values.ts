@@ -1,9 +1,7 @@
-import { BaseValues, CircularSize, EntityManager, Id } from "@lundin/age"
+import { BaseValues, CircularSize, Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { DashState } from "../values/dash-state"
 import { SolidId } from "./block"
-
-export type MeldEntities = EntityManager<EntityValues>
 
 export class EntityValues extends BaseValues {
 	constructor(

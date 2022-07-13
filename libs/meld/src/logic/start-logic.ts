@@ -2,10 +2,10 @@ import { GameLogic, Random, TerrainManager, ValueSetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
 import { Block, Blocks } from "../state/block"
-import { MeldEntities } from "../state/entity-values"
-import { GenerateAction, GameUpdate } from "../state/game-update"
 import { Changes } from "../state/changes"
 import { GameState } from "../state/game-state"
+import { GameUpdate, GenerateAction } from "../state/game-update"
+import { MeldEntities } from "../state/meld-entities"
 
 export class StartLogic implements GameLogic<GameUpdate> {
 	constructor(

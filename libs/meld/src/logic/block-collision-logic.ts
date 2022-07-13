@@ -2,8 +2,8 @@ import { Box, CircularSize, GameLogic, Id, TerrainManager, ValueGetter, ValueSet
 import { Vector3 } from "@lundin/utility"
 import { Constants } from "../config/constants"
 import { Block, Blocks, BlockType } from "../state/block"
-import { MeldEntities } from "../state/entity-values"
 import { GameUpdate } from "../state/game-update"
+import { MeldEntities } from "../state/meld-entities"
 
 export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	constructor(

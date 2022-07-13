@@ -28,6 +28,11 @@ export class Vector2 {
 			this.x * Math.sin(angle) + this.y * Math.cos(angle))
 	}
 
+	getAngle() {
+		const angle = Math.atan2(this.y, this.x)
+		return angle < 0 ? angle + Math.PI * 2 : angle
+	}
+
 	angle() {
 		return Math.atan2(this.y, this.x)
 	}
@@ -45,7 +50,7 @@ export class Vector2 {
 
 	length() {
 		if (this.x === 0 || this.y === 0)
-			return this.x + this.y
+			return Math.abs(this.x) + Math.abs(this.y)
 		return Math.sqrt(this.lengthSquared())
 	}
 
@@ -64,7 +69,7 @@ export class Vector2 {
 		this.y = y
 	}
 
-	isZero(){
+	isZero() {
 		return this.x === 0 && this.y === 0
 	}
 }

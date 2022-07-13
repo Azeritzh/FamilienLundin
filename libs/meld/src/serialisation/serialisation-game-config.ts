@@ -24,15 +24,17 @@ export function readGameConfig(jsonConfig: any) {
 	)
 }
 
-function constantsFrom(serialised: any, typeMap: TypeMap) {
-	const constants: Constants = Object.assign(new Constants(0), serialised)
-	constants.PlayerType = typeMap.TypeIdFor(serialised.playerType)
-	if (serialised.chunkSize)
-		constants.ChunkSize = new Vector3(serialised.chunkSize.x, serialised.chunkSize.y, serialised.chunkSize.z)
-	constants.GravityAcceleration = (serialised.gravityAcceleration ?? 0.5) / updatesPerSecond
-	constants.TerminalVerticalVelocity = (serialised.terminalVerticalVelocity ?? 10) / updatesPerSecond
-	constants.MaxMoveSpeed = (serialised.maxMoveSpeed ?? 10) / updatesPerSecond
-	return constants
+function constantsFrom(serialised: any, entityTypeMap: TypeMap) {
+	return new Constants(
+		entityTypeMap.TypeIdFor(serialised.playerType),
+		Object.assign(new Vector3(50, 50, 5), serialised.chunkSize ?? {}),
+		serialised.chunkLoadingRadius ?? 1,
+		serialised.collisionAreaWidth ?? 1 / 1024,
+		(serialised.gravityAcceleration ?? 0.5) / updatesPerSecond,
+		(serialised.terminalVerticalVelocity ?? 10) / updatesPerSecond,
+		(serialised.maxMoveSpeed ?? 10) / updatesPerSecond,
+		(serialised.acceleration ?? 3) / updatesPerSecond,
+	)
 }
 
 function groupedEntityValuesFrom(serialised: any, blockTypeMap: TypeMap): GroupedEntityValues {

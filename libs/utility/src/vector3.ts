@@ -24,6 +24,11 @@ export class Vector3 {
 			0)
 	}
 
+	getAngle( ) {
+		const angle = Math.atan2(this.y, this.x)
+		return angle < 0 ? angle + Math.PI * 2 : angle
+	}
+
 	lengthSquared() {
 		return this.x * this.x + this.y * this.y + this.z * this.z
 	}
@@ -36,8 +41,6 @@ export class Vector3 {
 	}
 
 	length() {
-		if (this.x === 0 || this.y === 0)
-			return this.x + this.y
 		return Math.sqrt(this.lengthSquared())
 	}
 
