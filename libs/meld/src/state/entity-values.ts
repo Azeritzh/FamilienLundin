@@ -1,27 +1,32 @@
 import { BaseValues, CircularSize, EntityManager, Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
+import { DashState } from "../values/dash-state"
 import { SolidId } from "./block"
 
 export type MeldEntities = EntityManager<EntityValues>
 
 export class EntityValues extends BaseValues {
 	constructor(
+		public readonly CircularSize = new Map<Id, CircularSize>(),
+		public readonly DashState = new Map<Id, DashState>(),
 		public readonly Health = new Map<Id, number>(),
 		public readonly Orientation = new Map<Id, number>(),
 		public readonly Position = new Map<Id, Vector3>(),
-		public readonly CircularSize = new Map<Id, CircularSize>(),
 		public readonly SelectedBlock = new Map<Id, SolidId>(),
+		public readonly TargetVelocity = new Map<Id, Vector3>(),
 		public readonly Velocity = new Map<Id, Vector3>(),
 		public readonly BlockCollisionBehaviour = new Map<Id, boolean>(),
 		public readonly GravityBehaviour = new Map<Id, boolean>(),
 		Entities = new Map<Id, boolean>(),
 	) {
 		super(Entities)
+		this.register(CircularSize)
+		this.register(DashState)
 		this.register(Health)
 		this.register(Orientation)
 		this.register(Position)
-		this.register(CircularSize)
 		this.register(SelectedBlock)
+		this.register(TargetVelocity)
 		this.register(Velocity)
 		this.register(BlockCollisionBehaviour)
 		this.register(GravityBehaviour)
@@ -36,16 +41,20 @@ export class EntityValues extends BaseValues {
 
 	AddValuesFrom(key: Id, values: GroupedEntityValues) {
 		this.Entities.set(key, true)
+		if (values.CircularSize !== undefined)
+			this.CircularSize.set(key, values.CircularSize)
+		if (values.DashState !== undefined)
+			this.DashState.set(key, values.DashState)
 		if (values.Health !== undefined)
 			this.Health.set(key, values.Health)
 		if (values.Orientation !== undefined)
 			this.Orientation.set(key, values.Orientation)
 		if (values.Position !== undefined)
 			this.Position.set(key, values.Position)
-		if (values.CircularSize !== undefined)
-			this.CircularSize.set(key, values.CircularSize)
 		if (values.SelectedBlock !== undefined)
 			this.SelectedBlock.set(key, values.SelectedBlock)
+		if (values.TargetVelocity !== undefined)
+			this.TargetVelocity.set(key, values.TargetVelocity)
 		if (values.Velocity !== undefined)
 			this.Velocity.set(key, values.Velocity)
 		if (values.BlockCollisionBehaviour !== undefined)
@@ -56,11 +65,13 @@ export class EntityValues extends BaseValues {
 
 	GroupFor(key: Id): GroupedEntityValues {
 		return {
+			CircularSize: this.CircularSize.get(key),
+			DashState: this.DashState.get(key),
 			Health: this.Health.get(key),
 			Orientation: this.Orientation.get(key),
 			Position: this.Position.get(key),
-			CircularSize: this.CircularSize.get(key),
 			SelectedBlock: this.SelectedBlock.get(key),
+			TargetVelocity: this.TargetVelocity.get(key),
 			Velocity: this.Velocity.get(key),
 			BlockCollisionBehaviour: this.BlockCollisionBehaviour.get(key),
 			GravityBehaviour: this.GravityBehaviour.get(key),
@@ -69,11 +80,13 @@ export class EntityValues extends BaseValues {
 }
 
 export interface GroupedEntityValues {
+	CircularSize?: CircularSize
+	DashState?: DashState
 	Health?: number
 	Orientation?: number
 	Position?: Vector3
-	CircularSize?: CircularSize
 	SelectedBlock?: SolidId
+	TargetVelocity?: Vector3
 	Velocity?: Vector3
 	BlockCollisionBehaviour?: boolean
 	GravityBehaviour?: boolean
