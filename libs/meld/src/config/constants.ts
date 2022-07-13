@@ -11,5 +11,13 @@ export class Constants {
 		public TerminalVerticalVelocity: number,
 		public MaxMoveSpeed: number,
 		public Acceleration: number,
+		public InitialDashCharge: number,
+		public MaxDashCharge: number,
+		public DashChargeSpeed: number,
+		public DashDuration: number,
+		public DashCooldown: number,
+		public DashQuickChargeWindowStart: number,
+		public DashQuickChargeWindowEnd: number,
+		public DashQuickChargeMinimumAngle: number,
 	) { }
 }

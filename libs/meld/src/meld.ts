@@ -15,6 +15,7 @@ import { GameState } from "./state/game-state"
 import { LoadStateLogic } from "./logic/load-state-logic"
 import { BlockCollisionLogic } from "./logic/block-collision-logic"
 import { GravityLogic } from "./logic/gravity-logic"
+import { DashLogic } from "./logic/dash-logic"
 
 export class Meld extends BaseGame<GameUpdate> {
 	constructor(
@@ -30,6 +31,17 @@ export class Meld extends BaseGame<GameUpdate> {
 			Terrain,
 			Entities.CircularSize.Get,
 			Entities.Position.Get,
+			Entities.Velocity.Get,
+			Entities.Velocity.Set,
+		),
+		public readonly dashLogic = new DashLogic(
+			Config.Constants,
+			State.Globals,
+			Entities,
+			Entities.DashState.Get,
+			Entities.DashState.Set,
+			Entities.GravityBehaviour.Get,
+			Entities.GravityBehaviour.Set,
 			Entities.Velocity.Get,
 			Entities.Velocity.Set,
 		),
@@ -87,6 +99,7 @@ export class Meld extends BaseGame<GameUpdate> {
 	) {
 		super([
 			movementLogic,
+			dashLogic,
 			gravityLogic,
 			blockCollisionLogic,
 			velocityLogic,

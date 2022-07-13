@@ -34,6 +34,14 @@ function constantsFrom(serialised: any, entityTypeMap: TypeMap) {
 		(serialised.terminalVerticalVelocity ?? 10) / updatesPerSecond,
 		(serialised.maxMoveSpeed ?? 10) / updatesPerSecond,
 		(serialised.acceleration ?? 3) / updatesPerSecond,
+		(serialised.initialDashCharge ?? 24) / updatesPerSecond,
+		(serialised.maxDashCharge ?? 60) / updatesPerSecond,
+		(serialised.dashChargeSpeed ?? 1.2) / updatesPerSecond,
+		Math.floor((serialised.dashDuration ?? 10 / 60) * updatesPerSecond),
+		Math.floor((serialised.dashCooldown ?? 1) * updatesPerSecond),
+		Math.floor((serialised.dashQuickChargeWindowStart ?? 8 / 60) * updatesPerSecond),
+		Math.floor((serialised.dashQuickChargeWindowEnd ?? 30 / 60) * updatesPerSecond),
+		serialised.dashQuickChargeMinimumAngle ?? Math.PI / 3,
 	)
 }
 

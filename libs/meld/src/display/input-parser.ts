@@ -1,7 +1,7 @@
-import { BaseInputParser, DisplayProvider } from "@lundin/age"
-import { Vector2 } from "@lundin/utility"
+import { BaseInputParser, DisplayProvider, Id } from "@lundin/age"
+import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../meld"
-import { GenerateAction, MovementAction, SelectNextItemAction, PlaceBlockAction } from "../state/game-update"
+import { GenerateAction, MovementAction, SelectNextItemAction, PlaceBlockAction, ChargeDashAction, ReleaseDashAction } from "../state/game-update"
 import { Camera } from "./camera"
 import { AngleOf, DisplayState } from "./display-state"
 
@@ -12,7 +12,7 @@ export class InputParser extends BaseInputParser<Input> {
 		private Game: Meld,
 		private State: DisplayState,
 		private Camera: Camera,
-		DisplayProvider: DisplayProvider,
+		private DisplayProvider: DisplayProvider,
 		Inputs: Map<Input, string[]>,
 	) {
 		super(DisplayProvider, Inputs)
@@ -21,11 +21,13 @@ export class InputParser extends BaseInputParser<Input> {
 	ParseInputs() {
 		this.UpdateCamera()
 		this.updateActionStates()
+		const player = this.Game.State.Players.get(this.State.PlayerName)
 		return [
-			this.parseGenerate(),
-			this.parseMovement(),
-			this.parsePlaceBlock(),
-			this.parseSelectNextItem(),
+			this.ParseGenerate(),
+			this.ParseDash(player),
+			this.ParseMovement(player),
+			this.ParsePlaceBlock(),
+			this.ParseSelectNextItem(),
 		].filter(x => x)
 	}
 
@@ -36,7 +38,7 @@ export class InputParser extends BaseInputParser<Input> {
 			this.Camera.RotateCamera(-1)
 	}
 
-	private parseMovement() {
+	private ParseMovement(player: Id) {
 		const factor = this.boolStateFor(Input.HoldWalk) ? 0.5 : 1
 		const up = this.floatStateFor(Input.MoveUp) ?? 0
 		const down = this.floatStateFor(Input.MoveDown) ?? 0
@@ -50,15 +52,39 @@ export class InputParser extends BaseInputParser<Input> {
 		if (movement.x === this.PreviousMovement.x && movement.y === this.PreviousMovement.y)
 			return null
 		this.PreviousMovement = movement
-		return new MovementAction(this.Game.State.Players.get(this.State.PlayerName), movement)
+		return new MovementAction(player, movement)
 	}
 
-	private parseGenerate() {
+	private ParseDash(player: Id) {
+		//var angle = CurrentControllerType == ControllerType.KeyboardAndMouse
+		//	? this.GetVectorToMouse(player).GetAngle()
+		//	: this.Game.Entities.Orientation.Get.Of(player) ?? 0;
+
+		const angle = this.GetVectorToMouse(player).getAngle()
+
+		//if (HasJustBeenPressed(Input.Action))
+		//	new ChargeDashAction(player, angle);
+		if (this.hasJustBeenReleased(Input.Action))
+			return new ReleaseDashAction(player, angle)
+		if (this.boolStateFor(Input.Action))
+			return new ChargeDashAction(player, angle)
+		return null
+	}
+
+	private GetVectorToMouse(player: Id) {
+		const pointerVector = this.Camera.TilePositionFor(
+			this.DisplayProvider.getInputState("MouseX"),
+			this.DisplayProvider.getInputState("MouseY")
+		).subtract(this.Game.Entities.Position.Get.Of(player) ?? new Vector3(0, 0, 0))
+		return new Vector2(pointerVector.x, pointerVector.y)
+	}
+
+	private ParseGenerate() {
 		if (this.hasJustBeenPressed(Input.Generate))
 			return new GenerateAction()
 	}
 
-	private parsePlaceBlock() {
+	private ParsePlaceBlock() {
 		const position = this.Camera.TilePositionFor(
 			this.displayProvider.getInputState("MouseX"),
 			this.displayProvider.getInputState("MouseY"),
@@ -67,7 +93,7 @@ export class InputParser extends BaseInputParser<Input> {
 			return new PlaceBlockAction(this.Game.State.Players.get(this.State.PlayerName), position)
 	}
 
-	private parseSelectNextItem() {
+	private ParseSelectNextItem() {
 		if (this.hasJustBeenPressed(Input.SelectNextItem))
 			return new SelectNextItemAction(this.Game.State.Players.get(this.State.PlayerName))
 	}

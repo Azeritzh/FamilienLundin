@@ -6,6 +6,20 @@ export abstract class GameUpdate { }
 
 export class GenerateAction extends GameUpdate { }
 
+export class ChargeDashAction extends GameUpdate {
+	constructor(
+		public Entity: Id,
+		public Angle: number
+	) { super() }
+}
+
+export class ReleaseDashAction extends GameUpdate {
+	constructor(
+		public Entity: Id,
+		public Angle: number
+	) { super() }
+}
+
 export class LoadState extends GameUpdate {
 	constructor(
 		public State: GameState,
