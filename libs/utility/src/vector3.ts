@@ -91,7 +91,24 @@ export class Vector3 {
 
 	/** Add the given vector in-place */
 	addFrom(vector: Vector3) {
-		this.set(this.x + vector.x, this.y + vector.y, this.z + vector.z)
-		return this
+		return this.set(this.x + vector.x, this.y + vector.y, this.z + vector.z)
+	}
+
+	/** Subtract in-place. THIS IS NOT THE INVERSE OF SUBTRACT */
+	subtractFrom(vector: Vector3) {
+		return this.set(this.x - vector.x, this.y - vector.y, this.z - vector.z)
+	}
+
+	/** Multiply in-place */
+	multiplyFrom(factor: number) {
+		return this.set(this.x * factor, this.y * factor, this.z * factor)
+	}
+
+	/** Rotate in-place */
+	rotateFrom(angle: number) {
+		return this.set(
+			this.x * Math.cos(angle) - this.y * Math.sin(angle),
+			this.x * Math.sin(angle) + this.y * Math.cos(angle),
+			0)
 	}
 }

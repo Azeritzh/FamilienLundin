@@ -13,6 +13,15 @@ export class Camera {
 		public ShownLayers: { layer: number, area: DisplayArea }[] = []
 	) { }
 
+	private BaseTopTile = new Vector3(0, -1, 0)
+	private BaseTopRightTile = new Vector3(1, -1, 0)
+	private BaseRightTile = new Vector3(1, 0, 0)
+	private BaseBottomRightTile = new Vector3(1, 1, 0)
+	private BaseBottomTile = new Vector3(0, 1, 0)
+	private BaseBottomLeftTile = new Vector3(-1, 1, 0)
+	private BaseLeftTile = new Vector3(-1, 0, 0)
+	private BaseTopLeftTile = new Vector3(-1, -1, 0)
+
 	public TopTile = new Vector3(0, -1, 0) //apparent north tile
 	public TopRightTile = new Vector3(1, -1, 0) //apparent north-east tile
 	public RightTile = new Vector3(1, 0, 0) //apparent east tile
@@ -22,8 +31,11 @@ export class Camera {
 	public LeftTile = new Vector3(-1, 0, 0) //apparent west tile
 	public TopLeftTile = new Vector3(-1, -1, 0) //apparent north-west tile
 
+	private Adjustable = new Vector3(0, 0, 0)
+
 	public FocusOn(entity: Id) {
-		this.State.FocusPoint = this.CurrentPositionFrom(
+		this.SetCurrentPositionWith(
+			this.State.FocusPoint,
 			this.Game.Entities.Position.Get.Of(entity) ?? new Vector3(0, 0, 0),
 			this.Game.Entities.Velocity.Get.Of(entity),
 		)
@@ -66,10 +78,11 @@ export class Camera {
 			right + layerAdjustment.x + margin)
 	}
 
-	private CurrentPositionFrom(position: Vector3, velocity: Vector3 = null) {
+	private _adjustableCurrentPosition = new Vector3(0, 0, 0)
+	private SetCurrentPositionWith(destination: Vector3, position: Vector3, velocity: Vector3 = null) {
 		return velocity
-			? position.add(velocity.multiply(this.State.FractionOfTick))
-			: position
+			? destination.setFrom(position).addFrom(this._adjustableCurrentPosition.setFrom(velocity).multiplyFrom(this.State.FractionOfTick))
+			: destination.setFrom(position)
 	}
 
 	DrawAnimated(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, animationStart = 0) {
@@ -88,26 +101,28 @@ export class Camera {
 	}
 
 	Draw(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, frameIndex = 0) {
-		let currentPosition = this.CurrentPositionFrom(position, velocity)
-		currentPosition = this.AdjustForFocusAndCamera(currentPosition)
-		const screenPosition = this.ScreenPositionFor(currentPosition)
+		const currentPosition = this.SetCurrentPositionWith(this.Adjustable, position, velocity)
+		this.AdjustForFocusAndCamera(currentPosition)
+		const screenX = this.ScreenXFor(currentPosition)
+		const screenY = this.ScreenYFor(currentPosition)
+		currentPosition.z = position.z
 		const config = this.Config.Sprites[sprite]
 		const frameX = frameIndex % config.framesX
 		const frameY = Math.floor(frameIndex / config.framesX) % config.framesY
-		this.DisplayProvider.draw(sprite, screenPosition.x, screenPosition.y, frameX, frameY, this.sortingNumberFor(currentPosition.withZ(position.z), layer))
+		this.DisplayProvider.draw(sprite, screenX, screenY, frameX, frameY, this.sortingNumberFor(currentPosition, layer))
 	}
 
 	private AdjustForFocusAndCamera(position: Vector3) {
 		const diagonalFactor = 0.75 //1/MathF.Sqrt(2);
-		const pos = position.subtract(this.State.FocusPoint)
+		const pos = position.subtractFrom(this.State.FocusPoint)
 		switch (this.State.ViewDirection) {
-			case ViewDirection.NorthEast: return new Vector3((pos.x + pos.y) * diagonalFactor, (-pos.x + pos.y) * diagonalFactor, pos.z)
-			case ViewDirection.East: return new Vector3(pos.y, -pos.x, pos.z)
-			case ViewDirection.SouthEast: return new Vector3((-pos.x + pos.y) * diagonalFactor, (-pos.x - pos.y) * diagonalFactor, pos.z)
-			case ViewDirection.South: return new Vector3(-pos.x, -pos.y, pos.z)
-			case ViewDirection.SouthWest: return new Vector3((-pos.x - pos.y) * diagonalFactor, (pos.x - pos.y) * diagonalFactor, pos.z)
-			case ViewDirection.West: return new Vector3(-pos.y, pos.x, pos.z)
-			case ViewDirection.NorthWest: return new Vector3((pos.x - pos.y) * diagonalFactor, (pos.x + pos.y) * diagonalFactor, pos.z)
+			case ViewDirection.NorthEast: return position.set((pos.x + pos.y) * diagonalFactor, (-pos.x + pos.y) * diagonalFactor, pos.z)
+			case ViewDirection.East: return position.set(pos.y, -pos.x, pos.z)
+			case ViewDirection.SouthEast: return position.set((-pos.x + pos.y) * diagonalFactor, (-pos.x - pos.y) * diagonalFactor, pos.z)
+			case ViewDirection.South: return position.set(-pos.x, -pos.y, pos.z)
+			case ViewDirection.SouthWest: return position.set((-pos.x - pos.y) * diagonalFactor, (pos.x - pos.y) * diagonalFactor, pos.z)
+			case ViewDirection.West: return position.set(-pos.y, pos.x, pos.z)
+			case ViewDirection.NorthWest: return position.set((pos.x - pos.y) * diagonalFactor, (pos.x + pos.y) * diagonalFactor, pos.z)
 			default: return pos
 		}
 	}
@@ -115,18 +130,18 @@ export class Camera {
 	private RevertFocusAndCameraAdjustment(pos: Vector3) {
 		const diagonalFactor = 1.33333 // inverted of above
 		const unrotated = this.RevertBla(pos, diagonalFactor)
-		return unrotated.add(this.State.FocusPoint)
+		return unrotated.addFrom(this.State.FocusPoint)
 	}
 
 	private RevertBla(pos: Vector3, diagonalFactor: number) {
 		switch (this.State.ViewDirection) {
-			case ViewDirection.NorthWest: return new Vector3((pos.x + pos.y) * diagonalFactor, (-pos.x + pos.y) * diagonalFactor, pos.z)
-			case ViewDirection.West: return new Vector3(pos.y, -pos.x, pos.z)
-			case ViewDirection.SouthWest: return new Vector3((-pos.x + pos.y) * diagonalFactor, (-pos.x - pos.y) * diagonalFactor, pos.z)
-			case ViewDirection.South: return new Vector3(-pos.x, -pos.y, pos.z)
-			case ViewDirection.SouthEast: return new Vector3((-pos.x - pos.y) * diagonalFactor, (pos.x - pos.y) * diagonalFactor, pos.z)
-			case ViewDirection.East: return new Vector3(-pos.y, pos.x, pos.z)
-			case ViewDirection.NorthEast: return new Vector3((pos.x - pos.y) * diagonalFactor, (pos.x + pos.y) * diagonalFactor, pos.z)
+			case ViewDirection.NorthWest: return pos.set((pos.x + pos.y) * diagonalFactor, (-pos.x + pos.y) * diagonalFactor, pos.z)
+			case ViewDirection.West: return pos.set(pos.y, -pos.x, pos.z)
+			case ViewDirection.SouthWest: return pos.set((-pos.x + pos.y) * diagonalFactor, (-pos.x - pos.y) * diagonalFactor, pos.z)
+			case ViewDirection.South: return pos.set(-pos.x, -pos.y, pos.z)
+			case ViewDirection.SouthEast: return pos.set((-pos.x - pos.y) * diagonalFactor, (pos.x - pos.y) * diagonalFactor, pos.z)
+			case ViewDirection.East: return pos.set(-pos.y, pos.x, pos.z)
+			case ViewDirection.NorthEast: return pos.set((pos.x - pos.y) * diagonalFactor, (pos.x + pos.y) * diagonalFactor, pos.z)
 			default: return pos
 		}
 	}
@@ -135,6 +150,14 @@ export class Camera {
 		return new Vector2(
 			position.x + this.State.Size.widthInTiles / 2,
 			position.y + this.State.Size.heightInTiles / 2 - this.Config.WallDisplayHeight * position.z)
+	}
+
+	private ScreenXFor(position: Vector3) {
+		return position.x + this.State.Size.widthInTiles / 2
+	}
+
+	private ScreenYFor(position: Vector3) {
+		return position.y + this.State.Size.heightInTiles / 2 - this.Config.WallDisplayHeight * position.z
 	}
 
 	private sortingNumberFor(position: Vector3, layer: number) {
@@ -171,18 +194,18 @@ export class Camera {
 	}
 
 	private UpdateDirections() {
-		this.TopTile = this.RotateAndRound(new Vector3(0, -1, 0))
-		this.TopRightTile = this.RotateAndRound(new Vector3(1, -1, 0))
-		this.RightTile = this.RotateAndRound(new Vector3(1, 0, 0))
-		this.BottomRightTile = this.RotateAndRound(new Vector3(1, 1, 0))
-		this.BottomTile = this.RotateAndRound(new Vector3(0, 1, 0))
-		this.BottomLeftTile = this.RotateAndRound(new Vector3(-1, 1, 0))
-		this.LeftTile = this.RotateAndRound(new Vector3(-1, 0, 0))
-		this.TopLeftTile = this.RotateAndRound(new Vector3(-1, -1, 0))
+		this.RotateAndRound(this.TopTile, this.BaseTopTile)
+		this.RotateAndRound(this.TopRightTile, this.BaseTopRightTile)
+		this.RotateAndRound(this.RightTile, this.BaseRightTile)
+		this.RotateAndRound(this.BottomRightTile, this.BaseBottomRightTile)
+		this.RotateAndRound(this.BottomTile, this.BaseBottomTile)
+		this.RotateAndRound(this.BottomLeftTile, this.BaseBottomLeftTile)
+		this.RotateAndRound(this.LeftTile, this.BaseLeftTile)
+		this.RotateAndRound(this.TopLeftTile, this.BaseTopLeftTile)
 	}
 
-	private RotateAndRound(vector: Vector3) {
-		const rotated = vector.rotate(AngleOf(this.State.ViewDirection))
+	private RotateAndRound(rotated: Vector3, vector: Vector3) {
+		rotated.setFrom(vector).rotateFrom(AngleOf(this.State.ViewDirection))
 		rotated.x = Math.round(rotated.x)
 		rotated.y = Math.round(rotated.y)
 		rotated.z = Math.round(rotated.z)
