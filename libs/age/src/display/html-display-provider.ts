@@ -5,12 +5,13 @@ import { ScreenSize } from "./screen-size"
 
 export interface DisplayProvider {
 	sortByDepth: boolean
-	startFrame()
-	draw(name: string, x: number, y: number, frameX: number, frameY: number, depth?: number)
-	endFrame()
-	drawString(text: string, x: number, y: number, font: string, fontSize: number, color?: string)
+	startFrame(): void
+	draw(name: string, x: number, y: number, frameX: number, frameY: number, depth?: number): void
+	endFrame(): void
+	drawString(text: string, x: number, y: number, font: string, fontSize: number, color?: string): void
 	getInputState(input: string): number
-	setSize(width: number, height: number)
+	endInputFrame(): void
+	setSize(width: number, height: number): void
 }
 
 export class HtmlDisplayProvider implements DisplayProvider {
@@ -133,6 +134,10 @@ export class HtmlDisplayProvider implements DisplayProvider {
 			case "MouseY": return this.modifyMouseY(state)
 			default: return state
 		}
+	}
+
+	endInputFrame() {
+		this.keyStates.endInputFrame()
 	}
 
 	private modifyMouseX(x: number) {

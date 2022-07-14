@@ -26,6 +26,7 @@ export class MeldGame extends GameRunner<GameUpdate> {
 		else
 			this.actions.push(new GenerateAction())
 		window.addEventListener("unload", this.onUnload)
+		this.afterGameUpdate = () => this.displayProvider.endInputFrame()
 	}
 
 	private onUnload = () => {

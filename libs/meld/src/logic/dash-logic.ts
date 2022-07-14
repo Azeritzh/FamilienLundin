@@ -20,17 +20,17 @@ export class DashLogic implements GameLogic<GameUpdate> {
 	) { }
 
 	update(actions: GameUpdate[]) {
-		for (const action of actions)
-			if (action instanceof ChargeDashAction)
-				this.UpdateCharge(action.Entity, action.Angle)
-			else if (action instanceof ReleaseDashAction)
-				this.ReleaseDash(action.Entity, action.Angle)
-
 		for (const [entity, state] of this.Entities.With.DashState)
 			if (state.IsCharging)
 				this.ChargeDash(entity, state)
 			else if (this.DashEffectShouldEnd(state))
 				this.EndDashEffect(entity)
+
+		for (const action of actions)
+			if (action instanceof ChargeDashAction)
+				this.UpdateCharge(action.Entity, action.Angle)
+			else if (action instanceof ReleaseDashAction)
+				this.ReleaseDash(action.Entity, action.Angle)
 	}
 
 	private ChargeDash(entity: Id, state: DashState) {
@@ -81,8 +81,8 @@ export class DashLogic implements GameLogic<GameUpdate> {
 		this.SetDashState.For(entity, new DashState(
 			this.Globals.Tick,
 			false,
-			angle,
 			0,
+			angle,
 		))
 
 		const oldVelocity = this.Velocity.Of(entity) ?? new Vector3(0, 0, 0)

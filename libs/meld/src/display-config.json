@@ -72,7 +72,7 @@
 		"CameraModeRotateCameraLeft": [ "PadX" ],
 		"CameraModeRotateCameraRight": [ "PadB" ],
 
-		"SelectNextItem": [ "Space" ],
+		"SelectNextItem": [ "MouseScrollUp" ],
 		"SelectPreviousItem": [ "MouseScrollDown" ],
 		"HoldWalk": [ "LeftControl" ],
 		"ToggleWalk": []

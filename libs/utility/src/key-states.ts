@@ -3,12 +3,14 @@ export class KeyStates {
 		public onDown: { [key: string]: (key: string) => void } = {},
 		public onUp: { [key: string]: (key: string) => void } = {},
 		private states: { [key: string]: number } = {},
+		private eventStates: { [key: string]: EventState } = {},
 	) {
 		window.addEventListener("keydown", this.onKeyDown, { capture: true })
 		window.addEventListener("keyup", this.onKeyUp)
 		window.addEventListener("mousemove", this.onMouseMove)
 		window.addEventListener("mousedown", this.onMouseDown)
 		window.addEventListener("mouseup", this.onMouseUp)
+		window.addEventListener("wheel", this.onScroll)
 	}
 
 	onDestroy() {
@@ -17,20 +19,25 @@ export class KeyStates {
 		window.removeEventListener("mousemove", this.onMouseMove)
 		window.removeEventListener("mousedown", this.onMouseDown)
 		window.removeEventListener("mouseup", this.onMouseUp)
+		window.removeEventListener("wheel", this.onScroll)
 	}
 
 	private onKeyDown = (event: KeyboardEvent) => {
 		if (this.states[event.code])
 			return
 		this.states[event.code] = 1
+		this.eventStates[event.code] = EventState.JustPressed
 		this.onDown[event.code]?.(event.code)
 	}
 
 	private onKeyUp = (event: KeyboardEvent) => {
 		if (!this.states[event.code])
 			return
-		this.states[event.code] = 0
 		this.onUp[event.code]?.(event.code)
+		if (this.eventStates[event.code] === EventState.JustPressed)
+			this.eventStates[event.code] = EventState.ShouldBeReset
+		else
+			this.states[event.code] = 0
 	}
 
 	private onMouseMove = (event: MouseEvent) => {
@@ -43,6 +50,7 @@ export class KeyStates {
 		if (this.states[code])
 			return
 		this.states[code] = 1
+		this.eventStates[code] = EventState.JustPressed
 		this.onDown[code]?.(code)
 	}
 
@@ -50,8 +58,11 @@ export class KeyStates {
 		const code = this.getMouseButtonCode(event)
 		if (!this.states[code])
 			return
-		this.states[code] = 0
 		this.onUp[code]?.(code)
+		if (this.eventStates[code] === EventState.JustPressed)
+			this.eventStates[code] = EventState.ShouldBeReset
+		else
+			this.states[code] = 0
 	}
 
 	private getMouseButtonCode(event: MouseEvent) {
@@ -60,6 +71,25 @@ export class KeyStates {
 			case 1: return "MouseMiddle"
 			case 2: return "MouseRight"
 		}
+	}
+
+	private onScroll = (event: WheelEvent) => {
+		if (event.deltaY > 0) {
+			this.states["MouseScrollDown"] = 1
+			this.eventStates["MouseScrollDown"] = EventState.ShouldBeReset
+		}
+		else if (event.deltaY < 0) {
+			this.states["MouseScrollUp"] = 1
+			this.eventStates["MouseScrollUp"] = EventState.ShouldBeReset
+		}
+	}
+
+	endInputFrame() {
+		for (const key in this.eventStates) {
+			if (this.eventStates[key] === EventState.ShouldBeReset)
+				this.states[key] = 0
+		}
+		this.eventStates = {}
 	}
 
 	getInputState(input: string) {
@@ -132,3 +162,5 @@ export class KeyStates {
 		}
 	}
 }
+
+enum EventState { JustPressed, ShouldBeReset }

@@ -27,9 +27,13 @@ export class GameRunner<Action> {
 	updateGame = () => {
 		//const start = performance.now()
 		this.game.update(...this.actions.splice(0), ...this.display.getNewActions())
+		this.afterGameUpdate()
 		//console.log(performance.now() - start)
 		this.lastUpdate = Date.now()
 	}
+
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	protected afterGameUpdate = () => { }
 
 	startDisplayLoop = () => {
 		this.updateDisplay()
