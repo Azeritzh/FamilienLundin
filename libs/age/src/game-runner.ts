@@ -1,5 +1,6 @@
 import { BaseDisplay } from "./base-display"
 import { BaseGame } from "./base-game"
+import { finishTiming, startTiming } from "./services/performance"
 
 export class GameRunner<Action> {
 	private timerId: number
@@ -25,10 +26,10 @@ export class GameRunner<Action> {
 	}
 
 	updateGame = () => {
-		//const start = performance.now()
+		startTiming("gameUpdate")
 		this.game.update(...this.actions.splice(0), ...this.display.getNewActions())
 		this.afterGameUpdate()
-		//console.log(performance.now() - start)
+		finishTiming("gameUpdate")
 		this.lastUpdate = Date.now()
 	}
 

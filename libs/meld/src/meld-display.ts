@@ -1,4 +1,4 @@
-import { BaseDisplay, HtmlDisplayProvider } from "@lundin/age"
+import { BaseDisplay, finishTiming, HtmlDisplayProvider, startTiming } from "@lundin/age"
 import { Camera } from "./display/camera"
 import { DisplayConfig } from "./display/display-config"
 import { DisplayState } from "./display/display-state"
@@ -37,10 +37,10 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		if (firstEntity !== undefined && firstEntity !== null)
 			this.camera.FocusOn(firstEntity)
 		this.Display.startFrame()
-		//const start = performance.now()
+		startTiming("displayUpdate")
 		this.worldDrawer.DrawWorld()
 		this.hudDrawer.Draw()
-		//console.log(performance.now() - start)
+		finishTiming("displayUpdate")
 		this.Display.endFrame()
 	}
 

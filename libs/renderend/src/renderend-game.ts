@@ -37,6 +37,7 @@ export class RenderendGame extends GameRunner<RenderendAction> {
 	}
 
 	onDestroy() {
+		super.onDestroy()
 		this.resizeObserver.disconnect()
 	}
 }
