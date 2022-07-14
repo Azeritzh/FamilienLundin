@@ -24,7 +24,7 @@ export class Vector3 {
 			0)
 	}
 
-	getAngle( ) {
+	getAngle() {
 		const angle = Math.atan2(this.y, this.x)
 		return angle < 0 ? angle + Math.PI * 2 : angle
 	}
@@ -75,5 +75,23 @@ export class Vector3 {
 
 	withZ(z: number) {
 		return new Vector3(this.x, this.y, z)
+	}
+
+	set(x: number, y: number, z: number) {
+		this.x = x
+		this.y = y
+		this.z = z
+		return this
+	}
+
+	setFrom(vector: Vector3) {
+		this.set(vector.x, vector.y, vector.z)
+		return this
+	}
+
+	/** Add the given vector in-place */
+	addFrom(vector: Vector3) {
+		this.set(this.x + vector.x, this.y + vector.y, this.z + vector.z)
+		return this
 	}
 }
