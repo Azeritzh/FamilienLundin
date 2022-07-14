@@ -30,7 +30,7 @@ export class TerrainDrawer {
 		else
 			this.DrawTileOverlays(block, position)
 		this.DrawWallOverlays(block, position)
-		// this.DrawWallShadows(block, position, rightPosition) // disabled because transparency with webgl seems to be weird
+		this.DrawWallShadows(block, position) // disabled because transparency with webgl seems to be weird
 	}
 
 	private DrawBlockTile(block: Block, position: Vector3) {
@@ -179,7 +179,8 @@ export class TerrainDrawer {
 		return blockType
 	}
 
-	private DrawWallShadows(leftBlock: Block, leftPosition: Vector3, rightPosition: Vector3) {
+	private DrawWallShadows(leftBlock: Block, leftPosition: Vector3) {
+		const rightPosition = leftPosition.add(this.Camera.RightTile)
 		const rightBlock = this.Game.Terrain.GetAt(rightPosition)
 		if (!rightBlock)
 			return

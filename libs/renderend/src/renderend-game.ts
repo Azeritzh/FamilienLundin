@@ -20,6 +20,7 @@ export class RenderendGame extends GameRunner<RenderendAction> {
 		super(renderendDisplay, game, updatesPerSecond)
 		this.resizeObserver.observe(hostElement)
 		this.actions.push(new StartGameAction)
+		this.afterGameUpdate = () => this.displayProvider.endInputFrame()
 	}
 
 	static createAt(hostElement: HTMLElement, displayConfig: any) {

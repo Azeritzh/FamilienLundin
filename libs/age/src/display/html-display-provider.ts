@@ -41,6 +41,7 @@ export class HtmlDisplayProvider implements DisplayProvider {
 
 	private initialiseCanvas() {
 		this.hostElement.style.position = "relative"
+		this.hostElement.style.backgroundColor = "black"
 		this.canvas = document.createElement("canvas")
 		this.canvas.style.position = "absolute"
 		if (this.config.RenderToVirtualSize) {

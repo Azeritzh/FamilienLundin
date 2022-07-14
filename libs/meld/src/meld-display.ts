@@ -22,7 +22,7 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		private terrainDrawer = new TerrainDrawer(Game, Config, State, camera),
 		private entityDrawer = new EntityDrawer(Game, camera),
 		private worldDrawer = new WorldDrawer(Game, Config, camera, terrainDrawer, entityDrawer),
-		private hudDrawer = new HudDrawer(Game, State, Display),
+		private hudDrawer = new HudDrawer(Game,Config, State, Display),
 	) {
 		Display.sortByDepth = true
 	}
