@@ -265,7 +265,7 @@ export class TerrainDrawer {
 			case Side.Top: return tileOverlays.tileOverlayTop
 			case Side.Left: return tileOverlays.tileOverlayLeft
 			case Side.Right: return tileOverlays.tileOverlayRight
-			case Side.TopLeft: return tileOverlays.tileOverlayRight
+			case Side.TopLeft: return tileOverlays.tileOverlayTopLeft
 			case Side.TopRight: return tileOverlays.tileOverlayTopRight
 			case Side.BottomLeft: return tileOverlays.tileOverlayBottomLeft
 			case Side.BottomRight: return tileOverlays.tileOverlayBottomRight

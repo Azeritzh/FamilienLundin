@@ -124,16 +124,16 @@
 			{
 				"straightTile": "dirt-tile",
 				"straightFullWall": "dirt-wall",
-				"diagonalTile": "dirt-tile",
-				"diagonalFullWall": "dirt-wall"
+				"diagonalTile": "dirt-tile-diagonal",
+				"diagonalFullWall": "dirt-wall-diagonal"
 			}
 		],
 		"earth": [
 			{
 				"straightTile": "earth-tile",
 				"straightFullWall": "earth-wall",
-				"diagonalTile": "earth-tile",
-				"diagonalFullWall": "earth-wall"
+				"diagonalTile": "earth-tile-diagonal",
+				"diagonalFullWall": "earth-wall-diagonal"
 			}
 		],
 		"stone": [
@@ -148,8 +148,8 @@
 			{
 				"straightTile": "slab-tile",
 				"straightFullWall": "slab-wall",
-				"diagonalTile": "slab-tile",
-				"diagonalFullWall": "slab-wall"
+				"diagonalTile": "slab-tile-diagonal",
+				"diagonalFullWall": "slab-wall-diagonal"
 			}
 		],
 		"wooden": [
@@ -317,9 +317,13 @@
 			"centerY": 8
 		},
 		"dirt-tile": { "type": "defaultTile" },
+		"dirt-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"dirt-wall": { "type": "defaultFullWall" },
+		"dirt-wall-diagonal": { "type": "defaultDiagonalFullWall" },
 		"earth-tile": { "type": "defaultTile" },
+		"earth-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"earth-wall": { "type": "defaultFullWall" },
+		"earth-wall-diagonal": { "type": "defaultDiagonalFullWall" },
 		"grass-tile": {
 			"type": "defaultTile",
 			"framesX": 4,
@@ -358,7 +362,9 @@
 			"centerY": -8
 		},
 		"slab-tile": { "type": "defaultTile" },
+		"slab-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"slab-wall": { "type": "defaultFullWall" },
+		"slab-wall-diagonal": { "type": "defaultDiagonalFullWall" },
 		"stone-tile": { "type": "defaultTile" },
 		"stone-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"stone-wall": { "type": "defaultFullWall" },

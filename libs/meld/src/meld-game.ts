@@ -20,7 +20,7 @@ export class MeldGame extends GameRunner<GameUpdate> {
 	) {
 		super(meldDisplay, meld, updatesPerSecond)
 		this.resizeObserver.observe(hostElement)
-		const saved = localStorage["meld-save"]
+		const saved = localStorage["meld-save-0.3"]
 		if (saved)
 			this.actions.push(new LoadState(readGameState(meld.Config, JSON.parse(saved))))
 		else
@@ -35,7 +35,7 @@ export class MeldGame extends GameRunner<GameUpdate> {
 
 	private saveGame() {
 		const saved = createGameState(this.meld.Config, this.meld.State)
-		localStorage["meld-save"] = JSON.stringify(saved)
+		localStorage["meld-save-0.3"] = JSON.stringify(saved)
 	}
 
 	static createAt(hostElement: HTMLElement, displayConfig: any) {
