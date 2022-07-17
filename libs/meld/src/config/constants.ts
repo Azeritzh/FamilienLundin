@@ -16,8 +16,8 @@ export class Constants {
 		public DashChargeSpeed: number,
 		public DashDuration: number,
 		public DashCooldown: number,
-		public DashQuickChargeWindowStart: number,
-		public DashQuickChargeWindowEnd: number,
-		public DashQuickChargeMinimumAngle: number,
+		public QuickDashWindowStart: number,
+		public QuickDashWindowEnd: number,
+		public QuickDashMinimumAngle: number,
 	) { }
 }

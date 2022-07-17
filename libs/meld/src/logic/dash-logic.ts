@@ -17,6 +17,7 @@ export class DashLogic implements GameLogic<GameUpdate> {
 		private SetGravityBehaviour: ValueSetter<boolean>,
 		private Velocity: ValueGetter<Vector3>,
 		private SetVelocity: ValueSetter<Vector3>,
+		public Listeners: DashListener[] = [],
 	) { }
 
 	update(actions: GameUpdate[]) {
@@ -37,6 +38,7 @@ export class DashLogic implements GameLogic<GameUpdate> {
 		this.SetDashState.For(entity, new DashState(
 			state.TimeOfLastDash,
 			state.IsCharging,
+			state.HasFailedQuickDash,
 			state.Charge + this.Constants.DashChargeSpeed,
 			state.Angle,
 		))
@@ -53,42 +55,76 @@ export class DashLogic implements GameLogic<GameUpdate> {
 
 	private UpdateCharge(entity: Id, angle: number) {
 		const state = this.DashState.CurrentlyOf(entity) ?? new DashState()
-		const timeSinceLastDash = this.Globals.Tick - state.TimeOfLastDash
-		if (this.CooldownHasPassed(timeSinceLastDash) || this.CanQuickCharge(timeSinceLastDash, angle, state.Angle))
+		if (this.CooldownHasPassed(state))
 			this.SetDashState.For(entity, new DashState(
 				state.TimeOfLastDash,
 				true,
+				false,
 				state.Charge + this.Constants.DashChargeSpeed,
 				angle,
 			))
 	}
 
-	private CooldownHasPassed(timeSinceLastDash: number) {
+	private CooldownHasPassed(state: DashState) {
+		const timeSinceLastDash = this.Globals.Tick - state.TimeOfLastDash
 		return timeSinceLastDash > this.Constants.DashCooldown
-	}
-
-	private CanQuickCharge(timeSinceLastDash: number, newAngle: number, oldAngle: number) {
-		return this.Constants.DashQuickChargeWindowStart < timeSinceLastDash && timeSinceLastDash < this.Constants.DashQuickChargeWindowEnd
-			&& Math.abs(newAngle - oldAngle) > this.Constants.DashQuickChargeMinimumAngle
 	}
 
 	private ReleaseDash(entity: Id, angle: number) {
 		const state = this.DashState.CurrentlyOf(entity) ?? new DashState()
-		if (!state.IsCharging)
+		if (this.CanQuickDash(state, angle) && !state.IsCharging) {
+			this.SetDashState.For(entity, new DashState(
+				state.TimeOfLastDash,
+				state.IsCharging,
+				true,
+				state.Charge,
+				state.Angle,
+			))
+			this.Notify(entity, false, new DashState(
+				state.TimeOfLastDash,
+				state.IsCharging,
+				state.HasFailedQuickDash,
+				state.Charge,
+				angle,
+			))
 			return
+		}
 
 		const strength = Math.min(state.Charge + this.Constants.InitialDashCharge, this.Constants.MaxDashCharge)
 		this.SetDashState.For(entity, new DashState(
 			this.Globals.Tick,
 			false,
+			state.HasFailedQuickDash,
 			0,
 			angle,
 		))
 
-		const oldVelocity = this.Velocity.Of(entity) ?? new Vector3(0, 0, 0)
-		const dashVelocity = new Vector3(strength, 0, 0).rotate(angle)
-		const newVelocity = dashVelocity.add(oldVelocity)
+		const verticalVelocity = this.Velocity.Of(entity)?.z ?? 0
+		const newVelocity = new Vector3(strength, 0, 0).rotate(angle)
+		newVelocity.z = verticalVelocity
 		this.SetVelocity.For(entity, newVelocity)
 		this.SetGravityBehaviour.For(entity, false)
+		this.Notify(entity, true, new DashState(
+			state.TimeOfLastDash,
+			state.IsCharging,
+			state.HasFailedQuickDash,
+			state.Charge,
+			angle,
+		))
 	}
+
+	private CanQuickDash(state: DashState, newAngle: number) {
+		return !state.HasFailedQuickDash
+			&& state.IsInInterval(this.Globals.Tick, this.Constants.QuickDashWindowStart, this.Constants.QuickDashWindowEnd)
+			&& state.IsWithinAngle(newAngle, this.Constants.QuickDashMinimumAngle)
+	}
+
+	private Notify(entity: Id, success: boolean, state: DashState) {
+		for(const listener of this.Listeners)
+			listener.OnDash(entity, success, state)
+	}
+}
+
+export interface DashListener {
+	OnDash: (entity: Id, success: boolean, state: DashState) => void
 }
