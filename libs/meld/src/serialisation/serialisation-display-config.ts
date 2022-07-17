@@ -1,5 +1,5 @@
 import { GameConfig } from "../config/game-config"
-import { BlockSprites, BlockTileOverlays, BlockWallOverlays, DisplayConfig, SpriteInfo } from "../display/display-config"
+import { BlockSprites, BlockTileOverlays, BlockWallOverlays, DisplayConfig, GameplaySprites, SpriteInfo } from "../display/display-config"
 import { Input } from "../display/input-parser"
 import { updatesPerSecond } from "../meld-game"
 import { SolidId } from "../state/block"
@@ -50,8 +50,16 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 		BlockSprites: blockSprites,
 		BlockTileOverlays: blockTileOverlays,
 		BlockWallOverlays: blockWallOverlays,
+		GameplaySprites: Object.assign(new GameplaySprites(), ToPascalCase(deserialised.gameplaySprites) ?? {}),
 		Sprites: sprites,
 	}
+}
+
+function ToPascalCase(object: any) {
+	const newObject = {}
+	for (const key in object)
+		newObject[key[0].toUpperCase() + key.substring(1)] = object[key]
+	return newObject
 }
 
 function spriteInfoFrom(
@@ -87,6 +95,7 @@ export interface SerialisableDisplayConfig {
 	blockSprites?: { [index: string]: SerialisableBlockSprites[] },
 	blockTileOverlays?: { [index: string]: BlockTileOverlays },
 	blockWallOverlays?: { [index: string]: BlockWallOverlays },
+	gameplaySprites: { [index: string]: string },
 	sprites: { [index: string]: SerialisedSpriteInfo },
 
 	defaultSpriteTypes?: { [index: string]: SerialisedSpriteInfo },

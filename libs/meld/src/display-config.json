@@ -108,6 +108,12 @@
 			"height": 16,
 			"centerX": 8,
 			"centerY": 8
+		},
+		"tileSize": {
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
 		}
 	},
 
@@ -172,6 +178,20 @@
 			"tileOverlayBottomLeft": "grass-tile-bottom",
 			"tileOverlayBottomRight": "grass-tile-right"
 		}
+	},
+	"gameplaySprites": {
+		"shadowSmall": "shadow-medium",
+		"shadowMedium": "shadow-medium",
+		"shadowBig": "shadow-medium",
+		"dashCloud": "dash-cloud",
+		"dashRecharge": "dash-recharge",
+		"dashTarget": "dash-target",
+		"dashTargetFade": "dash-target-fade",
+		"dashFail": "dash-fail",
+		"dashMarker": "dash-marker",
+		"dashFailMarker": "dash-fail-marker",
+		"hudLeft": "hud-life-energy",
+		"hudRight": "hud-tool-items"
 	},
 
 	"sprites": {
@@ -381,6 +401,54 @@
 			"width": 46,
 			"height": 166,
 			"centerX": 46
+		},
+		"dash-cloud": {
+			"width": 48,
+			"height": 48,
+			"centerX": 24,
+			"centerY": 24,
+			"framesX": 3,
+			"framesY": 3,
+			"frameInterval": 0.1
+		},
+		"dash-recharge": {
+			"width": 48,
+			"height": 48,
+			"centerX": 24,
+			"centerY": 24,
+			"framesX": 3,
+			"framesY": 3,
+			"frameInterval": 0.05
+		},
+		"dash-target": {
+			"type": "tileSize",
+			"framesX": 2,
+			"framesY": 2,
+			"frameInterval": 0.085
+		},
+		"dash-target-fade": {
+			"type": "tileSize",
+			"framesX": 2,
+			"framesY": 2,
+			"frameInterval": 0.085
+		},
+		"dash-fail": {
+			"type": "tileSize",
+			"framesX": 2,
+			"framesY": 2,
+			"frameInterval": 0.1
+		},
+		"dash-marker": {
+			"type": "tileSize",
+			"framesX": 4,
+			"framesY": 3,
+			"frameInterval": 0.085
+		},
+		"dash-fail-marker": {
+			"type": "tileSize",
+			"framesX": 4,
+			"framesY": 3,
+			"frameInterval": 0.085
 		}
 	}
 }

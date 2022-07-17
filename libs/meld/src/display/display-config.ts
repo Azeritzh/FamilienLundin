@@ -17,7 +17,25 @@ export interface DisplayConfig {
 	BlockSprites: Map<SolidId, BlockSprites[]>
 	BlockTileOverlays: Map<SolidId, BlockTileOverlays>
 	BlockWallOverlays: Map<SolidId, BlockWallOverlays>
+	GameplaySprites: GameplaySprites
 	Sprites: { [index: string]: SpriteInfo }
+}
+
+export class GameplaySprites {
+	constructor(
+		public ShadowSmall = "missing-sprite",
+		public ShadowMedium = "missing-sprite",
+		public ShadowBig = "missing-sprite",
+		public DashCloud = "missing-sprite",
+		public DashRecharge = "missing-sprite",
+		public DashTarget = "missing-sprite",
+		public DashTargetFade = "missing-sprite",
+		public DashFail = "missing-sprite",
+		public DashMarker = "missing-sprite",
+		public DashFailMarker = "missing-sprite",
+		public HudLeft = "missing-sprite",
+		public HudRight = "missing-sprite"
+	) { }
 }
 
 export interface SpriteInfo {
@@ -31,7 +49,7 @@ export interface SpriteInfo {
 	frameInterval: number
 }
 
-export function DurationOf(info: SpriteInfo){
+export function DurationOf(info: SpriteInfo) {
 	return info.framesX * info.framesY * info.frameInterval
 }
 

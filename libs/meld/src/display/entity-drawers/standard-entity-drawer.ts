@@ -1,18 +1,18 @@
 import { Id, EntityTypeOf } from "@lundin/age"
-import { Meld } from "../meld"
-import { Camera, Layer } from "./camera"
+import { Meld } from "../../meld"
+import { Camera, Layer } from "../camera"
 
-export class EntityDrawer {
+export class StandardEntityDrawer {
 	constructor(
 		private Game: Meld,
 		private Camera: Camera,
 	) { }
 
 	Draw(entity: Id) {
-		if (EntityTypeOf(entity) === this.Game.Config.Constants.PlayerType)
-			this.drawPlayer(entity)
-		else
-			this.drawGeneralEntity(entity)
+		//if (EntityTypeOf(entity) === this.Game.Config.Constants.PlayerType)
+		//	this.drawPlayer(entity)
+		//else
+		this.drawGeneralEntity(entity)
 	}
 
 	private drawGeneralEntity(entity: Id) {

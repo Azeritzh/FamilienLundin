@@ -47,9 +47,9 @@ function constantsFrom(serialised: any, entityTypeMap: TypeMap) {
 }
 
 function groupedEntityValuesFrom(serialised: any, blockTypeMap: TypeMap): GroupedEntityValues {
-	return {
+	return { // Remember to add stuff in game state serialisation
 		CircularSize: serialised.circularSize ? Object.assign(new CircularSize(0, 0), serialised.circularSize) : null,
-		DashState: serialised.DashState ?  Object.assign(new DashState(), serialised.dashState) : null,
+		DashState: serialised.DashState ? Object.assign(new DashState(), serialised.dashState) : null,
 		Health: serialised.health,
 		Orientation: serialised.orientation,
 		Position: serialised.position ? Object.assign(new Vector3(0, 0, 0), serialised.position) : null,

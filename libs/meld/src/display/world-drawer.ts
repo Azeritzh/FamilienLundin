@@ -1,8 +1,8 @@
+import { Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Meld } from "../meld"
 import { Camera, DisplayArea } from "./camera"
 import { DisplayConfig } from "./display-config"
-import { EntityDrawer } from "./entity-drawer"
 import { TerrainDrawer } from "./terrain-drawer"
 
 export class WorldDrawer {
@@ -11,7 +11,7 @@ export class WorldDrawer {
 		private Config: DisplayConfig,
 		private Camera: Camera,
 		private TerrainDrawer: TerrainDrawer,
-		private EntityDrawer: EntityDrawer,
+		private EntityDrawers: EntityDrawer[],
 	) { }
 
 	DrawWorld() {
@@ -29,7 +29,8 @@ export class WorldDrawer {
 				if (this.Camera.IsWithinScreen(new Vector3(x, y, layer)))
 					this.TerrainDrawer.DrawBlockContent(x, y, layer)
 		for (const entity of entitiesInLayer)
-			this.EntityDrawer.Draw(entity)
+			for (const drawer of this.EntityDrawers)
+				drawer.Draw(entity)
 	}
 
 	private entitiesInArea(layer: number, area: DisplayArea) {
@@ -43,4 +44,8 @@ export class WorldDrawer {
 			&& area.top <= position.y && position.y < area.bottom
 			&& Math.floor(position.z) == layer
 	}
+}
+
+export interface EntityDrawer {
+	Draw(entity: Id): void
 }

@@ -4,6 +4,7 @@ import { GameConfig } from "../config/game-config"
 import { Block, Blocks } from "../state/block"
 import { EntityValues, GroupedEntityValues } from "../state/entity-values"
 import { GameState } from "../state/game-state"
+import { DashState } from "../values/dash-state"
 
 export function createGameState(config: GameConfig, state: GameState) {
 	return serialiseGameState(state, config)
@@ -167,10 +168,12 @@ function serialiseBlockChunk(chunk: BlockChunk<Block>, coords: Vector3): Seriali
 
 function groupedEntityValuesFrom(serialised: any) {
 	const values: GroupedEntityValues = { ...serialised }
-	if (serialised.Position)
-		values.Position = Object.assign(new Vector3(0, 0, 0), serialised.Position)
 	if (serialised.CircularSize)
 		values.CircularSize = Object.assign(new CircularSize(0, 0), serialised.CircularSize)
+	if (serialised.DashState)
+		values.DashState = Object.assign(new DashState(), serialised.DashState)
+	if (serialised.Position)
+		values.Position = Object.assign(new Vector3(0, 0, 0), serialised.Position)
 	if (serialised.Velocity)
 		values.Velocity = Object.assign(new Vector3(0, 0, 0), serialised.Velocity)
 	return values
