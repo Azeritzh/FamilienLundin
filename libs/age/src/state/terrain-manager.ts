@@ -1,4 +1,5 @@
 import { range, Vector3 } from "@lundin/utility"
+import { Box } from "../values/box"
 import { BlockChunk } from "./block-chunk"
 
 export class TerrainManager<Field> {
@@ -6,6 +7,7 @@ export class TerrainManager<Field> {
 		private chunkSize = new Vector3(10, 10, 1),
 		private chunks: Map<string, BlockChunk<Field>>,
 		private updatedBlocks = new Map<string, Field>(),
+		public WorldBounds: Box = null, // TODO: do this differently. See also LoadStateLogic
 	) { }
 
 	public AddChunk(x: number, y: number, z: number) {
@@ -17,6 +19,14 @@ export class TerrainManager<Field> {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
+
+		if (this.WorldBounds && !this.WorldBounds.containsPoint(x, y, z)) {
+			const position = this.WorldBounds.Contain(new Vector3(x, y, z))
+			x = position.x
+			y = position.y
+			z = position.z
+		}
+
 		const chunk = this.chunks.get(this.getChunkCoords(x, y, z))
 		return chunk?.Get(x, y, z)
 		// ?? this.defaultTile
@@ -98,12 +108,19 @@ export class TerrainManager<Field> {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
+
+		if (this.WorldBounds && !this.WorldBounds.containsPoint(x, y, z)) {
+			const position = this.WorldBounds.Contain(new Vector3(x, y, z))
+			x = position.x
+			y = position.y
+			z = position.z
+		}
+
 		this.updatedBlocks.set(Vector3.stringify(x, y, z), field)
 	}
 
 	public SetAt(position: Vector3, field: Field) {
-		const pos = Vector3.stringify(Math.floor(position.x), Math.floor(position.y), Math.floor(position.z))
-		this.updatedBlocks.set(pos, field)
+		this.Set(field, position.x, position.y, position.z)
 	}
 
 	public ApplyUpdatedValues() {

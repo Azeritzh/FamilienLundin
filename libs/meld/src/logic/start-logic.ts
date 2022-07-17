@@ -1,4 +1,4 @@
-import { GameLogic, Random, TerrainManager, ValueSetter } from "@lundin/age"
+import { Box, GameLogic, Random, TerrainManager, ValueSetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
 import { Block, Blocks } from "../state/block"
@@ -41,6 +41,7 @@ export class StartLogic implements GameLogic<GameUpdate> {
 					this.Terrain.Set(Blocks.NewFloor(this.Random.get.in(types), 0), position.x, position.y, position.z)
 				else
 					this.Terrain.Set(Blocks.NewFull(this.Random.get.in(types)), position.x, position.y, position.z)
+		this.State.Globals.WorldBounds = new Box(-50, 50, -50, 50, -5, 5)
 	}
 
 	private clearEntities() {

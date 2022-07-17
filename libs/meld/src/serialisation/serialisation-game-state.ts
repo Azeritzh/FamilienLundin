@@ -1,10 +1,11 @@
-import { BlockChunk, CircularSize, Id, TypeMap } from "@lundin/age"
+import { BlockChunk, Box, CircularSize, Id, TypeMap } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
 import { Block, Blocks } from "../state/block"
 import { EntityValues, GroupedEntityValues } from "../state/entity-values"
 import { GameState } from "../state/game-state"
 import { DashState } from "../values/dash-state"
+import { ToPascalCase } from "./serialisation-display-config"
 
 export function createGameState(config: GameConfig, state: GameState) {
 	return serialiseGameState(state, config)
@@ -67,11 +68,18 @@ function gameStateFrom(config: GameConfig, deserialised: SerialisableGameState) 
 		players.set(playerId, deserialised.Players[playerId])
 
 	return new GameState(
-		deserialised.Globals,
+		readGlobals(deserialised.Globals),
 		entityValues,
 		chunks,
 		players,
 	)
+}
+
+function readGlobals(deserialised: any) {
+	const globals = ToPascalCase(deserialised)
+	if (globals.WorldBounds)
+		globals.WorldBounds = Object.assign(new Box(0, 0, 0, 0, 0, 0), globals.WorldBounds)
+	return globals
 }
 
 function UnadjustedGameStateFrom(deserialised: SerialisableGameState) {
@@ -88,7 +96,7 @@ function UnadjustedGameStateFrom(deserialised: SerialisableGameState) {
 		players.set(playerId, deserialised.Players[playerId])
 
 	return new GameState(
-		deserialised.Globals,
+		readGlobals(deserialised.Globals),
 		entityValues,
 		chunks,
 		players,
@@ -174,6 +182,8 @@ function groupedEntityValuesFrom(serialised: any) {
 		values.DashState = Object.assign(new DashState(), serialised.DashState)
 	if (serialised.Position)
 		values.Position = Object.assign(new Vector3(0, 0, 0), serialised.Position)
+	if (serialised.TargetVelocity)
+		values.TargetVelocity = Object.assign(new Vector3(0, 0, 0), serialised.TargetVelocity)
 	if (serialised.Velocity)
 		values.Velocity = Object.assign(new Vector3(0, 0, 0), serialised.Velocity)
 	return values

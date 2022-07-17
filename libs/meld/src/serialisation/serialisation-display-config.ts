@@ -55,7 +55,7 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 	}
 }
 
-function ToPascalCase(object: any) {
+export function ToPascalCase(object: any): any {
 	const newObject = {}
 	for (const key in object)
 		newObject[key[0].toUpperCase() + key.substring(1)] = object[key]

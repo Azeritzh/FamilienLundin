@@ -16,6 +16,7 @@ import { LoadStateLogic } from "./logic/load-state-logic"
 import { BlockCollisionLogic } from "./logic/block-collision-logic"
 import { GravityLogic } from "./logic/gravity-logic"
 import { DashLogic } from "./logic/dash-logic"
+import { OutOfBoundsLogic } from "./logic/out-of-bounds-logic"
 
 export class Meld extends BaseGame<GameUpdate> {
 	constructor(
@@ -55,6 +56,7 @@ export class Meld extends BaseGame<GameUpdate> {
 		),
 		public readonly loadStateLogic = new LoadStateLogic(
 			State,
+			Terrain,
 		),
 		public readonly movementLogic = new MovementLogic(
 			Config.Constants,
@@ -64,6 +66,12 @@ export class Meld extends BaseGame<GameUpdate> {
 			Entities.TargetVelocity.Set,
 			Entities.Velocity.Get,
 			Entities.Velocity.Set,
+		),
+		public readonly outOfBoundsLogic = new OutOfBoundsLogic(
+			State.Globals,
+			Entities,
+			Entities.Position.Get,
+			Entities.Position.Set,
 		),
 		public readonly placeBlockLogic = new PlaceBlockLogic(
 			Terrain,
@@ -103,6 +111,7 @@ export class Meld extends BaseGame<GameUpdate> {
 			gravityLogic,
 			blockCollisionLogic,
 			velocityLogic,
+			outOfBoundsLogic,
 			placeBlockLogic,
 			selectedItemLogic,
 			startLogic,

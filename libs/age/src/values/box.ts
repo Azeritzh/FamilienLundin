@@ -44,9 +44,37 @@ export class Box { // struct
 		)
 	}
 
+	containsPoint(x: number, y: number, z: number) {
+		return this.minX <= x && x < this.maxX
+			&& this.minY <= y && y < this.maxY
+			&& this.minZ <= z && z < this.maxZ
+	}
+
 	contains(point: Vector3) {
-		return this.minX <= point.x && point.x <= this.maxX
-			&& this.minY <= point.y && point.y <= this.maxY
-			&& this.minZ <= point.z && point.z <= this.maxZ
+		return this.minX <= point.x && point.x < this.maxX
+			&& this.minY <= point.y && point.y < this.maxY
+			&& this.minZ <= point.z && point.z < this.maxZ
+	}
+
+	/// <summary>
+	/// This is like 5%3 -> 2, but instead 5 is a box and 3 and 2 are vectors.
+	/// </summary>
+	public Contain(position: Vector3) {
+		let x = position.x
+		if (x < this.minX)
+			x += (this.maxX - this.minX)
+		else if (x >= this.maxX)
+			x -= (this.maxX - this.minX)
+		let y = position.y
+		if (y < this.minY)
+			y += this.maxY - this.minY
+		else if (y >= this.maxY)
+			y -= (this.maxY - this.minY)
+		let z = position.z
+		if (z < this.minZ)
+			z += this.maxZ - this.minZ
+		else if (z >= this.maxZ)
+			z -= (this.maxZ - this.minZ)
+		return new Vector3(x, y, z)
 	}
 }

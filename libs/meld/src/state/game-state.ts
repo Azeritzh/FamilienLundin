@@ -19,6 +19,7 @@ export class GameState {
 		this.Globals.Tick = state.Globals.Tick
 		this.Globals.Seed = state.Globals.Seed
 		this.Globals.NextId = state.Globals.NextId
+		this.Globals.WorldBounds = state.Globals.WorldBounds
 
 		this.EntityValues.ClearValues()
 		this.EntityValues.Entities.clear()
