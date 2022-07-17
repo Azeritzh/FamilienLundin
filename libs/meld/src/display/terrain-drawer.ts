@@ -94,7 +94,7 @@ export class TerrainDrawer {
 		const finalPosition = this.Adjustable.setFrom(position).addFrom(TerrainDrawer.BlockCenter)
 		if (Blocks.TypeOf(block) === BlockType.Half && smallestInFront < BlockType.Half)
 			this.Camera.DrawAnimated(this.HalfWallSpriteFor(block), Layer.Middle - Layer.ZFightingAdjustment, finalPosition, null, this.AnimationStartFor(position))
-		if (Blocks.TypeOf(block) === BlockType.Full && smallestInFront === BlockType.Full)
+		if (Blocks.TypeOf(block) === BlockType.Full && smallestInFront !== BlockType.Full)
 			this.Camera.DrawAnimated(this.FullWallSpriteFor(block), Layer.Middle, finalPosition, null, this.AnimationStartFor(position))
 	}
 

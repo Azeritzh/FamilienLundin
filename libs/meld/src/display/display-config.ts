@@ -31,6 +31,10 @@ export interface SpriteInfo {
 	frameInterval: number
 }
 
+export function DurationOf(info: SpriteInfo){
+	return info.framesX * info.framesY * info.frameInterval
+}
+
 export class BlockSprites {
 	constructor(
 		public TileNorth: string,

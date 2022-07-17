@@ -1,6 +1,7 @@
 import { ScreenSize } from "@lundin/age"
-import { Vector2, Vector3 } from "@lundin/utility"
+import { Vector3 } from "@lundin/utility"
 import { DisplayConfig } from "./display-config"
+import { DisplayEntity } from "./display-entity-drawer"
 
 export class DisplayState {
 	constructor(
@@ -24,14 +25,6 @@ export class DisplayState {
 			playerName,
 		)
 	}
-}
-
-export interface DisplayEntity {
-	sprite: string
-	position: Vector2
-	velocity: Vector2
-	endTick: number
-	animationStart: number
 }
 
 export enum ViewDirection { North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest }
