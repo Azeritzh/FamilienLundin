@@ -85,10 +85,19 @@ export class Camera {
 			: destination.setFrom(position)
 	}
 
-	DrawAnimated(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, animationStart = 0) {
+	DrawAnimated(
+		sprite: string,
+		layer: number,
+		position: Vector3,
+		velocity: Vector3 = null,
+		animationStart = 0,
+		rotation = 0,
+		color: Vector3 = null,
+		alpha = 1
+	) {
 		const config = this.Config.Sprites[sprite]
 		const frame = this.AnimationFrame(config.frameInterval, config.framesX, config.framesY, animationStart)
-		this.Draw(sprite, layer, position, velocity, frame)
+		this.Draw(sprite, layer, position, velocity, frame, rotation, color, alpha)
 	}
 
 	private AnimationFrame(frameInterval: number, framesX: number, framesY: number, animationStart: number) {
@@ -100,7 +109,16 @@ export class Camera {
 		return frameIndex
 	}
 
-	Draw(sprite: string, layer: number, position: Vector3, velocity: Vector3 = null, frameIndex = 0) {
+	Draw(
+		sprite: string,
+		layer: number,
+		position: Vector3,
+		velocity: Vector3 = null,
+		frameIndex = 0,
+		rotation = 0,
+		color: Vector3 = null,
+		alpha = 1
+	) {
 		const currentPosition = this.SetCurrentPositionWith(this.Adjustable, position, velocity)
 		this.AdjustForFocusAndCamera(currentPosition)
 		const screenX = this.ScreenXFor(currentPosition)
@@ -109,7 +127,15 @@ export class Camera {
 		const config = this.Config.Sprites[sprite]
 		const frameX = frameIndex % config.framesX
 		const frameY = Math.floor(frameIndex / config.framesX) % config.framesY
-		this.DisplayProvider.draw(sprite, screenX, screenY, frameX, frameY, this.sortingNumberFor(currentPosition, layer))
+		this.DisplayProvider.draw(
+			sprite,
+			screenX, screenY,
+			frameX, frameY,
+			this.sortingNumberFor(currentPosition, layer),
+			rotation,
+			color,
+			alpha,
+		)
 	}
 
 	/** adjusts position in-place and returns it */

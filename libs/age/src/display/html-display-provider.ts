@@ -1,4 +1,4 @@
-import { KeyStates } from "@lundin/utility"
+import { KeyStates, Vector3 } from "@lundin/utility"
 import { WebGl2Display } from "@lundin/web-gl-display"
 import { BaseDisplayConfig } from "./base-display-config"
 import { ScreenSize } from "./screen-size"
@@ -6,7 +6,7 @@ import { ScreenSize } from "./screen-size"
 export interface DisplayProvider {
 	sortByDepth: boolean
 	startFrame(): void
-	draw(name: string, x: number, y: number, frameX: number, frameY: number, depth?: number): void
+	draw(name: string, x: number, y: number, frameX: number, frameY: number, depth?: number, rotation?: number, color?: Vector3, alpha?: number): void
 	endFrame(): void
 	drawString(text: string, x: number, y: number, font: string, fontSize: number, color?: string): void
 	getInputState(input: string): number

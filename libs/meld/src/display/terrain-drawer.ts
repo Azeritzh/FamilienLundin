@@ -44,7 +44,7 @@ export class TerrainDrawer {
 		else
 			this.DrawTileOverlays(block, this.Position)
 		this.DrawWallOverlays(block, this.Position)
-		this.DrawWallShadows(block, this.Position) // disabled because transparency with webgl seems to be weird
+		this.DrawWallShadows(block, this.Position)
 	}
 
 	private updateDirections() {
@@ -64,9 +64,11 @@ export class TerrainDrawer {
 
 		const layer = this.layerFor(Blocks.TypeOf(block))
 		const height = this.heightFor(Blocks.TypeOf(block))
+		const hasBlockAbove = Blocks.HasSolid(this.Game.Terrain.Get(position.x, position.y, position.z + 1)) ?? false
+		const color = hasBlockAbove ? new Vector3(0.7, 0.7, 0.7) : null
 
 		const finalPosition = this.Adjustable.setFrom(position).addFrom(height).addFrom(TerrainDrawer.BlockCenter)
-		this.Camera.DrawAnimated(this.TileSpriteFor(block), layer, finalPosition, null, this.AnimationStartFor(position))
+		this.Camera.DrawAnimated(this.TileSpriteFor(block), layer, finalPosition, null, this.AnimationStartFor(position), 0, color)
 	}
 
 	private layerFor(blockType: BlockType) {
@@ -88,11 +90,20 @@ export class TerrainDrawer {
 	}
 
 	private DrawBlockWall(block: Block, position: Vector3) {
+		const smallestInFront = this.SmallestBlockInFrontOfCurrentPosition()
 		const finalPosition = this.Adjustable.setFrom(position).addFrom(TerrainDrawer.BlockCenter)
-		if (Blocks.TypeOf(block) === BlockType.Half)
+		if (Blocks.TypeOf(block) === BlockType.Half && smallestInFront < BlockType.Half)
 			this.Camera.DrawAnimated(this.HalfWallSpriteFor(block), Layer.Middle - Layer.ZFightingAdjustment, finalPosition, null, this.AnimationStartFor(position))
-		if (Blocks.TypeOf(block) === BlockType.Full)
+		if (Blocks.TypeOf(block) === BlockType.Full && smallestInFront === BlockType.Full)
 			this.Camera.DrawAnimated(this.FullWallSpriteFor(block), Layer.Middle, finalPosition, null, this.AnimationStartFor(position))
+	}
+
+	private SmallestBlockInFrontOfCurrentPosition() {
+		if (!this.Camera.IsDiagonalView())
+			return Blocks.TypeOf(this.Game.Terrain.GetAt(this.BottomPosition)) ?? BlockType.Empty
+		const left = Blocks.TypeOf(this.Game.Terrain.GetAt(this.BottomLeftPosition)) ?? BlockType.Empty
+		const right = Blocks.TypeOf(this.Game.Terrain.GetAt(this.BottomRightPosition)) ?? BlockType.Empty
+		return left < right ? left : right
 	}
 
 	private DrawDiagonalTileOverlays(block: Block, position: Vector3) {
@@ -240,7 +251,7 @@ export class TerrainDrawer {
 		}
 	}
 
-	private getCenter(position: Vector3){
+	private getCenter(position: Vector3) {
 		return this.Adjustable.setFrom(position).addFrom(TerrainDrawer.BlockCenter)
 	}
 
