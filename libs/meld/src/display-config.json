@@ -1,7 +1,7 @@
 {
 	"renderToVirtualSize": false,
 	"virtualPixelsPerTile": 16,
-	"virtualHeight": 360,
+	"virtualHeight": 240,
 	"wallDisplayHeight": 2,
 	"assetFolder": "assets/",
 	"inputs": {
