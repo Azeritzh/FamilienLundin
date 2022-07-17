@@ -25,8 +25,9 @@ export class WorldDrawer {
 		const endY = Math.floor(area.bottom + this.Config.WallDisplayHeight)
 
 		for (let y = startY; y <= endY; y++)
-			for (let x = Math.floor(area.left - 1); x <= Math.floor(area.right + 1); x++)
-				this.TerrainDrawer.DrawBlockContent(x, y, layer)
+			for (let x = Math.floor(area.left); x <= Math.floor(area.right); x++)
+				if (this.Camera.IsWithinScreen(new Vector3(x, y, layer)))
+					this.TerrainDrawer.DrawBlockContent(x, y, layer)
 		for (const entity of entitiesInLayer)
 			this.EntityDrawer.Draw(entity)
 	}

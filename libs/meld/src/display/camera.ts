@@ -32,6 +32,7 @@ export class Camera {
 	public TopLeftTile = new Vector3(-1, -1, 0) //apparent north-west tile
 
 	private Adjustable = new Vector3(0, 0, 0)
+	private ScreenMargin = 3
 
 	public FocusOn(entity: Id) {
 		this.SetCurrentPositionWith(
@@ -70,12 +71,11 @@ export class Camera {
 				right = corner.x
 		}
 		const layerAdjustment = this.BottomTile.multiply(layer * this.Config.WallDisplayHeight)
-		const margin = 2
 		return new DisplayArea(
-			top + layerAdjustment.y - margin,
-			bottom + layerAdjustment.y + margin,
-			left + layerAdjustment.x - margin,
-			right + layerAdjustment.x + margin)
+			top + layerAdjustment.y - this.ScreenMargin,
+			bottom + layerAdjustment.y + this.ScreenMargin,
+			left + layerAdjustment.x - this.ScreenMargin,
+			right + layerAdjustment.x + this.ScreenMargin)
 	}
 
 	private _adjustableCurrentPosition = new Vector3(0, 0, 0)
@@ -112,6 +112,7 @@ export class Camera {
 		this.DisplayProvider.draw(sprite, screenX, screenY, frameX, frameY, this.sortingNumberFor(currentPosition, layer))
 	}
 
+	/** adjusts position in-place and returns it */
 	private AdjustForFocusAndCamera(position: Vector3) {
 		const diagonalFactor = 0.75 //1/MathF.Sqrt(2);
 		const pos = position.subtractFrom(this.State.FocusPoint)
@@ -127,6 +128,7 @@ export class Camera {
 		}
 	}
 
+	/** Reverts adjustment to position in-place and returns it */
 	private RevertFocusAndCameraAdjustment(pos: Vector3) {
 		const diagonalFactor = 1.33333 // inverted of above
 		const unrotated = this.RevertBla(pos, diagonalFactor)
@@ -214,6 +216,14 @@ export class Camera {
 
 	public IsDiagonalView() {
 		return this.State.ViewDirection % 2 == 1
+	}
+
+	public IsWithinScreen(position: Vector3) {
+		this.AdjustForFocusAndCamera(position)
+		const screenX = this.ScreenXFor(position)
+		const screenY = this.ScreenYFor(position)
+		return 0 - this.ScreenMargin < screenX && screenX < this.State.Size.widthInTiles + this.ScreenMargin
+			&& 0 - this.ScreenMargin < screenY && screenY < this.State.Size.heightInTiles + this.ScreenMargin
 	}
 }
 
