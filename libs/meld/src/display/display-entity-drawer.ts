@@ -38,7 +38,7 @@ export class DisplayEntityDrawer {
 		if (entity.ParentEntity) {
 			const position = this.Game.Entities.Position.Get.Of(entity.ParentEntity) ?? new Vector3(0, 0, 0)
 			const velocity = this.Game.Entities.Velocity.Get.Of(entity.ParentEntity) ?? new Vector3(0, 0, 0)
-			this.Camera.DrawAnimated(entity.Sprite, Layer.Middle, position.addFrom(entity.Position), velocity.addFrom(entity.Velocity), entity.AnimationStart, entity.Rotation)
+			this.Camera.DrawAnimated(entity.Sprite, Layer.Middle, position.add(entity.Position), velocity.add(entity.Velocity), entity.AnimationStart, entity.Rotation)
 		}
 		else {
 			this.Camera.DrawAnimated(entity.Sprite, Layer.Middle, entity.Position, entity.Velocity, entity.AnimationStart, entity.Rotation)

@@ -72,7 +72,7 @@ export class DashLogic implements GameLogic<GameUpdate> {
 
 	private ReleaseDash(entity: Id, angle: number) {
 		const state = this.DashState.CurrentlyOf(entity) ?? new DashState()
-		if (this.CanQuickDash(state, angle) && !state.IsCharging) {
+		if (!this.CanQuickDash(state, angle) && !state.IsCharging) {
 			this.SetDashState.For(entity, new DashState(
 				state.TimeOfLastDash,
 				state.IsCharging,
