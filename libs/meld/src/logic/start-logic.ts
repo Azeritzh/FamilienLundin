@@ -35,12 +35,25 @@ export class StartLogic implements GameLogic<GameUpdate> {
 		this.Terrain.AddChunk(0, -1, 0)
 		this.Terrain.AddChunk(-1, 0, 0)
 		this.Terrain.AddChunk(-1, -1, 0)
+		this.Terrain.AddChunk(0, 0, -1)
+		this.Terrain.AddChunk(0, -1, -1)
+		this.Terrain.AddChunk(-1, 0, -1)
+		this.Terrain.AddChunk(-1, -1, -1)
 		for (const { position } of this.Terrain.AllFields())
-			if (position.z === 0)
-				if (Math.random() < 0.9)
-					this.Terrain.Set(Blocks.NewFloor(this.Random.get.in(types), 0), position.x, position.y, position.z)
+			if (position.z === 0) {
+				if (Math.random() < 0.1)
+					this.Terrain.SetAt(position, Blocks.NewFloor(this.Random.get.in(types), 0))
+				else if (Math.random() < 0.11)
+					this.Terrain.SetAt(position, Blocks.NewFull(this.Random.get.in(types)))
 				else
-					this.Terrain.Set(Blocks.NewFull(this.Random.get.in(types)), position.x, position.y, position.z)
+					this.Terrain.SetAt(position, Blocks.NewEmpty(0))
+			}
+			else if (position.z < 0) {
+				if (Math.random() < 0.1)
+					this.Terrain.SetAt(position, Blocks.NewFull(this.Random.get.in(types)))
+				else
+					this.Terrain.SetAt(position, Blocks.NewEmpty(0))
+			}
 		this.State.Globals.WorldBounds = new Box(-50, 50, -50, 50, -5, 5)
 	}
 

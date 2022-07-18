@@ -19,6 +19,7 @@ export class WorldDrawer {
 			this.drawLayer(layer, area)
 	}
 
+	private _adjustable = new Vector3(0, 0, 0)
 	private drawLayer(layer: number, area: DisplayArea) {
 		const entitiesInLayer = this.entitiesInArea(layer, area)
 		const startY = Math.floor(area.top - this.Config.WallDisplayHeight)
@@ -26,7 +27,7 @@ export class WorldDrawer {
 
 		for (let y = startY; y <= endY; y++)
 			for (let x = Math.floor(area.left); x <= Math.floor(area.right); x++)
-				if (this.Camera.IsWithinScreen(new Vector3(x, y, layer)))
+				if (this.Camera.IsWithinScreen(this._adjustable.set(x, y, layer)))
 					this.TerrainDrawer.DrawBlockContent(x, y, layer)
 		for (const entity of entitiesInLayer)
 			for (const drawer of this.EntityDrawers)

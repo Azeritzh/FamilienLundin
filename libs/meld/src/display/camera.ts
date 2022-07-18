@@ -190,7 +190,7 @@ export class Camera {
 
 	private sortingNumberFor(position: Vector3, layer: number) {
 		const z = Math.floor(position.z) + layer
-		const rangeZ = (this.Config.DisplayDepth * 2 + 3) // adding 3 rather than 1 just to be on the safe side
+		const rangeZ = ((this.Config.DisplayDepth + 2) * 2 + 1) // adding 2: 1 due to Layer.Top, and 1 due to z position within each layer
 		const minZ = this.State.FocusPoint.z - rangeZ / 2
 		const normalisedZ = (z - minZ) / rangeZ
 
