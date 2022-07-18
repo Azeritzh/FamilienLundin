@@ -29,18 +29,18 @@ export class WebGl2Display {
 		this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA)
 	}
 
-	public draw(sprite: string, x: number, y: number, frameX: number, frameY: number, depth = 1) {
+	public draw(sprite: string, x: number, y: number, frameX: number, frameY: number, depth = 1, rotation = 0, color: { x: number, y: number, z: number } = null, alpha = 1) {
 		if (this.sortByDepth)
-			this.spritesToDraw.push(new SpriteDrawInfo(sprite, x, y, frameX, frameY, depth))
+			this.spritesToDraw.push(new SpriteDrawInfo(sprite, x, y, frameX, frameY, depth, rotation, color, alpha))
 		else
-			this.drawSprite(sprite, x, y, frameX, frameY)
+			this.drawSprite(sprite, x, y, frameX, frameY, rotation, color, alpha)
 	}
 
 	public endFrame() {
 		if (this.sortByDepth) {
 			this.spritesToDraw.sort((a, b) => a.depth - b.depth)
 			for (const sprite of this.spritesToDraw)
-				this.drawSprite(sprite.sprite, sprite.x, sprite.y, sprite.frameX, sprite.frameY)
+				this.drawSprite(sprite.sprite, sprite.x, sprite.y, sprite.frameX, sprite.frameY, sprite.rotation, sprite.color, sprite.alpha)
 			this.spritesToDraw = []
 		}
 		this.previousProgram = null
@@ -48,7 +48,8 @@ export class WebGl2Display {
 		this.gl.flush()
 	}
 
-	private drawSprite(name: string, x: number, y: number, frameX: number, frameY: number) {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	private drawSprite(name: string, x: number, y: number, frameX: number, frameY: number, rotation = 0, color: { x: number, y: number, z: number } = null, alpha = 1) {
 		const sprite = this.sprites[name]
 		if (!sprite)
 			return console.warn("Could not load sprite {0}", name)
@@ -60,7 +61,7 @@ export class WebGl2Display {
 			x = Math.floor(x * this.tileSize) / this.tileSize
 			y = Math.floor(y * this.tileSize) / this.tileSize
 		}
-		sprite.render(x, y, frameX, frameY)
+		sprite.render(x, y, frameX, frameY, rotation  )
 	}
 
 	// Do sprites need to be recreated after this?
@@ -102,5 +103,8 @@ class SpriteDrawInfo {
 		public frameX: number,
 		public frameY: number,
 		public depth: number,
+		public rotation = 0,
+		public color: { x: number, y: number, z: number } = null,
+		public alpha = 1
 	) { }
 }

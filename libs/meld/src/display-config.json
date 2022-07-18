@@ -1,5 +1,5 @@
 {
-	"renderToVirtualSize": false,
+	"renderToVirtualSize": true,
 	"virtualPixelsPerTile": 16,
 	"virtualHeight": 240,
 	"wallDisplayHeight": 2,

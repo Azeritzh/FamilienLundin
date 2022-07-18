@@ -72,6 +72,26 @@ export class M3x3 {
 		return output
 	}
 
+	static transformation(translateX: number, translateY: number, rotation: number, scaleX: number, scaleY: number) {
+		const output = new M3x3()
+		const sin = Math.sin(rotation)
+		const cos = Math.cos(rotation)
+		output.matrix = [
+			cos * scaleX,
+			-sin * scaleY,
+			0,
+
+			sin * scaleX,
+			cos * scaleY,
+			0,
+
+			translateX,
+			translateY,
+			1
+		]
+		return output
+	}
+
 	getFloatArray() {
 		return new Float32Array(this.matrix)
 	}

@@ -17,7 +17,7 @@ export class Sprite {
 	) {
 	}
 
-	render(x: number, y: number, frameX = 0, frameY = 0) {
+	render(x: number, y: number, frameX = 0, frameY = 0, rotation = 0, scaleX = 1, scaleY = 1) {
 		const gl = this.gl
 
 		gl.activeTexture(gl.TEXTURE0)
@@ -34,7 +34,7 @@ export class Sprite {
 
 		const fX = frameX * this.uvX
 		const fY = frameY * this.uvY
-		const trans = new M3x3().transition(x * this.tileSize - this.centerX, y * this.tileSize - this.centerY)
+		const trans = M3x3.transformation(x * this.tileSize - this.centerX, y * this.tileSize - this.centerY, -rotation, scaleX, scaleY) // I think the reason it needs to be a negative rotation is that we've inverted the x axis
 
 		gl.uniform2f(this.shader.uFrameLocation, fX, fY)
 		gl.uniformMatrix3fv(this.shader.uWorldLocation, false, this.worldSpaceMatrix.getFloatArray())

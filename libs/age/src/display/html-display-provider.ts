@@ -83,10 +83,10 @@ export class HtmlDisplayProvider implements DisplayProvider {
 		delete this.textElements[key]
 	}
 
-	public draw(name: string, x: number, y: number, frameX: number, frameY: number, depth = 1) {
+	public draw(name: string, x: number, y: number, frameX: number, frameY: number, depth = 1, rotation?: number, color?: Vector3, alpha?: number) {
 		if (this.display.isLoading())
 			return
-		this.display.draw(name, x, y, frameX, frameY, depth)
+		this.display.draw(name, x, y, frameX, frameY, depth, rotation, color, alpha)
 	}
 
 	public endFrame() {
