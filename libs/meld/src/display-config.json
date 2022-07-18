@@ -206,7 +206,7 @@
 			"width": 20,
 			"height": 48,
 			"centerX": 10,
-			"centerY": 40
+			"centerY": 38
 		},
 		"default-tile-left": {
 			"width": 16,
@@ -449,6 +449,12 @@
 			"framesX": 4,
 			"framesY": 3,
 			"frameInterval": 0.085
+		},
+		"shadow-medium": {
+			"width": 20,
+			"height": 20,
+			"centerX": 10,
+			"centerY": 10
 		}
 	}
 }

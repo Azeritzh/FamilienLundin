@@ -7,6 +7,7 @@ import { DisplayState } from "./display-state"
 
 export class TerrainDrawer {
 	static BlockCenter = new Vector3(0.5, 0.5, 0)
+	static NoHeight = new Vector3(0, 0, 0)
 	static FloorHeight = new Vector3(0, 0, 1 / 32) // should look like one pixel, so: 1/(WallHeight * PixelsPerTile)
 	static HalfHeight = new Vector3(0, 0, 0.5)
 	static FullHeight = new Vector3(0, 0, 1)
@@ -63,7 +64,7 @@ export class TerrainDrawer {
 			return
 
 		const layer = this.layerFor(Blocks.TypeOf(block))
-		const height = this.heightFor(Blocks.TypeOf(block))
+		const height = TerrainDrawer.HeightOf(Blocks.TypeOf(block))
 		const hasBlockAbove = Blocks.HasSolid(this.Game.Terrain.Get(position.x, position.y, position.z + 1)) ?? false
 		const color = hasBlockAbove ? new Vector3(0.7, 0.7, 0.7) : null
 
@@ -80,12 +81,12 @@ export class TerrainDrawer {
 		}
 	}
 
-	private heightFor(blockType: BlockType) {
+	public static HeightOf(blockType: BlockType) {
 		switch (blockType) {
 			case BlockType.Floor: return TerrainDrawer.FloorHeight
 			case BlockType.Half: return TerrainDrawer.HalfHeight
 			case BlockType.Full: return TerrainDrawer.FullHeight
-			default: throw new Error("Invalid argument: No layer for empty blocks")
+			default: return TerrainDrawer.NoHeight
 		}
 	}
 
@@ -148,7 +149,7 @@ export class TerrainDrawer {
 		const layerAdjustment = this.LayerForSide(direction)
 		const sprite = this.TileOverlayFor(Blocks.SolidOf(block), direction)
 		const finalPosition = this.Adjustable.setFrom(position)
-			.addFrom(this.heightFor(Blocks.TypeOf(block)))
+			.addFrom(TerrainDrawer.HeightOf(Blocks.TypeOf(block)))
 			.addFrom(TerrainDrawer.BlockCenter)
 		this.Camera.Draw(sprite, blockLayer + layerAdjustment, finalPosition)
 	}

@@ -23,7 +23,7 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		private inputParser = new InputParser(Game, State, camera, Display, Config.Inputs),
 		private displayEntityDrawer = new DisplayEntityDrawer(Game, Config, State, camera),
 		private terrainDrawer = new TerrainDrawer(Game, Config, State, camera),
-		private entityDrawer = new StandardEntityDrawer(Game, camera),
+		private entityDrawer = new StandardEntityDrawer(Game, Config, camera),
 		private dashDrawer = new DashDrawer(Game, Config, State, camera, displayEntityDrawer),
 		private worldDrawer = new WorldDrawer(Game, Config, camera, terrainDrawer, [entityDrawer, dashDrawer]),
 		private hudDrawer = new HudDrawer(Game, Config, State, Display),
