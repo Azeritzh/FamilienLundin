@@ -123,6 +123,8 @@ export class Camera {
 		this.AdjustForFocusAndCamera(currentPosition)
 		const screenX = this.ScreenXFor(currentPosition)
 		const screenY = this.ScreenYFor(currentPosition)
+		if (currentPosition.z < 0)
+			color = this.DarkenByDepth(color ?? new Vector3(1, 1, 1), currentPosition.z)
 		currentPosition.z = position.z
 		const config = this.Config.Sprites[sprite]
 		const frameX = frameIndex % config.framesX
@@ -136,6 +138,12 @@ export class Camera {
 			color,
 			alpha,
 		)
+	}
+
+	DarkenByDepth(color: Vector3, depth: number) {
+		if (depth < 0)
+			return color.multiplyFrom(1 + depth / 10)
+		return color
 	}
 
 	/** adjusts position in-place and returns it */
