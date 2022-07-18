@@ -15,9 +15,10 @@ vTexCoord = aTexCoord + uFrame;
 const fragmentShader = `
 precision mediump float;
 uniform sampler2D uImage;
+uniform vec4 uColor;
 varying vec2 vTexCoord;
 void main(void) {
-gl_FragColor = texture2D(uImage, vTexCoord);
+gl_FragColor = texture2D(uImage, vTexCoord) * uColor;
 }`
 
 export class StandardShader extends GenericShader {
@@ -26,6 +27,7 @@ export class StandardShader extends GenericShader {
 		public aPositionLocation?: number,
 		public aTexCoordLocation?: number,
 		public uImageLocation?: WebGLUniformLocation,
+		public uColorLocation?: WebGLUniformLocation,
 		public uWorldLocation?: WebGLUniformLocation,
 		public uObjectLocation?: WebGLUniformLocation,
 		public uFrameLocation?: WebGLUniformLocation,
@@ -34,6 +36,7 @@ export class StandardShader extends GenericShader {
 		this.aPositionLocation = gl.getAttribLocation(this.program, "aPosition")
 		this.aTexCoordLocation = gl.getAttribLocation(this.program, "aTexCoord")
 		this.uImageLocation = gl.getUniformLocation(this.program, "uImage")
+		this.uColorLocation = gl.getUniformLocation(this.program, "uColor")
 		this.uWorldLocation = gl.getUniformLocation(this.program, "uWorld")
 		this.uObjectLocation = gl.getUniformLocation(this.program, "uObject")
 		this.uFrameLocation = gl.getUniformLocation(this.program, "uFrame")

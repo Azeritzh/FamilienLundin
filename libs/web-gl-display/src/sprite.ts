@@ -1,5 +1,6 @@
 import { M3x3 } from "./m3x3"
 import { StandardShader } from "./standard-shader"
+import { Vector3 } from "@lundin/utility"
 
 export class Sprite {
 	constructor(
@@ -14,15 +15,23 @@ export class Sprite {
 		private centerY: number,
 		private uvX: number,
 		private uvY: number,
+		private color = new Float32Array([1, 1, 1, 1]),
+		private transformation = new M3x3(),
 	) {
 	}
 
-	render(x: number, y: number, frameX = 0, frameY = 0, rotation = 0, scaleX = 1, scaleY = 1) {
+	render(x: number, y: number, frameX = 0, frameY = 0, rotation = 0, color: Vector3 = null, alpha = 1, scaleX = 1, scaleY = 1) {
 		const gl = this.gl
 
 		gl.activeTexture(gl.TEXTURE0)
 		gl.bindTexture(gl.TEXTURE_2D, this.texture)
 		gl.uniform1i(this.shader.uImageLocation, 0)
+
+		this.color[0] = color?.x ?? 1
+		this.color[1] = color?.y ?? 1
+		this.color[2] = color?.z ?? 1
+		this.color[3] = alpha
+		gl.uniform4fv(this.shader.uColorLocation, this.color)
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.textureBuffer)
 		gl.enableVertexAttribArray(this.shader.aTexCoordLocation)
@@ -34,11 +43,11 @@ export class Sprite {
 
 		const fX = frameX * this.uvX
 		const fY = frameY * this.uvY
-		const trans = M3x3.transformation(x * this.tileSize - this.centerX, y * this.tileSize - this.centerY, -rotation, scaleX, scaleY) // I think the reason it needs to be a negative rotation is that we've inverted the x axis
+		this.transformation.setToTransformation(x * this.tileSize - this.centerX, y * this.tileSize - this.centerY, -rotation, scaleX, scaleY) // I think the reason it needs to be a negative rotation is that we've inverted the x axis
 
 		gl.uniform2f(this.shader.uFrameLocation, fX, fY)
 		gl.uniformMatrix3fv(this.shader.uWorldLocation, false, this.worldSpaceMatrix.getFloatArray())
-		gl.uniformMatrix3fv(this.shader.uObjectLocation, false, trans.getFloatArray())
+		gl.uniformMatrix3fv(this.shader.uObjectLocation, false, this.transformation.getFloatArray())
 
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 6)
 	}
