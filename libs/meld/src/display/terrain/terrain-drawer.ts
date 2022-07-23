@@ -37,7 +37,7 @@ export class TerrainDrawer {
 			for (let y = 0; y < this.State.VisibleBlocks.ChunkSize.y; y++)
 				for (let z = 0; z < this.State.VisibleBlocks.ChunkSize.z; z++)
 					if (this.State.VisibleBlocks.GetWithoutOffset(x, y, z))
-						this.DrawBlock(this.State.VisibleBlocks.Offset.x + x, this.State.VisibleBlocks.Offset.z + y, this.State.VisibleBlocks.Offset.z + z)
+						this.DrawBlock(this.State.VisibleBlocks.Offset.x + x, this.State.VisibleBlocks.Offset.y + y, this.State.VisibleBlocks.Offset.z + z)
 	}
 
 	private DrawBlock(x: number, y: number, z: number) {

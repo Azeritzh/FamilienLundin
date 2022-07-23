@@ -5,7 +5,7 @@
 	"wallDisplayHeight": 2,
 	"assetFolder": "assets/",
 	"inputs": {
-		"Generate": [ "Escape", "Enter", "PadStart" ],
+		"Generate": [ "Enter", "PadStart" ],
 		
 		"ToggleInventory": [ "Tab", "Start" ],
 		"ToggleMenu": [ "Escape", "Select" ],

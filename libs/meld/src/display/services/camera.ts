@@ -217,10 +217,12 @@ export class Camera {
 		return this.State.ViewDirection % 2 == 1
 	}
 
+	private _adjustableIsWithinScreen = new Vector3(0, 0, 0)
 	public IsWithinScreen(position: Vector3) {
-		this.AdjustForFocusAndCamera(position)
-		const screenX = this.ScreenXFor(position)
-		const screenY = this.ScreenYFor(position)
+		const pos = this._adjustableIsWithinScreen.setFrom(position)
+		this.AdjustForFocusAndCamera(pos)
+		const screenX = this.ScreenXFor(pos)
+		const screenY = this.ScreenYFor(pos)
 		return 0 - Visibility.ScreenMargin < screenX && screenX < this.State.Size.widthInTiles + Visibility.ScreenMargin
 			&& 0 - Visibility.ScreenMargin < screenY && screenY < this.State.Size.heightInTiles + Visibility.ScreenMargin
 	}

@@ -4,6 +4,7 @@ import { Meld } from "../../meld"
 import { GenerateAction, MovementAction, SelectNextItemAction, PlaceBlockAction, ChargeDashAction, ReleaseDashAction } from "../../state/game-update"
 import { Camera } from "./camera"
 import { AngleOf, DisplayState } from "../state/display-state"
+import { Visibility } from "./visibility"
 
 export class InputParser extends BaseInputParser<Input> {
 	PreviousMovement = new Vector2(0, 0)
@@ -13,6 +14,7 @@ export class InputParser extends BaseInputParser<Input> {
 		private State: DisplayState,
 		private Camera: Camera,
 		private DisplayProvider: DisplayProvider,
+		private Visibility: Visibility,
 		Inputs: Map<Input, string[]>,
 	) {
 		super(DisplayProvider, Inputs)
@@ -32,10 +34,14 @@ export class InputParser extends BaseInputParser<Input> {
 	}
 
 	private UpdateCamera() {
-		if (this.hasJustBeenPressed(Input.RotateCameraRight))
+		if (this.hasJustBeenPressed(Input.RotateCameraRight)) {
 			this.Camera.RotateCamera(1)
-		if (this.hasJustBeenPressed(Input.RotateCameraLeft))
+			this.Visibility.UpdateSize()
+		}
+		if (this.hasJustBeenPressed(Input.RotateCameraLeft)) {
 			this.Camera.RotateCamera(-1)
+			this.Visibility.UpdateSize()
+		}
 	}
 
 	private ParseMovement(player: Id) {

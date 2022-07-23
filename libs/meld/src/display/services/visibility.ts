@@ -42,7 +42,7 @@ export class Visibility {
 			for (let y = 0; y < this.State.VisibleBlocks.ChunkSize.y; y++)
 				for (let z = 0; z < this.State.VisibleBlocks.ChunkSize.z; z++)
 					this.State.VisibleBlocks.SetWithoutOffset(x, y, z, false)
-		this.State.VisibleBlocks.Offset = new Vector3(
+		this.State.VisibleBlocks.Offset.set(
 			Math.floor(this.State.FocusPoint.x - this.State.VisibleBlocks.ChunkSize.x / 2),
 			Math.floor(this.State.FocusPoint.y - this.State.VisibleBlocks.ChunkSize.y / 2),
 			Math.floor(this.State.FocusPoint.z - this.State.VisibleBlocks.ChunkSize.z / 2)
@@ -114,14 +114,14 @@ export class Visibility {
 
 	private _adjustableIsBlocked = new Vector3(0, 0, 0)
 	private IsBlocked(position: Vector3) {
-		const pos = this._adjustableIsBlocked.setFrom(position)
-		const blockAbove = Blocks.TypeOf(this.Game.Terrain.GetAt(pos.addFrom(Camera.Above))) ?? BlockType.Empty
+		const pos = this._adjustableIsBlocked
+		const blockAbove = Blocks.TypeOf(this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(Camera.Above))) ?? BlockType.Empty
 		if (blockAbove == BlockType.Empty)
 			return false
-		return Blocks.TypeOf(this.Game.Terrain.GetAt(pos.addFrom(Camera.North))) == BlockType.Full
-			&& Blocks.TypeOf(this.Game.Terrain.GetAt(pos.addFrom(Camera.East))) == BlockType.Full
-			&& Blocks.TypeOf(this.Game.Terrain.GetAt(pos.addFrom(Camera.South))) == BlockType.Full
-			&& Blocks.TypeOf(this.Game.Terrain.GetAt(pos.addFrom(Camera.West))) == BlockType.Full
+		return Blocks.TypeOf(this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(Camera.North))) == BlockType.Full
+			&& Blocks.TypeOf(this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(Camera.East))) == BlockType.Full
+			&& Blocks.TypeOf(this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(Camera.South))) == BlockType.Full
+			&& Blocks.TypeOf(this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(Camera.West))) == BlockType.Full
 	}
 
 	private _adjustableAddToVisibleBelow = new Vector3(0, 0, 0)
