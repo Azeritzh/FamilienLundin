@@ -63,7 +63,7 @@ export class BorderDrawer {
 		switch (blockType) {
 			case BlockType.Floor: return Layer.Floor
 			case BlockType.Half: return Layer.Middle
-			case BlockType.Full: return Layer.Bottom
+			case BlockType.Full: return Layer.Top
 			default: return Layer.Bottom
 		}
 	}

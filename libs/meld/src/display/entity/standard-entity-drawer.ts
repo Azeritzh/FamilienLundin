@@ -36,13 +36,13 @@ export class StandardEntityDrawer {
 	private GetFloorHeight(position: Vector3) {
 		const nextPosition = Vector3.copy(position)
 		let nextBlock = this.Game.Terrain.GetAt(position) ?? Blocks.NewFull(0)
-		while (Blocks.TypeOf(nextBlock) == BlockType.Empty) {
+		while (Blocks.TypeOf(nextBlock) === BlockType.Empty) {
 			nextPosition.z = nextPosition.z - 1
 			nextBlock = this.Game.Terrain.GetAt(nextPosition) ?? Blocks.NewFull(0)
 			if (nextPosition.z < position.z - 10)
 				return null
 		}
-		return Camera.HeightOf(nextBlock).z + Math.floor(nextPosition.z)
+		return Camera.HeightOf(Blocks.TypeOf(nextBlock)).z + Math.floor(nextPosition.z) + Layer.ZFightingAdjustment
 	}
 
 	private GetShadowOf(entity: Id) {
