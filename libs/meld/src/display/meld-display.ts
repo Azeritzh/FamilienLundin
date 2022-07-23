@@ -8,7 +8,7 @@ import { StandardEntityDrawer } from "./entity/standard-entity-drawer"
 import { HudDrawer } from "./hud/hud-drawer"
 import { InputParser } from "./services/input-parser"
 import { TerrainDrawer } from "./terrain/terrain-drawer"
-import { WorldDrawer } from "./world-drawer"
+import { EntitiesDrawer } from "./entity/entities-drawer"
 import { Meld } from "../meld"
 import { GameUpdate } from "../state/game-update"
 import { Visibility } from "./services/visibility"
@@ -30,7 +30,7 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 
 		private entityDrawer = new StandardEntityDrawer(Game, Config, camera),
 		private dashDrawer = new DashDrawer(Game, Config, State, camera, displayEntityDrawer),
-		private worldDrawer = new WorldDrawer(Game, Config, State, camera, terrainDrawer, [entityDrawer, dashDrawer]),
+		private entitiesDrawer = new EntitiesDrawer(Game, State, [entityDrawer, dashDrawer]),
 	) {
 		Game.dashLogic.Listeners.push(dashDrawer)
 		Display.sortByDepth = true
@@ -41,15 +41,16 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 	}
 
 	show(fractionOfTick = 0) {
+		this.Display.startFrame()
+		startTiming("displayUpdate")
 		this.State.FractionOfTick = fractionOfTick
 		const firstEntity = [...this.Game.Entities.With.Position.keys()][0]
 		if (firstEntity !== undefined && firstEntity !== null) {
 			this.camera.FocusOn(firstEntity)
 			this.visibility.Update()
 		}
-		this.Display.startFrame()
-		startTiming("displayUpdate")
-		this.worldDrawer.DrawWorld()
+		this.entitiesDrawer.Draw()
+		this.terrainDrawer.Draw()
 		this.displayEntityDrawer.DrawDisplayEntities()
 		this.hudDrawer.Draw()
 		finishTiming("displayUpdate")

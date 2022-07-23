@@ -32,7 +32,15 @@ export class TerrainDrawer {
 		private Camera: Camera,
 	) { }
 
-	public DrawBlockContent(x: number, y: number, z: number) {
+	Draw() {
+		for (let x = 0; x < this.State.VisibleBlocks.ChunkSize.x; x++)
+			for (let y = 0; y < this.State.VisibleBlocks.ChunkSize.y; y++)
+				for (let z = 0; z < this.State.VisibleBlocks.ChunkSize.z; z++)
+					if (this.State.VisibleBlocks.GetWithoutOffset(x, y, z))
+						this.DrawBlock(this.State.VisibleBlocks.Offset.x + x, this.State.VisibleBlocks.Offset.z + y, this.State.VisibleBlocks.Offset.z + z)
+	}
+
+	private DrawBlock(x: number, y: number, z: number) {
 		const block = this.Game.Terrain.Get(x, y, z)
 		if (block === null || block === undefined)
 			return
