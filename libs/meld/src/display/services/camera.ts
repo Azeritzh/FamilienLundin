@@ -13,12 +13,12 @@ export class Camera {
 		private Config: DisplayConfig,
 		private State: DisplayState,
 	) { }
-	
+
 	static BlockCenter = new Vector3(0.5, 0.5, 0)
 	static NoHeight = new Vector3(0, 0, 0)
 	static FloorHeight = new Vector3(0, 0, 1 / 32) // should look like one pixel, so: 1/(WallHeight * PixelsPerTile)
 	static HalfHeight = new Vector3(0, 0, 0.5)
-	static FullHeight = new Vector3(0, 0, 1)
+	static FullHeight = new Vector3(0, 0, 1 - 0.00001)
 
 	public static North = new Vector3(0, -1, 0)
 	public static NorthEast = new Vector3(1, -1, 0)
@@ -65,11 +65,12 @@ export class Camera {
 		animationStart = 0,
 		rotation = 0,
 		color: Vector3 = null,
-		alpha = 1
+		alpha = 1,
+		allowTransparentInFrontOfPlayer = false,
 	) {
 		const config = this.Config.Sprites[sprite]
 		const frame = this.AnimationFrame(config.frameInterval, config.framesX, config.framesY, animationStart)
-		this.Draw(sprite, layer, position, velocity, frame, rotation, color, alpha)
+		this.Draw(sprite, layer, position, velocity, frame, rotation, color, alpha, allowTransparentInFrontOfPlayer)
 	}
 
 	private AnimationFrame(frameInterval: number, framesX: number, framesY: number, animationStart: number) {
@@ -89,12 +90,15 @@ export class Camera {
 		frameIndex = 0,
 		rotation = 0,
 		color: Vector3 = null,
-		alpha = 1
+		alpha = 1,
+		allowTransparentInFrontOfPlayer = false,
 	) {
 		const currentPosition = this.SetCurrentPositionWith(this.Adjustable, position, velocity)
 		this.AdjustForFocusAndCamera(currentPosition)
 		const screenX = this.ScreenXFor(currentPosition)
 		const screenY = this.ScreenYFor(currentPosition)
+		if (allowTransparentInFrontOfPlayer && this.State.PlayerIsBlocked && this.IsInFrontOfPlayer(position, screenX, screenY))
+			alpha = 0.2
 		if (currentPosition.z < 0)
 			color = this.DarkenByDepth(color ?? new Vector3(1, 1, 1), currentPosition.z)
 		currentPosition.z = position.z
@@ -112,7 +116,17 @@ export class Camera {
 		)
 	}
 
-	DarkenByDepth(color: Vector3, depth: number) {
+	
+	private _adjustableIsInFrontOfPlayer = new Vector3(0, 0, 0)
+	private IsInFrontOfPlayer(position: Vector3, screenX: number, screenY: number) {
+		const layerDifference = Math.floor(position.z) - Math.floor(this.State.FocusPoint.z)
+		if (layerDifference <= 0)
+			return false
+		const vectorFromMidScreen = this._adjustableIsInFrontOfPlayer.set(screenX - this.State.Size.widthInTiles / 2, screenY - this.State.Size.heightInTiles / 2, 0)
+		return vectorFromMidScreen.lengthSquared() < this.Config.BlockingTransparencyRadius * this.Config.BlockingTransparencyRadius
+	}
+
+	private DarkenByDepth(color: Vector3, depth: number) {
 		if (depth < 0)
 			return color.multiplyFrom(1 + depth / 10)
 		return color

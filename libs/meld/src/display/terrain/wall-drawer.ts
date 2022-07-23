@@ -19,9 +19,9 @@ export class WallDrawer {
 		const smallestInFront = this.SmallestBlockInFront()
 		const finalPosition = this._adjustableDraw.setFrom(this.BlockContext.Position).addFrom(Camera.BlockCenter)
 		if (this.BlockContext.BlockType === BlockType.Half && !this.ShouldSkipHalfWall(smallestInFront))
-			this.Camera.DrawAnimated(this.HalfWallSprite(), Layer.Middle - Layer.ZFightingAdjustment, finalPosition, null, this.BlockContext.AnimationStart, 0, null, this.BlockContext.CurrentAlpha)
+			this.Camera.DrawAnimated(this.HalfWallSprite(), Layer.Middle - Layer.ZFightingAdjustment, finalPosition, null, this.BlockContext.AnimationStart, 0, null, this.BlockContext.CurrentAlpha, true)
 		if (this.BlockContext.BlockType === BlockType.Full && !this.ShouldSkipFullWall(smallestInFront))
-			this.Camera.DrawAnimated(this.FullWallSprite(), Layer.Middle, finalPosition, null, this.BlockContext.AnimationStart, 0, null, this.BlockContext.CurrentAlpha)
+			this.Camera.DrawAnimated(this.FullWallSprite(), Layer.Middle, finalPosition, null, this.BlockContext.AnimationStart, 0, null, this.BlockContext.CurrentAlpha, true)
 	}
 
 	private SmallestBlockInFront() {

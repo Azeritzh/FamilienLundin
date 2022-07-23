@@ -43,6 +43,7 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 		WallDisplayHeight: deserialised.wallDisplayHeight ?? 2,
 		DisplayDepth: deserialised.displayDepth ?? 4,
 		TransparencyRadius: deserialised.transparencyRadius ?? 5,
+		BlockingTransparencyRadius: deserialised.blockingTransparencyRadius ?? 10,
 		AssetFolder: deserialised.assetFolder ?? "assets/",
 
 		Inputs: inputs,
@@ -89,6 +90,7 @@ export interface SerialisableDisplayConfig {
 	wallDisplayHeight?: number
 	displayDepth?: number
 	transparencyRadius?: number
+	blockingTransparencyRadius?: number
 	assetFolder?: string
 	inputs: { [input: string]: string[] }
 

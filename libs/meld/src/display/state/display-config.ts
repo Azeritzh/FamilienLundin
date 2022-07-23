@@ -9,6 +9,7 @@ export interface DisplayConfig {
 	WallDisplayHeight: number
 	DisplayDepth: number
 	TransparencyRadius: number
+	BlockingTransparencyRadius: number
 	AssetFolder: string
 
 	Inputs: Map<Input, string[]>

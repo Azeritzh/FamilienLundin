@@ -17,6 +17,7 @@ export class TileDrawer {
 
 	Draw(context: BlockContext) {
 		this.BlockContext = context
+		this.DrawTileBelowTransparent()
 		this.DrawBlockTile()
 	}
 
@@ -27,14 +28,14 @@ export class TileDrawer {
 		const color = this.HasBlockAbove() ? new Vector3(0.7, 0.7, 0.7) : null
 
 		const finalPosition = this._adjustableDrawBlockTile.setFrom(this.BlockContext.Position).addFrom(height).addFrom(Camera.BlockCenter)
-		this.Camera.DrawAnimated(this.TileSprite(), layer, finalPosition, null, this.BlockContext.AnimationStart, 0, color, this.BlockContext.CurrentAlpha)
+		this.Camera.DrawAnimated(this.TileSprite(), layer, finalPosition, null, this.BlockContext.AnimationStart, 0, color, this.BlockContext.CurrentAlpha, true)
 	}
 
 	private layerFor(blockType: BlockType) {
 		switch (blockType) {
 			case BlockType.Floor: return Layer.Floor
 			case BlockType.Half: return Layer.Middle
-			case BlockType.Full: return Layer.Bottom
+			case BlockType.Full: return Layer.Top
 			default: throw new Error("Invalid argument: No layer for empty blocks")
 		}
 	}
@@ -46,6 +47,14 @@ export class TileDrawer {
 		if (this.BlockContext.BlockType == BlockType.Full)
 			return Blocks.HasSolid(this.Game.Terrain.GetAt(this._adjustableHasBlockAbove.setFrom(this.BlockContext.Position).addFrom(Camera.Above).addFrom(Camera.Above))) ?? false
 		return false
+	}
+
+	private _adjustableDrawTileBelowTransparent = new Vector3(0, 0, 0)
+	private DrawTileBelowTransparent() {
+		if (this.BlockContext.CurrentAlpha == 1)
+			return
+		const position = this._adjustableDrawTileBelowTransparent.setFrom(this.BlockContext.Position)
+		this.Camera.DrawAnimated(this.TileSprite(), Layer.Bottom, position.addFrom(Camera.BlockCenter), null, this.BlockContext.AnimationStart, 0, null, this.BlockContext.CurrentAlpha, true)
 	}
 
 	private TileSprite() {
