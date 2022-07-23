@@ -56,7 +56,7 @@ export class BorderDrawer {
 		const finalPosition = this._adjustableDrawTileOverlay.setFrom(this.BlockContext.Position)
 			.addFrom(Camera.HeightOf(this.BlockContext.BlockType))
 			.addFrom(Camera.BlockCenter)
-		this.Camera.Draw(sprite, blockLayer + layerAdjustment, finalPosition)
+		this.Camera.Draw(sprite, blockLayer + layerAdjustment, finalPosition, null, 0, 0, null, this.BlockContext.CurrentAlpha)
 	}
 
 	private TileLayerFor(blockType: BlockType) {
@@ -102,11 +102,11 @@ export class BorderDrawer {
 		const center = this._adjustableDrawWallOverlaysFor.setFrom(this.BlockContext.Position).addFrom(Camera.BlockCenter)
 
 		if (this.BlockContext.BlockType === BlockType.Full && (otherType === BlockType.Empty || otherType === BlockType.Floor))
-			this.Camera.Draw(this.FullWallOverlayFor(side), Layer.Middle + Layer.OverlayWestAdjustment, center)
+			this.Camera.Draw(this.FullWallOverlayFor(side), Layer.Middle + Layer.OverlayWestAdjustment, center, null, 0, 0, null, this.BlockContext.CurrentAlpha)
 		else if (this.BlockContext.BlockType === BlockType.Full && otherType === BlockType.Half)
-			this.Camera.Draw(this.HalfWallOverlayFor(side), Layer.Middle + Layer.OverlayWestAdjustment, center.addFrom(Camera.HalfHeight))
+			this.Camera.Draw(this.HalfWallOverlayFor(side), Layer.Middle + Layer.OverlayWestAdjustment, center.addFrom(Camera.HalfHeight), null, 0, 0, null, this.BlockContext.CurrentAlpha)
 		else if (this.BlockContext.BlockType === BlockType.Half && (otherType === BlockType.Empty || otherType === BlockType.Floor))
-			this.Camera.Draw(this.HalfWallOverlayFor(side), Layer.Middle + Layer.OverlayWestAdjustment, center)
+			this.Camera.Draw(this.HalfWallOverlayFor(side), Layer.Middle + Layer.OverlayWestAdjustment, center, null, 0, 0, null, this.BlockContext.CurrentAlpha)
 	}
 
 	private HighestBlockAmong(blockA: Block, blockB: Block, blockC: Block) {

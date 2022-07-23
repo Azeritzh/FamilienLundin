@@ -42,7 +42,7 @@ export class TerrainDrawer {
 	private _adjustableUpdateContext = new Vector3(0, 0, 0)
 	private UpdateContext(block: Block, x: number, y: number, z: number) {
 		const pos = this._adjustableUpdateContext.set(x, y, z)
-		//this.BlockContext.CurrentAlpha = this.GetTransparency(block, position)
+		this.BlockContext.CurrentAlpha = this.GetTransparency(block, pos)
 		this.BlockContext.AnimationStart = this.AnimationStartFor(pos)
 		this.BlockContext.Block = block
 		this.BlockContext.BlockType = Blocks.TypeOf(block)
@@ -55,6 +55,73 @@ export class TerrainDrawer {
 		this.BlockContext.BottomLeftBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.BottomLeftTile)) ?? Blocks.NewEmpty(0)
 		this.BlockContext.LeftBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.LeftTile)) ?? Blocks.NewEmpty(0)
 		this.BlockContext.TopLeftBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.TopLeftTile)) ?? Blocks.NewEmpty(0)
+	}
+
+	private GetTransparency(block: Block, position: Vector3) {
+		const layerDifference = Math.floor(position.z) - Math.floor(this.State.FocusPoint.z)
+		if (layerDifference == 0)
+			return this.ShouldBeTransparentAtPlayerLayer(block, position) ? 0.5 : 1
+		return 1
+	}
+
+	private _adjustableShouldBeTransparentAtPlayerLayer = new Vector3(0, 0, 0)
+	private ShouldBeTransparentAtPlayerLayer(block: Block, position: Vector3) {
+		const pos = this._adjustableShouldBeTransparentAtPlayerLayer
+		const blockType = Blocks.TypeOf(block)
+		if (blockType == BlockType.Empty || blockType == BlockType.Floor)
+			return false
+		if (pos.setFrom(position).subtractFrom(this.State.FocusPoint).lengthSquared() > this.Config.TransparencyRadius * this.Config.TransparencyRadius)
+			return false
+
+		if (this.Camera.IsDiagonalView())
+			return this.DiagonalShouldBeTransparent(blockType, position)
+		return this.StraightShouldBeTransparent(blockType, position)
+	}
+
+	private DiagonalShouldBeTransparent(blockType: BlockType, position: Vector3) {
+		if (this.IsInQuadrant(position, this.Camera.LeftTile))
+			return this.ShouldBeTransparentDueToDirection(blockType, position, this.Camera.TopTile)
+				&& this.ShouldBeTransparentDueToDirection(blockType, position, this.Camera.TopRightTile)
+		if (this.IsInQuadrant(position, this.Camera.RightTile))
+			return this.ShouldBeTransparentDueToDirection(blockType, position, this.Camera.TopTile)
+				&& this.ShouldBeTransparentDueToDirection(blockType, position, this.Camera.TopLeftTile)
+		if (this.IsInQuadrant(position, this.Camera.BottomTile))
+			return this.ShouldBeTransparentDueToDirection(blockType, position, this.Camera.TopTile)
+		return false
+	}
+
+	private _adjustableShouldBeTransparentDueToDirection = new Vector3(0, 0, 0)
+	private ShouldBeTransparentDueToDirection(blockType: BlockType, position: Vector3, direction: Vector3) {
+		const pos = this._adjustableShouldBeTransparentDueToDirection
+		if (!this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(direction)))
+			return false
+
+		const topBlockType = Blocks.TypeOf(this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(direction))) ?? BlockType.Full
+		if (blockType == BlockType.Half || this.Camera.IsDiagonalView())
+			return topBlockType < blockType
+		const topTopBlockType = Blocks.TypeOf(this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(direction).addFrom(direction))) ?? BlockType.Full
+		return (topBlockType < blockType || topTopBlockType < blockType)
+	}
+
+	private StraightShouldBeTransparent(blockType: BlockType, position: Vector3) {
+		return this.IsInBottomHalf(position) && this.ShouldBeTransparentDueToDirection(blockType, position, this.Camera.TopTile)
+	}
+
+	private _adjustableIsInBottomHalf = new Vector3(0, 0, 0)
+	private IsInBottomHalf(position: Vector3) {
+		const relativePosition = this._adjustableIsInBottomHalf.setFrom(position).subtract(this.State.FocusPoint)
+		const tempX = relativePosition.x * this.Camera.BottomTile.x
+		const tempY = relativePosition.y * this.Camera.BottomTile.y
+		return tempX >= 0 && tempY >= 0
+	}
+
+	private _adjustableIsInQuadrant = new Vector3(0, 0, 0)
+	private IsInQuadrant(position: Vector3, quadrant: Vector3) {
+		const relativePosition = this._adjustableIsInQuadrant.setFrom(position).subtract(this.State.FocusPoint)
+		relativePosition.x += 1
+		const tempX = relativePosition.x * quadrant.x
+		const tempY = relativePosition.y * quadrant.y
+		return tempX > 0 && tempY > 0
 	}
 
 	private AnimationStartFor(position: Vector3) {

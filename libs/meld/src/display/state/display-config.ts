@@ -8,6 +8,7 @@ export interface DisplayConfig {
 	VirtualHeight: number
 	WallDisplayHeight: number
 	DisplayDepth: number
+	TransparencyRadius: number
 	AssetFolder: string
 
 	Inputs: Map<Input, string[]>

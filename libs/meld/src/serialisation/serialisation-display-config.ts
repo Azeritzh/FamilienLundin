@@ -42,6 +42,7 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 		VirtualHeight: deserialised.virtualHeight ?? 360,
 		WallDisplayHeight: deserialised.wallDisplayHeight ?? 2,
 		DisplayDepth: deserialised.displayDepth ?? 4,
+		TransparencyRadius: deserialised.transparencyRadius ?? 5,
 		AssetFolder: deserialised.assetFolder ?? "assets/",
 
 		Inputs: inputs,
@@ -87,6 +88,7 @@ export interface SerialisableDisplayConfig {
 	virtualHeight?: number
 	wallDisplayHeight?: number
 	displayDepth?: number
+	transparencyRadius?: number
 	assetFolder?: string
 	inputs: { [input: string]: string[] }
 

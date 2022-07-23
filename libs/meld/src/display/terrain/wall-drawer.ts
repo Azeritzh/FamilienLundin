@@ -42,17 +42,17 @@ export class WallDrawer {
 		const pos = this._adjustableShouldSkipFullWall
 		const isDiagonal = this.Camera.IsDiagonalView()
 		const northFree = isDiagonal
-			? this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(Camera.NorthWest)) && Blocks.TypeOf(this.BlockContext.TopLeftBlock) !== BlockType.Full
-			: this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(Camera.North)) && Blocks.TypeOf(this.BlockContext.TopBlock) !== BlockType.Full
+			? this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(this.Camera.TopLeftTile)) && Blocks.TypeOf(this.BlockContext.TopLeftBlock) !== BlockType.Full
+			: this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(this.Camera.TopTile)) && Blocks.TypeOf(this.BlockContext.TopBlock) !== BlockType.Full
 		const eastFree = isDiagonal
-			? this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(Camera.NorthEast)) && Blocks.TypeOf(this.BlockContext.TopRightBlock) !== BlockType.Full
-			: this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(Camera.East)) && Blocks.TypeOf(this.BlockContext.RightBlock) !== BlockType.Full
+			? this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(this.Camera.TopRightTile)) && Blocks.TypeOf(this.BlockContext.TopRightBlock) !== BlockType.Full
+			: this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(this.Camera.RightTile)) && Blocks.TypeOf(this.BlockContext.RightBlock) !== BlockType.Full
 		const southFree = isDiagonal
-			? this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(Camera.SouthEast)) && Blocks.TypeOf(this.BlockContext.BottomRightBlock) !== BlockType.Full
-			: this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(Camera.South)) && Blocks.TypeOf(this.BlockContext.BottomBlock) !== BlockType.Full
+			? this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(this.Camera.BottomRightTile)) && Blocks.TypeOf(this.BlockContext.BottomRightBlock) !== BlockType.Full
+			: this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(this.Camera.BottomTile)) && Blocks.TypeOf(this.BlockContext.BottomBlock) !== BlockType.Full
 		const westFree = isDiagonal
-			? this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(Camera.SouthWest)) && Blocks.TypeOf(this.BlockContext.BottomLeftBlock) !== BlockType.Full
-			: this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(Camera.West)) && Blocks.TypeOf(this.BlockContext.LeftBlock) !== BlockType.Full
+			? this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(this.Camera.BottomLeftTile)) && Blocks.TypeOf(this.BlockContext.BottomLeftBlock) !== BlockType.Full
+			: this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(this.Camera.LeftTile)) && Blocks.TypeOf(this.BlockContext.LeftBlock) !== BlockType.Full
 		return smallestInFront === BlockType.Full && !northFree && !eastFree && !southFree && !westFree
 	}
 
