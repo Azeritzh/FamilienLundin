@@ -3,6 +3,7 @@ import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
 import { DisplayConfig } from "../state/display-config"
 import { AngleOf, DisplayState, ViewDirection } from "../state/display-state"
+import { Visibility } from "./visibility"
 
 export class Camera {
 	constructor(
@@ -10,17 +11,18 @@ export class Camera {
 		private DisplayProvider: DisplayProvider,
 		private Config: DisplayConfig,
 		private State: DisplayState,
-		public ShownLayers: { layer: number, area: DisplayArea }[] = []
 	) { }
 
-	private BaseTopTile = new Vector3(0, -1, 0)
-	private BaseTopRightTile = new Vector3(1, -1, 0)
-	private BaseRightTile = new Vector3(1, 0, 0)
-	private BaseBottomRightTile = new Vector3(1, 1, 0)
-	private BaseBottomTile = new Vector3(0, 1, 0)
-	private BaseBottomLeftTile = new Vector3(-1, 1, 0)
-	private BaseLeftTile = new Vector3(-1, 0, 0)
-	private BaseTopLeftTile = new Vector3(-1, -1, 0)
+	public static North = new Vector3(0, -1, 0)
+	public static NorthEast = new Vector3(1, -1, 0)
+	public static East = new Vector3(1, 0, 0)
+	public static SouthEast = new Vector3(1, 1, 0)
+	public static South = new Vector3(0, 1, 0)
+	public static SouthWest = new Vector3(-1, 1, 0)
+	public static West = new Vector3(-1, 0, 0)
+	public static NorthWest = new Vector3(-1, -1, 0)
+	public static Above = new Vector3(0, 0, 1)
+	public static Below = new Vector3(0, 0, -1)
 
 	public TopTile = new Vector3(0, -1, 0) //apparent north tile
 	public TopRightTile = new Vector3(1, -1, 0) //apparent north-east tile
@@ -32,7 +34,6 @@ export class Camera {
 	public TopLeftTile = new Vector3(-1, -1, 0) //apparent north-west tile
 
 	private Adjustable = new Vector3(0, 0, 0)
-	private ScreenMargin = 3
 
 	public FocusOn(entity: Id) {
 		this.SetCurrentPositionWith(
@@ -40,42 +41,6 @@ export class Camera {
 			this.Game.Entities.Position.Get.Of(entity) ?? new Vector3(0, 0, 0),
 			this.Game.Entities.Velocity.Get.Of(entity),
 		)
-		this.UpdateShownLayers()
-	}
-
-	private UpdateShownLayers() {
-		this.ShownLayers.clear()
-		for (let layer = -this.Config.DisplayDepth; layer <= this.Config.DisplayDepth; layer++)
-			this.ShownLayers.push({ layer: layer + Math.floor(this.State.FocusPoint.z), area: this.displayAreaFor(layer) })
-	}
-
-	private displayAreaFor(layer: number) {
-		const corners = [
-			this.TilePositionFor(0, 0),
-			this.TilePositionFor(1, 0),
-			this.TilePositionFor(0, 1),
-			this.TilePositionFor(1, 1),
-		]
-		let top = Number.MAX_VALUE
-		let bottom = Number.MIN_VALUE
-		let left = Number.MAX_VALUE
-		let right = Number.MIN_VALUE
-		for (const corner of corners) {
-			if (corner.y < top)
-				top = corner.y
-			if (corner.y > bottom)
-				bottom = corner.y
-			if (corner.x < left)
-				left = corner.x
-			if (corner.x > right)
-				right = corner.x
-		}
-		const layerAdjustment = this.BottomTile.multiply(layer * this.Config.WallDisplayHeight)
-		return new DisplayArea(
-			top + layerAdjustment.y - this.ScreenMargin,
-			bottom + layerAdjustment.y + this.ScreenMargin,
-			left + layerAdjustment.x - this.ScreenMargin,
-			right + layerAdjustment.x + this.ScreenMargin)
 	}
 
 	private _adjustableCurrentPosition = new Vector3(0, 0, 0)
@@ -230,14 +195,14 @@ export class Camera {
 	}
 
 	private UpdateDirections() {
-		this.RotateAndRound(this.TopTile, this.BaseTopTile)
-		this.RotateAndRound(this.TopRightTile, this.BaseTopRightTile)
-		this.RotateAndRound(this.RightTile, this.BaseRightTile)
-		this.RotateAndRound(this.BottomRightTile, this.BaseBottomRightTile)
-		this.RotateAndRound(this.BottomTile, this.BaseBottomTile)
-		this.RotateAndRound(this.BottomLeftTile, this.BaseBottomLeftTile)
-		this.RotateAndRound(this.LeftTile, this.BaseLeftTile)
-		this.RotateAndRound(this.TopLeftTile, this.BaseTopLeftTile)
+		this.RotateAndRound(this.TopTile, Camera.North)
+		this.RotateAndRound(this.TopRightTile, Camera.NorthEast)
+		this.RotateAndRound(this.RightTile, Camera.East)
+		this.RotateAndRound(this.BottomRightTile, Camera.SouthEast)
+		this.RotateAndRound(this.BottomTile, Camera.South)
+		this.RotateAndRound(this.BottomLeftTile, Camera.SouthWest)
+		this.RotateAndRound(this.LeftTile, Camera.West)
+		this.RotateAndRound(this.TopLeftTile, Camera.NorthWest)
 	}
 
 	private RotateAndRound(rotated: Vector3, vector: Vector3) {
@@ -256,17 +221,17 @@ export class Camera {
 		this.AdjustForFocusAndCamera(position)
 		const screenX = this.ScreenXFor(position)
 		const screenY = this.ScreenYFor(position)
-		return 0 - this.ScreenMargin < screenX && screenX < this.State.Size.widthInTiles + this.ScreenMargin
-			&& 0 - this.ScreenMargin < screenY && screenY < this.State.Size.heightInTiles + this.ScreenMargin
+		return 0 - Visibility.ScreenMargin < screenX && screenX < this.State.Size.widthInTiles + Visibility.ScreenMargin
+			&& 0 - Visibility.ScreenMargin < screenY && screenY < this.State.Size.heightInTiles + Visibility.ScreenMargin
 	}
 }
 
 export class DisplayArea {
 	constructor(
-		public top: number,
-		public bottom: number,
-		public left: number,
-		public right: number,
+		public Top: number,
+		public Bottom: number,
+		public Left: number,
+		public Right: number,
 	) { }
 }
 

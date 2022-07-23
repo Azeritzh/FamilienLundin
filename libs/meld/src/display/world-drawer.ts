@@ -3,30 +3,32 @@ import { Vector3 } from "@lundin/utility"
 import { Meld } from "../meld"
 import { Camera, DisplayArea } from "./services/camera"
 import { DisplayConfig } from "./state/display-config"
+import { DisplayState } from "./state/display-state"
 import { TerrainDrawer } from "./terrain/terrain-drawer"
 
 export class WorldDrawer {
 	constructor(
 		private Game: Meld,
 		private Config: DisplayConfig,
+		private State: DisplayState,
 		private Camera: Camera,
 		private TerrainDrawer: TerrainDrawer,
 		private EntityDrawers: EntityDrawer[],
 	) { }
 
 	DrawWorld() {
-		for (const { layer, area } of this.Camera.ShownLayers)
+		for (const { layer, area } of this.State.ShownLayers)
 			this.drawLayer(layer, area)
 	}
 
 	private _adjustable = new Vector3(0, 0, 0)
 	private drawLayer(layer: number, area: DisplayArea) {
 		const entitiesInLayer = this.entitiesInArea(layer, area)
-		const startY = Math.floor(area.top - this.Config.WallDisplayHeight)
-		const endY = Math.floor(area.bottom + this.Config.WallDisplayHeight)
+		const startY = Math.floor(area.Top - this.Config.WallDisplayHeight)
+		const endY = Math.floor(area.Bottom + this.Config.WallDisplayHeight)
 
 		for (let y = startY; y <= endY; y++)
-			for (let x = Math.floor(area.left); x <= Math.floor(area.right); x++)
+			for (let x = Math.floor(area.Left); x <= Math.floor(area.Right); x++)
 				if (this.Camera.IsWithinScreen(this._adjustable.set(x, y, layer)))
 					this.TerrainDrawer.DrawBlockContent(x, y, layer)
 		for (const entity of entitiesInLayer)
@@ -41,8 +43,8 @@ export class WorldDrawer {
 	}
 
 	private isInArea(layer: number, area: DisplayArea, position: Vector3) {
-		return area.left <= position.x && position.x < area.right
-			&& area.top <= position.y && position.y < area.bottom
+		return area.Left <= position.x && position.x < area.Right
+			&& area.Top <= position.y && position.y < area.Bottom
 			&& Math.floor(position.z) == layer
 	}
 }

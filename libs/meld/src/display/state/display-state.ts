@@ -1,7 +1,8 @@
-import { ScreenSize } from "@lundin/age"
+import { BlockChunk, ScreenSize } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { DisplayConfig } from "./display-config"
 import { DisplayEntity } from "../display-entity-drawer"
+import { DisplayArea } from "../services/camera"
 
 export class DisplayState {
 	constructor(
@@ -11,6 +12,9 @@ export class DisplayState {
 		public FocusPoint = new Vector3(0, 0, 0),
 		public ViewDirection: ViewDirection = <ViewDirection>0,
 		public DisplayEntities: DisplayEntity[] = [],
+		public ShownLayers: { layer: number, area: DisplayArea }[] = [],
+		public VisibleBlocks: BlockChunk<boolean> = new BlockChunk([false]),
+		public PlayerIsBlocked = false,
 	) { }
 
 	public static from(config: DisplayConfig, playerName: string) {
