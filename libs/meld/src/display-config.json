@@ -183,6 +183,12 @@
 		"shadowSmall": "shadow-medium",
 		"shadowMedium": "shadow-medium",
 		"shadowBig": "shadow-medium",
+		"wallShadowFullLeft": "default-wall-shadow-full-left",
+		"wallShadowFullRight": "default-wall-shadow-full-right",
+		"wallShadowFullDiagonal": "default-wall-shadow-full-diagonal",
+		"wallShadowHalfLeft": "default-wall-shadow-half-left",
+		"wallShadowHalfRight": "default-wall-shadow-half-right",
+		"wallShadowHalfDiagonal": "default-wall-shadow-half-diagonal",
 		"dashCloud": "dash-cloud",
 		"dashRecharge": "dash-recharge",
 		"dashTarget": "dash-target",
@@ -312,30 +318,12 @@
 			"centerX": -12,
 			"centerY": 16
 		},
-		"default-wall-shadow-full-left": {
-			"width": 16,
-			"height": 16,
-			"centerX": 24,
-			"centerY": 8
-		},
-		"default-wall-shadow-full-right": {
-			"width": 16,
-			"height": 16,
-			"centerX": -8,
-			"centerY": 8
-		},
-		"default-wall-shadow-half-left": {
-			"width": 16,
-			"height": 16,
-			"centerX": 24,
-			"centerY": 8
-		},
-		"default-wall-shadow-half-right": {
-			"width": 16,
-			"height": 16,
-			"centerX": -8,
-			"centerY": 8
-		},
+		"default-wall-shadow-full-left": { "type": "defaultTile" },
+		"default-wall-shadow-full-right": { "type": "defaultTile" },
+		"default-wall-shadow-full-diagonal": { "type": "defaultDiagonalTile" },
+		"default-wall-shadow-half-left": { "type": "defaultTile" },
+		"default-wall-shadow-half-right": { "type": "defaultTile" },
+		"default-wall-shadow-half-diagonal": { "type": "defaultDiagonalTile" },
 		"dirt-tile": { "type": "defaultTile" },
 		"dirt-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"dirt-wall": { "type": "defaultFullWall" },
