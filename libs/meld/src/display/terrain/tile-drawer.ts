@@ -8,10 +8,10 @@ import { BlockContext } from "./block-context"
 
 export class TileDrawer {
 	constructor(
-		private Game: Meld,
 		private Config: DisplayConfig,
 		private State: DisplayState,
 		private Camera: Camera,
+		private Game: Meld,
 	) { }
 	BlockContext: BlockContext
 

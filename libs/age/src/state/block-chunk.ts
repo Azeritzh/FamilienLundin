@@ -15,6 +15,10 @@ export class BlockChunk<Field> {
 		return this.Blocks[this.chunkIndexFor(x, y, z)]
 	}
 
+	GetAt(position: Vector3) {
+		return this.Blocks[this.chunkIndexFor(position.x - this.Offset.x, position.y - this.Offset.y, position.z - this.Offset.z)]
+	}
+
 	Set(x: number, y: number, z: number, value: Field) {
 		return this.Blocks[this.chunkIndexFor(x - this.Offset.x, y - this.Offset.y, z - this.Offset.z)] = value
 	}

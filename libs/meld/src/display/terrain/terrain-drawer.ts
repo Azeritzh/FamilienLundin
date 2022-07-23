@@ -57,7 +57,6 @@ export class TerrainDrawer {
 			drawer.Draw(this.BlockContext)
 
 		this.updateDirections()
-		this.DrawBlockWall(block, this.Position)
 		if (this.Camera.IsDiagonalView())
 			this.DrawDiagonalTileOverlays(block, this.Position)
 		else
@@ -93,23 +92,6 @@ export class TerrainDrawer {
 		this.BottomLeftPosition.setFrom(this.Position).addFrom(this.Camera.BottomLeftTile)
 		this.LeftPosition.setFrom(this.Position).addFrom(this.Camera.LeftTile)
 		this.TopLeftPosition.setFrom(this.Position).addFrom(this.Camera.TopLeftTile)
-	}
-
-	private DrawBlockWall(block: Block, position: Vector3) {
-		const smallestInFront = this.SmallestBlockInFrontOfCurrentPosition()
-		const finalPosition = this.Adjustable.setFrom(position).addFrom(TerrainDrawer.BlockCenter)
-		if (Blocks.TypeOf(block) === BlockType.Half && smallestInFront < BlockType.Half)
-			this.Camera.DrawAnimated(this.HalfWallSpriteFor(block), Layer.Middle - Layer.ZFightingAdjustment, finalPosition, null, this.AnimationStartFor(position))
-		if (Blocks.TypeOf(block) === BlockType.Full && smallestInFront !== BlockType.Full)
-			this.Camera.DrawAnimated(this.FullWallSpriteFor(block), Layer.Middle, finalPosition, null, this.AnimationStartFor(position))
-	}
-
-	private SmallestBlockInFrontOfCurrentPosition() {
-		if (!this.Camera.IsDiagonalView())
-			return Blocks.TypeOf(this.Game.Terrain.GetAt(this.BottomPosition)) ?? BlockType.Empty
-		const left = Blocks.TypeOf(this.Game.Terrain.GetAt(this.BottomLeftPosition)) ?? BlockType.Empty
-		const right = Blocks.TypeOf(this.Game.Terrain.GetAt(this.BottomRightPosition)) ?? BlockType.Empty
-		return left < right ? left : right
 	}
 
 	private DrawDiagonalTileOverlays(block: Block, position: Vector3) {
@@ -261,18 +243,6 @@ export class TerrainDrawer {
 
 	private getCenter(position: Vector3) {
 		return this.Adjustable.setFrom(position).addFrom(TerrainDrawer.BlockCenter)
-	}
-
-	private TileSpriteFor(block: Block) {
-		return this.Config.BlockSprites.get(Blocks.SolidOf(block))[Blocks.VariantOf(block)].TileFor(this.State.ViewDirection)
-	}
-
-	private FullWallSpriteFor(block: Block) {
-		return this.Config.BlockSprites.get(Blocks.SolidOf(block))[Blocks.VariantOf(block)].FullWallFor(this.State.ViewDirection)
-	}
-
-	private HalfWallSpriteFor(block: Block) {
-		return this.Config.BlockSprites.get(Blocks.SolidOf(block))[Blocks.VariantOf(block)].HalfWallFor(this.State.ViewDirection)
 	}
 
 	private TileOverlayFor(solidType: SolidId, direction: Side) {
