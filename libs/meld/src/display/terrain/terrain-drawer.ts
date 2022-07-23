@@ -4,6 +4,8 @@ import { Block, Blocks, BlockType, SolidId } from "../../state/block"
 import { Camera, Layer } from "../services/camera"
 import { DisplayConfig } from "../state/display-config"
 import { DisplayState } from "../state/display-state"
+import { BlockContext } from "./block-context"
+import { BlockDrawer } from "./block-drawer"
 
 export class TerrainDrawer {
 	static BlockCenter = new Vector3(0.5, 0.5, 0)
@@ -25,11 +27,14 @@ export class TerrainDrawer {
 	private Below = new Vector3(0, 0, -1)
 	private Adjustable = new Vector3(0, 0, 0)
 
+	private BlockContext = new BlockContext()
+
 	constructor(
 		private Game: Meld,
 		private Config: DisplayConfig,
 		private State: DisplayState,
 		private Camera: Camera,
+		private BlockDrawers: BlockDrawer[],
 	) { }
 
 	Draw() {
@@ -44,9 +49,14 @@ export class TerrainDrawer {
 		const block = this.Game.Terrain.Get(x, y, z)
 		if (block === null || block === undefined)
 			return
+		if (Blocks.TypeOf(block) == BlockType.Empty)
+			return
 		this.Position.set(x, y, z)
+		this.UpdateContext(block, this.Position)
+		for (const drawer of this.BlockDrawers)
+			drawer.Draw(this.BlockContext)
+
 		this.updateDirections()
-		this.DrawBlockTile(block, this.Position)
 		this.DrawBlockWall(block, this.Position)
 		if (this.Camera.IsDiagonalView())
 			this.DrawDiagonalTileOverlays(block, this.Position)
@@ -54,6 +64,24 @@ export class TerrainDrawer {
 			this.DrawTileOverlays(block, this.Position)
 		this.DrawWallOverlays(block, this.Position)
 		this.DrawWallShadows(block, this.Position)
+	}
+
+	private _adjustableUpdateContext = new Vector3(0, 0, 0)
+	private UpdateContext(block: Block, position: Vector3) {
+		const pos = this._adjustableUpdateContext
+		//this.BlockContext.CurrentAlpha = this.GetTransparency(block, position)
+		this.BlockContext.AnimationStart = this.AnimationStartFor(position)
+		this.BlockContext.Block = block
+		this.BlockContext.BlockType = Blocks.TypeOf(block)
+		this.BlockContext.Position.setFrom(position)
+		this.BlockContext.TopBlock = this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(this.Camera.TopTile)) ?? Blocks.NewEmpty(0)
+		this.BlockContext.TopRightBlock = this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(this.Camera.TopRightTile)) ?? Blocks.NewEmpty(0)
+		this.BlockContext.RightBlock = this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(this.Camera.RightTile)) ?? Blocks.NewEmpty(0)
+		this.BlockContext.BottomRightBlock = this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(this.Camera.BottomRightTile)) ?? Blocks.NewEmpty(0)
+		this.BlockContext.BottomBlock = this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(this.Camera.BottomTile)) ?? Blocks.NewEmpty(0)
+		this.BlockContext.BottomLeftBlock = this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(this.Camera.BottomLeftTile)) ?? Blocks.NewEmpty(0)
+		this.BlockContext.LeftBlock = this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(this.Camera.LeftTile)) ?? Blocks.NewEmpty(0)
+		this.BlockContext.TopLeftBlock = this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(this.Camera.TopLeftTile)) ?? Blocks.NewEmpty(0)
 	}
 
 	private updateDirections() {
@@ -65,37 +93,6 @@ export class TerrainDrawer {
 		this.BottomLeftPosition.setFrom(this.Position).addFrom(this.Camera.BottomLeftTile)
 		this.LeftPosition.setFrom(this.Position).addFrom(this.Camera.LeftTile)
 		this.TopLeftPosition.setFrom(this.Position).addFrom(this.Camera.TopLeftTile)
-	}
-
-	private DrawBlockTile(block: Block, position: Vector3) {
-		if (Blocks.TypeOf(block) === BlockType.Empty)
-			return
-
-		const layer = this.layerFor(Blocks.TypeOf(block))
-		const height = TerrainDrawer.HeightOf(Blocks.TypeOf(block))
-		const hasBlockAbove = Blocks.HasSolid(this.Game.Terrain.Get(position.x, position.y, position.z + 1)) ?? false
-		const color = hasBlockAbove ? new Vector3(0.7, 0.7, 0.7) : null
-
-		const finalPosition = this.Adjustable.setFrom(position).addFrom(height).addFrom(TerrainDrawer.BlockCenter)
-		this.Camera.DrawAnimated(this.TileSpriteFor(block), layer, finalPosition, null, this.AnimationStartFor(position), 0, color)
-	}
-
-	private layerFor(blockType: BlockType) {
-		switch (blockType) {
-			case BlockType.Floor: return Layer.Floor
-			case BlockType.Half: return Layer.Middle
-			case BlockType.Full: return Layer.Bottom
-			default: throw new Error("Invalid argument: No layer for empty blocks")
-		}
-	}
-
-	public static HeightOf(blockType: BlockType) {
-		switch (blockType) {
-			case BlockType.Floor: return TerrainDrawer.FloorHeight
-			case BlockType.Half: return TerrainDrawer.HalfHeight
-			case BlockType.Full: return TerrainDrawer.FullHeight
-			default: return TerrainDrawer.NoHeight
-		}
 	}
 
 	private DrawBlockWall(block: Block, position: Vector3) {
@@ -157,8 +154,8 @@ export class TerrainDrawer {
 		const layerAdjustment = this.LayerForSide(direction)
 		const sprite = this.TileOverlayFor(Blocks.SolidOf(block), direction)
 		const finalPosition = this.Adjustable.setFrom(position)
-			.addFrom(TerrainDrawer.HeightOf(Blocks.TypeOf(block)))
-			.addFrom(TerrainDrawer.BlockCenter)
+			.addFrom(Camera.HeightOf(Blocks.TypeOf(block)))
+			.addFrom(Camera.BlockCenter)
 		this.Camera.Draw(sprite, blockLayer + layerAdjustment, finalPosition)
 	}
 

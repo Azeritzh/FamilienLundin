@@ -12,6 +12,7 @@ import { EntitiesDrawer } from "./entity/entities-drawer"
 import { Meld } from "../meld"
 import { GameUpdate } from "../state/game-update"
 import { Visibility } from "./services/visibility"
+import { TileDrawer } from "./terrain/tile-drawer"
 
 export class MeldDisplay implements BaseDisplay<GameUpdate> {
 	constructor(
@@ -26,7 +27,8 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		private displayEntityDrawer = new DisplayEntityDrawer(Game, Config, State, camera),
 		private hudDrawer = new HudDrawer(Game, Config, State, Display),
 
-		private terrainDrawer = new TerrainDrawer(Game, Config, State, camera),
+		private tileDrawer = new TileDrawer(Game, Config, State, camera),
+		private terrainDrawer = new TerrainDrawer(Game, Config, State, camera, [tileDrawer]),
 
 		private entityDrawer = new StandardEntityDrawer(Game, Config, camera),
 		private dashDrawer = new DashDrawer(Game, Config, State, camera, displayEntityDrawer),

@@ -1,10 +1,9 @@
-import { Id, EntityTypeOf } from "@lundin/age"
+import { EntityTypeOf, Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
 import { Blocks, BlockType } from "../../state/block"
 import { Camera, Layer } from "../services/camera"
 import { DisplayConfig } from "../state/display-config"
-import { TerrainDrawer } from "../terrain/terrain-drawer"
 
 export class StandardEntityDrawer {
 	constructor(
@@ -43,7 +42,7 @@ export class StandardEntityDrawer {
 			if (nextPosition.z < position.z - 10)
 				return null
 		}
-		return TerrainDrawer.HeightOf(nextBlock).z + Math.floor(nextPosition.z)
+		return Camera.HeightOf(nextBlock).z + Math.floor(nextPosition.z)
 	}
 
 	private GetShadowOf(entity: Id) {

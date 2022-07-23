@@ -1,6 +1,7 @@
 import { DisplayProvider, Id } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
+import { BlockType } from "../../state/block"
 import { DisplayConfig } from "../state/display-config"
 import { AngleOf, DisplayState, ViewDirection } from "../state/display-state"
 import { Visibility } from "./visibility"
@@ -12,6 +13,12 @@ export class Camera {
 		private Config: DisplayConfig,
 		private State: DisplayState,
 	) { }
+	
+	static BlockCenter = new Vector3(0.5, 0.5, 0)
+	static NoHeight = new Vector3(0, 0, 0)
+	static FloorHeight = new Vector3(0, 0, 1 / 32) // should look like one pixel, so: 1/(WallHeight * PixelsPerTile)
+	static HalfHeight = new Vector3(0, 0, 0.5)
+	static FullHeight = new Vector3(0, 0, 1)
 
 	public static North = new Vector3(0, -1, 0)
 	public static NorthEast = new Vector3(1, -1, 0)
@@ -225,6 +232,15 @@ export class Camera {
 		const screenY = this.ScreenYFor(pos)
 		return 0 - Visibility.ScreenMargin < screenX && screenX < this.State.Size.widthInTiles + Visibility.ScreenMargin
 			&& 0 - Visibility.ScreenMargin < screenY && screenY < this.State.Size.heightInTiles + Visibility.ScreenMargin
+	}
+
+	public static HeightOf(blockType: BlockType) {
+		switch (blockType) {
+			case BlockType.Floor: return Camera.FloorHeight
+			case BlockType.Half: return Camera.HalfHeight
+			case BlockType.Full: return Camera.FullHeight
+			default: return Camera.NoHeight
+		}
 	}
 }
 
