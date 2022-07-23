@@ -1,9 +1,9 @@
 import { Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Meld } from "../meld"
-import { Camera, Layer } from "./camera"
-import { DisplayConfig, DurationOf } from "./display-config"
-import { DisplayState } from "./display-state"
+import { Camera, Layer } from "./services/camera"
+import { DisplayConfig, DurationOf } from "./state/display-config"
+import { DisplayState } from "./state/display-state"
 
 export class DisplayEntityDrawer {
 	constructor(

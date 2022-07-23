@@ -2,9 +2,9 @@ import { Id, EntityTypeOf } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
 import { Blocks, BlockType } from "../../state/block"
-import { Camera, Layer } from "../camera"
-import { DisplayConfig } from "../display-config"
-import { TerrainDrawer } from "../terrain-drawer"
+import { Camera, Layer } from "../services/camera"
+import { DisplayConfig } from "../state/display-config"
+import { TerrainDrawer } from "../terrain/terrain-drawer"
 
 export class StandardEntityDrawer {
 	constructor(

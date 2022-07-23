@@ -1,9 +1,9 @@
 import { Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Meld } from "../meld"
-import { Camera, DisplayArea } from "./camera"
-import { DisplayConfig } from "./display-config"
-import { TerrainDrawer } from "./terrain-drawer"
+import { Camera, DisplayArea } from "./services/camera"
+import { DisplayConfig } from "./state/display-config"
+import { TerrainDrawer } from "./terrain/terrain-drawer"
 
 export class WorldDrawer {
 	constructor(

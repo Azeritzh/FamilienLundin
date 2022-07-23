@@ -1,9 +1,9 @@
 import { BaseInputParser, DisplayProvider, Id } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
-import { Meld } from "../meld"
-import { GenerateAction, MovementAction, SelectNextItemAction, PlaceBlockAction, ChargeDashAction, ReleaseDashAction } from "../state/game-update"
+import { Meld } from "../../meld"
+import { GenerateAction, MovementAction, SelectNextItemAction, PlaceBlockAction, ChargeDashAction, ReleaseDashAction } from "../../state/game-update"
 import { Camera } from "./camera"
-import { AngleOf, DisplayState } from "./display-state"
+import { AngleOf, DisplayState } from "../state/display-state"
 
 export class InputParser extends BaseInputParser<Input> {
 	PreviousMovement = new Vector2(0, 0)

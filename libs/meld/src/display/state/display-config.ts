@@ -1,6 +1,6 @@
-import { SolidId } from "../state/block"
+import { SolidId } from "../../state/block"
 import { ViewDirection } from "./display-state"
-import { Input } from "./input-parser"
+import { Input } from "../services/input-parser"
 
 export interface DisplayConfig {
 	RenderToVirtualSize: boolean

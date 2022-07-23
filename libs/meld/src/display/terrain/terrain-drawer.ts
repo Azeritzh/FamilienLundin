@@ -1,9 +1,9 @@
 import { Vector3 } from "@lundin/utility"
-import { Meld } from "../meld"
-import { Block, Blocks, BlockType, SolidId } from "../state/block"
-import { Camera, Layer } from "./camera"
-import { DisplayConfig } from "./display-config"
-import { DisplayState } from "./display-state"
+import { Meld } from "../../meld"
+import { Block, Blocks, BlockType, SolidId } from "../../state/block"
+import { Camera, Layer } from "../services/camera"
+import { DisplayConfig } from "../state/display-config"
+import { DisplayState } from "../state/display-state"
 
 export class TerrainDrawer {
 	static BlockCenter = new Vector3(0.5, 0.5, 0)

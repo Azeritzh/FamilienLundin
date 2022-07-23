@@ -1,7 +1,7 @@
 import { ScreenSize } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { DisplayConfig } from "./display-config"
-import { DisplayEntity } from "./display-entity-drawer"
+import { DisplayEntity } from "../display-entity-drawer"
 
 export class DisplayState {
 	constructor(

@@ -2,10 +2,10 @@ import { Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
 import { DashState } from "../../values/dash-state"
-import { Camera, Layer } from "../camera"
-import { DisplayConfig, DurationOf } from "../display-config"
+import { Camera, Layer } from "../services/camera"
+import { DisplayConfig, DurationOf } from "../state/display-config"
 import { DisplayEntityDrawer } from "../display-entity-drawer"
-import { AngleOf, DisplayState } from "../display-state"
+import { AngleOf, DisplayState } from "../state/display-state"
 
 export class DashDrawer {
 	constructor(

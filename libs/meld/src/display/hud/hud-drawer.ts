@@ -1,9 +1,9 @@
 import { DisplayProvider } from "@lundin/age"
 import { Vector2 } from "@lundin/utility"
-import { Meld } from "../meld"
-import { SolidId } from "../state/block"
-import { DisplayConfig } from "./display-config"
-import { DisplayState } from "./display-state"
+import { Meld } from "../../meld"
+import { SolidId } from "../../state/block"
+import { DisplayConfig } from "../state/display-config"
+import { DisplayState } from "../state/display-state"
 
 export class HudDrawer {
 	static BottomLayer = 0.9998

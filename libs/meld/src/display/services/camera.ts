@@ -1,8 +1,8 @@
 import { DisplayProvider, Id } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
-import { Meld } from "../meld"
-import { DisplayConfig } from "./display-config"
-import { AngleOf, DisplayState, ViewDirection } from "./display-state"
+import { Meld } from "../../meld"
+import { DisplayConfig } from "../state/display-config"
+import { AngleOf, DisplayState, ViewDirection } from "../state/display-state"
 
 export class Camera {
 	constructor(
