@@ -1,7 +1,7 @@
 import { BaseGame, Random, TerrainManager } from "@lundin/age"
 import { GameConfig } from "./config/game-config"
 import { MovementLogic } from "./logic/movement-logic"
-import { PlaceBlockLogic } from "./logic/place-block-logic"
+import { UseItemLogic } from "./logic/use-item-logic"
 import { SelectedItemLogic } from "./logic/selected-item-logic"
 import { StartLogic } from "./logic/start-logic"
 import { UpdateStateLogic } from "./logic/update-state-logic"
@@ -73,7 +73,8 @@ export class Meld extends BaseGame<GameUpdate> {
 			Entities.Position.Get,
 			Entities.Position.Set,
 		),
-		public readonly placeBlockLogic = new PlaceBlockLogic(
+		public readonly useItemLogic = new UseItemLogic(
+			Config,
 			Terrain,
 			Entities.SelectableItems.Get,
 		),
@@ -111,7 +112,7 @@ export class Meld extends BaseGame<GameUpdate> {
 			blockCollisionLogic,
 			velocityLogic,
 			outOfBoundsLogic,
-			placeBlockLogic,
+			useItemLogic,
 			selectedItemLogic,
 			startLogic,
 			updateStateLogic,

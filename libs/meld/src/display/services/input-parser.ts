@@ -1,7 +1,7 @@
 import { BaseInputParser, DisplayProvider, Id } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
-import { GenerateAction, MovementAction, SelectItemAction, PlaceBlockAction, ChargeDashAction, ReleaseDashAction } from "../../state/game-update"
+import { GenerateAction, MovementAction, SelectItemAction, UseItemAction, ChargeDashAction, ReleaseDashAction, UseItemActionType } from "../../state/game-update"
 import { Camera } from "./camera"
 import { AngleOf, DisplayState, InputMode } from "../state/display-state"
 import { Visibility } from "./visibility"
@@ -122,12 +122,11 @@ export class InputParser extends BaseInputParser<Input> {
 			this.displayProvider.getInputState("MouseX"),
 			this.displayProvider.getInputState("MouseY"),
 		)
+		
 		if (this.hasJustBeenPressed(this.UseItemInput()))
-			return new PlaceBlockAction(player, position)
-		/*if (this.hasJustBeenPressed(this.UseItemInput()))
 			return new UseItemAction(player, UseItemActionType.Start, position)
 		if (this.hasJustBeenReleased(this.UseItemInput()))
-			return new UseItemAction(player, UseItemActionType.End, position)*/
+			return new UseItemAction(player, UseItemActionType.End, position)
 	}
 
 
@@ -180,7 +179,7 @@ export class InputParser extends BaseInputParser<Input> {
 	}
 
 	//////////////////////////////// SELECTION ////////////////////////////////
-	
+
 	private ParseSelectItem(player: Id) {
 		const selectableItems = this.Game.Entities.SelectableItems.Get.Of(player)
 		if (!selectableItems)

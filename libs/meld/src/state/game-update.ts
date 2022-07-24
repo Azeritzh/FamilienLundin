@@ -33,12 +33,15 @@ export class MovementAction extends GameUpdate {
 	) { super() }
 }
 
-export class PlaceBlockAction extends GameUpdate {
+export class UseItemAction extends GameUpdate {
 	constructor(
 		public Entity: Id,
-		public Position: Vector3,
+		public ActionType: UseItemActionType,
+		public Target: Vector3,
 	) { super() }
 }
+
+export enum UseItemActionType { Start, End }
 
 export class SelectItemAction extends GameUpdate {
 	constructor(
