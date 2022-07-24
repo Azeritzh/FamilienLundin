@@ -128,7 +128,6 @@ export class HtmlDisplayProvider implements DisplayProvider {
 	}
 
 	getInputState(input: string) {
-		input = this.translateInputString(input)
 		const state = this.keyStates.getInputState(input)
 		switch (input) {
 			case "MouseX": return this.modifyMouseX(state)
@@ -149,19 +148,6 @@ export class HtmlDisplayProvider implements DisplayProvider {
 	private modifyMouseY(y: number) {
 		const box = this.hostElement.getBoundingClientRect()
 		return (y - box.y) / box.height
-	}
-
-	private translateInputString(input: string) {
-		if (input.length === 1)
-			return "Key" + input
-		switch (input) {
-			case "Up": return "ArrowUp"
-			case "Down": return "ArrowDown"
-			case "Left": return "ArrowLeft"
-			case "Right": return "ArrowRight"
-			case "LeftShift": return "ShiftLeft"
-		}
-		return input
 	}
 
 	setSize(width: number, height: number) {

@@ -11,6 +11,7 @@ export class KeyStates {
 		window.addEventListener("mousedown", this.onMouseDown)
 		window.addEventListener("mouseup", this.onMouseUp)
 		window.addEventListener("wheel", this.onScroll)
+		window.addEventListener("contextmenu", this.preventDefault)
 	}
 
 	onDestroy() {
@@ -20,24 +21,43 @@ export class KeyStates {
 		window.removeEventListener("mousedown", this.onMouseDown)
 		window.removeEventListener("mouseup", this.onMouseUp)
 		window.removeEventListener("wheel", this.onScroll)
+		window.removeEventListener("contextmenu", this.preventDefault)
+	}
+
+	private preventDefault = (event: MouseEvent) => {
+		event.preventDefault()
 	}
 
 	private onKeyDown = (event: KeyboardEvent) => {
-		if (this.states[event.code])
+		const code = this.getKeyboardCode(event)
+		if (this.states[code])
 			return
-		this.states[event.code] = 1
-		this.eventStates[event.code] = EventState.JustPressed
-		this.onDown[event.code]?.(event.code)
+		this.states[code] = 1
+		this.eventStates[code] = EventState.JustPressed
+		this.onDown[code]?.(code)
 	}
 
 	private onKeyUp = (event: KeyboardEvent) => {
-		if (!this.states[event.code])
+		const code = this.getKeyboardCode(event)
+		if (!this.states[code])
 			return
-		this.onUp[event.code]?.(event.code)
-		if (this.eventStates[event.code] === EventState.JustPressed)
-			this.eventStates[event.code] = EventState.ShouldBeReset
+		this.onUp[code]?.(code)
+		if (this.eventStates[code] === EventState.JustPressed)
+			this.eventStates[code] = EventState.ShouldBeReset
 		else
-			this.states[event.code] = 0
+			this.states[code] = 0
+	}
+
+	private getKeyboardCode(event: KeyboardEvent) {
+		if (event.code.startsWith("Arrow"))
+			return event.code.substring(5)
+		if (event.code.startsWith("Digit"))
+			return event.code[5]
+		if (event.code.startsWith("Key"))
+			return event.code[3]
+		if (event.code === "ShiftLeft")
+			return "LeftShift"
+		return event.code
 	}
 
 	private onMouseMove = (event: MouseEvent) => {
