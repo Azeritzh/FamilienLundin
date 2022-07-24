@@ -1,12 +1,11 @@
 import { GameLogic, Id, ValueGetter, ValueSetter } from "@lundin/age"
-import { GameConfig } from "../config/game-config"
 import { GameUpdate, SelectNextItemAction } from "../state/game-update"
+import { SelectableItems } from "../values/selectable-items"
 
 export class SelectedItemLogic implements GameLogic<GameUpdate> {
 	constructor(
-		private Config: GameConfig,
-		private SelectedBlock: ValueGetter<Id>,
-		private SetSelectedBlock: ValueSetter<Id>,
+		private SelectableItems: ValueGetter<SelectableItems>,
+		private SetSelectableItems: ValueSetter<SelectableItems>,
 	) { }
 
 	update(actions: GameUpdate[]) {
@@ -16,12 +15,9 @@ export class SelectedItemLogic implements GameLogic<GameUpdate> {
 	}
 
 	private incrementSelectedItemFor(entity: Id) {
-		const blockTypes = [...this.Config.SolidTypeMap.Types.values()]
-		const previous = this.SelectedBlock.Of(entity)
-		const previousIndex = blockTypes.indexOf(previous)
-		const nextIndex = previousIndex + 1 < blockTypes.length
-			? previousIndex + 1
-			: 0
-		this.SetSelectedBlock.For(entity, blockTypes[nextIndex])
+		const selectableItems = this.SelectableItems.Of(entity)
+		if (!selectableItems)
+			return
+		this.SetSelectableItems.For(entity, selectableItems.SelectItem(1))
 	}
 }

@@ -5,7 +5,9 @@ import { Block, Blocks } from "../state/block"
 import { Changes } from "../state/changes"
 import { GameState } from "../state/game-state"
 import { GameUpdate, GenerateAction } from "../state/game-update"
+import { Item } from "../state/item"
 import { MeldEntities } from "../state/meld-entities"
+import { SelectableItems } from "../values/selectable-items"
 
 export class StartLogic implements GameLogic<GameUpdate> {
 	constructor(
@@ -68,6 +70,19 @@ export class StartLogic implements GameLogic<GameUpdate> {
 	private spawnPlayer() {
 		const entity = this.Entities.Create(this.Config.Constants.PlayerType)
 		this.SetPosition.For(entity, new Vector3(5, 5, 0))
+		const items = [
+			new Item(this.Config.Constants.SolidItemType, this.Config.SolidTypeMap.TypeIdFor("grass"), 0),
+			new Item(this.Config.Constants.SolidItemType, this.Config.SolidTypeMap.TypeIdFor("dirt"), 0),
+			new Item(this.Config.Constants.SolidItemType, this.Config.SolidTypeMap.TypeIdFor("earth"), 0),
+			new Item(this.Config.Constants.SolidItemType, this.Config.SolidTypeMap.TypeIdFor("stone"), 0),
+
+			new Item(this.Config.Constants.SolidItemType, this.Config.SolidTypeMap.TypeIdFor("slab"), 0),
+			new Item(this.Config.Constants.SolidItemType, this.Config.SolidTypeMap.TypeIdFor("wooden"), 0),
+			null, null,
+			null, null, null, null,
+			null, null, null, null,
+		]
+		this.Entities.SelectableItems.Set.For(entity, new SelectableItems(items))
 		this.State.Players.set("insertPlayerName", entity)
 	}
 }

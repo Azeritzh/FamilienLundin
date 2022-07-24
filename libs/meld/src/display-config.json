@@ -443,6 +443,10 @@
 			"height": 20,
 			"centerX": 10,
 			"centerY": 10
-		}
+		},
+		"button-a": { "type": "tileSize" },
+		"button-b": { "type": "tileSize" },
+		"button-x": { "type": "tileSize" },
+		"button-y": { "type": "tileSize" }
 	}
 }

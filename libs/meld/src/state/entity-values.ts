@@ -1,7 +1,7 @@
 import { BaseValues, CircularSize, Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { DashState } from "../values/dash-state"
-import { SolidId } from "./block"
+import { SelectableItems } from "../values/selectable-items"
 
 export class EntityValues extends BaseValues {
 	constructor(
@@ -10,7 +10,7 @@ export class EntityValues extends BaseValues {
 		public readonly Health = new Map<Id, number>(),
 		public readonly Orientation = new Map<Id, number>(),
 		public readonly Position = new Map<Id, Vector3>(),
-		public readonly SelectedBlock = new Map<Id, SolidId>(),
+		public readonly SelectableItems = new Map<Id, SelectableItems>(),
 		public readonly TargetVelocity = new Map<Id, Vector3>(),
 		public readonly Velocity = new Map<Id, Vector3>(),
 		public readonly BlockCollisionBehaviour = new Map<Id, boolean>(),
@@ -23,7 +23,7 @@ export class EntityValues extends BaseValues {
 		this.register(Health)
 		this.register(Orientation)
 		this.register(Position)
-		this.register(SelectedBlock)
+		this.register(SelectableItems)
 		this.register(TargetVelocity)
 		this.register(Velocity)
 		this.register(BlockCollisionBehaviour)
@@ -49,8 +49,8 @@ export class EntityValues extends BaseValues {
 			this.Orientation.set(key, values.Orientation)
 		if (values.Position !== undefined)
 			this.Position.set(key, values.Position)
-		if (values.SelectedBlock !== undefined)
-			this.SelectedBlock.set(key, values.SelectedBlock)
+		if (values.SelectableItems !== undefined)
+			this.SelectableItems.set(key, values.SelectableItems)
 		if (values.TargetVelocity !== undefined)
 			this.TargetVelocity.set(key, values.TargetVelocity)
 		if (values.Velocity !== undefined)
@@ -68,7 +68,7 @@ export class EntityValues extends BaseValues {
 			Health: this.Health.get(key),
 			Orientation: this.Orientation.get(key),
 			Position: this.Position.get(key),
-			SelectedBlock: this.SelectedBlock.get(key),
+			SelectableItems: this.SelectableItems.get(key),
 			TargetVelocity: this.TargetVelocity.get(key),
 			Velocity: this.Velocity.get(key),
 			BlockCollisionBehaviour: this.BlockCollisionBehaviour.get(key),
@@ -83,7 +83,7 @@ export interface GroupedEntityValues {
 	Health?: number
 	Orientation?: number
 	Position?: Vector3
-	SelectedBlock?: SolidId
+	SelectableItems?: SelectableItems
 	TargetVelocity?: Vector3
 	Velocity?: Vector3
 	BlockCollisionBehaviour?: boolean

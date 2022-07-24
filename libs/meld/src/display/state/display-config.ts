@@ -1,6 +1,7 @@
 import { SolidId } from "../../state/block"
 import { ViewDirection } from "./display-state"
 import { Input } from "../services/input-parser"
+import { ItemTypeId } from "../../state/item"
 
 export interface DisplayConfig {
 	RenderToVirtualSize: boolean
@@ -19,6 +20,7 @@ export interface DisplayConfig {
 	BlockSprites: Map<SolidId, BlockSprites[]>
 	BlockTileOverlays: Map<SolidId, BlockTileOverlays>
 	BlockWallOverlays: Map<SolidId, BlockWallOverlays>
+	ItemSprites: Map<ItemTypeId, string>
 	GameplaySprites: GameplaySprites
 	Sprites: { [index: string]: SpriteInfo }
 }

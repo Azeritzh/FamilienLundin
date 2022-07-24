@@ -5,29 +5,36 @@ import { GameConfig } from "../config/game-config"
 import { updatesPerSecond } from "../meld-game"
 import { NonSolidOffset, SolidOffset } from "../state/block"
 import { GroupedEntityValues } from "../state/entity-values"
+import { ItemKind, ItemValues } from "../state/item"
 import { DashState } from "../values/dash-state"
+import { SelectableItems } from "../values/selectable-items"
 
-export function readGameConfig(jsonConfig: any) {
-	const entityTypeNames = Object.keys(jsonConfig.entityTypes)
+export function readGameConfig(deserialised: any) {
+	const entityTypeNames = Object.keys(deserialised.entityTypes)
 	const entityTypeMap = TypeMap.From(EntityTypeOffset, entityTypeNames)
-	const solidTypeNames = Object.keys(jsonConfig.solidTypes)
+	const solidTypeNames = Object.keys(deserialised.solidTypes)
 	const solidTypeMap = TypeMap.From(SolidOffset, solidTypeNames)
-	const nonSolidTypeNames = Object.keys(jsonConfig.nonSolidTypes)
+	const nonSolidTypeNames = Object.keys(deserialised.nonSolidTypes)
 	const nonSolidTypeMap = TypeMap.From(NonSolidOffset, nonSolidTypeNames)
+	const itemTypeNames = Object.keys(deserialised.itemTypes)
+	const itemTypeMap = TypeMap.From(NonSolidOffset, itemTypeNames)
 	return new GameConfig(
-		constantsFrom(jsonConfig.constants, entityTypeMap),
+		constantsFrom(deserialised.constants, entityTypeMap, itemTypeMap),
 		entityTypeMap,
-		new Map(entityTypeNames.map(x => [entityTypeMap.TypeIdFor(x), groupedEntityValuesFrom(jsonConfig.entityTypes[x], solidTypeMap)])),
+		new Map(entityTypeNames.map(x => [entityTypeMap.TypeIdFor(x), groupedEntityValuesFrom(deserialised.entityTypes[x])])),
 		solidTypeMap,
 		new Map(solidTypeNames.map(x => [solidTypeMap.TypeIdFor(x), { hardness: 0 }])),
 		nonSolidTypeMap,
 		new Map(nonSolidTypeNames.map(x => [nonSolidTypeMap.TypeIdFor(x), { hardness: 0 }])),
+		itemTypeMap,
+		new Map(itemTypeNames.map(x => [itemTypeMap.TypeIdFor(x), itemValuesFrom(deserialised.itemTypes[x])])),
 	)
 }
 
-function constantsFrom(serialised: any, entityTypeMap: TypeMap) {
+function constantsFrom(serialised: any, entityTypeMap: TypeMap, itemTypeMap: TypeMap) {
 	return new Constants(
 		entityTypeMap.TypeIdFor(serialised.playerType),
+		itemTypeMap.TypeIdFor(serialised.solidItemType),
 		Object.assign(new Vector3(50, 50, 5), serialised.chunkSize ?? {}),
 		serialised.chunkLoadingRadius ?? 1,
 		serialised.collisionAreaWidth ?? 1 / 1024,
@@ -46,17 +53,23 @@ function constantsFrom(serialised: any, entityTypeMap: TypeMap) {
 	)
 }
 
-function groupedEntityValuesFrom(serialised: any, blockTypeMap: TypeMap): GroupedEntityValues {
+function groupedEntityValuesFrom(serialised: any): GroupedEntityValues {
 	return { // Remember to add stuff in game state serialisation
 		CircularSize: serialised.circularSize ? Object.assign(new CircularSize(0, 0), serialised.circularSize) : null,
-		DashState: serialised.DashState ? Object.assign(new DashState(), serialised.dashState) : null,
+		DashState: serialised.dashState ? Object.assign(new DashState(), serialised.dashState) : null,
 		Health: serialised.health,
 		Orientation: serialised.orientation,
 		Position: serialised.position ? Object.assign(new Vector3(0, 0, 0), serialised.position) : null,
-		SelectedBlock: serialised.selectedBlock ? blockTypeMap.TypeIdFor(serialised.selectedBlock) : null,
+		SelectableItems: serialised.SelectableItems ? new SelectableItems([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]) : null,
 		TargetVelocity: serialised.targetVelocity ? Object.assign(new Vector3(0, 0, 0), serialised.targetVelocity) : null,
 		Velocity: serialised.velocity ? Object.assign(new Vector3(0, 0, 0), serialised.velocity) : null,
 		BlockCollisionBehaviour: serialised.blockCollisionBehaviour,
 		GravityBehaviour: serialised.gravityBehaviour,
+	}
+}
+
+function itemValuesFrom(serialised: any): ItemValues {
+	return { // Remember to add stuff in game state serialisation
+		Kind: <any>ItemKind[serialised.kind], // why in the world does it complain if I don't cast to any?
 	}
 }

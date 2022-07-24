@@ -3,6 +3,7 @@ import { BlockSprites, BlockTileOverlays, BlockWallOverlays, DisplayConfig, Game
 import { Input } from "../display/services/input-parser"
 import { updatesPerSecond } from "../meld-game"
 import { SolidId } from "../state/block"
+import { ItemTypeId } from "../state/item"
 
 export function readDisplayConfig(gameConfig: GameConfig, deserialised: SerialisableDisplayConfig): DisplayConfig {
 
@@ -25,6 +26,13 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 		blockWallOverlays.set(
 			gameConfig.SolidTypeMap.TypeIdFor(key),
 			Object.assign(new BlockWallOverlays(), deserialised.blockWallOverlays[key])
+		)
+
+	const itemSprites = new Map<ItemTypeId, string>()
+	for (const key in deserialised.itemSprites)
+		itemSprites.set(
+			gameConfig.ItemTypeMap.TypeIdFor(key),
+			deserialised.itemSprites[key]
 		)
 
 	const inputs = new Map<Input, string[]>()
@@ -52,6 +60,7 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 		BlockSprites: blockSprites,
 		BlockTileOverlays: blockTileOverlays,
 		BlockWallOverlays: blockWallOverlays,
+		ItemSprites: itemSprites,
 		GameplaySprites: Object.assign(new GameplaySprites(), ToPascalCase(deserialised.gameplaySprites) ?? {}),
 		Sprites: sprites,
 	}
@@ -99,6 +108,7 @@ export interface SerialisableDisplayConfig {
 	blockSprites?: { [index: string]: SerialisableBlockSprites[] },
 	blockTileOverlays?: { [index: string]: BlockTileOverlays },
 	blockWallOverlays?: { [index: string]: BlockWallOverlays },
+	itemSprites?: { [index: string]: string },
 	gameplaySprites: { [index: string]: string },
 	sprites: { [index: string]: SerialisedSpriteInfo },
 

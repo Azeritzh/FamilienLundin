@@ -2,11 +2,12 @@ import { GameLogic, Id, TerrainManager, ValueGetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Block, Blocks, BlockType } from "../state/block"
 import { GameUpdate, PlaceBlockAction } from "../state/game-update"
+import { SelectableItems } from "../values/selectable-items"
 
 export class PlaceBlockLogic implements GameLogic<GameUpdate> {
 	constructor(
 		private Terrain: TerrainManager<Block>,
-		private SelectedItem: ValueGetter<Id>
+		private SelectableItems: ValueGetter<SelectableItems>
 	) { }
 
 	update(actions: GameUpdate[]) {
@@ -16,9 +17,11 @@ export class PlaceBlockLogic implements GameLogic<GameUpdate> {
 	}
 
 	private placeBlock(entity: Id, position: Vector3) {
-		const block = this.SelectedItem.Of(entity)
-		if (!(block > -1))
+		const selectableItems = this.SelectableItems.Of(entity)
+		const item = selectableItems?.CurrentItem()
+		if (!item)
 			return
+		const block = item.Content
 		const currentBlock = this.Terrain.GetAt(position) ?? Blocks.NewEmpty(0)
 		if (Blocks.SolidOf(currentBlock) != block)
 			this.Terrain.SetAt(position, Blocks.NewFloor(block, 0))

@@ -75,12 +75,11 @@ export class Meld extends BaseGame<GameUpdate> {
 		),
 		public readonly placeBlockLogic = new PlaceBlockLogic(
 			Terrain,
-			Entities.SelectedBlock.Get,
+			Entities.SelectableItems.Get,
 		),
 		public readonly selectedItemLogic = new SelectedItemLogic(
-			Config,
-			Entities.SelectedBlock.Get,
-			Entities.SelectedBlock.Set,
+			Entities.SelectableItems.Get,
+			Entities.SelectableItems.Set,
 		),
 		public readonly startLogic = new StartLogic(
 			Config,

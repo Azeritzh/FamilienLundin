@@ -5,6 +5,7 @@ import { Block, Blocks } from "../state/block"
 import { EntityValues, GroupedEntityValues } from "../state/entity-values"
 import { GameState } from "../state/game-state"
 import { DashState } from "../values/dash-state"
+import { SelectableItems } from "../values/selectable-items"
 import { ToPascalCase } from "./serialisation-display-config"
 
 export function createGameState(config: GameConfig, state: GameState) {
@@ -133,9 +134,10 @@ function CreateMapping(mapA: TypeMap, mapB: TypeMap) {
 	return mapping
 }
 
-function MapValues(mapping: Map<Id, Id>, values: GroupedEntityValues): GroupedEntityValues {
-	if (values.SelectedBlock !== null && values.SelectedBlock !== undefined)
-		values.SelectedBlock = mapping.get(values.SelectedBlock)
+function MapValues(solidMapping: Map<Id, Id>, values: GroupedEntityValues): GroupedEntityValues {
+	if (values.SelectableItems !== null && values.SelectableItems !== undefined)
+		for (const item of values.SelectableItems.Items)
+			item.Content = solidMapping.get(item.Content)
 	return values
 }
 
@@ -182,6 +184,8 @@ function groupedEntityValuesFrom(serialised: any) {
 		values.DashState = Object.assign(new DashState(), serialised.DashState)
 	if (serialised.Position)
 		values.Position = Object.assign(new Vector3(0, 0, 0), serialised.Position)
+	if (serialised.SelectableItems)
+		values.SelectableItems = Object.assign(new SelectableItems([]), serialised.SelectableItems)
 	if (serialised.TargetVelocity)
 		values.TargetVelocity = Object.assign(new Vector3(0, 0, 0), serialised.TargetVelocity)
 	if (serialised.Velocity)
