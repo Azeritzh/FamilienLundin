@@ -21,6 +21,7 @@ export class HudDrawer {
 			return
 		this.DrawHud()
 		this.DrawItems(playerId)
+		this.DrawToolSection(playerId)
 	}
 
 	private DrawHud() {
@@ -69,6 +70,18 @@ export class HudDrawer {
 				break
 		}
 		this.DisplayProvider.draw("button-y", buttonX, buttonY, 0, 0, HudDrawer.TopLayer)
+	}
+
+	private DrawToolSection(player: Id) {
+		const tool = this.Game.Entities.SelectableTools.Get.Of(player)?.CurrentTool()
+		if (!tool)
+			return
+		this.DrawItem(tool, this.State.Size.widthInTiles - 3, 4.5)
+		this.DisplayProvider.draw("button-a", this.State.Size.widthInTiles - 2.25, 5, 0, 0, HudDrawer.TopLayer)
+		this.DisplayProvider.draw("button-x", this.State.Size.widthInTiles - 3.75, 5, 0, 0, HudDrawer.TopLayer)
+
+		this.DisplayProvider.draw(this.Config.GameplaySprites.DashTarget, this.State.Size.widthInTiles - 1.5, 3, 0, 0, HudDrawer.TopLayer)
+		this.DisplayProvider.draw("button-b", this.State.Size.widthInTiles - 0.75, 3.5, 0, 0, HudDrawer.TopLayer)
 	}
 
 	private DrawItem(item: Item, x: number, y: number) {

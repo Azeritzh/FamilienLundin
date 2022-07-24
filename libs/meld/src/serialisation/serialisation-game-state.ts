@@ -4,8 +4,10 @@ import { GameConfig } from "../config/game-config"
 import { Block, Blocks } from "../state/block"
 import { EntityValues, GroupedEntityValues } from "../state/entity-values"
 import { GameState } from "../state/game-state"
+import { Item } from "../state/item"
 import { DashState } from "../values/dash-state"
 import { SelectableItems } from "../values/selectable-items"
+import { SelectableTools } from "../values/selectable-tools"
 import { ToPascalCase } from "./serialisation-display-config"
 
 export function createGameState(config: GameConfig, state: GameState) {
@@ -20,6 +22,7 @@ interface SerialisableGameState {
 	EntityTypeMap: [string, number][]
 	SolidTypeMap: [string, number][]
 	NonSolidTypeMap: [string, number][]
+	ItemTypeMap: [string, number][]
 	Globals: any
 	EntityValues: { [id: string]: GroupedEntityValues }
 	Chunks: SerialisableBlockChunk[],
@@ -37,6 +40,7 @@ function serialiseGameState(state: GameState, config: GameConfig = null): Serial
 		EntityTypeMap: [...config?.EntityTypeMap.Types.entries() ?? []],
 		SolidTypeMap: [...config?.SolidTypeMap.Types.entries() ?? []],
 		NonSolidTypeMap: [...config?.NonSolidTypeMap.Types.entries() ?? []],
+		ItemTypeMap: [...config?.ItemTypeMap.Types.entries() ?? []],
 		Globals: state.Globals,
 		EntityValues: entityValues,
 		Chunks: chunks,
@@ -48,17 +52,19 @@ function gameStateFrom(config: GameConfig, deserialised: SerialisableGameState) 
 	const entityTypeMap = new TypeMap(new Map(deserialised.EntityTypeMap))
 	const solidTypeMap = new TypeMap(new Map(deserialised.SolidTypeMap))
 	const nonSolidTypeMap = new TypeMap(new Map(deserialised.NonSolidTypeMap))
+	const itemTypeMap = new TypeMap(new Map(deserialised.ItemTypeMap))
 
-	if (TypeMapsAreSame(config, entityTypeMap, solidTypeMap, nonSolidTypeMap))
+	if (TypeMapsAreSame(config, entityTypeMap, solidTypeMap, nonSolidTypeMap, itemTypeMap))
 		return UnadjustedGameStateFrom(deserialised)
 
 	// const entityMap = CreateMapping(deserialised.EntityTypeMap, config.EntityTypeMap)
 	const solidMap = CreateMapping(solidTypeMap, config.SolidTypeMap)
 	const nonSolidMap = CreateMapping(nonSolidTypeMap, config.NonSolidTypeMap)
+	const itemMap = CreateMapping(itemTypeMap, config.ItemTypeMap)
 
 	const entityValues = new EntityValues()
 	for (const key in deserialised.EntityValues)
-		entityValues.AddValuesFrom(+key, MapValues(solidMap, groupedEntityValuesFrom(deserialised.EntityValues[key])))
+		entityValues.AddValuesFrom(+key, MapValues(groupedEntityValuesFrom(deserialised.EntityValues[key]), solidMap, itemMap))
 
 	const chunks = new Map<string, BlockChunk<Block>>()
 	for (const chunk of deserialised.Chunks)
@@ -104,12 +110,14 @@ function UnadjustedGameStateFrom(deserialised: SerialisableGameState) {
 	)
 }
 
-function TypeMapsAreSame(config: GameConfig, entityTypeMap: TypeMap, solidTypeMap: TypeMap, nonSolidTypeMap: TypeMap) {
+function TypeMapsAreSame(config: GameConfig, entityTypeMap: TypeMap, solidTypeMap: TypeMap, nonSolidTypeMap: TypeMap, itemTypeMap: TypeMap) {
 	if (entityTypeMap.Types.size != config.EntityTypeMap.Types.size)
 		return false
 	if (solidTypeMap.Types.size != config.SolidTypeMap.Types.size)
 		return false
 	if (nonSolidTypeMap.Types.size != config.NonSolidTypeMap.Types.size)
+		return false
+	if (itemTypeMap.Types.size != config.ItemTypeMap.Types.size)
 		return false
 	for (const [key, value] of entityTypeMap.Types)
 		if (!config.EntityTypeMap.Types.has(key) || config.EntityTypeMap.TypeIdFor(key) != value)
@@ -119,6 +127,9 @@ function TypeMapsAreSame(config: GameConfig, entityTypeMap: TypeMap, solidTypeMa
 			return false
 	for (const [key, value] of nonSolidTypeMap.Types)
 		if (!config.NonSolidTypeMap.Types.has(key) || config.NonSolidTypeMap.TypeIdFor(key) != value)
+			return false
+	for (const [key, value] of itemTypeMap.Types)
+		if (!config.ItemTypeMap.Types.has(key) || config.ItemTypeMap.TypeIdFor(key) != value)
 			return false
 	return true
 }
@@ -134,11 +145,33 @@ function CreateMapping(mapA: TypeMap, mapB: TypeMap) {
 	return mapping
 }
 
-function MapValues(solidMapping: Map<Id, Id>, values: GroupedEntityValues): GroupedEntityValues {
+function MapValues(values: GroupedEntityValues, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): GroupedEntityValues {
 	if (values.SelectableItems !== null && values.SelectableItems !== undefined)
-		for (const item of values.SelectableItems.Items)
-			item.Content = solidMapping.get(item.Content)
+		UpdateSelectableItems(values.SelectableItems, solidMapping, itemMapping)
+	if (values.SelectableTools !== null && values.SelectableTools !== undefined)
+		UpdateSelectableTools(values.SelectableTools, solidMapping, itemMapping)
 	return values
+}
+
+function UpdateSelectableItems(selectableItems: SelectableItems, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>) {
+	if (selectableItems === null || selectableItems === undefined)
+		return null
+	for (const item of selectableItems.Items)
+		UpdateItem(item, solidMapping, itemMapping)
+}
+
+function UpdateSelectableTools(selectableTools: SelectableTools, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>) {
+	if (selectableTools === null || selectableTools === undefined)
+		return null
+	for (const item of selectableTools.Items)
+		UpdateItem(item, solidMapping, itemMapping)
+}
+
+function UpdateItem(item: Item, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>) {
+	if (!item)
+		return
+	item.Type = itemMapping.get(item.Type)
+	item.Content = solidMapping.get(item.Content)
 }
 
 interface SerialisableBlockChunk {
@@ -186,6 +219,8 @@ function groupedEntityValuesFrom(serialised: any) {
 		values.Position = Object.assign(new Vector3(0, 0, 0), serialised.Position)
 	if (serialised.SelectableItems)
 		values.SelectableItems = Object.assign(new SelectableItems([]), serialised.SelectableItems)
+	if (serialised.SelectableTools)
+		values.SelectableTools = Object.assign(new SelectableTools([]), serialised.SelectableTools)
 	if (serialised.TargetVelocity)
 		values.TargetVelocity = Object.assign(new Vector3(0, 0, 0), serialised.TargetVelocity)
 	if (serialised.Velocity)

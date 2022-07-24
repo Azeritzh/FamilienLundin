@@ -8,6 +8,7 @@ import { GroupedEntityValues } from "../state/entity-values"
 import { ItemKind, ItemValues } from "../state/item"
 import { DashState } from "../values/dash-state"
 import { SelectableItems } from "../values/selectable-items"
+import { SelectableTools } from "../values/selectable-tools"
 
 export function readGameConfig(deserialised: any) {
 	const entityTypeNames = Object.keys(deserialised.entityTypes)
@@ -60,7 +61,8 @@ function groupedEntityValuesFrom(serialised: any): GroupedEntityValues {
 		Health: serialised.health,
 		Orientation: serialised.orientation,
 		Position: serialised.position ? Object.assign(new Vector3(0, 0, 0), serialised.position) : null,
-		SelectableItems: serialised.SelectableItems ? new SelectableItems([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]) : null,
+		SelectableItems: serialised.selectableItems ? new SelectableItems([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]) : null,
+		SelectableTools: serialised.selectableTools ? new SelectableTools([null, null, null, null]) : null,
 		TargetVelocity: serialised.targetVelocity ? Object.assign(new Vector3(0, 0, 0), serialised.targetVelocity) : null,
 		Velocity: serialised.velocity ? Object.assign(new Vector3(0, 0, 0), serialised.velocity) : null,
 		BlockCollisionBehaviour: serialised.blockCollisionBehaviour,

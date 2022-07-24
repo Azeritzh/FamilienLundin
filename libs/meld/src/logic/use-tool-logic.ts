@@ -16,10 +16,10 @@ export class UseToolLogic implements GameLogic<GameUpdate> {
 	update(actions: GameUpdate[]) {
 		for (const action of actions)
 			if (action instanceof UseToolAction)
-				this.UseItem(action.Entity, action.ActionType, action.Target)
+				this.UseTool(action.Entity, action.ActionType, action.Target)
 	}
 
-	private UseItem(entity: Id, actionType: UseToolActionType, position: Vector3) {
+	private UseTool(entity: Id, actionType: UseToolActionType, position: Vector3) {
 		const selectableTools = this.SelectableTools.Of(entity)
 		const tool = selectableTools?.CurrentTool()
 		if (!tool)

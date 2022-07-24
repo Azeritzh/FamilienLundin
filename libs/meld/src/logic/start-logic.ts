@@ -27,7 +27,7 @@ export class StartLogic implements GameLogic<GameUpdate> {
 	}
 
 	private initialiseGame() {
-		this.generateRandomTerrain()
+		//this.generateRandomTerrain()
 		this.clearEntities()
 		this.spawnPlayer()
 	}
