@@ -1,6 +1,6 @@
 import { SolidId } from "../../state/block"
 import { ViewDirection } from "./display-state"
-import { Input } from "../services/input-parser"
+import { Input } from "../services/input"
 import { ItemTypeId } from "../../state/item"
 
 export interface DisplayConfig {

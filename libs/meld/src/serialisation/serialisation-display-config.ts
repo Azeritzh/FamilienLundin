@@ -1,6 +1,6 @@
 import { GameConfig } from "../config/game-config"
+import { Input } from "../display/services/input"
 import { BlockSprites, BlockTileOverlays, BlockWallOverlays, DisplayConfig, GameplaySprites, SpriteInfo } from "../display/state/display-config"
-import { Input } from "../display/services/input-parser"
 import { updatesPerSecond } from "../meld-game"
 import { SolidId } from "../state/block"
 import { ItemTypeId } from "../state/item"

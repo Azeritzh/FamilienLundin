@@ -26,7 +26,7 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		private State = DisplayState.from(Config, PlayerName),
 		private camera = new Camera(Game, Display, Config, State),
 		private visibility = new Visibility(Game, Config, State, camera),
-		private inputParser = new InputParser(Game, State, camera, Display, visibility, Config.Inputs),
+		private inputParser = new InputParser(Game, State, camera, visibility, Display, Config.Inputs),
 		private displayEntityDrawer = new DisplayEntityDrawer(Game, Config, State, camera),
 		private hudDrawer = new HudDrawer(Game, Config, State, Display),
 

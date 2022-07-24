@@ -15,6 +15,7 @@ export class DisplayState {
 		public ShownLayers: { layer: number, area: DisplayArea }[] = [],
 		public VisibleBlocks: BlockChunk<boolean> = new BlockChunk([false]),
 		public PlayerIsBlocked = false,
+		public InputMode: InputMode =  <InputMode>0,
 	) { }
 
 	public static from(config: DisplayConfig, playerName: string) {
@@ -37,3 +38,5 @@ export function AngleOf(direction: ViewDirection) {
 	const oneEighthCircle = 0.25 * Math.PI
 	return oneEighthCircle * direction
 }
+
+export enum InputMode { Normal, Selection, Camera }
