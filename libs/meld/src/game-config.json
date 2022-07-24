@@ -13,7 +13,8 @@
 				"height": 0.875
 			},
 			"gravityBehaviour": true,
-			"selectableItems": true
+			"selectableItems": true,
+			"selectableTools": true
 		}
 	},
 	"solidTypes": {

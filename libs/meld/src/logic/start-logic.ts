@@ -8,6 +8,7 @@ import { GameUpdate, GenerateAction } from "../state/game-update"
 import { Item } from "../state/item"
 import { MeldEntities } from "../state/meld-entities"
 import { SelectableItems } from "../values/selectable-items"
+import { SelectableTools } from "../values/selectable-tools"
 
 export class StartLogic implements GameLogic<GameUpdate> {
 	constructor(
@@ -70,6 +71,7 @@ export class StartLogic implements GameLogic<GameUpdate> {
 	private spawnPlayer() {
 		const entity = this.Entities.Create(this.Config.Constants.PlayerType)
 		this.SetPosition.For(entity, new Vector3(5, 5, 0))
+
 		const items = [
 			new Item(this.Config.Constants.SolidItemType, this.Config.SolidTypeMap.TypeIdFor("grass"), 0),
 			new Item(this.Config.Constants.SolidItemType, this.Config.SolidTypeMap.TypeIdFor("dirt"), 0),
@@ -83,6 +85,13 @@ export class StartLogic implements GameLogic<GameUpdate> {
 			null, null, null, null,
 		]
 		this.Entities.SelectableItems.Set.For(entity, new SelectableItems(items))
+
+		const tools = [
+			new Item(this.Config.ItemTypeMap.TypeIdFor("basic-hammer"), 0, 0),
+			null, null, null,
+		]
+		this.Entities.SelectableTools.Set.For(entity, new SelectableTools(tools))
+
 		this.State.Players.set("insertPlayerName", entity)
 	}
 }

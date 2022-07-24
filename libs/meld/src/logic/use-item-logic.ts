@@ -24,7 +24,7 @@ export class UseItemLogic implements GameLogic<GameUpdate> {
 		const item = selectableItems?.CurrentItem()
 		if (!item)
 			return
-		if (this.Config.ItemValues.get(item.Type)?.Kind == ItemKind.Solid)
+		if (this.Config.ItemValues.get(item.Type)?.Kind === ItemKind.Solid)
 			this.PlaceBlock(item, actionType, position)
 	}
 
@@ -34,13 +34,13 @@ export class UseItemLogic implements GameLogic<GameUpdate> {
 
 		const block = item.Content
 		const currentBlock = this.Terrain.GetAt(position) ?? Blocks.NewEmpty(0)
-		if (Blocks.TypeOf(currentBlock) == BlockType.Empty)
+		if (Blocks.TypeOf(currentBlock) === BlockType.Empty)
 			this.Terrain.SetAt(position, Blocks.NewFloor(block, Blocks.NonSolidOf(currentBlock)))
-		else if (Blocks.SolidOf(currentBlock) != block)
+		else if (Blocks.SolidOf(currentBlock) !== block)
 			this.Terrain.SetAt(position, Blocks.New(Blocks.TypeOf(currentBlock), block, Blocks.NonSolidOf(currentBlock)))
-		else if (Blocks.TypeOf(currentBlock) == BlockType.Floor)
+		else if (Blocks.TypeOf(currentBlock) === BlockType.Floor)
 			this.Terrain.SetAt(position, Blocks.NewHalf(block,  Blocks.NonSolidOf(currentBlock)))
-		else if (Blocks.TypeOf(currentBlock) == BlockType.Half)
+		else if (Blocks.TypeOf(currentBlock) === BlockType.Half)
 			this.Terrain.SetAt(position, Blocks.NewFull(block))
 	}
 }

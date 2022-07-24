@@ -2,6 +2,7 @@ import { BaseValues, CircularSize, Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { DashState } from "../values/dash-state"
 import { SelectableItems } from "../values/selectable-items"
+import { SelectableTools } from "../values/selectable-tools"
 
 export class EntityValues extends BaseValues {
 	constructor(
@@ -11,6 +12,7 @@ export class EntityValues extends BaseValues {
 		public readonly Orientation = new Map<Id, number>(),
 		public readonly Position = new Map<Id, Vector3>(),
 		public readonly SelectableItems = new Map<Id, SelectableItems>(),
+		public readonly SelectableTools = new Map<Id, SelectableTools>(),
 		public readonly TargetVelocity = new Map<Id, Vector3>(),
 		public readonly Velocity = new Map<Id, Vector3>(),
 		public readonly BlockCollisionBehaviour = new Map<Id, boolean>(),
@@ -24,6 +26,7 @@ export class EntityValues extends BaseValues {
 		this.register(Orientation)
 		this.register(Position)
 		this.register(SelectableItems)
+		this.register(SelectableTools)
 		this.register(TargetVelocity)
 		this.register(Velocity)
 		this.register(BlockCollisionBehaviour)
@@ -51,6 +54,8 @@ export class EntityValues extends BaseValues {
 			this.Position.set(key, values.Position)
 		if (values.SelectableItems !== undefined)
 			this.SelectableItems.set(key, values.SelectableItems)
+		if (values.SelectableTools !== undefined)
+			this.SelectableTools.set(key, values.SelectableTools)
 		if (values.TargetVelocity !== undefined)
 			this.TargetVelocity.set(key, values.TargetVelocity)
 		if (values.Velocity !== undefined)
@@ -69,6 +74,7 @@ export class EntityValues extends BaseValues {
 			Orientation: this.Orientation.get(key),
 			Position: this.Position.get(key),
 			SelectableItems: this.SelectableItems.get(key),
+			SelectableTools: this.SelectableTools.get(key),
 			TargetVelocity: this.TargetVelocity.get(key),
 			Velocity: this.Velocity.get(key),
 			BlockCollisionBehaviour: this.BlockCollisionBehaviour.get(key),
@@ -84,6 +90,7 @@ export interface GroupedEntityValues {
 	Orientation?: number
 	Position?: Vector3
 	SelectableItems?: SelectableItems
+	SelectableTools?: SelectableTools
 	TargetVelocity?: Vector3
 	Velocity?: Vector3
 	BlockCollisionBehaviour?: boolean

@@ -3,8 +3,9 @@
 	"virtualPixelsPerTile": 16,
 	"virtualHeight": 240,
 	"wallDisplayHeight": 2,
+	"transparencyRadius": 5,
 	"assetFolder": "assets/",
-	
+
 	"defaultSpriteTypes": {
 		"defaultTile": {
 			"width": 16,
@@ -18,23 +19,29 @@
 			"centerX": 12,
 			"centerY": 12
 		},
+		"defaultHalfWall": {
+			"width": 16,
+			"height": 16,
+			"centerX": 8,
+			"centerY": 8
+		},
 		"defaultFullWall": {
 			"width": 16,
 			"height": 32,
 			"centerX": 8,
 			"centerY": 24
 		},
+		"defaultDiagonalHalfWall": {
+			"width": 24,
+			"height": 28,
+			"centerX": 12,
+			"centerY": 16
+		},
 		"defaultDiagonalFullWall": {
 			"width": 24,
 			"height": 44,
 			"centerX": 12,
 			"centerY": 32
-		},
-		"defaultHalfWall": {
-			"width": 16,
-			"height": 16,
-			"centerX": 8,
-			"centerY": 8
 		},
 		"tileSize": {
 			"width": 16,
@@ -57,8 +64,10 @@
 			{
 				"straightTile": "dirt-tile",
 				"straightFullWall": "dirt-wall",
+				"straightHalfWall": "dirt-wall-half",
 				"diagonalTile": "dirt-tile-diagonal",
-				"diagonalFullWall": "dirt-wall-diagonal"
+				"diagonalFullWall": "dirt-wall-diagonal",
+				"diagonalHalfWall": "dirt-wall-half-diagonal"
 			}
 		],
 		"earth": [
@@ -81,8 +90,10 @@
 			{
 				"straightTile": "slab-tile",
 				"straightFullWall": "slab-wall",
+				"straightHalfWall": "slab-wall-half",
 				"diagonalTile": "slab-tile-diagonal",
-				"diagonalFullWall": "slab-wall-diagonal"
+				"diagonalFullWall": "slab-wall-diagonal",
+				"diagonalHalfWall": "slab-wall-half-diagonal"
 			}
 		],
 		"wooden": [
@@ -105,6 +116,9 @@
 			"tileOverlayBottomLeft": "grass-tile-bottom",
 			"tileOverlayBottomRight": "grass-tile-right"
 		}
+	},
+	"itemSprites": {
+		"basic-hammer": "hammer"
 	},
 	"gameplaySprites": {
 		"shadowSmall": "shadow-medium",
@@ -254,7 +268,9 @@
 		"dirt-tile": { "type": "defaultTile" },
 		"dirt-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"dirt-wall": { "type": "defaultFullWall" },
+		"dirt-wall-half": { "type": "defaultHalfWall" },
 		"dirt-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"dirt-wall-half-diagonal": { "type": "defaultDiagonalHalfWall" },
 		"earth-tile": { "type": "defaultTile" },
 		"earth-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"earth-wall": { "type": "defaultFullWall" },
@@ -299,7 +315,9 @@
 		"slab-tile": { "type": "defaultTile" },
 		"slab-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"slab-wall": { "type": "defaultFullWall" },
+		"slab-wall-half": { "type": "defaultHalfWall" },
 		"slab-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"slab-wall-half-diagonal": { "type": "defaultDiagonalHalfWall" },
 		"stone-tile": { "type": "defaultTile" },
 		"stone-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"stone-wall": { "type": "defaultFullWall" },
@@ -371,6 +389,12 @@
 			"height": 20,
 			"centerX": 10,
 			"centerY": 10
+		},
+		"hammer": {
+			"width": 24,
+			"height": 24,
+			"centerX": 12,
+			"centerY": 12
 		},
 		"button-a": { "type": "tileSize" },
 		"button-b": { "type": "tileSize" },

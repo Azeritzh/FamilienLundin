@@ -17,6 +17,8 @@ import { BlockCollisionLogic } from "./logic/block-collision-logic"
 import { GravityLogic } from "./logic/gravity-logic"
 import { DashLogic } from "./logic/dash-logic"
 import { OutOfBoundsLogic } from "./logic/out-of-bounds-logic"
+import { SelectedToolLogic } from "./logic/selected-tool-logic"
+import { UseToolLogic } from "./logic/use-tool-logic"
 
 export class Meld extends BaseGame<GameUpdate> {
 	constructor(
@@ -73,14 +75,13 @@ export class Meld extends BaseGame<GameUpdate> {
 			Entities.Position.Get,
 			Entities.Position.Set,
 		),
-		public readonly useItemLogic = new UseItemLogic(
-			Config,
-			Terrain,
-			Entities.SelectableItems.Get,
-		),
 		public readonly selectedItemLogic = new SelectedItemLogic(
 			Entities.SelectableItems.Get,
 			Entities.SelectableItems.Set,
+		),
+		public readonly selectedToolLogic = new SelectedToolLogic(
+			Entities.SelectableTools.Get,
+			Entities.SelectableTools.Set,
 		),
 		public readonly startLogic = new StartLogic(
 			Config,
@@ -95,6 +96,16 @@ export class Meld extends BaseGame<GameUpdate> {
 			State,
 			Entities,
 			Terrain,
+		),
+		public readonly useItemLogic = new UseItemLogic(
+			Config,
+			Terrain,
+			Entities.SelectableItems.Get,
+		),
+		public readonly useToolLogic = new UseToolLogic(
+			Config,
+			Terrain,
+			Entities.SelectableTools.Get,
 		),
 		public velocityLogic = new VelocityLogic(
 			Config.Constants,
@@ -113,7 +124,9 @@ export class Meld extends BaseGame<GameUpdate> {
 			velocityLogic,
 			outOfBoundsLogic,
 			useItemLogic,
+			useToolLogic,
 			selectedItemLogic,
+			selectedToolLogic,
 			startLogic,
 			updateStateLogic,
 			loadStateLogic,
