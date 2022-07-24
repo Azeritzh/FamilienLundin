@@ -49,3 +49,20 @@ export class SelectItemAction extends GameUpdate {
 		public ItemIndex: number,
 	) { super() }
 }
+
+export class UseToolAction extends GameUpdate {
+	constructor(
+		public Entity: Id,
+		public ActionType: UseToolActionType,
+		public Target: Vector3,
+	) { super() }
+}
+
+export enum UseToolActionType { StartPrimary, EndPrimary, StartSecondary, EndSecondary }
+
+export class SelectToolAction extends GameUpdate {
+	constructor(
+		public Entity: Id,
+		public ToolIndex: number,
+	) { super() }
+}

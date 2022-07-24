@@ -1,7 +1,7 @@
 import { BaseInputParser, DisplayProvider, Id } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
-import { GenerateAction, MovementAction, SelectItemAction, UseItemAction, ChargeDashAction, ReleaseDashAction, UseItemActionType } from "../../state/game-update"
+import { GenerateAction, MovementAction, SelectItemAction, UseItemAction, ChargeDashAction, ReleaseDashAction, UseItemActionType, UseToolActionType, UseToolAction, SelectToolAction } from "../../state/game-update"
 import { Camera } from "./camera"
 import { AngleOf, DisplayState, InputMode } from "../state/display-state"
 import { Visibility } from "./visibility"
@@ -30,7 +30,9 @@ export class InputParser extends BaseInputParser<Input> {
 			this.ParseDash(player),
 			this.ParseMovement(player),
 			this.ParseUseItem(player),
+			this.ParseUseTool(player),
 			this.ParseSelectItem(player),
+			this.ParseSelectTool(player),
 		].filter(x => x)
 	}
 
@@ -122,13 +124,28 @@ export class InputParser extends BaseInputParser<Input> {
 			this.displayProvider.getInputState("MouseX"),
 			this.displayProvider.getInputState("MouseY"),
 		)
-		
+
 		if (this.hasJustBeenPressed(this.UseItemInput()))
 			return new UseItemAction(player, UseItemActionType.Start, position)
 		if (this.hasJustBeenReleased(this.UseItemInput()))
 			return new UseItemAction(player, UseItemActionType.End, position)
 	}
 
+	private ParseUseTool(player: Id) {
+		const position = this.Camera.TilePositionFor(
+			this.displayProvider.getInputState("MouseX"),
+			this.displayProvider.getInputState("MouseY"),
+		)
+
+		if (this.hasJustBeenPressed(this.ToolPrimaryInput()))
+			return new UseToolAction(player, UseToolActionType.StartPrimary, position)
+		if (this.hasJustBeenReleased(this.ToolPrimaryInput()))
+			return new UseToolAction(player, UseToolActionType.EndPrimary, position)
+		if (this.hasJustBeenPressed(this.ToolSecondaryInput()))
+			return new UseToolAction(player, UseToolActionType.StartSecondary, position)
+		if (this.hasJustBeenReleased(this.ToolSecondaryInput()))
+			return new UseToolAction(player, UseToolActionType.EndSecondary, position)
+	}
 
 	private ActionInput() {
 		return this.State.InputMode == InputMode.Normal
@@ -196,6 +213,17 @@ export class InputParser extends BaseInputParser<Input> {
 			return new SelectItemAction(player, 2)
 		if (this.hasJustBeenPressed(this.SelectLeftItemInput()))
 			return new SelectItemAction(player, 3)
+	}
+
+	private ParseSelectTool(player: Id) {
+		if (this.hasJustBeenPressed(this.SelectTopToolInput()))
+			return new SelectToolAction(player, 0)
+		if (this.hasJustBeenPressed(this.SelectRightToolInput()))
+			return new SelectToolAction(player, 1)
+		if (this.hasJustBeenPressed(this.SelectBottomToolInput()))
+			return new SelectToolAction(player, 2)
+		if (this.hasJustBeenPressed(this.SelectLeftToolInput()))
+			return new SelectToolAction(player, 3)
 	}
 
 	private SelectTopItemInput() {
