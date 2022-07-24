@@ -1,0 +1,86 @@
+{
+	"inputs": {
+		"Generate": [ "Enter", "PadStart" ],
+		
+		"NormalModeMoveUp": [ "W", "Up", "PadLeftStickUp" ],
+		"NormalModeMoveDown": [ "S", "Down", "PadLeftStickDown" ],
+		"NormalModeMoveLeft": [ "A", "Left", "PadLeftStickLeft" ],
+		"NormalModeMoveRight": [ "D", "Right", "PadLeftStickRight" ],
+
+		"NormalModeUseItem": [ "MouseRight", "PadY", "PadRightTrigger" ],
+		"NormalModeToolPrimary": [ "MouseLeft", "PadA", "PadLeftTrigger" ],
+		"NormalModeToolSecondary": [ "F", "PadX" ],
+		"NormalModeAction": [ "Space", "PadB", "PadRightStickPress" ],
+
+		"MoveUp": [ "W", "Up" ],
+		"MoveDown": [ "S", "Down" ],
+		"MoveLeft": [ "A", "Left" ],
+		"MoveRight": [ "D", "Right" ],
+
+		"UseItem": [ "MouseRight", "PadRightTrigger" ],
+		"ToolPrimary": [ "MouseLeft", "PadLeftTrigger" ],
+		"ToolSecondary": [ "F" ],
+		"Action": [ "Space", "PadRightStickPress" ],
+
+		"ToggleSelection": [],
+		"HoldSelection": [ "PadLeftShoulder" ],
+
+		"SelectionModeSelectTopItem": [ "1", "PadUp", "PadLeftStickUp" ],
+		"SelectionModeSelectBottomItem": [ "3", "PadDown", "PadLeftStickDown" ],
+		"SelectionModeSelectLeftItem": [ "4", "PadLeft", "PadLeftStickLeft" ],
+		"SelectionModeSelectRightItem": [ "2", "PadRight", "PadLeftStickRight" ],
+
+		"SelectionModeSelectTopTool": [ "PadY" ],
+		"SelectionModeSelectBottomTool": [ "PadA" ],
+		"SelectionModeSelectLeftTool": [ "PadX" ],
+		"SelectionModeSelectRightTool": [ "PadB" ],
+
+		"SelectTopItem": [ "1", "PadUp" ],
+		"SelectBottomItem": [ "3", "PadDown" ],
+		"SelectLeftItem": [ "4", "PadLeft" ],
+		"SelectRightItem": [ "2", "PadRight" ],
+
+		"SelectTopTool": [],
+		"SelectBottomTool": [],
+		"SelectLeftTool": [],
+		"SelectRightTool": [],
+
+		"ToggleCamera": [],
+		"HoldCamera": [ "PadRightShoulder" ],
+
+		"CameraModeMoveCameraUp": [ "PadLeftStickUp" ],
+		"CameraModeMoveCameraDown": [ "PadLeftStickDown" ],
+		"CameraModeMoveCameraLeft": [ "PadLeftStickLeft" ],
+		"CameraModeMoveCameraRight": [ "PadLeftStickRight" ],
+
+		"CameraModeLookUp": [ "PadY" ],
+		"CameraModeLookDown": [ "PadA" ],
+		"CameraModeRotateCameraLeft": [ "PadX" ],
+		"CameraModeRotateCameraRight": [ "PadB" ],
+
+		"MoveCameraUp": [],
+		"MoveCameraDown": [],
+		"MoveCameraLeft": [],
+		"MoveCameraRight": [],
+
+		"LookUp": [],
+		"LookDown": [],
+		"RotateCameraLeft": [ "Q" ],
+		"RotateCameraRight": [ "E" ],
+
+		"ToggleInventory": [ "Tab", "Start" ],
+		"ToggleMenu": [ "Escape", "Select" ],
+		"ToggleChat": [ "Enter" ],
+
+		"SelectTopItemSet": [],
+		"SelectBottomItemSet": [],
+		"SelectLeftItemSet": [],
+		"SelectRightItemSet": [],
+
+		"SelectNextItem": [ "MouseScrollUp" ],
+		"SelectPreviousItem": [ "MouseScrollDown" ],
+
+		"HoldWalk": [ "LeftControl" ],
+		"ToggleWalk": []
+	}
+}

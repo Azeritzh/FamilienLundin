@@ -1,5 +1,4 @@
 import { GameConfig } from "../config/game-config"
-import { Input } from "../display/services/input"
 import { BlockSprites, BlockTileOverlays, BlockWallOverlays, DisplayConfig, GameplaySprites, SpriteInfo } from "../display/state/display-config"
 import { updatesPerSecond } from "../meld-game"
 import { SolidId } from "../state/block"
@@ -35,10 +34,6 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 			deserialised.itemSprites[key]
 		)
 
-	const inputs = new Map<Input, string[]>()
-	for (const key in deserialised.inputs)
-		inputs.set(Input[key], deserialised.inputs[key])
-
 	const defaultSpriteTypes = deserialised.defaultSpriteTypes ?? {}
 	const sprites = {}
 	for (const key in deserialised.sprites)
@@ -54,7 +49,6 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 		BlockingTransparencyRadius: deserialised.blockingTransparencyRadius ?? 10,
 		AssetFolder: deserialised.assetFolder ?? "assets/",
 
-		Inputs: inputs,
 		DefaultTileOverlays: Object.assign(new BlockTileOverlays(), deserialised.defaultTileOverlays ?? {}),
 		DefaultWallOverlays: Object.assign(new BlockWallOverlays(), deserialised.defaultTileOverlays ?? {}),
 		BlockSprites: blockSprites,
@@ -101,7 +95,6 @@ export interface SerialisableDisplayConfig {
 	transparencyRadius?: number
 	blockingTransparencyRadius?: number
 	assetFolder?: string
-	inputs: { [input: string]: string[] }
 
 	defaultTileOverlays?: BlockTileOverlays,
 	defaultWallOverlays?: BlockWallOverlays,

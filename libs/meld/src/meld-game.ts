@@ -1,5 +1,6 @@
 import { GameRunner, HtmlDisplayProvider } from "@lundin/age"
 import * as defaultDisplayConfig from "./display-config.json"
+import * as defaultDisplaySettings from "./display-settings.json"
 import * as gameConfig from "./game-config.json"
 import { Meld } from "./meld"
 import { MeldDisplay } from "./display/meld-display"
@@ -7,6 +8,7 @@ import { readDisplayConfig } from "./serialisation/serialisation-display-config"
 import { readGameConfig } from "./serialisation/serialisation-game-config"
 import { createGameState, readGameState } from "./serialisation/serialisation-game-state"
 import { GenerateAction, GameUpdate, LoadState } from "./state/game-update"
+import { readDisplaySettings } from "./serialisation/serialisation-display-settings"
 
 export const updatesPerSecond = 30
 
@@ -41,8 +43,9 @@ export class MeldGame extends GameRunner<GameUpdate> {
 	static createAt(hostElement: HTMLElement, displayConfig: any) {
 		const meld = new Meld(readGameConfig(gameConfig))
 		displayConfig = { ...readDisplayConfig(meld.Config, defaultDisplayConfig), ...displayConfig }
+		const displaySettings = readDisplaySettings(defaultDisplaySettings)
 		const displayProvider = new HtmlDisplayProvider(hostElement, displayConfig)
-		const display = new MeldDisplay(displayConfig, meld, displayProvider, "insertPlayerName")
+		const display = new MeldDisplay(displayConfig, displaySettings, meld, displayProvider, "insertPlayerName")
 		return new MeldGame(hostElement, display, displayProvider, meld)
 	}
 

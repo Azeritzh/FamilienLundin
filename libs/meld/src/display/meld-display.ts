@@ -16,17 +16,19 @@ import { TileDrawer } from "./terrain/tile-drawer"
 import { WallDrawer } from "./terrain/wall-drawer"
 import { BorderDrawer } from "./terrain/border-drawer"
 import { BlockShadowDrawer } from "./terrain/block-shadow-drawer"
+import { DisplaySettings } from "./state/display-settings"
 
 export class MeldDisplay implements BaseDisplay<GameUpdate> {
 	constructor(
 		private Config: DisplayConfig,
+		private Settings: DisplaySettings,
 		private Game: Meld,
 		private Display: HtmlDisplayProvider,
 		PlayerName: string,
 		private State = DisplayState.from(Config, PlayerName),
 		private camera = new Camera(Game, Display, Config, State),
 		private visibility = new Visibility(Game, Config, State, camera),
-		private inputParser = new InputParser(Game, State, camera, visibility, Display, Config.Inputs),
+		private inputParser = new InputParser(Game, State, camera, visibility, Display, Settings.Inputs),
 		private displayEntityDrawer = new DisplayEntityDrawer(Game, Config, State, camera),
 		private hudDrawer = new HudDrawer(Game, Config, State, Display),
 

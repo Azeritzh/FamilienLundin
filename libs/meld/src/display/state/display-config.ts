@@ -1,7 +1,6 @@
 import { SolidId } from "../../state/block"
-import { ViewDirection } from "./display-state"
-import { Input } from "../services/input"
 import { ItemTypeId } from "../../state/item"
+import { ViewDirection } from "./display-state"
 
 export interface DisplayConfig {
 	RenderToVirtualSize: boolean
@@ -12,8 +11,6 @@ export interface DisplayConfig {
 	TransparencyRadius: number
 	BlockingTransparencyRadius: number
 	AssetFolder: string
-
-	Inputs: Map<Input, string[]>
 
 	DefaultTileOverlays: BlockTileOverlays
 	DefaultWallOverlays: BlockWallOverlays
