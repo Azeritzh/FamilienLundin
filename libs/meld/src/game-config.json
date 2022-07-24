@@ -1,9 +1,7 @@
 {
 	"constants": {
 		"playerType": "player",
-		"solidItemType": "solid",
-		"initialDashCharge": 20,
-		"maxDashCharge": 40
+		"solidItemType": "solid"
 	},
 	"entityTypes": {
 		"player": {

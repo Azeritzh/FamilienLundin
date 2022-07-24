@@ -52,7 +52,7 @@ export class DashDrawer {
 	}
 
 	private TargetPosition(dashState: DashState) {
-		const charge = 10 * Math.min(this.Game.Config.Constants.MaxDashCharge - this.Game.Config.Constants.InitialDashCharge, dashState.Charge)
+		const charge = 20 * Math.min(this.Game.Config.Constants.MaxDashCharge - this.Game.Config.Constants.InitialDashCharge, dashState.Charge)
 		return new Vector3(charge, 0, 0).rotate(dashState.Angle)
 	}
 

@@ -10,7 +10,7 @@ import { createGameState, readGameState } from "./serialisation/serialisation-ga
 import { GenerateAction, GameUpdate, LoadState } from "./state/game-update"
 import { readDisplaySettings } from "./serialisation/serialisation-display-settings"
 
-export const updatesPerSecond = 30
+export const updatesPerSecond = 60
 
 export class MeldGame extends GameRunner<GameUpdate> {
 	constructor(
