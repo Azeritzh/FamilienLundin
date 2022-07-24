@@ -196,8 +196,8 @@
 		"dashFail": "dash-fail",
 		"dashMarker": "dash-marker",
 		"dashFailMarker": "dash-fail-marker",
-		"hudLeft": "hud-life-energy",
-		"hudRight": "hud-tool-items"
+		"hudLeft": "hud-items",
+		"hudRight": "hud-tools"
 	},
 
 	"sprites": {
@@ -381,14 +381,15 @@
 		"wood-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"wood-wall": { "type": "defaultFullWall" },
 		"wood-wall-diagonal": { "type": "defaultDiagonalFullWall" },
-		"hud-life-energy": {
-			"width": 26,
-			"height": 173
+		"hud-items": {
+			"width": 96,
+			"height": 96
 		},
-		"hud-tool-items": {
-			"width": 46,
-			"height": 166,
-			"centerX": 46
+		"hud-tools": {
+			"path": "hud-items",
+			"width": 96,
+			"height": 96,
+			"centerX": 96
 		},
 		"dash-cloud": {
 			"width": 48,

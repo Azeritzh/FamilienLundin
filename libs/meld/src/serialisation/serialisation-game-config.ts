@@ -69,7 +69,7 @@ function groupedEntityValuesFrom(serialised: any): GroupedEntityValues {
 }
 
 function itemValuesFrom(serialised: any): ItemValues {
-	return { // Remember to add stuff in game state serialisation
+	return {
 		Kind: <any>ItemKind[serialised.kind], // why in the world does it complain if I don't cast to any?
 	}
 }

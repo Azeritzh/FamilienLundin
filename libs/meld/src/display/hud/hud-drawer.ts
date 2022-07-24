@@ -24,8 +24,8 @@ export class HudDrawer {
 	}
 
 	private DrawHud() {
-		this.DisplayProvider.draw("hud-life-energy", 0, 0, 0, 0, HudDrawer.BottomLayer)
-		this.DisplayProvider.draw("hud-tool-items", this.State.Size.widthInTiles, 0, 0, 0, HudDrawer.BottomLayer)
+		this.DisplayProvider.draw(this.Config.GameplaySprites.HudLeft, 0, 0, 0, 0, HudDrawer.BottomLayer)
+		this.DisplayProvider.draw(this.Config.GameplaySprites.HudRight, this.State.Size.widthInTiles, 0, 0, 0, HudDrawer.BottomLayer)
 	}
 
 	private DrawItems(player: Id) {
