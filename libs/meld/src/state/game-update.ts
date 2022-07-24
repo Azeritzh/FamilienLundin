@@ -40,8 +40,9 @@ export class PlaceBlockAction extends GameUpdate {
 	) { super() }
 }
 
-export class SelectNextItemAction extends GameUpdate {
+export class SelectItemAction extends GameUpdate {
 	constructor(
 		public Entity: Id,
+		public ItemIndex: number,
 	) { super() }
 }

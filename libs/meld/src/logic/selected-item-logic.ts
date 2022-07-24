@@ -1,5 +1,5 @@
 import { GameLogic, Id, ValueGetter, ValueSetter } from "@lundin/age"
-import { GameUpdate, SelectNextItemAction } from "../state/game-update"
+import { GameUpdate, SelectItemAction } from "../state/game-update"
 import { SelectableItems } from "../values/selectable-items"
 
 export class SelectedItemLogic implements GameLogic<GameUpdate> {
@@ -10,14 +10,14 @@ export class SelectedItemLogic implements GameLogic<GameUpdate> {
 
 	update(actions: GameUpdate[]) {
 		for (const action of actions)
-			if (action instanceof SelectNextItemAction)
-				this.incrementSelectedItemFor(action.Entity)
+			if (action instanceof SelectItemAction)
+				this.UpdateSelectedItemFor(action.Entity, action.ItemIndex)
 	}
 
-	private incrementSelectedItemFor(entity: Id) {
+	private UpdateSelectedItemFor(entity: Id, index: number) {
 		const selectableItems = this.SelectableItems.Of(entity)
 		if (!selectableItems)
 			return
-		this.SetSelectableItems.For(entity, selectableItems.SelectItem(1))
+		this.SetSelectableItems.For(entity, selectableItems.SelectItem(index))
 	}
 }

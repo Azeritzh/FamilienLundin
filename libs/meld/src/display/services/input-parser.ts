@@ -1,7 +1,7 @@
 import { BaseInputParser, DisplayProvider, Id } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
-import { GenerateAction, MovementAction, SelectNextItemAction, PlaceBlockAction, ChargeDashAction, ReleaseDashAction } from "../../state/game-update"
+import { GenerateAction, MovementAction, SelectItemAction, PlaceBlockAction, ChargeDashAction, ReleaseDashAction } from "../../state/game-update"
 import { Camera } from "./camera"
 import { AngleOf, DisplayState } from "../state/display-state"
 import { Visibility } from "./visibility"
@@ -29,7 +29,7 @@ export class InputParser extends BaseInputParser<Input> {
 			this.ParseDash(player),
 			this.ParseMovement(player),
 			this.ParsePlaceBlock(),
-			this.ParseSelectNextItem(),
+			this.ParseSelectItem(player),
 		].filter(x => x)
 	}
 
@@ -99,9 +99,22 @@ export class InputParser extends BaseInputParser<Input> {
 			return new PlaceBlockAction(this.Game.State.Players.get(this.State.PlayerName), position)
 	}
 
-	private ParseSelectNextItem() {
+	private ParseSelectItem(player: Id) {
+		const selectableItems = this.Game.Entities.SelectableItems.Get.Of(player)
+		if (!selectableItems)
+			return null
 		if (this.hasJustBeenPressed(Input.SelectNextItem))
-			return new SelectNextItemAction(this.Game.State.Players.get(this.State.PlayerName))
+			return new SelectItemAction(player, selectableItems.CurrentItemInSet + 1)
+		if (this.hasJustBeenPressed(Input.SelectPreviousItem))
+			return new SelectItemAction(player, selectableItems.CurrentItemInSet - 1)
+		if (this.hasJustBeenPressed(Input.SelectTopItem))
+			return new SelectItemAction(player, 0)
+		if (this.hasJustBeenPressed(Input.SelectRightItem))
+			return new SelectItemAction(player, 1)
+		if (this.hasJustBeenPressed(Input.SelectBottomItem))
+			return new SelectItemAction(player, 2)
+		if (this.hasJustBeenPressed(Input.SelectLeftItem))
+			return new SelectItemAction(player, 3)
 	}
 }
 
