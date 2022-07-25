@@ -1,5 +1,8 @@
+import { TypeId } from "@lundin/age"
 import { GameConfig } from "../config/game-config"
-import { BlockSprites, BlockTileOverlays, BlockWallOverlays, DisplayConfig, GameplaySprites, SpriteInfo } from "../display/state/display-config"
+import { BlockSprites, BlockTileOverlays, BlockWallOverlays } from "../display/state/block-sprites"
+import { DisplayConfig, GameplaySprites, SpriteInfo } from "../display/state/display-config"
+import { EntitySprites, RotationSprite } from "../display/state/entity-sprites"
 import { updatesPerSecond } from "../meld-game"
 import { SolidId } from "../state/block"
 import { ItemTypeId } from "../state/item"
@@ -7,55 +10,66 @@ import { ItemTypeId } from "../state/item"
 export function readDisplayConfig(gameConfig: GameConfig, deserialised: SerialisableDisplayConfig): DisplayConfig {
 
 	const blockSprites = new Map<SolidId, BlockSprites[]>()
-	for (const key in deserialised.blockSprites)
+	for (const key in deserialised.BlockSprites)
 		blockSprites.set(
 			gameConfig.SolidTypeMap.TypeIdFor(key),
-			deserialised.blockSprites[key].map(x => BlockSpritesFrom(x))
+			deserialised.BlockSprites[key].map(x => BlockSpritesFrom(x))
 		)
 
 	const blockTileOverlays = new Map<SolidId, BlockTileOverlays>()
-	for (const key in deserialised.blockTileOverlays)
+	for (const key in deserialised.BlockTileOverlays)
 		blockTileOverlays.set(
 			gameConfig.SolidTypeMap.TypeIdFor(key),
-			Object.assign(new BlockTileOverlays(), deserialised.blockTileOverlays[key])
+			Object.assign(new BlockTileOverlays(), deserialised.BlockTileOverlays[key])
 		)
 
 	const blockWallOverlays = new Map<SolidId, BlockWallOverlays>()
-	for (const key in deserialised.blockWallOverlays)
+	for (const key in deserialised.BlockWallOverlays)
 		blockWallOverlays.set(
 			gameConfig.SolidTypeMap.TypeIdFor(key),
-			Object.assign(new BlockWallOverlays(), deserialised.blockWallOverlays[key])
+			Object.assign(new BlockWallOverlays(), deserialised.BlockWallOverlays[key])
 		)
+
+	const entitySprites = new Map<TypeId, EntitySprites>()
+	for (const key in deserialised.EntitySprites) {
+		const entry = deserialised.EntitySprites[key]
+		const sprites = new EntitySprites(
+			entry.Rotations.map(x => Object.assign(new RotationSprite(), x)),
+			entry.HammerStrike?.map(x => Object.assign(new RotationSprite(), x)),
+		)
+		entitySprites.set(gameConfig.EntityTypeMap.TypeIdFor(key), sprites)
+	}
 
 	const itemSprites = new Map<ItemTypeId, string>()
-	for (const key in deserialised.itemSprites)
+	for (const key in deserialised.ItemSprites)
 		itemSprites.set(
 			gameConfig.ItemTypeMap.TypeIdFor(key),
-			deserialised.itemSprites[key]
+			deserialised.ItemSprites[key]
 		)
 
-	const defaultSpriteTypes = deserialised.defaultSpriteTypes ?? {}
+	const defaultSpriteTypes = deserialised.DefaultSpriteTypes ?? {}
 	const sprites = {}
-	for (const key in deserialised.sprites)
-		sprites[key] = spriteInfoFrom(key, deserialised.sprites[key], defaultSpriteTypes)
+	for (const key in deserialised.Sprites)
+		sprites[key] = spriteInfoFrom(key, deserialised.Sprites[key], defaultSpriteTypes)
 
 	return {
-		RenderToVirtualSize: deserialised.renderToVirtualSize ?? true,
-		VirtualPixelsPerTile: deserialised.virtualPixelsPerTile ?? 16,
-		VirtualHeight: deserialised.virtualHeight ?? 360,
-		WallDisplayHeight: deserialised.wallDisplayHeight ?? 2,
-		DisplayDepth: deserialised.displayDepth ?? 4,
-		TransparencyRadius: deserialised.transparencyRadius ?? 5,
-		BlockingTransparencyRadius: deserialised.blockingTransparencyRadius ?? 10,
-		AssetFolder: deserialised.assetFolder ?? "assets/",
+		RenderToVirtualSize: deserialised.RenderToVirtualSize ?? true,
+		VirtualPixelsPerTile: deserialised.VirtualPixelsPerTile ?? 16,
+		VirtualHeight: deserialised.VirtualHeight ?? 360,
+		WallDisplayHeight: deserialised.WallDisplayHeight ?? 2,
+		DisplayDepth: deserialised.DisplayDepth ?? 4,
+		TransparencyRadius: deserialised.TransparencyRadius ?? 5,
+		BlockingTransparencyRadius: deserialised.BlockingTransparencyRadius ?? 10,
+		AssetFolder: deserialised.AssetFolder ?? "assets/",
 
-		DefaultTileOverlays: Object.assign(new BlockTileOverlays(), deserialised.defaultTileOverlays ?? {}),
-		DefaultWallOverlays: Object.assign(new BlockWallOverlays(), deserialised.defaultTileOverlays ?? {}),
+		DefaultTileOverlays: Object.assign(new BlockTileOverlays(), deserialised.DefaultTileOverlays ?? {}),
+		DefaultWallOverlays: Object.assign(new BlockWallOverlays(), deserialised.DefaultWallOverlays ?? {}),
 		BlockSprites: blockSprites,
 		BlockTileOverlays: blockTileOverlays,
 		BlockWallOverlays: blockWallOverlays,
+		EntitySprites: entitySprites,
 		ItemSprites: itemSprites,
-		GameplaySprites: Object.assign(new GameplaySprites(), ToPascalCase(deserialised.gameplaySprites) ?? {}),
+		GameplaySprites: Object.assign(new GameplaySprites(), deserialised.GameplaySprites ?? {}),
 		Sprites: sprites,
 	}
 }
@@ -87,25 +101,26 @@ function spriteInfoFrom(
 }
 
 export interface SerialisableDisplayConfig {
-	renderToVirtualSize?: boolean
-	virtualPixelsPerTile?: number
-	virtualHeight?: number
-	wallDisplayHeight?: number
-	displayDepth?: number
-	transparencyRadius?: number
-	blockingTransparencyRadius?: number
-	assetFolder?: string
+	RenderToVirtualSize?: boolean
+	VirtualPixelsPerTile?: number
+	VirtualHeight?: number
+	WallDisplayHeight?: number
+	DisplayDepth?: number
+	TransparencyRadius?: number
+	BlockingTransparencyRadius?: number
+	AssetFolder?: string
 
-	defaultTileOverlays?: BlockTileOverlays,
-	defaultWallOverlays?: BlockWallOverlays,
-	blockSprites?: { [index: string]: SerialisableBlockSprites[] },
-	blockTileOverlays?: { [index: string]: BlockTileOverlays },
-	blockWallOverlays?: { [index: string]: BlockWallOverlays },
-	itemSprites?: { [index: string]: string },
-	gameplaySprites: { [index: string]: string },
-	sprites: { [index: string]: SerialisedSpriteInfo },
+	DefaultTileOverlays?: BlockTileOverlays,
+	DefaultWallOverlays?: BlockWallOverlays,
+	BlockSprites?: { [index: string]: SerialisableBlockSprites[] },
+	BlockTileOverlays?: { [index: string]: BlockTileOverlays },
+	BlockWallOverlays?: { [index: string]: BlockWallOverlays },
+	EntitySprites?: { [index: string]: EntitySprites },
+	ItemSprites?: { [index: string]: string },
+	GameplaySprites: { [index: string]: string },
+	Sprites: { [index: string]: SerialisedSpriteInfo },
 
-	defaultSpriteTypes?: { [index: string]: SerialisedSpriteInfo },
+	DefaultSpriteTypes?: { [index: string]: SerialisedSpriteInfo },
 }
 
 interface SerialisedSpriteInfo {
@@ -121,68 +136,68 @@ interface SerialisedSpriteInfo {
 }
 
 interface SerialisableBlockSprites {
-	straightTile?: string,
-	straightFullWall?: string,
-	straightHalfWall?: string,
-	diagonalTile?: string,
-	diagonalFullWall?: string,
-	diagonalHalfWall?: string,
+	StraightTile?: string,
+	StraightFullWall?: string,
+	StraightHalfWall?: string,
+	DiagonalTile?: string,
+	DiagonalFullWall?: string,
+	DiagonalHalfWall?: string,
 
-	tileNorth?: string,
-	tileNorthEast?: string,
-	tileEast?: string,
-	tileSouthEast?: string,
-	tileSouth?: string,
-	tileSouthWest?: string,
-	tileWest?: string,
-	tileNorthWest?: string,
+	TileNorth?: string,
+	TileNorthEast?: string,
+	TileEast?: string,
+	TileSouthEast?: string,
+	TileSouth?: string,
+	TileSouthWest?: string,
+	TileWest?: string,
+	TileNorthWest?: string,
 
-	fullWallNorth?: string,
-	fullWallNorthEast?: string,
-	fullWallEast?: string,
-	fullWallSouthEast?: string,
-	fullWallSouth?: string,
-	fullWallSouthWest?: string,
-	fullWallWest?: string,
-	fullWallNorthWest?: string,
+	FullWallNorth?: string,
+	FullWallNorthEast?: string,
+	FullWallEast?: string,
+	FullWallSouthEast?: string,
+	FullWallSouth?: string,
+	FullWallSouthWest?: string,
+	FullWallWest?: string,
+	FullWallNorthWest?: string,
 
-	halfWallNorth?: string,
-	halfWallNorthEast?: string,
-	halfWallEast?: string,
-	halfWallSouthEast?: string,
-	halfWallSouth?: string,
-	halfWallSouthWest?: string,
-	halfWallWest?: string,
-	halfWallNorthWest?: string,
+	HalfWallNorth?: string,
+	HalfWallNorthEast?: string,
+	HalfWallEast?: string,
+	HalfWallSouthEast?: string,
+	HalfWallSouth?: string,
+	HalfWallSouthWest?: string,
+	HalfWallWest?: string,
+	HalfWallNorthWest?: string,
 }
 
 function BlockSpritesFrom(sprites: SerialisableBlockSprites) {
 	return new BlockSprites(
-		sprites.tileNorth ?? sprites.straightTile ?? "missing-sprite",
-		sprites.tileNorthEast ?? sprites.diagonalTile ?? "missing-sprite",
-		sprites.tileEast ?? sprites.straightTile ?? "missing-sprite",
-		sprites.tileSouthEast ?? sprites.diagonalTile ?? "missing-sprite",
-		sprites.tileSouth ?? sprites.straightTile ?? "missing-sprite",
-		sprites.tileSouthWest ?? sprites.diagonalTile ?? "missing-sprite",
-		sprites.tileWest ?? sprites.straightTile ?? "missing-sprite",
-		sprites.tileNorthWest ?? sprites.diagonalTile ?? "missing-sprite",
+		sprites.TileNorth ?? sprites.StraightTile ?? "missing-sprite",
+		sprites.TileNorthEast ?? sprites.DiagonalTile ?? "missing-sprite",
+		sprites.TileEast ?? sprites.StraightTile ?? "missing-sprite",
+		sprites.TileSouthEast ?? sprites.DiagonalTile ?? "missing-sprite",
+		sprites.TileSouth ?? sprites.StraightTile ?? "missing-sprite",
+		sprites.TileSouthWest ?? sprites.DiagonalTile ?? "missing-sprite",
+		sprites.TileWest ?? sprites.StraightTile ?? "missing-sprite",
+		sprites.TileNorthWest ?? sprites.DiagonalTile ?? "missing-sprite",
 
-		sprites.fullWallNorth ?? sprites.straightFullWall ?? "missing-sprite",
-		sprites.fullWallNorthEast ?? sprites.diagonalFullWall ?? "missing-sprite",
-		sprites.fullWallEast ?? sprites.straightFullWall ?? "missing-sprite",
-		sprites.fullWallSouthEast ?? sprites.diagonalFullWall ?? "missing-sprite",
-		sprites.fullWallSouth ?? sprites.straightFullWall ?? "missing-sprite",
-		sprites.fullWallSouthWest ?? sprites.diagonalFullWall ?? "missing-sprite",
-		sprites.fullWallWest ?? sprites.straightFullWall ?? "missing-sprite",
-		sprites.fullWallNorthWest ?? sprites.diagonalFullWall ?? "missing-sprite",
+		sprites.FullWallNorth ?? sprites.StraightFullWall ?? "missing-sprite",
+		sprites.FullWallNorthEast ?? sprites.DiagonalFullWall ?? "missing-sprite",
+		sprites.FullWallEast ?? sprites.StraightFullWall ?? "missing-sprite",
+		sprites.FullWallSouthEast ?? sprites.DiagonalFullWall ?? "missing-sprite",
+		sprites.FullWallSouth ?? sprites.StraightFullWall ?? "missing-sprite",
+		sprites.FullWallSouthWest ?? sprites.DiagonalFullWall ?? "missing-sprite",
+		sprites.FullWallWest ?? sprites.StraightFullWall ?? "missing-sprite",
+		sprites.FullWallNorthWest ?? sprites.DiagonalFullWall ?? "missing-sprite",
 
-		sprites.halfWallNorth ?? sprites.straightHalfWall ?? sprites.straightFullWall ?? "missing-sprite",
-		sprites.halfWallNorthEast ?? sprites.diagonalHalfWall ?? sprites.diagonalFullWall ?? "missing-sprite",
-		sprites.halfWallEast ?? sprites.straightHalfWall ?? sprites.straightFullWall ?? "missing-sprite",
-		sprites.halfWallSouthEast ?? sprites.diagonalHalfWall ?? sprites.diagonalFullWall ?? "missing-sprite",
-		sprites.halfWallSouth ?? sprites.straightHalfWall ?? sprites.straightFullWall ?? "missing-sprite",
-		sprites.halfWallSouthWest ?? sprites.diagonalHalfWall ?? sprites.diagonalFullWall ?? "missing-sprite",
-		sprites.halfWallWest ?? sprites.straightHalfWall ?? sprites.straightFullWall ?? "missing-sprite",
-		sprites.halfWallNorthWest ?? sprites.diagonalHalfWall ?? sprites.diagonalFullWall ?? "missing-sprite"
+		sprites.HalfWallNorth ?? sprites.StraightHalfWall ?? sprites.StraightFullWall ?? "missing-sprite",
+		sprites.HalfWallNorthEast ?? sprites.DiagonalHalfWall ?? sprites.DiagonalFullWall ?? "missing-sprite",
+		sprites.HalfWallEast ?? sprites.StraightHalfWall ?? sprites.StraightFullWall ?? "missing-sprite",
+		sprites.HalfWallSouthEast ?? sprites.DiagonalHalfWall ?? sprites.DiagonalFullWall ?? "missing-sprite",
+		sprites.HalfWallSouth ?? sprites.StraightHalfWall ?? sprites.StraightFullWall ?? "missing-sprite",
+		sprites.HalfWallSouthWest ?? sprites.DiagonalHalfWall ?? sprites.DiagonalFullWall ?? "missing-sprite",
+		sprites.HalfWallWest ?? sprites.StraightHalfWall ?? sprites.StraightFullWall ?? "missing-sprite",
+		sprites.HalfWallNorthWest ?? sprites.DiagonalHalfWall ?? sprites.DiagonalFullWall ?? "missing-sprite"
 	)
 }

@@ -4,6 +4,7 @@ import { Meld } from "../../meld"
 import { Blocks, BlockType } from "../../state/block"
 import { Camera, Layer } from "../services/camera"
 import { DisplayConfig } from "../state/display-config"
+import { SpriteFor } from "../state/entity-sprites"
 
 export class StandardEntityDrawer {
 	constructor(
@@ -22,12 +23,13 @@ export class StandardEntityDrawer {
 	private drawGeneralEntity(entity: Id) {
 		const position = this.Game.Entities.Position.Get.Of(entity)
 		const velocity = this.Game.Entities.Velocity.Get.Of(entity)
-		const sprite = this.Game.Config.EntityTypeMap.TypeFor(EntityTypeOf(entity))
+		const orientation = this.Game.Entities.Orientation.Get.Of(entity) ?? 0
+		const sprite = SpriteFor(this.Config.EntitySprites.get(EntityTypeOf(entity)).Rotations, orientation)
 		this.Camera.DrawAnimated(sprite, Layer.Middle, position, velocity)
 		this.DrawShadow(entity, position, velocity)
 	}
 
-	private DrawShadow(entity: Id, position: Vector3, velocity?: Vector3) { // TODO: it seems to draw shadows too low at full blocks
+	private DrawShadow(entity: Id, position: Vector3, velocity?: Vector3) {
 		const height = this.GetFloorHeight(position)
 		if (height !== null && height !== undefined)
 			this.Camera.DrawAnimated(this.GetShadowOf(entity), Layer.Middle, position.withZ(height), velocity)

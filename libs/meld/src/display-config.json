@@ -1,12 +1,142 @@
 {
-	"renderToVirtualSize": true,
-	"virtualPixelsPerTile": 16,
-	"virtualHeight": 240,
-	"wallDisplayHeight": 2,
-	"transparencyRadius": 5,
-	"assetFolder": "assets/",
+	"RenderToVirtualSize": true,
+	"VirtualPixelsPerTile": 16,
+	"VirtualHeight": 240,
+	"WallDisplayHeight": 2,
+	"TransparencyRadius": 5,
+	"AssetFolder": "assets/",
 
-	"defaultSpriteTypes": {
+	"BlockSprites": {
+		"grass": [
+			{
+				"StraightTile": "grass-tile",
+				"StraightFullWall": "grass-wall",
+				"DiagonalTile": "grass-tile-diagonal",
+				"DiagonalFullWall": "grass-wall-diagonal"
+			}
+		],
+		"dirt": [
+			{
+				"StraightTile": "dirt-tile",
+				"StraightFullWall": "dirt-wall",
+				"StraightHalfWall": "dirt-wall-half",
+				"DiagonalTile": "dirt-tile-diagonal",
+				"DiagonalFullWall": "dirt-wall-diagonal",
+				"DiagonalHalfWall": "dirt-wall-half-diagonal"
+			}
+		],
+		"earth": [
+			{
+				"StraightTile": "earth-tile",
+				"StraightFullWall": "earth-wall",
+				"DiagonalTile": "earth-tile-diagonal",
+				"DiagonalFullWall": "earth-wall-diagonal"
+			}
+		],
+		"stone": [
+			{
+				"StraightTile": "stone-tile",
+				"StraightFullWall": "stone-wall",
+				"DiagonalTile": "stone-tile-diagonal",
+				"DiagonalFullWall": "stone-wall-diagonal"
+			}
+		],
+		"slab": [
+			{
+				"StraightTile": "slab-tile",
+				"StraightFullWall": "slab-wall",
+				"StraightHalfWall": "slab-wall-half",
+				"DiagonalTile": "slab-tile-diagonal",
+				"DiagonalFullWall": "slab-wall-diagonal",
+				"DiagonalHalfWall": "slab-wall-half-diagonal"
+			}
+		],
+		"wooden": [
+			{
+				"StraightTile": "wood-tile",
+				"StraightFullWall": "wood-wall",
+				"DiagonalTile": "wood-tile-diagonal",
+				"DiagonalFullWall": "wood-wall-diagonal"
+			}
+		]
+	},
+	"BlockTileOverlays": {
+		"grass": {
+			"TileOverlayTop": "grass-tile-top",
+			"TileOverlayBottom": "grass-tile-bottom",
+			"TileOverlayLeft": "grass-tile-left",
+			"TileOverlayRight": "grass-tile-right",
+			"TileOverlayTopLeft": "grass-tile-left",
+			"TileOverlayTopRight": "grass-tile-top",
+			"TileOverlayBottomLeft": "grass-tile-bottom",
+			"TileOverlayBottomRight": "grass-tile-right"
+		}
+	},
+	"EntitySprites": {
+		"player": {
+			"Rotations": [
+				{
+					"EndAngle": 0.125,
+					"Sprite": "character-right-x40"
+				},
+				{
+					"EndAngle": 0.375,
+					"Sprite": "character-bottom-x40"
+				},
+				{
+					"EndAngle": 0.625,
+					"Sprite": "character-left-x40"
+				},
+				{
+					"EndAngle": 0.875,
+					"Sprite": "character-top-x40"
+				}
+			],
+			"HammerStrike": [
+				{
+					"EndAngle": 0.125,
+					"Sprite": "character-box-x32-right"
+				},
+				{
+					"EndAngle": 0.375,
+					"Sprite": "character-box-x32-bottom"
+				},
+				{
+					"EndAngle": 0.625,
+					"Sprite": "character-box-x32-left"
+				},
+				{
+					"EndAngle": 0.875,
+					"Sprite": "character-box-x32-top"
+				}
+			]
+		}
+	},
+	"ItemSprites": {
+		"basic-hammer": "hammer"
+	},
+	"GameplaySprites": {
+		"ShadowSmall": "shadow-medium",
+		"ShadowMedium": "shadow-medium",
+		"ShadowBig": "shadow-medium",
+		"WallShadowFullLeft": "default-wall-shadow-full-left",
+		"WallShadowFullRight": "default-wall-shadow-full-right",
+		"WallShadowFullDiagonal": "default-wall-shadow-full-diagonal",
+		"WallShadowHalfLeft": "default-wall-shadow-half-left",
+		"WallShadowHalfRight": "default-wall-shadow-half-right",
+		"WallShadowHalfDiagonal": "default-wall-shadow-half-diagonal",
+		"DashCloud": "dash-cloud",
+		"DashRecharge": "dash-recharge",
+		"DashTarget": "dash-target",
+		"DashTargetFade": "dash-target-fade",
+		"DashFail": "dash-fail",
+		"DashMarker": "dash-marker",
+		"DashFailMarker": "dash-fail-marker",
+		"HudLeft": "hud-items",
+		"HudRight": "hud-tools"
+	},
+
+	"DefaultSpriteTypes": {
 		"defaultTile": {
 			"width": 16,
 			"height": 16,
@@ -48,108 +178,40 @@
 			"height": 16,
 			"centerX": 8,
 			"centerY": 8
-		}
-	},
-
-	"blockSprites": {
-		"grass": [
-			{
-				"straightTile": "grass-tile",
-				"straightFullWall": "grass-wall",
-				"diagonalTile": "grass-tile-diagonal",
-				"diagonalFullWall": "grass-wall-diagonal"
-			}
-		],
-		"dirt": [
-			{
-				"straightTile": "dirt-tile",
-				"straightFullWall": "dirt-wall",
-				"straightHalfWall": "dirt-wall-half",
-				"diagonalTile": "dirt-tile-diagonal",
-				"diagonalFullWall": "dirt-wall-diagonal",
-				"diagonalHalfWall": "dirt-wall-half-diagonal"
-			}
-		],
-		"earth": [
-			{
-				"straightTile": "earth-tile",
-				"straightFullWall": "earth-wall",
-				"diagonalTile": "earth-tile-diagonal",
-				"diagonalFullWall": "earth-wall-diagonal"
-			}
-		],
-		"stone": [
-			{
-				"straightTile": "stone-tile",
-				"straightFullWall": "stone-wall",
-				"diagonalTile": "stone-tile-diagonal",
-				"diagonalFullWall": "stone-wall-diagonal"
-			}
-		],
-		"slab": [
-			{
-				"straightTile": "slab-tile",
-				"straightFullWall": "slab-wall",
-				"straightHalfWall": "slab-wall-half",
-				"diagonalTile": "slab-tile-diagonal",
-				"diagonalFullWall": "slab-wall-diagonal",
-				"diagonalHalfWall": "slab-wall-half-diagonal"
-			}
-		],
-		"wooden": [
-			{
-				"straightTile": "wood-tile",
-				"straightFullWall": "wood-wall",
-				"diagonalTile": "wood-tile-diagonal",
-				"diagonalFullWall": "wood-wall-diagonal"
-			}
-		]
-	},
-	"blockTileOverlays": {
-		"grass": {
-			"tileOverlayTop": "grass-tile-top",
-			"tileOverlayBottom": "grass-tile-bottom",
-			"tileOverlayLeft": "grass-tile-left",
-			"tileOverlayRight": "grass-tile-right",
-			"tileOverlayTopLeft": "grass-tile-left",
-			"tileOverlayTopRight": "grass-tile-top",
-			"tileOverlayBottomLeft": "grass-tile-bottom",
-			"tileOverlayBottomRight": "grass-tile-right"
-		}
-	},
-	"itemSprites": {
-		"basic-hammer": "hammer"
-	},
-	"gameplaySprites": {
-		"shadowSmall": "shadow-medium",
-		"shadowMedium": "shadow-medium",
-		"shadowBig": "shadow-medium",
-		"wallShadowFullLeft": "default-wall-shadow-full-left",
-		"wallShadowFullRight": "default-wall-shadow-full-right",
-		"wallShadowFullDiagonal": "default-wall-shadow-full-diagonal",
-		"wallShadowHalfLeft": "default-wall-shadow-half-left",
-		"wallShadowHalfRight": "default-wall-shadow-half-right",
-		"wallShadowHalfDiagonal": "default-wall-shadow-half-diagonal",
-		"dashCloud": "dash-cloud",
-		"dashRecharge": "dash-recharge",
-		"dashTarget": "dash-target",
-		"dashTargetFade": "dash-target-fade",
-		"dashFail": "dash-fail",
-		"dashMarker": "dash-marker",
-		"dashFailMarker": "dash-fail-marker",
-		"hudLeft": "hud-items",
-		"hudRight": "hud-tools"
-	},
-
-	"sprites": {
-		"missing-sprite": {
-			"width": 16,
-			"height": 16,
-			"centerX": 8,
-			"centerY": 8
 		},
-		"player": {
-			"path": "character-box-x32",
+		"defaultCharacter": {
+			"width": 32,
+			"height": 48,
+			"centerX": 16,
+			"centerY": 44
+		}
+	},
+
+	"Sprites": {
+		"missing-sprite": { "type": "tileSize" },
+		"character-top-x40": { "type": "defaultCharacter" },
+		"character-bottom-x40": { "type": "defaultCharacter" },
+		"character-right-x40": { "type": "defaultCharacter" },
+		"character-left-x40": { "type": "defaultCharacter" },
+		"character-box-x32-top": {
+			"width": 20,
+			"height": 48,
+			"centerX": 10,
+			"centerY": 38
+		},
+		"character-box-x32-right": {
+			"width": 20,
+			"height": 48,
+			"centerX": 10,
+			"centerY": 38
+		},
+		"character-box-x32-bottom": {
+			"width": 20,
+			"height": 48,
+			"centerX": 10,
+			"centerY": 38
+		},
+		"character-box-x32-left": {
 			"width": 20,
 			"height": 48,
 			"centerX": 10,

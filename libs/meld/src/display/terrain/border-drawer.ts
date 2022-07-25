@@ -124,14 +124,14 @@ export class BorderDrawer {
 			? this.Config.BlockTileOverlays.get(solidType)
 			: this.Config.DefaultTileOverlays
 		switch (direction) {
-			case Side.Bottom: return tileOverlays.tileOverlayBottom
-			case Side.Top: return tileOverlays.tileOverlayTop
-			case Side.Left: return tileOverlays.tileOverlayLeft
-			case Side.Right: return tileOverlays.tileOverlayRight
-			case Side.TopLeft: return tileOverlays.tileOverlayTopLeft
-			case Side.TopRight: return tileOverlays.tileOverlayTopRight
-			case Side.BottomLeft: return tileOverlays.tileOverlayBottomLeft
-			case Side.BottomRight: return tileOverlays.tileOverlayBottomRight
+			case Side.Bottom: return tileOverlays.TileOverlayBottom
+			case Side.Top: return tileOverlays.TileOverlayTop
+			case Side.Left: return tileOverlays.TileOverlayLeft
+			case Side.Right: return tileOverlays.TileOverlayRight
+			case Side.TopLeft: return tileOverlays.TileOverlayTopLeft
+			case Side.TopRight: return tileOverlays.TileOverlayTopRight
+			case Side.BottomLeft: return tileOverlays.TileOverlayBottomLeft
+			case Side.BottomRight: return tileOverlays.TileOverlayBottomRight
 		}
 	}
 
@@ -141,8 +141,8 @@ export class BorderDrawer {
 			? this.Config.BlockWallOverlays.get(solidType)
 			: this.Config.DefaultWallOverlays
 		switch (direction) {
-			case Side.Left: return this.Camera.IsDiagonalView() ? wallOverlays.diagonalHalfWallOverlayLeft : wallOverlays.straightHalfWallOverlayLeft
-			case Side.Right: return this.Camera.IsDiagonalView() ? wallOverlays.diagonalHalfWallOverlayRight : wallOverlays.straightHalfWallOverlayRight
+			case Side.Left: return this.Camera.IsDiagonalView() ? wallOverlays.DiagonalHalfWallOverlayLeft : wallOverlays.StraightHalfWallOverlayLeft
+			case Side.Right: return this.Camera.IsDiagonalView() ? wallOverlays.DiagonalHalfWallOverlayRight : wallOverlays.StraightHalfWallOverlayRight
 		}
 	}
 
@@ -152,8 +152,8 @@ export class BorderDrawer {
 			? this.Config.BlockWallOverlays.get(solidType)
 			: this.Config.DefaultWallOverlays
 		switch (direction) {
-			case Side.Left: return this.Camera.IsDiagonalView() ? wallOverlays.diagonalFullWallOverlayLeft : wallOverlays.straightFullWallOverlayLeft
-			case Side.Right: return this.Camera.IsDiagonalView() ? wallOverlays.diagonalFullWallOverlayRight : wallOverlays.straightFullWallOverlayRight
+			case Side.Left: return this.Camera.IsDiagonalView() ? wallOverlays.DiagonalFullWallOverlayLeft : wallOverlays.StraightFullWallOverlayLeft
+			case Side.Right: return this.Camera.IsDiagonalView() ? wallOverlays.DiagonalFullWallOverlayRight : wallOverlays.StraightFullWallOverlayRight
 		}
 	}
 }
