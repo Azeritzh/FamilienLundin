@@ -17,6 +17,7 @@ import { WallDrawer } from "./terrain/wall-drawer"
 import { BorderDrawer } from "./terrain/border-drawer"
 import { BlockShadowDrawer } from "./terrain/block-shadow-drawer"
 import { DisplaySettings } from "./state/display-settings"
+import { EntityShadowDrawer } from "./entity/entity-shadow-drawer"
 
 export class MeldDisplay implements BaseDisplay<GameUpdate> {
 	constructor(
@@ -39,8 +40,9 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		private terrainDrawer = new TerrainDrawer(Game, Config, State, camera, [tileDrawer, wallDrawer, borderDrawer, blockShadowDrawer]),
 
 		private entityDrawer = new StandardEntityDrawer(Game, Config, camera),
+		private entityShadowDrawer = new EntityShadowDrawer(Game, Config, camera),
 		private dashDrawer = new DashDrawer(Game, Config, State, camera, displayEntityDrawer),
-		private entitiesDrawer = new EntitiesDrawer(Game, Config, State, [entityDrawer, dashDrawer]),
+		private entitiesDrawer = new EntitiesDrawer(Game, Config, State, [entityDrawer, entityShadowDrawer, dashDrawer]),
 	) {
 		Game.dashLogic.Listeners.push(dashDrawer)
 		Display.sortByDepth = true
