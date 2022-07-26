@@ -1,8 +1,11 @@
+import { Tau } from "@lundin/utility"
 import { Meld } from "../../meld"
+import { Item } from "../../state/item"
 import { Camera, Layer } from "../services/camera"
 import { DisplayConfig } from "../state/display-config"
+import { ViewDirection } from "../state/display-state"
 import { RotationSprite, SpriteFor } from "../state/entity-sprites"
-import { ItemAnimation } from "../state/item-animations"
+import { ItemAnimation, ItemPlacement, ItemPlacementFor } from "../state/item-animations"
 import { EntityContext } from "./entity-context"
 
 export class StandardEntityDrawer {
@@ -23,17 +26,28 @@ export class StandardEntityDrawer {
 	}
 
 	private IsPerformingToolAction() {
-		return false // this.Game.State.Globals.Tick < (this.EntityContext.ToolState?.EndTime ?? 0)
+		return this.Game.State.Globals.Tick < (this.EntityContext.ToolState?.EndTime ?? 0)
 	}
 
 	private DrawTool(sprites: RotationSprite[], itemAnimations: ItemAnimation[]) {
 		console.log(sprites, itemAnimations)
-		/*const state = this.EntityContext.ToolState
+		const state = this.EntityContext.ToolState
 
-		if (itemAnimations.For(EntityContext.Orientation, (Game.State.Globals.Tick - state.StartTime) % 30) is ItemPlacement placement)
-		DrawItem(state.SourceItem, placement);
+		const placement = ItemPlacementFor(itemAnimations, this.EntityContext.Orientation, (this.Game.State.Globals.Tick - state.StartTime) % 30)
+		if (placement)
+			this.DrawItem(state.SourceItem, placement)
 
-		var entitySprite = sprites.For(EntityContext.Orientation);
-		Camera.DrawAnimated(entitySprite, Layer.Middle, EntityContext.Position, EntityContext.Velocity);*/
+		const entitySprite = SpriteFor(sprites, this.EntityContext.Orientation)
+		this.Camera.DrawAnimated(entitySprite, Layer.Middle, this.EntityContext.Position, this.EntityContext.Velocity)
+	}
+
+	private DrawItem(item: Item, placement: ItemPlacement) {
+		const toolSprite = this.Config.ItemSprites.has(item.Type)
+			? this.Config.ItemSprites.get(item.Type)
+			: this.Config.BlockSprites.get(item.Content)[0].TileFor(ViewDirection.North)
+		const layer = placement.InFront
+			? Layer.Middle + Layer.ZFightingAdjustment
+			: Layer.Middle - Layer.ZFightingAdjustment
+		this.Camera.DrawAnimated(toolSprite, layer, this.EntityContext.Position, this.EntityContext.Velocity, 0, placement.Rotation * Tau, null, 1, false, placement.OffsetX, placement.OffsetY)
 	}
 }

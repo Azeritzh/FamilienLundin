@@ -50,7 +50,7 @@ export class EntitiesDrawer {
 		this.EntityContext.Orientation = Rotate(orientation, AngleOf(-this.State.ViewDirection))
 		this.EntityContext.Position = this.Game.Entities.Position.Get.Of(entity) ?? new Vector3(0, 0, 0)
 		this.EntityContext.Velocity = this.Game.Entities.Velocity.Get.Of(entity) ?? new Vector3(0, 0, 0)
-		//this.EntityContext.ToolState = this.Game.Entities.ToolState.Get.Of(entity)
+		this.EntityContext.ToolState = this.Game.Entities.ToolState.Get.Of(entity)
 	}
 }
 

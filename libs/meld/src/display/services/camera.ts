@@ -67,10 +67,12 @@ export class Camera {
 		color: Vector3 = null,
 		alpha = 1,
 		allowTransparentInFrontOfPlayer = false,
+		pixelOffsetX = 0,
+		pixelOffsetY = 0
 	) {
 		const config = this.Config.Sprites[sprite]
 		const frame = this.AnimationFrame(config.frameInterval, config.framesX, config.framesY, animationStart)
-		this.Draw(sprite, layer, position, velocity, frame, rotation, color, alpha, allowTransparentInFrontOfPlayer)
+		this.Draw(sprite, layer, position, velocity, frame, rotation, color, alpha, allowTransparentInFrontOfPlayer, pixelOffsetX, pixelOffsetY)
 	}
 
 	private AnimationFrame(frameInterval: number, framesX: number, framesY: number, animationStart: number) {
@@ -92,11 +94,13 @@ export class Camera {
 		color: Vector3 = null,
 		alpha = 1,
 		allowTransparentInFrontOfPlayer = false,
+		pixelOffsetX = 0,
+		pixelOffsetY = 0
 	) {
 		const currentPosition = this.SetCurrentPositionWith(this.Adjustable, position, velocity)
 		this.AdjustForFocusAndCamera(currentPosition)
-		const screenX = this.ScreenXFor(currentPosition)
-		const screenY = this.ScreenYFor(currentPosition)
+		const screenX = this.ScreenXFor(currentPosition) + pixelOffsetX / this.Config.VirtualPixelsPerTile
+		const screenY = this.ScreenYFor(currentPosition) + pixelOffsetY / this.Config.VirtualPixelsPerTile
 		if (allowTransparentInFrontOfPlayer && this.State.PlayerIsBlocked && this.IsInFrontOfPlayer(position, screenX, screenY))
 			alpha = 0.2
 		if (currentPosition.z < 0)
@@ -116,7 +120,7 @@ export class Camera {
 		)
 	}
 
-	
+
 	private _adjustableIsInFrontOfPlayer = new Vector3(0, 0, 0)
 	private IsInFrontOfPlayer(position: Vector3, screenX: number, screenY: number) {
 		const layerDifference = Math.floor(position.z) - Math.floor(this.State.FocusPoint.z)
