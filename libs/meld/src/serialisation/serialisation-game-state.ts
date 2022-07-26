@@ -8,6 +8,7 @@ import { Item } from "../state/item"
 import { DashState } from "../values/dash-state"
 import { SelectableItems } from "../values/selectable-items"
 import { SelectableTools } from "../values/selectable-tools"
+import { ToolState } from "../values/tool-state"
 import { ToPascalCase } from "./serialisation-display-config"
 
 export function createGameState(config: GameConfig, state: GameState) {
@@ -223,6 +224,8 @@ function groupedEntityValuesFrom(serialised: any) {
 		values.SelectableTools = Object.assign(new SelectableTools([]), serialised.SelectableTools)
 	if (serialised.TargetVelocity)
 		values.TargetVelocity = Object.assign(new Vector3(0, 0, 0), serialised.TargetVelocity)
+	if (serialised.ToolState)
+		values.ToolState = ToolState.From(serialised.ToolState)
 	if (serialised.Velocity)
 		values.Velocity = Object.assign(new Vector3(0, 0, 0), serialised.Velocity)
 	return values

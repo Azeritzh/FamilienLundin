@@ -10,6 +10,10 @@ export class Item {
 		public Content: Id,
 		public Amount: number,
 	) { }
+
+	static From(object: any) {
+		return Object.assign(new Item(0, 0, 0), object)
+	}
 }
 
 export interface ItemValues {

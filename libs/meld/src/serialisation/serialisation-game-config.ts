@@ -58,12 +58,14 @@ function groupedEntityValuesFrom(serialised: any): GroupedEntityValues {
 	return { // Remember to add stuff in game state serialisation
 		CircularSize: serialised.circularSize ? Object.assign(new CircularSize(0, 0), serialised.circularSize) : null,
 		DashState: serialised.dashState ? Object.assign(new DashState(), serialised.dashState) : null,
+		DespawnTime: serialised.despawnTime,
 		Health: serialised.health,
 		Orientation: serialised.orientation,
 		Position: serialised.position ? Object.assign(new Vector3(0, 0, 0), serialised.position) : null,
 		SelectableItems: serialised.selectableItems ? new SelectableItems([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]) : null,
 		SelectableTools: serialised.selectableTools ? new SelectableTools([null, null, null, null]) : null,
 		TargetVelocity: serialised.targetVelocity ? Object.assign(new Vector3(0, 0, 0), serialised.targetVelocity) : null,
+		//ToolState: null
 		Velocity: serialised.velocity ? Object.assign(new Vector3(0, 0, 0), serialised.velocity) : null,
 		BlockCollisionBehaviour: serialised.blockCollisionBehaviour,
 		GravityBehaviour: serialised.gravityBehaviour,

@@ -65,6 +65,10 @@ export class Vector3 {
 		return x + "," + y + "," + z
 	}
 
+	static From(object: any) {
+		return Object.assign(new Vector3(0, 0, 0), object)
+	}
+
 	withX(x: number) {
 		return new Vector3(x, this.y, this.z)
 	}
