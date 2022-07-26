@@ -62,3 +62,14 @@ export function randomNumber(min: number, max: number) {
 export function randomNumberBelow(max: number) {
 	return Math.random() * max
 }
+
+export const Tau = Math.PI * 2
+
+export function Rotate(source: number, angle: number) {
+	source += angle
+	while (source < 0)
+		source += Tau
+	while (source >= Tau)
+		source -= Tau
+	return source
+}

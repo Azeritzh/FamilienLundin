@@ -40,7 +40,7 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 
 		private entityDrawer = new StandardEntityDrawer(Game, Config, camera),
 		private dashDrawer = new DashDrawer(Game, Config, State, camera, displayEntityDrawer),
-		private entitiesDrawer = new EntitiesDrawer(Game, State, [entityDrawer, dashDrawer]),
+		private entitiesDrawer = new EntitiesDrawer(Game, Config, State, [entityDrawer, dashDrawer]),
 	) {
 		Game.dashLogic.Listeners.push(dashDrawer)
 		Display.sortByDepth = true

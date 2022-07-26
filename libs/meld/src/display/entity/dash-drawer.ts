@@ -6,8 +6,11 @@ import { Camera, Layer } from "../services/camera"
 import { DisplayConfig, DurationOf } from "../state/display-config"
 import { DisplayEntityDrawer } from "../display-entity-drawer"
 import { AngleOf, DisplayState } from "../state/display-state"
+import { EntityContext } from "./entity-context"
 
 export class DashDrawer {
+	private EntityContext = new EntityContext()
+
 	constructor(
 		private Game: Meld,
 		private Config: DisplayConfig,
@@ -16,13 +19,14 @@ export class DashDrawer {
 		private DisplayEntityDrawer: DisplayEntityDrawer,
 	) { }
 
-	Draw(entity: Id) {
-		const dashState = this.Game.Entities.DashState.Get.Of(entity)
+	Draw(context: EntityContext) {
+		this.EntityContext = context
+		const dashState = this.Game.Entities.DashState.Get.Of(context.Entity)
 		if (!dashState)
 			return
 
-		const position = this.Game.Entities.Position.Get.Of(entity) ?? new Vector3(0, 0, 0)
-		const velocity = this.Game.Entities.Velocity.Get.Of(entity) ?? new Vector3(0, 0, 0)
+		const position = this.Game.Entities.Position.Get.Of(context.Entity) ?? new Vector3(0, 0, 0)
+		const velocity = this.Game.Entities.Velocity.Get.Of(context.Entity) ?? new Vector3(0, 0, 0)
 		if (this.ShouldShowRecharge(dashState))
 			this.Camera.DrawAnimated(this.Config.GameplaySprites.DashRecharge, Layer.Middle - Layer.ZFightingAdjustment, position, velocity, dashState.TimeOfLastDash + this.Game.Config.Constants.DashCooldown)
 		if (dashState.IsCharging)

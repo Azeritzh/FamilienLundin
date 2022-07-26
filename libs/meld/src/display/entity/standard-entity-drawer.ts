@@ -5,19 +5,23 @@ import { Blocks, BlockType } from "../../state/block"
 import { Camera, Layer } from "../services/camera"
 import { DisplayConfig } from "../state/display-config"
 import { SpriteFor } from "../state/entity-sprites"
+import { EntityContext } from "./entity-context"
 
 export class StandardEntityDrawer {
+	private EntityContext = new EntityContext()
+
 	constructor(
 		private Game: Meld,
 		private Config: DisplayConfig,
 		private Camera: Camera,
 	) { }
 
-	Draw(entity: Id) {
+	Draw(context: EntityContext) {
+		this.EntityContext = context
 		//if (EntityTypeOf(entity) === this.Game.Config.Constants.PlayerType)
 		//	this.drawPlayer(entity)
 		//else
-		this.drawGeneralEntity(entity)
+		this.drawGeneralEntity(context.Entity)
 	}
 
 	private drawGeneralEntity(entity: Id) {
