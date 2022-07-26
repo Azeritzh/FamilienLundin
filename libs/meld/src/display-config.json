@@ -112,6 +112,102 @@
 			]
 		}
 	},
+	"ItemAnimations": {
+		"HammerStrike": [
+			{
+				"EndAngle": 0.125,
+				"ItemFrames": [
+					{
+						"EndTime": 0.34,
+						"Placement": {
+							"OffsetX": 0,
+							"OffsetY": -24,
+							"InFront": false,
+							"Rotation": 0
+						}
+					},
+					{
+						"EndTime": 0.5,
+						"Placement": {
+							"OffsetX": 16,
+							"OffsetY": 0,
+							"InFront": false,
+							"Rotation": 0.25
+						}
+					}
+				]
+			},
+			{
+				"EndAngle": 0.375,
+				"ItemFrames": [
+					{
+						"EndTime": 0.34,
+						"Placement": {
+							"OffsetX": 0,
+							"OffsetY": -24,
+							"InFront": true,
+							"Rotation": 0
+						}
+					},
+					{
+						"EndTime": 0.5,
+						"Placement": {
+							"OffsetX": 0,
+							"OffsetY": 0,
+							"InFront": true,
+							"Rotation": 0.25
+						}
+					}
+				]
+			},
+			{
+				"EndAngle": 0.625,
+				"ItemFrames": [
+					{
+						"EndTime": 0.34,
+						"Placement": {
+							"OffsetX": 0,
+							"OffsetY": -24,
+							"InFront": false,
+							"Rotation": 0
+						}
+					},
+					{
+						"EndTime": 0.5,
+						"Placement": {
+							"OffsetX": -16,
+							"OffsetY": 0,
+							"InFront": false,
+							"Rotation": 0.75
+						}
+					}
+				]
+			},
+			{
+				"EndAngle": 0.875,
+				"ItemFrames": [
+					{
+						"EndTime": 0.34,
+						"Placement": {
+							"OffsetX": 0,
+							"OffsetY": -24,
+							"InFront": false,
+							"Rotation": 0
+						}
+					},
+					{
+						"EndTime": 0.5,
+						"Placement": {
+							"OffsetX": 0,
+							"OffsetY": 0,
+							"InFront": false,
+							"Rotation": 0.75
+						}
+					}
+				]
+			}
+		]
+	},
 	"ItemSprites": {
 		"basic-hammer": "hammer"
 	},

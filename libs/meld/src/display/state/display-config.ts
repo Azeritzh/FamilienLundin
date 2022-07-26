@@ -3,6 +3,7 @@ import { SolidId } from "../../state/block"
 import { ItemTypeId } from "../../state/item"
 import { BlockSprites, BlockTileOverlays, BlockWallOverlays } from "./block-sprites"
 import { EntitySprites } from "./entity-sprites"
+import { ItemAnimations } from "./item-animations"
 
 export interface DisplayConfig {
 	RenderToVirtualSize: boolean
@@ -21,6 +22,7 @@ export interface DisplayConfig {
 	BlockWallOverlays: Map<SolidId, BlockWallOverlays>
 	EntitySprites: Map<TypeId, EntitySprites>
 	ItemSprites: Map<ItemTypeId, string>
+	ItemAnimations: ItemAnimations
 	GameplaySprites: GameplaySprites
 	Sprites: { [index: string]: SpriteInfo }
 }
