@@ -2,7 +2,7 @@ import { GameLogic, Id, TerrainManager, ValueGetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
 import { Block, Blocks, BlockType } from "../state/block"
-import { GameUpdate, UseItemAction, UseItemActionType } from "../state/game-update"
+import { ActionState, GameUpdate, UseItemAction } from "../state/game-update"
 import { Item, ItemKind } from "../state/item"
 import { SelectableItems } from "../values/selectable-items"
 
@@ -16,10 +16,10 @@ export class UseItemLogic implements GameLogic<GameUpdate> {
 	update(actions: GameUpdate[]) {
 		for (const action of actions)
 			if (action instanceof UseItemAction)
-				this.UseItem(action.Entity, action.ActionType, action.Target)
+				this.UseItem(action.Entity, action.ActionState, action.Target)
 	}
 
-	private UseItem(entity: Id, actionType: UseItemActionType, position: Vector3) {
+	private UseItem(entity: Id, actionType: ActionState, position: Vector3) {
 		const selectableItems = this.SelectableItems.Of(entity)
 		const item = selectableItems?.CurrentItem()
 		if (!item)
@@ -28,8 +28,8 @@ export class UseItemLogic implements GameLogic<GameUpdate> {
 			this.PlaceBlock(item, actionType, position)
 	}
 
-	private PlaceBlock(item: Item, actionType: UseItemActionType, position: Vector3) {
-		if (actionType != UseItemActionType.Start)
+	private PlaceBlock(item: Item, actionType: ActionState, position: Vector3) {
+		if (actionType != ActionState.Start)
 			return
 
 		const block = item.Content

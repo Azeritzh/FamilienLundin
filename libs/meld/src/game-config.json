@@ -13,6 +13,9 @@
 			"gravityBehaviour": true,
 			"selectableItems": true,
 			"selectableTools": true
+		},
+		"despawning": {
+			"despawnTime": 0
 		}
 	},
 	"solidTypes": {

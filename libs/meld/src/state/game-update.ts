@@ -36,12 +36,12 @@ export class MovementAction extends GameUpdate {
 export class UseItemAction extends GameUpdate {
 	constructor(
 		public Entity: Id,
-		public ActionType: UseItemActionType,
+		public ActionState: ActionState,
 		public Target: Vector3,
 	) { super() }
 }
 
-export enum UseItemActionType { Start, End }
+export enum ActionState { Start, Unchanged, End }
 
 export class SelectItemAction extends GameUpdate {
 	constructor(
@@ -53,12 +53,11 @@ export class SelectItemAction extends GameUpdate {
 export class UseToolAction extends GameUpdate {
 	constructor(
 		public Entity: Id,
-		public ActionType: UseToolActionType,
+		public PrimaryActionState: ActionState,
+		public SecondaryActionState: ActionState,
 		public Target: Vector3,
 	) { super() }
 }
-
-export enum UseToolActionType { StartPrimary, EndPrimary, StartSecondary, EndSecondary }
 
 export class SelectToolAction extends GameUpdate {
 	constructor(

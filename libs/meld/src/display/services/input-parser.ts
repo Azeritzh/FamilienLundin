@@ -1,11 +1,11 @@
 import { BaseInputParser, DisplayProvider, Id } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
-import { GenerateAction, MovementAction, SelectItemAction, UseItemAction, ChargeDashAction, ReleaseDashAction, UseItemActionType, UseToolActionType, UseToolAction, SelectToolAction } from "../../state/game-update"
-import { Camera } from "./camera"
+import { ActionState, ChargeDashAction, GenerateAction, MovementAction, ReleaseDashAction, SelectItemAction, SelectToolAction, UseItemAction, UseToolAction } from "../../state/game-update"
 import { AngleOf, DisplayState, InputMode } from "../state/display-state"
-import { Visibility } from "./visibility"
+import { Camera } from "./camera"
 import { Input } from "./input"
+import { Visibility } from "./visibility"
 
 export class InputParser extends BaseInputParser<Input> {
 
@@ -85,6 +85,8 @@ export class InputParser extends BaseInputParser<Input> {
 
 	//////////////////////////////// NORMAL ////////////////////////////////
 	private PreviousMovement = new Vector2(0, 0)
+	private PreviousItemTarget = new Vector3(0, 0, 0)
+	private PreviousToolTarget = new Vector3(0, 0, 0)
 
 	private ParseMovement(player: Id) {
 		const factor = this.boolStateFor(Input.HoldWalk) ? 0.5 : 1
@@ -120,31 +122,48 @@ export class InputParser extends BaseInputParser<Input> {
 	}
 
 	private ParseUseItem(player: Id) {
-		const position = this.Camera.TilePositionFor(
+		const target = this.Camera.TilePositionFor(
 			this.displayProvider.getInputState("MouseX"),
 			this.displayProvider.getInputState("MouseY"),
 		)
 
+		const targetHasChanged = !this.PreviousItemTarget.equals(target)
+		this.PreviousItemTarget = target
 		if (this.hasJustBeenPressed(this.UseItemInput()))
-			return new UseItemAction(player, UseItemActionType.Start, position)
+			return new UseItemAction(player, ActionState.Start, target)
 		if (this.hasJustBeenReleased(this.UseItemInput()))
-			return new UseItemAction(player, UseItemActionType.End, position)
+			return new UseItemAction(player, ActionState.End, target)
+		if (this.boolStateFor(this.UseItemInput()) && targetHasChanged)
+			return new UseItemAction(player, ActionState.Unchanged, target)
+		return null
 	}
 
 	private ParseUseTool(player: Id) {
-		const position = this.Camera.TilePositionFor(
+		const target = this.Camera.TilePositionFor(
 			this.displayProvider.getInputState("MouseX"),
 			this.displayProvider.getInputState("MouseY"),
 		)
 
-		if (this.hasJustBeenPressed(this.ToolPrimaryInput()))
-			return new UseToolAction(player, UseToolActionType.StartPrimary, position)
-		if (this.hasJustBeenReleased(this.ToolPrimaryInput()))
-			return new UseToolAction(player, UseToolActionType.EndPrimary, position)
-		if (this.hasJustBeenPressed(this.ToolSecondaryInput()))
-			return new UseToolAction(player, UseToolActionType.StartSecondary, position)
-		if (this.hasJustBeenReleased(this.ToolSecondaryInput()))
-			return new UseToolAction(player, UseToolActionType.EndSecondary, position)
+		const targetHasChanged = !this.PreviousToolTarget.equals(target)
+		this.PreviousToolTarget = target
+		const primaryState = this.ActionStateFor(this.ToolPrimaryInput())
+		const secondaryState = this.ActionStateFor(this.ToolSecondaryInput())
+
+		if (primaryState !== ActionState.Unchanged || secondaryState !== ActionState.Unchanged || this.ShouldUpdateToolTarget(targetHasChanged))
+			return new UseToolAction(player, primaryState, secondaryState, target)
+		return null
+	}
+
+	private ActionStateFor(input: Input) {
+		if (this.hasJustBeenPressed(input))
+			return ActionState.Start
+		if (this.hasJustBeenReleased(input))
+			return ActionState.End
+		return ActionState.Unchanged
+	}
+
+	private ShouldUpdateToolTarget(targetHasChanged: boolean) {
+		return targetHasChanged && (this.boolStateFor(this.ToolPrimaryInput()) || this.boolStateFor(this.ToolSecondaryInput()))
 	}
 
 	private ActionInput() {

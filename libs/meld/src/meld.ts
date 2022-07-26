@@ -104,8 +104,17 @@ export class Meld extends BaseGame<GameUpdate> {
 		),
 		public readonly useToolLogic = new UseToolLogic(
 			Config,
+			State.Globals,
+			Entities,
 			Terrain,
+			Entities.DespawnTime.Set,
+			Entities.Position.Get,
+			Entities.Position.Set,
 			Entities.SelectableTools.Get,
+			Entities.ToolState.Get,
+			Entities.ToolState.Set,
+			Entities.Velocity.Get,
+			Entities.Velocity.Set,
 		),
 		public velocityLogic = new VelocityLogic(
 			Config.Constants,

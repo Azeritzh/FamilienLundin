@@ -51,6 +51,10 @@ export class EntityManager<EntityValues extends BaseValues> {
 		this.updatedEntityValues.RemoveValuesFor(entityId)
 	}
 
+	public Exists(entity: Id) {
+		return this.entityValues.Entities.has(entity)
+	}
+
 	*[Symbol.iterator]() {
 		for (const [entity] of this.entityValues.Entities)
 			yield entity
