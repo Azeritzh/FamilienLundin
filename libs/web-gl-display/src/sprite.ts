@@ -43,7 +43,10 @@ export class Sprite {
 
 		const fX = frameX * this.uvX
 		const fY = frameY * this.uvY
-		this.transformation.setToTransformation(x * this.tileSize - this.centerX, y * this.tileSize - this.centerY, -rotation, scaleX, scaleY) // I think the reason it needs to be a negative rotation is that we've inverted the x axis
+
+		this.transformation.reset()
+		this.transformation.transformFrom(x * this.tileSize, y * this.tileSize, -rotation, scaleX, scaleY)
+		this.transformation.transformFrom(- this.centerX, - this.centerY, 0, 1, 1)
 
 		gl.uniform2f(this.shader.uFrameLocation, fX, fY)
 		gl.uniformMatrix3fv(this.shader.uWorldLocation, false, this.worldSpaceMatrix.getFloatArray())
