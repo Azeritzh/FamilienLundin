@@ -74,6 +74,6 @@ function groupedEntityValuesFrom(serialised: any): GroupedEntityValues {
 
 function itemValuesFrom(serialised: any): ItemValues {
 	return {
-		Kind: <ItemKind>serialised.Kind,
+		Kind: <any>ItemKind[serialised.Kind], // converting from string to number (enum), even if vscode thinks otherwise
 	}
 }

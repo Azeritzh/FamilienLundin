@@ -30,7 +30,6 @@ export class StandardEntityDrawer {
 	}
 
 	private DrawTool(sprites: RotationSprite[], itemAnimations: ItemAnimation[]) {
-		console.log(sprites, itemAnimations)
 		const state = this.EntityContext.ToolState
 
 		const placement = ItemPlacementFor(itemAnimations, this.EntityContext.Orientation, (this.Game.State.Globals.Tick - state.StartTime) % 30)

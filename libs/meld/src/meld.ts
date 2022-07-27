@@ -19,6 +19,7 @@ import { DashLogic } from "./logic/dash-logic"
 import { OutOfBoundsLogic } from "./logic/out-of-bounds-logic"
 import { SelectedToolLogic } from "./logic/selected-tool-logic"
 import { UseToolLogic } from "./logic/use-tool-logic"
+import { DespawnLogic } from "./logic/despawn-logic"
 
 export class Meld extends BaseGame<GameUpdate> {
 	constructor(
@@ -47,6 +48,10 @@ export class Meld extends BaseGame<GameUpdate> {
 			Entities.GravityBehaviour.Set,
 			Entities.Velocity.Get,
 			Entities.Velocity.Set,
+		),
+		public readonly despawnLogic = new DespawnLogic(
+			State.Globals,
+			Entities,
 		),
 		public readonly gravityLogic = new GravityLogic(
 			Config.Constants,
@@ -137,6 +142,7 @@ export class Meld extends BaseGame<GameUpdate> {
 			selectedItemLogic,
 			selectedToolLogic,
 			startLogic,
+			despawnLogic,
 			updateStateLogic,
 			loadStateLogic,
 		])
