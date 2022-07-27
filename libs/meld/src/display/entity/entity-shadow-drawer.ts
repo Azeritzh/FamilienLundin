@@ -37,7 +37,7 @@ export class EntityShadowDrawer {
 		const size = this.Game.Entities.CircularSize.Get.Of(this.EntityContext.Entity)
 		if (!size)
 			return this.Config.GameplaySprites.ShadowSmall
-		return size.radius < 1
+		return size.Radius < 1
 			? this.Config.GameplaySprites.ShadowMedium
 			: this.Config.GameplaySprites.ShadowBig
 	}

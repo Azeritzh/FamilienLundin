@@ -1,5 +1,5 @@
 {
-	"inputs": {
+	"Inputs": {
 		"Generate": [ "Enter", "PadStart" ],
 		
 		"NormalModeMoveUp": [ "W", "Up", "PadLeftStickUp" ],

@@ -35,12 +35,12 @@ export class Box { // struct
 
 	static occupiedArea(point: Vector3, size: CircularSize) {
 		return new Box(
-			point.x - size.radius,
-			point.x + size.radius,
-			point.y - size.radius,
-			point.y + size.radius,
+			point.x - size.Radius,
+			point.x + size.Radius,
+			point.y - size.Radius,
+			point.y + size.Radius,
 			point.z,
-			point.z + size.height,
+			point.z + size.Height,
 		)
 	}
 

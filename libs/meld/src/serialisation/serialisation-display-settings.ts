@@ -4,8 +4,8 @@ import { DisplaySettings } from "../display/state/display-settings"
 export function readDisplaySettings(deserialised: SerialisableDisplaySettings): DisplaySettings {
 
 	const inputs = new Map<Input, string[]>()
-	for (const key in deserialised.inputs)
-		inputs.set(Input[key], deserialised.inputs[key])
+	for (const key in deserialised.Inputs)
+		inputs.set(Input[key], deserialised.Inputs[key])
 
 	return {
 		Inputs: inputs,
@@ -13,5 +13,5 @@ export function readDisplaySettings(deserialised: SerialisableDisplaySettings): 
 }
 
 export interface SerialisableDisplaySettings {
-	inputs: { [input: string]: string[] },
+	Inputs: { [input: string]: string[] },
 }

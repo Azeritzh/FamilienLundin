@@ -1,24 +1,24 @@
 {
-	"constants": {
-		"playerType": "player",
-		"solidItemType": "solid"
+	"Constants": {
+		"PlayerType": "player",
+		"SolidItemType": "solid"
 	},
-	"entityTypes": {
+	"EntityTypes": {
 		"player": {
-			"blockCollisionBehaviour": true,
-			"circularSize": {
-				"radius": 0.625,
-				"height": 0.875
+			"BlockCollisionBehaviour": true,
+			"CircularSize": {
+				"Radius": 0.625,
+				"Height": 0.875
 			},
-			"gravityBehaviour": true,
-			"selectableItems": true,
-			"selectableTools": true
+			"GravityBehaviour": true,
+			"SelectableItems": true,
+			"SelectableTools": true
 		},
 		"despawning": {
-			"despawnTime": 0
+			"DespawnTime": 0
 		}
 	},
-	"solidTypes": {
+	"SolidTypes": {
 		"dirt": {},
 		"earth": {},
 		"grass": {},
@@ -26,15 +26,15 @@
 		"stone": {},
 		"wooden": {}
 	},
-	"nonSolidTypes": {
+	"NonSolidTypes": {
 		"air": {}
 	},
-	"itemTypes": {
+	"ItemTypes": {
 		"solid": {
-			"kind": "Solid"
+			"Kind": "Solid"
 		},
 		"basic-hammer": {
-			"kind": "Hammer"
+			"Kind": "Hammer"
 		}
 	}
 }

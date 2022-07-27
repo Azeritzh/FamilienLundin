@@ -9,7 +9,6 @@ import { DashState } from "../values/dash-state"
 import { SelectableItems } from "../values/selectable-items"
 import { SelectableTools } from "../values/selectable-tools"
 import { ToolState } from "../values/tool-state"
-import { ToPascalCase } from "./serialisation-display-config"
 
 export function createGameState(config: GameConfig, state: GameState) {
 	return serialiseGameState(state, config)
@@ -84,7 +83,7 @@ function gameStateFrom(config: GameConfig, deserialised: SerialisableGameState) 
 }
 
 function readGlobals(deserialised: any) {
-	const globals = ToPascalCase(deserialised)
+	const globals = { ...deserialised }
 	if (globals.WorldBounds)
 		globals.WorldBounds = Object.assign(new Box(0, 0, 0, 0, 0, 0), globals.WorldBounds)
 	return globals

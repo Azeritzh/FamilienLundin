@@ -1,3 +1,3 @@
 export interface BlockValues {
-	hardness: number
+	Hardness: number
 }
