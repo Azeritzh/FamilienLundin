@@ -60,7 +60,7 @@ export class TerrainDrawer {
 	private GetTransparency(block: Block, position: Vector3) {
 		const layerDifference = Math.floor(position.z) - Math.floor(this.State.FocusPoint.z)
 		if (layerDifference == 0)
-			return this.ShouldBeTransparentAtPlayerLayer(block, position) ? 0.5 : 1
+			return this.ShouldBeTransparentAtPlayerLayer(block, position) ? this.Config.TransparencyAlpha : 1
 		return 1
 	}
 

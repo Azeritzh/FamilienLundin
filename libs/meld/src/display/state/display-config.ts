@@ -12,7 +12,9 @@ export interface DisplayConfig {
 	WallDisplayHeight: number
 	DisplayDepth: number
 	TransparencyRadius: number
+	TransparencyAlpha: number
 	BlockingTransparencyRadius: number
+	BlockingTransparencyAlpha: number
 	AssetFolder: string
 
 	DefaultTileOverlays: BlockTileOverlays

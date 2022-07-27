@@ -12,11 +12,13 @@ export class Camera {
 		private DisplayProvider: DisplayProvider,
 		private Config: DisplayConfig,
 		private State: DisplayState,
-	) { }
+	) {
+		Camera.FloorHeight.z = 1 / (Config.WallDisplayHeight * Config.VirtualPixelsPerTile)
+	}
 
 	static BlockCenter = new Vector3(0.5, 0.5, 0)
 	static NoHeight = new Vector3(0, 0, 0)
-	static FloorHeight = new Vector3(0, 0, 1 / 32) // should look like one pixel, so: 1/(WallHeight * PixelsPerTile)
+	static FloorHeight = new Vector3(0, 0, 1 / 40) // should look like one pixel, so: 1/(WallHeight * PixelsPerTile)
 	static HalfHeight = new Vector3(0, 0, 0.5)
 	static FullHeight = new Vector3(0, 0, 1 - 0.00001)
 
@@ -102,7 +104,7 @@ export class Camera {
 		const screenX = this.ScreenXFor(currentPosition) + pixelOffsetX / this.Config.VirtualPixelsPerTile
 		const screenY = this.ScreenYFor(currentPosition) + pixelOffsetY / this.Config.VirtualPixelsPerTile
 		if (allowTransparentInFrontOfPlayer && this.State.PlayerIsBlocked && this.IsInFrontOfPlayer(position, screenX, screenY))
-			alpha = 0.2
+			alpha = this.Config.BlockingTransparencyAlpha
 		if (currentPosition.z < 0)
 			color = this.DarkenByDepth(color ?? new Vector3(1, 1, 1), currentPosition.z)
 		currentPosition.z = position.z

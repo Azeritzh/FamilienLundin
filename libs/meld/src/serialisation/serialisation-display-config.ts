@@ -60,7 +60,9 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 		WallDisplayHeight: deserialised.WallDisplayHeight ?? 2,
 		DisplayDepth: deserialised.DisplayDepth ?? 4,
 		TransparencyRadius: deserialised.TransparencyRadius ?? 5,
+		TransparencyAlpha: deserialised.TransparencyAlpha ?? 0.4,
 		BlockingTransparencyRadius: deserialised.BlockingTransparencyRadius ?? 10,
+		BlockingTransparencyAlpha: deserialised.BlockingTransparencyAlpha ?? 0.2,
 		AssetFolder: deserialised.AssetFolder ?? "assets/",
 
 		DefaultTileOverlays: Object.assign(new BlockTileOverlays(), deserialised.DefaultTileOverlays ?? {}),
@@ -102,7 +104,9 @@ export interface SerialisableDisplayConfig {
 	WallDisplayHeight?: number
 	DisplayDepth?: number
 	TransparencyRadius?: number
+	TransparencyAlpha?: number
 	BlockingTransparencyRadius?: number
+	BlockingTransparencyAlpha?: number
 	AssetFolder?: string
 
 	DefaultTileOverlays?: BlockTileOverlays,

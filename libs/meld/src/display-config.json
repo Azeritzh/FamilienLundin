@@ -3,7 +3,11 @@
 	"VirtualPixelsPerTile": 16,
 	"VirtualHeight": 240,
 	"WallDisplayHeight": 2.5,
+	"DisplayDepth": 4,
 	"TransparencyRadius": 5,
+	"TransparencyAlpha": 0.4,
+	"BlockingTransparencyRadius": 10,
+	"BlockingTransparencyAlpha": 0.2,
 	"AssetFolder": "assets/",
 
 	"BlockSprites": {
