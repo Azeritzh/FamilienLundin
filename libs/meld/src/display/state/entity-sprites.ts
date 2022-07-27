@@ -1,7 +1,7 @@
 export class EntitySprites {
 	constructor(
 		public Rotations: RotationSprite[],
-		public HammerStrike: RotationSprite[] = null
+		public HammerStrike?: RotationSprite[]
 	) { }
 }
 

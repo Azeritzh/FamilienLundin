@@ -28,7 +28,7 @@ export class ItemAnimation {
 export class ItemFrame {
 	constructor(
 		public EndTime = 1,
-		public Placement: ItemPlacement = null,
+		public Placement?: ItemPlacement,
 	) { }
 
 	static From(object: any) {

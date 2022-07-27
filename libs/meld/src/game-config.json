@@ -24,7 +24,7 @@
 		"grass": {},
 		"slab": {},
 		"stone": {},
-		"wooden": {}
+		"plank": {}
 	},
 	"NonSolidTypes": {
 		"air": {}
