@@ -1,9 +1,9 @@
 import { CircularSize, EntityTypeOffset, TypeMap } from "@lundin/age"
-import { Vector3 } from "@lundin/utility"
+import { Tau, Vector3 } from "@lundin/utility"
 import { Constants } from "../config/constants"
 import { GameConfig } from "../config/game-config"
 import { updatesPerSecond } from "../meld-game"
-import { NonSolidOffset, SolidOffset } from "../state/block"
+import { Blocks, BlockType, NonSolidOffset, SolidOffset } from "../state/block"
 import { GroupedEntityValues } from "../state/entity-values"
 import { ItemKind, ItemValues } from "../state/item"
 import { DashState } from "../values/dash-state"
@@ -20,7 +20,7 @@ export function readGameConfig(deserialised: any) {
 	const itemTypeNames = Object.keys(deserialised.ItemTypes)
 	const itemTypeMap = TypeMap.From(NonSolidOffset, itemTypeNames)
 	return new GameConfig(
-		constantsFrom(deserialised.Constants, entityTypeMap, itemTypeMap),
+		constantsFrom(deserialised.Constants, entityTypeMap, itemTypeMap, solidTypeMap, nonSolidTypeMap),
 		entityTypeMap,
 		new Map(entityTypeNames.map(x => [entityTypeMap.TypeIdFor(x), groupedEntityValuesFrom(deserialised.EntityTypes[x])])),
 		solidTypeMap,
@@ -32,11 +32,12 @@ export function readGameConfig(deserialised: any) {
 	)
 }
 
-function constantsFrom(serialised: any, entityTypeMap: TypeMap, itemTypeMap: TypeMap) {
+function constantsFrom(serialised: any, entityTypeMap: TypeMap, itemTypeMap: TypeMap, solidTypeMap: TypeMap, nonSolidTypeMap: TypeMap) {
 	return new Constants(
 		entityTypeMap.TypeIdFor(serialised.PlayerType),
 		itemTypeMap.TypeIdFor(serialised.SolidItemType),
-		Object.assign(new Vector3(50, 50, 5), serialised.ChunkSize ?? {}),
+		Blocks.New(<any>BlockType[serialised.DefaultBlock.BlockType], solidTypeMap.TypeIdFor(serialised.DefaultBlock.Solid), nonSolidTypeMap.TypeIdFor(serialised.DefaultBlock.NonSolid)),
+		Object.assign(new Vector3(50, 50, 5), serialised.ChunkSize),
 		serialised.ChunkLoadingRadius ?? 1,
 		serialised.CollisionAreaWidth ?? 1 / 1024,
 		(serialised.GravityAcceleration ?? 0.5) / updatesPerSecond,
@@ -50,7 +51,7 @@ function constantsFrom(serialised: any, entityTypeMap: TypeMap, itemTypeMap: Typ
 		Math.floor((serialised.DashCooldown ?? 1) * updatesPerSecond),
 		Math.floor((serialised.QuickDashWindowStart ?? 6 / 60) * updatesPerSecond),
 		Math.floor((serialised.QuickDashWindowEnd ?? 60 / 60) * updatesPerSecond),
-		serialised.QuickDashMinimumAngle ?? Math.PI / 4,
+		serialised.QuickDashMinimumAngle * Tau ?? Tau / 8,
 	)
 }
 

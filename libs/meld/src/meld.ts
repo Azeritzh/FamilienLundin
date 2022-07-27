@@ -26,7 +26,7 @@ export class Meld extends BaseGame<GameUpdate> {
 		public readonly Config: GameConfig,
 		public readonly State = new GameState(new Globals(), new EntityValues()),
 		public readonly changes = new Changes(new EntityValues()),
-		public readonly Terrain = new TerrainManager(Config.Constants.ChunkSize, State.Chunks, changes.UpdatedBlocks),
+		public readonly Terrain = new TerrainManager(Config.Constants.ChunkSize, Config.Constants.DefaultBlock, State.Chunks, changes.UpdatedBlocks),
 		public readonly Entities = new MeldEntities(Config.EntityTypeValues, State.EntityValues, changes.UpdatedEntityValues, State),
 		readonly random = new Random(() => State.Globals.Seed + State.Globals.Tick),
 		public readonly blockCollisionLogic = new BlockCollisionLogic(

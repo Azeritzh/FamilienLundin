@@ -138,7 +138,7 @@ export class UseToolLogic implements GameLogic<GameUpdate> {
 	}
 
 	private MineBlockAt(target: Vector3) {
-		const currentBlock = this.Terrain.GetAt(target) ?? Blocks.NewEmpty(0)
+		const currentBlock = this.Terrain.GetAt(target)
 		if (Blocks.TypeOf(currentBlock) == BlockType.Floor)
 			this.Terrain.SetAt(target, Blocks.NewEmpty(Blocks.NonSolidOf(currentBlock)))
 		else if (Blocks.TypeOf(currentBlock) == BlockType.Half)

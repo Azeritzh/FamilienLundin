@@ -33,39 +33,27 @@ export class Blocks {
 	}
 
 	public static TypeOf(block: Block): BlockType {
-		if (block === null)
-			return null
 		return <BlockType>(block & TypeMask) // skipping the shift, since there's no actual offset right now
 	}
 
 	public static VariantOf(block: Block) {
-		if (block === null)
-			return null
 		return (block & VariantMask) >> VariantOffset
 	}
 
 	public static SolidOf(block: Block): SolidId {
-		if (block === null)
-			return null
 		return block & SolidMask
 	}
 
 	public static NonSolidOf(block: Block): NonSolidId {
-		if (block === null)
-			return null
 		return block & NonSolidMask
 	}
 
 	public static HasSolid(block: Block) {
-		if (block === null)
-			return null
 		return Blocks.TypeOf(block) != BlockType.Empty
 	}
 
 
 	public static HasNonSolid(block: Block) {
-		if (block === null)
-			return null
 		return Blocks.TypeOf(block) != BlockType.Full
 	}
 }

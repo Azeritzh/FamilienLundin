@@ -1,7 +1,31 @@
 {
 	"Constants": {
 		"PlayerType": "player",
-		"SolidItemType": "solid"
+		"SolidItemType": "solid",
+		"DefaultBlock": {
+			"BlockType": "Empty",
+			"Solid": "grass",
+			"NonSolid": "air"
+		},
+		"ChunkSize": {
+			"x": 50,
+			"y": 50,
+			"z": 5
+		},
+		"ChunkLoadingRadius": 1,
+		"CollisionAreaWidth": 0.0001,
+		"GravityAcceleration": 0.5,
+		"TerminalVerticalVelocity": 10,
+		"MaxMoveSpeed": 8,
+		"Acceleration": 3,
+		"InitialDashCharge": 30,
+		"MaxDashCharge": 50,
+		"DashChargeSpeed": 1,
+		"DashDuration": 0.2,
+		"DashCooldown": 1,
+		"QuickDashWindowStart": 0.1,
+		"QuickDashWindowEnd": 1,
+		"QuickDashMinimumAngle": 0.125
 	},
 	"EntityTypes": {
 		"player": {

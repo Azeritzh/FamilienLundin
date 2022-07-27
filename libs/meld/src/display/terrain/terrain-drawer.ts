@@ -29,8 +29,6 @@ export class TerrainDrawer {
 
 	private DrawBlock(x: number, y: number, z: number) {
 		const block = this.Game.Terrain.Get(x, y, z)
-		if (block === null || block === undefined)
-			return
 		if (Blocks.TypeOf(block) == BlockType.Empty)
 			return
 		this.Position.set(x, y, z)
@@ -47,14 +45,14 @@ export class TerrainDrawer {
 		this.BlockContext.Block = block
 		this.BlockContext.BlockType = Blocks.TypeOf(block)
 		this.BlockContext.Position.set(x, y, z)
-		this.BlockContext.TopBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.TopTile)) ?? Blocks.NewEmpty(0)
-		this.BlockContext.TopRightBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.TopRightTile)) ?? Blocks.NewEmpty(0)
-		this.BlockContext.RightBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.RightTile)) ?? Blocks.NewEmpty(0)
-		this.BlockContext.BottomRightBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.BottomRightTile)) ?? Blocks.NewEmpty(0)
-		this.BlockContext.BottomBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.BottomTile)) ?? Blocks.NewEmpty(0)
-		this.BlockContext.BottomLeftBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.BottomLeftTile)) ?? Blocks.NewEmpty(0)
-		this.BlockContext.LeftBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.LeftTile)) ?? Blocks.NewEmpty(0)
-		this.BlockContext.TopLeftBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.TopLeftTile)) ?? Blocks.NewEmpty(0)
+		this.BlockContext.TopBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.TopTile))
+		this.BlockContext.TopRightBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.TopRightTile))
+		this.BlockContext.RightBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.RightTile))
+		this.BlockContext.BottomRightBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.BottomRightTile))
+		this.BlockContext.BottomBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.BottomTile))
+		this.BlockContext.BottomLeftBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.BottomLeftTile))
+		this.BlockContext.LeftBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.LeftTile))
+		this.BlockContext.TopLeftBlock = this.Game.Terrain.GetAt(pos.set(x, y, z).addFrom(this.Camera.TopLeftTile))
 	}
 
 	private GetTransparency(block: Block, position: Vector3) {
@@ -96,10 +94,10 @@ export class TerrainDrawer {
 		if (!this.State.VisibleBlocks.GetAt(pos.setFrom(position).addFrom(direction)))
 			return false
 
-		const topBlockType = Blocks.TypeOf(this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(direction))) ?? BlockType.Full
+		const topBlockType = Blocks.TypeOf(this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(direction)))
 		if (blockType == BlockType.Half || this.Camera.IsDiagonalView())
 			return topBlockType < blockType
-		const topTopBlockType = Blocks.TypeOf(this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(direction).addFrom(direction))) ?? BlockType.Full
+		const topTopBlockType = Blocks.TypeOf(this.Game.Terrain.GetAt(pos.setFrom(position).addFrom(direction).addFrom(direction)))
 		return (topBlockType < blockType || topTopBlockType < blockType)
 	}
 

@@ -42,10 +42,10 @@ export class TileDrawer {
 
 	private _adjustableHasBlockAbove = new Vector3(0, 0, 0)
 	private HasBlockAbove() {
-		if (Blocks.HasSolid(this.Game.Terrain.GetAt(this._adjustableHasBlockAbove.setFrom(this.BlockContext.Position).addFrom(Camera.Above))) ?? false)
+		if (Blocks.HasSolid(this.Game.Terrain.GetAt(this._adjustableHasBlockAbove.setFrom(this.BlockContext.Position).addFrom(Camera.Above))))
 			return true
 		if (this.BlockContext.BlockType == BlockType.Full)
-			return Blocks.HasSolid(this.Game.Terrain.GetAt(this._adjustableHasBlockAbove.setFrom(this.BlockContext.Position).addFrom(Camera.Above).addFrom(Camera.Above))) ?? false
+			return Blocks.HasSolid(this.Game.Terrain.GetAt(this._adjustableHasBlockAbove.setFrom(this.BlockContext.Position).addFrom(Camera.Above).addFrom(Camera.Above)))
 		return false
 	}
 

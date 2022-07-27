@@ -23,10 +23,10 @@ export class EntityShadowDrawer {
 
 	private GetFloorHeight(position: Vector3) {
 		const nextPosition = Vector3.copy(position)
-		let nextBlock = this.Game.Terrain.GetAt(position) ?? Blocks.NewFull(0)
+		let nextBlock = this.Game.Terrain.GetAt(position)
 		while (Blocks.TypeOf(nextBlock) === BlockType.Empty) {
 			nextPosition.z = nextPosition.z - 1
-			nextBlock = this.Game.Terrain.GetAt(nextPosition) ?? Blocks.NewFull(0)
+			nextBlock = this.Game.Terrain.GetAt(nextPosition)
 			if (nextPosition.z < position.z - 10)
 				return null
 		}

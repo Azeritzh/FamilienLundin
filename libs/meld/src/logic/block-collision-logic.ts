@@ -206,7 +206,7 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	}
 
 	private isSolidGoingDown(x: number, y: number, z: number) {
-		const blockType = Blocks.TypeOf(this.Terrain.Get(x, y, z)) ?? BlockType.Empty
+		const blockType = Blocks.TypeOf(this.Terrain.Get(x, y, z))
 		const zAboveFloor = z < 0 ? 1 + (z % 1) : z % 1
 		if (0.5 < zAboveFloor && zAboveFloor < 0.5 + this.Constants.CollisionAreaWidth)
 			return blockType == BlockType.Half
@@ -235,7 +235,7 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	}
 
 	private isSolidAtPoint(x: number, y: number, z: number) {
-		const blockType = Blocks.TypeOf(this.Terrain.Get(x, y, z)) ?? BlockType.Empty
+		const blockType = Blocks.TypeOf(this.Terrain.Get(x, y, z))
 		const zAboveFloor = z < 0 ? 1 - (z % 1) : z % 1
 		switch (blockType) {
 			case BlockType.Empty: return false
@@ -246,6 +246,6 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	}
 
 	private isSolidInBlock(x: number, y: number, z: number) {
-		return Blocks.HasSolid(this.Terrain.Get(x, y, z)) ?? false
+		return Blocks.HasSolid(this.Terrain.Get(x, y, z))
 	}
 }
