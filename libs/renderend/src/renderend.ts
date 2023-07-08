@@ -26,7 +26,7 @@ export class Renderend extends BaseGame<RenderendAction> {
 		public readonly state = new RenderendState(new Globals(), new EntityValues()),
 		readonly changes = new RenderendChanges(new EntityValues()),
 		public readonly entities = new RenderendEntities(config.typeValues, state.entityValues, changes.updatedEntityValues, state),
-		readonly random = new Random(() => state.globals.seed + state.globals.tick),
+		readonly random = new Random(state.globals.seed + state.globals.tick),
 		public bulletLogic = new BulletLogic(
 			entities,
 			entities.charge.Get,

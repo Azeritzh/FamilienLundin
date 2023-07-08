@@ -1,10 +1,9 @@
 import { Id } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
 import { GameState } from "./game-state"
+import { Region } from "./region"
 
 export abstract class GameUpdate { }
-
-export class GenerateAction extends GameUpdate { }
 
 export class ChargeDashAction extends GameUpdate {
 	constructor(
@@ -20,9 +19,27 @@ export class ReleaseDashAction extends GameUpdate {
 	) { super() }
 }
 
+export class LoadPlayer extends GameUpdate {
+	constructor(
+		public Player: string,
+	) { super() }
+}
+
+export class UnloadPlayer extends GameUpdate {
+	constructor(
+		public Player: string,
+	) { super() }
+}
+
 export class LoadState extends GameUpdate {
 	constructor(
 		public State: GameState,
+	) { super() }
+}
+
+export class LoadRegion extends GameUpdate {
+	constructor(
+		public Region: Region,
 	) { super() }
 }
 

@@ -20,7 +20,7 @@ export class DashLogic implements GameLogic<GameUpdate> {
 		public Listeners: DashListener[] = [],
 	) { }
 
-	update(actions: GameUpdate[]) {
+	Update(actions: GameUpdate[]) {
 		for (const [entity, state] of this.Entities.With.DashState)
 			if (state.IsCharging)
 				this.ChargeDash(entity, state)

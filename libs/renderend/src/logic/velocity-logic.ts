@@ -10,7 +10,7 @@ export class VelocityLogic implements GameLogic<RenderendAction> {
 		private setPosition: ValueSetter<Vector2>,
 	) { }
 
-	update() {
+	Update() {
 		for (const [entity, velocity] of this.entities.With.velocity)
 			this.updateEntity(entity, velocity)
 	}

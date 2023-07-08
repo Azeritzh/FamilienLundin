@@ -3,21 +3,21 @@ import { GameValidator, Validation } from "./interfaces/game-validator"
 
 export abstract class BaseGame<GameAction> {
 	constructor(
-		protected readonly logics: GameLogic<GameAction>[] = [],
-		protected readonly validators: GameValidator<GameAction>[] = [],
+		protected readonly Logics: GameLogic<GameAction>[] = [],
+		protected readonly Validators: GameValidator<GameAction>[] = [],
 	) { }
 
-	update(...actions: GameAction[]): Validation {
-		const problems = this.validate(actions)
+	Update(...actions: GameAction[]): Validation {
+		const problems = this.Validate(actions)
 		if (problems)
 			return problems
-		for (const logic of this.logics)
-			logic.update(actions)
+		for (const logic of this.Logics)
+			logic.Update(actions)
 		return { isValid: true, problems: [] }
 	}
 
-	private validate(actions: GameAction[]) {
-		for (const validator of this.validators) {
+	private Validate(actions: GameAction[]) {
+		for (const validator of this.Validators) {
 			const validation = validator.validate(actions)
 			if (!validation.isValid)
 				return validation

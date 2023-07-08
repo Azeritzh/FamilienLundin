@@ -17,7 +17,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		private random: Random,
 	) { }
 
-	update() {
+	Update() {
 		for (const [entity] of this.entities.With.obstacleBehaviour)
 			this.updateSpeed(entity)
 
@@ -47,10 +47,10 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 		const size = this.rectangularSize.DefaultOf(this.constants.wallType)
 		this.spawnWallAt(xPos, 0, size)
 		this.spawnWallAt(xPos, 9, size)
-		if (this.random.get.int(2))
+		if (this.random.Int(2))
 			return
 
-		if (this.random.get.int(2))
+		if (this.random.Int(2))
 			this.spawnWallAt(xPos, 1, size)
 		else
 			this.spawnWallAt(xPos, 8, size)
@@ -58,7 +58,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 
 	private spawnWallAt(xPos: number, yPos: number, wallSize: RectangularSize) {
 		const entity = this.entities.Create(this.constants.wallType)
-		this.setPosition.For(entity, new Vector2(xPos + wallSize.width / 2, yPos + wallSize.height / 2))
+		this.setPosition.For(entity, new Vector2(xPos + wallSize.Width / 2, yPos + wallSize.Height / 2))
 		this.setVelocity.For(entity, new Vector2(-this.globals.speed, 0))
 	}
 
@@ -75,12 +75,12 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private spawnObstacle() {
-		const obstacleType = this.random.get.in(this.constants.obstacleTypes)
-		const obstacleHeight = this.rectangularSize.DefaultOf(obstacleType).height
+		const obstacleType = this.random.In(this.constants.obstacleTypes)
+		const obstacleHeight = this.rectangularSize.DefaultOf(obstacleType).Height
 		this.spawnObstacleAt(
 			obstacleType,
-			this.random.get.float(2),
-			1 + this.random.get.float(7 - obstacleHeight) + obstacleHeight,
+			this.random.Float(2),
+			1 + this.random.Float(7 - obstacleHeight) + obstacleHeight,
 		)
 	}
 
@@ -89,10 +89,10 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private spawnAnnoyingObstacle() {
-		const obstacleType = this.random.get.in(this.constants.obstacleTypes)
+		const obstacleType = this.random.In(this.constants.obstacleTypes)
 		this.spawnObstacleAt(
 			obstacleType,
-			this.random.get.float(2),
+			this.random.Float(2),
 			this.getShipHeight(),
 		)
 	}

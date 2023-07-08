@@ -1,5 +1,4 @@
 export enum Input {
-	Generate,
 	// Normal mode:
 	NormalModeMoveUp,
 	NormalModeMoveDown,

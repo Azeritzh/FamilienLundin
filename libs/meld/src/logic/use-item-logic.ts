@@ -1,19 +1,20 @@
 import { GameLogic, Id, TerrainManager, ValueGetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
-import { Block, Blocks, BlockType } from "../state/block"
+import { Block, BlockType, Blocks } from "../state/block"
 import { ActionState, GameUpdate, UseItemAction } from "../state/game-update"
 import { Item, ItemKind } from "../state/item"
+import { Region } from "../state/region"
 import { SelectableItems } from "../values/selectable-items"
 
 export class UseItemLogic implements GameLogic<GameUpdate> {
 	constructor(
 		private Config: GameConfig,
-		private Terrain: TerrainManager<Block>,
+		private Terrain: TerrainManager<Block, Region>,
 		private SelectableItems: ValueGetter<SelectableItems>
 	) { }
 
-	update(actions: GameUpdate[]) {
+	Update(actions: GameUpdate[]) {
 		for (const action of actions)
 			if (action instanceof UseItemAction)
 				this.UseItem(action.Entity, action.ActionState, action.Target)
@@ -39,7 +40,7 @@ export class UseItemLogic implements GameLogic<GameUpdate> {
 		else if (Blocks.SolidOf(currentBlock) !== block)
 			this.Terrain.SetAt(position, Blocks.New(Blocks.TypeOf(currentBlock), block, Blocks.NonSolidOf(currentBlock)))
 		else if (Blocks.TypeOf(currentBlock) === BlockType.Floor)
-			this.Terrain.SetAt(position, Blocks.NewHalf(block,  Blocks.NonSolidOf(currentBlock)))
+			this.Terrain.SetAt(position, Blocks.NewHalf(block, Blocks.NonSolidOf(currentBlock)))
 		else if (Blocks.TypeOf(currentBlock) === BlockType.Half)
 			this.Terrain.SetAt(position, Blocks.NewFull(block))
 	}

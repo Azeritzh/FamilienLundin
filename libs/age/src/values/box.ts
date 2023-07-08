@@ -3,15 +3,15 @@ import { CircularSize } from "./circular-size"
 
 export class Box { // struct
 	constructor(
-		public readonly minX: number,
-		public readonly maxX: number,
-		public readonly minY: number,
-		public readonly maxY: number,
-		public readonly minZ: number,
-		public readonly maxZ: number,
+		public readonly MinX: number,
+		public readonly MaxX: number,
+		public readonly MinY: number,
+		public readonly MaxY: number,
+		public readonly MinZ: number,
+		public readonly MaxZ: number,
 	) { }
 
-	static from(point: Vector3) {
+	static From(point: Vector3) {
 		return new Box(
 			point.x,
 			point.x,
@@ -22,18 +22,18 @@ export class Box { // struct
 		)
 	}
 
-	translateBy(translation: Vector3) {
+	TranslateBy(translation: Vector3) {
 		return new Box(
-			this.minX + translation.x,
-			this.maxX + translation.x,
-			this.minY + translation.y,
-			this.maxY + translation.y,
-			this.minZ + translation.z,
-			this.maxZ + translation.z,
+			this.MinX + translation.x,
+			this.MaxX + translation.x,
+			this.MinY + translation.y,
+			this.MaxY + translation.y,
+			this.MinZ + translation.z,
+			this.MaxZ + translation.z,
 		)
 	}
 
-	static occupiedArea(point: Vector3, size: CircularSize) {
+	static OccupiedArea(point: Vector3, size: CircularSize) {
 		return new Box(
 			point.x - size.Radius,
 			point.x + size.Radius,
@@ -44,16 +44,16 @@ export class Box { // struct
 		)
 	}
 
-	containsPoint(x: number, y: number, z: number) {
-		return this.minX <= x && x < this.maxX
-			&& this.minY <= y && y < this.maxY
-			&& this.minZ <= z && z < this.maxZ
+	ContainsPoint(x: number, y: number, z: number) {
+		return this.MinX <= x && x < this.MaxX
+			&& this.MinY <= y && y < this.MaxY
+			&& this.MinZ <= z && z < this.MaxZ
 	}
 
-	contains(point: Vector3) {
-		return this.minX <= point.x && point.x < this.maxX
-			&& this.minY <= point.y && point.y < this.maxY
-			&& this.minZ <= point.z && point.z < this.maxZ
+	Contains(point: Vector3) {
+		return this.MinX <= point.x && point.x < this.MaxX
+			&& this.MinY <= point.y && point.y < this.MaxY
+			&& this.MinZ <= point.z && point.z < this.MaxZ
 	}
 
 	/// <summary>
@@ -61,20 +61,20 @@ export class Box { // struct
 	/// </summary>
 	public Contain(position: Vector3) {
 		let x = position.x
-		if (x < this.minX)
-			x += (this.maxX - this.minX)
-		else if (x >= this.maxX)
-			x -= (this.maxX - this.minX)
+		if (x < this.MinX)
+			x += (this.MaxX - this.MinX)
+		else if (x >= this.MaxX)
+			x -= (this.MaxX - this.MinX)
 		let y = position.y
-		if (y < this.minY)
-			y += this.maxY - this.minY
-		else if (y >= this.maxY)
-			y -= (this.maxY - this.minY)
+		if (y < this.MinY)
+			y += this.MaxY - this.MinY
+		else if (y >= this.MaxY)
+			y -= (this.MaxY - this.MinY)
 		let z = position.z
-		if (z < this.minZ)
-			z += this.maxZ - this.minZ
-		else if (z >= this.maxZ)
-			z -= (this.maxZ - this.minZ)
+		if (z < this.MinZ)
+			z += this.MaxZ - this.MinZ
+		else if (z >= this.MaxZ)
+			z -= (this.MaxZ - this.MinZ)
 		return new Vector3(x, y, z)
 	}
 }

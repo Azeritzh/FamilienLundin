@@ -11,10 +11,10 @@ export class Box2d { // struct
 
 	static from(point: Vector2, size: RectangularSize) {
 		return new Box2d(
-			point.x - size.width / 2,
-			point.x + size.width / 2,
-			point.y - size.height / 2,
-			point.y + size.height / 2,
+			point.x - size.Width / 2,
+			point.x + size.Width / 2,
+			point.y - size.Height / 2,
+			point.y + size.Height / 2,
 		)
 	}
 

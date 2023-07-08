@@ -1,11 +1,12 @@
 import { GameLogic, Id, TerrainManager, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
-import { Block, Blocks, BlockType } from "../state/block"
+import { Block, BlockType, Blocks } from "../state/block"
 import { ActionState, GameUpdate, UseToolAction } from "../state/game-update"
 import { Globals } from "../state/globals"
 import { Item, ItemKind } from "../state/item"
 import { MeldEntities } from "../state/meld-entities"
+import { Region } from "../state/region"
 import { SelectableTools } from "../values/selectable-tools"
 import { ToolAction, ToolState } from "../values/tool-state"
 
@@ -14,7 +15,7 @@ export class UseToolLogic implements GameLogic<GameUpdate> {
 		private Config: GameConfig,
 		private Globals: Globals,
 		private Entities: MeldEntities,
-		private Terrain: TerrainManager<Block>,
+		private Terrain: TerrainManager<Block, Region>,
 		private SetDespawnTime: ValueSetter<number>,
 		private Position: ValueGetter<Vector3>,
 		private SetPosition: ValueSetter<Vector3>,
@@ -25,7 +26,7 @@ export class UseToolLogic implements GameLogic<GameUpdate> {
 		private SetVelocity: ValueSetter<Vector3>,
 	) { }
 
-	update(actions: GameUpdate[]) {
+	Update(actions: GameUpdate[]) {
 		for (const [entity, state] of this.Entities.With.ToolState)
 			this.UpdateState(entity, state)
 

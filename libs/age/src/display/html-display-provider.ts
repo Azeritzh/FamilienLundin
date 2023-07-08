@@ -4,12 +4,12 @@ import { BaseDisplayConfig } from "./base-display-config"
 import { ScreenSize } from "./screen-size"
 
 export interface DisplayProvider {
-	sortByDepth: boolean
-	startFrame(): void
-	draw(name: string, x: number, y: number, frameX: number, frameY: number, depth?: number, rotation?: number, color?: Vector3, alpha?: number): void
-	endFrame(): void
-	drawString(text: string, x: number, y: number, font: string, fontSize: number, color?: string): void
-	getInputState(input: string): number
+	SortByDepth: boolean
+	StartNewFrame(): void
+	Draw(name: string, x: number, y: number, frameX: number, frameY: number, depth?: number, rotation?: number, color?: Vector3, alpha?: number): void
+	DrawString(text: string, x: number, y: number, font: string, fontSize: number, color?: string): void
+	FinishFrame(): void
+	GetInputState(input: string): number
 	endInputFrame(): void
 	setSize(width: number, height: number): void
 }
@@ -20,8 +20,8 @@ export class HtmlDisplayProvider implements DisplayProvider {
 	private size: ScreenSize
 	private textElements: { [index: string]: HTMLDivElement } = {}
 	private keyStates = new KeyStates()
-	get sortByDepth() { return this.display.sortByDepth }
-	set sortByDepth(value: boolean) { this.display.sortByDepth = value }
+	get SortByDepth() { return this.display.sortByDepth }
+	set SortByDepth(value: boolean) { this.display.sortByDepth = value }
 
 	constructor(
 		private hostElement: HTMLElement,
@@ -64,7 +64,7 @@ export class HtmlDisplayProvider implements DisplayProvider {
 			this.display.addSprite(name, this.config.AssetFolder + sprite.path + ".png", sprite.width, sprite.height, sprite.centerX, sprite.centerY)
 	}
 
-	public startFrame() {
+	public StartNewFrame() {
 		this.display.startFrame()
 		this.updateTextElements()
 	}
@@ -83,17 +83,17 @@ export class HtmlDisplayProvider implements DisplayProvider {
 		delete this.textElements[key]
 	}
 
-	public draw(name: string, x: number, y: number, frameX: number, frameY: number, depth = 1, rotation?: number, color?: Vector3, alpha?: number) {
+	public Draw(name: string, x: number, y: number, frameX: number, frameY: number, depth = 1, rotation?: number, color?: Vector3, alpha?: number) {
 		if (this.display.isLoading())
 			return
 		this.display.draw(name, x, y, frameX, frameY, depth, rotation, color, alpha)
 	}
 
-	public endFrame() {
+	public FinishFrame() {
 		this.display.endFrame()
 	}
 
-	public drawString(text: string, x: number, y: number, font: string, fontSize: number, color = "white") {
+	public DrawString(text: string, x: number, y: number, font: string, fontSize: number, color = "white") {
 		const textElement = this.getTextElement(x, y, font, color, fontSize)
 		textElement.innerText = text
 		textElement.style.display = "block"
@@ -117,17 +117,17 @@ export class HtmlDisplayProvider implements DisplayProvider {
 		element.style.textAlign = "center"
 		element.style.color = color
 		const width = 6
-		element.style.left = (this.size.hostPixelsPerTile * (x - (width / 2))) + "px"
-		element.style.top = (this.size.hostPixelsPerTile * y) + "px"
-		element.style.fontSize = (this.size.hostPixelsPerTile * fontSize) + "px"
-		element.style.width = (this.size.hostPixelsPerTile * width) + "px"
-		element.style.lineHeight = (this.size.hostPixelsPerTile * fontSize * 2) + "px"
+		element.style.left = (this.size.HostPixelsPerTile * (x - (width / 2))) + "px"
+		element.style.top = (this.size.HostPixelsPerTile * y) + "px"
+		element.style.fontSize = (this.size.HostPixelsPerTile * fontSize) + "px"
+		element.style.width = (this.size.HostPixelsPerTile * width) + "px"
+		element.style.lineHeight = (this.size.HostPixelsPerTile * fontSize * 2) + "px"
 
 		this.hostElement.appendChild(element)
 		return element
 	}
 
-	getInputState(input: string) {
+	GetInputState(input: string) {
 		const state = this.keyStates.getInputState(input)
 		switch (input) {
 			case "MouseX": return this.modifyMouseX(state)
@@ -151,9 +151,9 @@ export class HtmlDisplayProvider implements DisplayProvider {
 	}
 
 	setSize(width: number, height: number) {
-		this.size.updateHostSize(width, height)
-		this.canvas.width = this.size.canvasWidth
-		this.canvas.height = this.size.canvasHeight
+		this.size.UpdateHostSize(width, height)
+		this.canvas.width = this.size.CanvasWidth
+		this.canvas.height = this.size.CanvasHeight
 		this.initialiseDisplay()
 	}
 }

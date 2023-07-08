@@ -2,40 +2,67 @@ import { DisplayProvider } from "./html-display-provider"
 
 export abstract class BaseInputParser<Input> {
 	constructor(
-		protected displayProvider: DisplayProvider,
-		private inputs: Map<Input, string[]>,
-		private actionStates = new Map<Input, number>(),
-		private previousStates = new Map<Input, number>(),
+		public DisplayProvider: DisplayProvider,
+		public Inputs: Map<Input, string[]>,
+		private ActionStates = new Map<Input, number>(),
+		private PreviousStates = new Map<Input, number>(),
+		public CurrentControllerType = ControllerType.Controller
 	) { }
 
-	protected updateActionStates() {
-		this.previousStates = this.actionStates
-		this.actionStates = new Map()
-		for (const [input, keys] of this.inputs)
-			this.actionStates.set(input, this.stateFor(...keys))
+	protected UpdateActionStates() {
+		this.PreviousStates = this.ActionStates
+		this.ActionStates = new Map()
+		for (const [action, inputs] of this.Inputs)
+			this.ActionStates.set(action, this.StateFor(...inputs))
 	}
 
-	private stateFor(...keys: string[]) {
-		if (keys.length === 0)
-			return 0
-		return keys.map(x => this.displayProvider.getInputState(x)).max()
+	private StateFor(...inputs: string[]) {
+		let maxState = 0
+		for (const input of inputs) {
+			const state = this.DisplayProvider.GetInputState(input)
+			if (state > maxState)
+				maxState = state
+			if (state > 0)
+				this.UpdateCurrentControllerType(input)
+		}
+		return maxState
 	}
 
-	protected floatStateFor(input: Input) {
-		return this.actionStates.get(input)
+	private UpdateCurrentControllerType(input: string) {
+		if (ShouldBeIgnoredAsInputActivity(input))
+			return
+		this.CurrentControllerType = input.startsWith("Pad")
+			? ControllerType.Controller
+			: ControllerType.KeyboardAndMouse
 	}
 
-	protected boolStateFor(input: Input) {
-		return this.actionStates.get(input) > 0.5
+	protected FloatStateFor(input: Input) {
+		return this.ActionStates.get(input)
 	}
 
-	protected hasJustBeenPressed(input: Input) {
-		return this.actionStates.get(input) > 0.5
-			&& this.previousStates.get(input) <= 0.5
+	protected BoolStateFor(input: Input) {
+		return this.ActionStates.get(input) > 0.5
 	}
 
-	protected hasJustBeenReleased(input: Input) {
-		return this.actionStates.get(input) <= 0.5
-			&& this.previousStates.get(input) > 0.5
+	protected HasJustBeenPressed(input: Input) {
+		return this.ActionStates.get(input) > 0.5
+			&& this.PreviousStates.get(input) <= 0.5
+	}
+
+	protected HasJustBeenReleased(input: Input) {
+		return this.ActionStates.get(input) <= 0.5
+			&& this.PreviousStates.get(input) > 0.5
+	}
+}
+
+export enum ControllerType { KeyboardAndMouse, Controller }
+
+function ShouldBeIgnoredAsInputActivity(input: string) {
+	switch (input) {
+		case "MouseX":
+		case "MouseY":
+			return true
+		default:
+			return false
 	}
 }

@@ -10,7 +10,7 @@ export class CollisionLogic implements GameLogic<RenderendAction> {
 		public listeners: CollisionListener[] = [],
 	) { }
 
-	update() {
+	Update() {
 		for (const [entity, position] of this.entities.With.position)
 			for (const [otherEntity, size] of this.entities.With.rectangularSize)
 				if (this.collides(entity, position, otherEntity, size))

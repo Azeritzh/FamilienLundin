@@ -4,10 +4,12 @@ import { BlockValues } from "../state/block-values"
 import { GroupedEntityValues } from "../state/entity-values"
 import { ItemTypeId, ItemValues } from "../state/item"
 import { Constants } from "./constants"
+import { Lists } from "./lists"
 
 export class GameConfig {
 	constructor(
 		public readonly Constants: Constants,
+		public readonly Lists: Lists,
 		public readonly EntityTypeMap: TypeMap,
 		public readonly EntityTypeValues: Map<TypeId, GroupedEntityValues>,
 		public readonly SolidTypeMap: TypeMap,
@@ -17,4 +19,5 @@ export class GameConfig {
 		public readonly ItemTypeMap: TypeMap,
 		public readonly ItemValues: Map<ItemTypeId, ItemValues>,
 	) { }
+	public UpdatesPerSecond = 60
 }

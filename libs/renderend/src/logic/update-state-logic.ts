@@ -9,7 +9,7 @@ export class UpdateStateLogic implements GameLogic<RenderendAction> {
 		private entities: RenderendEntities,
 	) { }
 
-	update() {
+	Update() {
 		this.state.globals.tick++
 		this.entities.ApplyUpdatedValues()
 	}

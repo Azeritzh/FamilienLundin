@@ -8,7 +8,7 @@ export class DespawnLogic implements GameLogic<RenderendAction> {
 		private entities: RenderendEntities,
 	) { }
 
-	update() {
+	Update() {
 		for (const [entity, position] of this.entities.With.position)
 			if (this.shouldDespawn(position))
 				this.despawn(entity)

@@ -59,7 +59,7 @@ export class MinestrygerComponent implements OnInit, OnDestroy {
 
 	private onAction = (action: MinestrygerAction) => {
 		const oldState = this.game.state.playState
-		this.game.update(action)
+		this.game.Update(action)
 		const newState = this.game.state.playState
 		if (newState === PlayState.Won && oldState !== PlayState.Won)
 			this.registerScore()

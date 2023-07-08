@@ -14,7 +14,7 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 		private setVelocity: ValueSetter<Vector2>,
 	) { }
 
-	update(actions: RenderendAction[]) {
+	Update(actions: RenderendAction[]) {
 		if (!this.globals.isAlive)
 			return
 		this.globals.distanceTravelled += this.globals.speed

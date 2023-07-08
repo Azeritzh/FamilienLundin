@@ -32,6 +32,10 @@ export class Blocks {
 		return Blocks.New(BlockType.Full, solidType, 0, variant)
 	}
 
+	public static WithVariation(block: Block, variation: number): Block {
+		return Blocks.New(this.TypeOf(block), this.SolidOf(block), this.NonSolidOf(block), variation)
+	}
+
 	public static TypeOf(block: Block): BlockType {
 		return <BlockType>(block & TypeMask) // skipping the shift, since there's no actual offset right now
 	}
@@ -51,7 +55,6 @@ export class Blocks {
 	public static HasSolid(block: Block) {
 		return Blocks.TypeOf(block) != BlockType.Empty
 	}
-
 
 	public static HasNonSolid(block: Block) {
 		return Blocks.TypeOf(block) != BlockType.Full

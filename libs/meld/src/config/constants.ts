@@ -1,5 +1,5 @@
-import { TypeId } from "@lundin/age"
-import { Vector3 } from "@lundin/utility"
+import { Box, TypeId } from "@lundin/age"
+import { GridVector, Vector3 } from "@lundin/utility"
 import { Block } from "../state/block"
 import { ItemTypeId } from "../state/item"
 
@@ -8,7 +8,9 @@ export class Constants {
 		public PlayerType: TypeId,
 		public SolidItemType: ItemTypeId,
 		public DefaultBlock: Block,
-		public ChunkSize: Vector3,
+		public RegionSizeInChunks: GridVector,
+		public ChunkSize: GridVector,
+		public DefaultWorldBounds: Box,
 		public ChunkLoadingRadius: number,
 		public CollisionAreaWidth: number,
 		public GravityAcceleration: number,
@@ -24,4 +26,12 @@ export class Constants {
 		public QuickDashWindowEnd: number,
 		public QuickDashMinimumAngle: number,
 	) { }
+
+	RegionSize() {
+		return new Vector3(
+			this.RegionSizeInChunks.X * this.ChunkSize.X,
+			this.RegionSizeInChunks.Y * this.ChunkSize.Y,
+			this.RegionSizeInChunks.Z * this.ChunkSize.Z
+		)
+	}
 }

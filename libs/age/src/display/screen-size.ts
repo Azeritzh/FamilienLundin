@@ -1,22 +1,22 @@
 export class ScreenSize {
 	constructor(
-		public renderToVirtualSize: boolean,
-		public virtualPixelsPerTile: number,
-		public hostWidth: number,
-		public hostHeight: number,
-		public virtualWidth: number,
-		public virtualHeight: number,
+		public RenderToVirtualSize: boolean,
+		public VirtualPixelsPerTile: number,
+		public HostWidth: number,
+		public HostHeight: number,
+		public VirtualWidth: number,
+		public VirtualHeight: number,
 	) { }
 
-	get hostPixelsPerTile() { return (this.hostHeight / this.virtualHeight) * this.virtualPixelsPerTile }
-	get canvasWidth() { return this.renderToVirtualSize ? this.virtualWidth : this.hostWidth }
-	get canvasHeight() { return this.renderToVirtualSize ? this.virtualHeight : this.hostHeight }
-	get widthInTiles() { return this.virtualWidth / this.virtualPixelsPerTile }
-	get heightInTiles() { return this.virtualHeight / this.virtualPixelsPerTile }
+	get HostPixelsPerTile() { return (this.HostHeight / this.VirtualHeight) * this.VirtualPixelsPerTile }
+	get CanvasWidth() { return this.RenderToVirtualSize ? this.VirtualWidth : this.HostWidth }
+	get CanvasHeight() { return this.RenderToVirtualSize ? this.VirtualHeight : this.HostHeight }
+	get WidthInTiles() { return this.VirtualWidth / this.VirtualPixelsPerTile }
+	get HeightInTiles() { return this.VirtualHeight / this.VirtualPixelsPerTile }
 
-	updateHostSize(width: number, height: number) {
-		this.hostWidth = width
-		this.hostHeight = height
-		this.virtualWidth = this.hostWidth * (this.virtualHeight / this.hostHeight)
+	UpdateHostSize(width: number, height: number) {
+		this.HostWidth = width
+		this.HostHeight = height
+		this.VirtualWidth = this.HostWidth * (this.VirtualHeight / this.HostHeight)
 	}
 }

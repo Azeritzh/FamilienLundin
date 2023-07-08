@@ -8,7 +8,7 @@ export class SelectedToolLogic implements GameLogic<GameUpdate> {
 		private SetSelectableTools: ValueSetter<SelectableTools>,
 	) { }
 
-	update(actions: GameUpdate[]) {
+	Update(actions: GameUpdate[]) {
 		for (const action of actions)
 			if (action instanceof SelectToolAction)
 				this.UpdateSelectedItemFor(action.Entity, action.ToolIndex)

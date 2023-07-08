@@ -1,7 +1,7 @@
 import { BaseInputParser, DisplayProvider, Id } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
-import { ActionState, ChargeDashAction, GenerateAction, MovementAction, ReleaseDashAction, SelectItemAction, SelectToolAction, UseItemAction, UseToolAction } from "../../state/game-update"
+import { ActionState, ChargeDashAction, MovementAction, ReleaseDashAction, SelectItemAction, SelectToolAction, UseItemAction, UseToolAction } from "../../state/game-update"
 import { AngleOf, DisplayState, InputMode } from "../state/display-state"
 import { Camera } from "./camera"
 import { Input } from "./input"
@@ -14,7 +14,7 @@ export class InputParser extends BaseInputParser<Input> {
 		private State: DisplayState,
 		private Camera: Camera,
 		private Visibility: Visibility,
-		private DisplayProvider: DisplayProvider,
+		DisplayProvider: DisplayProvider,
 		Inputs: Map<Input, string[]>,
 	) {
 		super(DisplayProvider, Inputs)
@@ -23,10 +23,9 @@ export class InputParser extends BaseInputParser<Input> {
 	ParseInputs() {
 		this.UpdateMode()
 		this.UpdateCamera()
-		this.updateActionStates()
+		this.UpdateActionStates()
 		const player = this.Game.State.Players.get(this.State.PlayerName)
 		return [
-			this.ParseGenerate(),
 			this.ParseDash(player),
 			this.ParseMovement(player),
 			this.ParseUseItem(player),
@@ -37,23 +36,18 @@ export class InputParser extends BaseInputParser<Input> {
 	}
 
 	private UpdateMode() {
-		if (this.boolStateFor(Input.HoldCamera))
+		if (this.BoolStateFor(Input.HoldCamera))
 			this.State.InputMode = InputMode.Camera
-		else if (this.boolStateFor(Input.HoldSelection))
+		else if (this.BoolStateFor(Input.HoldSelection))
 			this.State.InputMode = InputMode.Selection
 		else
 			this.State.InputMode = InputMode.Normal
 	}
 
-	private ParseGenerate() {
-		if (this.hasJustBeenPressed(Input.Generate))
-			return new GenerateAction()
-	}
-
 	private GetVectorToMouse(player: Id) {
 		const pointerVector = this.Camera.TilePositionFor(
-			this.DisplayProvider.getInputState("MouseX"),
-			this.DisplayProvider.getInputState("MouseY")
+			this.DisplayProvider.GetInputState("MouseX"),
+			this.DisplayProvider.GetInputState("MouseY")
 		).subtract(this.Game.Entities.Position.Get.Of(player) ?? new Vector3(0, 0, 0))
 		return new Vector2(pointerVector.x, pointerVector.y)
 	}
@@ -61,11 +55,11 @@ export class InputParser extends BaseInputParser<Input> {
 	//////////////////////////////// CAMERA ////////////////////////////////
 
 	private UpdateCamera() {
-		if (this.hasJustBeenPressed(this.RotateRightInput())) {
+		if (this.HasJustBeenPressed(this.RotateRightInput())) {
 			this.Camera.RotateCamera(1)
 			this.Visibility.UpdateSize()
 		}
-		if (this.hasJustBeenPressed(this.RotateLeftInput())) {
+		if (this.HasJustBeenPressed(this.RotateLeftInput())) {
 			this.Camera.RotateCamera(-1)
 			this.Visibility.UpdateSize()
 		}
@@ -89,11 +83,11 @@ export class InputParser extends BaseInputParser<Input> {
 	private PreviousToolTarget = new Vector3(0, 0, 0)
 
 	private ParseMovement(player: Id) {
-		const factor = this.boolStateFor(Input.HoldWalk) ? 0.5 : 1
-		const up = this.floatStateFor(this.MoveUpInput()) ?? 0
-		const down = this.floatStateFor(this.MoveDownInput()) ?? 0
-		const left = this.floatStateFor(this.MoveLeftInput()) ?? 0
-		const right = this.floatStateFor(this.MoveRightInput()) ?? 0
+		const factor = this.BoolStateFor(Input.HoldWalk) ? 0.5 : 1
+		const up = this.FloatStateFor(this.MoveUpInput()) ?? 0
+		const down = this.FloatStateFor(this.MoveDownInput()) ?? 0
+		const left = this.FloatStateFor(this.MoveLeftInput()) ?? 0
+		const right = this.FloatStateFor(this.MoveRightInput()) ?? 0
 
 		const baseMovement = new Vector2(right - left, down - up).rotate(AngleOf(this.State.ViewDirection))
 		const movement = baseMovement.lengthSquared() > 1
@@ -114,34 +108,34 @@ export class InputParser extends BaseInputParser<Input> {
 
 		//if (HasJustBeenPressed(Input.Action))
 		//	new ChargeDashAction(player, angle);
-		if (this.hasJustBeenReleased(this.ActionInput()))
+		if (this.HasJustBeenReleased(this.ActionInput()))
 			return new ReleaseDashAction(player, angle)
-		if (this.boolStateFor(this.ActionInput()))
+		if (this.BoolStateFor(this.ActionInput()))
 			return new ChargeDashAction(player, angle)
 		return null
 	}
 
 	private ParseUseItem(player: Id) {
 		const target = this.Camera.TilePositionFor(
-			this.displayProvider.getInputState("MouseX"),
-			this.displayProvider.getInputState("MouseY"),
+			this.DisplayProvider.GetInputState("MouseX"),
+			this.DisplayProvider.GetInputState("MouseY"),
 		)
 
 		const targetHasChanged = !this.PreviousItemTarget.equals(target)
 		this.PreviousItemTarget = target
-		if (this.hasJustBeenPressed(this.UseItemInput()))
+		if (this.HasJustBeenPressed(this.UseItemInput()))
 			return new UseItemAction(player, ActionState.Start, target)
-		if (this.hasJustBeenReleased(this.UseItemInput()))
+		if (this.HasJustBeenReleased(this.UseItemInput()))
 			return new UseItemAction(player, ActionState.End, target)
-		if (this.boolStateFor(this.UseItemInput()) && targetHasChanged)
+		if (this.BoolStateFor(this.UseItemInput()) && targetHasChanged)
 			return new UseItemAction(player, ActionState.Unchanged, target)
 		return null
 	}
 
 	private ParseUseTool(player: Id) {
 		const target = this.Camera.TilePositionFor(
-			this.displayProvider.getInputState("MouseX"),
-			this.displayProvider.getInputState("MouseY"),
+			this.DisplayProvider.GetInputState("MouseX"),
+			this.DisplayProvider.GetInputState("MouseY"),
 		)
 
 		const targetHasChanged = !this.PreviousToolTarget.equals(target)
@@ -155,15 +149,15 @@ export class InputParser extends BaseInputParser<Input> {
 	}
 
 	private ActionStateFor(input: Input) {
-		if (this.hasJustBeenPressed(input))
+		if (this.HasJustBeenPressed(input))
 			return ActionState.Start
-		if (this.hasJustBeenReleased(input))
+		if (this.HasJustBeenReleased(input))
 			return ActionState.End
 		return ActionState.Unchanged
 	}
 
 	private ShouldUpdateToolTarget(targetHasChanged: boolean) {
-		return targetHasChanged && (this.boolStateFor(this.ToolPrimaryInput()) || this.boolStateFor(this.ToolSecondaryInput()))
+		return targetHasChanged && (this.BoolStateFor(this.ToolPrimaryInput()) || this.BoolStateFor(this.ToolSecondaryInput()))
 	}
 
 	private ActionInput() {
@@ -220,28 +214,28 @@ export class InputParser extends BaseInputParser<Input> {
 		const selectableItems = this.Game.Entities.SelectableItems.Get.Of(player)
 		if (!selectableItems)
 			return null
-		if (this.hasJustBeenPressed(Input.SelectNextItem))
+		if (this.HasJustBeenPressed(Input.SelectNextItem))
 			return new SelectItemAction(player, selectableItems.CurrentItemInSet + 1)
-		if (this.hasJustBeenPressed(Input.SelectPreviousItem))
+		if (this.HasJustBeenPressed(Input.SelectPreviousItem))
 			return new SelectItemAction(player, selectableItems.CurrentItemInSet - 1)
-		if (this.hasJustBeenPressed(this.SelectTopItemInput()))
+		if (this.HasJustBeenPressed(this.SelectTopItemInput()))
 			return new SelectItemAction(player, 0)
-		if (this.hasJustBeenPressed(this.SelectRightItemInput()))
+		if (this.HasJustBeenPressed(this.SelectRightItemInput()))
 			return new SelectItemAction(player, 1)
-		if (this.hasJustBeenPressed(this.SelectBottomItemInput()))
+		if (this.HasJustBeenPressed(this.SelectBottomItemInput()))
 			return new SelectItemAction(player, 2)
-		if (this.hasJustBeenPressed(this.SelectLeftItemInput()))
+		if (this.HasJustBeenPressed(this.SelectLeftItemInput()))
 			return new SelectItemAction(player, 3)
 	}
 
 	private ParseSelectTool(player: Id) {
-		if (this.hasJustBeenPressed(this.SelectTopToolInput()))
+		if (this.HasJustBeenPressed(this.SelectTopToolInput()))
 			return new SelectToolAction(player, 0)
-		if (this.hasJustBeenPressed(this.SelectRightToolInput()))
+		if (this.HasJustBeenPressed(this.SelectRightToolInput()))
 			return new SelectToolAction(player, 1)
-		if (this.hasJustBeenPressed(this.SelectBottomToolInput()))
+		if (this.HasJustBeenPressed(this.SelectBottomToolInput()))
 			return new SelectToolAction(player, 2)
-		if (this.hasJustBeenPressed(this.SelectLeftToolInput()))
+		if (this.HasJustBeenPressed(this.SelectLeftToolInput()))
 			return new SelectToolAction(player, 3)
 	}
 

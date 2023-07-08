@@ -27,7 +27,7 @@ export class GameRunner<Action> {
 
 	updateGame = () => {
 		startTiming("gameUpdate")
-		this.game.update(...this.actions.splice(0), ...this.display.getNewActions())
+		this.game.Update(...this.actions.splice(0), ...this.display.getNewActions())
 		this.afterGameUpdate()
 		finishTiming("gameUpdate")
 		this.lastUpdate = Date.now()

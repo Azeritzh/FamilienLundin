@@ -21,9 +21,10 @@ export class MeldEntities extends EntityManager<EntityValues> {
 		public readonly Velocity = accessor.For(x => x.Velocity, x => x.Velocity),
 		public readonly BlockCollisionBehaviour = accessor.For(x => x.BlockCollisionBehaviour, x => x.BlockCollisionBehaviour),
 		public readonly GravityBehaviour = accessor.For(x => x.GravityBehaviour, x => x.GravityBehaviour),
+		public readonly PlayerBehaviour = accessor.For(x => x.PlayerBehaviour, x => x.PlayerBehaviour),
 	) {
 		super(entityValues, updatedEntityValues, idProvider)
-		this.valueAccessors.push(
+		this.Accessors.push(
 			CircularSize,
 			DashState,
 			DespawnTime,
@@ -37,6 +38,7 @@ export class MeldEntities extends EntityManager<EntityValues> {
 			Velocity,
 			BlockCollisionBehaviour,
 			GravityBehaviour,
+			PlayerBehaviour,
 		)
 	}
 }

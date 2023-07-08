@@ -22,4 +22,12 @@ export class SelectableItems {
 			index = 3
 		return new SelectableItems(this.Items, this.CurrentSet, index)
 	}
+
+	SelectItemSet(index: number) {
+		if (index > 3)
+			index = 0
+		if (index < 0)
+			index = 3
+		return new SelectableItems(this.Items, index, this.CurrentItemInSet)
+	}
 }

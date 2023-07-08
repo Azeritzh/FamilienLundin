@@ -1,4 +1,4 @@
-import { CircularSize, EntityTypeOffset, TypeMap } from "@lundin/age"
+import { Box, CircularSize, EntityTypeOffset, TypeMap } from "@lundin/age"
 import { Tau, Vector3 } from "@lundin/utility"
 import { Constants } from "../config/constants"
 import { GameConfig } from "../config/game-config"
@@ -9,6 +9,7 @@ import { ItemKind, ItemValues } from "../state/item"
 import { DashState } from "../values/dash-state"
 import { SelectableItems } from "../values/selectable-items"
 import { SelectableTools } from "../values/selectable-tools"
+import { Lists } from "../config/lists"
 
 export function readGameConfig(deserialised: any) {
 	const entityTypeNames = Object.keys(deserialised.EntityTypes)
@@ -20,9 +21,10 @@ export function readGameConfig(deserialised: any) {
 	const itemTypeNames = Object.keys(deserialised.ItemTypes)
 	const itemTypeMap = TypeMap.From(NonSolidOffset, itemTypeNames)
 	return new GameConfig(
-		constantsFrom(deserialised.Constants, entityTypeMap, itemTypeMap, solidTypeMap, nonSolidTypeMap),
+		ConstantsFrom(deserialised.Constants, entityTypeMap, itemTypeMap, solidTypeMap, nonSolidTypeMap),
+		ListsFrom(deserialised.Lists, entityTypeMap),
 		entityTypeMap,
-		new Map(entityTypeNames.map(x => [entityTypeMap.TypeIdFor(x), groupedEntityValuesFrom(deserialised.EntityTypes[x])])),
+		new Map(entityTypeNames.map(x => [entityTypeMap.TypeIdFor(x), GroupedEntityValuesFrom(deserialised.EntityTypes[x])])),
 		solidTypeMap,
 		new Map(solidTypeNames.map(x => [solidTypeMap.TypeIdFor(x), { Hardness: 0 }])),
 		nonSolidTypeMap,
@@ -32,12 +34,14 @@ export function readGameConfig(deserialised: any) {
 	)
 }
 
-function constantsFrom(serialised: any, entityTypeMap: TypeMap, itemTypeMap: TypeMap, solidTypeMap: TypeMap, nonSolidTypeMap: TypeMap) {
+function ConstantsFrom(serialised: any, entityTypeMap: TypeMap, itemTypeMap: TypeMap, solidTypeMap: TypeMap, nonSolidTypeMap: TypeMap) {
 	return new Constants(
 		entityTypeMap.TypeIdFor(serialised.PlayerType),
 		itemTypeMap.TypeIdFor(serialised.SolidItemType),
 		Blocks.New(<any>BlockType[serialised.DefaultBlock.BlockType], solidTypeMap.TypeIdFor(serialised.DefaultBlock.Solid), nonSolidTypeMap.TypeIdFor(serialised.DefaultBlock.NonSolid)),
+		Object.assign(new Vector3(2, 2, 2), serialised.RegionSizeInChunks),
 		Object.assign(new Vector3(50, 50, 5), serialised.ChunkSize),
+		serialised.DefaultWorldBounds ? Object.assign(new Box(-50, 50, -50, 50, -50, 50), serialised.DefaultWorldBounds) : null,
 		serialised.ChunkLoadingRadius ?? 1,
 		serialised.CollisionAreaWidth ?? 1 / 1024,
 		(serialised.GravityAcceleration ?? 0.5) / updatesPerSecond,
@@ -55,7 +59,13 @@ function constantsFrom(serialised: any, entityTypeMap: TypeMap, itemTypeMap: Typ
 	)
 }
 
-function groupedEntityValuesFrom(serialised: any): GroupedEntityValues {
+function ListsFrom(serialised: any,  entityTypeMap: TypeMap) {
+	return new Lists(
+		serialised.RandomlySpawningMonsters?.map(x => entityTypeMap.TypeIdFor(x)) ?? []
+	)
+}
+
+function GroupedEntityValuesFrom(serialised: any): GroupedEntityValues {
 	return { // Remember to add stuff in game state serialisation
 		CircularSize: serialised.CircularSize ? Object.assign(new CircularSize(0, 0), serialised.CircularSize) : null,
 		DashState: serialised.DashState ? Object.assign(new DashState(), serialised.DashState) : null,
@@ -70,6 +80,7 @@ function groupedEntityValuesFrom(serialised: any): GroupedEntityValues {
 		Velocity: serialised.Velocity ? Object.assign(new Vector3(0, 0, 0), serialised.Velocity) : null,
 		BlockCollisionBehaviour: serialised.BlockCollisionBehaviour,
 		GravityBehaviour: serialised.GravityBehaviour,
+		PlayerBehaviour: serialised.PlayerBehaviour,
 	}
 }
 

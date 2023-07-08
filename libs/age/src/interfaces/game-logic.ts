@@ -1,3 +1,3 @@
 export interface GameLogic<GameAction> {
-	update(actions: GameAction[]): void
+	Update(actions: GameAction[]): void
 }

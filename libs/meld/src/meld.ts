@@ -3,7 +3,6 @@ import { GameConfig } from "./config/game-config"
 import { MovementLogic } from "./logic/movement-logic"
 import { UseItemLogic } from "./logic/use-item-logic"
 import { SelectedItemLogic } from "./logic/selected-item-logic"
-import { StartLogic } from "./logic/start-logic"
 import { UpdateStateLogic } from "./logic/update-state-logic"
 import { VelocityLogic } from "./logic/velocity-logic"
 import { EntityValues } from "./state/entity-values"
@@ -20,15 +19,18 @@ import { OutOfBoundsLogic } from "./logic/out-of-bounds-logic"
 import { SelectedToolLogic } from "./logic/selected-tool-logic"
 import { UseToolLogic } from "./logic/use-tool-logic"
 import { DespawnLogic } from "./logic/despawn-logic"
+import { LoadPlayerLogic } from "./logic/load-player-logic"
+import { LoadingLogic } from "./logic/loading-logic"
 
 export class Meld extends BaseGame<GameUpdate> {
 	constructor(
 		public readonly Config: GameConfig,
 		public readonly State = new GameState(new Globals(), new EntityValues()),
 		public readonly changes = new Changes(new EntityValues()),
-		public readonly Terrain = new TerrainManager(Config.Constants.ChunkSize, Config.Constants.DefaultBlock, State.Chunks, changes.UpdatedBlocks),
-		public readonly Entities = new MeldEntities(Config.EntityTypeValues, State.EntityValues, changes.UpdatedEntityValues, State),
-		readonly random = new Random(() => State.Globals.Seed + State.Globals.Tick),
+		public readonly Terrain = new TerrainManager(Config.Constants.RegionSize(), Config.Constants.DefaultBlock, State.Regions, changes.UpdatedBlocks, State.Globals.WorldBounds),
+		public readonly Entities = new MeldEntities(Config.EntityTypeValues, State.EntityValues, changes.EntityValues, State),
+		readonly random = new Random(State.Globals.Tick + State.Globals.Seed),
+
 		public readonly blockCollisionLogic = new BlockCollisionLogic(
 			Config.Constants,
 			Entities,
@@ -61,6 +63,20 @@ export class Meld extends BaseGame<GameUpdate> {
 			Entities.Velocity.Get,
 			Entities.Velocity.Set,
 		),
+		public readonly loadingLogic = new LoadingLogic(
+			Config,
+			Config.Constants,
+			State,
+			Entities,
+			null, // persistenceProvider,
+			null // variationProvider
+		),
+		public readonly loadPlayerLogic = new LoadPlayerLogic(
+			Config,
+			State,
+			changes,
+			Entities,
+		),
 		public readonly loadStateLogic = new LoadStateLogic(
 			State,
 			Terrain,
@@ -88,19 +104,11 @@ export class Meld extends BaseGame<GameUpdate> {
 			Entities.SelectableTools.Get,
 			Entities.SelectableTools.Set,
 		),
-		public readonly startLogic = new StartLogic(
-			Config,
-			State,
-			changes,
-			Entities,
-			Terrain,
-			Entities.Position.Set,
-			random,
-		),
 		public readonly updateStateLogic = new UpdateStateLogic(
 			State,
 			Entities,
 			Terrain,
+			random,
 		),
 		public readonly useItemLogic = new UseItemLogic(
 			Config,
@@ -131,6 +139,7 @@ export class Meld extends BaseGame<GameUpdate> {
 		),
 	) {
 		super([
+			loadingLogic,
 			movementLogic,
 			dashLogic,
 			gravityLogic,
@@ -141,8 +150,9 @@ export class Meld extends BaseGame<GameUpdate> {
 			useToolLogic,
 			selectedItemLogic,
 			selectedToolLogic,
-			startLogic,
 			despawnLogic,
+
+			loadPlayerLogic,
 			updateStateLogic,
 			loadStateLogic,
 		])

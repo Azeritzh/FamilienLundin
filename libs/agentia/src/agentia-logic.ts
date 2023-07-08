@@ -8,7 +8,7 @@ export class UpdateWorldLogic implements GameLogic<any> {
 		private config: Config,
 	) { }
 
-	update() {
+	Update() {
 		this.config.update()
 	}
 }
@@ -19,7 +19,7 @@ export class UpdateAgentsLogic implements GameLogic<any> {
 		private state: State,
 	) { }
 
-	update() {
+	Update() {
 		for (const agent of this.state.agents)
 			this.config.agentUpdate(agent)
 	}
@@ -28,7 +28,7 @@ export class UpdateAgentsLogic implements GameLogic<any> {
 export class MoveLogic implements GameLogic<any> {
 	constructor(private state: State) { }
 
-	update() {
+	Update() {
 		for (const agent of this.state.agents)
 			this.moveAgent(agent)
 	}

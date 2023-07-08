@@ -1,21 +1,22 @@
 import { GameLogic, Id, TerrainManager, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Constants } from "../config/constants"
-import { Block, Blocks, BlockType } from "../state/block"
+import { Block, BlockType, Blocks } from "../state/block"
 import { GameUpdate } from "../state/game-update"
 import { MeldEntities } from "../state/meld-entities"
+import { Region } from "../state/region"
 
 export class GravityLogic implements GameLogic<GameUpdate> {
 	constructor(
 		private Constants: Constants,
 		private Entities: MeldEntities,
-		private Terrain: TerrainManager<Block>,
+		private Terrain: TerrainManager<Block, Region>,
 		private Position: ValueGetter<Vector3>,
 		private Velocity: ValueGetter<Vector3>,
 		private SetVelocity: ValueSetter<Vector3>,
 	) { }
 
-	update() {
+	Update() {
 		for (const [entity] of this.Entities.With.GravityBehaviour)
 			this.updateEntity(entity)
 	}

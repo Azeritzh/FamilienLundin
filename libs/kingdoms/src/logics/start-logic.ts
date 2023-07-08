@@ -9,7 +9,7 @@ export class StartLogic implements GameLogic<KingdomsAction> {
 		private state: KingdomsState,
 	) { }
 
-	update(actions: KingdomsAction[]) {
+	Update(actions: KingdomsAction[]) {
 		for (const action of actions)
 			console.log(action)
 	}

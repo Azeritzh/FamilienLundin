@@ -15,7 +15,7 @@ export class StartLogic implements GameLogic<RenderendAction> {
 		private setPosition: ValueSetter<Vector2>,
 	) { }
 
-	update(actions: RenderendAction[]) {
+	Update(actions: RenderendAction[]) {
 		if (actions.some(x => x instanceof StartGameAction))
 			this.initialiseGame()
 	}

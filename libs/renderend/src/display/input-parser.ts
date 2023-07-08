@@ -4,7 +4,7 @@ import { MoveShipAction, ShootBulletAction, StartGameAction } from "../state/ren
 
 export class InputParser extends BaseInputParser<Input> {
 	parseInputs() {
-		this.updateActionStates()
+		this.UpdateActionStates()
 		return [
 			this.parseMovement(),
 			this.parseRestart(),
@@ -13,11 +13,11 @@ export class InputParser extends BaseInputParser<Input> {
 	}
 
 	private parseMovement() {
-		const factor = this.boolStateFor(Input.MoveSlow) ? 0.5 : 1
-		const up = this.floatStateFor(Input.MoveUp) ?? 0
-		const down = this.floatStateFor(Input.MoveDown) ?? 0
-		const left = this.floatStateFor(Input.MoveLeft) ?? 0
-		const right = this.floatStateFor(Input.MoveRight) ?? 0
+		const factor = this.BoolStateFor(Input.MoveSlow) ? 0.5 : 1
+		const up = this.FloatStateFor(Input.MoveUp) ?? 0
+		const down = this.FloatStateFor(Input.MoveDown) ?? 0
+		const left = this.FloatStateFor(Input.MoveLeft) ?? 0
+		const right = this.FloatStateFor(Input.MoveRight) ?? 0
 		const velocity = new Vector2(right - left, down - up)
 			.multiply(factor)
 		if (!velocity.isZero())
@@ -25,12 +25,12 @@ export class InputParser extends BaseInputParser<Input> {
 	}
 
 	private parseRestart() {
-		if (this.hasJustBeenPressed(Input.Restart))
+		if (this.HasJustBeenPressed(Input.Restart))
 			return new StartGameAction()
 	}
 
 	private parseShot() {
-		if (this.hasJustBeenPressed(Input.Shoot))
+		if (this.HasJustBeenPressed(Input.Shoot))
 			return new ShootBulletAction()
 	}
 }

@@ -1,9 +1,18 @@
+export type GridVector = Vector3
+
 export class Vector3 {
 	constructor(
 		public x: number,
 		public y: number,
 		public z: number,
 	) { }
+
+	get X() { return this.x }
+	set X(value: number) { this.x = value }
+	get Y() { return this.y }
+	set Y(value: number) { this.y = value }
+	get Z() { return this.z }
+	set Z(value: number) { this.z = value }
 
 	add(vector: Vector3) {
 		return new Vector3(this.x + vector.x, this.y + vector.y, this.z + vector.z)

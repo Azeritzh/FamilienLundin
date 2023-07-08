@@ -9,7 +9,7 @@ export class ChangePlayerLogic implements GameLogic<VirusAction> {
 		private readonly state: VirusState,
 	) { }
 
-	update() {
+	Update() {
 		this.changePlayer()
 	}
 

@@ -7,7 +7,7 @@ export class MoveLogic implements GameLogic<VirusAction> {
 		private readonly state: VirusState,
 	) { }
 
-	update(actions: VirusAction[]): void {
+	Update(actions: VirusAction[]): void {
 		this.movePiece(actions[0])
 	}
 

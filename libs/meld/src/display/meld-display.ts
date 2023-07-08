@@ -45,16 +45,16 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		private entitiesDrawer = new EntitiesDrawer(Game, Config, State, [entityDrawer, entityShadowDrawer, dashDrawer]),
 	) {
 		Game.dashLogic.Listeners.push(dashDrawer)
-		Display.sortByDepth = true
+		Display.SortByDepth = true
 	}
 
 	setSize(width: number, height: number) {
-		this.State.Size.updateHostSize(width, height)
+		this.State.Size.UpdateHostSize(width, height)
 		this.visibility.UpdateSize()
 	}
 
 	show(fractionOfTick = 0) {
-		this.Display.startFrame()
+		this.Display.StartNewFrame()
 		startTiming("displayUpdate")
 		this.State.FractionOfTick = fractionOfTick
 		const firstEntity = [...this.Game.Entities.With.Position.keys()][0]
@@ -67,7 +67,7 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		this.displayEntityDrawer.DrawDisplayEntities()
 		this.hudDrawer.Draw()
 		finishTiming("displayUpdate")
-		this.Display.endFrame()
+		this.Display.FinishFrame()
 	}
 
 	getNewActions() {

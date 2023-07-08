@@ -5,7 +5,7 @@ import { Field, MinestrygerState, PlayState } from "../minestryger-state"
 export class WinLogic implements GameLogic<MinestrygerAction> {
 	constructor(private state: MinestrygerState) { }
 
-	update() {
+	Update() {
 		if (this.state.playState !== PlayState.Started)
 			return
 		const allFields = [...this.state.board.allFields()].map(x => x.field)

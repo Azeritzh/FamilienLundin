@@ -7,7 +7,7 @@ export class TurnLogic implements GameLogic<VirusAction> {
 		private readonly state: VirusState,
 	) { }
 
-	update(actions: VirusAction[]): void {
+	Update(actions: VirusAction[]): void {
 		this.turnNeighbours(actions[0])
 	}
 

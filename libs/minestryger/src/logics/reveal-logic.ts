@@ -5,7 +5,7 @@ import { MinestrygerState, PlayState } from "../minestryger-state"
 export class RevealLogic implements GameLogic<MinestrygerAction> {
 	constructor(private state: MinestrygerState) { }
 
-	update(actions: MinestrygerAction[]) {
+	Update(actions: MinestrygerAction[]) {
 		if (this.state.playState !== PlayState.Started)
 			return
 		for (const action of actions)

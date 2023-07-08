@@ -1,27 +1,28 @@
 import { Box, CircularSize, GameLogic, Id, TerrainManager, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { Constants } from "../config/constants"
-import { Block, Blocks, BlockType } from "../state/block"
+import { Block, BlockType, Blocks } from "../state/block"
 import { GameUpdate } from "../state/game-update"
 import { MeldEntities } from "../state/meld-entities"
+import { Region } from "../state/region"
 
 export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 	constructor(
 		private Constants: Constants,
 		private Entities: MeldEntities,
-		private Terrain: TerrainManager<Block>,
+		private Terrain: TerrainManager<Block, Region>,
 		private CircularSize: ValueGetter<CircularSize>,
 		private Position: ValueGetter<Vector3>,
 		private Velocity: ValueGetter<Vector3>,
 		private SetVelocity: ValueSetter<Vector3>,
 	) { }
 
-	update() {
+	Update() {
 		for (const [entity] of this.Entities.With.BlockCollisionBehaviour)
-			this.updateEntity(entity)
+			this.UpdateEntity(entity)
 	}
 
-	private updateEntity(entity: Id) {
+	private UpdateEntity(entity: Id) {
 		const velocity = this.Velocity.CurrentlyOf(entity)
 		if (velocity?.isZero() ?? true)
 			return
@@ -35,45 +36,45 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 		const position = this.Position.CurrentlyOf(entity) ?? new Vector3(0, 0, 0)
 		const circularSize = this.CircularSize.CurrentlyOf(entity)
 		const area = circularSize
-			? Box.occupiedArea(position, circularSize)
-			: Box.from(position)
+			? Box.OccupiedArea(position, circularSize)
+			: Box.From(position)
 
-		const timeToCollisionX = this.relativeDistanceToCollisionX(area, velocity.x)
-		const timeToCollisionY = this.relativeDistanceToCollisionY(area, velocity.y)
-		const timeToCollisionZ = this.relativeDistanceToCollisionZ(area, velocity.z)
+		const timeToCollisionX = this.RelativeDistanceToCollisionX(area, velocity.x)
+		const timeToCollisionY = this.RelativeDistanceToCollisionY(area, velocity.y)
+		const timeToCollisionZ = this.RelativeDistanceToCollisionZ(area, velocity.z)
 
 		if (timeToCollisionX >= 1 && timeToCollisionY >= 1 && timeToCollisionZ >= 1)
 			return null
 
-		velocity = this.updateVelocitiesInOrder(timeToCollisionX, timeToCollisionY, timeToCollisionZ, area, velocity)
+		velocity = this.UpdateVelocitiesInOrder(timeToCollisionX, timeToCollisionY, timeToCollisionZ, area, velocity)
 
 		if (velocity == this.Velocity.CurrentlyOf(entity))
 			return null
 		return velocity
 	}
 
-	private relativeDistanceToCollisionX(occupiedArea: Box, velocity: number) {
+	private RelativeDistanceToCollisionX(occupiedArea: Box, velocity: number) {
 		const sideX = velocity > 0
-			? occupiedArea.maxX
-			: occupiedArea.minX
-		return this.relativeDistanceToCollision(sideX, velocity, 1)
+			? occupiedArea.MaxX
+			: occupiedArea.MinX
+		return this.RelativeDistanceToCollision(sideX, velocity, 1)
 	}
 
-	private relativeDistanceToCollisionY(occupiedArea: Box, velocity: number) {
+	private RelativeDistanceToCollisionY(occupiedArea: Box, velocity: number) {
 		const sideY = velocity > 0
-			? occupiedArea.maxY
-			: occupiedArea.minY
-		return this.relativeDistanceToCollision(sideY, velocity, 1)
+			? occupiedArea.MaxY
+			: occupiedArea.MinY
+		return this.RelativeDistanceToCollision(sideY, velocity, 1)
 	}
 
-	private relativeDistanceToCollisionZ(occupiedArea: Box, velocity: number) {
+	private RelativeDistanceToCollisionZ(occupiedArea: Box, velocity: number) {
 		const sideZ = velocity > 0
-			? occupiedArea.maxZ
-			: occupiedArea.minZ
-		return this.relativeDistanceToCollision(sideZ, velocity, 0.5)
+			? occupiedArea.MaxZ
+			: occupiedArea.MinZ
+		return this.RelativeDistanceToCollision(sideZ, velocity, 0.5)
 	}
 
-	private relativeDistanceToCollision(position: number, velocity: number, collisionInterval: number) {
+	private RelativeDistanceToCollision(position: number, velocity: number, collisionInterval: number) {
 		const distanceToLowerCollision = position < 0
 			? collisionInterval + (position % collisionInterval)
 			: position % collisionInterval
@@ -83,7 +84,7 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 		return distanceToNextCollision / Math.abs(velocity)
 	}
 
-	private updateVelocitiesInOrder(
+	private UpdateVelocitiesInOrder(
 		timeToCollisionX: number,
 		timeToCollisionY: number,
 		timeToCollisionZ: number,
@@ -94,69 +95,69 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 		// a list, sorting it, and then handling them in order, we do it
 		// manually to avoid the memory allocation overhead.
 		if (timeToCollisionX <= timeToCollisionY && timeToCollisionX <= timeToCollisionZ) {
-			velocity = this.updateVelocityX(timeToCollisionX, area, velocity)
+			velocity = this.UpdateVelocityX(timeToCollisionX, area, velocity)
 			if (timeToCollisionY <= timeToCollisionZ) {
-				velocity = this.updateVelocityY(timeToCollisionY, area, velocity)
-				velocity = this.updateVelocityZ(timeToCollisionZ, area, velocity)
+				velocity = this.UpdateVelocityY(timeToCollisionY, area, velocity)
+				velocity = this.UpdateVelocityZ(timeToCollisionZ, area, velocity)
 			}
 			else {
-				velocity = this.updateVelocityZ(timeToCollisionZ, area, velocity)
-				velocity = this.updateVelocityY(timeToCollisionY, area, velocity)
+				velocity = this.UpdateVelocityZ(timeToCollisionZ, area, velocity)
+				velocity = this.UpdateVelocityY(timeToCollisionY, area, velocity)
 			}
 		}
 		else if (timeToCollisionY <= timeToCollisionX && timeToCollisionY <= timeToCollisionZ) {
-			velocity = this.updateVelocityY(timeToCollisionY, area, velocity)
+			velocity = this.UpdateVelocityY(timeToCollisionY, area, velocity)
 			if (timeToCollisionX <= timeToCollisionZ) {
-				velocity = this.updateVelocityX(timeToCollisionX, area, velocity)
-				velocity = this.updateVelocityZ(timeToCollisionZ, area, velocity)
+				velocity = this.UpdateVelocityX(timeToCollisionX, area, velocity)
+				velocity = this.UpdateVelocityZ(timeToCollisionZ, area, velocity)
 			}
 			else {
-				velocity = this.updateVelocityZ(timeToCollisionZ, area, velocity)
-				velocity = this.updateVelocityX(timeToCollisionX, area, velocity)
+				velocity = this.UpdateVelocityZ(timeToCollisionZ, area, velocity)
+				velocity = this.UpdateVelocityX(timeToCollisionX, area, velocity)
 			}
 		}
 		else {
-			velocity = this.updateVelocityZ(timeToCollisionZ, area, velocity)
+			velocity = this.UpdateVelocityZ(timeToCollisionZ, area, velocity)
 			if (timeToCollisionX <= timeToCollisionY) {
-				velocity = this.updateVelocityX(timeToCollisionX, area, velocity)
-				velocity = this.updateVelocityY(timeToCollisionY, area, velocity)
+				velocity = this.UpdateVelocityX(timeToCollisionX, area, velocity)
+				velocity = this.UpdateVelocityY(timeToCollisionY, area, velocity)
 			}
 			else {
-				velocity = this.updateVelocityY(timeToCollisionY, area, velocity)
-				velocity = this.updateVelocityX(timeToCollisionX, area, velocity)
+				velocity = this.UpdateVelocityY(timeToCollisionY, area, velocity)
+				velocity = this.UpdateVelocityX(timeToCollisionX, area, velocity)
 			}
 		}
 		return velocity
 	}
 
-	private updateVelocityX(timeToCollisionX: number, area: Box, velocity: Vector3) {
+	private UpdateVelocityX(timeToCollisionX: number, area: Box, velocity: Vector3) {
 		if (timeToCollisionX >= 1)
 			return velocity
-		const boxAtCollisionPosition = area.translateBy(velocity.multiply(timeToCollisionX))
-		if (this.collisionAtX(boxAtCollisionPosition, velocity.x))
-			return velocity.withX(this.truncatedDistance(velocity.x * timeToCollisionX))
+		const boxAtCollisionPosition = area.TranslateBy(velocity.multiply(timeToCollisionX))
+		if (this.CollisionAtX(boxAtCollisionPosition, velocity.x))
+			return velocity.withX(this.TruncatedDistance(velocity.x * timeToCollisionX))
 		return velocity
 	}
 
-	private updateVelocityY(timeToCollisionY: number, area: Box, velocity: Vector3) {
+	private UpdateVelocityY(timeToCollisionY: number, area: Box, velocity: Vector3) {
 		if (timeToCollisionY >= 1)
 			return velocity
-		const boxAtCollisionPosition = area.translateBy(velocity.multiply(timeToCollisionY))
-		if (this.collisionAtY(boxAtCollisionPosition, velocity.y))
-			return velocity.withY(this.truncatedDistance(velocity.y * timeToCollisionY))
+		const boxAtCollisionPosition = area.TranslateBy(velocity.multiply(timeToCollisionY))
+		if (this.CollisionAtY(boxAtCollisionPosition, velocity.y))
+			return velocity.withY(this.TruncatedDistance(velocity.y * timeToCollisionY))
 		return velocity
 	}
 
-	private updateVelocityZ(timeToCollisionZ: number, area: Box, velocity: Vector3) {
+	private UpdateVelocityZ(timeToCollisionZ: number, area: Box, velocity: Vector3) {
 		if (timeToCollisionZ >= 1)
 			return velocity
-		const boxAtCollisionPosition = area.translateBy(velocity.multiply(timeToCollisionZ))
-		if (this.collisionAtZ(boxAtCollisionPosition, velocity.z))
-			return velocity.withZ(this.truncatedDistance(velocity.z * timeToCollisionZ))
+		const boxAtCollisionPosition = area.TranslateBy(velocity.multiply(timeToCollisionZ))
+		if (this.CollisionAtZ(boxAtCollisionPosition, velocity.z))
+			return velocity.withZ(this.TruncatedDistance(velocity.z * timeToCollisionZ))
 		return velocity
 	}
 
-	private truncatedDistance(remainingDistance: number) {
+	private TruncatedDistance(remainingDistance: number) {
 		if (remainingDistance > this.Constants.CollisionAreaWidth)
 			return remainingDistance - this.Constants.CollisionAreaWidth / 8
 		if (remainingDistance > -this.Constants.CollisionAreaWidth)
@@ -164,48 +165,48 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 		return remainingDistance + this.Constants.CollisionAreaWidth / 8
 	}
 
-	private collisionAtX(area: Box, velocity: number) {
+	private CollisionAtX(area: Box, velocity: number) {
 		const x = velocity > 0
-			? area.maxX + 0.5
-			: area.minX - 0.5
-		for (const y of this.blockPositionsY(area)) {
-			if (this.isSolidAtPoint(x, y, area.minZ))
+			? area.MaxX + 0.5
+			: area.MinX - 0.5
+		for (const y of this.BlockPositionsY(area)) {
+			if (this.IsSolidAtPoint(x, y, area.MinZ))
 				return true
-			for (const z of this.blockPositionAboveBottom(area))
-				if (this.isSolidInBlock(x, y, z))
+			for (const z of this.BlockPositionAboveBottom(area))
+				if (this.IsSolidInBlock(x, y, z))
 					return true
 		}
 		return false
 	}
 
-	private collisionAtY(area: Box, velocity: number) {
+	private CollisionAtY(area: Box, velocity: number) {
 		const y = velocity > 0
-			? area.maxY + 0.5
-			: area.minY - 0.5
-		for (const x of this.blockPositionsX(area)) {
-			if (this.isSolidAtPoint(x, y, area.minZ))
+			? area.MaxY + 0.5
+			: area.MinY - 0.5
+		for (const x of this.BlockPositionsX(area)) {
+			if (this.IsSolidAtPoint(x, y, area.MinZ))
 				return true
-			for (const z of this.blockPositionAboveBottom(area))
-				if (this.isSolidInBlock(x, y, z))
+			for (const z of this.BlockPositionAboveBottom(area))
+				if (this.IsSolidInBlock(x, y, z))
 					return true
 		}
 		return false
 	}
 
-	private collisionAtZ(area: Box, velocity: number) {
+	private CollisionAtZ(area: Box, velocity: number) {
 		const z = velocity > 0
-			? area.maxZ + 0.5
-			: area.minZ + this.Constants.CollisionAreaWidth / 8
-		for (const x of this.blockPositionsX(area))
-			for (const y of this.blockPositionsY(area))
+			? area.MaxZ + 0.5
+			: area.MinZ + this.Constants.CollisionAreaWidth / 8
+		for (const x of this.BlockPositionsX(area))
+			for (const y of this.BlockPositionsY(area))
 				if (velocity > 0
-					? this.isSolidInBlock(x, y, z)
-					: this.isSolidGoingDown(x, y, z))
+					? this.IsSolidInBlock(x, y, z)
+					: this.IsSolidGoingDown(x, y, z))
 					return true
 		return false
 	}
 
-	private isSolidGoingDown(x: number, y: number, z: number) {
+	private IsSolidGoingDown(x: number, y: number, z: number) {
 		const blockType = Blocks.TypeOf(this.Terrain.Get(x, y, z))
 		const zAboveFloor = z < 0 ? 1 + (z % 1) : z % 1
 		if (0.5 < zAboveFloor && zAboveFloor < 0.5 + this.Constants.CollisionAreaWidth)
@@ -215,26 +216,26 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 		return false
 	}
 
-	private *blockPositionsX(area: Box) {
-		for (let x = area.minX; x < area.maxX; x++)
+	private *BlockPositionsX(area: Box) {
+		for (let x = area.MinX; x < area.MaxX; x++)
 			yield x
-		yield area.maxX
+		yield area.MaxX
 	}
 
-	private *blockPositionsY(area: Box) {
-		for (let y = area.minY; y < area.maxY; y++)
+	private *BlockPositionsY(area: Box) {
+		for (let y = area.MinY; y < area.MaxY; y++)
 			yield y
-		yield area.maxY
+		yield area.MaxY
 	}
 
-	private *blockPositionAboveBottom(area: Box) {
-		for (let z = area.minZ + 1; z < area.maxZ; z++)
+	private *BlockPositionAboveBottom(area: Box) {
+		for (let z = area.MinZ + 1; z < area.MaxZ; z++)
 			yield z
-		if (area.minZ < Math.floor(area.maxZ))
-			yield area.maxZ
+		if (area.MinZ < Math.floor(area.MaxZ))
+			yield area.MaxZ
 	}
 
-	private isSolidAtPoint(x: number, y: number, z: number) {
+	private IsSolidAtPoint(x: number, y: number, z: number) {
 		const blockType = Blocks.TypeOf(this.Terrain.Get(x, y, z))
 		const zAboveFloor = z < 0 ? 1 - (z % 1) : z % 1
 		switch (blockType) {
@@ -245,7 +246,7 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 		}
 	}
 
-	private isSolidInBlock(x: number, y: number, z: number) {
+	private IsSolidInBlock(x: number, y: number, z: number) {
 		return Blocks.HasSolid(this.Terrain.Get(x, y, z))
 	}
 }

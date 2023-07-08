@@ -17,17 +17,17 @@ export class EntityValues extends BaseValues {
 		entities = new Map<Id, boolean>(),
 	) {
 		super(entities)
-		this.register(bulletType)
-		this.register(charge)
-		this.register(damage)
-		this.register(health)
-		this.register(orientation)
-		this.register(position)
-		this.register(rectangularSize)
-		this.register(velocity)
-		this.register(shipBehaviour)
-		this.register(obstacleBehaviour)
-		this.register(dieOnCollisionBehaviour)
+		this.Register(bulletType)
+		this.Register(charge)
+		this.Register(damage)
+		this.Register(health)
+		this.Register(orientation)
+		this.Register(position)
+		this.Register(rectangularSize)
+		this.Register(velocity)
+		this.Register(shipBehaviour)
+		this.Register(obstacleBehaviour)
+		this.Register(dieOnCollisionBehaviour)
 	}
 
 	public static from(groupedValues: Map<Id, GroupedEntityValues>) {

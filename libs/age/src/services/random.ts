@@ -1,33 +1,27 @@
 export class Random {
 	constructor(
-		private getSeed: () => number,
-		private previousSeed = -1,
-		private generator = new RandomGenerator(-1)
+		private seed: number
 	) { }
 
-	get get() {
-		const seed = this.getSeed()
-		if (this.previousSeed === seed)
-			return this.generator
-		this.previousSeed = seed
-		this.generator = new RandomGenerator(seed)
-		return this.generator
+	SetSeed(seed: number) {
+		// TODO
+		this.seed = seed
 	}
-}
 
-class RandomGenerator {
-	constructor(private seed: number) { }
+	Generate() {
+		// TODO
+	}
 
-	int(max: number) {
+	Int(max: number) {
 		return Math.floor(Math.random() * max) // TODO: make something based on the seed instead
 	}
 
-	float(max: number) {
+	Float(max = 1) {
 		return Math.random() * max // TODO: make something based on the seed instead
 	}
 
-	in<T>(list: T[]) {
-		const index = this.int(list.length)
+	In<T>(list: T[]) {
+		const index = this.Int(list.length)
 		return list[index]
 	}
 }

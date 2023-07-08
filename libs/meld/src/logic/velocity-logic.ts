@@ -14,28 +14,28 @@ export class VelocityLogic implements GameLogic<GameUpdate> {
 		private SetVelocity: ValueSetter<Vector3>,
 	) { }
 
-	update() {
+	Update() {
 		for (const [entity, _] of this.Entities.With.Velocity)
-			this.updateEntity(entity)
+			this.UpdateEntity(entity)
 	}
 
-	private updateEntity(entity: Id) {
+	private UpdateEntity(entity: Id) {
 		const velocity = this.Velocity.CurrentlyOf(entity)
 		if (!velocity || velocity.isZero())
 			return
-		const cappedVelocity = this.cappedVelocity(velocity)
+		const cappedVelocity = this.CappedVelocity(velocity)
 		const position = this.Position.CurrentlyOf(entity)
 		this.SetPosition.For(entity, position.add(cappedVelocity))
 		this.SetVelocity.For(entity, cappedVelocity)
 	}
 
-	private cappedVelocity(velocity: Vector3) {
-		if (this.Constants.TerminalVerticalVelocity >= Math.abs(velocity.z))
-			return velocity
-		return new Vector3(
-			velocity.x,
-			velocity.y,
-			velocity.z = Math.sign(velocity.z) * this.Constants.TerminalVerticalVelocity
-		)
+	private CappedVelocity(velocity: Vector3) {
+		if (this.Constants.TerminalVerticalVelocity < Math.abs(velocity.z))
+			return new Vector3(
+				velocity.x,
+				velocity.y,
+				velocity.z = Math.sign(velocity.z) * this.Constants.TerminalVerticalVelocity
+			)
+		return velocity
 	}
 }

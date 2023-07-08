@@ -8,7 +8,7 @@ export class SelectedItemLogic implements GameLogic<GameUpdate> {
 		private SetSelectableItems: ValueSetter<SelectableItems>,
 	) { }
 
-	update(actions: GameUpdate[]) {
+	Update(actions: GameUpdate[]) {
 		for (const action of actions)
 			if (action instanceof SelectItemAction)
 				this.UpdateSelectedItemFor(action.Entity, action.ItemIndex)

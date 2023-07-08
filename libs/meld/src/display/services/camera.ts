@@ -111,7 +111,7 @@ export class Camera {
 		const config = this.Config.Sprites[sprite]
 		const frameX = frameIndex % config.framesX
 		const frameY = Math.floor(frameIndex / config.framesX) % config.framesY
-		this.DisplayProvider.draw(
+		this.DisplayProvider.Draw(
 			sprite,
 			screenX, screenY,
 			frameX, frameY,
@@ -128,7 +128,7 @@ export class Camera {
 		const layerDifference = Math.floor(position.z) - Math.floor(this.State.FocusPoint.z)
 		if (layerDifference <= 0)
 			return false
-		const vectorFromMidScreen = this._adjustableIsInFrontOfPlayer.set(screenX - this.State.Size.widthInTiles / 2, screenY - this.State.Size.heightInTiles / 2, 0)
+		const vectorFromMidScreen = this._adjustableIsInFrontOfPlayer.set(screenX - this.State.Size.WidthInTiles / 2, screenY - this.State.Size.HeightInTiles / 2, 0)
 		return vectorFromMidScreen.lengthSquared() < this.Config.BlockingTransparencyRadius * this.Config.BlockingTransparencyRadius
 	}
 
@@ -176,16 +176,16 @@ export class Camera {
 
 	private ScreenPositionFor(position: Vector3) {
 		return new Vector2(
-			position.x + this.State.Size.widthInTiles / 2,
-			position.y + this.State.Size.heightInTiles / 2 - this.Config.WallDisplayHeight * position.z)
+			position.x + this.State.Size.WidthInTiles / 2,
+			position.y + this.State.Size.HeightInTiles / 2 - this.Config.WallDisplayHeight * position.z)
 	}
 
 	private ScreenXFor(position: Vector3) {
-		return position.x + this.State.Size.widthInTiles / 2
+		return position.x + this.State.Size.WidthInTiles / 2
 	}
 
 	private ScreenYFor(position: Vector3) {
-		return position.y + this.State.Size.heightInTiles / 2 - this.Config.WallDisplayHeight * position.z
+		return position.y + this.State.Size.HeightInTiles / 2 - this.Config.WallDisplayHeight * position.z
 	}
 
 	private sortingNumberFor(position: Vector3, layer: number) {
@@ -194,7 +194,7 @@ export class Camera {
 		const minZ = this.State.FocusPoint.z - rangeZ / 2
 		const normalisedZ = (z - minZ) / rangeZ
 
-		const rangeY = this.State.Size.heightInTiles + (this.Config.DisplayDepth * 2 + 1) * this.Config.WallDisplayHeight
+		const rangeY = this.State.Size.HeightInTiles + (this.Config.DisplayDepth * 2 + 1) * this.Config.WallDisplayHeight
 		const minY = - rangeY / 2
 		const normalisedY = (position.y - minY) / rangeY
 		const ySortingComponent = (normalisedY / Layer.NumberOfLayers) / rangeZ
@@ -204,8 +204,8 @@ export class Camera {
 
 	public TilePositionFor(x: number, y: number) {
 		let apparentRelativePositionToFocus = new Vector3(
-			x * this.State.Size.widthInTiles - this.State.Size.widthInTiles / 2,
-			y * this.State.Size.heightInTiles - this.State.Size.heightInTiles / 2,
+			x * this.State.Size.WidthInTiles - this.State.Size.WidthInTiles / 2,
+			y * this.State.Size.HeightInTiles - this.State.Size.HeightInTiles / 2,
 			0)
 		if (this.IsDiagonalView())
 			apparentRelativePositionToFocus = apparentRelativePositionToFocus.multiply(0.5) // Why half? Hell if I know...
@@ -250,8 +250,8 @@ export class Camera {
 		this.AdjustForFocusAndCamera(pos)
 		const screenX = this.ScreenXFor(pos)
 		const screenY = this.ScreenYFor(pos)
-		return 0 - Visibility.ScreenMargin < screenX && screenX < this.State.Size.widthInTiles + Visibility.ScreenMargin
-			&& 0 - Visibility.ScreenMargin < screenY && screenY < this.State.Size.heightInTiles + Visibility.ScreenMargin
+		return 0 - Visibility.ScreenMargin < screenX && screenX < this.State.Size.WidthInTiles + Visibility.ScreenMargin
+			&& 0 - Visibility.ScreenMargin < screenY && screenY < this.State.Size.HeightInTiles + Visibility.ScreenMargin
 	}
 
 	public static HeightOf(blockType: BlockType) {

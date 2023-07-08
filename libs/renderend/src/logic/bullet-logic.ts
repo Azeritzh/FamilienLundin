@@ -12,7 +12,7 @@ export class BulletLogic implements GameLogic<RenderendAction> {
 		private setPosition: ValueSetter<Vector2>,
 	) { }
 
-	update(actions: RenderendAction[]) {
+	Update(actions: RenderendAction[]) {
 		if (!actions.some(x => x instanceof ShootBulletAction))
 			return
 		for (const [entity, bulletType] of this.entities.With.bulletType)

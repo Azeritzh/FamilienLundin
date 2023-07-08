@@ -3,7 +3,7 @@ import { Id } from "../values/entity"
 import { ValueAccessor } from "./value-accessor"
 
 export class EntityManager<EntityValues extends BaseValues> {
-	protected valueAccessors: ValueAccessor<any>[] = []
+	protected Accessors: ValueAccessor<any>[] = []
 
 	constructor(
 		private entityValues: EntityValues,
@@ -15,10 +15,14 @@ export class EntityManager<EntityValues extends BaseValues> {
 		return this.entityValues
 	}
 
+	get All(){
+		return this.entityValues.Entities.keys()
+	}
+
 	public Create(type: Id) {
 		const id = this.idProvider.GetNewId() | type
 		this.updatedEntityValues.Entities.set(id, true)
-		for (const accessor of this.valueAccessors)
+		for (const accessor of this.Accessors)
 			accessor.InitialiseValueFor(id)
 		return id
 	}
@@ -33,18 +37,17 @@ export class EntityManager<EntityValues extends BaseValues> {
 		this.updatedEntityValues.ClearValues()
 		for (const [entity, add] of this.updatedEntityValues.Entities)
 			if (add)
-				this.add(entity)
+				this.Add(entity)
 			else
-				this.fullyRemove(entity)
-		this.updatedEntityValues.Entities.clear()
+				this.FullyRemove(entity)
 		this.updatedEntityValues.Entities.clear()
 	}
 
-	private add(entityId: Id) {
+	private Add(entityId: Id) {
 		this.entityValues.Entities.set(entityId, true)
 	}
 
-	private fullyRemove(entityId: Id) {
+	private FullyRemove(entityId: Id) {
 		this.entityValues.Entities.delete(entityId)
 		this.updatedEntityValues.Entities.delete(entityId)
 		this.entityValues.RemoveValuesFor(entityId)

@@ -9,7 +9,7 @@ export class DespawnLogic implements GameLogic<GameUpdate> {
 		private Entities: MeldEntities,
 	) { }
 
-	update() {
+	Update() {
 		for (const [entity, time] of this.Entities.With.DespawnTime)
 			if (time <= this.Globals.Tick)
 				this.Despawn(entity)

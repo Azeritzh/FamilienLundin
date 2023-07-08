@@ -23,21 +23,21 @@ export class RenderendDisplay {
 	}
 
 	setSize(width: number, height: number) {
-		this.state.size.updateHostSize(width, height)
+		this.state.size.UpdateHostSize(width, height)
 	}
 
 	show(fractionOfTick = 0) {
 		this.state.fractionOfTick = fractionOfTick
-		this.display.startFrame()
+		this.display.StartNewFrame()
 		this.drawBackground()
 		this.entityDrawer.drawEntities()
 		this.displayEntityDrawer.drawDisplayEntities()
 		this.writeText()
-		this.display.endFrame()
+		this.display.FinishFrame()
 	}
 
 	private drawBackground() {
-		const backgroundWidthInTiles = 450 / this.state.size.virtualPixelsPerTile
+		const backgroundWidthInTiles = 450 / this.state.size.VirtualPixelsPerTile
 		const offset = this.backgroundBasePosition() % backgroundWidthInTiles
 		this.spriteDrawer.draw("background", new Vector2(offset, 0))
 		this.spriteDrawer.draw("background", new Vector2(offset + backgroundWidthInTiles, 0))
@@ -52,9 +52,9 @@ export class RenderendDisplay {
 
 	private writeText() {
 		const distance = "" + Math.floor(this.game.state.globals.distanceTravelled)
-		this.display.drawString(distance, this.state.size.widthInTiles / 2, 9, this.config.Font, 0.5)
+		this.display.DrawString(distance, this.state.size.WidthInTiles / 2, 9, this.config.Font, 0.5)
 		if (!this.game.state.globals.isAlive)
-			this.display.drawString("GAME OVER", this.state.size.widthInTiles / 2, 4, this.config.Font, 1)
+			this.display.DrawString("GAME OVER", this.state.size.WidthInTiles / 2, 4, this.config.Font, 1)
 	}
 
 	getNewActions() {

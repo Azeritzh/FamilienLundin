@@ -15,7 +15,7 @@ export class MovementLogic implements GameLogic<GameUpdate> {
 		private SetVelocity: ValueSetter<Vector3>,
 	) { }
 
-	update(actions: GameUpdate[]) {
+	Update(actions: GameUpdate[]) {
 		for (const action of actions)
 			if (action instanceof MovementAction)
 				this.HandleMovement(action.Entity, action.Velocity)

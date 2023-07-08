@@ -11,114 +11,311 @@
 	"AssetFolder": "assets/",
 
 	"BlockSprites": {
-		"grass": [
+		"grass-rich": [
 			{
-				"StraightTile": "grass-tile-straight",
-				"StraightHalfWall": "grass-half-wall-straight",
-				"StraightFullWall": "grass-full-wall-straight",
-				"DiagonalTile": "grass-tile-diagonal",
-				"DiagonalHalfWall": "grass-half-wall-diagonal",
-				"DiagonalFullWall": "grass-full-wall-diagonal"
+				"Weight": 50,
+				"StraightTile": "grass-rich-tile-straight",
+				"StraightHalfWall": "grass-rich-half-wall-straight",
+				"StraightFullWall": "grass-rich-full-wall-straight",
+				"DiagonalTile": "grass-rich-tile-diagonal",
+				"DiagonalHalfWall": "grass-rich-half-wall-diagonal",
+				"DiagonalFullWall": "grass-rich-full-wall-diagonal"
+			},
+			{
+				"StraightTile": "grass-rich-tile-straight-2",
+				"StraightHalfWall": "grass-rich-half-wall-straight",
+				"StraightFullWall": "grass-rich-full-wall-straight",
+				"DiagonalTile": "grass-rich-tile-diagonal-2",
+				"DiagonalHalfWall": "grass-rich-half-wall-diagonal",
+				"DiagonalFullWall": "grass-rich-full-wall-diagonal"
+			},
+			{
+				"StraightTile": "grass-rich-tile-straight-3",
+				"StraightHalfWall": "grass-rich-half-wall-straight",
+				"StraightFullWall": "grass-rich-full-wall-straight",
+				"DiagonalTile": "grass-rich-tile-diagonal-3",
+				"DiagonalHalfWall": "grass-rich-half-wall-diagonal",
+				"DiagonalFullWall": "grass-rich-full-wall-diagonal"
+			},
+			{
+				"StraightTile": "grass-rich-tile-straight-4",
+				"StraightHalfWall": "grass-rich-half-wall-straight",
+				"StraightFullWall": "grass-rich-full-wall-straight",
+				"DiagonalTile": "grass-rich-tile-diagonal-4",
+				"DiagonalHalfWall": "grass-rich-half-wall-diagonal",
+				"DiagonalFullWall": "grass-rich-full-wall-diagonal"
+			},
+			{
+				"StraightTile": "grass-rich-tile-straight-5",
+				"StraightHalfWall": "grass-rich-half-wall-straight",
+				"StraightFullWall": "grass-rich-full-wall-straight",
+				"DiagonalTile": "grass-rich-tile-diagonal-5",
+				"DiagonalHalfWall": "grass-rich-half-wall-diagonal",
+				"DiagonalFullWall": "grass-rich-full-wall-diagonal"
+			},
+			{
+				"StraightTile": "grass-rich-tile-straight-6",
+				"StraightHalfWall": "grass-rich-half-wall-straight",
+				"StraightFullWall": "grass-rich-full-wall-straight",
+				"DiagonalTile": "grass-rich-tile-diagonal-6",
+				"DiagonalHalfWall": "grass-rich-half-wall-diagonal",
+				"DiagonalFullWall": "grass-rich-full-wall-diagonal"
 			}
 		],
-		"dirt": [
+		"darkstone": [
 			{
-				"StraightTile": "dirt-tile-straight",
-				"StraightHalfWall": "dirt-half-wall-straight",
-				"StraightFullWall": "dirt-full-wall-straight",
-				"DiagonalTile": "dirt-tile-diagonal",
-				"DiagonalHalfWall": "dirt-half-wall-diagonal",
-				"DiagonalFullWall": "dirt-full-wall-diagonal"
+				"StraightTile": "darkstone-tile-straight",
+				"StraightHalfWall": "darkstone-half-wall-straight",
+				"StraightFullWall": "darkstone-full-wall-straight",
+				"DiagonalTile": "darkstone-tile-diagonal",
+				"DiagonalHalfWall": "darkstone-half-wall-diagonal",
+				"DiagonalFullWall": "darkstone-full-wall-diagonal"
 			}
 		],
-		"earth": [
+		"darkstone-block": [
 			{
-				"StraightTile": "earth-tile-straight",
-				"StraightHalfWall": "earth-half-wall-straight",
-				"StraightFullWall": "earth-full-wall-straight",
-				"DiagonalTile": "earth-tile-diagonal",
-				"DiagonalHalfWall": "earth-half-wall-diagonal",
-				"DiagonalFullWall": "earth-full-wall-diagonal"
+				"StraightTile": "darkstone-block-tile-straight",
+				"StraightHalfWall": "darkstone-block-half-wall-straight",
+				"StraightFullWall": "darkstone-block-full-wall-straight",
+				"DiagonalTile": "darkstone-block-tile-diagonal",
+				"DiagonalHalfWall": "darkstone-block-half-wall-diagonal",
+				"DiagonalFullWall": "darkstone-block-full-wall-diagonal"
 			}
 		],
-		"stone": [
+		"darkstone-flagstone": [
 			{
-				"StraightTile": "stone-tile-straight",
-				"StraightHalfWall": "stone-half-wall-straight",
-				"StraightFullWall": "stone-full-wall-straight",
-				"DiagonalTile": "stone-tile-diagonal",
-				"DiagonalHalfWall": "stone-half-wall-diagonal",
-				"DiagonalFullWall": "stone-full-wall-diagonal"
+				"StraightTile": "darkstone-flagstone-tile-straight",
+				"StraightHalfWall": "darkstone-flagstone-half-wall-straight",
+				"StraightFullWall": "darkstone-flagstone-full-wall-straight",
+				"DiagonalTile": "darkstone-flagstone-tile-diagonal",
+				"DiagonalHalfWall": "darkstone-flagstone-half-wall-diagonal",
+				"DiagonalFullWall": "darkstone-flagstone-full-wall-diagonal"
 			}
 		],
-		"slab": [
+		"darkwood": [
 			{
-				"StraightTile": "slab-tile-straight",
-				"StraightHalfWall": "slab-half-wall-straight",
-				"StraightFullWall": "slab-full-wall-straight",
-				"DiagonalTile": "slab-tile-diagonal",
-				"DiagonalHalfWall": "slab-half-wall-diagonal",
-				"DiagonalFullWall": "slab-full-wall-diagonal"
+				"StraightTile": "darkwood-tile",
+				"StraightHalfWall": "darkwood-half",
+				"StraightFullWall": "darkwood-full",
+				"DiagonalTile": "darkwood-tile",
+				"DiagonalHalfWall": "darkwood-half",
+				"DiagonalFullWall": "darkwood-full"
 			}
 		],
-		"plank": [
+		"darkwood-beam": [
 			{
-				"StraightTile": "plank-tile-straight",
-				"StraightHalfWall": "plank-half-wall-straight",
-				"StraightFullWall": "plank-full-wall-straight",
-				"DiagonalTile": "plank-tile-diagonal",
-				"DiagonalHalfWall": "plank-half-wall-diagonal",
-				"DiagonalFullWall": "plank-full-wall-diagonal"
+				"StraightTile": "darkwood-beam-tile-straight",
+				"StraightHalfWall": "darkwood-beam-half-wall-straight",
+				"StraightFullWall": "darkwood-beam-full-wall-straight",
+				"DiagonalTile": "darkwood-beam-tile-diagonal",
+				"DiagonalHalfWall": "darkwood-beam-half-wall-diagonal",
+				"DiagonalFullWall": "darkwood-beam-full-wall-diagonal"
+			}
+		],
+		"darkwood-planks": [
+			{
+				"StraightTile": "darkwood-planks-tile-straight",
+				"StraightHalfWall": "darkwood-planks-half-wall-straight",
+				"StraightFullWall": "darkwood-planks-full-wall-straight",
+				"DiagonalTile": "darkwood-planks-tile-diagonal",
+				"DiagonalHalfWall": "darkwood-planks-half-wall-diagonal",
+				"DiagonalFullWall": "darkwood-planks-full-wall-diagonal"
+			}
+		],
+		"darkwood-planks-weathered": [
+			{
+				"StraightTile": "darkwood-planks-weathered-tile-straight",
+				"StraightHalfWall": "darkwood-planks-weathered-half-wall-straight",
+				"StraightFullWall": "darkwood-planks-weathered-full-wall-straight",
+				"DiagonalTile": "darkwood-planks-weathered-tile-diagonal",
+				"DiagonalHalfWall": "darkwood-planks-weathered-half-wall-diagonal",
+				"DiagonalFullWall": "darkwood-planks-weathered-full-wall-diagonal"
+			}
+		],
+		"lightwood": [
+			{
+				"StraightTile": "lightwood-tile",
+				"StraightHalfWall": "lightwood-half",
+				"StraightFullWall": "lightwood-full",
+				"DiagonalTile": "lightwood-tile",
+				"DiagonalHalfWall": "lightwood-half",
+				"DiagonalFullWall": "lightwood-full"
+			}
+		],
+		"lightwood-beam": [
+			{
+				"StraightTile": "lightwood-beam-tile-straight",
+				"StraightHalfWall": "lightwood-beam-half-wall-straight",
+				"StraightFullWall": "lightwood-beam-full-wall-straight",
+				"DiagonalTile": "lightwood-beam-tile-diagonal",
+				"DiagonalHalfWall": "lightwood-beam-half-wall-diagonal",
+				"DiagonalFullWall": "lightwood-beam-full-wall-diagonal"
+			}
+		],
+		"lightwood-planks": [
+			{
+				"StraightTile": "lightwood-planks-tile-straight",
+				"StraightHalfWall": "lightwood-planks-half-wall-straight",
+				"StraightFullWall": "lightwood-planks-full-wall-straight",
+				"DiagonalTile": "lightwood-planks-tile-diagonal",
+				"DiagonalHalfWall": "lightwood-planks-half-wall-diagonal",
+				"DiagonalFullWall": "lightwood-planks-full-wall-diagonal"
+			}
+		],
+		"lightwood-planks-weathered": [
+			{
+				"StraightTile": "lightwood-planks-weathered-tile-straight",
+				"StraightHalfWall": "lightwood-planks-weathered-half-wall-straight",
+				"StraightFullWall": "lightwood-planks-weathered-full-wall-straight",
+				"DiagonalTile": "lightwood-planks-weathered-tile-diagonal",
+				"DiagonalHalfWall": "lightwood-planks-weathered-half-wall-diagonal",
+				"DiagonalFullWall": "lightwood-planks-weathered-full-wall-diagonal"
+			}
+		],
+		"soil-poor": [
+			{
+				"StraightTile": "soil-poor-tile-straight",
+				"StraightHalfWall": "soil-poor-half-wall-straight",
+				"StraightFullWall": "soil-poor-full-wall-straight",
+				"DiagonalTile": "soil-poor-tile-diagonal",
+				"DiagonalHalfWall": "soil-poor-half-wall-diagonal",
+				"DiagonalFullWall": "soil-poor-full-wall-diagonal"
+			}
+		],
+		"soil-rich": [
+			{
+				"StraightTile": "soil-rich-tile-straight",
+				"StraightHalfWall": "soil-rich-half-wall-straight",
+				"StraightFullWall": "soil-rich-full-wall-straight",
+				"DiagonalTile": "soil-rich-tile-diagonal",
+				"DiagonalHalfWall": "soil-rich-half-wall-diagonal",
+				"DiagonalFullWall": "soil-rich-full-wall-diagonal"
+			}
+		],
+		"stone-block": [
+			{
+				"StraightTile": "stone-block-tile-straight",
+				"StraightHalfWall": "stone-block-half-wall-straight",
+				"StraightFullWall": "stone-block-full-wall-straight",
+				"DiagonalTile": "stone-block-tile-diagonal",
+				"DiagonalHalfWall": "stone-block-half-wall-diagonal",
+				"DiagonalFullWall": "stone-block-full-wall-diagonal"
+			}
+		],
+		"stone-flagstone": [
+			{
+				"StraightTile": "stone-flagstone-tile-straight",
+				"StraightHalfWall": "stone-flagstone-half-wall-straight",
+				"StraightFullWall": "stone-flagstone-full-wall-straight",
+				"DiagonalTile": "stone-flagstone-tile-diagonal",
+				"DiagonalHalfWall": "stone-flagstone-half-wall-diagonal",
+				"DiagonalFullWall": "stone-flagstone-full-wall-diagonal"
+			}
+		],
+		"wood": [
+			{
+				"StraightTile": "wood-tile",
+				"StraightHalfWall": "wood-half",
+				"StraightFullWall": "wood-full",
+				"DiagonalTile": "wood-tile",
+				"DiagonalHalfWall": "wood-half",
+				"DiagonalFullWall": "wood-full"
+			}
+		],
+		"wood-beam": [
+			{
+				"StraightTile": "wood-beam-tile-straight",
+				"StraightHalfWall": "wood-beam-half-wall-straight",
+				"StraightFullWall": "wood-beam-full-wall-straight",
+				"DiagonalTile": "wood-beam-tile-diagonal",
+				"DiagonalHalfWall": "wood-beam-half-wall-diagonal",
+				"DiagonalFullWall": "wood-beam-full-wall-diagonal"
+			}
+		],
+		"wood-planks": [
+			{
+				"StraightTile": "wood-planks-tile-straight",
+				"StraightHalfWall": "wood-planks-half-wall-straight",
+				"StraightFullWall": "wood-planks-full-wall-straight",
+				"DiagonalTile": "wood-planks-tile-diagonal",
+				"DiagonalHalfWall": "wood-planks-half-wall-diagonal",
+				"DiagonalFullWall": "wood-planks-full-wall-diagonal"
+			}
+		],
+		"wood-planks-weathered": [
+			{
+				"StraightTile": "wood-planks-weathered-tile-straight",
+				"StraightHalfWall": "wood-planks-weathered-half-wall-straight",
+				"StraightFullWall": "wood-planks-weathered-full-wall-straight",
+				"DiagonalTile": "wood-planks-weathered-tile-diagonal",
+				"DiagonalHalfWall": "wood-planks-weathered-half-wall-diagonal",
+				"DiagonalFullWall": "wood-planks-weathered-full-wall-diagonal"
 			}
 		]
 	},
 	"BlockTileOverlays": {
-		"grass": {
-			"TileOverlayTop": "grass-tile-top",
-			"TileOverlayBottom": "grass-tile-bottom",
-			"TileOverlayLeft": "grass-tile-left",
-			"TileOverlayRight": "grass-tile-right",
-			"TileOverlayTopLeft": "grass-tile-left",
-			"TileOverlayTopRight": "grass-tile-top",
-			"TileOverlayBottomLeft": "grass-tile-bottom",
-			"TileOverlayBottomRight": "grass-tile-right"
+		"grass-rich": {
+			"TileOverlayTop": "grass-rich-tile-top",
+			"TileOverlayBottom": "grass-rich-tile-bottom",
+			"TileOverlayLeft": "grass-rich-tile-left",
+			"TileOverlayRight": "grass-rich-tile-right",
+			"TileOverlayTopLeft": "grass-rich-tile-left",
+			"TileOverlayTopRight": "grass-rich-tile-top",
+			"TileOverlayBottomLeft": "grass-rich-tile-bottom",
+			"TileOverlayBottomRight": "grass-rich-tile-right"
 		}
 	},
 	"EntitySprites": {
 		"player": {
 			"Rotations": [
 				{
-					"EndAngle": 0.125,
+					"EndAngle": 0.0625,
 					"Sprite": "character-right"
 				},
 				{
-					"EndAngle": 0.375,
+					"EndAngle": 0.1875,
+					"Sprite": "character-bottom-right"
+				},
+				{
+					"EndAngle": 0.3125,
 					"Sprite": "character-bottom"
 				},
 				{
-					"EndAngle": 0.625,
+					"EndAngle": 0.4375,
+					"Sprite": "character-bottom-left"
+				},
+				{
+					"EndAngle": 0.5625,
 					"Sprite": "character-left"
 				},
 				{
-					"EndAngle": 0.875,
+					"EndAngle": 0.6875,
+					"Sprite": "character-top-left"
+				},
+				{
+					"EndAngle": 0.8125,
 					"Sprite": "character-top"
+				},
+				{
+					"EndAngle": 0.9375,
+					"Sprite": "character-top-right"
 				}
 			],
 			"HammerStrike": [
 				{
-					"EndAngle": 0.125,
-					"Sprite": "character-right"
+					"EndAngle": 0.1875,
+					"Sprite": "character-strike-right"
 				},
 				{
-					"EndAngle": 0.375,
-					"Sprite": "character-bottom"
+					"EndAngle": 0.3125,
+					"Sprite": "character-strike-bottom"
 				},
 				{
-					"EndAngle": 0.625,
-					"Sprite": "character-left"
+					"EndAngle": 0.6875,
+					"Sprite": "character-strike-left"
 				},
 				{
-					"EndAngle": 0.875,
+					"EndAngle": 0.8125,
 					"Sprite": "character-top"
 				}
 			]
@@ -128,22 +325,31 @@
 	"ItemAnimations": {
 		"HammerStrike": [
 			{
-				"EndAngle": 0.125,
+				"EndAngle": 0.1875,
 				"ItemFrames": [
+					{
+						"EndTime": 0.25,
+						"Placement": {
+							"OffsetX": -14,
+							"OffsetY": -26,
+							"InFront": false,
+							"Rotation": -0.25
+						}
+					},
 					{
 						"EndTime": 0.34,
 						"Placement": {
-							"OffsetX": 0,
-							"OffsetY": -24,
+							"OffsetX": -10,
+							"OffsetY": -32,
 							"InFront": false,
-							"Rotation": 0
+							"Rotation": -0.125
 						}
 					},
 					{
 						"EndTime": 0.5,
 						"Placement": {
-							"OffsetX": 16,
-							"OffsetY": 0,
+							"OffsetX": 19,
+							"OffsetY": -15,
 							"InFront": false,
 							"Rotation": 0.25
 						}
@@ -151,45 +357,63 @@
 				]
 			},
 			{
-				"EndAngle": 0.375,
+				"EndAngle": 0.3125,
 				"ItemFrames": [
+					{
+						"EndTime": 0.25,
+						"Placement": {
+							"OffsetX": 0,
+							"OffsetY": -36,
+							"InFront": false,
+							"Rotation": 0.125
+						}
+					},
 					{
 						"EndTime": 0.34,
 						"Placement": {
-							"OffsetX": 0,
-							"OffsetY": -24,
-							"InFront": true,
-							"Rotation": 0
+							"OffsetX": -14,
+							"OffsetY": -34,
+							"InFront": false,
+							"Rotation": -0.125
 						}
 					},
 					{
 						"EndTime": 0.5,
 						"Placement": {
 							"OffsetX": 0,
-							"OffsetY": 0,
+							"OffsetY": 2,
 							"InFront": true,
-							"Rotation": 0.25
+							"Rotation": 0.5
 						}
 					}
 				]
 			},
 			{
-				"EndAngle": 0.625,
+				"EndAngle": 0.6875,
 				"ItemFrames": [
+					{
+						"EndTime": 0.25,
+						"Placement": {
+							"OffsetX": 14,
+							"OffsetY": -25,
+							"InFront": false,
+							"Rotation": 0.25
+						}
+					},
 					{
 						"EndTime": 0.34,
 						"Placement": {
-							"OffsetX": 0,
-							"OffsetY": -24,
+							"OffsetX": 10,
+							"OffsetY": -32,
 							"InFront": false,
-							"Rotation": 0
+							"Rotation": 0.125
 						}
 					},
 					{
 						"EndTime": 0.5,
 						"Placement": {
-							"OffsetX": -16,
-							"OffsetY": 0,
+							"OffsetX": -19,
+							"OffsetY": -14,
 							"InFront": false,
 							"Rotation": 0.75
 						}
@@ -197,7 +421,7 @@
 				]
 			},
 			{
-				"EndAngle": 0.875,
+				"EndAngle": 0.8125,
 				"ItemFrames": [
 					{
 						"EndTime": 0.34,
@@ -298,10 +522,29 @@
 
 	"Sprites": {
 		"missing-sprite": { "type": "tileSize" },
+		"character-top-left": { "type": "defaultCharacter" },
 		"character-top": { "type": "defaultCharacter" },
-		"character-bottom": { "type": "defaultCharacter" },
+		"character-top-right": { "type": "defaultCharacter" },
 		"character-right": { "type": "defaultCharacter" },
+		"character-bottom-right": { "type": "defaultCharacter" },
+		"character-bottom": { "type": "defaultCharacter" },
+		"character-bottom-left": { "type": "defaultCharacter" },
 		"character-left": { "type": "defaultCharacter" },
+		"character-strike-left": {
+			"type": "defaultCharacter",
+			"framesX": 2,
+			"frameInterval": 0.34
+		},
+		"character-strike-right": {
+			"type": "defaultCharacter",
+			"framesX": 2,
+			"frameInterval": 0.34
+		},
+		"character-strike-bottom": {
+			"type": "defaultCharacter",
+			"framesX": 2,
+			"frameInterval": 0.34
+		},
 		"character-cylinder-top": {
 			"width": 20,
 			"height": 56,
@@ -325,6 +568,14 @@
 			"height": 56,
 			"centerX": 10,
 			"centerY": 46
+		},
+		"slime": {
+			"width": 32,
+			"height": 32,
+			"centerX": 16,
+			"centerY": 16,
+			"framesX": 4,
+			"frameInterval": 0.2
 		},
 		"default-tile-left": {
 			"width": 16,
@@ -436,66 +687,181 @@
 		"default-wall-shadow-half-left": { "type": "defaultTile" },
 		"default-wall-shadow-half-right": { "type": "defaultTile" },
 		"default-wall-shadow-half-diagonal": { "type": "defaultDiagonalTile" },
-		"dirt-tile-straight": { "type": "defaultTile" },
-		"dirt-tile-diagonal": { "type": "defaultDiagonalTile" },
-		"dirt-half-wall-straight": { "type": "defaultHalfWall" },
-		"dirt-full-wall-straight": { "type": "defaultFullWall" },
-		"dirt-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
-		"dirt-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
-		"earth-tile-straight": { "type": "defaultTile" },
-		"earth-tile-diagonal": { "type": "defaultDiagonalTile" },
-		"earth-half-wall-straight": { "type": "defaultHalfWall" },
-		"earth-full-wall-straight": { "type": "defaultFullWall" },
-		"earth-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
-		"earth-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
-		"grass-tile-straight": { "type": "defaultTile" },
-		"grass-tile-diagonal": { "type": "defaultDiagonalTile" },
-		"grass-half-wall-straight": { "type": "defaultHalfWall" },
-		"grass-full-wall-straight": { "type": "defaultFullWall" },
-		"grass-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
-		"grass-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
-		"grass-tile-left": {
+		"grass-rich-tile-straight": { "type": "defaultTile" },
+		"grass-rich-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"grass-rich-half-wall-straight": { "type": "defaultHalfWall" },
+		"grass-rich-full-wall-straight": { "type": "defaultFullWall" },
+		"grass-rich-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"grass-rich-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"grass-rich-tile-straight-2": { "type": "defaultTile" },
+		"grass-rich-tile-diagonal-2": { "type": "defaultDiagonalTile" },
+		"grass-rich-tile-straight-3": { "type": "defaultTile" },
+		"grass-rich-tile-diagonal-3": { "type": "defaultDiagonalTile" },
+		"grass-rich-tile-straight-4": { "type": "defaultTile" },
+		"grass-rich-tile-diagonal-4": { "type": "defaultDiagonalTile" },
+		"grass-rich-tile-straight-5": { "type": "defaultTile" },
+		"grass-rich-tile-diagonal-5": { "type": "defaultDiagonalTile" },
+		"grass-rich-tile-straight-6": { "type": "defaultTile" },
+		"grass-rich-tile-diagonal-6": { "type": "defaultDiagonalTile" },
+		"grass-rich-tile-left": {
 			"width": 16,
 			"height": 16,
 			"centerX": 24,
 			"centerY": 8
 		},
-		"grass-tile-right": {
+		"grass-rich-tile-right": {
 			"width": 16,
 			"height": 16,
 			"centerX": -8,
 			"centerY": 8
 		},
-		"grass-tile-top": {
+		"grass-rich-tile-top": {
 			"width": 16,
 			"height": 16,
 			"centerX": 8,
 			"centerY": 24
 		},
-		"grass-tile-bottom": {
+		"grass-rich-tile-bottom": {
 			"width": 16,
 			"height": 16,
 			"centerX": 8,
 			"centerY": -8
 		},
-		"slab-tile-straight": { "type": "defaultTile" },
-		"slab-tile-diagonal": { "type": "defaultDiagonalTile" },
-		"slab-half-wall-straight": { "type": "defaultHalfWall" },
-		"slab-full-wall-straight": { "type": "defaultFullWall" },
-		"slab-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
-		"slab-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
-		"stone-tile-straight": { "type": "defaultTile" },
-		"stone-tile-diagonal": { "type": "defaultDiagonalTile" },
-		"stone-half-wall-straight": { "type": "defaultHalfWall" },
-		"stone-full-wall-straight": { "type": "defaultFullWall" },
-		"stone-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
-		"stone-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
-		"plank-tile-straight": { "type": "defaultTile" },
-		"plank-tile-diagonal": { "type": "defaultDiagonalTile" },
-		"plank-half-wall-straight": { "type": "defaultHalfWall" },
-		"plank-full-wall-straight": { "type": "defaultFullWall" },
-		"plank-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
-		"plank-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"darkstone-tile-straight": { "type": "defaultTile" },
+		"darkstone-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"darkstone-half-wall-straight": { "type": "defaultHalfWall" },
+		"darkstone-full-wall-straight": { "type": "defaultFullWall" },
+		"darkstone-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"darkstone-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"darkstone-block-tile-straight": { "type": "defaultTile" },
+		"darkstone-block-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"darkstone-block-half-wall-straight": { "type": "defaultHalfWall" },
+		"darkstone-block-full-wall-straight": { "type": "defaultFullWall" },
+		"darkstone-block-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"darkstone-block-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"darkstone-flagstone-tile-straight": { "type": "defaultTile" },
+		"darkstone-flagstone-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"darkstone-flagstone-half-wall-straight": { "type": "defaultHalfWall" },
+		"darkstone-flagstone-full-wall-straight": { "type": "defaultFullWall" },
+		"darkstone-flagstone-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"darkstone-flagstone-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"darkwood-tile": { "type": "defaultTile" },
+		"darkwood-half": {
+			"width": 16,
+			"height": 32,
+			"centerX": 8,
+			"centerY": 24
+		},
+		"darkwood-full": {
+			"width": 16,
+			"height": 48,
+			"centerX": 8,
+			"centerY": 40
+		},
+		"darkwood-beam-tile-straight": { "type": "defaultTile" },
+		"darkwood-beam-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"darkwood-beam-half-wall-straight": { "type": "defaultHalfWall" },
+		"darkwood-beam-full-wall-straight": { "type": "defaultFullWall" },
+		"darkwood-beam-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"darkwood-beam-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"darkwood-planks-tile-straight": { "type": "defaultTile" },
+		"darkwood-planks-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"darkwood-planks-half-wall-straight": { "type": "defaultHalfWall" },
+		"darkwood-planks-full-wall-straight": { "type": "defaultFullWall" },
+		"darkwood-planks-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"darkwood-planks-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"darkwood-planks-weathered-tile-straight": { "type": "defaultTile" },
+		"darkwood-planks-weathered-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"darkwood-planks-weathered-half-wall-straight": { "type": "defaultHalfWall" },
+		"darkwood-planks-weathered-full-wall-straight": { "type": "defaultFullWall" },
+		"darkwood-planks-weathered-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"darkwood-planks-weathered-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"lightwood-tile": { "type": "defaultTile" },
+		"lightwood-half": {
+			"width": 16,
+			"height": 32,
+			"centerX": 8,
+			"centerY": 24
+		},
+		"lightwood-full": {
+			"width": 16,
+			"height": 48,
+			"centerX": 8,
+			"centerY": 40
+		},
+		"lightwood-beam-tile-straight": { "type": "defaultTile" },
+		"lightwood-beam-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"lightwood-beam-half-wall-straight": { "type": "defaultHalfWall" },
+		"lightwood-beam-full-wall-straight": { "type": "defaultFullWall" },
+		"lightwood-beam-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"lightwood-beam-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"lightwood-planks-tile-straight": { "type": "defaultTile" },
+		"lightwood-planks-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"lightwood-planks-half-wall-straight": { "type": "defaultHalfWall" },
+		"lightwood-planks-full-wall-straight": { "type": "defaultFullWall" },
+		"lightwood-planks-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"lightwood-planks-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"lightwood-planks-weathered-tile-straight": { "type": "defaultTile" },
+		"lightwood-planks-weathered-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"lightwood-planks-weathered-half-wall-straight": { "type": "defaultHalfWall" },
+		"lightwood-planks-weathered-full-wall-straight": { "type": "defaultFullWall" },
+		"lightwood-planks-weathered-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"lightwood-planks-weathered-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"soil-poor-tile-straight": { "type": "defaultTile" },
+		"soil-poor-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"soil-poor-half-wall-straight": { "type": "defaultHalfWall" },
+		"soil-poor-full-wall-straight": { "type": "defaultFullWall" },
+		"soil-poor-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"soil-poor-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"soil-rich-tile-straight": { "type": "defaultTile" },
+		"soil-rich-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"soil-rich-half-wall-straight": { "type": "defaultHalfWall" },
+		"soil-rich-full-wall-straight": { "type": "defaultFullWall" },
+		"soil-rich-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"soil-rich-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"stone-block-tile-straight": { "type": "defaultTile" },
+		"stone-block-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"stone-block-half-wall-straight": { "type": "defaultHalfWall" },
+		"stone-block-full-wall-straight": { "type": "defaultFullWall" },
+		"stone-block-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"stone-block-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"stone-flagstone-tile-straight": { "type": "defaultTile" },
+		"stone-flagstone-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"stone-flagstone-half-wall-straight": { "type": "defaultHalfWall" },
+		"stone-flagstone-full-wall-straight": { "type": "defaultFullWall" },
+		"stone-flagstone-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"stone-flagstone-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"wood-tile": { "type": "defaultTile" },
+		"wood-half": {
+			"width": 16,
+			"height": 32,
+			"centerX": 8,
+			"centerY": 24
+		},
+		"wood-full": {
+			"width": 16,
+			"height": 48,
+			"centerX": 8,
+			"centerY": 40
+		},
+		"wood-beam-tile-straight": { "type": "defaultTile" },
+		"wood-beam-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"wood-beam-half-wall-straight": { "type": "defaultHalfWall" },
+		"wood-beam-full-wall-straight": { "type": "defaultFullWall" },
+		"wood-beam-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"wood-beam-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"wood-planks-tile-straight": { "type": "defaultTile" },
+		"wood-planks-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"wood-planks-half-wall-straight": { "type": "defaultHalfWall" },
+		"wood-planks-full-wall-straight": { "type": "defaultFullWall" },
+		"wood-planks-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"wood-planks-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"wood-planks-weathered-tile-straight": { "type": "defaultTile" },
+		"wood-planks-weathered-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"wood-planks-weathered-half-wall-straight": { "type": "defaultHalfWall" },
+		"wood-planks-weathered-full-wall-straight": { "type": "defaultFullWall" },
+		"wood-planks-weathered-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"wood-planks-weathered-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
 		"hud-items": {
 			"width": 96,
 			"height": 96

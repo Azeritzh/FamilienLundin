@@ -7,7 +7,7 @@ export class FlagLogic implements GameLogic<MinestrygerAction> {
 		private state: MinestrygerState,
 	) { }
 
-	update(actions: MinestrygerAction[]) {
+	Update(actions: MinestrygerAction[]) {
 		for (const action of actions)
 			if (action instanceof FlagAction)
 				this.flag(action.x, action.y)

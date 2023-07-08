@@ -9,7 +9,7 @@ export class DifficultyLogic implements GameLogic<RenderendAction> {
 		private globals: Globals,
 	) { }
 
-	update() {
+	Update() {
 		if (!this.globals.isAlive)
 			return
 		this.globals.speed += this.constants.acceleration

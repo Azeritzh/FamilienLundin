@@ -9,7 +9,7 @@ export class DeathLogic implements GameLogic<RenderendAction> {
 		public listeners: DeathListener[] = [],
 	) { }
 
-	update() {
+	Update() {
 		for (const [entity] of this.entities.With.health)
 			if (this.health.CurrentlyOf(entity) <= 0)
 				this.kill(entity)

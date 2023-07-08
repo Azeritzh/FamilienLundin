@@ -28,7 +28,7 @@ export class AgEngine<GameAction> {
 	private performLogic(actions: GameAction[]) {
 		this.state.tick++
 		for (const logic of this.logics)
-			logic.update(actions)
+			logic.Update(actions)
 		this.state.finishUpdate?.()
 	}
 }

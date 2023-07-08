@@ -12,7 +12,7 @@ export class OutOfBoundsLogic implements GameLogic<GameUpdate> {
 		private SetPosition: ValueSetter<Vector3>,
 	) { }
 
-	update() {
+	Update() {
 		if (!this.Globals.WorldBounds)
 			return
 		for (const [entity, _] of this.Entities.With.Velocity)
@@ -23,7 +23,7 @@ export class OutOfBoundsLogic implements GameLogic<GameUpdate> {
 		const position = this.Position.CurrentlyOf(entity)
 		if (!position)
 			return
-		if (this.Globals.WorldBounds.contains(position))
+		if (this.Globals.WorldBounds.Contains(position))
 			return
 
 		this.SetPosition.For(entity, this.Globals.WorldBounds.Contain(position))

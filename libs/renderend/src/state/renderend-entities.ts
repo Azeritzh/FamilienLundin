@@ -21,7 +21,7 @@ export class RenderendEntities extends EntityManager<EntityValues> {
 		public readonly dieOnCollisionBehaviour = accessor.For(x => x.dieOnCollisionBehaviour, x => x.dieOnCollisionBehaviour),
 	) {
 		super(entityValues, updatedEntityValues, idProvider)
-		this.valueAccessors.push(
+		this.Accessors.push(
 			bulletType,
 			charge,
 			damage,

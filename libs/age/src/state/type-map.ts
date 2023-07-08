@@ -10,19 +10,27 @@ export class TypeMap {
 		offset: number,
 		types: string[]
 	) {
-		const typeMapping = new TypeMap()
+		const map = new TypeMap()
 		for (const [index, type] of types.entries())
-			typeMapping.Types.set(type, index << offset)
-		return typeMapping
+			map.Add(type, index << offset)
+		return map
 	}
 
 	public TypeFor(typeId: Id) {
-		for (const [type, id] of this.Types.entries())
+		for (const [typeName, id] of this.Types.entries())
 			if (typeId === id)
-				return type
+				return typeName
 	}
 
-	public TypeIdFor(type: string): Id {
-		return this.Types.get(type)
+	public TypeIdFor(typeName: string): Id {
+		return this.Types.get(typeName)
+	}
+
+	public Add(type: string, id: Id) {
+		this.Types.set(type, id)
+	}
+
+	public get Count() {
+		return this.Types.size
 	}
 }

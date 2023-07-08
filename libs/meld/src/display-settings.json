@@ -1,7 +1,5 @@
 {
 	"Inputs": {
-		"Generate": [ "Enter", "PadStart" ],
-		
 		"NormalModeMoveUp": [ "W", "Up", "PadLeftStickUp" ],
 		"NormalModeMoveDown": [ "S", "Down", "PadLeftStickDown" ],
 		"NormalModeMoveLeft": [ "A", "Left", "PadLeftStickLeft" ],
@@ -12,10 +10,10 @@
 		"NormalModeToolSecondary": [ "F", "PadX" ],
 		"NormalModeAction": [ "Space", "PadB", "PadRightStickPress" ],
 
-		"MoveUp": [ "W", "Up" ],
-		"MoveDown": [ "S", "Down" ],
-		"MoveLeft": [ "A", "Left" ],
-		"MoveRight": [ "D", "Right" ],
+		"MoveUp": [ "Up" ],
+		"MoveDown": [ "Down" ],
+		"MoveLeft": [ "Left" ],
+		"MoveRight": [ "Right" ],
 
 		"UseItem": [ "MouseRight", "PadRightTrigger" ],
 		"ToolPrimary": [ "MouseLeft", "PadLeftTrigger" ],
@@ -23,17 +21,17 @@
 		"Action": [ "Space", "PadRightStickPress" ],
 
 		"ToggleSelection": [],
-		"HoldSelection": [ "PadLeftShoulder" ],
+		"HoldSelection": [ "PadLeftShoulder", "LeftShift" ],
 
 		"SelectionModeSelectTopItem": [ "1", "PadUp", "PadLeftStickUp" ],
 		"SelectionModeSelectBottomItem": [ "3", "PadDown", "PadLeftStickDown" ],
 		"SelectionModeSelectLeftItem": [ "4", "PadLeft", "PadLeftStickLeft" ],
 		"SelectionModeSelectRightItem": [ "2", "PadRight", "PadLeftStickRight" ],
 
-		"SelectionModeSelectTopTool": [ "PadY" ],
-		"SelectionModeSelectBottomTool": [ "PadA" ],
-		"SelectionModeSelectLeftTool": [ "PadX" ],
-		"SelectionModeSelectRightTool": [ "PadB" ],
+		"SelectionModeSelectTopTool": [ "PadY", "W" ],
+		"SelectionModeSelectBottomTool": [ "PadA", "S" ],
+		"SelectionModeSelectLeftTool": [ "PadX", "A" ],
+		"SelectionModeSelectRightTool": [ "PadB", "D" ],
 
 		"SelectTopItem": [ "1", "PadUp" ],
 		"SelectBottomItem": [ "3", "PadDown" ],

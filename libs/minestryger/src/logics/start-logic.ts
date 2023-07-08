@@ -10,7 +10,7 @@ export class StartLogic implements GameLogic<MinestrygerAction> {
 		private state: MinestrygerState,
 	) { }
 
-	update(actions: MinestrygerAction[]) {
+	Update(actions: MinestrygerAction[]) {
 		if (this.state.playState !== PlayState.NotStarted)
 			return
 		for (const action of actions)

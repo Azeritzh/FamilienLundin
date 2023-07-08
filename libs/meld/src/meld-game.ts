@@ -1,14 +1,16 @@
 import { GameRunner, HtmlDisplayProvider } from "@lundin/age"
 import * as defaultDisplayConfig from "./display-config.json"
 import * as defaultDisplaySettings from "./display-settings.json"
-import * as gameConfig from "./game-config.json"
-import { Meld } from "./meld"
 import { MeldDisplay } from "./display/meld-display"
+import * as gameConfig from "./game-config.json"
+import { DummyVariationProvider, RegionGenerator } from "./generation/region-generator"
+import { Meld } from "./meld"
 import { readDisplayConfig } from "./serialisation/serialisation-display-config"
+import { readDisplaySettings } from "./serialisation/serialisation-display-settings"
 import { readGameConfig } from "./serialisation/serialisation-game-config"
 import { createGameState, readGameState } from "./serialisation/serialisation-game-state"
-import { GenerateAction, GameUpdate, LoadState } from "./state/game-update"
-import { readDisplaySettings } from "./serialisation/serialisation-display-settings"
+import { GameUpdate, LoadPlayer, LoadRegion, LoadState } from "./state/game-update"
+import { Vector3 } from "@lundin/utility"
 
 export const updatesPerSecond = 60
 
@@ -22,11 +24,14 @@ export class MeldGame extends GameRunner<GameUpdate> {
 	) {
 		super(meldDisplay, meld, updatesPerSecond)
 		this.resizeObserver.observe(hostElement)
-		const saved = localStorage["meld-save-0.3"]
+		const saved = false //localStorage["meld-save-0.3"]
 		if (saved)
 			this.actions.push(new LoadState(readGameState(meld.Config, JSON.parse(saved))))
 		else
-			this.actions.push(new GenerateAction())
+			this.actions.push(
+				new LoadRegion(new RegionGenerator(meld.Config, new DummyVariationProvider(), new Vector3(0, 0, 0), 0, 0).Generate()),
+				new LoadPlayer("insertPlayerName"),
+			)
 		window.addEventListener("unload", this.onUnload)
 		this.afterGameUpdate = () => this.displayProvider.endInputFrame()
 	}

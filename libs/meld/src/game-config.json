@@ -3,14 +3,27 @@
 		"PlayerType": "player",
 		"SolidItemType": "solid",
 		"DefaultBlock": {
-			"BlockType": "Empty",
-			"Solid": "grass",
+			"BlockType": "Full",
+			"Solid": "darkstone",
 			"NonSolid": "air"
 		},
 		"ChunkSize": {
-			"x": 50,
-			"y": 50,
-			"z": 5
+			"X": 32,
+			"Y": 32,
+			"Z": 4
+		},
+		"RegionSizeInChunks": {
+			"X": 16,
+			"Y": 16,
+			"Z": 4
+		},
+		"DefaultWorldBounds": {
+			"MinX": -768,
+			"MaxX": 768,
+			"MinY": -768,
+			"MaxY": 768,
+			"MinZ": -8,
+			"MaxZ": 8
 		},
 		"ChunkLoadingRadius": 1,
 		"CollisionAreaWidth": 0.0001,
@@ -27,6 +40,9 @@
 		"QuickDashWindowEnd": 1,
 		"QuickDashMinimumAngle": 0.125
 	},
+	"Lists": {
+		"RandomlySpawningMonsters": []
+	},
 	"EntityTypes": {
 		"player": {
 			"BlockCollisionBehaviour": true,
@@ -35,6 +51,7 @@
 				"Height": 0.875
 			},
 			"GravityBehaviour": true,
+			"PlayerBehaviour": true,
 			"SelectableItems": true,
 			"SelectableTools": true
 		},
@@ -43,12 +60,26 @@
 		}
 	},
 	"SolidTypes": {
-		"dirt": {},
-		"earth": {},
-		"grass": {},
-		"slab": {},
-		"stone": {},
-		"plank": {}
+		"darkstone": {},
+		"darkstone-block": {},
+		"darkstone-flagstone": {},
+		"darkwood": {},
+		"darkwood-beam": {},
+		"darkwood-planks": {},
+		"darkwood-planks-weathered": {},
+		"grass-rich": {},
+		"lightwood": {},
+		"lightwood-beam": {},
+		"lightwood-planks": {},
+		"lightwood-planks-weathered": {},
+		"soil-poor": {},
+		"soil-rich": {},
+		"stone-block": {},
+		"stone-flagstone": {},
+		"wood": {},
+		"wood-beam": {},
+		"wood-planks": {},
+		"wood-planks-weathered": {}
 	},
 	"NonSolidTypes": {
 		"air": {}

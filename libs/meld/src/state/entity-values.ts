@@ -1,9 +1,10 @@
-import { BaseValues, CircularSize, Id } from "@lundin/age"
+import { BaseValues, CircularSize, EntityIdOf, EntityTypeOf, Id } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { DashState } from "../values/dash-state"
 import { SelectableItems } from "../values/selectable-items"
 import { SelectableTools } from "../values/selectable-tools"
 import { ToolState } from "../values/tool-state"
+import { Item } from "./item"
 
 export class EntityValues extends BaseValues {
 	constructor(
@@ -20,22 +21,24 @@ export class EntityValues extends BaseValues {
 		public readonly Velocity = new Map<Id, Vector3>(),
 		public readonly BlockCollisionBehaviour = new Map<Id, boolean>(),
 		public readonly GravityBehaviour = new Map<Id, boolean>(),
+		public readonly PlayerBehaviour = new Map<Id, boolean>(),
 		Entities = new Map<Id, boolean>(),
 	) {
 		super(Entities)
-		this.register(CircularSize)
-		this.register(DashState)
-		this.register(DespawnTime)
-		this.register(Health)
-		this.register(Orientation)
-		this.register(Position)
-		this.register(SelectableItems)
-		this.register(SelectableTools)
-		this.register(TargetVelocity)
-		this.register(ToolState)
-		this.register(Velocity)
-		this.register(BlockCollisionBehaviour)
-		this.register(GravityBehaviour)
+		this.Register(CircularSize)
+		this.Register(DashState)
+		this.Register(DespawnTime)
+		this.Register(Health)
+		this.Register(Orientation)
+		this.Register(Position)
+		this.Register(SelectableItems)
+		this.Register(SelectableTools)
+		this.Register(TargetVelocity)
+		this.Register(ToolState)
+		this.Register(Velocity)
+		this.Register(BlockCollisionBehaviour)
+		this.Register(GravityBehaviour)
+		this.Register(PlayerBehaviour)
 	}
 
 	public static From(groupedValues: Map<Id, GroupedEntityValues>) {
@@ -73,6 +76,8 @@ export class EntityValues extends BaseValues {
 			this.BlockCollisionBehaviour.set(key, values.BlockCollisionBehaviour)
 		if (values.GravityBehaviour !== undefined)
 			this.GravityBehaviour.set(key, values.GravityBehaviour)
+		if (values.PlayerBehaviour !== undefined)
+			this.PlayerBehaviour.set(key, values.PlayerBehaviour)
 	}
 
 	GroupFor(key: Id): GroupedEntityValues {
@@ -90,6 +95,7 @@ export class EntityValues extends BaseValues {
 			Velocity: this.Velocity.get(key),
 			BlockCollisionBehaviour: this.BlockCollisionBehaviour.get(key),
 			GravityBehaviour: this.GravityBehaviour.get(key),
+			PlayerBehaviour: this.PlayerBehaviour.get(key),
 		}
 	}
 }
@@ -108,4 +114,92 @@ export interface GroupedEntityValues {
 	Velocity?: Vector3
 	BlockCollisionBehaviour?: boolean
 	GravityBehaviour?: boolean
+	PlayerBehaviour?: boolean
+}
+
+export class SerialisableEntities {
+	public static From(entityValues: EntityValues): Map<Id, GroupedEntityValues> {
+		const map = new Map<Id, GroupedEntityValues>()
+		for (const [key] of entityValues.Entities)
+			map.set(key, entityValues.GroupFor(key))
+		return map
+	}
+
+	public static ToEntityValuesWithMapping(
+		serialised: Map<Id, GroupedEntityValues>,
+		entityMapping: Map<Id, Id>,
+		solidMapping: Map<Id, Id>,
+		itemMapping: Map<Id, Id>
+	): EntityValues {
+		const entityValues = new EntityValues()
+		for (const [id, values] of serialised)
+			entityValues.AddValuesFrom(this.MapEntity(id, entityMapping), this.MapValues(values, solidMapping, itemMapping))
+		return entityValues
+	}
+
+	public static ToEntityValues(serialised: Map<Id, GroupedEntityValues>): EntityValues {
+		const entityValues = new EntityValues()
+		for (const [id, values] of serialised)
+			entityValues.AddValuesFrom(id, values)
+		return entityValues
+	}
+
+	public static MapEntity(entity: Id, entityMapping: Map<Id, Id>): Id {
+		const type = entityMapping.get(EntityTypeOf(entity))
+		const id = EntityIdOf(entity)
+		return type | id
+	}
+
+	public static MapValues(values: GroupedEntityValues, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): GroupedEntityValues {
+		return {
+			...values,
+			SelectableItems: this.MapSelectableItems(values.SelectableItems, solidMapping, itemMapping),
+			SelectableTools: this.MapSelectableTools(values.SelectableTools, solidMapping, itemMapping),
+			ToolState: this.MapToolState(values.ToolState, solidMapping, itemMapping),
+		}
+	}
+
+	static MapSelectableItems(selectableItems: SelectableItems, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): SelectableItems {
+		if (!selectableItems)
+			return null
+		return new SelectableItems(
+			selectableItems.Items.map(x => this.MapItem(x, solidMapping, itemMapping)),
+			selectableItems.CurrentSet,
+			selectableItems.CurrentItemInSet,
+		)
+	}
+
+	static MapSelectableTools(selectableTools: SelectableTools, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): SelectableTools {
+		if (!selectableTools)
+			return null
+		return new SelectableTools(
+			selectableTools.Items.map(x => this.MapItem(x, solidMapping, itemMapping)),
+			selectableTools.CurrentToolIndex,
+		)
+	}
+
+	static MapToolState(toolState: ToolState, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): ToolState {
+		if (!toolState)
+			return null
+		return new ToolState(
+			toolState.Action,
+			this.MapItem(toolState.SourceItem, solidMapping, itemMapping),
+			toolState.SubEntities,
+			toolState.Target,
+			toolState.StartTime,
+			toolState.EndTime,
+			toolState.LockOrientation,
+			toolState.BlockMovement,
+		)
+	}
+
+	static MapItem(item: Item, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): Item {
+		if (!item)
+			return null
+		return new Item(
+			itemMapping.get(item.Type),
+			solidMapping.get(item.Content), // TODO: it won't always be a SolidId
+			item.Amount,
+		)
+	}
 }

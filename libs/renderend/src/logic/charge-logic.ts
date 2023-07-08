@@ -10,7 +10,7 @@ export class ChargeLogic implements GameLogic<RenderendAction> {
 		private setCharge: ValueSetter<number>,
 	) { }
 
-	update() {
+	Update() {
 		for (const [entity, charge] of this.entities.With.charge)
 			this.chargeEntity(entity, charge)
 	}
