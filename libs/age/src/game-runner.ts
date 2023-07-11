@@ -43,10 +43,12 @@ export class GameRunner<Action> {
 	}
 
 	updateDisplay() {
+		startTiming("displayUpdate")
 		const now = Date.now()
 		const updateInterval = 1000 / this.updatesPerSecond
 		const fractionOfTick = (now - this.lastUpdate) / updateInterval
 		this.display.show(fractionOfTick)
+		finishTiming("displayUpdate")
 	}
 
 	onDestroy() {

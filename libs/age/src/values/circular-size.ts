@@ -1,6 +1,9 @@
 export class CircularSize { // struct
 	constructor(
-		public readonly Radius: number,
-		public readonly Height: number,
+		public readonly radius: number,
+		public readonly height: number,
 	) { }
+
+	get Radius() { return this.radius }
+	get Height() { return this.height }
 }

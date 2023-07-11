@@ -1,6 +1,9 @@
 export class RectangularSize { // struct
 	constructor(
-		public readonly Width: number,
-		public readonly Height: number,
+		public readonly width: number,
+		public readonly height: number,
 	) { }
+
+	get Width() { return this.width }
+	get Height() { return this.height }
 }
