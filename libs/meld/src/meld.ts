@@ -21,6 +21,7 @@ import { UseToolLogic } from "./logic/use-tool-logic"
 import { DespawnLogic } from "./logic/despawn-logic"
 import { LoadPlayerLogic } from "./logic/load-player-logic"
 import { LoadingLogic } from "./logic/loading-logic"
+import { JumpLogic } from "./logic/jump-logic"
 
 export class Meld extends BaseGame<GameUpdate> {
 	constructor(
@@ -60,6 +61,11 @@ export class Meld extends BaseGame<GameUpdate> {
 			Entities,
 			Terrain,
 			Entities.Position.Get,
+			Entities.Velocity.Get,
+			Entities.Velocity.Set,
+		),
+		public readonly jumpLogic = new JumpLogic(
+			Config.Constants,
 			Entities.Velocity.Get,
 			Entities.Velocity.Set,
 		),
@@ -143,6 +149,7 @@ export class Meld extends BaseGame<GameUpdate> {
 			movementLogic,
 			dashLogic,
 			gravityLogic,
+			jumpLogic,
 			blockCollisionLogic,
 			velocityLogic,
 			outOfBoundsLogic,

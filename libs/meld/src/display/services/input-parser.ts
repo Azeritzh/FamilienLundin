@@ -1,11 +1,12 @@
 import { BaseInputParser, DisplayProvider, Id } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
-import { ActionState, ChargeDashAction, MovementAction, ReleaseDashAction, SelectItemAction, SelectItemSetAction, SelectToolAction, UseItemAction, UseToolAction } from "../../state/game-update"
+import { ActionState, ChargeDashAction, JumpAction, MovementAction, ReleaseDashAction, SelectItemAction, SelectItemSetAction, SelectToolAction, UseItemAction, UseToolAction } from "../../state/game-update"
 import { AngleOf, DisplayState, InputMode } from "../state/display-state"
 import { Camera } from "./camera"
 import { Input } from "./input"
 import { Visibility } from "./visibility"
+import { BlockType, Blocks } from "../../state/block"
 
 export class InputParser extends BaseInputParser<Input> {
 
@@ -97,6 +98,25 @@ export class InputParser extends BaseInputParser<Input> {
 			return null
 		this.PreviousMovement = movement
 		return new MovementAction(player, movement)
+	}
+
+
+	private ParseAction(player: Id) {
+		const angle = CurrentVector != Vector2.Zero
+			? CurrentVector.GetAngle()
+			: this.Game.Entities.Orientation.Get.Of(player) ?? 0
+
+		const nearestBlock = NearestBlockAt(angle)
+		if (Blocks.TypeOf(nearestBlock) == BlockType.Full)
+			return this.ParseJump()
+		else
+			return this.ParseDash(angle)
+	}
+
+	private ParseJump(player: Id) {
+		if (this.HasJustBeenReleased(this.ActionInput()))
+			return new JumpAction(player)
+		return null
 	}
 
 	private ParseDash(player: Id) {

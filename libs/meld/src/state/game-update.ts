@@ -19,6 +19,12 @@ export class ReleaseDashAction extends GameUpdate {
 	) { super() }
 }
 
+export class JumpAction extends GameUpdate {
+	constructor(
+		public Entity: Id,
+	) { super() }
+}
+
 export class LoadPlayer extends GameUpdate {
 	constructor(
 		public Player: string,

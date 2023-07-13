@@ -128,4 +128,6 @@ export class Vector3 {
 			this.x * Math.sin(angle) + this.y * Math.cos(angle),
 			0)
 	}
+
+	static Zero = new Vector3(0, 0, 0)
 }
