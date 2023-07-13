@@ -1,6 +1,6 @@
 import { GameLogic } from "./interfaces/game-logic"
 import { GameState } from "./interfaces/game-state"
-import { GameValidator, Validation } from "./interfaces/game-validator"
+import { GameValidator } from "./interfaces/game-validator"
 
 export class AgEngine<GameAction> {
 	constructor(
@@ -9,19 +9,19 @@ export class AgEngine<GameAction> {
 		private readonly state: GameState,
 	) { }
 
-	update(...actions: GameAction[]): Validation {
+	update(...actions: GameAction[]): string[] {
 		const problems = this.validate(actions)
 		if (problems)
 			return problems
 		this.performLogic(actions)
-		return { isValid: true, problems: [] }
+		return null
 	}
 
 	private validate(actions: GameAction[]) {
 		for (const validator of this.validators) {
-			const validation = validator.validate(actions)
-			if (!validation.isValid)
-				return validation
+			const problems = validator.validate(actions)
+			if (problems)
+				return problems
 		}
 	}
 

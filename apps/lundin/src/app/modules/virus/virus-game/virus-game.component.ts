@@ -84,9 +84,9 @@ export class VirusGameComponent {
 	}
 
 	private performAction(action: VirusAction) {
-		const validation = this.game.update(action)
-		if (!validation.isValid)
-			return this.writeProblems(validation.problems)
+		const problems = this.game.update(action)
+		if (problems)
+			return this.writeProblems(problems)
 		const winner = this.game.state.findWinner()
 		if (winner)
 			this.announceWinner(winner)

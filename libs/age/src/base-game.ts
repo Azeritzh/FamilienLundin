@@ -1,5 +1,5 @@
 import { GameLogic } from "./interfaces/game-logic"
-import { GameValidator, Validation } from "./interfaces/game-validator"
+import { GameValidator } from "./interfaces/game-validator"
 
 export abstract class BaseGame<GameAction> {
 	constructor(
@@ -7,20 +7,20 @@ export abstract class BaseGame<GameAction> {
 		protected readonly Validators: GameValidator<GameAction>[] = [],
 	) { }
 
-	Update(...actions: GameAction[]): Validation {
+	Update(...actions: GameAction[]): string[] {
 		const problems = this.Validate(actions)
 		if (problems)
 			return problems
 		for (const logic of this.Logics)
 			logic.Update(actions)
-		return { isValid: true, problems: [] }
+		return null
 	}
 
 	private Validate(actions: GameAction[]) {
 		for (const validator of this.Validators) {
-			const validation = validator.validate(actions)
-			if (!validation.isValid)
-				return validation
+			const problems = validator.validate(actions)
+			if (problems)
+				return problems
 		}
 	}
 }

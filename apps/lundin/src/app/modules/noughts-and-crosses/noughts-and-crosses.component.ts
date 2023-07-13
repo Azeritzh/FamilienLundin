@@ -34,9 +34,9 @@ export class NoughtsAndCrossesComponent {
 
 	placePiece(x: number, y: number) {
 		const action = new NoughtsAndCrossesAction(this.game.state.currentPlayer, x, y)
-		const validation = this.game.update(action)
-		if (!validation.isValid)
-			this.writeProblems(validation.problems)
+		const problems = this.game.update(action)
+		if (problems)
+			this.writeProblems(problems)
 		else
 			this.checkWinner()
 	}
