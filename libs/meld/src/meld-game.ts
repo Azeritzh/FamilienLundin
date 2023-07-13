@@ -8,7 +8,7 @@ import { Meld } from "./meld"
 import { readDisplayConfig } from "./serialisation/serialisation-display-config"
 import { readDisplaySettings } from "./serialisation/serialisation-display-settings"
 import { readGameConfig } from "./serialisation/serialisation-game-config"
-import { createGameState, readGameState } from "./serialisation/serialisation-game-state"
+import { readGameState } from "./serialisation/serialisation-game-state"
 import { GameUpdate, LoadPlayer, LoadRegion, LoadState } from "./state/game-update"
 import { Vector3 } from "@lundin/utility"
 
@@ -24,7 +24,7 @@ export class MeldGame extends GameRunner<GameUpdate> {
 	) {
 		super(meldDisplay, meld, updatesPerSecond)
 		this.resizeObserver.observe(hostElement)
-		const saved = false //localStorage["meld-save-0.3"]
+		const saved = false //localStorage["meld-save-0.4"]
 		if (saved)
 			this.actions.push(new LoadState(readGameState(meld.Config, JSON.parse(saved))))
 		else
@@ -41,8 +41,8 @@ export class MeldGame extends GameRunner<GameUpdate> {
 	}
 
 	private saveGame() {
-		const saved = createGameState(this.meld.Config, this.meld.State)
-		localStorage["meld-save-0.3"] = JSON.stringify(saved)
+		//const saved = createGameState(this.meld.Config, this.meld.State)
+		//localStorage["meld-save-0.4"] = JSON.stringify(saved)
 	}
 
 	static createAt(hostElement: HTMLElement, displayConfig: any) {
