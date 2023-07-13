@@ -1,7 +1,7 @@
 import { BaseInputParser, DisplayProvider, Id } from "@lundin/age"
 import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
-import { ActionState, ChargeDashAction, MovementAction, ReleaseDashAction, SelectItemAction, SelectToolAction, UseItemAction, UseToolAction } from "../../state/game-update"
+import { ActionState, ChargeDashAction, MovementAction, ReleaseDashAction, SelectItemAction, SelectItemSetAction, SelectToolAction, UseItemAction, UseToolAction } from "../../state/game-update"
 import { AngleOf, DisplayState, InputMode } from "../state/display-state"
 import { Camera } from "./camera"
 import { Input } from "./input"
@@ -214,18 +214,29 @@ export class InputParser extends BaseInputParser<Input> {
 		const selectableItems = this.Game.Entities.SelectableItems.Get.Of(player)
 		if (!selectableItems)
 			return null
+
+		const currentItem = selectableItems.CurrentItemInSet
 		if (this.HasJustBeenPressed(Input.SelectNextItem))
-			return new SelectItemAction(player, selectableItems.CurrentItemInSet + 1)
+			return new SelectItemAction(player, currentItem + 1)
 		if (this.HasJustBeenPressed(Input.SelectPreviousItem))
-			return new SelectItemAction(player, selectableItems.CurrentItemInSet - 1)
+			return new SelectItemAction(player, currentItem - 1)
+
 		if (this.HasJustBeenPressed(this.SelectTopItemInput()))
-			return new SelectItemAction(player, 0)
+			return this.State.InputMode == InputMode.Selection && currentItem === 0
+				? new SelectItemSetAction(player, 0)
+				: new SelectItemAction(player, 0)
 		if (this.HasJustBeenPressed(this.SelectRightItemInput()))
-			return new SelectItemAction(player, 1)
+			return this.State.InputMode == InputMode.Selection && currentItem === 1
+				? new SelectItemSetAction(player, 1)
+				: new SelectItemAction(player, 1)
 		if (this.HasJustBeenPressed(this.SelectBottomItemInput()))
-			return new SelectItemAction(player, 2)
+			return this.State.InputMode == InputMode.Selection && currentItem === 2
+				? new SelectItemSetAction(player, 2)
+				: new SelectItemAction(player, 2)
 		if (this.HasJustBeenPressed(this.SelectLeftItemInput()))
-			return new SelectItemAction(player, 3)
+			return this.State.InputMode == InputMode.Selection && currentItem === 3
+				? new SelectItemSetAction(player, 3)
+				: new SelectItemAction(player, 3)
 	}
 
 	private ParseSelectTool(player: Id) {

@@ -67,6 +67,13 @@ export class SelectItemAction extends GameUpdate {
 	) { super() }
 }
 
+export class SelectItemSetAction extends GameUpdate {
+	constructor(
+		public Entity: Id,
+		public ItemSetIndex: number,
+	) { super() }
+}
+
 export class UseToolAction extends GameUpdate {
 	constructor(
 		public Entity: Id,
