@@ -73,4 +73,8 @@ export class Vector2 {
 	isZero() {
 		return this.x === 0 && this.y === 0
 	}
+
+	static Zero = new Vector2(0, 0)
 }
+
+Vector2.Zero.set = () => { throw new Error("Can't override zero vector") }

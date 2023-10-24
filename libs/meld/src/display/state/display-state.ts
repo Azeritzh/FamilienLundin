@@ -1,5 +1,5 @@
 import { BlockChunk, ScreenSize } from "@lundin/age"
-import { Vector3 } from "@lundin/utility"
+import { Rotate, Vector3 } from "@lundin/utility"
 import { DisplayConfig } from "./display-config"
 import { DisplayEntity } from "../display-entity-drawer"
 import { DisplayArea } from "../services/camera"
@@ -10,12 +10,12 @@ export class DisplayState {
 		public PlayerName: string = "",
 		public FractionOfTick = 0,
 		public FocusPoint = new Vector3(0, 0, 0),
-		public ViewDirection: ViewDirection = <ViewDirection>0,
+		public ViewDirection: ViewDirection = <ViewDirection>6,
 		public DisplayEntities: DisplayEntity[] = [],
 		public ShownLayers: { layer: number, area: DisplayArea }[] = [],
 		public VisibleBlocks: BlockChunk<boolean> = new BlockChunk([false]),
 		public PlayerIsBlocked = false,
-		public InputMode: InputMode =  <InputMode>0,
+		public InputMode: InputMode = <InputMode>0,
 	) { }
 
 	public static from(config: DisplayConfig, playerName: string) {
@@ -32,11 +32,18 @@ export class DisplayState {
 	}
 }
 
-export enum ViewDirection { North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest }
+export enum ViewDirection { North = 6, NorthEast = 7, East = 0, SouthEast = 1, South = 2, SouthWest = 3, West = 4, NorthWest = 5 }
 
-export function AngleOf(direction: ViewDirection) {
-	const oneEighthCircle = 0.25 * Math.PI
-	return oneEighthCircle * direction
+const tau = Math.PI * 2
+
+export function AngleFromNorth(direction: ViewDirection) {
+	const oneEighthCircle = 0.125 * tau
+	return Rotate(oneEighthCircle * direction, tau / 4)
+}
+
+export function ViewDirectionFromAngle(angle: number) {
+	angle = Rotate(angle, tau * 0.0625) // -1/16 circle for centering
+	return <ViewDirection>Math.floor(8 * angle / tau)
 }
 
 export enum InputMode { Normal, Selection, Camera }

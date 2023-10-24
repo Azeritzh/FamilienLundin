@@ -71,6 +71,6 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 	}
 
 	getNewActions() {
-		return this.inputParser.ParseInputs()
+		return this.inputParser.GetNewActions()
 	}
 }

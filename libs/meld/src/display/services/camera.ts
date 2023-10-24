@@ -3,7 +3,7 @@ import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
 import { BlockType } from "../../state/block"
 import { DisplayConfig } from "../state/display-config"
-import { AngleOf, DisplayState, ViewDirection } from "../state/display-state"
+import { AngleFromNorth, DisplayState, ViewDirection } from "../state/display-state"
 import { Visibility } from "./visibility"
 
 export class Camera {
@@ -47,7 +47,7 @@ export class Camera {
 	public FocusOn(entity: Id) {
 		this.SetCurrentPositionWith(
 			this.State.FocusPoint,
-			this.Game.Entities.Position.Get.Of(entity) ?? new Vector3(0, 0, 0),
+			this.Game.Entities.Position.Get.Of(entity) ?? Vector3.Zero,
 			this.Game.Entities.Velocity.Get.Of(entity),
 		)
 	}
@@ -214,10 +214,10 @@ export class Camera {
 
 	public RotateCamera(steps: number) {
 		this.State.ViewDirection += steps
-		if (this.State.ViewDirection > ViewDirection.NorthWest)
-			this.State.ViewDirection = ViewDirection.North
-		if (this.State.ViewDirection < ViewDirection.North)
-			this.State.ViewDirection = ViewDirection.NorthWest
+		if (this.State.ViewDirection > ViewDirection.NorthEast)
+			this.State.ViewDirection = ViewDirection.East
+		if (this.State.ViewDirection < ViewDirection.East)
+			this.State.ViewDirection = ViewDirection.NorthEast
 		this.UpdateDirections()
 	}
 
@@ -233,7 +233,7 @@ export class Camera {
 	}
 
 	private RotateAndRound(rotated: Vector3, vector: Vector3) {
-		rotated.setFrom(vector).rotateFrom(AngleOf(this.State.ViewDirection))
+		rotated.setFrom(vector).rotateFrom(AngleFromNorth(this.State.ViewDirection))
 		rotated.x = Math.round(rotated.x)
 		rotated.y = Math.round(rotated.y)
 		rotated.z = Math.round(rotated.z)

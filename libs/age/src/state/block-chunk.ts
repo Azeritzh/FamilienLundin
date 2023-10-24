@@ -4,7 +4,7 @@ export class BlockChunk<Field> {
 	constructor(
 		public Blocks: Field[],
 		public ChunkSize = new Vector3(10, 10, 1),
-		public Offset: Vector3 = new Vector3(0, 0, 0),
+		public Offset: Vector3 = new Vector3(0, 0, 0), // Don't use Vector3.Zero here (using set() in visibility)
 	) { }
 
 	Get(x: number, y: number, z: number) {

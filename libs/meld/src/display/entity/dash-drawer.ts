@@ -5,7 +5,7 @@ import { DashState } from "../../values/dash-state"
 import { Camera, Layer } from "../services/camera"
 import { DisplayConfig, DurationOf } from "../state/display-config"
 import { DisplayEntityDrawer } from "../display-entity-drawer"
-import { AngleOf, DisplayState } from "../state/display-state"
+import { AngleFromNorth, DisplayState } from "../state/display-state"
 import { EntityContext } from "./entity-context"
 
 export class DashDrawer {
@@ -25,12 +25,12 @@ export class DashDrawer {
 		if (!dashState)
 			return
 
-		const position = this.Game.Entities.Position.Get.Of(context.Entity) ?? new Vector3(0, 0, 0)
-		const velocity = this.Game.Entities.Velocity.Get.Of(context.Entity) ?? new Vector3(0, 0, 0)
+		const position = this.Game.Entities.Position.Get.Of(context.Entity) ?? Vector3.Zero
+		const velocity = this.Game.Entities.Velocity.Get.Of(context.Entity) ?? Vector3.Zero
 		if (this.ShouldShowRecharge(dashState))
 			this.Camera.DrawAnimated(this.Config.GameplaySprites.DashRecharge, Layer.Middle - Layer.ZFightingAdjustment, position, velocity, dashState.TimeOfLastDash + this.Game.Config.Constants.DashCooldown)
 		if (dashState.IsCharging)
-			this.Camera.DrawAnimated(this.Config.GameplaySprites.DashTarget, Layer.Middle, this.TargetPosition(dashState).addFrom(position), velocity, 0, dashState.Angle - AngleOf(this.State.ViewDirection))
+			this.Camera.DrawAnimated(this.Config.GameplaySprites.DashTarget, Layer.Middle, this.TargetPosition(dashState).addFrom(position), velocity, 0, dashState.Angle - AngleFromNorth(this.State.ViewDirection))
 		if (this.IsInQuickDashWindow(dashState))
 			this.ShowQuickDashAngle(dashState, position, velocity)
 	}
@@ -61,11 +61,11 @@ export class DashDrawer {
 	}
 
 	public OnDash(entity: Id, success: boolean, state: DashState) {
-		const position = this.Game.Entities.Position.Get.Of(entity) ?? new Vector3(0, 0, 0)
+		const position = this.Game.Entities.Position.Get.Of(entity) ?? Vector3.Zero
 		if (success) {
-			this.DisplayEntityDrawer.Add(this.Config.GameplaySprites.DashCloud, position, new Vector3(0, 0, 0))
+			this.DisplayEntityDrawer.Add(this.Config.GameplaySprites.DashCloud, position, Vector3.Zero)
 			if (state.IsCharging)
-				this.DisplayEntityDrawer.Add(this.Config.GameplaySprites.DashTargetFade, this.TargetPosition(state).addFrom(position), new Vector3(0, 0, 0), state.Angle - AngleOf(this.State.ViewDirection))
+				this.DisplayEntityDrawer.Add(this.Config.GameplaySprites.DashTargetFade, this.TargetPosition(state).addFrom(position), Vector3.Zero, state.Angle - AngleFromNorth(this.State.ViewDirection))
 		}
 		else
 			this.DisplayEntityDrawer.AddRelative(this.Config.GameplaySprites.DashFail, entity, new Vector3(1, 0, 0).rotate(state.Angle))

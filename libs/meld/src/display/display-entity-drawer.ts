@@ -36,8 +36,8 @@ export class DisplayEntityDrawer {
 
 	private DrawDisplayEntity(entity: DisplayEntity) {
 		if (entity.ParentEntity) {
-			const position = this.Game.Entities.Position.Get.Of(entity.ParentEntity) ?? new Vector3(0, 0, 0)
-			const velocity = this.Game.Entities.Velocity.Get.Of(entity.ParentEntity) ?? new Vector3(0, 0, 0)
+			const position = this.Game.Entities.Position.Get.Of(entity.ParentEntity) ?? Vector3.Zero
+			const velocity = this.Game.Entities.Velocity.Get.Of(entity.ParentEntity) ?? Vector3.Zero
 			this.Camera.DrawAnimated(entity.Sprite, Layer.Middle, position.add(entity.Position), velocity.add(entity.Velocity), entity.AnimationStart, entity.Rotation)
 		}
 		else {
@@ -63,8 +63,8 @@ export class DisplayEntityDrawer {
 		this.State.DisplayEntities.push({
 			Sprite: sprite,
 			ParentEntity: entity,
-			Position: position ?? new Vector3(0, 0, 0),
-			Velocity: velocity ?? new Vector3(0, 0, 0),
+			Position: position ?? Vector3.Zero,
+			Velocity: velocity ?? Vector3.Zero,
 			EndTick: this.Game.State.Globals.Tick + DurationOf(info),
 			AnimationStart: this.Game.State.Globals.Tick,
 			LastUpdate: this.Game.State.Globals.Tick,

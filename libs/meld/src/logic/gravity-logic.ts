@@ -22,11 +22,11 @@ export class GravityLogic implements GameLogic<GameUpdate> {
 	}
 
 	private updateEntity(entity: Id) {
-		const position = this.Position.CurrentlyOf(entity) ?? new Vector3(0, 0, 0)
+		const position = this.Position.CurrentlyOf(entity) ?? Vector3.Zero
 		if (this.hasGroundAt(position))
 			return
 
-		const velocity = this.Velocity.CurrentlyOf(entity) ?? new Vector3(0, 0, 0)
+		const velocity = this.Velocity.CurrentlyOf(entity) ?? Vector3.Zero
 		const newVelocity = velocity.withZ(velocity.z - this.Constants.GravityAcceleration)
 		this.SetVelocity.For(entity, newVelocity)
 	}

@@ -33,7 +33,7 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 
 
 	private CollisionVelocityChange(entity: Id, velocity: Vector3) {
-		const position = this.Position.CurrentlyOf(entity) ?? new Vector3(0, 0, 0)
+		const position = this.Position.CurrentlyOf(entity) ?? Vector3.Zero
 		const circularSize = this.CircularSize.CurrentlyOf(entity)
 		const area = circularSize
 			? Box.OccupiedArea(position, circularSize)

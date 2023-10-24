@@ -93,8 +93,8 @@ export class UseToolLogic implements GameLogic<GameUpdate> {
 	private UpdateState(entity: Id, state: ToolState) {
 		if (state.EndTime <= this.Globals.Tick)
 			return
-		const position = this.Position.CurrentlyOf(entity) ?? new Vector3(0, 0, 0)
-		const velocity = this.Velocity.CurrentlyOf(entity) ?? new Vector3(0, 0, 0)
+		const position = this.Position.CurrentlyOf(entity) ?? Vector3.Zero
+		const velocity = this.Velocity.CurrentlyOf(entity) ?? Vector3.Zero
 
 		const subEntities = this.UpdateSubEntities(state.SubEntities, velocity)
 

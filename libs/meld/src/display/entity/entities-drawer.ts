@@ -3,7 +3,7 @@ import { Rotate, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
 import { DisplayArea } from "../services/camera"
 import { DisplayConfig } from "../state/display-config"
-import { AngleOf, DisplayState } from "../state/display-state"
+import { AngleFromNorth, DisplayState } from "../state/display-state"
 import { EntitySprites } from "../state/entity-sprites"
 import { EntityContext } from "./entity-context"
 
@@ -47,9 +47,9 @@ export class EntitiesDrawer {
 		this.EntityContext.Entity = entity
 		this.EntityContext.EntitySprites = entitySprites
 		const orientation = this.Game.Entities.Orientation.Get.Of(entity) ?? 0
-		this.EntityContext.Orientation = Rotate(orientation, AngleOf(-this.State.ViewDirection))
-		this.EntityContext.Position = this.Game.Entities.Position.Get.Of(entity) ?? new Vector3(0, 0, 0)
-		this.EntityContext.Velocity = this.Game.Entities.Velocity.Get.Of(entity) ?? new Vector3(0, 0, 0)
+		this.EntityContext.Orientation = Rotate(orientation, -AngleFromNorth(this.State.ViewDirection))
+		this.EntityContext.Position = this.Game.Entities.Position.Get.Of(entity) ?? Vector3.Zero
+		this.EntityContext.Velocity = this.Game.Entities.Velocity.Get.Of(entity) ?? Vector3.Zero
 		this.EntityContext.ToolState = this.Game.Entities.ToolState.Get.Of(entity)
 	}
 }

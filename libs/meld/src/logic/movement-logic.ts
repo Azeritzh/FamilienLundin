@@ -39,8 +39,8 @@ export class MovementLogic implements GameLogic<GameUpdate> {
 	}
 
 	private UpdateVelocity(entity: Id) {
-		const targetVelocity = this.TargetVelocity.CurrentlyOf(entity) ?? new Vector3(0, 0, 0)
-		const oldVelocity = this.Velocity.Of(entity) ?? new Vector3(0, 0, 0)
+		const targetVelocity = this.TargetVelocity.CurrentlyOf(entity) ?? Vector3.Zero
+		const oldVelocity = this.Velocity.Of(entity) ?? Vector3.Zero
 		if (targetVelocity.x === oldVelocity.x && targetVelocity.y === oldVelocity.y)
 			return
 		const delta = targetVelocity.subtract(oldVelocity.withZ(0)) // we ignore the z axis, since we only control x and y

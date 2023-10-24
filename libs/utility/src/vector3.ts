@@ -131,3 +131,5 @@ export class Vector3 {
 
 	static Zero = new Vector3(0, 0, 0)
 }
+
+Vector3.Zero.set = () => { throw new Error("Can't override zero vector") }
