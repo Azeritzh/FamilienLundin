@@ -34,8 +34,10 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 	for (const key in deserialised.EntitySprites) {
 		const entry = deserialised.EntitySprites[key]
 		const sprites = new EntitySprites(
-			entry.Rotations.map(x => Object.assign(new RotationSprite(), x)),
-			entry.HammerStrike?.map(x => Object.assign(new RotationSprite(), x)),
+			entry.Idle.map(x => Object.assign(new RotationSprite(), x)),
+			entry.Walk?.map(x => Object.assign(new RotationSprite(), x)),
+			entry.Run?.map(x => Object.assign(new RotationSprite(), x)),
+			entry.Dash?.map(x => Object.assign(new RotationSprite(), x)),
 		)
 		entitySprites.set(gameConfig.EntityTypeMap.TypeIdFor(key), sprites)
 	}

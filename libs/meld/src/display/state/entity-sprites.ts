@@ -1,7 +1,9 @@
 export class EntitySprites {
 	constructor(
-		public Rotations: RotationSprite[],
-		public HammerStrike?: RotationSprite[]
+		public Idle: RotationSprite[],
+		public Walk?: RotationSprite[],
+		public Run?: RotationSprite[],
+		public Dash?: RotationSprite[],
 	) { }
 }
 

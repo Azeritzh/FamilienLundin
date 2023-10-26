@@ -267,61 +267,145 @@
 	},
 	"EntitySprites": {
 		"player": {
-			"Rotations": [
+			"Idle": [
 				{
 					"EndAngle": 0.0625,
-					"Sprite": "character-right"
+					"Sprite": "character-idle-right"
 				},
 				{
 					"EndAngle": 0.1875,
-					"Sprite": "character-bottom-right"
+					"Sprite": "character-idle-bottom-right"
 				},
 				{
 					"EndAngle": 0.3125,
-					"Sprite": "character-bottom"
+					"Sprite": "character-idle-bottom"
 				},
 				{
 					"EndAngle": 0.4375,
-					"Sprite": "character-bottom-left"
+					"Sprite": "character-idle-bottom-left"
 				},
 				{
 					"EndAngle": 0.5625,
-					"Sprite": "character-left"
+					"Sprite": "character-idle-left"
 				},
 				{
 					"EndAngle": 0.6875,
-					"Sprite": "character-top-left"
+					"Sprite": "character-idle-top-left"
 				},
 				{
 					"EndAngle": 0.8125,
-					"Sprite": "character-top"
+					"Sprite": "character-idle-top"
 				},
 				{
 					"EndAngle": 0.9375,
-					"Sprite": "character-top-right"
+					"Sprite": "character-idle-top-right"
 				}
 			],
-			"HammerStrike": [
+			"Walk": [
+				{
+					"EndAngle": 0.0625,
+					"Sprite": "character-walk-right"
+				},
 				{
 					"EndAngle": 0.1875,
-					"Sprite": "character-strike-right"
+					"Sprite": "character-walk-bottom-right"
 				},
 				{
 					"EndAngle": 0.3125,
-					"Sprite": "character-strike-bottom"
+					"Sprite": "character-walk-bottom"
+				},
+				{
+					"EndAngle": 0.4375,
+					"Sprite": "character-walk-bottom-left"
+				},
+				{
+					"EndAngle": 0.5625,
+					"Sprite": "character-walk-left"
 				},
 				{
 					"EndAngle": 0.6875,
-					"Sprite": "character-strike-left"
+					"Sprite": "character-walk-top-left"
 				},
 				{
 					"EndAngle": 0.8125,
-					"Sprite": "character-top"
+					"Sprite": "character-walk-top"
+				},
+				{
+					"EndAngle": 0.9375,
+					"Sprite": "character-walk-top-right"
+				}
+			],
+			"Run": [
+				{
+					"EndAngle": 0.0625,
+					"Sprite": "character-run-right"
+				},
+				{
+					"EndAngle": 0.1875,
+					"Sprite": "character-run-bottom-right"
+				},
+				{
+					"EndAngle": 0.3125,
+					"Sprite": "character-run-bottom"
+				},
+				{
+					"EndAngle": 0.4375,
+					"Sprite": "character-run-bottom-left"
+				},
+				{
+					"EndAngle": 0.5625,
+					"Sprite": "character-run-left"
+				},
+				{
+					"EndAngle": 0.6875,
+					"Sprite": "character-run-top-left"
+				},
+				{
+					"EndAngle": 0.8125,
+					"Sprite": "character-run-top"
+				},
+				{
+					"EndAngle": 0.9375,
+					"Sprite": "character-run-top-right"
+				}
+			],
+			"Dash": [
+				{
+					"EndAngle": 0.0625,
+					"Sprite": "character-dash-right"
+				},
+				{
+					"EndAngle": 0.1875,
+					"Sprite": "character-dash-bottom-right"
+				},
+				{
+					"EndAngle": 0.3125,
+					"Sprite": "character-dash-bottom"
+				},
+				{
+					"EndAngle": 0.4375,
+					"Sprite": "character-dash-bottom-left"
+				},
+				{
+					"EndAngle": 0.5625,
+					"Sprite": "character-dash-left"
+				},
+				{
+					"EndAngle": 0.6875,
+					"Sprite": "character-dash-top-left"
+				},
+				{
+					"EndAngle": 0.8125,
+					"Sprite": "character-dash-top"
+				},
+				{
+					"EndAngle": 0.9375,
+					"Sprite": "character-dash-top-right"
 				}
 			]
 		},
 		"slime": {
-			"Rotations": [
+			"Idle": [
 				{
 					"EndAngle": 1,
 					"Sprite": "slime"
@@ -406,29 +490,38 @@
 
 	"Sprites": {
 		"missing-sprite": { "type": "tileSize" },
-		"character-top-left": { "type": "defaultCharacter" },
-		"character-top": { "type": "defaultCharacter" },
-		"character-top-right": { "type": "defaultCharacter" },
-		"character-right": { "type": "defaultCharacter" },
-		"character-bottom-right": { "type": "defaultCharacter" },
-		"character-bottom": { "type": "defaultCharacter" },
-		"character-bottom-left": { "type": "defaultCharacter" },
-		"character-left": { "type": "defaultCharacter" },
-		"character-strike-left": {
-			"type": "defaultCharacter",
-			"framesX": 2,
-			"frameInterval": 0.34
-		},
-		"character-strike-right": {
-			"type": "defaultCharacter",
-			"framesX": 2,
-			"frameInterval": 0.34
-		},
-		"character-strike-bottom": {
-			"type": "defaultCharacter",
-			"framesX": 2,
-			"frameInterval": 0.34
-		},
+		"character-idle-top-left": { "type": "defaultCharacter" },
+		"character-idle-top": { "type": "defaultCharacter" },
+		"character-idle-top-right": { "type": "defaultCharacter" },
+		"character-idle-right": { "type": "defaultCharacter" },
+		"character-idle-bottom-right": { "type": "defaultCharacter" },
+		"character-idle-bottom": { "type": "defaultCharacter" },
+		"character-idle-bottom-left": { "type": "defaultCharacter" },
+		"character-idle-left": { "type": "defaultCharacter" },
+		"character-walk-top-left": { "type": "defaultCharacter" },
+		"character-walk-top": { "type": "defaultCharacter" },
+		"character-walk-top-right": { "type": "defaultCharacter" },
+		"character-walk-right": { "type": "defaultCharacter" },
+		"character-walk-bottom-right": { "type": "defaultCharacter" },
+		"character-walk-bottom": { "type": "defaultCharacter" },
+		"character-walk-bottom-left": { "type": "defaultCharacter" },
+		"character-walk-left": { "type": "defaultCharacter" },
+		"character-run-top-left": { "type": "defaultCharacter" },
+		"character-run-top": { "type": "defaultCharacter" },
+		"character-run-top-right": { "type": "defaultCharacter" },
+		"character-run-right": { "type": "defaultCharacter" },
+		"character-run-bottom-right": { "type": "defaultCharacter" },
+		"character-run-bottom": { "type": "defaultCharacter" },
+		"character-run-bottom-left": { "type": "defaultCharacter" },
+		"character-run-left": { "type": "defaultCharacter" },
+		"character-dash-top-left": { "type": "defaultCharacter" },
+		"character-dash-top": { "type": "defaultCharacter" },
+		"character-dash-top-right": { "type": "defaultCharacter" },
+		"character-dash-right": { "type": "defaultCharacter" },
+		"character-dash-bottom-right": { "type": "defaultCharacter" },
+		"character-dash-bottom": { "type": "defaultCharacter" },
+		"character-dash-bottom-left": { "type": "defaultCharacter" },
+		"character-dash-left": { "type": "defaultCharacter" },
 		"character-cylinder-top": {
 			"width": 20,
 			"height": 56,

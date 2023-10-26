@@ -19,7 +19,18 @@ export class StandardEntityDrawer {
 		this.EntityContext = context
 		if (this.IsPerformingToolAction())
 			this.DrawTool()
-		this.Camera.DrawAnimated(SpriteFor(context.EntitySprites.Rotations, context.Orientation), Layer.Middle, context.Position, context.Velocity)
+		this.Camera.DrawAnimated(SpriteFor(this.GetCurrentSprite(), context.Orientation), Layer.Middle, context.Position, context.Velocity)
+	}
+
+	private GetCurrentSprite() {
+		const speed = this.EntityContext.Velocity.Length()
+		if (speed > this.Game.Config.Constants.MaxMoveSpeed * 1.01)
+			return this.EntityContext.EntitySprites.Dash ?? this.EntityContext.EntitySprites.Idle
+		if (speed > this.Game.Config.Constants.MaxMoveSpeed * 0.75)
+			return this.EntityContext.EntitySprites.Run ?? this.EntityContext.EntitySprites.Idle
+		if (speed > this.Game.Config.Constants.MaxMoveSpeed * 0.01)
+			return this.EntityContext.EntitySprites.Walk ?? this.EntityContext.EntitySprites.Idle
+		return this.EntityContext.EntitySprites.Idle
 	}
 
 	private IsPerformingToolAction() {

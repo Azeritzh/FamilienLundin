@@ -53,6 +53,8 @@ export class Vector3 {
 		return Math.sqrt(this.lengthSquared())
 	}
 
+	Length = this.length
+
 	isZero() {
 		return this.x === 0 && this.y === 0 && this.z === 0
 	}
