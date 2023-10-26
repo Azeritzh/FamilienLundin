@@ -74,8 +74,9 @@ export function Rotate(source: number, angle: number) {
 	return source
 }
 
-
 export const MathF = {
 	Floor: Math.floor,
 	Tau: Math.PI * 2,
+	Min: Math.min,
+	Pow: Math.pow,
 }

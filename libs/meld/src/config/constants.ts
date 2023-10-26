@@ -25,6 +25,8 @@ export class Constants {
 		public QuickDashWindowStart: number,
 		public QuickDashWindowEnd: number,
 		public QuickDashMinimumAngle: number,
+		public MiningStartup: number,
+		public MiningRecovery: number,
 	) { }
 
 	RegionSize() {

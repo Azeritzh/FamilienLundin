@@ -29,19 +29,31 @@ export class StandardEntityDrawer {
 	private DrawTool() {
 		const state = this.EntityContext.ToolState
 
-		const animationProgress = (this.Game.State.Globals.Tick - state.StartTime) % 30
-		const rotation = (animationProgress / 30) * (MathF.Tau / 4)
+		const startup = this.Game.Config.Constants.MiningStartup
+		const recovery = this.Game.Config.Constants.MiningRecovery
+		const progress = (this.Game.State.Globals.Tick - state.StartTime) % (startup + recovery)
+		const rotation = progress < startup
+			? this.StartupRotation(progress / startup)
+			: this.RecoveryRotation((progress - startup) / recovery)
 		const targetBlock = new Vector3(MathF.Floor(state.Target.X), MathF.Floor(state.Target.Y), MathF.Floor(state.Target.Z))
-		const offset = new Vector2(0, -1.5).rotateFrom(rotation).addFromNumbers(-2, 0)
+		const offset = new Vector2(0, -1.25).rotateFrom(rotation).addFromNumbers(-1.75, 0.625)
 		const toolSprite = this.Config.ItemSprites.has(state.SourceItem.Type)
 			? this.Config.ItemSprites.get(state.SourceItem.Type)
 			: this.Config.BlockSprites.get(state.SourceItem.Content)[0].TileFor(ViewDirection.North)
 
 		this.Camera.Draw(toolSprite,
 			Layer.Middle,
-			targetBlock.addFrom(new Vector3(0.5, 0.5, 0.5)).addFrom(this.Camera.BottomTile),
+			targetBlock.addFrom(new Vector3(0.5, 0.5, 0.5)).addFrom(this.Camera.BottomTile.multiply(0.5)),
 			this.EntityContext.Velocity,
 			0, rotation,
 			null, 1, false, offset)
+	}
+
+	private StartupRotation(progress: number) {
+		return MathF.Pow(progress, 4) * (MathF.Tau / 4)
+	}
+
+	private RecoveryRotation(progress: number) {
+		return (1 - MathF.Min(progress, 1 - progress) * 0.25) * (MathF.Tau / 4)
 	}
 }

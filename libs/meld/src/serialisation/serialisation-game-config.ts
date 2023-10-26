@@ -56,6 +56,8 @@ function ConstantsFrom(serialised: any, entityTypeMap: TypeMap, itemTypeMap: Typ
 		Math.floor((serialised.QuickDashWindowStart ?? 6 / 60) * updatesPerSecond),
 		Math.floor((serialised.QuickDashWindowEnd ?? 60 / 60) * updatesPerSecond),
 		serialised.QuickDashMinimumAngle * Tau ?? Tau / 8,
+		Math.floor((serialised.MiningStartup ?? 20 / 60) * updatesPerSecond),
+		Math.floor((serialised.MiningRecovery ?? 10 / 60) * updatesPerSecond),
 	)
 }
 

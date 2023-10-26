@@ -38,7 +38,9 @@
 		"DashCooldown": 1,
 		"QuickDashWindowStart": 0.1,
 		"QuickDashWindowEnd": 1,
-		"QuickDashMinimumAngle": 0.125
+		"QuickDashMinimumAngle": 0.125,
+		"MiningStartup": 0.333,
+		"MiningRecovery": 0.166
 	},
 	"Lists": {
 		"RandomlySpawningMonsters": [ "slime" ]
