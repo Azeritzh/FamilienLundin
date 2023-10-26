@@ -69,12 +69,11 @@ export class Camera {
 		color: Vector3 = null,
 		alpha = 1,
 		allowTransparentInFrontOfPlayer = false,
-		pixelOffsetX = 0,
-		pixelOffsetY = 0
+		screenOffset: Vector2 = null
 	) {
 		const config = this.Config.Sprites[sprite]
 		const frame = this.AnimationFrame(config.frameInterval, config.framesX, config.framesY, animationStart)
-		this.Draw(sprite, layer, position, velocity, frame, rotation, color, alpha, allowTransparentInFrontOfPlayer, pixelOffsetX, pixelOffsetY)
+		this.Draw(sprite, layer, position, velocity, frame, rotation, color, alpha, allowTransparentInFrontOfPlayer, screenOffset)
 	}
 
 	private AnimationFrame(frameInterval: number, framesX: number, framesY: number, animationStart: number) {
@@ -96,13 +95,12 @@ export class Camera {
 		color: Vector3 = null,
 		alpha = 1,
 		allowTransparentInFrontOfPlayer = false,
-		pixelOffsetX = 0,
-		pixelOffsetY = 0
+		screenOffset: Vector2 = null
 	) {
 		const currentPosition = this.SetCurrentPositionWith(this.Adjustable, position, velocity)
 		this.AdjustForFocusAndCamera(currentPosition)
-		const screenX = this.ScreenXFor(currentPosition) + pixelOffsetX / this.Config.VirtualPixelsPerTile
-		const screenY = this.ScreenYFor(currentPosition) + pixelOffsetY / this.Config.VirtualPixelsPerTile
+		const screenX = this.ScreenXFor(currentPosition) + (screenOffset?.X ?? 0)
+		const screenY = this.ScreenYFor(currentPosition) + (screenOffset?.Y ?? 0)
 		if (allowTransparentInFrontOfPlayer && this.State.PlayerIsBlocked && this.IsInFrontOfPlayer(position, screenX, screenY))
 			alpha = this.Config.BlockingTransparencyAlpha
 		if (currentPosition.z < 0)

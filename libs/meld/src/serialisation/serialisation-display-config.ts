@@ -3,7 +3,6 @@ import { GameConfig } from "../config/game-config"
 import { BlockSprites, BlockTileOverlays, BlockWallOverlays } from "../display/state/block-sprites"
 import { DisplayConfig, GameplaySprites, SpriteInfo } from "../display/state/display-config"
 import { EntitySprites, RotationSprite } from "../display/state/entity-sprites"
-import { ItemAnimations } from "../display/state/item-animations"
 import { updatesPerSecond } from "../meld-game"
 import { SolidId } from "../state/block"
 import { ItemTypeId } from "../state/item"
@@ -72,7 +71,6 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 		BlockWallOverlays: blockWallOverlays,
 		EntitySprites: entitySprites,
 		ItemSprites: itemSprites,
-		ItemAnimations: ItemAnimations.From(deserialised.ItemAnimations ?? {}),
 		GameplaySprites: Object.assign(new GameplaySprites(), deserialised.GameplaySprites ?? {}),
 		Sprites: sprites,
 	}
@@ -116,7 +114,6 @@ export interface SerialisableDisplayConfig {
 	BlockWallOverlays?: { [index: string]: BlockWallOverlays },
 	EntitySprites?: { [index: string]: EntitySprites },
 	ItemSprites?: { [index: string]: string },
-	ItemAnimations?: ItemAnimations,
 	GameplaySprites?: GameplaySprites,
 	Sprites: { [index: string]: SerialisedSpriteInfo },
 

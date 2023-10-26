@@ -6,12 +6,25 @@ export class Vector2 {
 		public y: number,
 	) { }
 
+	get X() { return this.x }
+	set X(value: number) { this.x = value }
+	get Y() { return this.y }
+	set Y(value: number) { this.y = value }
+
 	static fromAngle(angle: number) {
 		return new Vector2(1, 0).rotate(angle) // TODO: double check that this is correct
 	}
 
 	add(vector: Vector2) {
 		return new Vector2(this.x + vector.x, this.y + vector.y)
+	}
+
+	addFrom(vector: Vector2) {
+		return this.set(this.x + vector.x, this.y + vector.y)
+	}
+
+	addFromNumbers(x: number, y: number) {
+		return this.set(this.x + x, this.y + y)
 	}
 
 	subtract(vector: Vector2) {
@@ -24,6 +37,12 @@ export class Vector2 {
 
 	rotate(angle: number) {
 		return new Vector2(
+			this.x * Math.cos(angle) - this.y * Math.sin(angle),
+			this.x * Math.sin(angle) + this.y * Math.cos(angle))
+	}
+
+	rotateFrom(angle: number) {
+		return this.set(
 			this.x * Math.cos(angle) - this.y * Math.sin(angle),
 			this.x * Math.sin(angle) + this.y * Math.cos(angle))
 	}
