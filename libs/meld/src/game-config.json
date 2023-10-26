@@ -41,7 +41,7 @@
 		"QuickDashMinimumAngle": 0.125
 	},
 	"Lists": {
-		"RandomlySpawningMonsters": []
+		"RandomlySpawningMonsters": [ "slime" ]
 	},
 	"EntityTypes": {
 		"player": {
@@ -54,6 +54,14 @@
 			"PlayerBehaviour": true,
 			"SelectableItems": true,
 			"SelectableTools": true
+		},
+		"slime": {
+			"BlockCollisionBehaviour": true,
+			"CircularSize": {
+				"Radius": 0.750,
+				"Height": 1
+			},
+			"GravityBehaviour": true
 		},
 		"despawning": {
 			"DespawnTime": 0

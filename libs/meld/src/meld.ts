@@ -22,6 +22,7 @@ import { DespawnLogic } from "./logic/despawn-logic"
 import { LoadPlayerLogic } from "./logic/load-player-logic"
 import { LoadingLogic } from "./logic/loading-logic"
 import { JumpLogic } from "./logic/jump-logic"
+import { SpawnMonsterLogic } from "./logic/spawn-monster-logic"
 
 export class Meld extends BaseGame<GameUpdate> {
 	constructor(
@@ -110,6 +111,15 @@ export class Meld extends BaseGame<GameUpdate> {
 			Entities.SelectableTools.Get,
 			Entities.SelectableTools.Set,
 		),
+		public readonly spawnMonsterLogic = new SpawnMonsterLogic(
+			Config,
+			State,
+			State.Globals,
+			Entities,
+			Entities.Position.Get,
+			Entities.Position.Set,
+			random
+		),
 		public readonly updateStateLogic = new UpdateStateLogic(
 			State,
 			Entities,
@@ -157,6 +167,7 @@ export class Meld extends BaseGame<GameUpdate> {
 			useToolLogic,
 			selectedItemLogic,
 			selectedToolLogic,
+			spawnMonsterLogic,
 			despawnLogic,
 
 			loadPlayerLogic,

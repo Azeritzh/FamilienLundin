@@ -320,7 +320,14 @@
 				}
 			]
 		},
-		"despawning": { "Rotations": [] }
+		"slime": {
+			"Rotations": [
+				{
+					"EndAngle": 1,
+					"Sprite": "slime"
+				}
+			]
+		}
 	},
 	"ItemSprites": {
 		"basic-hammer": "hammer"
