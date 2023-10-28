@@ -5,6 +5,7 @@ import { GameConfig } from "../config/game-config"
 import { GameState } from "../state/game-state"
 import { GameUpdate } from "../state/game-update"
 import { MeldEntities } from "../state/meld-entities"
+import { VariationProvider } from "../variation-provider"
 
 export class LoadingLogic implements GameLogic<GameUpdate> {
 	constructor(
@@ -81,9 +82,5 @@ export class LoadingLogic implements GameLogic<GameUpdate> {
 }
 
 interface StateProvider {
-	hej
-}
-
-interface VariationProvider {
 	hej
 }

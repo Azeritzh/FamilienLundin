@@ -139,7 +139,7 @@ export class SerialisableEntities {
 
 	public static ToEntityValues(serialised: Map<Id, GroupedEntityValues>): EntityValues {
 		const entityValues = new EntityValues()
-		for (const [id, values] of serialised)
+		for (const [id, values] of serialised.entries())
 			entityValues.AddValuesFrom(id, values)
 		return entityValues
 	}

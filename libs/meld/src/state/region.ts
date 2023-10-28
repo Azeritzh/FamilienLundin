@@ -147,6 +147,7 @@ export class SerialisableBlockChunk {
 	public ToBlockChunk(): BlockChunk<Block> {
 		return new BlockChunk<Block>(
 			[...this.Blocks],
+			this.Size,
 			this.Offset
 		)
 	}

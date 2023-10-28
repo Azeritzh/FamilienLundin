@@ -4,7 +4,7 @@ import { GameConfig } from "../config/game-config"
 import { Version } from "../config/version"
 import { GroupedEntityValues, SerialisableEntities } from "../state/entity-values"
 import { GameState } from "../state/game-state"
-import { Region, SerialisableRegion } from "../state/region"
+import { Region, SerialisableBlockChunk, SerialisableRegion } from "../state/region"
 import { DashState } from "../values/dash-state"
 import { SelectableItems } from "../values/selectable-items"
 import { SelectableTools } from "../values/selectable-tools"
@@ -63,6 +63,19 @@ function serialiseGameState(state: GameState, config: GameConfig = null): Serial
 }
 
 function gameStateFrom(config: GameConfig, deserialised: SerialisableGameState) {
+	deserialised.Regions = deserialised.Regions.map(x => Object.assign(new SerialisableRegion(null, null, null, null, null, null), x))
+	for (const region of deserialised.Regions) {
+		region.Chunks = region.Chunks.map(x => Object.assign(new SerialisableBlockChunk(null, null, null), x))
+		for (const chunk of region.Chunks) {
+			chunk.Offset = Object.assign(new Vector3(0, 0, 0), chunk.Offset)
+			chunk.Size = Object.assign(new Vector3(0, 0, 0), chunk.Size)
+		}
+		region.ChunkSize = Object.assign(new Vector3(0, 0, 0), region.ChunkSize)
+		region.Offset = Object.assign(new Vector3(0, 0, 0), region.Offset)
+		region.Size = Object.assign(new Vector3(0, 0, 0), region.Size)
+		region.EntityValues = new Map(Object.entries(region.EntityValues).map(([k, v]) => [+k, v]))
+	}
+
 	const version = new Version(
 		new TypeMap(new Map(deserialised.Version.EntityTypeMap)),
 		new TypeMap(new Map(deserialised.Version.SolidTypeMap)),

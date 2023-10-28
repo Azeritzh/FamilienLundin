@@ -21,7 +21,7 @@ import { EntityShadowDrawer } from "./entity/entity-shadow-drawer"
 
 export class MeldDisplay implements BaseDisplay<GameUpdate> {
 	constructor(
-		private Config: DisplayConfig,
+		public Config: DisplayConfig,
 		private Settings: DisplaySettings,
 		private Game: Meld,
 		private Display: HtmlDisplayProvider,

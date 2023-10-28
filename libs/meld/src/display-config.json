@@ -522,30 +522,6 @@
 		"character-dash-bottom": { "type": "defaultCharacter" },
 		"character-dash-bottom-left": { "type": "defaultCharacter" },
 		"character-dash-left": { "type": "defaultCharacter" },
-		"character-cylinder-top": {
-			"width": 20,
-			"height": 56,
-			"centerX": 10,
-			"centerY": 46
-		},
-		"character-cylinder-right": {
-			"width": 20,
-			"height": 56,
-			"centerX": 10,
-			"centerY": 46
-		},
-		"character-cylinder-bottom": {
-			"width": 20,
-			"height": 56,
-			"centerX": 10,
-			"centerY": 46
-		},
-		"character-cylinder-left": {
-			"width": 20,
-			"height": 56,
-			"centerX": 10,
-			"centerY": 46
-		},
 		"slime": {
 			"width": 32,
 			"height": 32,

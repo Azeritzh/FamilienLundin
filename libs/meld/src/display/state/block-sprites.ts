@@ -2,6 +2,7 @@ import { ViewDirection } from "./display-state"
 
 export class BlockSprites {
 	constructor(
+		public Weight: number,
 		public TileNorth: string,
 		public TileNorthEast: string,
 		public TileEast: string,

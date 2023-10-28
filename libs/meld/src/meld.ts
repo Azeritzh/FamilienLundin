@@ -23,9 +23,11 @@ import { LoadPlayerLogic } from "./logic/load-player-logic"
 import { LoadingLogic } from "./logic/loading-logic"
 import { JumpLogic } from "./logic/jump-logic"
 import { SpawnMonsterLogic } from "./logic/spawn-monster-logic"
+import { VariationProvider } from "./variation-provider"
 
 export class Meld extends BaseGame<GameUpdate> {
 	constructor(
+		private readonly variationProvider: VariationProvider,
 		public readonly Config: GameConfig,
 		public readonly State = new GameState(new Globals(), new EntityValues()),
 		public readonly changes = new Changes(new EntityValues()),
@@ -76,7 +78,7 @@ export class Meld extends BaseGame<GameUpdate> {
 			State,
 			Entities,
 			null, // persistenceProvider,
-			null // variationProvider
+			variationProvider
 		),
 		public readonly loadPlayerLogic = new LoadPlayerLogic(
 			Config,

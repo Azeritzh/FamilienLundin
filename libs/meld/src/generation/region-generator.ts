@@ -1,8 +1,9 @@
 import { Random } from "@lundin/age"
 import { GridVector } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
-import { Block, Blocks, SolidId } from "../state/block"
+import { Blocks } from "../state/block"
 import { Region as StateRegion } from "../state/region"
+import { BlockSurroundings, VariationProvider } from "../variation-provider"
 
 export class RegionGenerator {
 	constructor(
@@ -87,30 +88,4 @@ export class RegionGenerator {
 		const variation = this.VariationProvider.GetVariationFor(this.Surroundings, this.random.Float())
 		return Blocks.WithVariation(block, variation)
 	}
-}
-
-// TODO: put in other file:
-interface VariationProvider {
-	HasVariation(solid: SolidId): boolean
-	GetVariationFor(surroundings: BlockSurroundings, random: number): number
-}
-
-export class DummyVariationProvider implements VariationProvider {
-	HasVariation(): boolean {
-		return false
-	}
-
-	GetVariationFor(): number {
-		return 0
-	}
-}
-
-class BlockSurroundings {
-	constructor(
-		public Block: Block,
-		public NorthBlock: Block,
-		public EastBlock: Block,
-		public SouthBlock: Block,
-		public WestBlock: Block,
-	) { }
 }

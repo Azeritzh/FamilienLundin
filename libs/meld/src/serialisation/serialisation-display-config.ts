@@ -135,6 +135,7 @@ interface SerialisedSpriteInfo {
 }
 
 interface SerialisableBlockSprites {
+	Weight?: number,
 	StraightTile?: string,
 	StraightFullWall?: string,
 	StraightHalfWall?: string,
@@ -172,6 +173,7 @@ interface SerialisableBlockSprites {
 
 function BlockSpritesFrom(sprites: SerialisableBlockSprites) {
 	return new BlockSprites(
+		sprites.Weight ?? sprites.Weight ?? 1,
 		sprites.TileNorth ?? sprites.StraightTile ?? "missing-sprite",
 		sprites.TileNorthEast ?? sprites.DiagonalTile ?? "missing-sprite",
 		sprites.TileEast ?? sprites.StraightTile ?? "missing-sprite",
