@@ -1,4 +1,4 @@
-import { Block, SolidId } from "./state/block"
+import { Block, Blocks, SolidId } from "./state/block"
 
 export interface VariationProvider {
 	HasVariation(solid: SolidId): boolean
@@ -12,5 +12,17 @@ export class BlockSurroundings {
 		public EastBlock: Block,
 		public SouthBlock: Block,
 		public WestBlock: Block,
+		public NorthBorder?: Block,
+		public EastBorder?: Block,
+		public SouthBorder?: Block,
+		public WestBorder?: Block,
 	) { }
+
+	public UpdateBorderInfo() {
+		const type = Blocks.TypeOf(this.Block)
+		this.NorthBorder = Blocks.TypeOf(this.NorthBlock) === type ? Blocks.SolidOf(this.NorthBlock) : null
+		this.EastBorder = Blocks.TypeOf(this.EastBlock) === type ? Blocks.SolidOf(this.EastBlock) : null
+		this.SouthBorder = Blocks.TypeOf(this.SouthBlock) === type ? Blocks.SolidOf(this.SouthBlock) : null
+		this.WestBorder = Blocks.TypeOf(this.WestBlock) === type ? Blocks.SolidOf(this.WestBlock) : null
+	}
 }

@@ -24,6 +24,7 @@ import { LoadingLogic } from "./logic/loading-logic"
 import { JumpLogic } from "./logic/jump-logic"
 import { SpawnMonsterLogic } from "./logic/spawn-monster-logic"
 import { VariationProvider } from "./variation-provider"
+import { ChangeBlockService } from "./services/change-block-service"
 
 export class Meld extends BaseGame<GameUpdate> {
 	constructor(
@@ -34,6 +35,7 @@ export class Meld extends BaseGame<GameUpdate> {
 		public readonly Terrain = new TerrainManager(Config.Constants.RegionSize(), Config.Constants.DefaultBlock, State.Regions, changes.UpdatedBlocks, State.Globals.WorldBounds),
 		public readonly Entities = new MeldEntities(Config.EntityTypeValues, State.EntityValues, changes.EntityValues, State),
 		readonly random = new Random(State.Globals.Tick + State.Globals.Seed),
+		readonly changeBlockService = new ChangeBlockService(Terrain, variationProvider, random),
 
 		public readonly blockCollisionLogic = new BlockCollisionLogic(
 			Config.Constants,
@@ -130,14 +132,14 @@ export class Meld extends BaseGame<GameUpdate> {
 		),
 		public readonly useItemLogic = new UseItemLogic(
 			Config,
-			Terrain,
+			changeBlockService,
 			Entities.SelectableItems.Get,
 		),
 		public readonly useToolLogic = new UseToolLogic(
 			Config,
 			State.Globals,
 			Entities,
-			Terrain,
+			changeBlockService,
 			Entities.DespawnTime.Set,
 			Entities.Position.Get,
 			Entities.Position.Set,

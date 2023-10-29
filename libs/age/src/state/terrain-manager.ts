@@ -6,9 +6,10 @@ export interface ITerrainManager<Field> {
 	WorldBounds: Box
 
 	Get(x: number, y: number, z?: number): Field
-	Set(field: Field, x: number, y: number, z?: number): void
+	Set(x: number, y: number, z: number, field: Field): void
 	GetAt(position: Vector3): Field
 	SetAt(position: Vector3, field: Field): void
+	UpdatedAt(x: number, y: number, z: number): Field
 
 	ApplyUpdatedValues(): void
 }
@@ -27,7 +28,7 @@ export class TerrainManager<Field, Region extends FieldRegion<Field>> implements
 	}
 
 	public SetAt(position: Vector3, field: Field) {
-		this.Set(field, position.x, position.y, position.z)
+		this.Set(position.x, position.y, position.z, field)
 	}
 
 	public Get(x: number, y: number, z = 0) {
@@ -47,7 +48,7 @@ export class TerrainManager<Field, Region extends FieldRegion<Field>> implements
 			?? this.DefaultBlock
 	}
 
-	public Set(field: Field, x: number, y: number, z = 0) {
+	public Set(x: number, y: number, z: number, field: Field) {
 		x = Math.floor(x)
 		y = Math.floor(y)
 		z = Math.floor(z)
@@ -60,6 +61,10 @@ export class TerrainManager<Field, Region extends FieldRegion<Field>> implements
 		}
 
 		this.UpdatedBlocks.set(Vector3.stringify(x, y, z), field)
+	}
+
+	public UpdatedAt(x: number, y: number, z: number) {
+		return this.UpdatedBlocks.get(Vector3.stringify(x, y, z)) ?? this.Get(x, y, z)
 	}
 
 	public ApplyUpdatedValues() {

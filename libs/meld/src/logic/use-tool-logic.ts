@@ -1,12 +1,11 @@
-import { GameLogic, Id, TerrainManager, ValueGetter, ValueSetter } from "@lundin/age"
+import { GameLogic, Id, ValueGetter, ValueSetter } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
-import { Block, BlockType, Blocks } from "../state/block"
+import { ChangeBlockService } from "../services/change-block-service"
 import { ActionState, GameUpdate, UseToolAction } from "../state/game-update"
 import { Globals } from "../state/globals"
 import { Item, ItemKind } from "../state/item"
 import { MeldEntities } from "../state/meld-entities"
-import { Region } from "../state/region"
 import { SelectableTools } from "../values/selectable-tools"
 import { ToolAction, ToolState } from "../values/tool-state"
 
@@ -15,7 +14,7 @@ export class UseToolLogic implements GameLogic<GameUpdate> {
 		private Config: GameConfig,
 		private Globals: Globals,
 		private Entities: MeldEntities,
-		private Terrain: TerrainManager<Block, Region>,
+		private ChangeBlockService: ChangeBlockService,
 		private SetDespawnTime: ValueSetter<number>,
 		private Position: ValueGetter<Vector3>,
 		private SetPosition: ValueSetter<Vector3>,
@@ -127,7 +126,7 @@ export class UseToolLogic implements GameLogic<GameUpdate> {
 	}
 
 	private HammerStrikeHit(state: ToolState, position: Vector3, velocity: Vector3) {
-		this.MineBlockAt(state.Target)
+		this.ChangeBlockService.DestroyBlock(state.Target, true)
 		return this.CreateHitFor(position, velocity)
 	}
 
@@ -136,15 +135,5 @@ export class UseToolLogic implements GameLogic<GameUpdate> {
 		this.SetPosition.For(subEntity, new Vector3(0, 1, 0.5).addFrom(position).addFrom(velocity))
 		this.SetDespawnTime.For(subEntity, this.Globals.Tick + 3)
 		return subEntity
-	}
-
-	private MineBlockAt(target: Vector3) {
-		const currentBlock = this.Terrain.GetAt(target)
-		if (Blocks.TypeOf(currentBlock) == BlockType.Floor)
-			this.Terrain.SetAt(target, Blocks.NewEmpty(Blocks.NonSolidOf(currentBlock)))
-		else if (Blocks.TypeOf(currentBlock) == BlockType.Half)
-			this.Terrain.SetAt(target, Blocks.NewFloor(Blocks.SolidOf(currentBlock), Blocks.NonSolidOf(currentBlock)))
-		else if (Blocks.TypeOf(currentBlock) == BlockType.Full)
-			this.Terrain.SetAt(target, Blocks.NewHalf(Blocks.SolidOf(currentBlock), Blocks.NonSolidOf(currentBlock)))
 	}
 }
