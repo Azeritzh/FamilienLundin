@@ -47,6 +47,7 @@ export class StandardEntityDrawer {
 			? this.StartupRotation(progress / startup)
 			: this.RecoveryRotation((progress - startup) / recovery)
 		const targetBlock = new Vector3(MathF.Floor(state.Target.X), MathF.Floor(state.Target.Y), MathF.Floor(state.Target.Z))
+		const hammerPosition = targetBlock.addFrom(new Vector3(0.5, 0.5, 0.5)).addFrom(this.Camera.BottomTile.multiply(0.5))
 		const offset = new Vector2(0, -1.25).rotateFrom(rotation).addFromNumbers(-1.75, 0.625)
 		const toolSprite = this.Config.ItemSprites.has(state.SourceItem.Type)
 			? this.Config.ItemSprites.get(state.SourceItem.Type)
@@ -54,10 +55,18 @@ export class StandardEntityDrawer {
 
 		this.Camera.Draw(toolSprite,
 			Layer.Middle,
-			targetBlock.addFrom(new Vector3(0.5, 0.5, 0.5)).addFrom(this.Camera.BottomTile.multiply(0.5)),
+			hammerPosition,
 			this.EntityContext.Velocity,
 			0, rotation,
 			null, 1, false, offset)
+
+		const markerOffset = new Vector2(0, -0.875).rotateFrom(rotation).addFromNumbers(-1.75, 0.625)
+		this.Camera.Draw(this.Config.GameplaySprites.StandardMarker,
+			Layer.Middle - Layer.ZFightingAdjustment,
+			hammerPosition,
+			this.EntityContext.Velocity,
+			0, rotation,
+			null, 1, false, markerOffset)
 	}
 
 	private StartupRotation(progress: number) {

@@ -466,6 +466,7 @@
 		"basic-hammer": "hammer"
 	},
 	"GameplaySprites": {
+		"StandardMarker": "standard-marker",
 		"ShadowSmall": "shadow-medium",
 		"ShadowMedium": "shadow-medium",
 		"ShadowBig": "shadow-medium",
@@ -945,6 +946,12 @@
 			"framesX": 4,
 			"framesY": 3,
 			"frameInterval": 0.085
+		},
+		"standard-marker": {
+			"type": "tileSize",
+			"framesX": 2,
+			"framesY": 2,
+			"frameInterval": 0.1
 		},
 		"shadow-medium": {
 			"width": 20,

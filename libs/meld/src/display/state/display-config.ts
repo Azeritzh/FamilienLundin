@@ -29,6 +29,7 @@ export interface DisplayConfig {
 
 export class GameplaySprites {
 	constructor(
+		public StandardMarker = "missing-sprite",
 		public ShadowSmall = "missing-sprite",
 		public ShadowMedium = "missing-sprite",
 		public ShadowBig = "missing-sprite",
