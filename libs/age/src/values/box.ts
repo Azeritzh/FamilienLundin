@@ -1,4 +1,4 @@
-import { Vector3 } from "@lundin/utility"
+import { Contain, Vector3 } from "@lundin/utility"
 import { CircularSize } from "./circular-size"
 
 export class Box { // struct
@@ -60,21 +60,10 @@ export class Box { // struct
 	/// This is like 5%3 -> 2, but instead 5 is a box and 3 and 2 are vectors.
 	/// </summary>
 	public Contain(position: Vector3) {
-		let x = position.x
-		if (x < this.MinX)
-			x += (this.MaxX - this.MinX)
-		else if (x >= this.MaxX)
-			x -= (this.MaxX - this.MinX)
-		let y = position.y
-		if (y < this.MinY)
-			y += this.MaxY - this.MinY
-		else if (y >= this.MaxY)
-			y -= (this.MaxY - this.MinY)
-		let z = position.z
-		if (z < this.MinZ)
-			z += this.MaxZ - this.MinZ
-		else if (z >= this.MaxZ)
-			z -= (this.MaxZ - this.MinZ)
-		return new Vector3(x, y, z)
+		return new Vector3(
+			Contain(position.X, this.MinX, this.MaxX),
+			Contain(position.Y, this.MinY, this.MaxY),
+			Contain(position.Z, this.MinZ, this.MaxZ)
+		)
 	}
 }

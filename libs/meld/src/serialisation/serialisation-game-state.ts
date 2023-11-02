@@ -63,7 +63,7 @@ function serialiseGameState(state: GameState, config: GameConfig = null): Serial
 }
 
 function gameStateFrom(config: GameConfig, deserialised: SerialisableGameState) {
-	deserialised.Regions = deserialised.Regions.map(x => Object.assign(new SerialisableRegion(null, null, null, null, null, null), x))
+	deserialised.Regions = deserialised.Regions.map(x => Object.assign(new SerialisableRegion(null, null, null, null, null, null, null), x))
 	for (const region of deserialised.Regions) {
 		region.Chunks = region.Chunks.map(x => Object.assign(new SerialisableBlockChunk(null, null, null), x))
 		for (const chunk of region.Chunks) {

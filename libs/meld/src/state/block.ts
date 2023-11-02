@@ -4,12 +4,12 @@ export type NonSolidId = number
 
 const TypeMask = 0x00000003
 //const TypeOffset = 0
-export const VariantMask = 0x000000FC
-export const VariantOffset = 2
+export const NonSolidMask = 0x000000FC
+export const NonSolidOffset = 2
 export const SolidMask = 0x00FFFF00
 export const SolidOffset = 8
-export const NonSolidMask = 0xFF000000
-export const NonSolidOffset = 24
+export const VariantMask = 0xFF000000
+export const VariantOffset = 24
 
 export class Blocks {
 	public static New(type: BlockType, solid: SolidId, nonSolid: NonSolidId, variant = 0): Block {

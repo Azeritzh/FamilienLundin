@@ -45,4 +45,12 @@ export class FieldRegion<Field> {
 		const chunkZ = Math.floor((z - this.Offset.Z) / this.ChunkSize.Z)
 		return chunkX + chunkY * xSizeInChunks + chunkZ * xSizeInChunks * ySizeInChunks
 	}
+
+	public Contains(x: number,  y: number, z: number) {
+		const Offset = this.Offset
+		const Size = this.Size
+		return Offset.X <= x && x < (Offset.X + Size.X)
+			&& Offset.Y <= y && y < (Offset.Y + Size.Y)
+			&& Offset.Z <= z && z < (Offset.Z + Size.Z)
+	}
 }

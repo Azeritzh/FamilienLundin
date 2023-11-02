@@ -44,7 +44,7 @@ export class LoadPlayerLogic implements GameLogic<GameUpdate> {
 	private SpawnPlayer(player: string) {
 		const Config = this.Config
 		const id = this.Entities.Create(Config.Constants.PlayerType)
-		this.Entities.Position.Set.For(id, new Vector3(0, 0, 0))
+		this.Entities.Position.Set.For(id, new Vector3(0, 0, 5))
 
 		const items = [
 			new Item(Config.Constants.SolidItemType, Config.SolidTypeMap.TypeIdFor("grass-rich"), 0),

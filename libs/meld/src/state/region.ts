@@ -4,6 +4,7 @@ import { GameConfig } from "../config/game-config"
 import { Version } from "../config/version"
 import { Block, Blocks } from "./block"
 import { EntityValues, GroupedEntityValues, SerialisableEntities } from "./entity-values"
+import { OverworldGeneration } from "./overworld-generation"
 
 export class Region extends FieldRegion<Block>{
 	constructor(
@@ -11,12 +12,13 @@ export class Region extends FieldRegion<Block>{
 		public ChunkSize: GridVector,
 		public Offset: GridVector,
 		public Chunks: BlockChunk<Block>[],
-		public EntityValues: EntityValues
+		public EntityValues: EntityValues,
+		public OverworldGeneration: OverworldGeneration,
 	) { super(Size, ChunkSize, Offset, Chunks) }
 
 	public RegionCoords = () => RegionCoordsFor(this.Offset.X, this.Offset.Y, this.Offset.Z, this.Size)
 
-	public static New(regionCoords: GridVector, sizeInChunks: GridVector, chunkSize: GridVector): Region {
+	public static New(regionCoords: GridVector, sizeInChunks: GridVector, chunkSize: GridVector, overworldGeneration: OverworldGeneration): Region {
 		const size = new Vector3(
 			sizeInChunks.X * chunkSize.X,
 			sizeInChunks.Y * chunkSize.Y,
@@ -43,7 +45,8 @@ export class Region extends FieldRegion<Block>{
 			chunkSize,
 			offset,
 			chunks,
-			new EntityValues()
+			new EntityValues(),
+			overworldGeneration,
 		)
 	}
 
@@ -68,6 +71,7 @@ export class SerialisableRegion {
 		public Offset: GridVector,
 		public Chunks: SerialisableBlockChunk[],
 		public EntityValues: Map<Id, GroupedEntityValues>,
+		public OverworldGeneration: OverworldGeneration,
 	) { }
 
 	static fromDeserialised(source: any) { // TODO
@@ -82,7 +86,8 @@ export class SerialisableRegion {
 			new Vector3(0, 0, 0),
 			new Vector3(0, 0, 0),
 			source.Chunks.map(x => SerialisableBlockChunk.From(x)),
-			SerialisableEntities.From(source.EntityValues)
+			SerialisableEntities.From(source.EntityValues),
+			source.OverworldGeneration,
 		)
 	}
 
@@ -98,7 +103,8 @@ export class SerialisableRegion {
 			state.ChunkSize,
 			state.Offset,
 			state.Chunks.map(x => SerialisableBlockChunk.From(x)),
-			SerialisableEntities.From(state.EntityValues)
+			SerialisableEntities.From(state.EntityValues),
+			state.OverworldGeneration,
 		)
 	}
 
@@ -118,7 +124,8 @@ export class SerialisableRegion {
 			this.ChunkSize,
 			this.Offset,
 			chunks,
-			SerialisableEntities.ToEntityValuesWithMapping(this.EntityValues, entityMap, solidMap, nonSolidMap)
+			SerialisableEntities.ToEntityValuesWithMapping(this.EntityValues, entityMap, solidMap, nonSolidMap),
+			this.OverworldGeneration,
 		)
 	}
 
@@ -130,7 +137,8 @@ export class SerialisableRegion {
 			this.ChunkSize,
 			this.Offset,
 			chunks,
-			SerialisableEntities.ToEntityValues(this.EntityValues)
+			SerialisableEntities.ToEntityValues(this.EntityValues),
+			this.OverworldGeneration,
 		)
 	}
 

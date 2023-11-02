@@ -12,6 +12,7 @@ import { readDisplaySettings } from "./serialisation/serialisation-display-setti
 import { readGameConfig } from "./serialisation/serialisation-game-config"
 import { createGameState, readGameState } from "./serialisation/serialisation-game-state"
 import { GameUpdate, LoadPlayer, LoadRegion, LoadState } from "./state/game-update"
+import { OverworldGeneration } from "./state/overworld-generation"
 
 export const updatesPerSecond = 60
 
@@ -25,12 +26,12 @@ export class MeldGame extends GameRunner<GameUpdate> {
 	) {
 		super(meldDisplay, meld, updatesPerSecond)
 		this.resizeObserver.observe(hostElement)
-		const saved = localStorage["meld-save-0.4"]
+		const saved = null// = localStorage["meld-save-0.4"]
 		if (saved)
 			this.actions.push(new LoadState(readGameState(meld.Config, JSON.parse(saved))))
 		else
 			this.actions.push(
-				new LoadRegion(new RegionGenerator(meld.Config, new DisplayVariationProvider(meldDisplay.Config), new Vector3(0, 0, 0), 0, 0).Generate()),
+				new LoadRegion(new RegionGenerator(meld.Config, new DisplayVariationProvider(meldDisplay.Config), new Vector3(0, 0, 0), this.DefaultGeneration(), 0, 0).Generate()),
 				new LoadPlayer("insertPlayerName"),
 			)
 		window.addEventListener("unload", this.onUnload)
@@ -66,5 +67,9 @@ export class MeldGame extends GameRunner<GameUpdate> {
 		this.resizeObserver.disconnect()
 		window.removeEventListener("visibilitychanged", this.onUnload)
 		this.saveGame()
+	}
+
+	private DefaultGeneration() { // TODO: figure this out from a combination of procedural generation and loading from existing regions 
+		return new OverworldGeneration("default", 0, 0, 0, 0, "grass-rich", "grass-rich", "grass-rich", "grass-rich")
 	}
 }

@@ -68,4 +68,11 @@ export class ChangeBlockService {
 		const variation = this.VariationProvider.GetVariationFor(surroundings, this.Random.Float())
 		return Blocks.WithVariation(block, variation)
 	}
+
+	public static GetVariationFor(block: Block, surroundings: BlockSurroundings, variationProvider: VariationProvider, random: Random) {
+		if (!variationProvider.HasVariation(Blocks.SolidOf(block)))
+			return block
+		const variation = variationProvider.GetVariationFor(surroundings, random.Float())
+		return Blocks.WithVariation(block, variation)
+	}
 }

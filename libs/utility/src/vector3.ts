@@ -1,3 +1,5 @@
+import { Contain } from "./utility"
+
 export type GridVector = Vector3
 
 export class Vector3 {
@@ -129,6 +131,14 @@ export class Vector3 {
 			this.x * Math.cos(angle) - this.y * Math.sin(angle),
 			this.x * Math.sin(angle) + this.y * Math.cos(angle),
 			0)
+	}
+
+	Contain(position: Vector3){
+		return new Vector3(
+			Contain(position.X, 0, this.X),
+			Contain(position.Y, 0, this.Y),
+			Contain(position.Z, 0, this.Z),
+		)
 	}
 
 	static Zero = new Vector3(0, 0, 0)

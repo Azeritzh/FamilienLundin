@@ -9,7 +9,7 @@ export class Random {
 	}
 
 	Generate() {
-		// TODO
+		return Math.floor(Math.random() * 4294967295) // TODO: make something based on the seed instead
 	}
 
 	Int(max: number) {

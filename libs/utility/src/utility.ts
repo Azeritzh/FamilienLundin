@@ -75,8 +75,20 @@ export function Rotate(source: number, angle: number) {
 }
 
 export const MathF = {
+	Ceiling: Math.ceil,
 	Floor: Math.floor,
 	Tau: Math.PI * 2,
+	Abs: Math.abs,
+	Max: Math.max,
 	Min: Math.min,
 	Pow: Math.pow,
+}
+
+export function Contain(value: number, min: number, max: number) {
+	const size = max - min
+	if (value < min)
+		value += size * MathF.Ceiling((min - value) / size)
+	else if (value >= max)
+		value -= size * MathF.Ceiling((value - max) / size)
+	return value
 }

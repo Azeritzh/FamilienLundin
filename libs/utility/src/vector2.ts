@@ -1,4 +1,4 @@
-import { clip } from "./utility"
+import { Contain, clip } from "./utility"
 
 export class Vector2 {
 	constructor(
@@ -60,6 +60,8 @@ export class Vector2 {
 		return this.x * this.x + this.y * this.y
 	}
 
+	LengthSquared = this.lengthSquared
+
 	unitVector() {
 		const length = this.length()
 		if (length === 0)
@@ -89,8 +91,23 @@ export class Vector2 {
 		return this
 	}
 
+	withX(x: number) {
+		return new Vector2(x, this.y)
+	}
+
+	withY(y: number) {
+		return new Vector2(this.x, y)
+	}
+
 	isZero() {
 		return this.x === 0 && this.y === 0
+	}
+
+	Contain(position: Vector2){
+		return new Vector2(
+			Contain(position.X, 0, this.X),
+			Contain(position.Y, 0, this.Y),
+		)
 	}
 
 	static Zero = new Vector2(0, 0)
