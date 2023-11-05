@@ -1,4 +1,4 @@
-import { Random } from "@lundin/age"
+import { DoubleValleyNoiseMap, NoiseMap, Random } from "@lundin/age"
 import { GridVector, MathF, Vector2 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
 import { Block, Blocks } from "../state/block"
@@ -33,13 +33,17 @@ export class RegionGenerator {
 		this.Region = Region.New(regionCoords, Config.Constants.RegionSizeInChunks, Config.Constants.ChunkSize, overworldGeneration)
 		this.RegionSeed = this.GetRegionSeed(worldSeed, regionCoords)
 		this.RegionTimelineSeed = this.GetRegionSeed(timelineSeed, regionCoords)
+		this.TerrainRandom = new Random(this.RegionSeed)
+		this.TimelineRandom = new Random(this.RegionTimelineSeed)
 
-		this.HeightMap = new NoiseMap(new Vector2(this.Region.Size.X, this.Region.Size.Y))
-		this.HeightNoiseMap = new NoiseMap(new Vector2(32, 32))
-		this.GrassMap = new NoiseMap(new Vector2(this.Region.Size.X, this.Region.Size.Y))
-		this.GrassNoiseMap = new NoiseMap(new Vector2(32, 32))
-		this.DirtMap = new NoiseMap(new Vector2(this.Region.Size.X, this.Region.Size.Y))
-		this.DirtNoiseMap = new NoiseMap(new Vector2(32, 32))
+		const TerrainRandom = this.TerrainRandom
+		const regionSize = new Vector2(this.Region.Size.X, this.Region.Size.Y)
+		this.HeightMap = new DoubleValleyNoiseMap(regionSize, 20, TerrainRandom) // We want the heightmap to generate first, so it won't be influenced by changes in the other steps
+		this.HeightNoiseMap = new DoubleValleyNoiseMap(new Vector2(32, 32), 20, TerrainRandom)
+		this.GrassMap = new DoubleValleyNoiseMap(regionSize, 80, TerrainRandom)
+		this.GrassNoiseMap = new DoubleValleyNoiseMap(new Vector2(32, 32), 20, TerrainRandom)
+		this.DirtMap = new DoubleValleyNoiseMap(regionSize, 80, TerrainRandom)
+		this.DirtNoiseMap = new DoubleValleyNoiseMap(new Vector2(32, 32), 20, TerrainRandom)
 	}
 
 	private GetRegionSeed(worldSeed: number, regionCoords: GridVector) {
@@ -49,26 +53,9 @@ export class RegionGenerator {
 	}
 
 	Generate() {
-		this.InitialiseRandoms()
-		this.GenerateNoiseMaps()
 		this.GenerateBlocks()
 		this.SetVariations()
 		return this.Region
-	}
-
-	private InitialiseRandoms() {
-		this.TerrainRandom = new Random(this.RegionSeed)
-		this.TimelineRandom = new Random(this.RegionTimelineSeed)
-	}
-
-	private GenerateNoiseMaps() {
-		const TerrainRandom = this.TerrainRandom
-		this.HeightMap.Generate(20, TerrainRandom) // We want the heightmap to generate first, so it won't be influenced by changes in the other steps
-		this.HeightNoiseMap.Generate(20, TerrainRandom)
-		this.GrassMap.Generate(80, TerrainRandom)
-		this.GrassNoiseMap.Generate(20, TerrainRandom)
-		this.DirtMap.Generate(80, TerrainRandom)
-		this.DirtNoiseMap.Generate(20, TerrainRandom)
 	}
 
 	private GenerateBlocks() {
@@ -91,57 +78,100 @@ export class RegionGenerator {
 
 		const x = (position.X - Region.Offset.X) / Region.Size.X // normalised to 0..1
 		const y = (position.Y - Region.Offset.Y) / Region.Size.Y // normalised to 0..1
+		const baseHeight = this.GetBaseHeight(x, y)
+
+		const nearnessToBorder = MathF.Max(MathF.Abs(x - 0.5), MathF.Abs(y - 0.5)) * 2 // 1 at border, 0 at center
+		const heightMapWeight = 1 - MathF.Pow(nearnessToBorder, 4)
+
+		return MathF.Round(baseHeight + heightMapWeight * height)
+	}
+
+	private GetBaseHeight(x: number, y: number) {
+		const Region = this.Region
 		const nearnessToSouthEast = MathF.Max(0, x + y - 1)
 		const nearnessToNorthEast = MathF.Max(0, x + 1 - y - 1)
 		const nearnessToSouthWest = MathF.Max(0, 1 - x + y - 1)
 		const nearnessToNorthWest = MathF.Max(0, 1 - x + 1 - y - 1)
-		const borderHeight = Region.OverworldGeneration.NorthWestHeight * nearnessToNorthWest
+		const nearnessToCenter = 1 - nearnessToNorthWest - nearnessToNorthEast - nearnessToSouthEast - nearnessToSouthWest
+		const averageHeight = (Region.OverworldGeneration.NorthWestHeight + Region.OverworldGeneration.NorthEastHeight + Region.OverworldGeneration.SouthEastHeight + Region.OverworldGeneration.SouthWestHeight) / 4
+		return Region.OverworldGeneration.NorthWestHeight * nearnessToNorthWest
 			+ Region.OverworldGeneration.NorthEastHeight * nearnessToNorthEast
 			+ Region.OverworldGeneration.SouthEastHeight * nearnessToSouthEast
 			+ Region.OverworldGeneration.SouthWestHeight * nearnessToSouthWest
-
-		const nearnessToBorder = MathF.Max(MathF.Abs(x - 0.5), MathF.Abs(y - 0.5)) * 2 // 1 at border, 0 at center
-		const borderWeight = MathF.Pow(nearnessToBorder, 4)
-
-		return Math.floor(borderWeight * borderHeight + (1 - borderWeight) * height)
+			+ averageHeight * nearnessToCenter
 	}
 
 	private BlockFor(x: number, y: number, z: number, height: number) {
 		const Config = this.Config
-		if (this.IsRegionBorder(x, y, z))
+		if (this.IsRegionBorder(x, y, z, height))
 			return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("stone-block"))
 		if (this.IsHole(x, y))
 			return Blocks.NewEmpty(Config.NonSolidTypeMap.TypeIdFor("air"))
 		if (this.IsTower(x, y))
 			return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("stone-flagstone"))
-		return this.BaseLayerBlockFor(x, y, z - Math.floor(height))
+		if (this.IsDisplayArea(x, y, z, height))
+			return this.DisplayBlockFor(x, y)
+		return this.BaseLayerBlockFor(x, y, z, height)
 	}
 
-	private IsRegionBorder(x: number, y: number, z: number) {
+	private IsRegionBorder(x: number, y: number, z: number, height: number) {
 		const localX = (x + 256) % 512
 		const localY = (y + 256) % 512
-		return z == 0 && (localX == 0 || localX == 511 || localY == 0 || localY == 511)
+		return z == height && (localX == 0 || localX == 511 || localY == 0 || localY == 511)
 	}
 
 	private IsHole(x: number, y: number) {
-		return 10 < x && x <= 30
-			&& 10 < y && y <= 30
+		return 20 < x && x <= 40
+			&& -30 <= y && y < -10
 	}
 
 	private IsTower(x: number, y: number) {
-		return 0 < x && x <= 50
-			&& -50 <= y && y < -1
+		return 40 < x && x <= 60
+			&& -30 <= y && y < -10
 	}
 
-	private BaseLayerBlockFor(x: number, y: number, z: number) {
+	private IsDisplayArea(x: number, y: number, z: number, height: number) {
+		return z - height == 0
+			&& 10 < x && x <= 20
+			&& -30 <= y && y < -10
+	}
+
+	private DisplayBlockFor(x: number, y: number) {
 		const Config = this.Config
-		if (z < -3)
+		const offset = x - 10
+		const type = this.switch(offset)
+		if (y == -30)
+			return Blocks.NewHalf(Config.SolidTypeMap.TypeIdFor(type), Config.NonSolidTypeMap.TypeIdFor("air"))
+		if (y == -20)
+			return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor(type))
+		return Blocks.NewFloor(Config.SolidTypeMap.TypeIdFor(type), Config.NonSolidTypeMap.TypeIdFor("air"))
+	}
+
+	private switch(offset: number) {
+		switch (offset) {
+			case 1: return "darkwood-beam"
+			case 2: return "darkwood-planks"
+			case 3: return "wood-beam"
+			case 4: return "wood-planks"
+			case 5: return "lightwood-beam"
+			case 6: return "lightwood-planks"
+			case 7: return "darkstone-flagstone"
+			case 8: return "darkstone-block"
+			case 9: return "stone-flagstone"
+			case 10: return "stone-block"
+			default: "wood"
+		}
+	}
+
+	private BaseLayerBlockFor(x: number, y: number, z: number, height: number) {
+		const Config = this.Config
+		if (z - height < -3)
 			return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("darkstone"))
-		if (z < -2)
+		if (z - height < -2)
 			return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("soil-poor"))
-		if (z < -1)
+		if (z - height < -1)
 			return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("soil-rich"))
-		if (z < 0) {
+		if (z - height < 0) {
 			const position = new Vector2(x, y)
 			const grass = this.GrassMap.ValueAt(position) * 5 + this.GrassNoiseMap.ValueAt(position) * 0.5
 			const dirt = this.DirtMap.ValueAt(position) * 2 + this.DirtNoiseMap.ValueAt(position) * 0.5
@@ -177,43 +207,5 @@ export class RegionGenerator {
 			this.Region.Contains(x - 1, y, z) ? this.Region.Get(x - 1, y, z) : block,
 		)
 		this.Region.Set(x, y, z, ChangeBlockService.GetVariationFor(block, surroundings, this.VariationProvider, this.TerrainRandom))
-	}
-}
-
-class NoiseMap {
-	constructor(
-		private Size: Vector2
-	) { }
-	private Peaks: Vector2[] = []
-	private Valleys: Vector2[] = []
-
-	public Generate(numberOfPeaks: number, random: Random) {
-		const Size = this.Size
-		const Peaks = this.Peaks
-		const Valleys = this.Valleys
-		for (let i = 0; i < numberOfPeaks; i++)
-			this.AddPointTo(Peaks, new Vector2(random.Float(Size.X), random.Float(Size.Y)))
-		for (let i = 0; i < numberOfPeaks; i++)
-			this.AddPointTo(Valleys, new Vector2(random.Float(Size.X), random.Float(Size.Y)))
-	}
-
-	private AddPointTo(list: Vector2[], point: Vector2) {
-		const Size = this.Size
-		list.push(point)
-		if (point.X < Size.X / 2)
-			list.push(point.withX(point.X + Size.X))
-		else
-			list.push(point.withX(point.X - Size.X))
-		if (point.Y < Size.Y / 2)
-			list.push(point.withY(point.Y + Size.Y))
-		else
-			list.push(point.withY(point.Y - Size.Y))
-	}
-
-	public ValueAt(point: Vector2) {
-		point = this.Size.Contain(point)
-		const closestPeak = this.Peaks.map(x => x.subtract(point).LengthSquared()).min()
-		const closestValley = this.Valleys.map(x => x.subtract(point).LengthSquared()).min()
-		return closestPeak / (closestPeak + closestValley)
 	}
 }

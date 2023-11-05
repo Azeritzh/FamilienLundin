@@ -19,7 +19,7 @@ export class JumpLogic implements GameLogic<GameUpdate> {
 
 	private Jump(entity: Id) {
 		const velocity = this.Velocity.Of(entity) ?? Vector3.Zero
-		const newVelocity = velocity.withZ(1)
+		const newVelocity = velocity.withZ(0.13)
 		this.SetVelocity.For(entity, newVelocity)
 		this.Notify(entity)
 	}

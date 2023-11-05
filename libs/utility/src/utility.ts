@@ -77,6 +77,7 @@ export function Rotate(source: number, angle: number) {
 export const MathF = {
 	Ceiling: Math.ceil,
 	Floor: Math.floor,
+	Round: Math.round,
 	Tau: Math.PI * 2,
 	Abs: Math.abs,
 	Max: Math.max,
