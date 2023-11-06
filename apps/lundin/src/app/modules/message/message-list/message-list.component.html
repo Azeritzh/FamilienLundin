@@ -1,4 +1,4 @@
-<div *ngFor="let thread of threads"
+<div *ngFor="let thread of threads | reverse"
 	class="thread"
 	(click)="openThread(thread._id)">
 	<header class="message-header">
