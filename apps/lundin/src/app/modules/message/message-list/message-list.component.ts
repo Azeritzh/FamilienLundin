@@ -20,6 +20,7 @@ export class MessageListComponent {
 
 	async updateThreads() {
 		this.threads = await this.messageService.getThreads()
+		this.threads = this.threads.sortBy(x => x.creationTime).reverse()
 	}
 
 	openThread(threadId: number) {
