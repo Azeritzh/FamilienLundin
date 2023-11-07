@@ -91,6 +91,7 @@ export class Meld extends BaseGame<GameUpdate> {
 		public readonly loadStateLogic = new LoadStateLogic(
 			State,
 			Terrain,
+			random,
 		),
 		public readonly movementLogic = new MovementLogic(
 			Config.Constants,

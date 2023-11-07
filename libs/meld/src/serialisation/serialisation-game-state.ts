@@ -9,6 +9,7 @@ import { DashState } from "../values/dash-state"
 import { SelectableItems } from "../values/selectable-items"
 import { SelectableTools } from "../values/selectable-tools"
 import { ToolState } from "../values/tool-state"
+import { BlockArea } from "../values/block-area"
 
 export function createGameState(config: GameConfig, state: GameState) {
 	return serialiseGameState(state, config)
@@ -63,7 +64,7 @@ function serialiseGameState(state: GameState, config: GameConfig = null): Serial
 }
 
 function gameStateFrom(config: GameConfig, deserialised: SerialisableGameState) {
-	deserialised.Regions = deserialised.Regions.map(x => Object.assign(new SerialisableRegion(null, null, null, null, null, null, null), x))
+	deserialised.Regions = deserialised.Regions.map(x => Object.assign(new SerialisableRegion(null, null, null, null, null, null, null, null), x))
 	for (const region of deserialised.Regions) {
 		region.Chunks = region.Chunks.map(x => Object.assign(new SerialisableBlockChunk(null, null, null), x))
 		for (const chunk of region.Chunks) {
@@ -148,6 +149,10 @@ function groupedEntityValuesFrom(serialised: any) {
 	const values: GroupedEntityValues = { ...serialised }
 	if (serialised.CircularSize)
 		values.CircularSize = Object.assign(new CircularSize(0, 0), serialised.CircularSize)
+	if (serialised.BlockArea)
+		values.BlockArea = Object.assign(new BlockArea(), serialised.BlockArea)
+	if (serialised.BlockPosition)
+		values.BlockPosition = Object.assign(new Vector3(0, 0, 0), serialised.BlockPosition)
 	if (serialised.DashState)
 		values.DashState = Object.assign(new DashState(), serialised.DashState)
 	if (serialised.Position)

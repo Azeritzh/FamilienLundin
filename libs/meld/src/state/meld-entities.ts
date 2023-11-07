@@ -9,6 +9,9 @@ export class MeldEntities extends EntityManager<EntityValues> {
 		idProvider: IdProvider,
 		accessor = new ValueAccessBuilder(typeValues, entityValues, updatedEntityValues),
 		public readonly CircularSize = accessor.For(x => x.CircularSize, x => x.CircularSize),
+		public readonly BlockArea = accessor.For(x => x.BlockArea, x => x.BlockArea),
+		public readonly BlockPosition = accessor.For(x => x.BlockPosition, x => x.BlockPosition),
+		public readonly Damage = accessor.For(x => x.Damage, x => x.Damage),
 		public readonly DashState = accessor.For(x => x.DashState, x => x.DashState),
 		public readonly DespawnTime = accessor.For(x => x.DespawnTime, x => x.DespawnTime),
 		public readonly Health = accessor.For(x => x.Health, x => x.Health),
@@ -26,6 +29,9 @@ export class MeldEntities extends EntityManager<EntityValues> {
 		super(entityValues, updatedEntityValues, idProvider)
 		this.Accessors.push(
 			CircularSize,
+			BlockArea,
+			BlockPosition,
+			Damage,
 			DashState,
 			DespawnTime,
 			Health,

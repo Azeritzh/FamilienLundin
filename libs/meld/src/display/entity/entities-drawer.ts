@@ -18,18 +18,21 @@ export class EntitiesDrawer {
 	) { }
 
 	Draw() {
-		for (const { layer, area } of this.State.ShownLayers)
-			for (const entity of this.entitiesInArea(layer, area))
+		for (const { layer, area } of this.State.ShownLayers) {
+			for (const entity of this.EntitiesInArea(layer, area))
 				this.DrawEntity(entity)
+			for (const entity of this.BlockEntitiesInArea(layer, area))
+				this.DrawBlockEntity(entity)
+		}
 	}
 
-	private entitiesInArea(layer: number, area: DisplayArea) {
+	private EntitiesInArea(layer: number, area: DisplayArea) {
 		return [...this.Game.Entities.With.Position]
-			.filter(([, position]) => this.isInArea(layer, area, position))
+			.filter(([, position]) => this.IsInArea(layer, area, position))
 			.map(x => x[0])
 	}
 
-	private isInArea(layer: number, area: DisplayArea, position: Vector3) {
+	private IsInArea(layer: number, area: DisplayArea, position: Vector3) {
 		return area.Left <= position.x && position.x < area.Right
 			&& area.Top <= position.y && position.y < area.Bottom
 			&& Math.floor(position.z) == layer
@@ -51,6 +54,29 @@ export class EntitiesDrawer {
 		this.EntityContext.Position = this.Game.Entities.Position.Get.Of(entity) ?? Vector3.Zero
 		this.EntityContext.Velocity = this.Game.Entities.Velocity.Get.Of(entity) ?? Vector3.Zero
 		this.EntityContext.ToolState = this.Game.Entities.ToolState.Get.Of(entity)
+	}
+	
+	private BlockEntitiesInArea(layer: number, area: DisplayArea) {
+		return [...this.Game.Entities.With.BlockPosition]
+			.filter(([, position]) => this.IsInArea(layer, area, position))
+			.map(x => x[0])
+	}
+
+	private DrawBlockEntity(entity: Id) {
+		if (!this.Config.EntitySprites.has(EntityTypeOf(entity)))
+			return
+		this.UpdateBlockEntityContext(entity, this.Config.EntitySprites.get(EntityTypeOf(entity)))
+		for (const drawer of this.EntityDrawers)
+			drawer.Draw(this.EntityContext)
+	}
+
+	private UpdateBlockEntityContext(entity: Id, entitySprites: EntitySprites) {
+		this.EntityContext.Entity = entity
+		this.EntityContext.EntitySprites = entitySprites
+		this.EntityContext.Orientation = 0
+		this.EntityContext.Position = this.Game.Entities.BlockPosition.Get.Of(entity) ?? Vector3.Zero
+		this.EntityContext.Velocity = Vector3.Zero
+		this.EntityContext.ToolState = null
 	}
 }
 

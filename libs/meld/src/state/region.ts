@@ -13,6 +13,7 @@ export class Region extends FieldRegion<Block>{
 		public Offset: GridVector,
 		public Chunks: BlockChunk<Block>[],
 		public EntityValues: EntityValues,
+		public EntitiesToBeCreated: Map<Id, GroupedEntityValues>,
 		public OverworldGeneration: OverworldGeneration,
 	) { super(Size, ChunkSize, Offset, Chunks) }
 
@@ -46,6 +47,7 @@ export class Region extends FieldRegion<Block>{
 			offset,
 			chunks,
 			new EntityValues(),
+			new Map<Id, GroupedEntityValues>(),
 			overworldGeneration,
 		)
 	}
@@ -71,6 +73,7 @@ export class SerialisableRegion {
 		public Offset: GridVector,
 		public Chunks: SerialisableBlockChunk[],
 		public EntityValues: Map<Id, GroupedEntityValues>,
+		public EntitiesToBeCreated: Map<Id, GroupedEntityValues>,
 		public OverworldGeneration: OverworldGeneration,
 	) { }
 
@@ -87,6 +90,7 @@ export class SerialisableRegion {
 			new Vector3(0, 0, 0),
 			source.Chunks.map(x => SerialisableBlockChunk.From(x)),
 			SerialisableEntities.From(source.EntityValues),
+			source.EntitiesToBeCreated,
 			source.OverworldGeneration,
 		)
 	}
@@ -104,6 +108,7 @@ export class SerialisableRegion {
 			state.Offset,
 			state.Chunks.map(x => SerialisableBlockChunk.From(x)),
 			SerialisableEntities.From(state.EntityValues),
+			state.EntitiesToBeCreated,
 			state.OverworldGeneration,
 		)
 	}
@@ -125,6 +130,7 @@ export class SerialisableRegion {
 			this.Offset,
 			chunks,
 			SerialisableEntities.ToEntityValuesWithMapping(this.EntityValues, entityMap, solidMap, nonSolidMap),
+			this.EntitiesToBeCreated,
 			this.OverworldGeneration,
 		)
 	}
@@ -138,6 +144,7 @@ export class SerialisableRegion {
 			this.Offset,
 			chunks,
 			SerialisableEntities.ToEntityValues(this.EntityValues),
+			this.EntitiesToBeCreated,
 			this.OverworldGeneration,
 		)
 	}

@@ -10,6 +10,7 @@ import { DashState } from "../values/dash-state"
 import { SelectableItems } from "../values/selectable-items"
 import { SelectableTools } from "../values/selectable-tools"
 import { Lists } from "../config/lists"
+import { BlockArea } from "../values/block-area"
 
 export function readGameConfig(deserialised: any) {
 	const entityTypeNames = Object.keys(deserialised.EntityTypes)
@@ -70,6 +71,9 @@ function ListsFrom(serialised: any,  entityTypeMap: TypeMap) {
 function GroupedEntityValuesFrom(serialised: any): GroupedEntityValues {
 	return { // Remember to add stuff in game state serialisation
 		CircularSize: serialised.CircularSize ? Object.assign(new CircularSize(0, 0), serialised.CircularSize) : null,
+		BlockArea: serialised.BlockArea ? Object.assign(new BlockArea(), serialised.BlockArea) : null,
+		BlockPosition: serialised.BlockPosition ? Object.assign(new Vector3(0, 0, 0), serialised.BlockPosition) : null,
+		Damage: serialised.Damage,
 		DashState: serialised.DashState ? Object.assign(new DashState(), serialised.DashState) : null,
 		DespawnTime: serialised.DespawnTime,
 		Health: serialised.Health,

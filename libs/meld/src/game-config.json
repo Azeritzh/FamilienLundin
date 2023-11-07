@@ -65,6 +65,15 @@
 			},
 			"GravityBehaviour": true
 		},
+		"bush": {
+			"BlockArea": {
+				"MinX": -1,
+				"MaxX": 1,
+				"MinY": -1,
+				"MaxY": 1,
+				"HasCollision": false
+			}
+		},
 		"despawning": {
 			"DespawnTime": 0
 		}

@@ -460,6 +460,14 @@
 					"Sprite": "slime"
 				}
 			]
+		},
+		"bush": {
+			"Idle": [
+				{
+					"EndAngle": 1,
+					"Sprite": "sprite-bush"
+				}
+			]
 		}
 	},
 	"ItemSprites": {
@@ -580,6 +588,13 @@
 			"framesX": 4,
 			"frameInterval": 0.2
 		},
+		"sprite-bush": {
+			"width": 32,
+			"height": 32,
+			"centerX": 16,
+			"centerY": 16
+		},
+		
 		"default-tile-left": {
 			"width": 16,
 			"height": 16,

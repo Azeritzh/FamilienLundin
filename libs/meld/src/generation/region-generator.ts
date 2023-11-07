@@ -1,5 +1,5 @@
 import { DoubleValleyNoiseMap, NoiseMap, Random } from "@lundin/age"
-import { GridVector, MathF, Vector2 } from "@lundin/utility"
+import { GridVector, MathF, Vector2, Vector3 } from "@lundin/utility"
 import { GameConfig } from "../config/game-config"
 import { Block, Blocks } from "../state/block"
 import { Region } from "../state/region"
@@ -70,6 +70,11 @@ export class RegionGenerator {
 		const height = this.GetHeight(new Vector2(x, y))
 		for (let z = Region.Offset.Z; z < Region.Offset.Z + Region.Size.Z; z++)
 			this.SetBlock(x, y, z, this.BlockFor(x, y, z, height))
+		if (this.TerrainRandom.Float() < 0.02) {
+			const id = this.Config.EntityTypeMap.TypeIdFor("bush") | Region.EntitiesToBeCreated.size
+			const values = { BlockPosition: new Vector3(x, y, height) }
+			Region.EntitiesToBeCreated.set(id, values)
+		}
 	}
 
 	private GetHeight(position: Vector2) {

@@ -1,5 +1,6 @@
 import { BaseValues, CircularSize, EntityIdOf, EntityTypeOf, Id } from "@lundin/age"
-import { Vector3 } from "@lundin/utility"
+import { GridVector, Vector3 } from "@lundin/utility"
+import { BlockArea } from "../values/block-area"
 import { DashState } from "../values/dash-state"
 import { SelectableItems } from "../values/selectable-items"
 import { SelectableTools } from "../values/selectable-tools"
@@ -9,6 +10,9 @@ import { Item } from "./item"
 export class EntityValues extends BaseValues {
 	constructor(
 		public readonly CircularSize = new Map<Id, CircularSize>(),
+		public readonly BlockArea = new Map<Id, BlockArea>(),
+		public readonly BlockPosition = new Map<Id, GridVector>(),
+		public readonly Damage = new Map<Id, number>(),
 		public readonly DashState = new Map<Id, DashState>(),
 		public readonly DespawnTime = new Map<Id, number>(),
 		public readonly Health = new Map<Id, number>(),
@@ -26,6 +30,9 @@ export class EntityValues extends BaseValues {
 	) {
 		super(Entities)
 		this.Register(CircularSize)
+		this.Register(BlockArea)
+		this.Register(BlockPosition)
+		this.Register(Damage)
 		this.Register(DashState)
 		this.Register(DespawnTime)
 		this.Register(Health)
@@ -52,6 +59,12 @@ export class EntityValues extends BaseValues {
 		this.Entities.set(key, true)
 		if (values.CircularSize !== undefined)
 			this.CircularSize.set(key, values.CircularSize)
+		if (values.BlockArea !== undefined)
+			this.BlockArea.set(key, values.BlockArea)
+		if (values.BlockPosition !== undefined)
+			this.BlockPosition.set(key, values.BlockPosition)
+		if (values.Damage !== undefined)
+			this.Damage.set(key, values.Damage)
 		if (values.DashState !== undefined)
 			this.DashState.set(key, values.DashState)
 		if (values.DespawnTime !== undefined)
@@ -83,6 +96,9 @@ export class EntityValues extends BaseValues {
 	GroupFor(key: Id): GroupedEntityValues {
 		return {
 			CircularSize: this.CircularSize.get(key),
+			BlockArea: this.BlockArea.get(key),
+			BlockPosition: this.BlockPosition.get(key),
+			Damage: this.Damage.get(key),
 			DashState: this.DashState.get(key),
 			DespawnTime: this.DespawnTime.get(key),
 			Health: this.Health.get(key),
@@ -102,6 +118,9 @@ export class EntityValues extends BaseValues {
 
 export interface GroupedEntityValues {
 	CircularSize?: CircularSize
+	BlockArea?: BlockArea
+	BlockPosition?: GridVector
+	Damage?: number
 	DashState?: DashState
 	DespawnTime?: number
 	Health?: number
