@@ -22,6 +22,17 @@ export class Box { // struct
 		)
 	}
 
+	static FromOffsetAndSize(offset: Vector3, size: Vector3) {
+		return new Box(
+			offset.X,
+			offset.X + size.X,
+			offset.Y,
+			offset.Y + size.Y,
+			offset.Z,
+			offset.Z + size.Z,
+		)
+	}
+
 	TranslateBy(translation: Vector3) {
 		return new Box(
 			this.MinX + translation.x,

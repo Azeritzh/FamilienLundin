@@ -48,10 +48,8 @@ export class EntityManager<EntityValues extends BaseValues> {
 	}
 
 	private FullyRemove(entityId: Id) {
-		this.entityValues.Entities.delete(entityId)
-		this.updatedEntityValues.Entities.delete(entityId)
-		this.entityValues.RemoveValuesFor(entityId)
-		this.updatedEntityValues.RemoveValuesFor(entityId)
+		this.entityValues.Remove(entityId)
+		this.updatedEntityValues.Remove(entityId)
 	}
 
 	public Exists(entity: Id) {

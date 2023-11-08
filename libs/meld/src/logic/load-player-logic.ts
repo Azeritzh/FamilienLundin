@@ -37,8 +37,7 @@ export class LoadPlayerLogic implements GameLogic<GameUpdate> {
 		if (!id)
 			return
 		this.State.UnloadPlayer(player)
-		this.Changes.EntityValues.RemoveValuesFor(id)
-		this.Changes.EntityValues.Entities.delete(id)
+		this.Changes.EntityValues.Remove(id)
 	}
 
 	private SpawnPlayer(player: string) {

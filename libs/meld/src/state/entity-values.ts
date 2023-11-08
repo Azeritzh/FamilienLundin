@@ -55,6 +55,12 @@ export class EntityValues extends BaseValues {
 		return entityValues
 	}
 
+	public AddFromOther(otherValues: EntityValues) {
+		for (const [id, value] of otherValues.Entities)
+			this.Entities.set(id, value)
+		this.AddValuesFromOther(otherValues)
+	}
+
 	AddValuesFrom(key: Id, values: GroupedEntityValues) {
 		this.Entities.set(key, true)
 		if (values.CircularSize !== undefined)

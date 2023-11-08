@@ -22,6 +22,18 @@ export abstract class BaseValues {
 			map.delete(key)
 	}
 
+	ClearAll() {
+		for (const map of this.AllValueMaps)
+			map.clear()
+		this.Entities.clear()
+	}
+
+	Remove(key: Id) {
+		for (const map of this.AllValueMaps)
+			map.delete(key)
+		this.Entities.delete(key)
+	}
+
 	// Should only be used with same classes, but don't know how to express that generically
 	AddValuesFromOther(otherValues: BaseValues) {
 		for (let i = 0; i < this.AllValueMaps.length; i++)

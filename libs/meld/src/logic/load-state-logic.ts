@@ -30,6 +30,8 @@ export class LoadStateLogic implements GameLogic<GameUpdate> {
 		const State = this.State
 		const coords = region.RegionCoords().stringify()
 		State.Regions.set(coords, region)
+		State.EntityValues.AddValuesFromOther(region.EntityValues)
+		region.EntityValues.ClearAll()
 		for (const [id, values] of region.EntitiesToBeCreated.entries())
 			State.EntityValues.AddValuesFrom(State.GetNewId() | EntityTypeOf(id), values) // some day maybe we'll have to remap the ids instead of just ignoring that part
 		region.EntitiesToBeCreated.clear()

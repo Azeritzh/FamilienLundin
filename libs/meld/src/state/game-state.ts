@@ -23,11 +23,8 @@ export class GameState {
 		this.Globals.NextId = state.Globals.NextId
 		this.Globals.WorldBounds = state.Globals.WorldBounds
 
-		this.EntityValues.ClearValues()
-		this.EntityValues.Entities.clear()
-		for (const [id, value] of state.EntityValues.Entities)
-			this.EntityValues.Entities.set(id, value)
-		this.EntityValues.AddValuesFromOther(state.EntityValues)
+		this.EntityValues.ClearAll()
+		this.EntityValues.AddFromOther(state.EntityValues)
 
 		this.Regions.clear()
 		for (const [position, blocks] of state.Regions)
@@ -36,6 +33,8 @@ export class GameState {
 		this.Players.clear()
 		for (const [playerId, entityId] of state.Players)
 			this.Players.set(playerId, entityId)
+
+		// no unloading players in this version
 	}
 
 	/// <summary>
