@@ -61,7 +61,7 @@ export class HtmlDisplayProvider implements DisplayProvider {
 		)
 		this.display.sortByDepth = sortByDepth
 		for (const [name, sprite] of Object.entries(this.config.Sprites))
-			this.display.addSprite(name, this.config.AssetFolder + sprite.path + ".png", sprite.width, sprite.height, sprite.centerX, sprite.centerY)
+			this.display.addSprite(name, this.config.AssetFolder + sprite.path + ".png", sprite.width, sprite.height, sprite.centerX, sprite.centerY, sprite.offsetX, sprite.offsetY)
 	}
 
 	public StartNewFrame() {

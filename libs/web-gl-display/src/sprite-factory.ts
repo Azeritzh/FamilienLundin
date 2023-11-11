@@ -16,6 +16,8 @@ export class SpriteFactory {
 		height: number,
 		centerX: number,
 		centerY: number,
+		offsetX: number,
+		offsetY: number,
 	) {
 		const image = await this.loadImage(path)
 
@@ -38,6 +40,8 @@ export class SpriteFactory {
 			geometryBuffer,
 			centerX,
 			centerY,
+			offsetX / image.width,
+			offsetY / image.height,
 			uvX,
 			uvY,
 		)

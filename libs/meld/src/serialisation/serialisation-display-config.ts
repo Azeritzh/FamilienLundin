@@ -91,6 +91,8 @@ function spriteInfoFrom(
 		height: serialised.height ?? defaults?.height ?? 16,
 		centerX: serialised.centerX ?? defaults?.centerX ?? 0,
 		centerY: serialised.centerY ?? defaults?.centerY ?? 0,
+		offsetX: serialised.offsetX ?? defaults?.offsetX ?? 0,
+		offsetY: serialised.offsetY ?? defaults?.offsetY ?? 0,
 		framesX: serialised.framesX ?? defaults?.framesX ?? 1,
 		framesY: serialised.framesY ?? defaults?.framesY ?? 1,
 		frameInterval: Math.floor(frameInterval * updatesPerSecond),
@@ -128,6 +130,8 @@ interface SerialisedSpriteInfo {
 	height?: number
 	centerX?: number
 	centerY?: number
+	offsetX?: number
+	offsetY?: number
 	framesX?: number
 	framesY?: number
 	frameInterval?: number
@@ -284,6 +288,52 @@ function AutoBlockSpritesFrom(sprites: SerialisableBlockSprites, solidTypeMap: T
 		sprites.TileEast = sprites.TileEast ?? block + "-tile-straight-bottomright-" + sprites.SouthBorder
 		sprites.TileSouth = sprites.TileSouth ?? block + "-tile-straight-topright-" + sprites.SouthBorder
 		sprites.TileWest = sprites.TileWest ?? block + "-tile-straight-topleft-" + sprites.SouthBorder
+		sprites.DiagonalTile = sprites.DiagonalTile ?? block + "-tile-diagonal" // TODO: diagonals
+	}
+	if (Type == "default-east-south-west-border") {
+		sprites.TileNorth = sprites.TileNorth ?? block + "-tile-straight-bottomleftright-" + sprites.SouthBorder
+		sprites.TileEast = sprites.TileEast ?? block + "-tile-straight-topbottomright-" + sprites.SouthBorder
+		sprites.TileSouth = sprites.TileSouth ?? block + "-tile-straight-topleftright-" + sprites.SouthBorder
+		sprites.TileWest = sprites.TileWest ?? block + "-tile-straight-topbottomleft-" + sprites.SouthBorder
+		sprites.DiagonalTile = sprites.DiagonalTile ?? block + "-tile-diagonal" // TODO: diagonals
+	}
+	if (Type == "default-north-south-west-border") {
+		sprites.TileNorth = sprites.TileNorth ?? block + "-tile-straight-topbottomleft-" + sprites.NorthBorder
+		sprites.TileEast = sprites.TileEast ?? block + "-tile-straight-bottomleftright-" + sprites.NorthBorder
+		sprites.TileSouth = sprites.TileSouth ?? block + "-tile-straight-topbottomright-" + sprites.NorthBorder
+		sprites.TileWest = sprites.TileWest ?? block + "-tile-straight-topleftright-" + sprites.NorthBorder
+		sprites.DiagonalTile = sprites.DiagonalTile ?? block + "-tile-diagonal" // TODO: diagonals
+	}
+	if (Type == "default-north-east-west-border") {
+		sprites.TileNorth = sprites.TileNorth ?? block + "-tile-straight-topleftright-" + sprites.NorthBorder
+		sprites.TileEast = sprites.TileEast ?? block + "-tile-straight-topbottomleft-" + sprites.NorthBorder
+		sprites.TileSouth = sprites.TileSouth ?? block + "-tile-straight-bottomleftright-" + sprites.NorthBorder
+		sprites.TileWest = sprites.TileWest ?? block + "-tile-straight-topbottomright-" + sprites.NorthBorder
+		sprites.DiagonalTile = sprites.DiagonalTile ?? block + "-tile-diagonal" // TODO: diagonals
+	}
+	if (Type == "default-north-east-south-border") {
+		sprites.TileNorth = sprites.TileNorth ?? block + "-tile-straight-topbottomright-" + sprites.NorthBorder
+		sprites.TileEast = sprites.TileEast ?? block + "-tile-straight-topleftright-" + sprites.NorthBorder
+		sprites.TileSouth = sprites.TileSouth ?? block + "-tile-straight-topbottomleft-" + sprites.NorthBorder
+		sprites.TileWest = sprites.TileWest ?? block + "-tile-straight-bottomleftright-" + sprites.NorthBorder
+		sprites.DiagonalTile = sprites.DiagonalTile ?? block + "-tile-diagonal" // TODO: diagonals
+	}
+	if (Type == "default-north-east-south-west-border") {
+		sprites.StraightTile = sprites.StraightTile ?? block + "-tile-straight-topbottomleftright-" + sprites.NorthBorder
+		sprites.DiagonalTile = sprites.DiagonalTile ?? block + "-tile-diagonal" // TODO: diagonals
+	}
+	if (Type == "default-north-south-border") {
+		sprites.TileNorth = sprites.TileNorth ?? block + "-tile-straight-topbottom-" + sprites.NorthBorder
+		sprites.TileEast = sprites.TileEast ?? block + "-tile-straight-leftright-" + sprites.NorthBorder
+		sprites.TileSouth = sprites.TileSouth ?? block + "-tile-straight-topbottom-" + sprites.NorthBorder
+		sprites.TileWest = sprites.TileWest ?? block + "-tile-straight-leftright-" + sprites.NorthBorder
+		sprites.DiagonalTile = sprites.DiagonalTile ?? block + "-tile-diagonal" // TODO: diagonals
+	}
+	if (Type == "default-east-west-border") {
+		sprites.TileNorth = sprites.TileNorth ?? block + "-tile-straight-leftright-" + sprites.EastBorder
+		sprites.TileEast = sprites.TileEast ?? block + "-tile-straight-topbottom-" + sprites.EastBorder
+		sprites.TileSouth = sprites.TileSouth ?? block + "-tile-straight-leftright-" + sprites.EastBorder
+		sprites.TileWest = sprites.TileWest ?? block + "-tile-straight-topbottom-" + sprites.EastBorder
 		sprites.DiagonalTile = sprites.DiagonalTile ?? block + "-tile-diagonal" // TODO: diagonals
 	}
 	return BlockSpritesFrom(sprites, solidTypeMap)

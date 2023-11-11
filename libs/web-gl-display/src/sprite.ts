@@ -13,6 +13,8 @@ export class Sprite {
 		private geometryBuffer: WebGLBuffer,
 		private centerX: number,
 		private centerY: number,
+		private offsetX: number,
+		private offsetY: number,
 		private uvX: number,
 		private uvY: number,
 		private color = new Float32Array([1, 1, 1, 1]),
@@ -41,8 +43,8 @@ export class Sprite {
 		gl.enableVertexAttribArray(this.shader.aPositionLocation)
 		gl.vertexAttribPointer(this.shader.aPositionLocation, 2, gl.FLOAT, false, 0, 0)
 
-		const fX = frameX * this.uvX
-		const fY = frameY * this.uvY
+		const fX = frameX * this.uvX + this.offsetX
+		const fY = frameY * this.uvY + this.offsetY
 
 		this.transformation.reset()
 		this.transformation.transformFrom(x * this.tileSize, y * this.tileSize, -rotation, scaleX, scaleY)

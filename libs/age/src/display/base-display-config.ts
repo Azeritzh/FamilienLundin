@@ -10,6 +10,8 @@ export interface BaseDisplayConfig {
 			height?: number
 			centerX?: number
 			centerY?: number
+			offsetX?: number
+			offsetY?: number
 		}
 	},
 }

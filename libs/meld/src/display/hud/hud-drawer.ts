@@ -69,7 +69,7 @@ export class HudDrawer {
 				buttonY = 3
 				break
 		}
-		this.DisplayProvider.Draw("button-y", buttonX, buttonY, 0, 0, HudDrawer.TopLayer)
+		this.DisplayProvider.Draw("ui-button-y", buttonX, buttonY, 0, 0, HudDrawer.TopLayer)
 	}
 
 	private DrawToolSection(player: Id) {
@@ -77,11 +77,11 @@ export class HudDrawer {
 		if (!tool)
 			return
 		this.DrawItem(tool, this.State.Size.WidthInTiles - 3, 4.5)
-		this.DisplayProvider.Draw("button-a", this.State.Size.WidthInTiles - 2.25, 5, 0, 0, HudDrawer.TopLayer)
-		this.DisplayProvider.Draw("button-x", this.State.Size.WidthInTiles - 3.75, 5, 0, 0, HudDrawer.TopLayer)
+		this.DisplayProvider.Draw("ui-button-a", this.State.Size.WidthInTiles - 2.25, 5, 0, 0, HudDrawer.TopLayer)
+		this.DisplayProvider.Draw("ui-button-x", this.State.Size.WidthInTiles - 3.75, 5, 0, 0, HudDrawer.TopLayer)
 
 		this.DisplayProvider.Draw(this.Config.GameplaySprites.DashTarget, this.State.Size.WidthInTiles - 1.5, 3, 0, 0, HudDrawer.TopLayer)
-		this.DisplayProvider.Draw("button-b", this.State.Size.WidthInTiles - 0.75, 3.5, 0, 0, HudDrawer.TopLayer)
+		this.DisplayProvider.Draw("ui-button-b", this.State.Size.WidthInTiles - 0.75, 3.5, 0, 0, HudDrawer.TopLayer)
 	}
 
 	private DrawItem(item: Item, x: number, y: number) {

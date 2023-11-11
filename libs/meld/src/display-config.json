@@ -11,6 +11,349 @@
 	"AssetFolder": "assets/",
 
 	"BlockSprites": {
+		"grass": [
+			{
+				"Weight": 50,
+				"Block": "grass",
+				"Type": "default-block"
+			},
+			{
+				"Block": "grass",
+				"StraightTile": "grass-tile-straight-2",
+				"DiagonalTile": "grass-tile-diagonal-2"
+			},
+			{
+				"Block": "grass",
+				"StraightTile": "grass-tile-straight-3",
+				"DiagonalTile": "grass-tile-diagonal-3"
+			},
+			{
+				"Block": "grass",
+				"StraightTile": "grass-tile-straight-4",
+				"DiagonalTile": "grass-tile-diagonal-4"
+			},
+			{
+				"Block": "grass",
+				"StraightTile": "grass-tile-straight-5",
+				"DiagonalTile": "grass-tile-diagonal-5"
+			},
+			{
+				"Block": "grass",
+				"StraightTile": "grass-tile-straight-6",
+				"DiagonalTile": "grass-tile-diagonal-6"
+			},
+
+			{
+				"Block": "grass",
+				"NorthBorder": "grass-rich",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "grass",
+				"EastBorder": "grass-rich",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "grass",
+				"SouthBorder": "grass-rich",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "grass",
+				"WestBorder": "grass-rich",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "grass",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "grass",
+				"NorthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "grass",
+				"SouthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "grass",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "grass",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "grass",
+				"NorthBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "grass",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "grass",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "grass",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "grass",
+				"NorthBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "grass",
+				"EastBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-east-west-border"
+			}
+		],
+		"grass-poor": [
+			{
+				"Weight": 50,
+				"Block": "grass-poor",
+				"Type": "default-block"
+			},
+			{
+				"Block": "grass-poor",
+				"StraightTile": "grass-poor-tile-straight-2",
+				"DiagonalTile": "grass-poor-tile-diagonal-2"
+			},
+			{
+				"Block": "grass-poor",
+				"StraightTile": "grass-poor-tile-straight-3",
+				"DiagonalTile": "grass-poor-tile-diagonal-3"
+			},
+			{
+				"Block": "grass-poor",
+				"StraightTile": "grass-poor-tile-straight-4",
+				"DiagonalTile": "grass-poor-tile-diagonal-4"
+			},
+			{
+				"Block": "grass-poor",
+				"StraightTile": "grass-poor-tile-straight-5",
+				"DiagonalTile": "grass-poor-tile-diagonal-5"
+			},
+			{
+				"Block": "grass-poor",
+				"StraightTile": "grass-poor-tile-straight-6",
+				"DiagonalTile": "grass-poor-tile-diagonal-6"
+			},
+
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "grass-poor",
+				"EastBorder": "grass",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "grass-poor",
+				"SouthBorder": "grass",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "grass-poor",
+				"WestBorder": "grass",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"SouthBorder": "grass",
+				"EastBorder": "grass",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "grass-poor",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass",
+				"SouthBorder": "grass",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "grass-poor",
+				"EastBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-east-west-border"
+			},
+
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass-rich",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "grass-poor",
+				"EastBorder": "grass-rich",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "grass-poor",
+				"SouthBorder": "grass-rich",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "grass-poor",
+				"WestBorder": "grass-rich",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"SouthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "grass-poor",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "grass-poor",
+				"NorthBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "grass-poor",
+				"EastBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-east-west-border"
+			}
+		],
 		"grass-rich": [
 			{
 				"Weight": 50,
@@ -161,30 +504,647 @@
 				"Type": "default-block"
 			}
 		],
+		"soil": [
+			{
+				"Weight": 100,
+				"Block": "soil",
+				"Type": "default-block"
+			},
+			{
+				"Block": "soil",
+				"StraightTile": "soil-tile-straight-2",
+				"DiagonalTile": "soil-tile-diagonal-2"
+			},
+			{
+				"Block": "soil",
+				"StraightTile": "soil-tile-straight-3",
+				"DiagonalTile": "soil-tile-diagonal-3"
+			},
+			{
+				"Block": "soil",
+				"StraightTile": "soil-tile-straight-4",
+				"DiagonalTile": "soil-tile-diagonal-4"
+			},
+			{
+				"Block": "soil",
+				"StraightTile": "soil-tile-straight-5",
+				"DiagonalTile": "soil-tile-diagonal-5"
+			},
+			{
+				"Block": "soil",
+				"StraightTile": "soil-tile-straight-6",
+				"DiagonalTile": "soil-tile-diagonal-6"
+			},
+
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-poor",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "grass-poor",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "grass-poor",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil",
+				"WestBorder": "grass-poor",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-east-west-border"
+			},
+
+			{
+				"Block": "soil",
+				"NorthBorder": "grass",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "grass",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "grass",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil",
+				"WestBorder": "grass",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "grass",
+				"EastBorder": "grass",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass",
+				"SouthBorder": "grass",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-east-west-border"
+			},
+
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-rich",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "grass-rich",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "grass-rich",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil",
+				"WestBorder": "grass-rich",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-east-west-border"
+			},
+
+			{
+				"Block": "soil",
+				"NorthBorder": "soil-rich",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "soil-rich",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "soil-rich",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil",
+				"WestBorder": "soil-rich",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "soil-rich",
+				"EastBorder": "soil-rich",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "soil-rich",
+				"EastBorder": "soil-rich",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "soil",
+				"SouthBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "soil-rich",
+				"SouthBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "soil-rich",
+				"SouthBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "soil-rich",
+				"EastBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "soil-rich",
+				"EastBorder": "soil-rich",
+				"SouthBorder": "soil-rich",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "soil-rich",
+				"EastBorder": "soil-rich",
+				"SouthBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil",
+				"NorthBorder": "soil-rich",
+				"SouthBorder": "soil-rich",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil",
+				"EastBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-east-west-border"
+			}
+		],
 		"soil-poor": [
 			{
+				"Weight": 100,
 				"Block": "soil-poor",
 				"Type": "default-block"
 			},
 			{
 				"Block": "soil-poor",
-				"Type": "default-north-border",
-				"NorthBorder": "grass-rich"
+				"StraightTile": "soil-poor-tile-straight-2",
+				"DiagonalTile": "soil-poor-tile-diagonal-2"
 			},
 			{
 				"Block": "soil-poor",
-				"Type": "default-east-border",
-				"EastBorder": "grass-rich"
+				"StraightTile": "soil-poor-tile-straight-3",
+				"DiagonalTile": "soil-poor-tile-diagonal-3"
 			},
 			{
 				"Block": "soil-poor",
-				"Type": "default-south-border",
-				"SouthBorder": "grass-rich"
+				"StraightTile": "soil-poor-tile-straight-4",
+				"DiagonalTile": "soil-poor-tile-diagonal-4"
 			},
 			{
 				"Block": "soil-poor",
-				"Type": "default-west-border",
-				"WestBorder": "grass-rich"
+				"StraightTile": "soil-poor-tile-straight-5",
+				"DiagonalTile": "soil-poor-tile-diagonal-5"
+			},
+			{
+				"Block": "soil-poor",
+				"StraightTile": "soil-poor-tile-straight-6",
+				"DiagonalTile": "soil-poor-tile-diagonal-6"
+			},
+
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-poor",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "grass-poor",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "grass-poor",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-east-west-border"
+			},
+
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "grass",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "grass",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"WestBorder": "grass",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "grass",
+				"EastBorder": "grass",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass",
+				"SouthBorder": "grass",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-east-west-border"
+			},
+
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-rich",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "grass-rich",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "grass-rich",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"WestBorder": "grass-rich",
+				"Type": "default-west-border"
 			},
 			{
 				"Block": "soil-poor",
@@ -209,32 +1169,479 @@
 				"SouthBorder": "grass-rich",
 				"WestBorder": "grass-rich",
 				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-east-west-border"
+			},
+
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "soil",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "soil",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"WestBorder": "soil",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil",
+				"EastBorder": "soil",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil",
+				"WestBorder": "soil",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "soil",
+				"EastBorder": "soil",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "soil",
+				"WestBorder": "soil",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "soil",
+				"SouthBorder": "soil",
+				"WestBorder": "soil",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil",
+				"SouthBorder": "soil",
+				"WestBorder": "soil",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil",
+				"EastBorder": "soil",
+				"WestBorder": "soil",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil",
+				"EastBorder": "soil",
+				"SouthBorder": "soil",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil",
+				"EastBorder": "soil",
+				"SouthBorder": "soil",
+				"WestBorder": "soil",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil",
+				"SouthBorder": "soil",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "soil",
+				"WestBorder": "soil",
+				"Type": "default-east-west-border"
+			},
+
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil-rich",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "soil-rich",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "soil-rich",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"WestBorder": "soil-rich",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil-rich",
+				"EastBorder": "soil-rich",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "soil-rich",
+				"EastBorder": "soil-rich",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "soil-poor",
+				"SouthBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "soil-rich",
+				"SouthBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil-rich",
+				"SouthBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil-rich",
+				"EastBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil-rich",
+				"EastBorder": "soil-rich",
+				"SouthBorder": "soil-rich",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil-rich",
+				"EastBorder": "soil-rich",
+				"SouthBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil-poor",
+				"NorthBorder": "soil-rich",
+				"SouthBorder": "soil-rich",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil-poor",
+				"EastBorder": "soil-rich",
+				"WestBorder": "soil-rich",
+				"Type": "default-east-west-border"
 			}
 		],
 		"soil-rich": [
 			{
+				"Weight": 100,
 				"Block": "soil-rich",
 				"Type": "default-block"
 			},
 			{
 				"Block": "soil-rich",
-				"Type": "default-north-border",
-				"NorthBorder": "grass-rich"
+				"StraightTile": "soil-rich-tile-straight-2",
+				"DiagonalTile": "soil-rich-tile-diagonal-2"
 			},
 			{
 				"Block": "soil-rich",
-				"Type": "default-east-border",
-				"EastBorder": "grass-rich"
+				"StraightTile": "soil-rich-tile-straight-3",
+				"DiagonalTile": "soil-rich-tile-diagonal-3"
 			},
 			{
 				"Block": "soil-rich",
-				"Type": "default-south-border",
-				"SouthBorder": "grass-rich"
+				"StraightTile": "soil-rich-tile-straight-4",
+				"DiagonalTile": "soil-rich-tile-diagonal-4"
 			},
 			{
 				"Block": "soil-rich",
-				"Type": "default-west-border",
-				"WestBorder": "grass-rich"
+				"StraightTile": "soil-rich-tile-straight-5",
+				"DiagonalTile": "soil-rich-tile-diagonal-5"
+			},
+			{
+				"Block": "soil-rich",
+				"StraightTile": "soil-rich-tile-straight-6",
+				"DiagonalTile": "soil-rich-tile-diagonal-6"
+			},
+
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-poor",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil-rich",
+				"EastBorder": "grass-poor",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil-rich",
+				"SouthBorder": "grass-poor",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil-rich",
+				"WestBorder": "grass-poor",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"SouthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "soil-rich",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"EastBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-poor",
+				"EastBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-poor",
+				"SouthBorder": "grass-poor",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil-rich",
+				"EastBorder": "grass-poor",
+				"WestBorder": "grass-poor",
+				"Type": "default-east-west-border"
+			},
+
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil-rich",
+				"EastBorder": "grass",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil-rich",
+				"SouthBorder": "grass",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil-rich",
+				"WestBorder": "grass",
+				"Type": "default-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"Type": "default-north-east-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"SouthBorder": "grass",
+				"EastBorder": "grass",
+				"Type": "default-south-east-border"
+			},
+			{
+				"Block": "soil-rich",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass",
+				"EastBorder": "grass",
+				"SouthBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass",
+				"SouthBorder": "grass",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil-rich",
+				"EastBorder": "grass",
+				"WestBorder": "grass",
+				"Type": "default-east-west-border"
+			},
+
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-rich",
+				"Type": "default-north-border"
+			},
+			{
+				"Block": "soil-rich",
+				"EastBorder": "grass-rich",
+				"Type": "default-east-border"
+			},
+			{
+				"Block": "soil-rich",
+				"SouthBorder": "grass-rich",
+				"Type": "default-south-border"
+			},
+			{
+				"Block": "soil-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-west-border"
 			},
 			{
 				"Block": "soil-rich",
@@ -259,6 +1666,54 @@
 				"SouthBorder": "grass-rich",
 				"WestBorder": "grass-rich",
 				"Type": "default-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-east-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-east-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"Type": "default-north-east-south-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-rich",
+				"EastBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-north-east-south-west-border"
+			},
+			{
+				"Block": "soil-rich",
+				"NorthBorder": "grass-rich",
+				"SouthBorder": "grass-rich",
+				"Type": "default-north-south-border"
+			},
+			{
+				"Block": "soil-rich",
+				"EastBorder": "grass-rich",
+				"WestBorder": "grass-rich",
+				"Type": "default-east-west-border"
 			}
 		],
 		"stone-block": [
@@ -457,42 +1912,66 @@
 			"Idle": [
 				{
 					"EndAngle": 1,
-					"Sprite": "slime"
+					"Sprite": "entity-slime"
 				}
 			]
 		},
-		"bush": {
+		"bush-big": {
 			"Idle": [
 				{
 					"EndAngle": 1,
-					"Sprite": "sprite-bush"
+					"Sprite": "entity-bush-big"
+				}
+			]
+		},
+		"stone": {
+			"Idle": [
+				{
+					"EndAngle": 1,
+					"Sprite": "entity-stone"
+				}
+			]
+		},
+		"stone-small": {
+			"Idle": [
+				{
+					"EndAngle": 1,
+					"Sprite": "entity-stone-small"
+				}
+			]
+		},
+		"stone-marker": {
+			"Idle": [
+				{
+					"EndAngle": 1,
+					"Sprite": "entity-stone-marker"
 				}
 			]
 		}
 	},
 	"ItemSprites": {
-		"basic-hammer": "hammer"
+		"basic-hammer": "item-hammer"
 	},
 	"GameplaySprites": {
-		"StandardMarker": "standard-marker",
-		"ShadowSmall": "shadow-medium",
-		"ShadowMedium": "shadow-medium",
-		"ShadowBig": "shadow-medium",
+		"StandardMarker": "fx-standard-marker",
+		"ShadowSmall": "fx-shadow-medium",
+		"ShadowMedium": "fx-shadow-medium",
+		"ShadowBig": "fx-shadow-medium",
 		"WallShadowFullLeft": "default-wall-shadow-full-left",
 		"WallShadowFullRight": "default-wall-shadow-full-right",
 		"WallShadowFullDiagonal": "default-wall-shadow-full-diagonal",
 		"WallShadowHalfLeft": "default-wall-shadow-half-left",
 		"WallShadowHalfRight": "default-wall-shadow-half-right",
 		"WallShadowHalfDiagonal": "default-wall-shadow-half-diagonal",
-		"DashCloud": "dash-cloud",
-		"DashRecharge": "dash-recharge",
-		"DashTarget": "dash-target",
-		"DashTargetFade": "dash-target-fade",
-		"DashFail": "dash-fail",
-		"DashMarker": "dash-marker",
-		"DashFailMarker": "dash-fail-marker",
-		"HudLeft": "hud-items",
-		"HudRight": "hud-tools"
+		"DashCloud": "fx-dash-cloud",
+		"DashRecharge": "fx-dash-recharge",
+		"DashTarget": "fx-dash-target",
+		"DashTargetFade": "fx-dash-target-fade",
+		"DashFail": "fx-dash-fail",
+		"DashMarker": "fx-dash-marker",
+		"DashFailMarker": "fx-dash-fail-marker",
+		"HudLeft": "ui-hud-items",
+		"HudRight": "ui-hud-tools"
 	},
 
 	"DefaultSpriteTypes": {
@@ -580,7 +2059,7 @@
 		"character-dash-bottom": { "type": "defaultCharacter" },
 		"character-dash-bottom-left": { "type": "defaultCharacter" },
 		"character-dash-left": { "type": "defaultCharacter" },
-		"slime": {
+		"entity-slime": {
 			"width": 32,
 			"height": 32,
 			"centerX": 16,
@@ -588,13 +2067,38 @@
 			"framesX": 4,
 			"frameInterval": 0.2
 		},
-		"sprite-bush": {
+		"entity-bush-big": {
 			"width": 32,
 			"height": 32,
 			"centerX": 16,
 			"centerY": 16
 		},
-		
+		"entity-stone": {
+			"width": 16,
+			"height": 16,
+			"centerX": 0,
+			"centerY": 0
+		},
+		"entity-stone-small": {
+			"width": 16,
+			"height": 16,
+			"centerX": 0,
+			"centerY": 0
+		},
+		"entity-stone-marker": {
+			"width": 16,
+			"height": 32,
+			"centerX": 0,
+			"centerY": 16
+		},
+
+		"item-hammer": {
+			"width": 24,
+			"height": 24,
+			"centerX": 12,
+			"centerY": 12
+		},
+
 		"default-tile-left": {
 			"width": 16,
 			"height": 16,
@@ -705,22 +2209,475 @@
 		"default-wall-shadow-half-left": { "type": "defaultTile" },
 		"default-wall-shadow-half-right": { "type": "defaultTile" },
 		"default-wall-shadow-half-diagonal": { "type": "defaultDiagonalTile" },
+
+		"grass-tile-straight": { "type": "defaultTile" },
+		"grass-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"grass-half-wall-straight": { "type": "defaultHalfWall" },
+		"grass-full-wall-straight": { "type": "defaultFullWall" },
+		"grass-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"grass-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"grass-tile-straight-topbottom-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"grass-tile-straight-leftright-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"grass-tile-straight-topbottomleftright-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"grass-tile-straight-left-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"grass-tile-straight-bottom-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"grass-tile-straight-right-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"grass-tile-straight-top-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"grass-tile-straight-bottomleft-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"grass-tile-straight-bottomright-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"grass-tile-straight-topleft-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"grass-tile-straight-topright-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"grass-tile-straight-bottomleftright-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"grass-tile-straight-topbottomright-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"grass-tile-straight-topbottomleft-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"grass-tile-straight-topleftright-grass-rich": {
+			"path": "grass-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"grass-tile-straight-2": {
+			"path": "grass-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"grass-tile-diagonal-2": {
+			"path": "grass-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 0
+		},
+		"grass-tile-straight-3": {
+			"path": "grass-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"grass-tile-diagonal-3": {
+			"path": "grass-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"grass-tile-straight-4": {
+			"path": "grass-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"grass-tile-diagonal-4": {
+			"path": "grass-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 0,
+			"offsetY": 24
+		},
+		"grass-tile-straight-5": {
+			"path": "grass-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"grass-tile-diagonal-5": {
+			"path": "grass-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 24
+		},
+		"grass-tile-straight-6": {
+			"path": "grass-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"grass-tile-diagonal-6": {
+			"path": "grass-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 24
+		},
+		"grass-poor-tile-straight": { "type": "defaultTile" },
+		"grass-poor-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"grass-poor-half-wall-straight": { "type": "defaultHalfWall" },
+		"grass-poor-full-wall-straight": { "type": "defaultFullWall" },
+		"grass-poor-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"grass-poor-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"grass-poor-tile-straight-topbottom-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"grass-poor-tile-straight-leftright-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"grass-poor-tile-straight-topbottomleftright-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"grass-poor-tile-straight-left-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"grass-poor-tile-straight-bottom-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"grass-poor-tile-straight-right-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"grass-poor-tile-straight-top-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"grass-poor-tile-straight-bottomleft-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"grass-poor-tile-straight-bottomright-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"grass-poor-tile-straight-topleft-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"grass-poor-tile-straight-topright-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"grass-poor-tile-straight-bottomleftright-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"grass-poor-tile-straight-topbottomright-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"grass-poor-tile-straight-topbottomleft-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"grass-poor-tile-straight-topleftright-grass-rich": {
+			"path": "grass-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"grass-poor-tile-straight-topbottom-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"grass-poor-tile-straight-leftright-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"grass-poor-tile-straight-topbottomleftright-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"grass-poor-tile-straight-left-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"grass-poor-tile-straight-bottom-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"grass-poor-tile-straight-right-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"grass-poor-tile-straight-top-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"grass-poor-tile-straight-bottomleft-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"grass-poor-tile-straight-bottomright-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"grass-poor-tile-straight-topleft-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"grass-poor-tile-straight-topright-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"grass-poor-tile-straight-bottomleftright-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"grass-poor-tile-straight-topbottomright-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"grass-poor-tile-straight-topbottomleft-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"grass-poor-tile-straight-topleftright-grass": {
+			"path": "grass-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"grass-poor-tile-straight-2": {
+			"path": "grass-poor-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"grass-poor-tile-diagonal-2": {
+			"path": "grass-poor-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 0
+		},
+		"grass-poor-tile-straight-3": {
+			"path": "grass-poor-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"grass-poor-tile-diagonal-3": {
+			"path": "grass-poor-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"grass-poor-tile-straight-4": {
+			"path": "grass-poor-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"grass-poor-tile-diagonal-4": {
+			"path": "grass-poor-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 0,
+			"offsetY": 24
+		},
+		"grass-poor-tile-straight-5": {
+			"path": "grass-poor-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"grass-poor-tile-diagonal-5": {
+			"path": "grass-poor-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 24
+		},
+		"grass-poor-tile-straight-6": {
+			"path": "grass-poor-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"grass-poor-tile-diagonal-6": {
+			"path": "grass-poor-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 24
+		},
 		"grass-rich-tile-straight": { "type": "defaultTile" },
 		"grass-rich-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"grass-rich-half-wall-straight": { "type": "defaultHalfWall" },
 		"grass-rich-full-wall-straight": { "type": "defaultFullWall" },
 		"grass-rich-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
 		"grass-rich-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
-		"grass-rich-tile-straight-2": { "type": "defaultTile" },
-		"grass-rich-tile-diagonal-2": { "type": "defaultDiagonalTile" },
-		"grass-rich-tile-straight-3": { "type": "defaultTile" },
-		"grass-rich-tile-diagonal-3": { "type": "defaultDiagonalTile" },
-		"grass-rich-tile-straight-4": { "type": "defaultTile" },
-		"grass-rich-tile-diagonal-4": { "type": "defaultDiagonalTile" },
-		"grass-rich-tile-straight-5": { "type": "defaultTile" },
-		"grass-rich-tile-diagonal-5": { "type": "defaultDiagonalTile" },
-		"grass-rich-tile-straight-6": { "type": "defaultTile" },
-		"grass-rich-tile-diagonal-6": { "type": "defaultDiagonalTile" },
+		"grass-rich-tile-straight-2": {
+			"path": "grass-rich-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"grass-rich-tile-diagonal-2": {
+			"path": "grass-rich-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 0
+		},
+		"grass-rich-tile-straight-3": {
+			"path": "grass-rich-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"grass-rich-tile-diagonal-3": {
+			"path": "grass-rich-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"grass-rich-tile-straight-4": {
+			"path": "grass-rich-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"grass-rich-tile-diagonal-4": {
+			"path": "grass-rich-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 0,
+			"offsetY": 24
+		},
+		"grass-rich-tile-straight-5": {
+			"path": "grass-rich-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"grass-rich-tile-diagonal-5": {
+			"path": "grass-rich-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 24
+		},
+		"grass-rich-tile-straight-6": {
+			"path": "grass-rich-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"grass-rich-tile-diagonal-6": {
+			"path": "grass-rich-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 24
+		},
 		"grass-rich-tile-left": {
 			"width": 16,
 			"height": 16,
@@ -833,34 +2790,1284 @@
 		"lightwood-planks-weathered-full-wall-straight": { "type": "defaultFullWall" },
 		"lightwood-planks-weathered-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
 		"lightwood-planks-weathered-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"soil-tile-straight": { "type": "defaultTile" },
+		"soil-tile-diagonal": { "type": "defaultDiagonalTile" },
+		"soil-half-wall-straight": { "type": "defaultHalfWall" },
+		"soil-full-wall-straight": { "type": "defaultFullWall" },
+		"soil-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
+		"soil-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
+		"soil-tile-straight-topbottom-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-tile-straight-leftright-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-tile-straight-topbottomleftright-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-tile-straight-left-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-tile-straight-bottom-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-tile-straight-right-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-tile-straight-top-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-tile-straight-bottomleft-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-tile-straight-bottomright-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-tile-straight-topleft-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-tile-straight-topright-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-tile-straight-bottomleftright-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topbottomright-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topbottomleft-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topleftright-soil-rich": {
+			"path": "soil-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topbottom-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-tile-straight-leftright-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-tile-straight-topbottomleftright-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-tile-straight-left-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-tile-straight-bottom-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-tile-straight-right-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-tile-straight-top-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-tile-straight-bottomleft-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-tile-straight-bottomright-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-tile-straight-topleft-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-tile-straight-topright-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-tile-straight-bottomleftright-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topbottomright-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topbottomleft-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topleftright-grass-rich": {
+			"path": "soil-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topbottom-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-tile-straight-leftright-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-tile-straight-topbottomleftright-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-tile-straight-left-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-tile-straight-bottom-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-tile-straight-right-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-tile-straight-top-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-tile-straight-bottomleft-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-tile-straight-bottomright-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-tile-straight-topleft-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-tile-straight-topright-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-tile-straight-bottomleftright-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topbottomright-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topbottomleft-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topleftright-grass": {
+			"path": "soil-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topbottom-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-tile-straight-leftright-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-tile-straight-topbottomleftright-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-tile-straight-left-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-tile-straight-bottom-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-tile-straight-right-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-tile-straight-top-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-tile-straight-bottomleft-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-tile-straight-bottomright-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-tile-straight-topleft-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-tile-straight-topright-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-tile-straight-bottomleftright-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topbottomright-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topbottomleft-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-tile-straight-topleftright-grass-poor": {
+			"path": "soil-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-tile-straight-2": {
+			"path": "soil-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-tile-diagonal-2": {
+			"path": "soil-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 0
+		},
+		"soil-tile-straight-3": {
+			"path": "soil-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-tile-diagonal-3": {
+			"path": "soil-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-tile-straight-4": {
+			"path": "soil-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-tile-diagonal-4": {
+			"path": "soil-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 0,
+			"offsetY": 24
+		},
+		"soil-tile-straight-5": {
+			"path": "soil-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-tile-diagonal-5": {
+			"path": "soil-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 24
+		},
+		"soil-tile-straight-6": {
+			"path": "soil-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-tile-diagonal-6": {
+			"path": "soil-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 24
+		},
 		"soil-poor-tile-straight": { "type": "defaultTile" },
 		"soil-poor-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"soil-poor-half-wall-straight": { "type": "defaultHalfWall" },
 		"soil-poor-full-wall-straight": { "type": "defaultFullWall" },
 		"soil-poor-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
 		"soil-poor-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
-		"soil-poor-tile-straight-top-grass-rich": { "type": "defaultTile" },
-		"soil-poor-tile-straight-right-grass-rich": { "type": "defaultTile" },
-		"soil-poor-tile-straight-bottom-grass-rich": { "type": "defaultTile" },
-		"soil-poor-tile-straight-left-grass-rich": { "type": "defaultTile" },
-		"soil-poor-tile-straight-topright-grass-rich": { "type": "defaultTile" },
-		"soil-poor-tile-straight-topleft-grass-rich": { "type": "defaultTile" },
-		"soil-poor-tile-straight-bottomright-grass-rich": { "type": "defaultTile" },
-		"soil-poor-tile-straight-bottomleft-grass-rich": { "type": "defaultTile" },
+		"soil-poor-tile-straight-topbottom-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-leftright-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-topbottomleftright-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-left-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-bottom-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-right-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-top-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-bottomleft-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-bottomright-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-topleft-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-topright-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-bottomleftright-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottomright-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottomleft-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topleftright-soil": {
+			"path": "soil-poor-borders-straight-soil",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottom-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-leftright-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-topbottomleftright-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-left-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-bottom-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-right-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-top-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-bottomleft-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-bottomright-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-topleft-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-topright-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-bottomleftright-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottomright-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottomleft-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topleftright-soil-rich": {
+			"path": "soil-poor-borders-straight-soil-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottom-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-leftright-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-topbottomleftright-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-left-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-bottom-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-right-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-top-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-bottomleft-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-bottomright-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-topleft-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-topright-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-bottomleftright-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottomright-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottomleft-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topleftright-grass-rich": {
+			"path": "soil-poor-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottom-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-leftright-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-topbottomleftright-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-left-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-bottom-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-right-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-top-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-bottomleft-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-bottomright-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-topleft-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-topright-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-bottomleftright-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottomright-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottomleft-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topleftright-grass": {
+			"path": "soil-poor-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottom-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-leftright-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-topbottomleftright-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-left-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-bottom-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-right-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-top-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-poor-tile-straight-bottomleft-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-bottomright-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-topleft-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-topright-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-poor-tile-straight-bottomleftright-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottomright-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topbottomleft-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-topleftright-grass-poor": {
+			"path": "soil-poor-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-poor-tile-straight-2": {
+			"path": "soil-poor-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-poor-tile-diagonal-2": {
+			"path": "soil-poor-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-3": {
+			"path": "soil-poor-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-poor-tile-diagonal-3": {
+			"path": "soil-poor-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-poor-tile-straight-4": {
+			"path": "soil-poor-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-poor-tile-diagonal-4": {
+			"path": "soil-poor-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 0,
+			"offsetY": 24
+		},
+		"soil-poor-tile-straight-5": {
+			"path": "soil-poor-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-poor-tile-diagonal-5": {
+			"path": "soil-poor-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 24
+		},
+		"soil-poor-tile-straight-6": {
+			"path": "soil-poor-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-poor-tile-diagonal-6": {
+			"path": "soil-poor-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 24
+		},
 		"soil-rich-tile-straight": { "type": "defaultTile" },
 		"soil-rich-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"soil-rich-half-wall-straight": { "type": "defaultHalfWall" },
 		"soil-rich-full-wall-straight": { "type": "defaultFullWall" },
 		"soil-rich-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
 		"soil-rich-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
-		"soil-rich-tile-straight-top-grass-rich": { "type": "defaultTile" },
-		"soil-rich-tile-straight-right-grass-rich": { "type": "defaultTile" },
-		"soil-rich-tile-straight-bottom-grass-rich": { "type": "defaultTile" },
-		"soil-rich-tile-straight-left-grass-rich": { "type": "defaultTile" },
-		"soil-rich-tile-straight-topright-grass-rich": { "type": "defaultTile" },
-		"soil-rich-tile-straight-topleft-grass-rich": { "type": "defaultTile" },
-		"soil-rich-tile-straight-bottomright-grass-rich": { "type": "defaultTile" },
-		"soil-rich-tile-straight-bottomleft-grass-rich": { "type": "defaultTile" },
+		"soil-rich-tile-straight-topbottom-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-rich-tile-straight-leftright-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-rich-tile-straight-topbottomleftright-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-rich-tile-straight-left-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-bottom-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-right-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-top-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-bottomleft-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-bottomright-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-topleft-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-topright-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-bottomleftright-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-topbottomright-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-topbottomleft-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-topleftright-grass-rich": {
+			"path": "soil-rich-borders-straight-grass-rich",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-topbottom-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-rich-tile-straight-leftright-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-rich-tile-straight-topbottomleftright-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-rich-tile-straight-left-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-bottom-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-right-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-top-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-bottomleft-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-bottomright-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-topleft-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-topright-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-bottomleftright-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-topbottomright-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-topbottomleft-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-topleftright-grass": {
+			"path": "soil-rich-borders-straight-grass",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-topbottom-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-rich-tile-straight-leftright-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-rich-tile-straight-topbottomleftright-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-rich-tile-straight-left-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-bottom-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-right-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-top-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 16
+		},
+		"soil-rich-tile-straight-bottomleft-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-bottomright-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-topleft-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-topright-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 32
+		},
+		"soil-rich-tile-straight-bottomleftright-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-topbottomright-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-topbottomleft-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-topleftright-grass-poor": {
+			"path": "soil-rich-borders-straight-grass-poor",
+			"type": "defaultTile",
+			"offsetX": 48,
+			"offsetY": 48
+		},
+		"soil-rich-tile-straight-2": {
+			"path": "soil-rich-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 0
+		},
+		"soil-rich-tile-diagonal-2": {
+			"path": "soil-rich-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 0
+		},
+		"soil-rich-tile-straight-3": {
+			"path": "soil-rich-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 0
+		},
+		"soil-rich-tile-diagonal-3": {
+			"path": "soil-rich-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 0
+		},
+		"soil-rich-tile-straight-4": {
+			"path": "soil-rich-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 0,
+			"offsetY": 16
+		},
+		"soil-rich-tile-diagonal-4": {
+			"path": "soil-rich-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 0,
+			"offsetY": 24
+		},
+		"soil-rich-tile-straight-5": {
+			"path": "soil-rich-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 16,
+			"offsetY": 16
+		},
+		"soil-rich-tile-diagonal-5": {
+			"path": "soil-rich-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 24,
+			"offsetY": 24
+		},
+		"soil-rich-tile-straight-6": {
+			"path": "soil-rich-tile-straight-variations",
+			"type": "defaultTile",
+			"offsetX": 32,
+			"offsetY": 16
+		},
+		"soil-rich-tile-diagonal-6": {
+			"path": "soil-rich-tile-diagonal-variations",
+			"type": "defaultDiagonalTile",
+			"offsetX": 48,
+			"offsetY": 24
+		},
 		"stone-block-tile-straight": { "type": "defaultTile" },
 		"stone-block-tile-diagonal": { "type": "defaultDiagonalTile" },
 		"stone-block-half-wall-straight": { "type": "defaultHalfWall" },
@@ -904,17 +4111,8 @@
 		"wood-planks-weathered-full-wall-straight": { "type": "defaultFullWall" },
 		"wood-planks-weathered-half-wall-diagonal": { "type": "defaultDiagonalHalfWall" },
 		"wood-planks-weathered-full-wall-diagonal": { "type": "defaultDiagonalFullWall" },
-		"hud-items": {
-			"width": 96,
-			"height": 96
-		},
-		"hud-tools": {
-			"path": "hud-items",
-			"width": 96,
-			"height": 96,
-			"centerX": 96
-		},
-		"dash-cloud": {
+
+		"fx-dash-cloud": {
 			"width": 48,
 			"height": 48,
 			"centerX": 24,
@@ -923,7 +4121,7 @@
 			"framesY": 3,
 			"frameInterval": 0.1
 		},
-		"dash-recharge": {
+		"fx-dash-recharge": {
 			"width": 48,
 			"height": 48,
 			"centerX": 24,
@@ -932,57 +4130,62 @@
 			"framesY": 3,
 			"frameInterval": 0.05
 		},
-		"dash-target": {
+		"fx-dash-target": {
 			"type": "tileSize",
 			"framesX": 2,
 			"framesY": 2,
 			"frameInterval": 0.085
 		},
-		"dash-target-fade": {
+		"fx-dash-target-fade": {
 			"type": "tileSize",
 			"framesX": 2,
 			"framesY": 2,
 			"frameInterval": 0.085
 		},
-		"dash-fail": {
-			"type": "tileSize",
-			"framesX": 2,
-			"framesY": 2,
-			"frameInterval": 0.1
-		},
-		"dash-marker": {
-			"type": "tileSize",
-			"framesX": 4,
-			"framesY": 3,
-			"frameInterval": 0.085
-		},
-		"dash-fail-marker": {
-			"type": "tileSize",
-			"framesX": 4,
-			"framesY": 3,
-			"frameInterval": 0.085
-		},
-		"standard-marker": {
+		"fx-dash-fail": {
 			"type": "tileSize",
 			"framesX": 2,
 			"framesY": 2,
 			"frameInterval": 0.1
 		},
-		"shadow-medium": {
+		"fx-dash-marker": {
+			"type": "tileSize",
+			"framesX": 4,
+			"framesY": 3,
+			"frameInterval": 0.085
+		},
+		"fx-dash-fail-marker": {
+			"type": "tileSize",
+			"framesX": 4,
+			"framesY": 3,
+			"frameInterval": 0.085
+		},
+		"fx-standard-marker": {
+			"type": "tileSize",
+			"framesX": 2,
+			"framesY": 2,
+			"frameInterval": 0.1
+		},
+		"fx-shadow-medium": {
 			"width": 20,
 			"height": 20,
 			"centerX": 10,
 			"centerY": 10
 		},
-		"hammer": {
-			"width": 24,
-			"height": 24,
-			"centerX": 12,
-			"centerY": 12
+
+		"ui-hud-items": {
+			"width": 96,
+			"height": 96
 		},
-		"button-a": { "type": "tileSize" },
-		"button-b": { "type": "tileSize" },
-		"button-x": { "type": "tileSize" },
-		"button-y": { "type": "tileSize" }
+		"ui-hud-tools": {
+			"path": "ui-hud-items",
+			"width": 96,
+			"height": 96,
+			"centerX": 96
+		},
+		"ui-button-a": { "type": "tileSize" },
+		"ui-button-b": { "type": "tileSize" },
+		"ui-button-x": { "type": "tileSize" },
+		"ui-button-y": { "type": "tileSize" }
 	}
 }

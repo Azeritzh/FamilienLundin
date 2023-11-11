@@ -17,10 +17,10 @@ export class RegionGenerator {
 
 	private HeightMap: NoiseMap
 	private HeightNoiseMap: NoiseMap
+	private RichnessMap: NoiseMap
+	private RichnessNoiseMap: NoiseMap
 	private GrassMap: NoiseMap
 	private GrassNoiseMap: NoiseMap
-	private DirtMap: NoiseMap
-	private DirtNoiseMap: NoiseMap
 
 	constructor(
 		private Config: GameConfig,
@@ -40,10 +40,10 @@ export class RegionGenerator {
 		const regionSize = new Vector2(this.Region.Size.X, this.Region.Size.Y)
 		this.HeightMap = new DoubleValleyNoiseMap(regionSize, 20, TerrainRandom) // We want the heightmap to generate first, so it won't be influenced by changes in the other steps
 		this.HeightNoiseMap = new DoubleValleyNoiseMap(new Vector2(32, 32), 20, TerrainRandom)
+		this.RichnessMap = new DoubleValleyNoiseMap(regionSize, 80, TerrainRandom)
+		this.RichnessNoiseMap = new DoubleValleyNoiseMap(new Vector2(32, 32), 20, TerrainRandom)
 		this.GrassMap = new DoubleValleyNoiseMap(regionSize, 80, TerrainRandom)
 		this.GrassNoiseMap = new DoubleValleyNoiseMap(new Vector2(32, 32), 20, TerrainRandom)
-		this.DirtMap = new DoubleValleyNoiseMap(regionSize, 80, TerrainRandom)
-		this.DirtNoiseMap = new DoubleValleyNoiseMap(new Vector2(32, 32), 20, TerrainRandom)
 	}
 
 	private GetRegionSeed(worldSeed: number, regionCoords: GridVector) {
@@ -70,11 +70,22 @@ export class RegionGenerator {
 		const height = this.GetHeight(new Vector2(x, y))
 		for (let z = Region.Offset.Z; z < Region.Offset.Z + Region.Size.Z; z++)
 			this.SetBlock(x, y, z, this.BlockFor(x, y, z, height))
-		if (this.TerrainRandom.Float() < 0.02) {
-			const id = this.Config.EntityTypeMap.TypeIdFor("bush") | Region.EntitiesToBeCreated.size
-			const values = { BlockPosition: new Vector3(x, y, height) }
-			Region.EntitiesToBeCreated.set(id, values)
-		}
+
+		let random = this.TerrainRandom.Float()
+		if ((random -= 0.005) < 0)
+			this.AddBlockEntity("bush-big", x, y, height)
+		else if ((random -= 0.004) < 0)
+			this.AddBlockEntity("stone", x, y, height)
+		else if ((random -= 0.006) < 0)
+			this.AddBlockEntity("stone-small", x, y, height)
+		else if ((random -= 0.001) < 0)
+			this.AddBlockEntity("stone-marker", x, y, height)
+	}
+
+	private AddBlockEntity(type: string, x: number, y: number, z: number) {
+		const id = this.Config.EntityTypeMap.TypeIdFor(type) | this.Region.EntitiesToBeCreated.size
+		const values = { BlockPosition: new Vector3(x, y, z) }
+		this.Region.EntitiesToBeCreated.set(id, values)
 	}
 
 	private GetHeight(position: Vector2) {
@@ -178,13 +189,24 @@ export class RegionGenerator {
 			return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("soil-rich"))
 		if (z - height < 0) {
 			const position = new Vector2(x, y)
-			const grass = this.GrassMap.ValueAt(position) * 5 + this.GrassNoiseMap.ValueAt(position) * 0.5
-			const dirt = this.DirtMap.ValueAt(position) * 2 + this.DirtNoiseMap.ValueAt(position) * 0.5
-			if (grass > 1)
-				return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("grass-rich"))
-			return dirt > 1
-				? Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("soil-rich"))
-				: Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("soil-poor"))
+			const richness = this.RichnessMap.ValueAt(position) * 0.9 + this.RichnessNoiseMap.ValueAt(position) * 0.1
+			const grass = this.GrassMap.ValueAt(position) * 0.9 + this.GrassNoiseMap.ValueAt(position) * 0.1
+			if (grass > 0.3) {
+				if(richness < 0.3)
+					return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("grass-poor"))
+				else if (richness < 0.7)
+					return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("grass"))
+				else
+					return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("grass-rich"))
+			}
+			else {
+				if (richness < 0.3)
+					return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("soil-poor"))
+				else if (richness < 0.7)
+					return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("soil"))
+				else
+					return Blocks.NewFull(Config.SolidTypeMap.TypeIdFor("soil-rich"))
+			}
 		}
 		return Blocks.NewEmpty(Config.NonSolidTypeMap.TypeIdFor("air"))
 	}

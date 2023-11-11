@@ -65,11 +65,38 @@
 			},
 			"GravityBehaviour": true
 		},
-		"bush": {
+		"bush-big": {
 			"BlockArea": {
 				"MinX": -1,
 				"MaxX": 1,
 				"MinY": -1,
+				"MaxY": 1,
+				"HasCollision": false
+			}
+		},
+		"stone": {
+			"BlockArea": {
+				"MinX": 0,
+				"MaxX": 1,
+				"MinY": 0,
+				"MaxY": 1,
+				"HasCollision": false
+			}
+		},
+		"stone-small": {
+			"BlockArea": {
+				"MinX": 0,
+				"MaxX": 1,
+				"MinY": 0,
+				"MaxY": 1,
+				"HasCollision": false
+			}
+		},
+		"stone-marker": {
+			"BlockArea": {
+				"MinX": 0,
+				"MaxX": 1,
+				"MinY": 0,
 				"MaxY": 1,
 				"HasCollision": false
 			}
@@ -86,11 +113,14 @@
 		"darkwood-beam": {},
 		"darkwood-planks": {},
 		"darkwood-planks-weathered": {},
+		"grass": {},
+		"grass-poor": {},
 		"grass-rich": {},
 		"lightwood": {},
 		"lightwood-beam": {},
 		"lightwood-planks": {},
 		"lightwood-planks-weathered": {},
+		"soil": {},
 		"soil-poor": {},
 		"soil-rich": {},
 		"stone-block": {},

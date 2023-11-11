@@ -1,4 +1,4 @@
-import { EntityTypeOf, Id } from "@lundin/age"
+import { Box, EntityTypeOf, Id } from "@lundin/age"
 import { Rotate, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
 import { DisplayArea } from "../services/camera"
@@ -18,18 +18,42 @@ export class EntitiesDrawer {
 	) { }
 
 	Draw() {
-		for (const { layer, area } of this.State.ShownLayers) {
-			for (const entity of this.EntitiesInArea(layer, area))
-				this.DrawEntity(entity)
-			for (const entity of this.BlockEntitiesInArea(layer, area))
-				this.DrawBlockEntity(entity)
-		}
+		for (const entity of this.VisibleEntities())
+			this.DrawEntity(entity)
+		for (const entity of this.VisibleBlockEntities())
+			this.DrawBlockEntity(entity)
 	}
 
-	private EntitiesInArea(layer: number, area: DisplayArea) {
-		return [...this.Game.Entities.With.Position]
-			.filter(([, position]) => this.IsInArea(layer, area, position))
-			.map(x => x[0])
+	private *VisibleEntities() {
+		const box = this.VisibleAreaBox()
+		const entities = [...this.Game.Entities.With.Position]
+			.filter(x => box.Contains(x[1]))
+		for (const { layer, area } of this.State.ShownLayers)
+			for (const entity of entities.filter(x => this.IsInArea(layer, area, x[1])))
+				yield entity[0]
+	}
+
+	private *VisibleBlockEntities() {
+		const box = this.VisibleAreaBox()
+		const entities = [...this.Game.Entities.With.BlockPosition]
+			.filter(x => box.Contains(x[1]))
+		for (const { layer, area } of this.State.ShownLayers)
+			for (const entity of entities.filter(x => this.IsInArea(layer, area, x[1])))
+				yield entity[0]
+	}
+
+	private VisibleAreaBox() {
+		const State = this.State
+		if (State.ShownLayers.length === 0)
+			return new Box(0, 0, 0, 0, 0, 0)
+		return new Box(
+			State.ShownLayers.map(x => x.area.Left).min(),
+			State.ShownLayers.map(x => x.area.Right).max(),
+			State.ShownLayers.map(x => x.area.Top).min(),
+			State.ShownLayers.map(x => x.area.Bottom).max(),
+			State.ShownLayers.map(x => x.layer).min(),
+			State.ShownLayers.map(x => x.layer).max()
+		)
 	}
 
 	private IsInArea(layer: number, area: DisplayArea, position: Vector3) {
@@ -55,12 +79,6 @@ export class EntitiesDrawer {
 		this.EntityContext.Velocity = this.Game.Entities.Velocity.Get.Of(entity) ?? Vector3.Zero
 		this.EntityContext.ToolState = this.Game.Entities.ToolState.Get.Of(entity)
 	}
-	
-	private BlockEntitiesInArea(layer: number, area: DisplayArea) {
-		return [...this.Game.Entities.With.BlockPosition]
-			.filter(([, position]) => this.IsInArea(layer, area, position))
-			.map(x => x[0])
-	}
 
 	private DrawBlockEntity(entity: Id) {
 		if (!this.Config.EntitySprites.has(EntityTypeOf(entity)))
@@ -77,6 +95,7 @@ export class EntitiesDrawer {
 		this.EntityContext.Position = this.Game.Entities.BlockPosition.Get.Of(entity) ?? Vector3.Zero
 		this.EntityContext.Velocity = Vector3.Zero
 		this.EntityContext.ToolState = null
+		this.EntityContext.HasShadow = false
 	}
 }
 

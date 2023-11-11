@@ -81,9 +81,11 @@ export class WebGl2Display {
 		height = 16,
 		centerX = 0,
 		centerY = 0,
+		offsetX = 0,
+		offsetY = 0,
 	) {
 		this.loadingSprites.push(name)
-		this.sprites[name] = await this.spriteFactory.createSprite(path, width, height, centerX, centerY)
+		this.sprites[name] = await this.spriteFactory.createSprite(path, width, height, centerX, centerY, offsetX, offsetY)
 		this.loadingSprites.splice(this.loadingSprites.indexOf(name), 1)
 	}
 

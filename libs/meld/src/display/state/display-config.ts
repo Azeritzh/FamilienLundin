@@ -57,6 +57,8 @@ export interface SpriteInfo {
 	height: number
 	centerX: number
 	centerY: number
+	offsetX: number
+	offsetY: number
 	framesX: number
 	framesY: number
 	frameInterval: number

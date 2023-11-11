@@ -15,6 +15,8 @@ export class EntityShadowDrawer {
 	) { }
 
 	Draw(context: EntityContext) {
+		if (!context.HasShadow)
+			return
 		this.EntityContext = context
 		const height = this.GetFloorHeight(context.Position)
 		if (height !== null && height !== undefined)

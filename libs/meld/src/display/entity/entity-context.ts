@@ -10,4 +10,5 @@ export class EntityContext {
 	public Position = new Vector3(0, 0, 0)
 	public Velocity = new Vector3(0, 0, 0)
 	public ToolState: ToolState = null
+	public HasShadow = true
 }
