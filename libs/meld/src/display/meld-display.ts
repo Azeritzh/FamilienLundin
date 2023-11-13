@@ -1,23 +1,26 @@
 import { BaseDisplay, finishTiming, HtmlDisplayProvider, startTiming } from "@lundin/age"
-import { Camera } from "./services/camera"
-import { DisplayConfig } from "./state/display-config"
-import { DisplayEntityDrawer } from "./display-entity-drawer"
-import { DisplayState } from "./state/display-state"
-import { DashDrawer } from "./entity/dash-drawer"
-import { StandardEntityDrawer } from "./entity/standard-entity-drawer"
-import { HudDrawer } from "./hud/hud-drawer"
-import { InputParser } from "./services/input-parser"
-import { TerrainDrawer } from "./terrain/terrain-drawer"
-import { EntitiesDrawer } from "./entity/entities-drawer"
 import { Meld } from "../meld"
 import { GameUpdate } from "../state/game-update"
+import { DisplayEntityDrawer } from "./display-entity-drawer"
+import { DashDrawer } from "./entity/dash-drawer"
+import { EntityDisplay } from "./entity/entity-display"
+import { EntityShadowDrawer } from "./entity/entity-shadow-drawer"
+import { StandardEntityDrawer } from "./entity/standard-entity-drawer"
+import { BlockMarkerDrawer } from "./hud/block-marker-drawer"
+import { HudDrawer } from "./hud/hud-drawer"
+import { UiDisplay } from "./hud/ui-display"
+import { Camera } from "./services/camera"
+import { InputParser } from "./services/input-parser"
 import { Visibility } from "./services/visibility"
+import { DisplayConfig } from "./state/display-config"
+import { DisplaySettings } from "./state/display-settings"
+import { DisplayState } from "./state/display-state"
+import { BlockShadowDrawer } from "./terrain/block-shadow-drawer"
+import { BorderDrawer } from "./terrain/border-drawer"
+import { TerrainDrawer } from "./terrain/terrain-drawer"
 import { TileDrawer } from "./terrain/tile-drawer"
 import { WallDrawer } from "./terrain/wall-drawer"
-import { BorderDrawer } from "./terrain/border-drawer"
-import { BlockShadowDrawer } from "./terrain/block-shadow-drawer"
-import { DisplaySettings } from "./state/display-settings"
-import { EntityShadowDrawer } from "./entity/entity-shadow-drawer"
+import { HammerDrawer } from "./entity/hammer-drawer"
 
 export class MeldDisplay implements BaseDisplay<GameUpdate> {
 	constructor(
@@ -31,18 +34,22 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		private visibility = new Visibility(Game, Config, State, camera),
 		private inputParser = new InputParser(Game, State, camera, visibility, Display, Settings.Inputs),
 		private displayEntityDrawer = new DisplayEntityDrawer(Game, Config, State, camera),
-		private hudDrawer = new HudDrawer(Game, Config, State, Display),
 
-		private tileDrawer = new TileDrawer(Config, State, camera, Game),
-		private wallDrawer = new WallDrawer(Config, State, camera),
-		private borderDrawer = new BorderDrawer(Config, camera),
-		private blockShadowDrawer = new BlockShadowDrawer(Config, camera, Game),
+		hudDrawer = new HudDrawer(Game, Config, State, Display),
+		blockMarkerDrawer  = new BlockMarkerDrawer(Game, Config, State, camera),
+		private uiDisplay = new UiDisplay(Game, State, [hudDrawer, blockMarkerDrawer]),
+
+		tileDrawer = new TileDrawer(Config, State, camera, Game),
+		wallDrawer = new WallDrawer(Config, State, camera),
+		borderDrawer = new BorderDrawer(Config, camera),
+		blockShadowDrawer = new BlockShadowDrawer(Config, camera, Game),
 		private terrainDrawer = new TerrainDrawer(Game, Config, State, camera, [tileDrawer, wallDrawer, borderDrawer, blockShadowDrawer]),
 
-		private entityDrawer = new StandardEntityDrawer(Game, Config, camera),
-		private entityShadowDrawer = new EntityShadowDrawer(Game, Config, camera),
-		private dashDrawer = new DashDrawer(Game, Config, State, camera, displayEntityDrawer),
-		private entitiesDrawer = new EntitiesDrawer(Game, Config, State, [entityDrawer, entityShadowDrawer, dashDrawer]),
+		entityDrawer = new StandardEntityDrawer(Game, Config, camera),
+		entityShadowDrawer = new EntityShadowDrawer(Game, Config, camera),
+		dashDrawer = new DashDrawer(Game, Config, State, camera, displayEntityDrawer),
+		hammerDrawer = new HammerDrawer(Game, Config, camera),
+		private entitiesDrawer = new EntityDisplay(Game, Config, State, [entityDrawer, entityShadowDrawer, dashDrawer, hammerDrawer]),
 	) {
 		Game.dashLogic.Listeners.push(dashDrawer)
 		Display.SortByDepth = true
@@ -65,7 +72,7 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		this.entitiesDrawer.Draw()
 		this.terrainDrawer.Draw()
 		this.displayEntityDrawer.DrawDisplayEntities()
-		this.hudDrawer.Draw()
+		this.uiDisplay.Draw()
 		finishTiming("displayUpdate")
 		this.Display.FinishFrame()
 	}

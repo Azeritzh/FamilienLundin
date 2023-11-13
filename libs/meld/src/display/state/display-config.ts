@@ -1,4 +1,5 @@
 import { TypeId } from "@lundin/age"
+import { ToClass } from "@lundin/utility"
 import { SolidId } from "../../state/block"
 import { ItemTypeId } from "../../state/item"
 import { BlockSprites, BlockTileOverlays, BlockWallOverlays } from "./block-sprites"
@@ -29,25 +30,61 @@ export interface DisplayConfig {
 
 export class GameplaySprites {
 	constructor(
+		public BlockMarker = new BlockMarkerSprites(),
+		public Dash = new DashSprites(),
+		public Shadow = new ShadowSprites(),
 		public StandardMarker = "missing-sprite",
-		public ShadowSmall = "missing-sprite",
-		public ShadowMedium = "missing-sprite",
-		public ShadowBig = "missing-sprite",
-		public WallShadowFullLeft = "missing-sprite",
-		public WallShadowFullRight = "missing-sprite",
-		public WallShadowFullDiagonal = "missing-sprite",
-		public WallShadowHalfLeft = "missing-sprite",
-		public WallShadowHalfRight = "missing-sprite",
-		public WallShadowHalfDiagonal = "missing-sprite",
-		public DashCloud = "missing-sprite",
-		public DashRecharge = "missing-sprite",
-		public DashTarget = "missing-sprite",
-		public DashTargetFade = "missing-sprite",
-		public DashFail = "missing-sprite",
-		public DashMarker = "missing-sprite",
-		public DashFailMarker = "missing-sprite",
 		public HudLeft = "missing-sprite",
 		public HudRight = "missing-sprite"
+	) { }
+
+	static From(source: any) {
+		const model = new GameplaySprites()
+		for (const prop in source)
+			model[prop] = source[prop]
+		model.BlockMarker = ToClass(model.BlockMarker, BlockMarkerSprites)
+		model.Dash = ToClass(model.Dash, DashSprites)
+		model.Shadow = ToClass(model.Shadow, ShadowSprites)
+		return model
+	}
+}
+
+export class BlockMarkerSprites {
+	constructor(
+		public Straight = "missing-sprite",
+		public StraightNear = "missing-sprite",
+		public StraightFar = "missing-sprite",
+		public StraightTop = "missing-sprite",
+		public Diagonal = "missing-sprite",
+		public DiagonalNear = "missing-sprite",
+		public DiagonalFar = "missing-sprite",
+		public DiagonalTop = "missing-sprite",
+	) { }
+}
+
+export class DashSprites {
+	constructor(
+		public Cloud = "missing-sprite",
+		public Recharge = "missing-sprite",
+		public Target = "missing-sprite",
+		public TargetFade = "missing-sprite",
+		public Fail = "missing-sprite",
+		public Marker = "missing-sprite",
+		public FailMarker = "missing-sprite",
+	) { }
+}
+
+export class ShadowSprites {
+	constructor(
+		public Small = "missing-sprite",
+		public Medium = "missing-sprite",
+		public Big = "missing-sprite",
+		public WallFullLeft = "missing-sprite",
+		public WallFullRight = "missing-sprite",
+		public WallFullDiagonal = "missing-sprite",
+		public WallHalfLeft = "missing-sprite",
+		public WallHalfRight = "missing-sprite",
+		public WallHalfDiagonal = "missing-sprite",
 	) { }
 }
 

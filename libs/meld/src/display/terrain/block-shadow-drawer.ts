@@ -29,8 +29,8 @@ export class BlockShadowDrawer {
 			.addFrom(this.Camera.BottomRightTile)
 			.addFrom(Camera.BlockCenter)
 		this.DrawStraightShadowsBy(
-			this.Config.GameplaySprites.WallShadowHalfDiagonal,
-			this.Config.GameplaySprites.WallShadowFullDiagonal,
+			this.Config.GameplaySprites.Shadow.WallHalfDiagonal,
+			this.Config.GameplaySprites.Shadow.WallFullDiagonal,
 			position,
 			this.BlockContext.BottomRightBlock)
 	}
@@ -41,8 +41,8 @@ export class BlockShadowDrawer {
 			.addFrom(this.Camera.LeftTile)
 			.addFrom(Camera.BlockCenter)
 		this.DrawStraightShadowsBy(
-			this.Config.GameplaySprites.WallShadowHalfLeft,
-			this.Config.GameplaySprites.WallShadowFullLeft,
+			this.Config.GameplaySprites.Shadow.WallHalfLeft,
+			this.Config.GameplaySprites.Shadow.WallFullLeft,
 			position,
 			this.BlockContext.LeftBlock)
 
@@ -50,8 +50,8 @@ export class BlockShadowDrawer {
 			.addFrom(this.Camera.RightTile)
 			.addFrom(Camera.BlockCenter)
 		this.DrawStraightShadowsBy(
-			this.Config.GameplaySprites.WallShadowHalfRight,
-			this.Config.GameplaySprites.WallShadowFullRight,
+			this.Config.GameplaySprites.Shadow.WallHalfRight,
+			this.Config.GameplaySprites.Shadow.WallFullRight,
 			position,
 			this.BlockContext.RightBlock)
 	}

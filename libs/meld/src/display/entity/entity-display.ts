@@ -7,7 +7,7 @@ import { AngleFromNorth, DisplayState } from "../state/display-state"
 import { EntitySprites } from "../state/entity-sprites"
 import { EntityContext } from "./entity-context"
 
-export class EntitiesDrawer {
+export class EntityDisplay {
 	private EntityContext = new EntityContext()
 
 	constructor(

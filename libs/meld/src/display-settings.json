@@ -61,8 +61,8 @@
 		"MoveCameraLeft": [],
 		"MoveCameraRight": [],
 
-		"LookUp": [],
-		"LookDown": [],
+		"LookUp": [ "R" ],
+		"LookDown": [ "C" ],
 		"RotateCameraLeft": [ "Q" ],
 		"RotateCameraRight": [ "E" ],
 

@@ -93,3 +93,7 @@ export function Contain(value: number, min: number, max: number) {
 		value -= size * MathF.Ceiling((value - max) / size)
 	return value
 }
+
+export function ToClass(source: any, cclass: any) {
+	return Object.assign(new cclass(), source)
+}

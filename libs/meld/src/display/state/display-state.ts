@@ -1,5 +1,5 @@
-import { BlockChunk, ScreenSize } from "@lundin/age"
-import { Rotate, Vector3 } from "@lundin/utility"
+import { BlockChunk, ControllerType, ScreenSize } from "@lundin/age"
+import { Rotate, Vector2, Vector3 } from "@lundin/utility"
 import { DisplayConfig } from "./display-config"
 import { DisplayEntity } from "../display-entity-drawer"
 import { DisplayArea } from "../services/camera"
@@ -11,11 +11,15 @@ export class DisplayState {
 		public FractionOfTick = 0,
 		public FocusPoint = new Vector3(0, 0, 0),
 		public ViewDirection: ViewDirection = <ViewDirection>6,
+		public LookingMode: LookingMode = <LookingMode>0,
 		public DisplayEntities: DisplayEntity[] = [],
 		public ShownLayers: { layer: number, area: DisplayArea }[] = [],
 		public VisibleBlocks: BlockChunk<boolean> = new BlockChunk([false]),
 		public PlayerIsBlocked = false,
+		public CurrentControllerType: ControllerType = ControllerType.Controller,
 		public InputMode: InputMode = <InputMode>0,
+		public PointerTarget: Vector3 = Vector3.Zero,
+		public PointerPosition: Vector2 = Vector2.Zero,
 	) { }
 
 	public static from(config: DisplayConfig, playerName: string) {
@@ -47,3 +51,4 @@ export function ViewDirectionFromAngle(angle: number) {
 }
 
 export enum InputMode { Normal, Selection, Camera }
+export enum LookingMode { Normal, Up, Down }

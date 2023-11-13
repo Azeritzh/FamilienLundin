@@ -3,7 +3,7 @@ import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
 import { BlockType } from "../../state/block"
 import { DisplayConfig } from "../state/display-config"
-import { AngleFromNorth, DisplayState, ViewDirection } from "../state/display-state"
+import { AngleFromNorth, DisplayState, LookingMode, ViewDirection } from "../state/display-state"
 import { Visibility } from "./visibility"
 
 export class Camera {
@@ -45,11 +45,16 @@ export class Camera {
 	private Adjustable = new Vector3(0, 0, 0)
 
 	public FocusOn(entity: Id) {
+		const State = this.State
 		this.SetCurrentPositionWith(
-			this.State.FocusPoint,
+			State.FocusPoint,
 			this.Game.Entities.Position.Get.Of(entity) ?? Vector3.Zero,
 			this.Game.Entities.Velocity.Get.Of(entity),
 		)
+		if (State.LookingMode === LookingMode.Up)
+			State.FocusPoint.Z += 1
+		else if (State.LookingMode === LookingMode.Down)
+			State.FocusPoint.Z += -1
 	}
 
 	private _adjustableCurrentPosition = new Vector3(0, 0, 0)
@@ -282,4 +287,5 @@ export class Layer {
 	public static OverlayEastAdjustment = Layer.ZFightingAdjustment * 2
 	public static OverlayWestAdjustment = Layer.ZFightingAdjustment * 3
 	public static OverlaySouthAdjustment = Layer.ZFightingAdjustment * 4
+	public static AboveOverlayAdjustment = Layer.ZFightingAdjustment * 5
 }

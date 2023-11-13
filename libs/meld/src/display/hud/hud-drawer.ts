@@ -3,10 +3,10 @@ import { Meld } from "../../meld"
 import { Item } from "../../state/item"
 import { DisplayConfig } from "../state/display-config"
 import { DisplayState } from "../state/display-state"
+import { UiDisplay } from "./ui-display"
 
 export class HudDrawer {
-	static BottomLayer = 0.9998
-	static TopLayer = 0.9999
+	private Player: Id
 
 	constructor(
 		private Game: Meld,
@@ -15,22 +15,20 @@ export class HudDrawer {
 		private DisplayProvider: DisplayProvider,
 	) { }
 
-	Draw() {
-		const playerId = this.Game.State.Players.get(this.State.PlayerName)
-		if (!(playerId > -1))
-			return
+	Draw(player: Id) {
+		this.Player = player
 		this.DrawHud()
-		this.DrawItems(playerId)
-		this.DrawToolSection(playerId)
+		this.DrawItems()
+		this.DrawToolSection()
 	}
 
 	private DrawHud() {
-		this.DisplayProvider.Draw(this.Config.GameplaySprites.HudLeft, 0, 0, 0, 0, HudDrawer.BottomLayer)
-		this.DisplayProvider.Draw(this.Config.GameplaySprites.HudRight, this.State.Size.WidthInTiles, 0, 0, 0, HudDrawer.BottomLayer)
+		this.DisplayProvider.Draw(this.Config.GameplaySprites.HudLeft, 0, 0, 0, 0, UiDisplay.BottomLayer)
+		this.DisplayProvider.Draw(this.Config.GameplaySprites.HudRight, this.State.Size.WidthInTiles, 0, 0, 0, UiDisplay.BottomLayer)
 	}
 
-	private DrawItems(player: Id) {
-		const items = this.Game.Entities.SelectableItems.Get.Of(player)
+	private DrawItems() {
+		const items = this.Game.Entities.SelectableItems.Get.Of(this.Player)
 		if (!items)
 			return
 		const topItem = items.ItemInCurrentSet(0)
@@ -69,25 +67,25 @@ export class HudDrawer {
 				buttonY = 3
 				break
 		}
-		this.DisplayProvider.Draw("ui-button-y", buttonX, buttonY, 0, 0, HudDrawer.TopLayer)
+		this.DisplayProvider.Draw("ui-button-y", buttonX, buttonY, 0, 0, UiDisplay.TopLayer)
 	}
 
-	private DrawToolSection(player: Id) {
-		const tool = this.Game.Entities.SelectableTools.Get.Of(player)?.CurrentTool()
+	private DrawToolSection() {
+		const tool = this.Game.Entities.SelectableTools.Get.Of(this.Player)?.CurrentTool()
 		if (!tool)
 			return
 		this.DrawItem(tool, this.State.Size.WidthInTiles - 3, 4.5)
-		this.DisplayProvider.Draw("ui-button-a", this.State.Size.WidthInTiles - 2.25, 5, 0, 0, HudDrawer.TopLayer)
-		this.DisplayProvider.Draw("ui-button-x", this.State.Size.WidthInTiles - 3.75, 5, 0, 0, HudDrawer.TopLayer)
+		this.DisplayProvider.Draw("ui-button-a", this.State.Size.WidthInTiles - 2.25, 5, 0, 0, UiDisplay.TopLayer)
+		this.DisplayProvider.Draw("ui-button-x", this.State.Size.WidthInTiles - 3.75, 5, 0, 0, UiDisplay.TopLayer)
 
-		this.DisplayProvider.Draw(this.Config.GameplaySprites.DashTarget, this.State.Size.WidthInTiles - 1.5, 3, 0, 0, HudDrawer.TopLayer)
-		this.DisplayProvider.Draw("ui-button-b", this.State.Size.WidthInTiles - 0.75, 3.5, 0, 0, HudDrawer.TopLayer)
+		this.DisplayProvider.Draw(this.Config.GameplaySprites.Dash.Target, this.State.Size.WidthInTiles - 1.5, 3, 0, 0, UiDisplay.TopLayer)
+		this.DisplayProvider.Draw("ui-button-b", this.State.Size.WidthInTiles - 0.75, 3.5, 0, 0, UiDisplay.TopLayer)
 	}
 
 	private DrawItem(item: Item, x: number, y: number) {
 		const sprite = this.Config.ItemSprites.has(item.Type)
 			? this.Config.ItemSprites.get(item.Type)
 			: this.Config.BlockSprites.get(item.Content)[0].TileFor(this.State.ViewDirection)
-		this.DisplayProvider.Draw(sprite, x, y, 0, 0, HudDrawer.TopLayer)
+		this.DisplayProvider.Draw(sprite, x, y, 0, 0, UiDisplay.TopLayer)
 	}
 }

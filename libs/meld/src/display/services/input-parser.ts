@@ -2,7 +2,7 @@ import { BaseInputParser, ControllerType, DisplayProvider, Id } from "@lundin/ag
 import { Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
 import { ActionState, ChargeDashAction, JumpAction, MovementAction, ReleaseDashAction, SelectItemAction, SelectItemSetAction, SelectToolAction, UseItemAction, UseToolAction } from "../../state/game-update"
-import { AngleFromNorth, DisplayState, InputMode, ViewDirection, ViewDirectionFromAngle } from "../state/display-state"
+import { AngleFromNorth, DisplayState, InputMode, LookingMode, ViewDirection, ViewDirectionFromAngle } from "../state/display-state"
 import { Camera } from "./camera"
 import { Input } from "./input"
 import { Visibility } from "./visibility"
@@ -36,6 +36,9 @@ export class InputParser extends BaseInputParser<Input> {
 		this.UpdatePointer()
 		this.UpdateCamera()
 		this.UpdateActionStates()
+		this.State.CurrentControllerType = this.CurrentControllerType
+		this.State.PointerTarget = this.CurrentTarget
+		this.State.PointerPosition = this.CurrentVector
 
 		return this.ParseActions()
 	}
@@ -104,6 +107,7 @@ export class InputParser extends BaseInputParser<Input> {
 	//////////////////////////////// CAMERA ////////////////////////////////
 
 	private UpdateCamera() {
+		const State = this.State
 		if (this.HasJustBeenPressed(this.RotateRightInput())) {
 			this.Camera.RotateCamera(1)
 			this.Visibility.UpdateSize()
@@ -112,6 +116,15 @@ export class InputParser extends BaseInputParser<Input> {
 			this.Camera.RotateCamera(-1)
 			this.Visibility.UpdateSize()
 		}
+		const oldMode = State.LookingMode
+		if (this.BoolStateFor(this.LookUpInput()))
+			State.LookingMode = LookingMode.Up
+		else if (this.BoolStateFor(this.LookDownInput()))
+			State.LookingMode = LookingMode.Down
+		else
+			State.LookingMode = LookingMode.Normal
+		if (oldMode != State.LookingMode)
+			this.Visibility.UpdateSize()
 	}
 
 	private RotateRightInput() {
@@ -124,6 +137,18 @@ export class InputParser extends BaseInputParser<Input> {
 		return this.State.InputMode == InputMode.Camera
 			? Input.CameraModeRotateCameraLeft
 			: Input.RotateCameraLeft
+	}
+
+	private LookUpInput() {
+		return this.State.InputMode == InputMode.Camera
+			? Input.CameraModeLookUp
+			: Input.LookUp
+	}
+
+	private LookDownInput() {
+		return this.State.InputMode == InputMode.Camera
+			? Input.CameraModeLookDown
+			: Input.LookDown
 	}
 
 	//////////////////////////////// NORMAL ////////////////////////////////

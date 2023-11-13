@@ -73,7 +73,7 @@ export function readDisplayConfig(gameConfig: GameConfig, deserialised: Serialis
 		BlockWallOverlays: blockWallOverlays,
 		EntitySprites: entitySprites,
 		ItemSprites: itemSprites,
-		GameplaySprites: Object.assign(new GameplaySprites(), deserialised.GameplaySprites ?? {}),
+		GameplaySprites: GameplaySprites.From(deserialised.GameplaySprites ?? {}),
 		Sprites: sprites,
 	}
 }

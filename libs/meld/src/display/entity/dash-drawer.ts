@@ -28,16 +28,16 @@ export class DashDrawer {
 		const position = this.Game.Entities.Position.Get.Of(context.Entity) ?? Vector3.Zero
 		const velocity = this.Game.Entities.Velocity.Get.Of(context.Entity) ?? Vector3.Zero
 		if (this.ShouldShowRecharge(dashState))
-			this.Camera.DrawAnimated(this.Config.GameplaySprites.DashRecharge, Layer.Middle - Layer.ZFightingAdjustment, position, velocity, dashState.TimeOfLastDash + this.Game.Config.Constants.DashCooldown)
+			this.Camera.DrawAnimated(this.Config.GameplaySprites.Dash.Recharge, Layer.Middle - Layer.ZFightingAdjustment, position, velocity, dashState.TimeOfLastDash + this.Game.Config.Constants.DashCooldown)
 		if (dashState.IsCharging)
-			this.Camera.DrawAnimated(this.Config.GameplaySprites.DashTarget, Layer.Middle, this.TargetPosition(dashState).addFrom(position), velocity, 0, dashState.Angle - AngleFromNorth(this.State.ViewDirection))
+			this.Camera.DrawAnimated(this.Config.GameplaySprites.Dash.Target, Layer.Middle, this.TargetPosition(dashState).addFrom(position), velocity, 0, dashState.Angle - AngleFromNorth(this.State.ViewDirection))
 		if (this.IsInQuickDashWindow(dashState))
 			this.ShowQuickDashAngle(dashState, position, velocity)
 	}
 
 	private ShouldShowRecharge(dashState: DashState) {
 		const timeSinceEndedCooldown = this.Game.State.Globals.Tick - dashState.TimeOfLastDash - this.Game.Config.Constants.DashCooldown
-		const animationDuration = DurationOf(this.Config.Sprites[this.Config.GameplaySprites.DashRecharge])
+		const animationDuration = DurationOf(this.Config.Sprites[this.Config.GameplaySprites.Dash.Recharge])
 		return 0 < timeSinceEndedCooldown && timeSinceEndedCooldown < animationDuration
 	}
 
@@ -50,7 +50,7 @@ export class DashDrawer {
 		const minimumAngle = this.Game.Config.Constants.QuickDashMinimumAngle
 		const angleA = new Vector3(1, 0, 0).rotate(dashState.Angle + minimumAngle)
 		const angleB = new Vector3(1, 0, 0).rotate(dashState.Angle - minimumAngle)
-		const sprite = dashState.HasFailedQuickDash ? this.Config.GameplaySprites.DashFailMarker : this.Config.GameplaySprites.DashMarker
+		const sprite = dashState.HasFailedQuickDash ? this.Config.GameplaySprites.Dash.FailMarker : this.Config.GameplaySprites.Dash.Marker
 		this.Camera.DrawAnimated(sprite, Layer.Middle, angleA.addFrom(position), velocity, quickDashWindowStart)
 		this.Camera.DrawAnimated(sprite, Layer.Middle, angleB.addFrom(position), velocity, quickDashWindowStart)
 	}
@@ -63,11 +63,11 @@ export class DashDrawer {
 	public OnDash(entity: Id, success: boolean, state: DashState) {
 		const position = this.Game.Entities.Position.Get.Of(entity) ?? Vector3.Zero
 		if (success) {
-			this.DisplayEntityDrawer.Add(this.Config.GameplaySprites.DashCloud, position, Vector3.Zero)
+			this.DisplayEntityDrawer.Add(this.Config.GameplaySprites.Dash.Cloud, position, Vector3.Zero)
 			if (state.IsCharging)
-				this.DisplayEntityDrawer.Add(this.Config.GameplaySprites.DashTargetFade, this.TargetPosition(state).addFrom(position), Vector3.Zero, state.Angle - AngleFromNorth(this.State.ViewDirection))
+				this.DisplayEntityDrawer.Add(this.Config.GameplaySprites.Dash.TargetFade, this.TargetPosition(state).addFrom(position), Vector3.Zero, state.Angle - AngleFromNorth(this.State.ViewDirection))
 		}
 		else
-			this.DisplayEntityDrawer.AddRelative(this.Config.GameplaySprites.DashFail, entity, new Vector3(1, 0, 0).rotate(state.Angle))
+			this.DisplayEntityDrawer.AddRelative(this.Config.GameplaySprites.Dash.Fail, entity, new Vector3(1, 0, 0).rotate(state.Angle))
 	}
 }

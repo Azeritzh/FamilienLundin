@@ -1954,24 +1954,38 @@
 	},
 	"GameplaySprites": {
 		"StandardMarker": "fx-standard-marker",
-		"ShadowSmall": "fx-shadow-medium",
-		"ShadowMedium": "fx-shadow-medium",
-		"ShadowBig": "fx-shadow-medium",
-		"WallShadowFullLeft": "default-wall-shadow-full-left",
-		"WallShadowFullRight": "default-wall-shadow-full-right",
-		"WallShadowFullDiagonal": "default-wall-shadow-full-diagonal",
-		"WallShadowHalfLeft": "default-wall-shadow-half-left",
-		"WallShadowHalfRight": "default-wall-shadow-half-right",
-		"WallShadowHalfDiagonal": "default-wall-shadow-half-diagonal",
-		"DashCloud": "fx-dash-cloud",
-		"DashRecharge": "fx-dash-recharge",
-		"DashTarget": "fx-dash-target",
-		"DashTargetFade": "fx-dash-target-fade",
-		"DashFail": "fx-dash-fail",
-		"DashMarker": "fx-dash-marker",
-		"DashFailMarker": "fx-dash-fail-marker",
 		"HudLeft": "ui-hud-items",
-		"HudRight": "ui-hud-tools"
+		"HudRight": "ui-hud-tools",
+		"BlockMarker": {
+			"Straight": "fx-block-marker-straight",
+			"StraightNear": "fx-block-marker-straight-near",
+			"StraightFar": "fx-block-marker-straight-far",
+			"StraightTop": "fx-block-marker-straight-top",
+			"Diagonal": "fx-block-marker-straight",
+			"DiagonalNear": "fx-block-marker-straight-near",
+			"DiagonalFar": "fx-block-marker-straight-far",
+			"DiagonalTop": "fx-block-marker-straight-top"
+		},
+		"Dash": {
+			"Cloud": "fx-dash-cloud",
+			"Recharge": "fx-dash-recharge",
+			"Target": "fx-dash-target",
+			"TargetFade": "fx-dash-target-fade",
+			"Fail": "fx-dash-fail",
+			"Marker": "fx-dash-marker",
+			"FailMarker": "fx-dash-fail-marker"
+		},
+		"Shadow": {
+			"Small": "fx-shadow-medium",
+			"Medium": "fx-shadow-medium",
+			"Big": "fx-shadow-medium",
+			"WallFullLeft": "default-wall-shadow-full-left",
+			"WallFullRight": "default-wall-shadow-full-right",
+			"WallFullDiagonal": "default-wall-shadow-full-diagonal",
+			"WallHalfLeft": "default-wall-shadow-half-left",
+			"WallHalfRight": "default-wall-shadow-half-right",
+			"WallHalfDiagonal": "default-wall-shadow-half-diagonal"
+		}
 	},
 
 	"DefaultSpriteTypes": {
@@ -4164,6 +4178,38 @@
 			"type": "tileSize",
 			"framesX": 2,
 			"framesY": 2,
+			"frameInterval": 0.1
+		},
+		"fx-block-marker-straight": {
+			"width": 32,
+			"height": 32,
+			"centerX": 16,
+			"centerY": 16,
+			"framesX": 3,
+			"frameInterval": 0.1
+		},
+		"fx-block-marker-straight-top": {
+			"width": 32,
+			"height": 32,
+			"centerX": 16,
+			"centerY": 16,
+			"framesX": 3,
+			"frameInterval": 0.1
+		},
+		"fx-block-marker-straight-near": {
+			"width": 32,
+			"height": 16,
+			"centerX": 16,
+			"centerY": 8,
+			"framesX": 3,
+			"frameInterval": 0.1
+		},
+		"fx-block-marker-straight-far": {
+			"width": 32,
+			"height": 16,
+			"centerX": 16,
+			"centerY": 8,
+			"framesX": 3,
 			"frameInterval": 0.1
 		},
 		"fx-shadow-medium": {
