@@ -67,6 +67,7 @@ export class MeldDisplay implements BaseDisplay<GameUpdate> {
 		const firstEntity = [...this.Game.Entities.With.Position.keys()][0]
 		if (firstEntity !== undefined && firstEntity !== null) {
 			this.camera.FocusOn(firstEntity)
+			this.camera.Move()
 			this.visibility.Update()
 		}
 		this.entitiesDrawer.Draw()

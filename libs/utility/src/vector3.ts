@@ -60,6 +60,8 @@ export class Vector3 {
 	isZero() {
 		return this.x === 0 && this.y === 0 && this.z === 0
 	}
+	
+	IsZero = this.isZero
 
 	equals(vector: Vector3) {
 		return this.x === vector.x && this.y === vector.y && this.z === vector.z

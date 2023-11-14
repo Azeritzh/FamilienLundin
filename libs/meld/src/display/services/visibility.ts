@@ -43,16 +43,16 @@ export class Visibility {
 				for (let z = 0; z < this.State.VisibleBlocks.ChunkSize.z; z++)
 					this.State.VisibleBlocks.SetWithoutOffset(x, y, z, false)
 		this.State.VisibleBlocks.Offset.set(
-			Math.floor(this.State.FocusPoint.x - this.State.VisibleBlocks.ChunkSize.x / 2),
-			Math.floor(this.State.FocusPoint.y - this.State.VisibleBlocks.ChunkSize.y / 2),
-			Math.floor(this.State.FocusPoint.z - this.State.VisibleBlocks.ChunkSize.z / 2)
+			Math.floor(this.State.CameraPosition.x - this.State.VisibleBlocks.ChunkSize.x / 2),
+			Math.floor(this.State.CameraPosition.y - this.State.VisibleBlocks.ChunkSize.y / 2),
+			Math.floor(this.State.CameraPosition.z - this.State.VisibleBlocks.ChunkSize.z / 2)
 		)
 	}
 
 	private UpdateShownLayers() {
 		this.State.ShownLayers.clear()
 		for (let layer = -this.Config.DisplayDepth; layer <= this.Config.DisplayDepth; layer++)
-			this.State.ShownLayers.push({ layer: layer + Math.floor(this.State.FocusPoint.z), area: this.DisplayAreaFor(layer) })
+			this.State.ShownLayers.push({ layer: layer + Math.floor(this.State.CameraPosition.z), area: this.DisplayAreaFor(layer) })
 	}
 
 	private DisplayAreaFor(layer: number) {
@@ -173,7 +173,7 @@ export class Visibility {
 	private _adjustableDistanceToCeiling = new Vector3(0, 0, 0)
 	private DistanceToCeiling() {
 		for (let i = 1; i <= this.Config.DisplayDepth; i++)
-			if (Blocks.TypeOf(this.Game.Terrain.GetAt(this._adjustableDistanceToCeiling.setFrom(Camera.Above).multiplyFrom(i).addFrom(this.State.FocusPoint))) != BlockType.Empty)
+			if (Blocks.TypeOf(this.Game.Terrain.GetAt(this._adjustableDistanceToCeiling.setFrom(Camera.Above).multiplyFrom(i).addFrom(this.State.CameraPosition))) != BlockType.Empty)
 				return i - 1
 		return this.Config.DisplayDepth
 	}

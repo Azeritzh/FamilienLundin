@@ -1,5 +1,5 @@
 import { DisplayProvider, Id } from "@lundin/age"
-import { Vector2, Vector3 } from "@lundin/utility"
+import { MathF, Vector2, Vector3 } from "@lundin/utility"
 import { Meld } from "../../meld"
 import { BlockType } from "../../state/block"
 import { DisplayConfig } from "../state/display-config"
@@ -47,14 +47,27 @@ export class Camera {
 	public FocusOn(entity: Id) {
 		const State = this.State
 		this.SetCurrentPositionWith(
-			State.FocusPoint,
+			State.CameraFocus,
 			this.Game.Entities.Position.Get.Of(entity) ?? Vector3.Zero,
 			this.Game.Entities.Velocity.Get.Of(entity),
 		)
 		if (State.LookingMode === LookingMode.Up)
-			State.FocusPoint.Z += 1
+			State.CameraFocus.Z += 1
 		else if (State.LookingMode === LookingMode.Down)
-			State.FocusPoint.Z += -1
+			State.CameraFocus.Z += -1
+	}
+
+	public Move() {
+		const State = this.State
+		const delta = State.CameraFocus.subtract(State.CameraPosition)
+		if (delta.IsZero())
+			return
+		const distance = delta.Length()
+		const speedFactor = 0.5
+		const minSpeed = 0.3 // I've set this high enough that the camera perfectly tracks the character when moving normally. That eliminates annoying jittering of the character sprite
+		let speed = MathF.Max(distance * speedFactor, minSpeed)
+		speed = MathF.Min(distance, speed)
+		State.CameraPosition.addFrom(delta.multiply(speed / distance))
 	}
 
 	private _adjustableCurrentPosition = new Vector3(0, 0, 0)
@@ -128,7 +141,7 @@ export class Camera {
 
 	private _adjustableIsInFrontOfPlayer = new Vector3(0, 0, 0)
 	private IsInFrontOfPlayer(position: Vector3, screenX: number, screenY: number) {
-		const layerDifference = Math.floor(position.z) - Math.floor(this.State.FocusPoint.z)
+		const layerDifference = Math.floor(position.z) - Math.floor(this.State.CameraPosition.z)
 		if (layerDifference <= 0)
 			return false
 		const vectorFromMidScreen = this._adjustableIsInFrontOfPlayer.set(screenX - this.State.Size.WidthInTiles / 2, screenY - this.State.Size.HeightInTiles / 2, 0)
@@ -144,7 +157,7 @@ export class Camera {
 	/** adjusts position in-place and returns it */
 	private AdjustForFocusAndCamera(position: Vector3) {
 		const diagonalFactor = 0.75 //1/MathF.Sqrt(2);
-		const pos = position.subtractFrom(this.State.FocusPoint)
+		const pos = position.subtractFrom(this.State.CameraPosition)
 		switch (this.State.ViewDirection) {
 			case ViewDirection.NorthEast: return position.set((pos.x + pos.y) * diagonalFactor, (-pos.x + pos.y) * diagonalFactor, pos.z)
 			case ViewDirection.East: return position.set(pos.y, -pos.x, pos.z)
@@ -161,7 +174,7 @@ export class Camera {
 	private RevertFocusAndCameraAdjustment(pos: Vector3) {
 		const diagonalFactor = 1.33333 // inverted of above
 		const unrotated = this.RevertBla(pos, diagonalFactor)
-		return unrotated.addFrom(this.State.FocusPoint)
+		return unrotated.addFrom(this.State.CameraPosition)
 	}
 
 	private RevertBla(pos: Vector3, diagonalFactor: number) {
@@ -194,7 +207,7 @@ export class Camera {
 	private sortingNumberFor(position: Vector3, layer: number) {
 		const z = Math.floor(position.z) + layer
 		const rangeZ = ((this.Config.DisplayDepth + 2) * 2 + 1) // adding 2: 1 due to Layer.Top, and 1 due to z position within each layer
-		const minZ = this.State.FocusPoint.z - rangeZ / 2
+		const minZ = this.State.CameraPosition.z - rangeZ / 2
 		const normalisedZ = (z - minZ) / rangeZ
 
 		const rangeY = this.State.Size.HeightInTiles + (this.Config.DisplayDepth * 2 + 1) * this.Config.WallDisplayHeight

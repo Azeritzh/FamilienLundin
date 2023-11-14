@@ -56,7 +56,7 @@ export class TerrainDrawer {
 	}
 
 	private GetTransparency(block: Block, position: Vector3) {
-		const layerDifference = Math.floor(position.z) - Math.floor(this.State.FocusPoint.z)
+		const layerDifference = Math.floor(position.z) - Math.floor(this.State.CameraPosition.z)
 		if (layerDifference == 0)
 			return this.ShouldBeTransparentAtPlayerLayer(block, position) ? this.Config.TransparencyAlpha : 1
 		return 1
@@ -68,7 +68,7 @@ export class TerrainDrawer {
 		const blockType = Blocks.TypeOf(block)
 		if (blockType == BlockType.Empty || blockType == BlockType.Floor)
 			return false
-		if (pos.setFrom(position).subtractFrom(this.State.FocusPoint).lengthSquared() > this.Config.TransparencyRadius * this.Config.TransparencyRadius)
+		if (pos.setFrom(position).subtractFrom(this.State.CameraPosition).lengthSquared() > this.Config.TransparencyRadius * this.Config.TransparencyRadius)
 			return false
 
 		if (this.Camera.IsDiagonalView())
@@ -107,7 +107,7 @@ export class TerrainDrawer {
 
 	private _adjustableIsInBottomHalf = new Vector3(0, 0, 0)
 	private IsInBottomHalf(position: Vector3) {
-		const relativePosition = this._adjustableIsInBottomHalf.setFrom(position).subtract(this.State.FocusPoint)
+		const relativePosition = this._adjustableIsInBottomHalf.setFrom(position).subtract(this.State.CameraPosition)
 		const tempX = relativePosition.x * this.Camera.BottomTile.x
 		const tempY = relativePosition.y * this.Camera.BottomTile.y
 		return tempX >= 0 && tempY >= 0
@@ -115,7 +115,7 @@ export class TerrainDrawer {
 
 	private _adjustableIsInQuadrant = new Vector3(0, 0, 0)
 	private IsInQuadrant(position: Vector3, quadrant: Vector3) {
-		const relativePosition = this._adjustableIsInQuadrant.setFrom(position).subtract(this.State.FocusPoint)
+		const relativePosition = this._adjustableIsInQuadrant.setFrom(position).subtract(this.State.CameraPosition)
 		relativePosition.x += 1
 		const tempX = relativePosition.x * quadrant.x
 		const tempY = relativePosition.y * quadrant.y
