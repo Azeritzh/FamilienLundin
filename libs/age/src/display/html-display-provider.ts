@@ -7,11 +7,14 @@ export interface DisplayProvider {
 	SortByDepth: boolean
 	StartNewFrame(): void
 	Draw(name: string, x: number, y: number, frameX: number, frameY: number, depth?: number, rotation?: number, color?: Vector3, alpha?: number): void
-	DrawString(text: string, x: number, y: number, font: string, fontSize: number, color?: string): void
+	DrawString(text: string, x: number, y: number, font: string, fontSize: number, color?: string, center?: boolean): void
 	FinishFrame(): void
 	GetInputState(input: string): number
 	endInputFrame(): void
 	setSize(width: number, height: number): void
+	StartTextInput(): void
+	StopTextInput(): void
+	GetTextInput(): string
 }
 
 export class HtmlDisplayProvider implements DisplayProvider {
@@ -22,6 +25,7 @@ export class HtmlDisplayProvider implements DisplayProvider {
 	private keyStates = new KeyStates()
 	get SortByDepth() { return this.display.sortByDepth }
 	set SortByDepth(value: boolean) { this.display.sortByDepth = value }
+	private CurrentText = ""
 
 	constructor(
 		private hostElement: HTMLElement,
@@ -93,31 +97,32 @@ export class HtmlDisplayProvider implements DisplayProvider {
 		this.display.endFrame()
 	}
 
-	public DrawString(text: string, x: number, y: number, font: string, fontSize: number, color = "white") {
-		const textElement = this.getTextElement(x, y, font, color, fontSize)
+	public DrawString(text: string, x: number, y: number, font: string, fontSize: number, color = "white", center = true) {
+		const textElement = this.getTextElement(x, y, font, color, fontSize, center)
 		textElement.innerText = text
 		textElement.style.display = "block"
 	}
 
-	private getTextElement(x: number, y: number, font: string, color: string, fontSize: number) {
+	private getTextElement(x: number, y: number, font: string, color: string, fontSize: number, center = true) {
 		const key = x + "," + y + font + color + fontSize
 		if (!this.textElements[key])
-			this.textElements[key] = this.createTextElement(x, y, font, color, fontSize)
+			this.textElements[key] = this.createTextElement(x, y, font, color, fontSize, center)
 		return this.textElements[key]
 	}
 
-	private createTextElement(x: number, y: number, font: string, color: string, fontSize: number) {
+	private createTextElement(x: number, y: number, font: string, color: string, fontSize: number, center = true) {
 		const element = document.createElement("div")
 		element.style.position = "absolute"
 		element.style.fontFamily = `'${font}', Courier, monospace`
 		element.style.fontWeight = "bold"
 
 		element.style.display = "none"
-		element.style.backgroundColor = "rgba(0,0,0,0.5)"
-		element.style.textAlign = "center"
+		element.style.textAlign = center ? "center" : ""
 		element.style.color = color
 		const width = 6
-		element.style.left = (this.size.HostPixelsPerTile * (x - (width / 2))) + "px"
+		element.style.left = center
+			? (this.size.HostPixelsPerTile * (x - (width / 2))) + "px"
+			: (this.size.HostPixelsPerTile * x) + "px"
 		element.style.top = (this.size.HostPixelsPerTile * y) + "px"
 		element.style.fontSize = (this.size.HostPixelsPerTile * fontSize) + "px"
 		element.style.width = (this.size.HostPixelsPerTile * width) + "px"
@@ -155,5 +160,29 @@ export class HtmlDisplayProvider implements DisplayProvider {
 		this.canvas.width = this.size.CanvasWidth
 		this.canvas.height = this.size.CanvasHeight
 		this.initialiseDisplay()
+	}
+
+	StartTextInput() {
+		this.CurrentText = ""
+		window.addEventListener("keyup", this.OnTextInput)
+	}
+
+	StopTextInput() {
+		this.CurrentText = ""
+		window.removeEventListener("keyup", this.OnTextInput)
+	}
+
+	GetTextInput() {
+		const text = this.CurrentText
+		this.CurrentText = ""
+		return text
+	}
+
+	private OnTextInput = (event: KeyboardEvent) => {
+		//TODO: do something smarter
+		if (event.key.length === 1)
+			this.CurrentText += event.key
+		else if (event.key === "Backspace")
+			this.CurrentText += "\b"
 	}
 }

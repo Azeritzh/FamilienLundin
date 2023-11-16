@@ -8,7 +8,7 @@ export class DisplayState {
 	constructor(
 		public Size: ScreenSize,
 		public PlayerName: string = "",
-		
+
 		// Camera
 		public CameraFocus = new Vector3(0, 0, 0),
 		public CameraPosition = new Vector3(0, 0, 0),
@@ -24,7 +24,9 @@ export class DisplayState {
 		// Input details
 		public CurrentControllerType: ControllerType = ControllerType.Controller,
 		public InputMode: InputMode = <InputMode>0,
-		
+		public ChatCurrentText = "",
+		public ChatLines: string[] = [],
+
 		// Other stuff
 		public DisplayEntities: DisplayEntity[] = [],
 		public ShownLayers: { layer: number, area: DisplayArea }[] = [],
@@ -45,7 +47,7 @@ export class DisplayState {
 	}
 }
 
-export enum InputMode { Normal, Selection, Camera }
+export enum InputMode { Normal, Selection, Camera, Chat }
 export enum LookingMode { Normal, Up, Down }
 export enum ViewDirection { North = 6, NorthEast = 7, East = 0, SouthEast = 1, South = 2, SouthWest = 3, West = 4, NorthWest = 5 }
 

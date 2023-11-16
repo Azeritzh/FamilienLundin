@@ -90,6 +90,7 @@ export class UseToolLogic implements GameLogic<GameUpdate> {
 	}
 
 	private UpdateState(entity: Id, state: ToolState) {
+		const Config = this.Config
 		if (state.EndTime <= this.Globals.Tick)
 			return
 		const position = this.Position.CurrentlyOf(entity) ?? Vector3.Zero
@@ -98,7 +99,8 @@ export class UseToolLogic implements GameLogic<GameUpdate> {
 		const subEntities = this.UpdateSubEntities(state.SubEntities, velocity)
 
 		const timePassed = this.Globals.Tick - state.StartTime
-		if (timePassed % 30 == 20) {
+		const progress = timePassed % (Config.Constants.MiningStartup + Config.Constants.MiningRecovery)
+		if (progress == Config.Constants.MiningStartup) {
 			const hitEntity = this.HammerStrikeHit(state, position, velocity)
 			subEntities.push(hitEntity)
 			this.SetToolState.For(entity, ToolState.From({

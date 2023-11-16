@@ -36,20 +36,20 @@ export abstract class BaseInputParser<Input> {
 			: ControllerType.KeyboardAndMouse
 	}
 
-	protected FloatStateFor(input: Input) {
+	public FloatStateFor(input: Input) {
 		return this.ActionStates.get(input)
 	}
 
-	protected BoolStateFor(input: Input) {
+	public BoolStateFor(input: Input) {
 		return this.ActionStates.get(input) > 0.5
 	}
 
-	protected HasJustBeenPressed(input: Input) {
+	public HasJustBeenPressed(input: Input) {
 		return this.ActionStates.get(input) > 0.5
 			&& this.PreviousStates.get(input) <= 0.5
 	}
 
-	protected HasJustBeenReleased(input: Input) {
+	public HasJustBeenReleased(input: Input) {
 		return this.ActionStates.get(input) <= 0.5
 			&& this.PreviousStates.get(input) > 0.5
 	}
