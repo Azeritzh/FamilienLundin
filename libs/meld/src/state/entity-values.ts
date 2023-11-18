@@ -142,6 +142,31 @@ export interface GroupedEntityValues {
 	PlayerBehaviour?: boolean
 }
 
+export function GroupedEntityValuesFrom(serialised: any) {
+	const values: GroupedEntityValues = { ...serialised }
+	if (serialised.CircularSize)
+		values.CircularSize = Object.assign(new CircularSize(0, 0), serialised.CircularSize)
+	if (serialised.BlockArea)
+		values.BlockArea = Object.assign(new BlockArea(), serialised.BlockArea)
+	if (serialised.BlockPosition)
+		values.BlockPosition = Object.assign(new Vector3(0, 0, 0), serialised.BlockPosition)
+	if (serialised.DashState)
+		values.DashState = Object.assign(new DashState(), serialised.DashState)
+	if (serialised.Position)
+		values.Position = Object.assign(new Vector3(0, 0, 0), serialised.Position)
+	if (serialised.SelectableItems)
+		values.SelectableItems = Object.assign(new SelectableItems([]), serialised.SelectableItems)
+	if (serialised.SelectableTools)
+		values.SelectableTools = Object.assign(new SelectableTools([]), serialised.SelectableTools)
+	if (serialised.TargetVelocity)
+		values.TargetVelocity = Object.assign(new Vector3(0, 0, 0), serialised.TargetVelocity)
+	if (serialised.ToolState)
+		values.ToolState = ToolState.From(serialised.ToolState)
+	if (serialised.Velocity)
+		values.Velocity = Object.assign(new Vector3(0, 0, 0), serialised.Velocity)
+	return values
+}
+
 export class SerialisableEntities {
 	public static From(entityValues: EntityValues): Map<Id, GroupedEntityValues> {
 		const map = new Map<Id, GroupedEntityValues>()

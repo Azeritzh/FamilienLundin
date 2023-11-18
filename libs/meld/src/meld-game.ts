@@ -1,16 +1,16 @@
 import { GameRunner, HtmlDisplayProvider } from "@lundin/age"
 import { Vector3 } from "@lundin/utility"
+import { GameConfig } from "./config/game-config"
 import * as defaultDisplayConfig from "./display-config.json"
 import * as defaultDisplaySettings from "./display-settings.json"
 import { MeldDisplay } from "./display/meld-display"
 import { DisplayVariationProvider } from "./display/services/display-variation-provider"
+import { DisplayConfig } from "./display/state/display-config"
+import { DisplaySettingsFrom } from "./display/state/display-settings"
 import * as gameConfig from "./game-config.json"
 import { WorldGenerator } from "./generation/world-generator"
 import { Meld } from "./meld"
-import { readDisplayConfig } from "./serialisation/serialisation-display-config"
-import { readDisplaySettings } from "./serialisation/serialisation-display-settings"
-import { readGameConfig } from "./serialisation/serialisation-game-config"
-import { createGameState, readGameState } from "./serialisation/serialisation-game-state"
+import { GameState, SerialisableGameState } from "./state/game-state"
 import { GameUpdate, LoadPlayer, LoadRegion, LoadState } from "./state/game-update"
 
 export const updatesPerSecond = 60
@@ -27,7 +27,7 @@ export class MeldGame extends GameRunner<GameUpdate> {
 		this.resizeObserver.observe(hostElement)
 		const saved = null// = localStorage["meld-save-0.4"]
 		if (saved)
-			this.actions.push(new LoadState(readGameState(meld.Config, JSON.parse(saved))))
+			this.actions.push(new LoadState(GameState.From(meld.Config, JSON.parse(saved))))
 		else
 			this.actions.push(
 				new LoadRegion(new WorldGenerator(meld.Config, new DisplayVariationProvider(meldDisplay.Config), 0, 0).GetGeneratorFor(new Vector3(0, 0, 0)).Generate()),
@@ -42,15 +42,15 @@ export class MeldGame extends GameRunner<GameUpdate> {
 	}
 
 	private saveGame() {
-		const saved = createGameState(this.meld.Config, this.meld.State)
+		const saved = SerialisableGameState.From(this.meld.State, this.meld.Config)
 		localStorage["meld-save-0.4"] = JSON.stringify(saved)
 	}
 
 	static createAt(hostElement: HTMLElement, displayConfig: any) {
-		const config = readGameConfig(gameConfig)
-		displayConfig = { ...readDisplayConfig(config, defaultDisplayConfig), ...displayConfig }
+		const config = GameConfig.From(gameConfig)
+		displayConfig = { ...DisplayConfig.From(config, defaultDisplayConfig), ...displayConfig }
 		const meld = new Meld(new DisplayVariationProvider(displayConfig), config)
-		const displaySettings = readDisplaySettings(defaultDisplaySettings)
+		const displaySettings = DisplaySettingsFrom(defaultDisplaySettings)
 		const displayProvider = new HtmlDisplayProvider(hostElement, displayConfig)
 		const display = new MeldDisplay(displayConfig, displaySettings, meld, displayProvider, "insertPlayerName")
 		return new MeldGame(hostElement, display, displayProvider, meld)

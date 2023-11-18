@@ -21,3 +21,9 @@ export interface ItemValues {
 }
 
 export enum ItemKind { Solid = 0, Hammer = 1, Sword = 2, Bow = 3 }
+
+export function ItemValuesFrom(serialised: any): ItemValues {
+	return {
+		Kind: <any>ItemKind[serialised.Kind], // converting from string to number (enum), even if vscode thinks otherwise
+	}
+}
