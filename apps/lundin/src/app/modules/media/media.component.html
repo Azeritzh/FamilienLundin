@@ -1,0 +1,20 @@
+<div class="message">Sange</div>
+
+<table>
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Artist</th>
+			<th>Album</th>
+			<th>Album Artist</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let song of musicLibrary">
+			<td>{{ song.title }}</td>
+			<td>{{ song.artist }}</td>
+			<td>{{ song.album }}</td>
+			<td>{{ song.albumArtist }}</td>
+		</tr>
+	</tbody>
+</table>

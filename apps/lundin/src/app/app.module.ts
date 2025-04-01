@@ -11,6 +11,7 @@ import { CalendarModule } from "./modules/calendar/calendar.module"
 import { CryptModule } from "./modules/crypt/crypt.module"
 import { GalleryModule } from "./modules/gallery/gallery.module"
 import { KingdomsModule } from "./modules/kingdoms/kingdoms.module"
+import { MediaModule } from "./modules/media/media.module"
 import { MeldModule } from "./modules/meld/meld.module"
 import { MessageModule } from "./modules/message/message.module"
 import { MinestrygerModule } from "./modules/minestryger/minestryger.module"
@@ -50,6 +51,7 @@ import { SharedModule } from "./shared/shared.module"
 		GalleryModule,
 		HttpClientModule,
 		KingdomsModule,
+		MediaModule,
 		MeldModule,
 		MessageModule,
 		MinestrygerModule,

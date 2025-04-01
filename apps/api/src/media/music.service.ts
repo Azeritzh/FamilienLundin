@@ -16,6 +16,8 @@ export class MusicService {
 	}
 
 	private getFiles(directory: string) {
+		if(!fs.existsSync(directory))
+			return []
 		const allFiles: string[] = []
 		const files = fs.readdirSync(directory, { withFileTypes: true })
 		for (const file of files) {
