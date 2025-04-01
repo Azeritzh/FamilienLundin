@@ -91,6 +91,16 @@ header.container-header {
 	border-top-right-radius: 0.9rem;
 }
 
+.sub-header {
+	display: flex;
+	background-color: var(--color-primary);
+	justify-content: space-between;
+	font-size: 1rem;
+	padding: 0 0.5rem;
+	line-height: 1.5rem;
+	color: var(--color-text-light);
+}
+
 .lowered-label {
 	position: relative;
 	top: 0;

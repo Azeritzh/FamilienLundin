@@ -8,7 +8,7 @@ export class VideoService {
 
 	constructor() {
 		const files = this.getFiles(this.libraryPath)
-			.filter(x => x.toLowerCase().endsWith(".mkv") || x.toLowerCase().endsWith(".mp4"))
+			.filter(x => x.toLowerCase().endsWith(".mkv") || x.toLowerCase().endsWith(".mp4") || x.toLowerCase().endsWith(".avi") || x.toLowerCase().endsWith(".webm"))
 			.map(x => x.substring(this.libraryPath.length + 1))
 
 		for (const file of files)

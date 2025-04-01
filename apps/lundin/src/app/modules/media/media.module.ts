@@ -4,11 +4,13 @@ import { AppRoutingModule } from "../../app-routing.module"
 import { SharedModule } from "../../shared/shared.module"
 import { MediaComponent } from "./media.component"
 import { MusicComponent } from "./music.component"
+import { VideoComponent } from "./video.component"
 
 @NgModule({
 	declarations: [
 		MediaComponent,
 		MusicComponent,
+		VideoComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -1,0 +1,35 @@
+<section class="media-container">
+	<header class="container-header">
+		<h1>Film</h1>
+	</header>
+
+	<section class="scroll-list-container">
+		<table>
+			<thead>
+				<tr>
+					<th>Titel</th>
+					<th>Årstal</th>
+					<th>Sæt</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let video of videoLibrary" (click)="playVideo(video)">
+					<td>{{ video.title }}</td>
+					<td>{{ video.year }}</td>
+					<td>{{ video.set }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+
+	<h2 class="sub-header">
+		{{currentVideo?.title ?? "Intet valgt"}}
+		<a *ngIf="currentVideo" href="api/video/files/{{currentVideo.file}}">Download</a>
+	</h2>
+
+	<section class="video-container">
+		<video #videoPlayer controls>
+			Your browser does not support the video element.
+		</video>
+	</section>
+</section>
