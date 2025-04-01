@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from "@nestjs/common"
+import { Controller, Get, Req, Res, UseGuards } from "@nestjs/common"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { MusicService } from "../../media/music.service"
 
@@ -10,5 +10,12 @@ export class MusicController {
 	@Get("get-library")
 	async getLibrary() {
 		return Object.keys(this.musicService.library)
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get("files/**")
+	async getFile(@Req() req, @Res() res) {
+		const filePath = decodeURIComponent(req.url.split("music/files/")[1])
+		res.sendFile(filePath, { root: "/mnt/data/Media/Lyd/Musik" })
 	}
 }

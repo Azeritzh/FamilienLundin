@@ -29,4 +29,8 @@ export class MediaComponent {
 			return null
 		}
 	}
+
+	playSong(file: string) {
+		document.getElementById("aberne")["src"] = "api/music/files/" + file
+	}
 }

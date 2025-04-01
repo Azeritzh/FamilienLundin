@@ -1,5 +1,10 @@
 <div class="message">Sange</div>
 
+<audio id="aberne" controls>
+	<source src="api/music/files/AC-DC/Ballbreaker/AC-DC - Ballbreaker.mp3" type="audio/mpeg">
+	Your browser does not support the audio element.
+</audio>
+
 <table>
 	<thead>
 		<tr>
@@ -10,7 +15,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let song of musicLibrary">
+		<tr *ngFor="let song of musicLibrary" (click)="playSong(song.file)">
 			<td>{{ song.title }}</td>
 			<td>{{ song.artist }}</td>
 			<td>{{ song.album }}</td>
