@@ -2,13 +2,13 @@ import { Injectable } from "@nestjs/common"
 import * as fs from "fs"
 
 @Injectable()
-export class MusicService {
-	libraryPath = "F:/Media/Lyd/Musik"
+export class VideoService {
+	libraryPath = "F:/Media/Video/Film"
 	library: { [index: string]: any } = {}
 
 	constructor() {
 		const files = this.getFiles(this.libraryPath)
-			.filter(x => x.toLowerCase().endsWith(".mp3") || x.toLowerCase().endsWith(".flac") || x.toLowerCase().endsWith(".mp4"))
+			.filter(x => x.toLowerCase().endsWith(".mkv") || x.toLowerCase().endsWith(".mp4"))
 			.map(x => x.substring(this.libraryPath.length + 1))
 
 		for (const file of files)
