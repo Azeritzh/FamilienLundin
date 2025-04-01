@@ -16,6 +16,6 @@ export class MusicController {
 	@Get("files/**")
 	async getFile(@Req() req, @Res() res) {
 		const filePath = decodeURIComponent(req.url.split("music/files/")[1])
-		res.sendFile(filePath, { root: "/mnt/data/Media/Lyd/Musik" })
+		res.sendFile(filePath, { root: "F:/Media/Lyd/Musik" })
 	}
 }
