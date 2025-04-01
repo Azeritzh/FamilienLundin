@@ -1,0 +1,57 @@
+@import "../../styles/general.scss";
+
+:host {
+	@extend .default-page, .default-background;
+}
+
+.media-container {
+	@extend .container-box;
+	height: 100%;
+	min-width: 50rem;
+}
+
+.scroll-list-container {
+	@extend .scroll-container;
+	height: calc(100% - 4.5rem);
+	margin-top: 0.5rem;
+}
+
+table {
+	margin: 0.5rem;
+
+	thead {
+		position: sticky;
+		top: 0;
+		background-color: rgba(255, 255, 255, 0.8);
+
+		th {
+			padding: 0.2rem;
+		}
+	}
+
+	tbody {
+		tr {
+			cursor: pointer;
+		}
+
+		tr:nth-child(odd) {
+			background-color: rgba(255, 255, 255, 0.05);
+		}
+
+		tr:nth-child(even) {
+			background-color: rgba(0, 0, 0, 0.05);
+		}
+
+		tr:hover {
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+
+		td {
+			padding: 0.2rem;
+		}
+	}
+}
+
+audio {
+	width: 100%;
+}

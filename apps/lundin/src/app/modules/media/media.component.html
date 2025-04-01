@@ -1,25 +1,9 @@
-<div class="message">Sange</div>
+<section class="media-container">
+	<header class="container-header">
+		<h1>Media</h1>
+	</header>
 
-<audio id="aberne" controls>
-	<source src="api/music/files/AC-DC/Ballbreaker/AC-DC - Ballbreaker.mp3" type="audio/mpeg">
-	Your browser does not support the audio element.
-</audio>
-
-<table>
-	<thead>
-		<tr>
-			<th>Title</th>
-			<th>Artist</th>
-			<th>Album</th>
-			<th>Album Artist</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let song of musicLibrary" (click)="playSong(song.file)">
-			<td>{{ song.title }}</td>
-			<td>{{ song.artist }}</td>
-			<td>{{ song.album }}</td>
-			<td>{{ song.albumArtist }}</td>
-		</tr>
-	</tbody>
-</table>
+	<section class="scroll-list-container">
+		<a routerLink="/music">Musik</a>
+	</section>
+</section>

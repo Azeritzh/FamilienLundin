@@ -10,6 +10,7 @@ import { GalleryRootComponent } from "./modules/gallery/gallery-root/gallery-roo
 import { galleryRoutes } from "./modules/gallery/routes"
 import { KingdomsComponent } from "./modules/kingdoms/kingdoms.component"
 import { MediaComponent } from "./modules/media/media.component"
+import { MusicComponent } from "./modules/media/music.component"
 import { MeldComponent } from "./modules/meld/meld.component"
 import { MessageRootComponent } from "./modules/message/message-root/message-root.component"
 import { messageRoutes } from "./modules/message/routes"
@@ -39,6 +40,7 @@ const routes: Routes = [
 	{ path: "games/virus", component: VirusComponent },
 	{ path: "media", component: MediaComponent },
 	{ path: "messages", component: MessageRootComponent, canActivate: [IsAuthenticatedGuard], children: messageRoutes },
+	{ path: "music", component: MusicComponent },
 	{ path: "profile", component: ProfileComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "recipes", component: RecipesRootComponent, canActivate: [IsAuthenticatedGuard], children: recipesRoutes },
 	{ path: "various", component: VariousComponent },

@@ -6,7 +6,7 @@ export class MusicService {
 	library: { [index: string]: any } = {}
 
 	constructor() {
-		const rootPath = "F:/Media/Lyd/Musik"
+		const rootPath = "/mnt/data/Media/Lyd/Musik"
 		const files = this.getFiles(rootPath)
 			.filter(x => x.toLowerCase().endsWith(".mp3") || x.toLowerCase().endsWith(".flac")|| x.toLowerCase().endsWith(".mp4"))
 			.map(x => x.substring(rootPath.length + 1))
