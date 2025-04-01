@@ -12,6 +12,8 @@ import { MessageController } from "./controllers/message.controller"
 import { MinestrygerController } from "./controllers/minestryger.controller"
 import { RecipeController } from "./controllers/recipe.controller"
 import { UserController } from "./controllers/user.controller"
+import { MusicController } from "./controllers/music.controller"
+import { MediaModule } from "../media/media.module"
 
 @Module({
 	imports: [
@@ -19,6 +21,7 @@ import { UserController } from "./controllers/user.controller"
 			rootPath: join(__dirname, "..", "lundin"),
 		}),
 		AuthModule,
+		MediaModule,
 		StorageModule,
 		UserModule,
 	],
@@ -29,6 +32,7 @@ import { UserController } from "./controllers/user.controller"
 		CryptController,
 		MessageController,
 		MinestrygerController,
+		MusicController,
 		RecipeController,
 		UserController,
 	],
