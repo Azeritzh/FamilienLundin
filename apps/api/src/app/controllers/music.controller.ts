@@ -9,7 +9,7 @@ export class MusicController {
 	@UseGuards(JwtAuthGuard)
 	@Get("get-library")
 	async getLibrary() {
-		return Object.keys(this.musicService.library)
+		return this.musicService.library
 	}
 
 	@UseGuards(JwtAuthGuard)
