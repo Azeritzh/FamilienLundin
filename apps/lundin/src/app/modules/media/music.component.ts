@@ -24,7 +24,7 @@ export class MusicComponent {
 	}
 
 	playSong(file: string) {
-		this.audioPlayer.nativeElement.src = "api/music/files/" + file
+		this.audioPlayer.nativeElement.src = "api/music/files/" + file.replace(/#/g, "ꖛ") // Replace # with ꖛ to avoid issues with the URL
 		this.audioPlayer.nativeElement.onloadeddata = () => this.audioPlayer.nativeElement.play()
 	}
 }

@@ -3,7 +3,7 @@ import * as fs from "fs"
 
 @Injectable()
 export class MusicService {
-	libraryPath = "/mnt/data/Media/Lyd/Musik"
+	libraryPath = "F:/Media/Lyd/Musik"
 	library: { [index: string]: any } = {}
 
 	constructor() {
@@ -12,7 +12,12 @@ export class MusicService {
 
 		for (const file of files){
 			const identifier = file.substring(this.libraryPath.length + 1, file.length - 11)
-			this.library[identifier] = JSON.parse(fs.readFileSync(file, "utf-8"))
+			try{
+				this.library[identifier] = JSON.parse(fs.readFileSync(file, "utf-8"))
+			}
+			catch {
+				console.error("Failed to parse file:", file)
+			}
 		}
 	}
 

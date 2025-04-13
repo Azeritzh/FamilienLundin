@@ -16,6 +16,7 @@ export class MusicController {
 	@Get("files/**")
 	async getFile(@Req() req, @Res() res) {
 		const filePath = decodeURIComponent(req.url.split("music/files/")[1])
+			.replace(/ꖛ/g, "#")  // Restore # in the filename
 		res.sendFile(filePath, { root: this.musicService.libraryPath })
 	}
 }
