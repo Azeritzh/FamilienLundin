@@ -1,19 +1,39 @@
 @import "../../styles/general.scss";
 
 :host {
-	@extend .default-page, .default-background;
+	display: grid;
+	grid-template-areas:
+		"tabs"
+		"tab"
+		"current";
+	grid-template-rows: 2.5rem 1fr 4rem;
+	height: 100%;
 }
 
-.media-container {
-	@extend .container-box;
-	height: 100%;
-	min-width: 50rem;
+.tabs {
+	grid-area: tabs;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	button {
+		flex: 1;
+		border-radius: 0;
+	}
+}
+
+.tab {
+	grid-area: tab;
+}
+
+.current-song {
+	grid-area: current;
 }
 
 .scroll-list-container {
 	@extend .scroll-container;
-	height: calc(100% - 4.5rem);
-	margin-top: 0.5rem;
+	height: 100%;
+	margin: 0;
 }
 
 table {

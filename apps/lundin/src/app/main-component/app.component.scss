@@ -130,6 +130,7 @@ a + button { margin-top: auto; }
 	right: 0;
 	margin: 0 auto;
 	width: 40rem;
+	max-width: 100%;
 	box-shadow: var(--standard-shadow);
 	transition: var(--standard-transition);
 }

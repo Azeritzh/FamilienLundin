@@ -9,7 +9,6 @@ import { CryptComponent } from "./modules/crypt/crypt.component"
 import { GalleryRootComponent } from "./modules/gallery/gallery-root/gallery-root.component"
 import { galleryRoutes } from "./modules/gallery/routes"
 import { KingdomsComponent } from "./modules/kingdoms/kingdoms.component"
-import { MediaComponent } from "./modules/media/media.component"
 import { MusicComponent } from "./modules/media/music.component"
 import { VideoComponent } from "./modules/media/video.component"
 import { MeldComponent } from "./modules/meld/meld.component"
@@ -39,7 +38,6 @@ const routes: Routes = [
 	{ path: "games/noughts-and-crosses", component: NoughtsAndCrossesComponent },
 	{ path: "games/renderend", component: RenderendComponent },
 	{ path: "games/virus", component: VirusComponent },
-	{ path: "media", component: MediaComponent },
 	{ path: "messages", component: MessageRootComponent, canActivate: [IsAuthenticatedGuard], children: messageRoutes },
 	{ path: "music", component: MusicComponent },
 	{ path: "profile", component: ProfileComponent, canActivate: [IsAuthenticatedGuard] },

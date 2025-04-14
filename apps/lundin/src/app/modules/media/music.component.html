@@ -1,29 +1,40 @@
-<section class="media-container">
-	<header class="container-header">
-		<h1>Musik</h1>
-	</header>
+<section class="tabs">
+	<button class="tab" (click)="selectTab('library')">Bibliotek</button>
+	<button class="tab" (click)="selectTab('album')">Albummer</button>
+	<button class="tab" (click)="selectTab('current')">Kø</button>
+</section>
 
-	<section class="scroll-list-container">
-		<table>
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Artist</th>
-					<th>Album</th>
-					<th>Album Artist</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let song of musicLibrary" (click)="playSong(song.filename)">
-					<td>{{ song.title }}</td>
-					<td>{{ song.artists.join(", ") }}</td>
-					<td>{{ song.album }}</td>
-					<td>{{ song.albumArtist }}</td>
-				</tr>
-			</tbody>
-		</table>
-	</section>
+<section *ngIf="currentTab === 'library'" class="tab library-tab scroll-list-container">
+	<table>
+		<thead>
+			<tr>
+				<th>Titel</th>
+				<th>Kunstnere</th>
+				<th>Album</th>
+				<th>Albumkunstner</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let song of musicLibrary" (click)="playSong(song.filename)">
+				<td>{{ song.title }}</td>
+				<td>{{ song.artists.join(", ") }}</td>
+				<td>{{ song.album }}</td>
+				<td>{{ song.albumArtist }}</td>
+			</tr>
+		</tbody>
+	</table>
+</section>
 
+<section *ngIf="currentTab === 'album'" class="tab album-tab">
+	albummer
+</section>
+
+<section *ngIf="currentTab === 'current'" class="tab  current-tab">
+	nuværende liste
+</section>
+
+<section class="current-song">
+	<div>{{currentSong}}</div>
 	<audio #audioPlayer controls>
 		Your browser does not support the audio element.
 	</audio>
