@@ -50,8 +50,8 @@ export class MusicService {
 		this.queue.splice(this.playingIndex + 1, 0, track)
 	}
 
-	addAsLast(track: TrackIdentifier) {
-		this.queue.push(track)
+	addAsLast(...tracks: TrackIdentifier[]) {
+		this.queue.push(...tracks)
 	}
 }
 

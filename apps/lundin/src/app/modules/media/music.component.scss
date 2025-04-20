@@ -6,7 +6,7 @@
 		"tabs"
 		"tab"
 		"current";
-	grid-template-rows: 2.5rem 1fr 4rem;
+	grid-template-rows: 2.5rem calc(100% - 6.5rem) 4rem;
 	height: 100%;
 }
 

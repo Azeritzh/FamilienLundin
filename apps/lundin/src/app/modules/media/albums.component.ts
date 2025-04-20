@@ -1,6 +1,6 @@
 import { Component } from "@angular/core"
-import { Album, MusicService } from "./music.service"
 import { Subscription } from "rxjs"
+import { Album, MusicService } from "./music.service"
 
 @Component({
 	selector: "lundin-albums",
@@ -8,8 +8,9 @@ import { Subscription } from "rxjs"
 	styleUrls: ["./albums.component.scss"],
 })
 export class AlbumsComponent {
-	albums: (Album & { cover: string })[] = []
 	subscription: Subscription | null
+	albums: DecoratedAlbum[] = []
+	currentAlbum: DecoratedAlbum | null = null
 
 	constructor(
 		private musicService: MusicService,
@@ -22,4 +23,14 @@ export class AlbumsComponent {
 	ngOnDestroy() {
 		this.subscription?.unsubscribe()
 	}
+
+	selectAlbum(album: DecoratedAlbum) {
+		this.currentAlbum = album
+	}
+
+	addCurrentAlbum() {
+		this.musicService.addAsLast(...this.currentAlbum.tracks.map(x => x.identifier))
+	}
 }
+
+type DecoratedAlbum = Album & { cover: string }

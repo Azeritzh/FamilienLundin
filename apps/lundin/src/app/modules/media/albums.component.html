@@ -1,6 +1,32 @@
-<div *ngFor="let album of albums"
-	class="album">
-	<img [src]="'api/music/files/' + album.cover">
-	<div class="artist">{{album.artist}}</div>
-	<div class="title">{{album.album}}</div>
+<ol *ngIf="!currentAlbum"
+	class="albums">
+	<input placeholder="search" />
+	<li *ngFor="let album of albums"
+		class="album"
+		(click)="selectAlbum(album)">
+		<img [src]="'api/music/files/' + album.cover">
+		<div class="artist">{{album.artist}}</div>
+		<div class="title">{{album.album}}</div>
+	</li>
+</ol>
+
+
+<div *ngIf="currentAlbum"
+	class="selected-album">
+	<div class="info">
+		<div class="buttons">
+			<button (click)="currentAlbum = null">
+				Tilbage
+			</button>
+			<button (click)="addCurrentAlbum()">
+				Tilføj alle
+			</button>
+		</div>
+		<img [src]="'api/music/files/' + currentAlbum.cover">
+		<div class="artist">{{currentAlbum.artist}}</div>
+		<div class="title">{{currentAlbum.album}}</div>
+	</div>
+	<div class="tracks">
+
+	</div>
 </div>
