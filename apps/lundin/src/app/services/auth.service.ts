@@ -65,7 +65,7 @@ export class AuthService {
 		this.loginInfo = await firstValueFrom(this.http.get<AuthResponse>("/api/auth/refresh"))
 			.catch(error => {
 				console.log("failed login: " + JSON.stringify(error))
-				return null
+				return error.status === 401 ? null : this.loginInfo // returning old loginInfo if it may be due to error
 			})
 		this.onRefreshResponse.next(this.isLoggedIn())
 		if (this.isLoggedIn())

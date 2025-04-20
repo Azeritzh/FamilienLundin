@@ -8,6 +8,8 @@ export interface StoredUser {
 	passwordHash: string
 	refreshHash?: string
 	refreshTokens?: { [expiration: string]: string }
+	expiredRefreshTokens?: { [expiration: string]: string }
+	removedRefreshTokens?: { [expiration: string]: string }
 	type: "admin" | "member" | "guest"
 }
 
@@ -54,13 +56,20 @@ export class UserService {
 		const expirations = Object.keys(user.refreshTokens)
 		const now = new Date().getTime() / 1000
 		for (const expiration of expirations)
-			if (+expiration < now)
+			if (+expiration < now){
+				if(!user.expiredRefreshTokens)
+					user.expiredRefreshTokens = {}
+				user.expiredRefreshTokens[expiration] = user.refreshTokens[expiration]
 				delete user.refreshTokens[expiration]
+			}
 	}
 
 	private removeToken = (expiration: number) => (user: StoredUser) => {
 		if (!user.refreshTokens)
 			return
+		if(!user.removedRefreshTokens)
+			user.removedRefreshTokens = {}
+		user.removedRefreshTokens[expiration] = user.refreshTokens[expiration]
 		delete user.refreshTokens[expiration]
 	}
 }
