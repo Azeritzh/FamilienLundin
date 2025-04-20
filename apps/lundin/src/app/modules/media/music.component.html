@@ -15,7 +15,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let song of musicLibrary" (click)="playSong(song.filename)">
+			<tr *ngFor="let song of musicService.tracksNoDuplicates" (click)="playSong(song.filename)">
 				<td>{{ song.title }}</td>
 				<td>{{ song.artists.join(", ") }}</td>
 				<td>{{ song.album }}</td>

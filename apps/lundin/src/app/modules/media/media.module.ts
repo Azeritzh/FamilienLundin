@@ -4,6 +4,7 @@ import { AppRoutingModule } from "../../app-routing.module"
 import { SharedModule } from "../../shared/shared.module"
 import { MusicComponent } from "./music.component"
 import { VideoComponent } from "./video.component"
+import { MusicService } from "./music.service"
 
 @NgModule({
 	declarations: [
@@ -15,6 +16,8 @@ import { VideoComponent } from "./video.component"
 		SharedModule,
 		AppRoutingModule,
 	],
-	providers: [],
+	providers: [
+		MusicService,
+	],
 })
 export class MediaModule { }
