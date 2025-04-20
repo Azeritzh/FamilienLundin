@@ -1,0 +1,6 @@
+<div *ngFor="let album of albums"
+	class="album">
+	<img [src]="'api/music/files/' + album.cover">
+	<div class="artist">{{album.artist}}</div>
+	<div class="title">{{album.album}}</div>
+</div>

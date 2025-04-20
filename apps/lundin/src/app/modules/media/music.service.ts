@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core"
-import { Subject } from "rxjs"
+import { BehaviorSubject, Subject } from "rxjs"
 
 @Injectable()
 export class MusicService {
+	loaded$ = new BehaviorSubject<void>(null)
 	musicLibrary: { [folder: string]: Album } = {}
 	tracksAll: Track[] = []
 	tracksNoDuplicates: Track[] = []
@@ -19,6 +20,7 @@ export class MusicService {
 		this.musicLibrary = albums
 		this.tracksAll = Object.entries(albums).flatMap(([, value]) => value.tracks)
 		this.tracksNoDuplicates = this.tracksAll.filter(x => x.duplicateOf === null)
+		this.loaded$.next()
 	}
 
 	play(track: TrackIdentifier, updateIndex = true) {
