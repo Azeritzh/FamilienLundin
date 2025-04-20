@@ -9,7 +9,7 @@
 
 <section *ngIf="currentTab === 'library'"
 	class="tab library-tab scroll-list-container">
-	<lundin-tracklist [tracks]="musicService.tracksNoDuplicates"></lundin-tracklist>
+	<lundin-tracklist [tracks]="musicService.tracksAll"></lundin-tracklist>
 </section>
 
 <section *ngIf="currentTab === 'album'"

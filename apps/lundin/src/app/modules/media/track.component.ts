@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from "@angular/core"
+import { Component, ElementRef, HostListener, Input } from "@angular/core"
 import { MusicService, Track } from "./music.service"
 
 @Component({
@@ -15,19 +15,34 @@ export class TrackComponent {
 	collapsed = true
 
 	constructor(
+		elementRef: ElementRef,
 		public musicService: MusicService
-	) { }
+	) {
+		window.addEventListener("click", (event: Event) => {
+			if (!this.active)
+				return
+			const isTarget = event.target === elementRef.nativeElement || elementRef.nativeElement.contains(event.target as Node)
+			if (!isTarget)
+				this.deactivate()
+		})
+	}
 
 	@HostListener("click")
 	click() {
-		if (!this.active) {
-			this.active = true
-			setTimeout(() => this.collapsed = false, 0)
-		}
-		else {
-			this.collapsed = true
-			setTimeout(() => this.active = false, 300)
-		}
+		if (!this.active)
+			this.activate()
+		else
+			this.deactivate()
+	}
+
+	private activate() {
+		this.active = true
+		setTimeout(() => this.collapsed = false, 0)
+	}
+
+	private deactivate() {
+		this.collapsed = true
+		setTimeout(() => this.active = false, 300)
 	}
 
 	handlePlay(event: Event) {

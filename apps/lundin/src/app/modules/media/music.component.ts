@@ -15,7 +15,7 @@ export class MusicComponent {
 		public musicService: MusicService
 	) {
 		this.musicService.nextTrack$.subscribe(track => {
-			this.playSong(track.filename)
+			this.playSong(track.filename ?? track.duplicateOf)
 		})
 	}
 

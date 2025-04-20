@@ -24,7 +24,8 @@ export class MusicService {
 	}
 
 	private fillFileNames(track: Track, folder: string) {
-		track.filename = folder + "/" + track.filename
+		if (track.filename)
+			track.filename = folder + "/" + track.filename
 		track.identifier = folder + "|" + track.title
 	}
 
