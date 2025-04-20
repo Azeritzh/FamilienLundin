@@ -9,6 +9,7 @@ import { MusicService, Track } from "./music.service"
 export class TrackComponent {
 	@Input() track: Track
 	@Input() fields: string[] = ["title", "artists", "album", "albumArtist"]
+	@Input() showQueueButtons = true
 	active = false
 
 	constructor(
@@ -18,5 +19,13 @@ export class TrackComponent {
 	@HostListener("click")
 	click() {
 		this.active = !this.active
+	}
+
+	handlePlay(event: Event) {
+		if (this.showQueueButtons)
+			this.musicService.addAndPlay(this.track.identifier)
+		else
+			this.musicService.play(this.track.identifier)
+		event.stopPropagation()
 	}
 }

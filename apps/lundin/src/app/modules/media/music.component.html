@@ -16,8 +16,7 @@
 		<div>Albumkunstner</div>
 	</div>
 	<lundin-track *ngFor="let track of musicService.tracksNoDuplicates"
-		[track]="track"
-		(click)="playSong(track.filename)">
+		[track]="track">
 	</lundin-track>
 </section>
 
@@ -34,8 +33,9 @@
 		<div>Album</div>
 		<div>Albumkunstner</div>
 	</div>
-	<lundin-track *ngFor="let track of musicService.tracksNoDuplicates"
-		[track]="track">
+	<lundin-track *ngFor="let track of musicService.queue"
+		[track]="musicService.trackFor(track)"
+		[showQueueButtons]="false">
 	</lundin-track>
 </section>
 

@@ -1,11 +1,14 @@
 import { Injectable } from "@angular/core"
+import { Subject } from "rxjs"
 
 @Injectable()
 export class MusicService {
 	musicLibrary: { [folder: string]: Album } = {}
 	tracksAll: Track[] = []
 	tracksNoDuplicates: Track[] = []
-	queue: Track[] = []
+	queue: TrackIdentifier[] = []
+	playingIndex: number | null = null
+	nextTrack$ = new Subject<Track>()
 
 	constructor() {
 		fetch("/api/music/get-library")
@@ -16,6 +19,34 @@ export class MusicService {
 		this.musicLibrary = albums
 		this.tracksAll = Object.entries(albums).flatMap(([, value]) => value.tracks)
 		this.tracksNoDuplicates = this.tracksAll.filter(x => x.duplicateOf === null)
+	}
+
+	play(track: TrackIdentifier, updateIndex = true) {
+		if (updateIndex) {
+			const index = this.queue.indexOf(track)
+			if (index !== -1)
+				this.playingIndex = index
+		}
+		this.nextTrack$.next(this.trackFor(track))
+	}
+
+	trackFor(trackIdentifier: TrackIdentifier) {
+		const [folder, title] = trackIdentifier.split("|")
+		return this.musicLibrary[folder].tracks.find(x => x.title === title)
+	}
+
+	addAndPlay(track: TrackIdentifier) {
+		this.queue.splice(this.playingIndex, 0, track)
+		this.playingIndex++
+		this.play(track, false)
+	}
+
+	addAsNext(track: TrackIdentifier) {
+		this.queue.splice(this.playingIndex, 0, track)
+	}
+
+	addAsLast(track: TrackIdentifier) {
+		this.queue.push(track)
 	}
 }
 
@@ -37,4 +68,7 @@ export interface Track {
 	length: string
 	filename: string | null
 	duplicateOf: string | null
+	identifier: string
 }
+
+export type TrackIdentifier = string

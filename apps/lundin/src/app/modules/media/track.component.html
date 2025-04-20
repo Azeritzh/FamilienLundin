@@ -4,7 +4,13 @@
 </div>
 <div *ngIf="active"
 	class="buttons">
-	<button>Afspil</button>
-	<button>Tilføj som næste</button>
-	<button>Tilføj som sidste</button>
+	<button (click)="handlePlay($event)">Afspil</button>
+	<button *ngIf="showQueueButtons"
+		(click)="musicService.addAsNext(track.identifier); $event.stopPropagation();">
+		Tilføj som næste
+	</button>
+	<button *ngIf="showQueueButtons"
+		(click)="musicService.addAsLast(track.identifier); $event.stopPropagation();">
+		Tilføj som sidste
+	</button>
 </div>
