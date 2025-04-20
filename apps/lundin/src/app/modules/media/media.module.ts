@@ -5,10 +5,12 @@ import { SharedModule } from "../../shared/shared.module"
 import { MusicComponent } from "./music.component"
 import { VideoComponent } from "./video.component"
 import { MusicService } from "./music.service"
+import { TrackComponent } from "./track.component"
 
 @NgModule({
 	declarations: [
 		MusicComponent,
+		TrackComponent,
 		VideoComponent,
 	],
 	imports: [
