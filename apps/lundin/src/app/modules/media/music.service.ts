@@ -36,8 +36,11 @@ export class MusicService {
 	}
 
 	addAndPlay(track: TrackIdentifier) {
+		if (this.playingIndex === null)
+			this.playingIndex = 0
+		else
+			this.playingIndex++
 		this.queue.splice(this.playingIndex, 0, track)
-		this.playingIndex++
 		this.play(track, false)
 	}
 

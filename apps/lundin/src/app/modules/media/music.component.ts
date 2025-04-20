@@ -19,6 +19,13 @@ export class MusicComponent {
 		})
 	}
 
+	ngAfterViewInit() {
+		this.audioPlayer.nativeElement.addEventListener("ended", () => {
+			if(this.musicService.playingIndex < this.musicService.queue.length - 1)
+				this.musicService.play(this.musicService.queue[this.musicService.playingIndex + 1])
+		})
+	}
+
 	private playSong(file: string) {
 		this.audioPlayer.nativeElement.src = "api/music/files/" + file.replace(/#/g, "ꖛ") // Replace # with ꖛ to avoid issues with the URL
 		this.audioPlayer.nativeElement.onloadeddata = () => this.audioPlayer.nativeElement.play()
