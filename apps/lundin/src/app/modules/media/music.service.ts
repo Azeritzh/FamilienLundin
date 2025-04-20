@@ -45,7 +45,7 @@ export class MusicService {
 	}
 
 	addAsNext(track: TrackIdentifier) {
-		this.queue.splice(this.playingIndex, 0, track)
+		this.queue.splice(this.playingIndex + 1, 0, track)
 	}
 
 	addAsLast(track: TrackIdentifier) {

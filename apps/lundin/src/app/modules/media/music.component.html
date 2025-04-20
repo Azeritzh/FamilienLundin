@@ -35,7 +35,8 @@
 	</div>
 	<lundin-track *ngFor="let track of musicService.queue"
 		[track]="musicService.trackFor(track)"
-		[showQueueButtons]="false">
+		[showQueueButtons]="false"
+		[isPlaying]="musicService.queue[musicService.playingIndex] === track">
 	</lundin-track>
 </section>
 
