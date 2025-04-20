@@ -9,15 +9,7 @@
 
 <section *ngIf="currentTab === 'library'"
 	class="tab library-tab scroll-list-container">
-	<div class="track-list-header">
-		<div>Titel</div>
-		<div>Kunstnere</div>
-		<div>Album</div>
-		<div>Albumkunstner</div>
-	</div>
-	<lundin-track *ngFor="let track of musicService.tracksNoDuplicates"
-		[track]="track">
-	</lundin-track>
+	<lundin-tracklist [tracks]="musicService.tracksNoDuplicates"></lundin-tracklist>
 </section>
 
 <section *ngIf="currentTab === 'album'"
@@ -27,17 +19,9 @@
 
 <section *ngIf="currentTab === 'current'"
 	class="tab current-tab scroll-list-container">
-	<div class="track-list-header">
-		<div>Titel</div>
-		<div>Kunstnere</div>
-		<div>Album</div>
-		<div>Albumkunstner</div>
-	</div>
-	<lundin-track *ngFor="let track of musicService.queue"
-		[track]="musicService.trackFor(track)"
-		[showQueueButtons]="false"
-		[isPlaying]="musicService.queue[musicService.playingIndex] === track">
-	</lundin-track>
+	<lundin-tracklist [tracks]="musicService.tracksQueue"
+		[isQueue]="true">
+	</lundin-tracklist>
 </section>
 
 <section class="current-song">

@@ -1,0 +1,31 @@
+.track-list-header {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: 1fr;
+	line-height: 1.5rem;
+	padding: 0 0.5rem;
+	
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	background-color: rgba(255, 255, 255, 0.8);
+
+	* {
+		white-space: nowrap;
+		overflow: hidden;
+	}
+}
+
+
+
+lundin-track:nth-child(odd) {
+	background-color: rgba(255, 255, 255, 0.05);
+}
+
+lundin-track:nth-child(even) {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+lundin-track:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+}

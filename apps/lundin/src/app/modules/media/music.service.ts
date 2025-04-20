@@ -7,6 +7,7 @@ export class MusicService {
 	musicLibrary: { [folder: string]: Album } = {}
 	tracksAll: Track[] = []
 	tracksNoDuplicates: Track[] = []
+	tracksQueue: Track[] = []
 	queue: TrackIdentifier[] = []
 	playingIndex: number | null = null
 	nextTrack$ = new Subject<Track>()
@@ -43,15 +44,22 @@ export class MusicService {
 		else
 			this.playingIndex++
 		this.queue.splice(this.playingIndex, 0, track)
+		this.updateTracksQueue()
 		this.play(track, false)
 	}
 
 	addAsNext(track: TrackIdentifier) {
 		this.queue.splice(this.playingIndex + 1, 0, track)
+		this.updateTracksQueue()
 	}
 
 	addAsLast(...tracks: TrackIdentifier[]) {
 		this.queue.push(...tracks)
+		this.updateTracksQueue()
+	}
+
+	private updateTracksQueue() {
+		this.tracksQueue = this.queue.map(x => this.trackFor(x))
 	}
 }
 

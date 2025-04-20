@@ -1,15 +1,16 @@
 @import "../../styles/general.scss";
 
 :host {
-	display: contents;
+	@extend .scroll-container;
+	display: block;
+	height: 100%;
+	margin: 0;
 }
 
 .albums {
-	@extend .scroll-container;
 	display: flex;
 	flex-wrap: wrap;
 	height: 100%;
-	margin: 0;
 
 	input {
 		width: 100%;
@@ -48,6 +49,7 @@ img {
 
 .selected-album {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .buttons {
@@ -60,4 +62,9 @@ img {
 	width: 18rem;
 	padding: 0.5rem;
 	box-sizing: content-box;
+}
+
+lundin-tracklist {
+	flex: 1;
+	min-width: 20rem;
 }

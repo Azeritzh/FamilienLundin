@@ -1,0 +1,11 @@
+<div class="track-list-header">
+	<div>Titel</div>
+	<div>Kunstnere</div>
+	<div>Album</div>
+	<div>Albumkunstner</div>
+</div>
+<lundin-track *ngFor="let track of tracks"
+	[track]="track"
+	[showQueueButtons]="!isQueue"
+	[isPlaying]="isQueue && musicService.queue[musicService.playingIndex] === track">
+</lundin-track>
