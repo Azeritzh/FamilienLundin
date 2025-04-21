@@ -61,6 +61,20 @@ export class TrackComponent {
 	handlePause(event: Event) {
 		event.stopPropagation()
 	}
+
+	handleAddNext(event: Event) {
+		this.musicService.addAsNext(this.track.identifier)
+		event.stopPropagation()
+	}
+
+	handleAddLast(event: Event) {
+		this.musicService.addAsLast(this.track.identifier)
+		event.stopPropagation()
+	}
+
+	handleRemove(event: Event) {
+		event.stopPropagation()
+	}
 }
 
 interface Field {

@@ -1,26 +1,38 @@
+<img *ngIf="!isPlaying"
+	class="fixed"
+	src="/assets/images/icons/play.svg"
+	(click)="handlePlay($event)"
+	alt="play">
+<img *ngIf="isPlaying"
+	class="fixed"
+	src="/assets/images/icons/pause.svg"
+	(click)="handlePause($event)"
+	alt="pause">
 <div *ngFor="let field of fields; let i = index"
 	class="field"
 	[style.flex]="field.size ?? 1">
 	{{isPlaying && i === 0 ? "⏵" : ""}}
 	{{field.titleFor(track)}}
 </div>
+<img *ngIf="showQueueButtons"
+	class="fixed"
+	src="/assets/images/icons/plus.svg"
+	(click)="musicService.addAsLast(track.identifier); $event.stopPropagation();"
+	alt="pause">
+<img *ngIf="!showQueueButtons"
+	class="fixed negative"
+	src="/assets/images/icons/Close_icon.svg"
+	(click)="handleRemove($event)"
+	alt="pause">
 <div *ngIf="active"
 	class="buttons"
 	[class.collapsed]="collapsed">
-	<img *ngIf="!isPlaying"
-		src="/assets/images/icons/play.svg"
-		(click)="handlePlay($event)"
-		alt="play">
-	<img *ngIf="isPlaying"
-		src="/assets/images/icons/pause.svg"
-		(click)="handlePause($event)"
-		alt="pause">
 	<button *ngIf="showQueueButtons"
-		(click)="musicService.addAsNext(track.identifier); $event.stopPropagation();">
+		(click)="handleAddNext(track.identifier)">
 		Tilføj som næste
 	</button>
 	<button *ngIf="showQueueButtons"
-		(click)="musicService.addAsLast(track.identifier); $event.stopPropagation();">
+		(click)="handleAddLast(track.identifier)">
 		Tilføj som sidste
 	</button>
 </div>

@@ -3,13 +3,25 @@
 	position: relative;
 
 	line-height: 1.5rem;
-	padding: 0 0.5rem;
 	cursor: pointer;
 }
 
 .field {
 	white-space: nowrap;
 	overflow: hidden;
+}
+
+img {
+	width: 1rem;
+	height: 1rem;
+	padding: 0.25rem;
+	box-sizing: content-box;
+}
+img.fixed {
+	opacity: 0;
+}
+:host:hover img.fixed {
+	opacity: 1;
 }
 
 .buttons {
@@ -21,6 +33,10 @@
 	overflow: hidden;
 	background-color: var(--color-btn-neutral);
 	transition: 0.3s ease;
+
+	img {
+		padding: 0.25rem 0.5rem;
+	}
 }
 
 .collapsed {
@@ -34,17 +50,13 @@ button {
 	white-space: nowrap;
 }
 
-img {
-	width: 1rem;
-	height: 1rem;
-	padding: 0.25rem 0.5rem;
-	box-sizing: content-box;
-}
-
 img, button {
 	transition: 0.3s ease;
 	background-color: transparent;
 }
 img:hover, button:hover {
 	background-color: var(--color-btn-neutral-hover);
+}
+img.negative:hover {
+	background-color: var(--color-btn-negative-hover);
 }
