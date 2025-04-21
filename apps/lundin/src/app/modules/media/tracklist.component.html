@@ -1,6 +1,8 @@
 <div class="settings-and-search">
 	<input type="text"
-		placeholder="Søg">
+		placeholder="Søg"
+		[(ngModel)]="query"
+		(input)="query$.next(query)">
 	<div *ngFor="let column of columns | keyvalue:onCompare"
 		class="column-setting">
 		<input type="checkbox"
@@ -17,7 +19,7 @@
 		{{column.title}}
 	</div>
 </div>
-<lundin-track *ngFor="let track of tracks"
+<lundin-track *ngFor="let track of shownTracks ?? tracks"
 	[track]="track"
 	[fields]="enabledColumns"
 	[showQueueButtons]="!isQueue"

@@ -1,6 +1,7 @@
 import { KeyValue } from "@angular/common"
 import { Component, Input } from "@angular/core"
 import { MusicService, Track } from "./music.service"
+import { debounceTime, distinctUntilChanged, Subject } from "rxjs"
 
 @Component({
 	selector: "lundin-tracklist",
@@ -21,11 +22,28 @@ export class TrackListComponent {
 		duration: { enabled: true, title: "Varighed", titleFor: (track) => track.length, size: 0.4 },
 	}
 	enabledColumns: Column[] = []
+	shownTracks: Track[] | null = null
+	query$ = new Subject<string>()
+	query = ""
 
 	constructor(
 		public musicService: MusicService
 	) {
 		this.updateEnabledColumns()
+		this.query$.pipe(
+			debounceTime(300),
+			distinctUntilChanged(),
+		).subscribe(this.search)
+	}
+
+	private search = () => {
+		if(!this.query)
+			this.shownTracks = null
+		const search = this.query.toLowerCase()
+		this.shownTracks = this.tracks.filter(track => {
+			const text = this.enabledColumns.map(column => column.titleFor(track)).join(" ").toLowerCase()
+			return text.includes(search)
+		})
 	}
 
 	updateEnabledColumns() {
