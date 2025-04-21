@@ -18,9 +18,7 @@
 }
 
 .track-list-header {
-	display: grid;
-	grid-auto-flow: column;
-	grid-auto-columns: 1fr;
+	display: flex;
 	line-height: 1.5rem;
 	padding: 0 0.5rem;
 

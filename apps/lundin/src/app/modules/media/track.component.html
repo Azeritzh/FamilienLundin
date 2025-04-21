@@ -1,7 +1,8 @@
 <div *ngFor="let field of fields; let i = index"
-	class="field">
+	class="field"
+	[style.flex]="field.size ?? 1">
 	{{isPlaying && i === 0 ? "⏵" : ""}}
-	{{track[field]}}
+	{{field.titleFor(track)}}
 </div>
 <div *ngIf="active"
 	class="buttons"

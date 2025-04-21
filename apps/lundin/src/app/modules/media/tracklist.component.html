@@ -1,19 +1,25 @@
 <div class="settings-and-search">
 	<input type="text"
 		placeholder="Søg">
-	<div *ngFor="let column of columns | keyvalue"
+	<div *ngFor="let column of columns | keyvalue:onCompare"
 		class="column-setting">
 		<input type="checkbox"
-			[id]="column.key">
+			[id]="column.key"
+			[(ngModel)]="column.value.enabled"
+			(change)="updateEnabledColumns()">
 		<label [for]="column.key">{{column.value.title}}</label>
 	</div>
 </div>
 
 <div class="track-list-header">
-	<div *ngFor="let column of enabledColumns()">{{column.title}}</div>
+	<div *ngFor="let column of enabledColumns"
+		[style.flex]="column.size ?? 1">
+		{{column.title}}
+	</div>
 </div>
 <lundin-track *ngFor="let track of tracks"
 	[track]="track"
+	[fields]="enabledColumns"
 	[showQueueButtons]="!isQueue"
 	[isPlaying]="isQueue && musicService.queue[musicService.playingIndex] === track">
 </lundin-track>

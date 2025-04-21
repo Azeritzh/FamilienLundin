@@ -8,7 +8,12 @@ import { MusicService, Track } from "./music.service"
 })
 export class TrackComponent {
 	@Input() track: Track
-	@Input() fields: string[] = ["title", "artists", "album", "albumArtist"]
+	@Input() fields: Field[] = [
+		{ titleFor: (track) => track.title, size: 2 },
+		{ titleFor: (track) => track.artists.join(", ") },
+		{ titleFor: (track) => track.album },
+		{ titleFor: (track) => track.albumArtist },
+	]
 	@Input() isPlaying = false
 	@Input() showQueueButtons = true
 	active = false
@@ -56,4 +61,9 @@ export class TrackComponent {
 	handlePause(event: Event) {
 		event.stopPropagation()
 	}
+}
+
+interface Field {
+	titleFor: (track: Track) => string
+	size?: number
 }

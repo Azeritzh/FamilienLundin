@@ -1,7 +1,5 @@
 :host {
-	display: grid;
-	grid-auto-flow: column;
-	grid-auto-columns: 1fr;
+	display: flex;
 	position: relative;
 
 	line-height: 1.5rem;
