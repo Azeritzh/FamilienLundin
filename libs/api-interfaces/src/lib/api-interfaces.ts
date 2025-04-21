@@ -95,3 +95,17 @@ export interface MinestrygerScoreSet {
 	userId: number
 	categories: { [category: string]: MinestrygerScore[] }
 }
+
+export interface MusicRating {
+	_id: number
+	userId: number
+	ratings: { [trackId: string]: number }
+}
+
+export interface MusicPlaylist {
+	_id: number
+	userId: number
+	playlistName: string
+	shared: boolean
+	content: string[] | string
+}

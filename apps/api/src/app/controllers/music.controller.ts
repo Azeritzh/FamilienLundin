@@ -1,10 +1,16 @@
-import { Controller, Get, Req, Res, UseGuards } from "@nestjs/common"
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { MusicService } from "../../media/music.service"
+import { StorageService } from "../../storage/storage.service"
+import { RequestWithUser } from "./auth.controller"
+import { MusicPlaylist } from "@lundin/api-interfaces"
 
 @Controller("music")
 export class MusicController {
-	constructor(private readonly musicService: MusicService) { }
+	constructor(
+		private readonly musicService: MusicService,
+		private readonly storageService: StorageService,
+	) { }
 
 	@UseGuards(JwtAuthGuard)
 	@Get("get-library")
@@ -18,5 +24,32 @@ export class MusicController {
 		const filePath = decodeURIComponent(req.url.split("music/files/")[1])
 			.replace(/ꖛ/g, "#")  // Restore # in the filename
 		res.sendFile(filePath, { root: this.musicService.libraryPath })
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get("load-ratings")
+	async loadRatings() {
+		return this.storageService.musicRatingCollection.find() ?? []
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get("load-playlists")
+	async loadPlaylists(@Req() request: RequestWithUser) {
+		return this.storageService.musicPlaylistCollection.find(x => x.shared || x.userId === request.user._id) ?? []
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post("add-playlist")
+	async addPlaylist(@Req() request: RequestWithUser, @Body() playlist: MusicPlaylist) {
+		playlist.userId = request.user._id
+		return this.storageService.musicPlaylistCollection.insertOne(playlist)
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post("update-playlist")
+	async updatePlaylist(@Req() request: RequestWithUser, @Body() playlist: MusicPlaylist) {
+		if (request.user._id !== playlist.userId)
+			throw new Error("You are not allowed to update this playlist") // TODO: return something instead?
+		return this.storageService.musicPlaylistCollection.updateOne({ _id: playlist._id }, playlist)
 	}
 }

@@ -1,4 +1,4 @@
-import { CalendarEvent, MessageThread, Person, MinestrygerTopScoreSet, MinestrygerScoreSet, Recipe } from "@lundin/api-interfaces"
+import { CalendarEvent, MessageThread, Person, MinestrygerTopScoreSet, MinestrygerScoreSet, Recipe, MusicRating, MusicPlaylist } from "@lundin/api-interfaces"
 import { Injectable } from "@nestjs/common"
 import * as fs from "fs"
 import { StoredUser } from "../user/user.service"
@@ -14,6 +14,8 @@ export class StorageService {
 	ancestryCollection = new Collection<Person>("ancestry", this)
 	minestrygerTopScoreCollection = new Collection<MinestrygerTopScoreSet & { _id: number }>("minestryger-topscores", this)
 	minestrygerScoreCollection = new Collection<MinestrygerScoreSet>("minestryger-scores", this)
+	musicRatingCollection = new Collection<MusicRating>("music-ratings", this)
+	musicPlaylistCollection = new Collection<MusicPlaylist>("music-playlists", this)
 
 	saveJsonFile(name: string, content: any): Promise<void> {
 		const path = "./storage/" + name + ".json"
