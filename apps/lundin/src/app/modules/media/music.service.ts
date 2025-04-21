@@ -58,6 +58,13 @@ export class MusicService {
 		this.updateTracksQueue()
 	}
 
+	removeFromQueue(track: TrackIdentifier) {
+		const index = this.queue.indexOf(track)
+		if (index !== -1)
+			this.queue.splice(index, 1)
+		this.updateTracksQueue()
+	}
+
 	private updateTracksQueue() {
 		this.tracksQueue = this.queue.map(x => this.trackFor(x))
 	}

@@ -20,7 +20,8 @@
 <section *ngIf="currentTab === 'current'"
 	class="tab current-tab scroll-list-container">
 	<lundin-tracklist [tracks]="musicService.tracksQueue"
-		[isQueue]="true">
+		[isQueue]="true"
+		(remove)="musicService.removeFromQueue($event.identifier)">
 	</lundin-tracklist>
 </section>
 

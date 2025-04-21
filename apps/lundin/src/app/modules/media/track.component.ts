@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input } from "@angular/core"
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from "@angular/core"
 import { MusicService, Track } from "./music.service"
 
 @Component({
@@ -16,6 +16,7 @@ export class TrackComponent {
 	]
 	@Input() isPlaying = false
 	@Input() showQueueButtons = true
+	@Output() remove = new EventEmitter<void>()
 	active = false
 	collapsed = true
 
@@ -73,6 +74,7 @@ export class TrackComponent {
 	}
 
 	handleRemove(event: Event) {
+		this.remove.emit()
 		event.stopPropagation()
 	}
 }

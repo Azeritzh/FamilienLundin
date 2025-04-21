@@ -1,5 +1,5 @@
 import { KeyValue } from "@angular/common"
-import { Component, Input, OnDestroy } from "@angular/core"
+import { Component, EventEmitter, Input, OnDestroy, Output } from "@angular/core"
 import { MusicService, Track } from "./music.service"
 import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs"
 
@@ -12,6 +12,7 @@ export class TrackListComponent implements OnDestroy{
 	subscription: Subscription | null
 	@Input() tracks: Track[] = []
 	@Input() isQueue = false
+	@Output() remove = new EventEmitter<Track>()
 	columns: { [index: string]: Column } = {
 		title: { enabled: true, title: "Titel", titleFor: (track) => track.title, size: 2 },
 		artistsCombined: { enabled: true, title: "Kunstnere (samlet)", titleFor: combinedArtists },
