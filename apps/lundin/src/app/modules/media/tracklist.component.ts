@@ -1,14 +1,15 @@
 import { KeyValue } from "@angular/common"
-import { Component, Input } from "@angular/core"
+import { Component, Input, OnDestroy } from "@angular/core"
 import { MusicService, Track } from "./music.service"
-import { debounceTime, distinctUntilChanged, Subject } from "rxjs"
+import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs"
 
 @Component({
 	selector: "lundin-tracklist",
 	templateUrl: "./tracklist.component.html",
 	styleUrls: ["./tracklist.component.scss"],
 })
-export class TrackListComponent {
+export class TrackListComponent implements OnDestroy{
+	subscription: Subscription | null
 	@Input() tracks: Track[] = []
 	@Input() isQueue = false
 	columns: { [index: string]: Column } = {
@@ -30,10 +31,14 @@ export class TrackListComponent {
 		public musicService: MusicService
 	) {
 		this.updateEnabledColumns()
-		this.query$.pipe(
+		this.subscription = this.query$.pipe(
 			debounceTime(300),
 			distinctUntilChanged(),
 		).subscribe(this.search)
+	}
+
+	ngOnDestroy() {
+		this.subscription?.unsubscribe()
 	}
 
 	private search = () => {

@@ -1,7 +1,10 @@
 <ol *ngIf="!currentAlbum"
 	class="albums">
-	<input placeholder="search" />
-	<li *ngFor="let album of albums"
+	<input type="text"
+		placeholder="Søg"
+		[(ngModel)]="query"
+		(input)="query$.next(query)" />
+	<li *ngFor="let album of shownAlbums ?? albums"
 		class="album"
 		(click)="selectAlbum(album)">
 		<img [src]="'api/music/files/' + album.cover">

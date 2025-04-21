@@ -1,5 +1,5 @@
-import { Component } from "@angular/core"
-import { Subscription } from "rxjs"
+import { Component, OnDestroy } from "@angular/core"
+import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs"
 import { Album, MusicService } from "./music.service"
 
 @Component({
@@ -7,21 +7,40 @@ import { Album, MusicService } from "./music.service"
 	templateUrl: "./albums.component.html",
 	styleUrls: ["./albums.component.scss"],
 })
-export class AlbumsComponent {
-	subscription: Subscription | null
+export class AlbumsComponent implements OnDestroy {
+	subscriptions: { [index: string]: Subscription } = {}
 	albums: DecoratedAlbum[] = []
+	shownAlbums: DecoratedAlbum[] | null = null
 	currentAlbum: DecoratedAlbum | null = null
+	query$ = new Subject<string>()
+	query = ""
 
 	constructor(
 		private musicService: MusicService,
 	) {
-		this.subscription = this.musicService.loaded$.subscribe(() => {
+		this.subscriptions["loaded"] = this.musicService.loaded$.subscribe(() => {
 			this.albums = Object.entries(this.musicService.musicLibrary).map(([folder, album]) => ({ ...album, cover: folder + "/cover.jpg" }))
 		})
+
+		this.subscriptions["query"] = this.query$.pipe(
+			debounceTime(300),
+			distinctUntilChanged(),
+		).subscribe(this.search)
 	}
 
 	ngOnDestroy() {
-		this.subscription?.unsubscribe()
+		for (const sub of Object.values(this.subscriptions))
+			sub.unsubscribe()
+	}
+
+	private search = () => {
+		if (!this.query)
+			this.shownAlbums = null
+		const search = this.query.toLowerCase()
+		this.shownAlbums = this.albums.filter(album => {
+			const text = [album.album, album.artist].join(" ").toLowerCase()
+			return text.includes(search)
+		})
 	}
 
 	selectAlbum(album: DecoratedAlbum) {

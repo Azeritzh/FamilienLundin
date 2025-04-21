@@ -2,7 +2,7 @@
 	<input type="text"
 		placeholder="Søg"
 		[(ngModel)]="query"
-		(input)="query$.next(query)">
+		(input)="query$.next(query)"/>
 	<div *ngFor="let column of columns | keyvalue:onCompare"
 		class="column-setting">
 		<input type="checkbox"
