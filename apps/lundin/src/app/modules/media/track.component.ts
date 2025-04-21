@@ -1,10 +1,11 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from "@angular/core"
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, Output } from "@angular/core"
 import { MusicService, Track } from "./music.service"
 
 @Component({
 	selector: "lundin-track",
 	templateUrl: "./track.component.html",
 	styleUrls: ["./track.component.scss"],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackComponent {
 	@Input() track: Track
@@ -22,7 +23,8 @@ export class TrackComponent {
 
 	constructor(
 		elementRef: ElementRef,
-		public musicService: MusicService
+		private changeDetectorRef: ChangeDetectorRef,
+		public musicService: MusicService,
 	) {
 		window.addEventListener("click", (event: Event) => {
 			if (!this.active)
@@ -43,12 +45,20 @@ export class TrackComponent {
 
 	private activate() {
 		this.active = true
-		setTimeout(() => this.collapsed = false, 0)
+		this.changeDetectorRef.markForCheck()
+		setTimeout(() => {
+			this.collapsed = false
+			this.changeDetectorRef.markForCheck()
+		}, 0)
 	}
 
 	private deactivate() {
 		this.collapsed = true
-		setTimeout(() => this.active = false, 300)
+		this.changeDetectorRef.markForCheck()
+		setTimeout(() => {
+			this.active = false
+			this.changeDetectorRef.markForCheck()
+		}, 300)
 	}
 
 	handlePlay(event: Event) {

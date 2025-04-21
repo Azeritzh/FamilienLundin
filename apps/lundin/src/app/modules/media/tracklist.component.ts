@@ -1,5 +1,5 @@
 import { KeyValue } from "@angular/common"
-import { Component, EventEmitter, Input, OnDestroy, Output } from "@angular/core"
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output } from "@angular/core"
 import { MusicService, Track } from "./music.service"
 import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs"
 
@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs"
 	selector: "lundin-tracklist",
 	templateUrl: "./tracklist.component.html",
 	styleUrls: ["./tracklist.component.scss"],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackListComponent implements OnDestroy{
 	subscription: Subscription | null
@@ -29,7 +30,8 @@ export class TrackListComponent implements OnDestroy{
 	query = ""
 
 	constructor(
-		public musicService: MusicService
+		private changeDetectorRef: ChangeDetectorRef,
+		public musicService: MusicService,
 	) {
 		this.updateEnabledColumns()
 		this.subscription = this.query$.pipe(
@@ -43,6 +45,7 @@ export class TrackListComponent implements OnDestroy{
 	}
 
 	private search = () => {
+		this.changeDetectorRef.markForCheck()
 		if(!this.query)
 			this.shownTracks = null
 		const search = this.query.toLowerCase()

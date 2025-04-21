@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core"
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from "@angular/core"
 import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs"
 import { Album, MusicService } from "./music.service"
 
@@ -6,6 +6,7 @@ import { Album, MusicService } from "./music.service"
 	selector: "lundin-albums",
 	templateUrl: "./albums.component.html",
 	styleUrls: ["./albums.component.scss"],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlbumsComponent implements OnDestroy {
 	subscriptions: { [index: string]: Subscription } = {}
@@ -16,6 +17,7 @@ export class AlbumsComponent implements OnDestroy {
 	query = ""
 
 	constructor(
+		private changeDetectorRef: ChangeDetectorRef,
 		private musicService: MusicService,
 	) {
 		this.subscriptions["loaded"] = this.musicService.loaded$.subscribe(() => {
@@ -34,6 +36,7 @@ export class AlbumsComponent implements OnDestroy {
 	}
 
 	private search = () => {
+		this.changeDetectorRef.markForCheck()
 		if (!this.query)
 			this.shownAlbums = null
 		const search = this.query.toLowerCase()
