@@ -1,7 +1,7 @@
 import { KeyValue } from "@angular/common"
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output } from "@angular/core"
-import { MusicService, Track } from "./music.service"
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, Output } from "@angular/core"
 import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs"
+import { MusicService, Track } from "./music.service"
 
 @Component({
 	selector: "lundin-tracklist",
@@ -9,7 +9,7 @@ import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs"
 	styleUrls: ["./tracklist.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TrackListComponent implements OnDestroy{
+export class TrackListComponent implements OnDestroy {
 	subscription: Subscription | null
 	@Input() tracks: Track[] = []
 	@Input() isQueue = false
@@ -28,9 +28,11 @@ export class TrackListComponent implements OnDestroy{
 	shownTracks: Track[] | null = null
 	query$ = new Subject<string>()
 	query = ""
+	private knownPosition: { index: number, height: number, top: number } = null
 
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
+		private elementRef: ElementRef,
 		public musicService: MusicService,
 	) {
 		this.updateEnabledColumns()
@@ -38,6 +40,10 @@ export class TrackListComponent implements OnDestroy{
 			debounceTime(300),
 			distinctUntilChanged(),
 		).subscribe(this.search)
+		window.addEventListener("scroll", () => {
+			this.knownPosition = null
+			this.changeDetectorRef.markForCheck()
+		}, true)
 	}
 
 	ngOnDestroy() {
@@ -46,7 +52,7 @@ export class TrackListComponent implements OnDestroy{
 
 	private search = () => {
 		this.changeDetectorRef.markForCheck()
-		if(!this.query)
+		if (!this.query)
 			this.shownTracks = null
 		const search = this.query.toLowerCase()
 		this.shownTracks = this.tracks.filter(track => {
@@ -58,6 +64,15 @@ export class TrackListComponent implements OnDestroy{
 	updateEnabledColumns() {
 		this.enabledColumns = Object.values(this.columns)
 			.filter(x => x.enabled)
+	}
+
+	isVisible(element: HTMLElement, index: number) {
+		if (this.knownPosition === null){
+			const rect = element.getBoundingClientRect()
+			this.knownPosition = { index, height: rect.bottom - rect.top, top: rect.top }
+		}
+		const position = (index - this.knownPosition.index) * this.knownPosition.height + this.knownPosition.top
+		return 0 < position && position < window.innerHeight
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

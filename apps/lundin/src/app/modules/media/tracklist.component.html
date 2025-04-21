@@ -2,7 +2,7 @@
 	<input type="text"
 		placeholder="Søg"
 		[(ngModel)]="query"
-		(input)="query$.next(query)"/>
+		(input)="query$.next(query)" />
 	<div *ngFor="let column of columns | keyvalue:onCompare"
 		class="column-setting">
 		<input type="checkbox"
@@ -19,10 +19,14 @@
 		{{column.title}}
 	</div>
 </div>
-<lundin-track *ngFor="let track of shownTracks ?? tracks"
-	[track]="track"
-	[fields]="enabledColumns"
-	[showQueueButtons]="!isQueue"
-	[isPlaying]="isQueue && musicService.queue[musicService.playingIndex] === track.identifier"
-	(remove)="remove.emit(track)">
-</lundin-track>
+<div *ngFor="let track of shownTracks ?? tracks; let i = index"
+	class="track-container"
+	#container>
+	<lundin-track *ngIf="isVisible(container, i)"
+		[track]="track"
+		[fields]="enabledColumns"
+		[showQueueButtons]="!isQueue"
+		[isPlaying]="isQueue && musicService.queue[musicService.playingIndex] === track.identifier"
+		(remove)="remove.emit(track)">
+	</lundin-track>
+</div>
