@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from "@angular/core"
+import { ChangeDetectionStrategy, Component } from "@angular/core"
 import { MusicPlaylist } from "@lundin/api-interfaces"
-import { Subscription } from "rxjs"
-import { MusicService } from "./music.service"
+import { MusicService, Track } from "./music.service"
+import { PlaylistService } from "./playlist.service"
 
 @Component({
 	selector: "lundin-playlists",
@@ -9,32 +9,16 @@ import { MusicService } from "./music.service"
 	styleUrls: ["./playlists.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlaylistsComponent implements OnDestroy {
-	subscriptions: { [index: string]: Subscription } = {}
-	playlists: MusicPlaylist[] = [{
-		_id: 1,
-		userId: 1,
-		title: "Listliste",
-		shared: true,
-		content: [
-			"ABBA/ABBA|SOS",
-			"ABBA/ABBA|Rock Me",
-			"ABBA/ABBA|So Long",
-		],
-	}]
+export class PlaylistsComponent {
+	playlistTracks = new Map<MusicPlaylist, Track[]>()
+	playlists: MusicPlaylist[] = []
 	currentPlaylist: MusicPlaylist | null = null
 
 	constructor(
-		private musicService: MusicService,
+		public musicService: MusicService,
+		private playlistService: PlaylistService,
 	) {
-		this.subscriptions["loaded"] = this.musicService.loaded$.subscribe(() => {
-			//this.albums = Object.entries(this.musicService.musicLibrary).map(([folder, album]) => ({ ...album, cover: folder + "/cover.jpg" }))
-		})
-	}
-
-	ngOnDestroy() {
-		for (const sub of Object.values(this.subscriptions))
-			sub.unsubscribe()
+		this.playlistService.getPlaylists().then(x => this.playlists = x)
 	}
 
 	selectPlaylist(playlist: MusicPlaylist) {
@@ -46,9 +30,12 @@ export class PlaylistsComponent implements OnDestroy {
 	}
 
 	tracksFor(playlist: MusicPlaylist) {
-		if (Array.isArray(playlist.content))
-			return playlist.content.map(x => this.musicService.trackFor(x))
-		else
-			return []
+		if (!this.playlistTracks.has(playlist)) {
+			if (Array.isArray(playlist.content))
+				this.playlistTracks.set(playlist, playlist.content.map(x => this.musicService.trackFor(x)))
+			else
+				this.playlistTracks.set(playlist, [])
+		}
+		return this.playlistTracks.get(playlist)
 	}
 }

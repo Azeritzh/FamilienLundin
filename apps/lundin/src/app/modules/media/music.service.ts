@@ -5,10 +5,12 @@ import { BehaviorSubject, Subject } from "rxjs"
 export class MusicService {
 	loaded$ = new BehaviorSubject<void>(null)
 	musicLibrary: { [folder: string]: Album } = {}
+
 	tracksAll: Track[] = []
 	tracksNoDuplicates: Track[] = []
 	tracksQueue: Track[] = []
 	queue: TrackIdentifier[] = []
+
 	playingIndex: number | null = null
 	nextTrack$ = new Subject<Track>()
 

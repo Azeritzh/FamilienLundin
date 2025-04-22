@@ -27,14 +27,14 @@ export class MusicController {
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Get("load-ratings")
-	async loadRatings() {
+	@Get("get-ratings")
+	async getRatings() {
 		return this.storageService.musicRatingCollection.find() ?? []
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Get("load-playlists")
-	async loadPlaylists(@Req() request: RequestWithUser) {
+	@Get("get-playlists")
+	async getPlaylists(@Req() request: RequestWithUser) {
 		return this.storageService.musicPlaylistCollection.find(x => x.shared || x.userId === request.user._id) ?? []
 	}
 
