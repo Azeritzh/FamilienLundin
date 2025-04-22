@@ -1,6 +1,6 @@
 <ol *ngIf="!currentPlaylist"
 	class="playlists">
-	<li *ngFor="let playlist of musicService.playlists"
+	<li *ngFor="let playlist of playlists"
 		class="playlist"
 		(click)="selectPlaylist(playlist)">
 		<div class="title">{{playlist.title}}</div>

@@ -1,0 +1,18 @@
+<h1>Vælg en spilleliste</h1>
+
+<div class="content-container">
+
+	<button *ngFor="let playlist of playlists"
+		(click)="selectPlaylist(playlist)">
+		{{playlist.title}}
+	</button>
+
+	<input type="text"
+		placeholder="Ny spilleliste"
+		[(ngModel)]="newPlaylistName"
+		(keyup.enter)="createPlaylist()" />
+
+	<button (click)="createPlaylist()">
+		Opret
+	</button>
+</div>

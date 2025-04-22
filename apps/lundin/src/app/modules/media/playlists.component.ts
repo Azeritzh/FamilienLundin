@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core"
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from "@angular/core"
 import { MusicPlaylist } from "@lundin/api-interfaces"
 import { MusicService, Track } from "./music.service"
 import { PlaylistService } from "./playlist.service"
@@ -15,10 +15,14 @@ export class PlaylistsComponent {
 	currentPlaylist: MusicPlaylist | null = null
 
 	constructor(
+		private changeDetectorRef: ChangeDetectorRef,
 		public musicService: MusicService,
 		private playlistService: PlaylistService,
 	) {
-		this.playlistService.getPlaylists().then(x => this.playlists = x)
+		this.playlistService.getPlaylists().then(x => {
+			this.playlists = x
+			this.changeDetectorRef.markForCheck()
+		})
 	}
 
 	selectPlaylist(playlist: MusicPlaylist) {
@@ -26,7 +30,10 @@ export class PlaylistsComponent {
 	}
 
 	addCurrentPlaylist() {
-		//this.musicService.addAsLast(...this.currentPlaylist.tracks.map(x => x.identifier))
+		if (Array.isArray(this.currentPlaylist.content))
+			this.musicService.addAsLast(...this.currentPlaylist.content)
+		else
+			this.musicService.addAsLast(...[]) // TODO
 	}
 
 	tracksFor(playlist: MusicPlaylist) {
@@ -34,7 +41,7 @@ export class PlaylistsComponent {
 			if (Array.isArray(playlist.content))
 				this.playlistTracks.set(playlist, playlist.content.map(x => this.musicService.trackFor(x)))
 			else
-				this.playlistTracks.set(playlist, [])
+				this.playlistTracks.set(playlist, []) // TODO
 		}
 		return this.playlistTracks.get(playlist)
 	}

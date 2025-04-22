@@ -1,7 +1,10 @@
 import { KeyValue } from "@angular/common"
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, Output } from "@angular/core"
-import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs"
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output } from "@angular/core"
+import { debounceTime, distinctUntilChanged, firstValueFrom, Subject, Subscription } from "rxjs"
 import { MusicService, Track } from "./music.service"
+import { PlaylistService } from "./playlist.service"
+import { NavigationService } from "../../services/navigation.service"
+import { PlaylistSelectorComponent } from "./playlist-selector.component"
 
 @Component({
 	selector: "lundin-tracklist",
@@ -32,8 +35,9 @@ export class TrackListComponent implements OnDestroy {
 
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
-		private elementRef: ElementRef,
 		public musicService: MusicService,
+		private navigationService: NavigationService,
+		private playlistService: PlaylistService,
 	) {
 		this.updateEnabledColumns()
 		this.subscription = this.query$.pipe(
@@ -67,12 +71,23 @@ export class TrackListComponent implements OnDestroy {
 	}
 
 	isVisible(element: HTMLElement, index: number) {
-		if (this.knownPosition === null){
+		if (this.knownPosition === null) {
 			const rect = element.getBoundingClientRect()
 			this.knownPosition = { index, height: rect.bottom - rect.top, top: rect.top }
 		}
 		const position = (index - this.knownPosition.index) * this.knownPosition.height + this.knownPosition.top
 		return 0 < position && position < window.innerHeight
+	}
+
+	async addToPlaylist() {
+		const component = await this.navigationService.openAsOverlay(PlaylistSelectorComponent)
+		const playlist = await firstValueFrom(component.selectedPlaylist)
+		this.navigationService.closeOverlay();
+		(<string[]>playlist.content).push(...this.shownTracks.map(x => x.identifier))
+		if (playlist._id)
+			this.playlistService.updatePlaylist(playlist)
+		else
+			this.playlistService.addPlaylist(playlist)
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -89,5 +104,5 @@ interface Column {
 function combinedArtists(track: Track) {
 	if (track.artists.length === 1 && track.artists[0] === track.albumArtist)
 		return track.albumArtist
-	return track.albumArtist + "(" + track.artists.join(", ") + ")"
+	return track.albumArtist + " (" + track.artists.join(", ") + ")"
 }
