@@ -1,0 +1,26 @@
+<ol *ngIf="!currentPlaylist"
+	class="playlists">
+	<li *ngFor="let playlist of playlists"
+		class="playlist"
+		(click)="selectPlaylist(playlist)">
+		<div class="title">{{playlist.title}}</div>
+		<div class="user">{{playlist.userId | user | async}}</div>
+	</li>
+</ol>
+
+<div *ngIf="currentPlaylist"
+	class="selected-playlist">
+	<div class="info">
+		<div class="buttons">
+			<button (click)="currentPlaylist = null">
+				Tilbage
+			</button>
+			<button (click)="addCurrentPlaylist()">
+				Tilføj alle
+			</button>
+		</div>
+		<div class="title">{{currentPlaylist.title}}</div>
+		<div class="user">{{currentPlaylist.userId | user | async}}</div>
+	</div>
+	<lundin-tracklist [tracks]="tracksFor(currentPlaylist)"></lundin-tracklist>
+</div>

@@ -8,7 +8,7 @@ import { MusicService } from "./music.service"
 })
 export class MusicComponent {
 	@ViewChild("audioPlayer") audioPlayer: ElementRef<HTMLAudioElement>
-	currentTab = "library"
+	currentTab: "library" | "album" | "playlist" | "current" = "library"
 	currentSong = ""
 
 	constructor(
@@ -21,7 +21,7 @@ export class MusicComponent {
 
 	ngAfterViewInit() {
 		this.audioPlayer.nativeElement.addEventListener("ended", () => {
-			if(this.musicService.playingIndex < this.musicService.queue.length - 1)
+			if (this.musicService.playingIndex < this.musicService.queue.length - 1)
 				this.musicService.play(this.musicService.queue[this.musicService.playingIndex + 1])
 		})
 	}
@@ -32,7 +32,7 @@ export class MusicComponent {
 		this.currentSong = file
 	}
 
-	selectTab(tab: string) {
+	selectTab(tab: "library" | "album" | "playlist" | "current") {
 		this.currentTab = tab
 	}
 }

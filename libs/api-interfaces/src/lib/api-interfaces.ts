@@ -105,7 +105,7 @@ export interface MusicRating {
 export interface MusicPlaylist {
 	_id: number
 	userId: number
-	playlistName: string
+	title: string
 	shared: boolean
 	content: string[] | string
 }
