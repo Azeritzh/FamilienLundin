@@ -1,17 +1,12 @@
 @import "../../styles/general.scss";
 
 :host {
-	display: grid;
-	grid-template-areas:
-		"tabs"
-		"tab"
-		"current";
-	grid-template-rows: 2.5rem calc(100% - 7.5rem) 5rem;
-	height: 100%;
+	display: block;
+	padding-bottom: 6rem;
 }
 
 .tabs {
-	grid-area: tabs;
+	height: 2.5rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -22,18 +17,12 @@
 	}
 }
 
-.tab {
-	grid-area: tab;
-}
-
 .current-song {
-	grid-area: current;
-}
-
-.scroll-list-container {
-	@extend .scroll-container;
-	height: 100%;
-	margin: 0;
+	position: fixed;
+	bottom: 0;
+	height: 5rem;
+	width: 100%;
+	background-color: var(--color-background);
 }
 
 audio {

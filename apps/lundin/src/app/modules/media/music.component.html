@@ -10,22 +10,22 @@
 </section>
 
 <section *ngIf="currentTab === 'library'"
-	class="tab library-tab scroll-list-container">
+	class="library-tab">
 	<lundin-tracklist [tracks]="musicService.tracksAll"></lundin-tracklist>
 </section>
 
 <section *ngIf="currentTab === 'album'"
-	class="tab album-tab">
+	class="album-tab">
 	<lundin-albums></lundin-albums>
 </section>
 
 <section *ngIf="currentTab === 'playlist'"
-	class="tab playlist-tab">
+	class="playlist-tab">
 	<lundin-playlists></lundin-playlists>
 </section>
 
 <section *ngIf="currentTab === 'current'"
-	class="tab current-tab scroll-list-container">
+	class="current-tab">
 	<lundin-tracklist [tracks]="musicService.tracksQueue"
 		[isQueue]="true"
 		[showRemoveButtons]="true"

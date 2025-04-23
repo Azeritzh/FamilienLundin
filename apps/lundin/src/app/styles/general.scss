@@ -30,6 +30,7 @@ button {
 	border-radius: var(--border-radius-full);
 	color: white;
 	outline: unset;
+	white-space: nowrap;
 }
 
 button:hover{
