@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from "@angular/core"
-import { PlaylistService } from "./playlist.service"
 import { MusicPlaylist } from "@lundin/api-interfaces"
+import { AuthService } from "../../services/auth.service"
+import { PlaylistService } from "./playlist.service"
 
 @Component({
 	selector: "lundin-playlist-selector",
@@ -14,9 +15,10 @@ export class PlaylistSelectorComponent {
 
 	constructor(
 		private playlistService: PlaylistService,
+		private authService: AuthService,
 	) {
 		this.playlistService.getPlaylists().then(playlists => {
-			this.playlists = playlists
+			this.playlists = playlists.filter(x => x.userId === this.authService.loginInfo.userId && Array.isArray(x.content))
 		})
 	}
 
@@ -25,7 +27,7 @@ export class PlaylistSelectorComponent {
 			_id: null,
 			userId: null,
 			title: this.newPlaylistName,
-			shared: false,
+			shared: true,
 			content: [],
 		})
 	}

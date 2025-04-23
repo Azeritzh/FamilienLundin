@@ -82,8 +82,8 @@ export class TrackListComponent implements OnDestroy {
 	async addToPlaylist() {
 		const component = await this.navigationService.openAsOverlay(PlaylistSelectorComponent)
 		const playlist = await firstValueFrom(component.selectedPlaylist)
-		this.navigationService.closeOverlay();
-		(<string[]>playlist.content).push(...this.shownTracks.map(x => x.identifier))
+		this.navigationService.closeOverlay()
+		;(<string[]>playlist.content).push(...this.shownTracks.map(x => x.identifier))
 		if (playlist._id)
 			this.playlistService.updatePlaylist(playlist)
 		else
