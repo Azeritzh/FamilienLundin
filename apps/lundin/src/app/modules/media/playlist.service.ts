@@ -11,11 +11,15 @@ export class PlaylistService {
 		return firstValueFrom(this.httpClient.get<MusicPlaylist[]>("api/music/get-playlists"))
 	}
 
-	addPlaylist(playlist: MusicPlaylist){
+	addPlaylist(playlist: MusicPlaylist) {
 		return firstValueFrom(this.httpClient.post<MusicPlaylist>("api/music/add-playlist", playlist))
 	}
 
 	updatePlaylist(playlist: MusicPlaylist) {
 		return firstValueFrom(this.httpClient.post("api/music/update-playlist", playlist))
+	}
+
+	deletePlaylist(id: number) {
+		return firstValueFrom(this.httpClient.delete("api/music/delete-playlist/" + id))
 	}
 }

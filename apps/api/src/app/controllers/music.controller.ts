@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common"
+import { Body, Controller, Delete, Get, Param, Post, Req, Res, UseGuards } from "@nestjs/common"
 import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { MusicService } from "../../media/music.service"
 import { StorageService } from "../../storage/storage.service"
@@ -51,5 +51,14 @@ export class MusicController {
 		if (request.user._id !== playlist.userId)
 			throw new Error("You are not allowed to update this playlist") // TODO: return something instead?
 		return this.storageService.musicPlaylistCollection.updateOne({ _id: playlist._id }, playlist)
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Delete("delete-playlist/:id")
+	async deletePlaylist(@Param("id") id, @Req() request: RequestWithUser) {
+		const playlist = await this.storageService.musicPlaylistCollection.findOne({ _id: +id })
+		if (request.user._id !== playlist.userId)
+			throw new Error("You are not allowed to update this playlist") // TODO: return something instead?
+		return this.storageService.musicPlaylistCollection.deleteOne({ _id: +id })
 	}
 }

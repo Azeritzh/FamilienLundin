@@ -13,6 +13,7 @@ export class PlaylistsComponent {
 	playlistTracks = new Map<MusicPlaylist, Track[]>()
 	playlists: MusicPlaylist[] = []
 	currentPlaylist: MusicPlaylist | null = null
+	isDeleting = false
 
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
@@ -27,6 +28,17 @@ export class PlaylistsComponent {
 
 	selectPlaylist(playlist: MusicPlaylist) {
 		this.currentPlaylist = playlist
+	}
+
+	deletePlaylist(){
+		if (!this.currentPlaylist)
+			return
+		if(!this.isDeleting)
+			return this.isDeleting = true
+		this.isDeleting = false
+		this.playlistService.deletePlaylist(this.currentPlaylist._id)
+		this.playlists = this.playlists.filter(x => x._id !== this.currentPlaylist._id)
+		this.currentPlaylist = null
 	}
 
 	removeFromPlaylist(track: Track) {
