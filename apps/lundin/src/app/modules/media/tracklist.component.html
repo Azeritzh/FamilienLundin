@@ -3,15 +3,33 @@
 		placeholder="Søg"
 		[(ngModel)]="query"
 		(input)="query$.next(query)" />
-	<div *ngFor="let column of columns | keyvalue:onCompare"
-		class="column-setting">
-		<input type="checkbox"
-			[id]="column.key"
-			[(ngModel)]="column.value.enabled"
-			(change)="updateEnabledColumns()">
-		<label [for]="column.key">{{column.value.title}}</label>
+
+	<button *ngIf="!isQueue"
+		(click)="playAll()">
+		Afspil
+	</button>
+	<button *ngIf="!isQueue"
+		(click)="addToQueue()">
+		Tilføj til kø
+	</button>
+	<button (click)="addToPlaylist()">
+		Tilføj til liste...
+	</button>
+
+	<button (click)="showColumnSettings = !showColumnSettings">
+		Redigér kolonner
+	</button>
+
+	<div class="column-settings" [class.collapsed]="!showColumnSettings">
+		<div *ngFor="let column of columns | keyvalue:onCompare"
+			class="column-setting">
+			<input type="checkbox"
+				[id]="column.key"
+				[(ngModel)]="column.value.enabled"
+				(change)="updateEnabledColumns()">
+			<label [for]="column.key">{{column.value.title}}</label>
+		</div>
 	</div>
-	<button (click)="addToPlaylist()">Tilføj til liste...</button>
 </div>
 
 <div class="track-list-header">

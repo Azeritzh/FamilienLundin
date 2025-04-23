@@ -49,10 +49,6 @@ export class AlbumsComponent implements OnDestroy {
 	selectAlbum(album: DecoratedAlbum) {
 		this.currentAlbum = album
 	}
-
-	addCurrentAlbum() {
-		this.musicService.addAsLast(...this.currentAlbum.tracks.map(x => x.identifier))
-	}
 }
 
 type DecoratedAlbum = Album & { cover: string }

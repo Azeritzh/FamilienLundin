@@ -40,14 +40,14 @@ export class MusicService {
 		return this.musicLibrary[folder].tracks.find(x => x.title === title)
 	}
 
-	addAndPlay(track: TrackIdentifier) {
+	addAndPlay(...tracks: TrackIdentifier[]) {
 		if (this.playingIndex === null)
 			this.playingIndex = 0
 		else
 			this.playingIndex++
-		this.queue.splice(this.playingIndex, 0, track)
+		this.queue.splice(this.playingIndex, 0, ...tracks)
 		this.updateTracksQueue()
-		this.play(track, false)
+		this.play(tracks[0], false)
 	}
 
 	addAsNext(track: TrackIdentifier) {

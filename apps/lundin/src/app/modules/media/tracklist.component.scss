@@ -9,11 +9,24 @@
 		min-width: 10rem;
 	}
 
+	.column-settings {
+		display: flex;
+		max-width: 50vw;
+		overflow: auto;
+		transition: 0.3s ease;
+	}
+	
+	.column-settings.collapsed {
+		max-width: 0vw;
+		overflow: hidden;
+	}
+
 	.column-setting {
 		display: flex;
 		line-height: 2rem;
 		padding: 0 0.5rem;
 		gap: 0.5rem;
+		white-space: nowrap;
 	}
 }
 

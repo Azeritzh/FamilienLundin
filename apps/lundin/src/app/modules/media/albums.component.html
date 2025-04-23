@@ -21,9 +21,6 @@
 			<button (click)="currentAlbum = null">
 				Tilbage
 			</button>
-			<button (click)="addCurrentAlbum()">
-				Tilføj alle
-			</button>
 		</div>
 		<img [src]="'api/music/files/' + currentAlbum.cover">
 		<div class="artist">{{currentAlbum.artist}}</div>

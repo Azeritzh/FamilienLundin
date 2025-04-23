@@ -29,13 +29,6 @@ export class PlaylistsComponent {
 		this.currentPlaylist = playlist
 	}
 
-	addCurrentPlaylist() {
-		if (Array.isArray(this.currentPlaylist.content))
-			this.musicService.addAsLast(...this.currentPlaylist.content)
-		else
-			this.musicService.addAsLast(...[]) // TODO
-	}
-
 	removeFromPlaylist(track: Track) {
 		if (!Array.isArray(this.currentPlaylist.content))
 			return

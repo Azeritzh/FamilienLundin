@@ -15,9 +15,6 @@
 			<button (click)="currentPlaylist = null">
 				Tilbage
 			</button>
-			<button (click)="addCurrentPlaylist()">
-				Tilføj alle
-			</button>
 		</div>
 		<div class="title">{{currentPlaylist.title}}</div>
 		<div class="user">{{currentPlaylist.userId | user | async}}</div>

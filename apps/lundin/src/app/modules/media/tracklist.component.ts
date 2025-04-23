@@ -29,6 +29,8 @@ export class TrackListComponent implements OnDestroy {
 		duration: { enabled: true, title: "Varighed", titleFor: (track) => track.length, size: 0.4 },
 	}
 	enabledColumns: Column[] = []
+	showColumnSettings = false
+
 	shownTracks: Track[] | null = null
 	query$ = new Subject<string>()
 	query = ""
@@ -80,11 +82,19 @@ export class TrackListComponent implements OnDestroy {
 		return 0 < position && position < window.innerHeight
 	}
 
+	playAll() {
+		this.musicService.addAndPlay(...(this.shownTracks ?? this.tracks).map(x => x.identifier))
+	}
+
+	addToQueue() {
+		this.musicService.addAsLast(...(this.shownTracks ?? this.tracks).map(x => x.identifier))
+	}
+
 	async addToPlaylist() {
 		const component = await this.navigationService.openAsOverlay(PlaylistSelectorComponent)
 		const playlist = await firstValueFrom(component.selectedPlaylist)
 		this.navigationService.closeOverlay()
-		;(<string[]>playlist.content).push(...this.shownTracks.map(x => x.identifier))
+		;(<string[]>playlist.content).push(...(this.shownTracks ?? this.tracks).map(x => x.identifier))
 		if (playlist._id)
 			this.playlistService.updatePlaylist(playlist)
 		else
