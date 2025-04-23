@@ -70,6 +70,11 @@ export class MusicService {
 	private updateTracksQueue() {
 		this.tracksQueue = this.queue.map(x => this.trackFor(x))
 	}
+
+	randomiseQueue() {
+		this.queue.sort(() => Math.random() - 0.5)
+		this.updateTracksQueue()
+	}
 }
 
 export interface Album {

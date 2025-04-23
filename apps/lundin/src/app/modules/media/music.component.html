@@ -11,7 +11,8 @@
 
 <section *ngIf="currentTab === 'library'"
 	class="library-tab">
-	<lundin-tracklist [tracks]="musicService.tracksAll"></lundin-tracklist>
+	<lundin-tracklist [tracks]="musicService.tracksAll">
+	</lundin-tracklist>
 </section>
 
 <section *ngIf="currentTab === 'album'"
@@ -29,7 +30,9 @@
 	<lundin-tracklist [tracks]="musicService.tracksQueue"
 		[isQueue]="true"
 		[showRemoveButtons]="true"
-		(remove)="musicService.removeFromQueue($event.identifier)">
+		(remove)="musicService.removeFromQueue($event.identifier)"
+		[randomiseLocally]="false"
+		(randomise)="musicService.randomiseQueue()">
 	</lundin-tracklist>
 </section>
 

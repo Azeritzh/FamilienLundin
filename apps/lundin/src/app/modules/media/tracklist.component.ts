@@ -1,10 +1,10 @@
 import { KeyValue } from "@angular/common"
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output } from "@angular/core"
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from "@angular/core"
 import { debounceTime, distinctUntilChanged, firstValueFrom, Subject, Subscription } from "rxjs"
-import { MusicService, Track } from "./music.service"
-import { PlaylistService } from "./playlist.service"
 import { NavigationService } from "../../services/navigation.service"
+import { MusicService, Track } from "./music.service"
 import { PlaylistSelectorComponent } from "./playlist-selector.component"
+import { PlaylistService } from "./playlist.service"
 
 @Component({
 	selector: "lundin-tracklist",
@@ -12,13 +12,16 @@ import { PlaylistSelectorComponent } from "./playlist-selector.component"
 	styleUrls: ["./tracklist.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TrackListComponent implements OnDestroy {
+export class TrackListComponent implements OnChanges, OnDestroy {
 	subscription: Subscription | null
 	@Input() tracks: Track[] = []
 	@Input() isQueue = false
 	@Input() showRemoveButtons = false
+	@Input() randomiseLocally = true // randomises within this tracklist when true, leaves it to parent otherwise
 	@Output() remove = new EventEmitter<Track>()
+	@Output() randomise = new EventEmitter<Track>()
 	columns: { [index: string]: Column } = {
+		track: { enabled: false, title: "Nummer", titleFor: (track) => track.track?.toString() ?? "", size: 0.2 },
 		title: { enabled: true, title: "Titel", titleFor: (track) => track.title, size: 2 },
 		artistsCombined: { enabled: true, title: "Kunstnere (samlet)", titleFor: combinedArtists },
 		artists: { enabled: false, title: "Kunstnere", titleFor: (track) => track.artists.join(", ") },
@@ -57,10 +60,16 @@ export class TrackListComponent implements OnDestroy {
 		this.subscription?.unsubscribe()
 	}
 
+	// re-search when tracks change
+	ngOnChanges(changes: { [index: string]: any }) {
+		if (changes.tracks)
+			this.search()
+	}
+
 	private search = () => {
 		this.changeDetectorRef.markForCheck()
 		if (!this.query)
-			this.shownTracks = null
+			this.shownTracks = this.tracks
 		const search = this.query.toLowerCase()
 		this.shownTracks = this.tracks.filter(track => {
 			const text = this.enabledColumns.map(column => column.titleFor(track)).join(" ").toLowerCase()
@@ -99,6 +108,15 @@ export class TrackListComponent implements OnDestroy {
 			this.playlistService.updatePlaylist(playlist)
 		else
 			this.playlistService.addPlaylist(playlist)
+	}
+
+	randomiseTracks() {
+		if (!this.randomiseLocally)
+			return this.randomise.emit()
+		this.tracks = [...this.tracks]
+		this.tracks.sort(() => Math.random() - 0.5)
+		this.shownTracks = this.tracks
+		this.randomise.emit()
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
