@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, Output } from "@angular/core"
 import { MusicService, Track } from "./music.service"
+import { NavigationService } from "../../services/navigation.service"
+import { PlaylistService } from "./playlist.service"
+import { PlaylistSelectorComponent } from "./playlist-selector.component"
+import { firstValueFrom } from "rxjs"
 
 @Component({
 	selector: "lundin-track",
@@ -25,7 +29,9 @@ export class TrackComponent {
 	constructor(
 		elementRef: ElementRef,
 		private changeDetectorRef: ChangeDetectorRef,
-		public musicService: MusicService,
+		private navigationService: NavigationService,
+		private musicService: MusicService,
+		private playlistService: PlaylistService,
 	) {
 		window.addEventListener("click", (event: Event) => {
 			if (!this.active)
@@ -62,31 +68,38 @@ export class TrackComponent {
 		}, 300)
 	}
 
-	handlePlay(event: Event) {
+	handlePlay() {
 		if (this.showQueueButtons)
 			this.musicService.addAndPlay(this.track.identifier)
 		else
 			this.musicService.play(this.track.identifier)
-		event.stopPropagation()
 	}
 
-	handlePause(event: Event) {
-		event.stopPropagation()
+	handlePause() {
+		// TODO
 	}
 
-	handleAddNext(event: Event) {
+	handleAddNext() {
 		this.musicService.addAsNext(this.track.identifier)
-		event.stopPropagation()
 	}
 
-	handleAddLast(event: Event) {
+	handleAddLast() {
 		this.musicService.addAsLast(this.track.identifier)
-		event.stopPropagation()
 	}
 
-	handleRemove(event: Event) {
+	handleRemove() {
 		this.remove.emit()
-		event.stopPropagation()
+	}
+
+	async handleAddToList() {
+		const component = await this.navigationService.openAsOverlay(PlaylistSelectorComponent)
+		const playlist = await firstValueFrom(component.selectedPlaylist)
+		this.navigationService.closeOverlay()
+		;(<string[]>playlist.content).push(this.track.identifier)
+		if (playlist._id)
+			this.playlistService.updatePlaylist(playlist)
+		else
+			this.playlistService.addPlaylist(playlist)
 	}
 }
 

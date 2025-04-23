@@ -1,12 +1,12 @@
 <img *ngIf="!isPlaying"
 	class="fixed"
 	src="/assets/images/icons/play.svg"
-	(click)="handlePlay($event)"
+	(click)="handlePlay(); $event.stopPropagation();"
 	alt="play">
 <img *ngIf="isPlaying"
 	class="fixed"
 	src="/assets/images/icons/pause.svg"
-	(click)="handlePause($event)"
+	(click)="handlePause(); $event.stopPropagation();"
 	alt="pause">
 <div *ngFor="let field of fields; let i = index"
 	class="field"
@@ -17,22 +17,25 @@
 <img *ngIf="showQueueButtons && !showRemoveButton"
 	class="fixed"
 	src="/assets/images/icons/plus.svg"
-	(click)="musicService.addAsLast(track.identifier); $event.stopPropagation();"
+	(click)="handleAddLast(); $event.stopPropagation();"
 	alt="pause">
 <img *ngIf="showRemoveButton"
 	class="fixed negative"
 	src="/assets/images/icons/Close_icon.svg"
-	(click)="handleRemove($event)"
+	(click)="handleRemove(); $event.stopPropagation();"
 	alt="pause">
 <div *ngIf="active"
 	class="buttons"
 	[class.collapsed]="collapsed">
 	<button *ngIf="showQueueButtons"
-		(click)="handleAddNext(track.identifier)">
+		(click)="handleAddNext(); $event.stopPropagation();">
 		Tilføj som næste
 	</button>
 	<button *ngIf="showQueueButtons"
-		(click)="handleAddLast(track.identifier)">
+		(click)="handleAddLast(); $event.stopPropagation();">
 		Tilføj som sidste
+	</button>
+	<button (click)="handleAddToList(); $event.stopPropagation();">
+		Tilføj til liste...
 	</button>
 </div>
