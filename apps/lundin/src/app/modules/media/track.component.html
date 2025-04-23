@@ -14,12 +14,12 @@
 	{{isPlaying && i === 0 ? "⏵" : ""}}
 	{{field.titleFor(track)}}
 </div>
-<img *ngIf="showQueueButtons"
+<img *ngIf="showQueueButtons && !showRemoveButton"
 	class="fixed"
 	src="/assets/images/icons/plus.svg"
 	(click)="musicService.addAsLast(track.identifier); $event.stopPropagation();"
 	alt="pause">
-<img *ngIf="!showQueueButtons"
+<img *ngIf="showRemoveButton"
 	class="fixed negative"
 	src="/assets/images/icons/Close_icon.svg"
 	(click)="handleRemove($event)"

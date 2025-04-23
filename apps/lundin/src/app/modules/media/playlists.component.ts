@@ -36,6 +36,17 @@ export class PlaylistsComponent {
 			this.musicService.addAsLast(...[]) // TODO
 	}
 
+	removeFromPlaylist(track: Track) {
+		if (!Array.isArray(this.currentPlaylist.content))
+			return
+		const index = this.currentPlaylist.content.indexOf(track.identifier)
+		if (index === -1)
+			return
+		this.currentPlaylist.content.splice(index, 1)
+		this.playlistService.updatePlaylist(this.currentPlaylist)
+		this.playlistTracks.delete(this.currentPlaylist)
+	}
+
 	tracksFor(playlist: MusicPlaylist) {
 		if (!this.playlistTracks.has(playlist)) {
 			if (Array.isArray(playlist.content))

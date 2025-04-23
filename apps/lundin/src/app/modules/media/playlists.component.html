@@ -22,5 +22,8 @@
 		<div class="title">{{currentPlaylist.title}}</div>
 		<div class="user">{{currentPlaylist.userId | user | async}}</div>
 	</div>
-	<lundin-tracklist [tracks]="tracksFor(currentPlaylist)"></lundin-tracklist>
+	<lundin-tracklist [tracks]="tracksFor(currentPlaylist)"
+		[showRemoveButtons]="true"
+		(remove)="removeFromPlaylist($event)">
+	</lundin-tracklist>
 </div>

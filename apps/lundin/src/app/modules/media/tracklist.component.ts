@@ -16,6 +16,7 @@ export class TrackListComponent implements OnDestroy {
 	subscription: Subscription | null
 	@Input() tracks: Track[] = []
 	@Input() isQueue = false
+	@Input() showRemoveButtons = false
 	@Output() remove = new EventEmitter<Track>()
 	columns: { [index: string]: Column } = {
 		title: { enabled: true, title: "Titel", titleFor: (track) => track.title, size: 2 },

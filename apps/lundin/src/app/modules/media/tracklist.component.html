@@ -27,6 +27,7 @@
 		[track]="track"
 		[fields]="enabledColumns"
 		[showQueueButtons]="!isQueue"
+		[showRemoveButton]="showRemoveButtons"
 		[isPlaying]="isQueue && musicService.queue[musicService.playingIndex] === track.identifier"
 		(remove)="remove.emit(track)">
 	</lundin-track>

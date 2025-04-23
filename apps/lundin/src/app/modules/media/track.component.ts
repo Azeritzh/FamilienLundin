@@ -17,6 +17,7 @@ export class TrackComponent {
 	]
 	@Input() isPlaying = false
 	@Input() showQueueButtons = true
+	@Input() showRemoveButton = false
 	@Output() remove = new EventEmitter<void>()
 	active = false
 	collapsed = true
