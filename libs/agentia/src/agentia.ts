@@ -39,12 +39,12 @@ export class Agentia {
 	}
 
 	updateCode(
-		configure: string = null,
-		setup: string = null,
-		update: string = null,
-		agentSetup: string = null,
-		agentUpdate: string = null,
-		click: string = null,
+		configure: string | null = null,
+		setup: string | null = null,
+		update: string | null = null,
+		agentSetup: string | null = null,
+		agentUpdate: string | null = null,
+		click: string | null = null,
 	) {
 		if (configure)
 			this.updateConfigure(configure)

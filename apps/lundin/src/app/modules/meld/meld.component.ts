@@ -5,10 +5,11 @@ import { MeldGame } from "@lundin/meld"
 	selector: "lundin-meld",
 	templateUrl: "./meld.component.html",
 	styleUrls: ["./meld.component.scss"],
+	standalone: false,
 })
 export class MeldComponent implements OnInit {
-	@ViewChild("gameHost", { static: true }) gameHost: ElementRef<HTMLDivElement>
-	private game: MeldGame
+	@ViewChild("gameHost", { static: true }) gameHost!: ElementRef<HTMLDivElement>
+	private game!: MeldGame
 
 	constructor(private ngZone: NgZone) { }
 

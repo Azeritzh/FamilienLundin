@@ -2,6 +2,7 @@ import { Directive, HostBinding, Input } from "@angular/core"
 
 @Directive({
 	selector: "[labelling]",
+	standalone: false,
 })
 export class LabellingDirective {
 	@Input() labelling: any

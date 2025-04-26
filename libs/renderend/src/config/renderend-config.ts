@@ -26,7 +26,7 @@ function constantsFrom(serialised: any, typeMap: TypeMap) {
 	const constants: RenderendConstants = Object.assign(new RenderendConstants(0, 0, []), serialised)
 	constants.shipType = typeMap.TypeIdFor(serialised.shipType)
 	constants.wallType = typeMap.TypeIdFor(serialised.wallType)
-	constants.obstacleTypes = serialised.obstacleTypes.map(x => typeMap.TypeIdFor(x))
+	constants.obstacleTypes = serialised.obstacleTypes.map((x: any) => typeMap.TypeIdFor(x))
 	if (serialised.initialSpeed)
 		constants.initialSpeed = serialised.initialSpeed / updatesPerSecond
 	if (serialised.acceleration)

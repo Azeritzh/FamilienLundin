@@ -7,9 +7,10 @@ import { MinestrygerService } from "../minestryger.service"
 	selector: "lundin-minestryger-highscores",
 	templateUrl: "./minestryger-highscores.component.html",
 	styleUrls: ["./minestryger-highscores.component.scss"],
+	standalone: false,
 })
 export class MinestrygerHighscoresComponent {
-	@Input() category: string
+	@Input() category: string = "beginnerFlags"
 	topScoreCategories = [
 		{ key: "beginnerFlags", title: "Begynder (med flag)" },
 		{ key: "beginnerNoFlags", title: "Begynder (uden flag)" },
@@ -47,5 +48,10 @@ export class MinestrygerHighscoresComponent {
 
 	switchPeriod() {
 		this.scoresThisYear = !this.scoresThisYear
+	}
+
+	topscores(topscores: MinestrygerTopScoreSet, key: string) {
+		const aber = <any>topscores
+		return aber[key]
 	}
 }

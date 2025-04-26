@@ -14,7 +14,7 @@ export class UiDisplay {
 
 	Draw() {
 		const playerId = this.Game.State.Players.get(this.State.PlayerName)
-		if (!(playerId > -1))
+		if (playerId === undefined)
 			return
 		for (const drawer of this.UiDrawers)
 			drawer.Draw(playerId)

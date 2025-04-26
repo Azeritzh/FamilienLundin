@@ -1,0 +1,8 @@
+{
+	"name": "@lundin/web-gl-display",
+	"version": "0.0.1",
+	"dependencies": {
+		"tslib": "^2.3.0",
+    "@lundin/utility": "0.0.1"
+	}
+}

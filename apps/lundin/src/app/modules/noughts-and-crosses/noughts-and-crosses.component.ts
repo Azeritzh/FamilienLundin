@@ -5,6 +5,7 @@ import { NoughtsAndCrosses, NoughtsAndCrossesPiece, NoughtsAndCrossesAction } fr
 	selector: "lundin-noughts-and-crosses",
 	templateUrl: "./noughts-and-crosses.component.html",
 	styleUrls: ["./noughts-and-crosses.component.scss"],
+	standalone: false,
 })
 export class NoughtsAndCrossesComponent {
 	game = new NoughtsAndCrosses()

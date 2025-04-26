@@ -7,13 +7,14 @@ import { FieldSelection } from "./kingdoms-display/kingdoms-display.component"
 	selector: "lundin-kingdoms",
 	templateUrl: "./kingdoms.component.html",
 	styleUrls: ["./kingdoms.component.scss"],
+	standalone: false,
 })
 export class KingdomsComponent implements OnInit {
 	game = new Kingdoms()
 	displayState = new DisplayState()
-	terrain: string
-	fertility: string
-	blabla: string
+	terrain!: string
+	fertility!: string
+	blabla!: string
 
 	ngOnInit() {
 		// TODO: this.game.setup()
@@ -28,7 +29,7 @@ export class KingdomsComponent implements OnInit {
 		this.terrain = Terrain[field.terrain]
 		this.fertility = Fertility[field.fertility]
 		this.blabla = field.controller
-			? this.game.state.players.find(x => x.id === field.controller).name
+			? this.game.state.players.find(x => x.id === field.controller)?.name ?? ""
 			: ""
 	}
 }

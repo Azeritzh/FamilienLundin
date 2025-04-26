@@ -63,39 +63,39 @@ export class EntityValues extends BaseValues {
 
 	AddValuesFrom(key: Id, values: GroupedEntityValues) {
 		this.Entities.set(key, true)
-		if (values.CircularSize !== undefined)
+		if (isDefined(values.CircularSize))
 			this.CircularSize.set(key, values.CircularSize)
-		if (values.BlockArea !== undefined)
+		if (isDefined(values.BlockArea))
 			this.BlockArea.set(key, values.BlockArea)
-		if (values.BlockPosition !== undefined)
+		if (isDefined(values.BlockPosition))
 			this.BlockPosition.set(key, values.BlockPosition)
-		if (values.Damage !== undefined)
+		if (isDefined(values.Damage))
 			this.Damage.set(key, values.Damage)
-		if (values.DashState !== undefined)
+		if (isDefined(values.DashState))
 			this.DashState.set(key, values.DashState)
-		if (values.DespawnTime !== undefined)
+		if (isDefined(values.DespawnTime))
 			this.DespawnTime.set(key, values.DespawnTime)
-		if (values.Health !== undefined)
+		if (isDefined(values.Health))
 			this.Health.set(key, values.Health)
-		if (values.Orientation !== undefined)
+		if (isDefined(values.Orientation))
 			this.Orientation.set(key, values.Orientation)
-		if (values.Position !== undefined)
+		if (isDefined(values.Position))
 			this.Position.set(key, values.Position)
-		if (values.SelectableItems !== undefined)
+		if (isDefined(values.SelectableItems))
 			this.SelectableItems.set(key, values.SelectableItems)
-		if (values.SelectableTools !== undefined)
+		if (isDefined(values.SelectableTools))
 			this.SelectableTools.set(key, values.SelectableTools)
-		if (values.TargetVelocity !== undefined)
+		if (isDefined(values.TargetVelocity))
 			this.TargetVelocity.set(key, values.TargetVelocity)
-		if (values.ToolState !== undefined)
+		if (isDefined(values.ToolState))
 			this.ToolState.set(key, values.ToolState)
-		if (values.Velocity !== undefined)
+		if (isDefined(values.Velocity))
 			this.Velocity.set(key, values.Velocity)
-		if (values.BlockCollisionBehaviour !== undefined)
+		if (isDefined(values.BlockCollisionBehaviour))
 			this.BlockCollisionBehaviour.set(key, values.BlockCollisionBehaviour)
-		if (values.GravityBehaviour !== undefined)
+		if (isDefined(values.GravityBehaviour))
 			this.GravityBehaviour.set(key, values.GravityBehaviour)
-		if (values.PlayerBehaviour !== undefined)
+		if (isDefined(values.PlayerBehaviour))
 			this.PlayerBehaviour.set(key, values.PlayerBehaviour)
 	}
 
@@ -122,24 +122,28 @@ export class EntityValues extends BaseValues {
 	}
 }
 
+function isDefined<T>(value: T | undefined | null): value is T {
+	return value !== undefined
+}
+
 export interface GroupedEntityValues {
-	CircularSize?: CircularSize
-	BlockArea?: BlockArea
-	BlockPosition?: GridVector
-	Damage?: number
-	DashState?: DashState
-	DespawnTime?: number
-	Health?: number
-	Orientation?: number
-	Position?: Vector3
-	SelectableItems?: SelectableItems
-	SelectableTools?: SelectableTools
-	TargetVelocity?: Vector3
-	ToolState?: ToolState
-	Velocity?: Vector3
-	BlockCollisionBehaviour?: boolean
-	GravityBehaviour?: boolean
-	PlayerBehaviour?: boolean
+	CircularSize?: CircularSize | undefined | null
+	BlockArea?: BlockArea | undefined | null
+	BlockPosition?: GridVector | undefined | null
+	Damage?: number | undefined | null
+	DashState?: DashState | undefined | null
+	DespawnTime?: number | undefined | null
+	Health?: number | undefined | null
+	Orientation?: number | undefined | null
+	Position?: Vector3 | undefined | null
+	SelectableItems?: SelectableItems | undefined | null
+	SelectableTools?: SelectableTools | undefined | null
+	TargetVelocity?: Vector3 | undefined | null
+	ToolState?: ToolState | undefined | null
+	Velocity?: Vector3 | undefined | null
+	BlockCollisionBehaviour?: boolean | undefined | null
+	GravityBehaviour?: boolean | undefined | null
+	PlayerBehaviour?: boolean | undefined | null
 }
 
 export function GroupedEntityValuesFrom(serialised: any) {
@@ -195,7 +199,7 @@ export class SerialisableEntities {
 	}
 
 	public static MapEntity(entity: Id, entityMapping: Map<Id, Id>): Id {
-		const type = entityMapping.get(EntityTypeOf(entity))
+		const type = entityMapping.get(EntityTypeOf(entity))!
 		const id = EntityIdOf(entity)
 		return type | id
 	}
@@ -203,13 +207,13 @@ export class SerialisableEntities {
 	public static MapValues(values: GroupedEntityValues, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): GroupedEntityValues {
 		return {
 			...values,
-			SelectableItems: this.MapSelectableItems(values.SelectableItems, solidMapping, itemMapping),
-			SelectableTools: this.MapSelectableTools(values.SelectableTools, solidMapping, itemMapping),
-			ToolState: this.MapToolState(values.ToolState, solidMapping, itemMapping),
+			SelectableItems: this.MapSelectableItems(values.SelectableItems ?? null, solidMapping, itemMapping) ?? undefined,
+			SelectableTools: this.MapSelectableTools(values.SelectableTools ?? null, solidMapping, itemMapping) ?? undefined,
+			ToolState: this.MapToolState(values.ToolState ?? null, solidMapping, itemMapping) ?? undefined,
 		}
 	}
 
-	static MapSelectableItems(selectableItems: SelectableItems, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): SelectableItems {
+	static MapSelectableItems(selectableItems: SelectableItems | null, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): SelectableItems | null {
 		if (!selectableItems)
 			return null
 		return new SelectableItems(
@@ -219,16 +223,16 @@ export class SerialisableEntities {
 		)
 	}
 
-	static MapSelectableTools(selectableTools: SelectableTools, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): SelectableTools {
+	static MapSelectableTools(selectableTools: SelectableTools | null, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): SelectableTools | null{
 		if (!selectableTools)
 			return null
 		return new SelectableTools(
-			selectableTools.Items.map(x => this.MapItem(x, solidMapping, itemMapping)),
+			selectableTools.Items.map(x => this.MapNullableItem(x, solidMapping, itemMapping)),
 			selectableTools.CurrentToolIndex,
 		)
 	}
 
-	static MapToolState(toolState: ToolState, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): ToolState {
+	static MapToolState(toolState: ToolState | null, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): ToolState | null {
 		if (!toolState)
 			return null
 		return new ToolState(
@@ -243,12 +247,20 @@ export class SerialisableEntities {
 		)
 	}
 
-	static MapItem(item: Item, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): Item {
+	static MapNullableItem(item: Item | null, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): Item | null {
 		if (!item)
 			return null
 		return new Item(
-			itemMapping.get(item.Type),
-			solidMapping.get(item.Content), // TODO: it won't always be a SolidId
+			itemMapping.get(item.Type)!,
+			solidMapping.get(item.Content)!, // TODO: it won't always be a SolidId
+			item.Amount,
+		)
+	}
+
+	static MapItem(item: Item, solidMapping: Map<Id, Id>, itemMapping: Map<Id, Id>): Item {
+		return new Item(
+			itemMapping.get(item.Type)!,
+			solidMapping.get(item.Content)!, // TODO: it won't always be a SolidId
 			item.Amount,
 		)
 	}

@@ -21,6 +21,7 @@ export class SelectToolInputHandler implements ActionHandler {
 			return new SelectToolAction(player, 2)
 		if (Inputs.HasJustBeenPressed(this.SelectLeftToolInput()))
 			return new SelectToolAction(player, 3)
+		return null
 	}
 
 	private SelectTopToolInput() {

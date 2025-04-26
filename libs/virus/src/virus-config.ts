@@ -31,6 +31,7 @@ export class VirusConfig {
 			case 3: return 3
 			case 4: return 3
 		}
+		return 0
 	}
 
 	private bottomRightPlayer() {
@@ -39,6 +40,7 @@ export class VirusConfig {
 			case 3: return 0
 			case 4: return 4
 		}
+		return 0
 	}
 
 	findWinner() {

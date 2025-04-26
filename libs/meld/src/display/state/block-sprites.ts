@@ -4,10 +4,10 @@ import { ViewDirection } from "./display-state"
 export class BlockSprites {
 	constructor(
 		public Weight: number,
-		public NorthBorder: number,
-		public EastBorder: number,
-		public SouthBorder: number,
-		public WestBorder: number,
+		public NorthBorder: number | null,
+		public EastBorder: number | null,
+		public SouthBorder: number | null,
+		public WestBorder: number | null,
 
 		public TileNorth: string,
 		public TileNorthEast: string,
@@ -187,10 +187,10 @@ export interface SerialisableBlockSprites {
 	HalfWallNorthWest?: string,
 }
 
-function AutoBlockSpritesFrom(sprites: SerialisableBlockSprites, solidTypeMap: TypeMap, block: string) {
+function AutoBlockSpritesFrom(sprites: SerialisableBlockSprites, solidTypeMap: TypeMap, block: string): BlockSprites {
 	const Type = sprites.Type
-	sprites.Block = null
-	sprites.Type = null
+	sprites.Block = undefined
+	sprites.Type = undefined
 	sprites.StraightHalfWall = sprites.StraightHalfWall ?? block + "-half-wall-straight"
 	sprites.StraightFullWall = sprites.StraightFullWall ?? block + "-full-wall-straight"
 	sprites.DiagonalHalfWall = sprites.DiagonalHalfWall ?? block + "-half-wall-diagonal"

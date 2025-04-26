@@ -6,9 +6,10 @@ import { Person } from "@lundin/api-interfaces"
 	selector: "lundin-ancestry-tree-node",
 	templateUrl: "./ancestry-tree-node.component.html",
 	styleUrls: ["./ancestry-tree-node.component.scss"],
+	standalone: false,
 })
 export class AncestryTreeNodeComponent {
-	@Input() person: Person
+	@Input() person!: Person
 
 	@HostListener("click")
 	navigateToPerson() {

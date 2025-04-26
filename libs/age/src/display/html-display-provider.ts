@@ -18,8 +18,8 @@ export interface DisplayProvider {
 }
 
 export class HtmlDisplayProvider implements DisplayProvider {
-	public canvas: HTMLCanvasElement
-	private display: WebGl2Display
+	public canvas!: HTMLCanvasElement
+	private display!: WebGl2Display
 	private size: ScreenSize
 	private textElements: { [index: string]: HTMLDivElement } = {}
 	private keyStates = new KeyStates()

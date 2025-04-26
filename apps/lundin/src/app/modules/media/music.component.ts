@@ -4,10 +4,11 @@ import { Component, ElementRef, ViewChild } from "@angular/core"
 	selector: "lundin-music",
 	templateUrl: "./music.component.html",
 	styleUrls: ["./music.component.scss"],
+	standalone: false,
 })
 export class MusicComponent {
-	@ViewChild("audioPlayer") audioPlayer: ElementRef<HTMLAudioElement>
-	musicLibrary = []
+	@ViewChild("audioPlayer") audioPlayer!: ElementRef<HTMLAudioElement>
+	musicLibrary: any[] = []
 	currentTab = "library"
 	currentSong = ""
 

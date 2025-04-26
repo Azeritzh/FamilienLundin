@@ -15,7 +15,7 @@ export class WinLogic implements GameLogic<MinestrygerAction> {
 
 	private finishGame() {
 		this.state.playState = PlayState.Won
-		this.state.finishTime = Date.now() - this.state.startTime
+		this.state.finishTime = Date.now() - (this.state.startTime ?? 0)
 	}
 }
 

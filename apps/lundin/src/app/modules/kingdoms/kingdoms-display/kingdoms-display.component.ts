@@ -7,16 +7,17 @@ import { DisplayConfig } from "./display-config"
 @Component({
 	selector: "lundin-kingdoms-display",
 	templateUrl: "./kingdoms-display.component.html",
+	standalone: false,
 })
 export class KingdomsDisplayComponent implements OnInit {
 	@Input() game = new Kingdoms()
 	@Input() displayState = new DisplayState()
 	@Output() clickField = new EventEmitter<FieldSelection>()
-	@ViewChild("canvas", { static: true }) canvasElement: ElementRef<HTMLCanvasElement>
+	@ViewChild("canvas", { static: true }) canvasElement!: ElementRef<HTMLCanvasElement>
 	get canvas() {
 		return this.canvasElement.nativeElement
 	}
-	private context: CanvasRenderingContext2D
+	private context!: CanvasRenderingContext2D
 	private config = new DisplayConfig()
 	private fieldSize = 40
 	private hexPath = new Path2D()
@@ -38,13 +39,13 @@ export class KingdomsDisplayComponent implements OnInit {
 
 	private resetCanvas() {
 		this.sizeToWindow()
-		this.context = this.canvas.getContext("2d")
+		this.context = this.canvas.getContext("2d")!
 	}
 
 	private sizeToWindow() {
 		// this.fieldSize = 4
-		this.canvas.width = this.canvasElement.nativeElement.parentElement.clientWidth
-		this.canvas.height = this.canvasElement.nativeElement.parentElement.clientHeight
+		this.canvas.width = this.canvasElement.nativeElement.parentElement?.clientWidth ?? 10
+		this.canvas.height = this.canvasElement.nativeElement.parentElement?.clientHeight ?? 10
 	}
 
 	private setupHexagons() {
@@ -139,7 +140,7 @@ export class KingdomsDisplayComponent implements OnInit {
 		this.context.translate(2, 2)
 		this.context.scale(this.fieldSize / (this.fieldSize + lineWidth), this.fieldSize / (this.fieldSize + lineWidth))
 		this.context.lineWidth = lineWidth
-		this.context.strokeStyle = this.game.state.players.find(x => x.id === field.controller).color
+		this.context.strokeStyle = this.game.state.players.find(x => x.id === field.controller)?.color ?? "black"
 		this.context.stroke(this.hexPath)
 		this.context.restore()
 	}
@@ -229,7 +230,8 @@ export class KingdomsDisplayComponent implements OnInit {
 		this.isDragging = false
 	}
 
-	scroll(event: WheelEvent) {
+	scroll(eventa: Event) {
+		const event = eventa as WheelEvent
 		event.preventDefault()
 		if (event.deltaY > 0)
 			this.fieldSize -= 5

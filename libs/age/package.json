@@ -1,0 +1,9 @@
+{
+	"name": "@lundin/age",
+	"version": "0.0.1",
+	"dependencies": {
+		"tslib": "^2.3.0",
+    "@lundin/utility": "0.0.1",
+    "@lundin/web-gl-display": "0.0.1"
+	}
+}

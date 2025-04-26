@@ -9,7 +9,7 @@ export class InputParser extends BaseInputParser<Input> {
 			this.parseMovement(),
 			this.parseRestart(),
 			this.parseShot(),
-		].filter(x => x)
+		].filter(x => x != null)
 	}
 
 	private parseMovement() {
@@ -22,16 +22,19 @@ export class InputParser extends BaseInputParser<Input> {
 			.multiply(factor)
 		if (!velocity.isZero())
 			return new MoveShipAction(velocity)
+		return null
 	}
 
 	private parseRestart() {
 		if (this.HasJustBeenPressed(Input.Restart))
 			return new StartGameAction()
+		return null
 	}
 
 	private parseShot() {
 		if (this.HasJustBeenPressed(Input.Shoot))
 			return new ShootBulletAction()
+		return null
 	}
 }
 

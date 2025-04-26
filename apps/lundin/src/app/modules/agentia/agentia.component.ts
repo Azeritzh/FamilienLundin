@@ -6,15 +6,16 @@ import { Vector2 } from "@lundin/utility"
 	selector: "lundin-agentia",
 	templateUrl: "./agentia.component.html",
 	styleUrls: ["./agentia.component.scss"],
+	standalone: false,
 })
 export class AgentiaComponent implements OnInit, OnDestroy {
 	game = new Agentia()
-	@ViewChild("canvas", { static: true }) canvasElement: ElementRef<HTMLCanvasElement>
+	@ViewChild("canvas", { static: true }) canvasElement!: ElementRef<HTMLCanvasElement>
 	get canvas() {
 		return this.canvasElement.nativeElement
 	}
-	private context: CanvasRenderingContext2D
-	timerId: number
+	private context!: CanvasRenderingContext2D
+	timerId: number | null = null
 	private fieldSize = 4
 	updateInterval = 100
 
@@ -38,7 +39,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		window.clearInterval(this.timerId)
+		window.clearInterval(this.timerId ?? 0)
 	}
 
 	startInterval() {
@@ -61,7 +62,7 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 
 	private resetCanvas() {
 		this.sizeToWindow()
-		this.context = this.canvas.getContext("2d")
+		this.context = this.canvas.getContext("2d")!
 		this.context.fillStyle = "white"
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 	}
@@ -99,8 +100,8 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	}
 
 	sizeToWindow() {
-		const availableWidth = this.canvasElement.nativeElement.parentElement.clientWidth
-		const availableHeight = this.canvasElement.nativeElement.parentElement.clientHeight
+		const availableWidth = this.canvasElement.nativeElement.parentElement?.clientWidth ?? 10
+		const availableHeight = this.canvasElement.nativeElement.parentElement?.clientHeight ?? 10
 		this.game.config.width = Math.floor(availableWidth / 4)
 		this.game.config.height = Math.floor(availableHeight / 4)
 		this.fieldSize = 4
@@ -128,8 +129,8 @@ export class AgentiaComponent implements OnInit, OnDestroy {
 	}
 
 	private updateFieldSize() {
-		const availableWidth = this.canvasElement.nativeElement.parentElement.clientWidth
-		const availableHeight = this.canvasElement.nativeElement.parentElement.clientHeight
+		const availableWidth = this.canvasElement.nativeElement.parentElement?.clientWidth ?? 10
+		const availableHeight = this.canvasElement.nativeElement.parentElement?.clientHeight ?? 10
 		const horisontalFieldSize = Math.floor(availableWidth / this.game.config.width)
 		const verticalFieldSize = Math.floor(availableHeight / this.game.config.height)
 		this.fieldSize = Math.max(Math.min(horisontalFieldSize, verticalFieldSize), 4)

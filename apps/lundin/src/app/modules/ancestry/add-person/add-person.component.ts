@@ -7,6 +7,7 @@ import { AncestryService } from "../ancestry.service"
 	selector: "lundin-add-person",
 	templateUrl: "./add-person.component.html",
 	styleUrls: ["./add-person.component.scss", "../../../styles/popup-box.scss"],
+	standalone: false,
 })
 export class AddPersonComponent {
 	name = ""
@@ -16,7 +17,7 @@ export class AddPersonComponent {
 	relations: PersonalRelation[] = [{ type: "child", id: 0 }]
 
 	constructor(
-		private ancestryService: AncestryService,
+		public ancestryService: AncestryService,
 		private navigationService: NavigationService,
 	) { }
 

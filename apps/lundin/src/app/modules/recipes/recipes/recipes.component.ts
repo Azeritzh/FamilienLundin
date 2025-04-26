@@ -8,7 +8,8 @@ import { RecipesService } from "../recipes.service"
 @Component({
 	selector: "lundin-recipes",
 	templateUrl: "./recipes.component.html",
-	styleUrls: ["./recipes.component.scss"]
+	styleUrls: ["./recipes.component.scss"],
+	standalone: false,
 })
 export class RecipesComponent {
 	recipes: Recipe[] = []

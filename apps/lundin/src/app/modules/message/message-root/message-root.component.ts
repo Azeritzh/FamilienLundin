@@ -4,5 +4,6 @@ import { Component } from "@angular/core"
 	selector: "lundin-message-root",
 	template: "<router-outlet></router-outlet>",
 	styleUrls: ["./message-root.component.scss"],
+	standalone: false,
 })
 export class MessageRootComponent { }

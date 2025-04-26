@@ -11,7 +11,7 @@ export class BlockShadowDrawer {
 		private Camera: Camera,
 		private Game: Meld,
 	) { }
-	BlockContext: BlockContext
+	BlockContext!: BlockContext
 
 	Draw(context: BlockContext) {
 		this.BlockContext = context

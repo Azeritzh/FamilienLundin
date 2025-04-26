@@ -6,6 +6,7 @@ import { GalleryService } from "../gallery.service"
 	selector: "lundin-edit-image",
 	templateUrl: "./edit-image.component.html",
 	styleUrls: ["./edit-image.component.scss", "../../../styles/popup-box.scss"],
+	standalone: false,
 })
 export class EditImageComponent {
 

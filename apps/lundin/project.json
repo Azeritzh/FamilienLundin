@@ -1,33 +1,32 @@
 {
+	"name": "lundin",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "application",
-	"sourceRoot": "apps/lundin/src",
 	"prefix": "lundin",
+	"sourceRoot": "apps/lundin/src",
+	"tags": [],
 	"targets": {
 		"build": {
 			"executor": "@angular-devkit/build-angular:browser",
+			"outputs": ["{options.outputPath}"],
 			"options": {
 				"outputPath": "dist/apps/lundin",
 				"index": "apps/lundin/src/index.html",
 				"main": "apps/lundin/src/main.ts",
-				"polyfills": "apps/lundin/src/polyfills.ts",
+				"polyfills": ["zone.js"],
 				"tsConfig": "apps/lundin/tsconfig.app.json",
-				"aot": true,
+				"inlineStyleLanguage": "scss",
 				"assets": [
-					"apps/lundin/src/favicon.ico",
-					"apps/lundin/src/assets"
+					{
+						"glob": "**/*",
+						"input": "apps/lundin/src"
+					}
 				],
 				"styles": ["apps/lundin/src/styles.scss"],
-				"scripts": ["node_modules/marked/marked.min.js"]
+				"scripts": []
 			},
 			"configurations": {
 				"production": {
-					"fileReplacements": [
-						{
-							"replace": "apps/lundin/src/environments/environment.ts",
-							"with": "apps/lundin/src/environments/environment.prod.ts"
-						}
-					],
-					"outputHashing": "all",
 					"budgets": [
 						{
 							"type": "initial",
@@ -39,62 +38,57 @@
 							"maximumWarning": "6kb",
 							"maximumError": "10kb"
 						}
-					]
+					],
+					"outputHashing": "all"
 				},
-        "development": {
-          "buildOptimizer": false,
-          "optimization": false,
-          "vendorChunk": true,
-          "extractLicenses": false,
-          "sourceMap": true,
-          "namedChunks": true
-        }
+				"development": {
+					"buildOptimizer": false,
+					"optimization": false,
+					"vendorChunk": true,
+					"extractLicenses": false,
+					"sourceMap": true,
+					"namedChunks": true
+				}
 			},
-      "defaultConfiguration": "production"
+			"defaultConfiguration": "production"
 		},
 		"serve": {
 			"executor": "@angular-devkit/build-angular:dev-server",
-      "defaultConfiguration": "development",
-			"options": {
-				"proxyConfig": "apps/lundin/proxy.conf.json"
-			},
 			"configurations": {
 				"production": {
-					"browserTarget": "lundin:build:production"
+					"buildTarget": "lundin:build:production"
 				},
-        "development": {
-          "browserTarget": "lundin:build:development"
-        }
+				"development": {
+					"buildTarget": "lundin:build:development"
+				}
+			},
+			"defaultConfiguration": "development",
+			"options": {
+				"proxyConfig": "apps/lundin/proxy.conf.json"
 			}
 		},
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",
 			"options": {
-				"browserTarget": "lundin:build"
+				"buildTarget": "lundin:build"
 			}
 		},
 		"lint": {
-			"executor": "@nrwl/linter:eslint",
-			"options": {
-				"lintFilePatterns": [
-					"apps/lundin/src/**/*.ts",
-          "apps/appliname/**/*.html"
-				]
-			}
+			"executor": "@nx/eslint:lint"
 		},
 		"test": {
-			"executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/lundin"],
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
-				"jestConfig": "apps/lundin/jest.config.ts",
-				"passWithNoTests": true
+				"jestConfig": "apps/lundin/jest.config.ts"
+			}
+		},
+		"serve-static": {
+			"executor": "@nx/web:file-server",
+			"options": {
+				"buildTarget": "lundin:build",
+				"spa": true
 			}
 		}
-	},
-	"schematics": {
-		"@schematics/angular:component": {
-			"style": "scss"
-		}
-	},
-	"tags": []
+	}
 }

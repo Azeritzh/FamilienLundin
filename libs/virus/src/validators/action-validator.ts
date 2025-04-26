@@ -7,7 +7,7 @@ export class ActionValidator implements GameValidator<VirusAction> {
 		private readonly state: VirusState,
 	) { }
 
-	validate(actions: VirusAction[]): string[] {
+	validate(actions: VirusAction[]): string[] | null {
 		const action = actions[0]
 		if (!this.originIsWithinBoard(action))
 			return ["origin must be within board"]

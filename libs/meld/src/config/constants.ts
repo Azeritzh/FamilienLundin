@@ -59,7 +59,7 @@ export class Constants {
 			Math.floor((serialised.DashCooldown ?? 1) * updatesPerSecond),
 			Math.floor((serialised.QuickDashWindowStart ?? 6 / 60) * updatesPerSecond),
 			Math.floor((serialised.QuickDashWindowEnd ?? 60 / 60) * updatesPerSecond),
-			serialised.QuickDashMinimumAngle * MathF.Tau ?? MathF.Tau / 8,
+			(serialised.QuickDashMinimumAngle ? serialised.QuickDashMinimumAngle * MathF.Tau : MathF.Tau / 8),
 			Math.floor((serialised.MiningStartup ?? 20 / 60) * updatesPerSecond),
 			Math.floor((serialised.MiningRecovery ?? 10 / 60) * updatesPerSecond),
 		)

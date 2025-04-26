@@ -6,12 +6,13 @@ import { AuthService } from "../../services/auth.service"
 @Component({
 	selector: "lundin-profile",
 	templateUrl: "./profile.component.html",
-	styleUrls: ["./profile.component.scss"]
+	styleUrls: ["./profile.component.scss"],
+	standalone: false,
 })
 export class ProfileComponent {
-	password: string
-	newPassword: string
-	repeatNewPassword: string
+	password: string = ""
+	newPassword: string	= ""
+	repeatNewPassword: string = ""
 
 	constructor(
 		public authService: AuthService,

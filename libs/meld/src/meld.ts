@@ -79,7 +79,7 @@ export class Meld extends BaseGame<GameUpdate> {
 			Config.Constants,
 			State,
 			Entities,
-			null, // persistenceProvider,
+			null!, // persistenceProvider,
 			variationProvider
 		),
 		public readonly loadPlayerLogic = new LoadPlayerLogic(

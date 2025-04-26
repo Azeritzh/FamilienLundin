@@ -65,7 +65,7 @@ export class EntityDisplay {
 	private DrawEntity(entity: Id) {
 		if (!this.Config.EntitySprites.has(EntityTypeOf(entity)))
 			return
-		this.UpdateEntityContext(entity, this.Config.EntitySprites.get(EntityTypeOf(entity)))
+		this.UpdateEntityContext(entity, this.Config.EntitySprites.get(EntityTypeOf(entity))!)
 		for (const drawer of this.EntityDrawers)
 			drawer.Draw(this.EntityContext)
 	}
@@ -77,13 +77,13 @@ export class EntityDisplay {
 		this.EntityContext.Orientation = Rotate(orientation, -AngleFromNorth(this.State.ViewDirection))
 		this.EntityContext.Position = this.Game.Entities.Position.Get.Of(entity) ?? Vector3.Zero
 		this.EntityContext.Velocity = this.Game.Entities.Velocity.Get.Of(entity) ?? Vector3.Zero
-		this.EntityContext.ToolState = this.Game.Entities.ToolState.Get.Of(entity)
+		this.EntityContext.ToolState = this.Game.Entities.ToolState.Get.Of(entity) ?? null // translate from undefined to null
 	}
 
 	private DrawBlockEntity(entity: Id) {
 		if (!this.Config.EntitySprites.has(EntityTypeOf(entity)))
 			return
-		this.UpdateBlockEntityContext(entity, this.Config.EntitySprites.get(EntityTypeOf(entity)))
+		this.UpdateBlockEntityContext(entity, this.Config.EntitySprites.get(EntityTypeOf(entity))!)
 		for (const drawer of this.EntityDrawers)
 			drawer.Draw(this.EntityContext)
 	}

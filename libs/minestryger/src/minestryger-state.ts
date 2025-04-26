@@ -5,8 +5,8 @@ export class MinestrygerState {
 	constructor(
 		config: MinestrygerConfig,
 		public playState: PlayState = PlayState.NotStarted,
-		public startTime: number = null,
-		public finishTime: number = null,
+		public startTime: number | null = null,
+		public finishTime: number | null = null,
 		public board = new GameGrid<Field>(config.width, config.height, () => new Field()),
 		public hasUsedFlags = false,
 		public tick = 0,

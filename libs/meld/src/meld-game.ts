@@ -61,7 +61,7 @@ export class MeldGame extends GameRunner<GameUpdate> {
 		this.displayProvider.setSize(width, height)
 	}
 
-	onDestroy() {
+	override onDestroy() {
 		super.onDestroy()
 		this.resizeObserver.disconnect()
 		window.removeEventListener("visibilitychanged", this.onUnload)

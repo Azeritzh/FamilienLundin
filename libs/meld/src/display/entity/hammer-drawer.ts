@@ -26,6 +26,8 @@ export class HammerDrawer {
 
 	private DrawTool() {
 		const state = this.EntityContext.ToolState
+		if(!state)
+			return
 
 		const startup = this.Game.Config.Constants.MiningStartup
 		const recovery = this.Game.Config.Constants.MiningRecovery
@@ -38,14 +40,14 @@ export class HammerDrawer {
 		const offset = new Vector2(0, -1.25).rotateFrom(rotation).addFromNumbers(-1.75, 0.625)
 		const toolSprite = this.Config.ItemSprites.has(state.SourceItem.Type)
 			? this.Config.ItemSprites.get(state.SourceItem.Type)
-			: this.Config.BlockSprites.get(state.SourceItem.Content)[0].TileFor(ViewDirection.North)
+			: this.Config.BlockSprites.get(state.SourceItem.Content)![0].TileFor(ViewDirection.North)
 
-		this.Camera.Draw(toolSprite,
+		this.Camera.Draw(toolSprite!,
 			Layer.Middle,
 			hammerPosition,
 			this.EntityContext.Velocity,
 			0, rotation,
-			null, 1, false, offset)
+			undefined, 1, false, offset)
 
 		const markerOffset = new Vector2(0, -0.875).rotateFrom(rotation).addFromNumbers(-1.75, 0.625)
 		this.Camera.Draw(this.Config.GameplaySprites.StandardMarker,
@@ -53,7 +55,7 @@ export class HammerDrawer {
 			hammerPosition,
 			this.EntityContext.Velocity,
 			0, rotation,
-			null, 1, false, markerOffset)
+			undefined, 1, false, markerOffset)
 	}
 
 	private StartupRotation(progress: number) {

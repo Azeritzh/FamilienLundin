@@ -1,3 +1,5 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <ng-container *ngIf="person$ | async as person"
 	class="person-container">
 	<section class="tree-box">
@@ -49,7 +51,8 @@
 					class="file-item">
 					<img *ngIf="isImage(file)"
 						[src]="pathFor(file)"
-						(click)="editFile(file)">
+						(click)="editFile(file)"
+						alt="todo">
 					<a *ngIf="!isImage(file)"
 						[href]="pathFor(file)"
 						[title]="file.description"

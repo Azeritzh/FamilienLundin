@@ -3,7 +3,7 @@ import { BaseGame } from "./base-game"
 import { finishTiming, startTiming } from "./services/performance"
 
 export class GameRunner<Action> {
-	private timerId: number
+	private timerId: number | null = null
 	private lastUpdate = Date.now()
 	private stop = false
 	actions: Action[] = []
@@ -53,7 +53,8 @@ export class GameRunner<Action> {
 
 	onDestroy() {
 		this.stop = true
-		window.clearInterval(this.timerId)
+		if (this.timerId)
+			window.clearInterval(this.timerId)
 		this.display.onDestroy?.()
 	}
 }

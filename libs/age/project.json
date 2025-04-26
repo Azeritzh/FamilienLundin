@@ -1,21 +1,19 @@
 {
+	"name": "age",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/age/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
+		"build": {
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
 			"options": {
-				"lintFilePatterns": ["libs/age/src/**/*.ts"]
-			},
-			"outputs": ["{options.outputFile}"]
-		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"options": {
-				"jestConfig": "libs/age/jest.config.ts",
-				"passWithNoTests": true
+				"outputPath": "dist/libs/age",
+				"main": "libs/age/src/index.ts",
+				"tsConfig": "libs/age/tsconfig.lib.json",
+				"assets": ["libs/age/*.md"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

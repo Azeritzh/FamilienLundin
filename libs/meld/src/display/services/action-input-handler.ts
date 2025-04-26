@@ -10,7 +10,7 @@ import { ActionHandler } from "./input-handler"
 import { InputParser } from "./input-parser"
 
 export class ActionInputHandler implements ActionHandler {
-	private Player: Id
+	private Player!: Id
 
 	constructor(
 		private Game: Meld,

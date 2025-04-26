@@ -10,9 +10,9 @@ export class WebGl2Display {
 		private tileSize: number,
 		private virtualScreenHeight: number,
 		private alignToPixelGrid = false,
-		private gl = canvas.getContext("webgl2"),
+		private gl = canvas.getContext("webgl2")!,
 		private standardShader = new StandardShader(gl),
-		private previousProgram = null,
+		private previousProgram: WebGLProgram | null = null,
 		private worldSpaceMatrix = buildWorldSpaceMatrix(canvas.width, canvas.height, virtualScreenHeight),
 		private spriteFactory = new SpriteFactory(gl, standardShader, tileSize, worldSpaceMatrix),
 		private sprites: { [index: string]: Sprite } = {},
@@ -30,7 +30,7 @@ export class WebGl2Display {
 		this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA)
 	}
 
-	public draw(sprite: string, x: number, y: number, frameX: number, frameY: number, depth = 1, rotation = 0, color: Vector3 = null, alpha = 1) {
+	public draw(sprite: string, x: number, y: number, frameX: number, frameY: number, depth = 1, rotation = 0, color: Vector3 | null = null, alpha = 1) {
 		if (this.sortByDepth)
 			this.sortedSprites.add(sprite, x, y, frameX, frameY, depth, rotation, color, alpha)
 		else
@@ -51,7 +51,7 @@ export class WebGl2Display {
 		this.gl.flush()
 	}
 
-	private drawSprite(name: string, x: number, y: number, frameX: number, frameY: number, rotation = 0, color: Vector3 = null, alpha = 1) {
+	private drawSprite(name: string, x: number, y: number, frameX: number, frameY: number, rotation = 0, color: Vector3 | null = null, alpha = 1) {
 		const sprite = this.sprites[name]
 		if (!sprite)
 			return console.warn("Could not load sprite {0}", name)
@@ -129,7 +129,7 @@ class SortedSprites {
 		frameY: number,
 		depth: number,
 		rotation = 0,
-		color: Vector3 = null,
+		color: Vector3 | null = null,
 		alpha = 1,
 	) {
 		if (!this.spritesToDraw[this.numberOfSprites]) {
@@ -162,7 +162,7 @@ class SpriteDrawInfo {
 		public frameY: number,
 		public depth: number,
 		public rotation = 0,
-		public color: Vector3 = null,
+		public color: Vector3 | null = null,
 		public alpha = 1,
 	) { }
 }

@@ -1,21 +1,19 @@
 {
+	"name": "kingdoms",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/kingdoms/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
+		"build": {
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
 			"options": {
-				"lintFilePatterns": ["libs/kingdoms/src/**/*.ts"]
-			},
-			"outputs": ["{options.outputFile}"]
-		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"options": {
-				"jestConfig": "libs/kingdoms/jest.config.ts",
-				"passWithNoTests": true
+				"outputPath": "dist/libs/kingdoms",
+				"main": "libs/kingdoms/src/index.ts",
+				"tsConfig": "libs/kingdoms/tsconfig.lib.json",
+				"assets": ["libs/kingdoms/*.md"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

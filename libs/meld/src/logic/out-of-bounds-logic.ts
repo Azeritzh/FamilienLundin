@@ -23,9 +23,9 @@ export class OutOfBoundsLogic implements GameLogic<GameUpdate> {
 		const position = this.Position.CurrentlyOf(entity)
 		if (!position)
 			return
-		if (this.Globals.WorldBounds.Contains(position))
+		if (this.Globals.WorldBounds!.Contains(position))
 			return
 
-		this.SetPosition.For(entity, this.Globals.WorldBounds.Contain(position))
+		this.SetPosition.For(entity, this.Globals.WorldBounds!.Contain(position))
 	}
 }

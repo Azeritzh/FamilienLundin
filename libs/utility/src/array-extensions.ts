@@ -27,7 +27,7 @@ declare global {
 
 Object.defineProperty(Array.prototype, "sum", {
 	value: function () {
-		return this.reduce((previous, current) => previous + +current, 0)
+		return this.reduce((previous: any, current: any) => previous + +current, 0)
 	}
 })
 
@@ -35,7 +35,7 @@ Object.defineProperty(Array.prototype, "max", {
 	value: function () {
 		if (!this.length)
 			throw new Error("Cannot find the max value in an empty array")
-		return this.reduce((previous, current) => previous > current ? previous : current)
+		return this.reduce((previous: any, current: any) => previous > current ? previous : current)
 	}
 })
 
@@ -43,7 +43,7 @@ Object.defineProperty(Array.prototype, "min", {
 	value: function () {
 		if (!this.length)
 			throw new Error("Cannot find the min value in an empty array")
-		return this.reduce((previous, current) => previous < current ? previous : current)
+		return this.reduce((previous: any, current: any) => previous < current ? previous : current)
 	}
 })
 
@@ -67,7 +67,7 @@ Object.defineProperty(Array.prototype, "last", {
 
 Object.defineProperty(Array.prototype, "distinct", {
 	value: function () {
-		return this.filter((e, i) => this.indexOf(e) === i)
+		return this.filter((e: any, i: any) => this.indexOf(e) === i)
 	}
 })
 
@@ -75,7 +75,7 @@ Object.defineProperty(Array.prototype, "distinctBy", {
 	value: function (transform: (entry: any) => boolean) {
 		const isFirstInstance = (e: any, i: number) => {
 			const base = transform(e)
-			return this.findIndex(x => transform(x) === base) === i
+			return this.findIndex((x: any) => transform(x) === base) === i
 		}
 		return this.filter(isFirstInstance)
 	}
@@ -103,7 +103,7 @@ Object.defineProperty(Array.prototype, "sortBy", {
 
 Object.defineProperty(Array.prototype, "includesAny", {
 	value: function (things: any[]) {
-		return this.some(x => things.includes(x))
+		return this.some((x: any) => things.includes(x))
 	}
 })
 
@@ -112,7 +112,7 @@ Object.defineProperty(Array.prototype, "groupBy", {
 		const groups = []
 		for (const entry of this) {
 			const groupKey = grouping(entry)
-			let group = groups.find(x => x.group === groupKey)
+			let group: any = groups.find(x => x.group === groupKey)
 			if (!group) {
 				group = { group: groupKey, entries: [] }
 				groups.push(group)

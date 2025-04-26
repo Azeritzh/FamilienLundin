@@ -8,12 +8,12 @@ export class DisplayVariationProvider implements VariationProvider {
 
 	HasVariation(solid: SolidId) {
 		if (this.Config.BlockSprites.has(solid))
-			return this.Config.BlockSprites.get(solid).length > 1
+			return this.Config.BlockSprites.get(solid)!.length > 1
 		return false
 	}
 
 	GetVariationFor(surroundings: BlockSurroundings, random: number) {
-		const allSprites = this.Config.BlockSprites.get(Blocks.SolidOf(surroundings.Block))
+		const allSprites = this.Config.BlockSprites.get(Blocks.SolidOf(surroundings.Block))!
 
 		surroundings.UpdateBorderInfo()
 		const bestFit = allSprites

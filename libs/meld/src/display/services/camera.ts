@@ -71,7 +71,7 @@ export class Camera {
 	}
 
 	private _adjustableCurrentPosition = new Vector3(0, 0, 0)
-	private SetCurrentPositionWith(destination: Vector3, position: Vector3, velocity: Vector3 = null) {
+	private SetCurrentPositionWith(destination: Vector3, position: Vector3, velocity: Vector3 | null = null) {
 		return velocity
 			? destination.setFrom(position).addFrom(this._adjustableCurrentPosition.setFrom(velocity).multiplyFrom(this.State.FractionOfTick))
 			: destination.setFrom(position)
@@ -81,13 +81,13 @@ export class Camera {
 		sprite: string,
 		layer: number,
 		position: Vector3,
-		velocity: Vector3 = null,
+		velocity: Vector3 | null = null,
 		animationStart = 0,
 		rotation = 0,
-		color: Vector3 = null,
+		color: Vector3 | null = null,
 		alpha = 1,
 		allowTransparentInFrontOfPlayer = false,
-		screenOffset: Vector2 = null
+		screenOffset: Vector2 | null = null
 	) {
 		const config = this.Config.Sprites[sprite]
 		const frame = this.AnimationFrame(config.frameInterval, config.framesX, config.framesY, animationStart)
@@ -107,13 +107,13 @@ export class Camera {
 		sprite: string,
 		layer: number,
 		position: Vector3,
-		velocity: Vector3 = null,
+		velocity: Vector3 | null = null,
 		frameIndex = 0,
 		rotation = 0,
-		color: Vector3 = null,
+		color: Vector3 | null = null,
 		alpha = 1,
 		allowTransparentInFrontOfPlayer = false,
-		screenOffset: Vector2 = null
+		screenOffset: Vector2 | null = null
 	) {
 		const currentPosition = this.SetCurrentPositionWith(this.Adjustable, position, velocity)
 		this.AdjustForFocusAndCamera(currentPosition)
@@ -133,7 +133,7 @@ export class Camera {
 			frameX, frameY,
 			this.sortingNumberFor(currentPosition, layer),
 			rotation,
-			color,
+			color ?? undefined, // convert null to undefined
 			alpha,
 		)
 	}

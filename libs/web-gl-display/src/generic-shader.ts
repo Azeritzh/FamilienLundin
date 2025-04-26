@@ -6,15 +6,15 @@ export class GenericShader {
 		vertexShaderScript: string,
 		fragmentShaderScript: string,
 	) {
-		const vertexShader = this.getShader(vertexShaderScript, gl.VERTEX_SHADER)
-		const fragmentShader = this.getShader(fragmentShaderScript, gl.FRAGMENT_SHADER)
+		const vertexShader = this.getShader(vertexShaderScript, gl.VERTEX_SHADER)!
+		const fragmentShader = this.getShader(fragmentShaderScript, gl.FRAGMENT_SHADER)!
 		this.program = this.createProgram(vertexShader, fragmentShader)
 		gl.deleteShader(vertexShader)
 		gl.deleteShader(fragmentShader)
 	}
 
 	getShader(script: string, type: number) {
-		const shader = this.gl.createShader(type)
+		const shader = this.gl.createShader(type)!
 		this.gl.shaderSource(shader, script)
 		this.gl.compileShader(shader)
 

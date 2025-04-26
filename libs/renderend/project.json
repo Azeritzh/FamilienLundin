@@ -1,31 +1,19 @@
 {
+	"name": "renderend",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/renderend/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
-			"options": {
-				"lintFilePatterns": ["libs/renderend/src/**/*.ts"]
-			},
-			"outputs": ["{options.outputFile}"]
-		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"options": {
-				"jestConfig": "libs/renderend/jest.config.ts",
-				"passWithNoTests": true
-			}
-		},
 		"build": {
-      "executor": "@nrwl/node:webpack",
-      "options": {
-        "outputPath": "dist/renderend",
-        "main": "libs/renderend/src/index.ts",
-        "tsConfig": "libs/renderend/tsconfig.lib.json",
-        "project": "libs/renderend/package.json",
-        "webpackConfig": "libs/renderend/webpack.config.js"
-      }
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/libs/renderend",
+				"main": "libs/renderend/src/index.ts",
+				"tsConfig": "libs/renderend/tsconfig.lib.json",
+				"assets": ["libs/renderend/*.md"]
+			}
 		}
-	},
-	"tags": []
+	}
 }

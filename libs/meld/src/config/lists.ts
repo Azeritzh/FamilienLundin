@@ -7,7 +7,7 @@ export class Lists {
 
 	static From(serialised: any,  entityTypeMap: TypeMap) {
 		return new Lists(
-			serialised.RandomlySpawningMonsters?.map(x => entityTypeMap.TypeIdFor(x)) ?? []
+			serialised.RandomlySpawningMonsters?.map((x: any) => entityTypeMap.TypeIdFor(x)) ?? []
 		)
 	}
 }

@@ -6,9 +6,10 @@ import { AncestryService } from "../ancestry.service"
 	selector: "lundin-edit-info",
 	templateUrl: "./edit-info.component.html",
 	styleUrls: ["./edit-info.component.scss", "../../../styles/popup-box.scss"],
+	standalone: false,
 })
 export class EditInfoComponent {
-	personId: number
+	personId!: number
 	name = ""
 	gender: "male" | "female" | "other" = "male"
 	born = ""
@@ -22,7 +23,7 @@ export class EditInfoComponent {
 
 	editPerson(personId: number) {
 		this.personId = personId
-		const person = this.ancestryService.person(personId)
+		const person = this.ancestryService.person(personId)!
 		this.information = person.information
 			.map(x => ({ ...x }))
 			.filter(this.isCustom)

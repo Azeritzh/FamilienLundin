@@ -19,7 +19,7 @@ export class Field {
 	constructor(
 		public terrain: Terrain = randomTerrain(),
 		public fertility: Fertility = randomFertility(),
-		public controller: number = null,
+		public controller: number | null = null,
 		public districts: District[] = [],
 		public buildings: any[] = [],
 	) { }
@@ -58,8 +58,8 @@ function randomFertility() {
 export class District {
 	constructor(
 		public type: DistrictType = DistrictType.Agricultural,
-		public population: number = 1,
-		public quality: number = 0,
+		public population = 1,
+		public quality = 0,
 	) { }
 }
 

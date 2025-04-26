@@ -7,9 +7,10 @@ import { VirusPlayer } from "../virus-game/virus-game.component"
 	selector: "lundin-settings",
 	templateUrl: "./settings.component.html",
 	styleUrls: ["./settings.component.scss"],
+	standalone: false,
 })
 export class SettingsComponent {
-	@Input() players = []
+	@Input() players: VirusPlayer[] = []
 	@Output() playersChange = new EventEmitter<VirusPlayer[]>()
 	@Input() boardSize = 8
 	@Output() boardSizeChange = new EventEmitter<number>()
@@ -42,7 +43,7 @@ export class SettingsComponent {
 		else if (type === "random")
 			return player.ai = new RandomAi(generateVirusActions)
 		else
-			this.removePlayer(player)
+			return this.removePlayer(player)
 	}
 
 	private removePlayer(player: VirusPlayer) {

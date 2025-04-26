@@ -1,4 +1,9 @@
 {
-  "name": "meld",
-  "version": "0.4.0"
+	"name": "@lundin/meld",
+	"version": "0.4.0",
+	"dependencies": {
+		"tslib": "^2.3.0",
+    "@lundin/age": "0.0.1",
+    "@lundin/utility": "0.0.1"
+	}
 }

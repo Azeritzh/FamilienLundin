@@ -42,6 +42,7 @@ export class SelectItemInputHandler implements ActionHandler {
 			return State.InputMode == InputMode.Selection && currentItem === 3
 				? new SelectItemSetAction(player, 3)
 				: new SelectItemAction(player, 3)
+		return null
 	}
 
 	private SelectTopItemInput() {

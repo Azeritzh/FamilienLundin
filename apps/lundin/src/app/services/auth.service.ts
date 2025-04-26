@@ -7,7 +7,7 @@ import { firstValueFrom, ReplaySubject, Subject } from "rxjs"
 export class AuthService {
 	onLogin = new ReplaySubject<void>(1)
 	onRefreshResponse = new Subject<boolean>()
-	loginInfo: AuthResponse
+	loginInfo: AuthResponse | null = null
 
 	constructor(private http: HttpClient) {
 		this.initialiseLogin()
@@ -22,7 +22,7 @@ export class AuthService {
 	}
 
 	private loadLoginInfoFromStorage() {
-		const storedInfo = JSON.parse(localStorage.getItem("loginInfo"))
+		const storedInfo = JSON.parse(localStorage.getItem("loginInfo") ?? "null")
 		if (storedInfo && this.isCurrent(storedInfo))
 			this.loginInfo = storedInfo
 		else
@@ -33,7 +33,7 @@ export class AuthService {
 		return 0 < this.secondsToExpiration(loginInfo.expiration)
 	}
 
-	private secondsToExpiration(expiration: number = this.loginInfo.expiration) {
+	private secondsToExpiration(expiration: number = this.loginInfo?.expiration ?? 0) {
 		const secondsSinceEpoch = new Date().getTime() / 1000
 		return expiration - secondsSinceEpoch
 	}

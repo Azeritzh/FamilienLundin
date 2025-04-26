@@ -31,7 +31,7 @@ export class MoveShipLogic implements GameLogic<RenderendAction> {
 			: velocity.multiply(this.constants.maxVerticalSpeed)
 
 		for (const [entity] of this.entities.With.shipBehaviour) {
-			const position = this.position.Of(entity)
+			const position = this.position.Of(entity)!
 			if (position.x < 1 && finalVelocity.x < 0)
 				finalVelocity.set(0, finalVelocity.y)
 			if (position.x > 10 && finalVelocity.x > 0)

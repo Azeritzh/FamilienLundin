@@ -6,10 +6,11 @@ import { AncestryService } from "../ancestry.service"
 	selector: "lundin-add-file",
 	templateUrl: "./add-file.component.html",
 	styleUrls: ["./add-file.component.scss", "../../../styles/popup-box.scss"],
+	standalone: false,
 })
 export class AddFileComponent {
-	personId: number
-	file: { description: string, data: File } = { description: "", data: null}
+	personId!: number
+	file: { description: string, data: File } = { description: "", data: null! }
 
 	constructor(
 		private ancestryService: AncestryService,
@@ -27,5 +28,9 @@ export class AddFileComponent {
 
 	cancel() {
 		this.navigationService.closeOverlay()
+	}
+
+	updateDescription(event: Event){
+		this.file.description = (event.target as HTMLInputElement)?.value || ""
 	}
 }

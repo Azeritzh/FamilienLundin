@@ -1,21 +1,19 @@
 {
+	"name": "virus",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/virus/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
+		"build": {
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
 			"options": {
-				"lintFilePatterns": ["libs/virus/src/**/*.ts"]
-			},
-			"outputs": ["{options.outputFile}"]
-		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"options": {
-				"jestConfig": "libs/virus/jest.config.ts",
-				"passWithNoTests": true
+				"outputPath": "dist/libs/virus",
+				"main": "libs/virus/src/index.ts",
+				"tsConfig": "libs/virus/tsconfig.lib.json",
+				"assets": ["libs/virus/*.md"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

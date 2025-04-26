@@ -11,7 +11,7 @@ export class SpriteDrawer {
 		private config: DisplayConfig,
 		private state: DisplayState,
 	) { }
-	public draw(sprite: string, position: Vector2, velocity: Vector2 = null, animationStart = 0) {
+	public draw(sprite: string, position: Vector2, velocity: Vector2 | null = null, animationStart = 0) {
 		if (velocity)
 			position = position.add(velocity.multiply(this.state.fractionOfTick))
 		const config = this.config.Sprites[sprite]

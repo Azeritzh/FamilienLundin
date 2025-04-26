@@ -4,7 +4,8 @@ import { AuthService } from "../../services/auth.service"
 @Component({
 	selector: "lundin-various",
 	templateUrl: "./various.component.html",
-	styleUrls: ["./various.component.scss"]
+	styleUrls: ["./various.component.scss"],
+	standalone: false,
 })
 export class VariousComponent {
 	tools: Entry[] = [

@@ -5,7 +5,7 @@ import { Subject } from "rxjs"
 @Injectable()
 export class NavigationService {
 	overlay$ = new Subject<{ component?: Type<any>, init?: (component: any) => void }>()
-	message$ = new Subject<string>()
+	message$ = new Subject<string | null>()
 
 	constructor(router: Router) {
 		router.events.subscribe(x => {

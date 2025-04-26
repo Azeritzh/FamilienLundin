@@ -58,7 +58,7 @@ export class DisplayEntityDrawer {
 		})
 	}
 
-	AddRelative(sprite: string, entity: Id, position: Vector3 = null, velocity: Vector3 = null, rotation = 0) {
+	AddRelative(sprite: string, entity: Id, position: Vector3 | null = null, velocity: Vector3 | null = null, rotation = 0) {
 		const info = this.Config.Sprites[sprite]
 		this.State.DisplayEntities.push({
 			Sprite: sprite,

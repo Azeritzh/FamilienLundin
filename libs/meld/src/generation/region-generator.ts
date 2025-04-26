@@ -175,7 +175,7 @@ export class RegionGenerator {
 			case 8: return "darkstone-block"
 			case 9: return "stone-flagstone"
 			case 10: return "stone-block"
-			default: "wood"
+			default: return "wood"
 		}
 	}
 

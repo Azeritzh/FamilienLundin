@@ -11,7 +11,7 @@ export class WallDrawer {
 		private State: DisplayState,
 		private Camera: Camera,
 	) { }
-	BlockContext: BlockContext
+	BlockContext!: BlockContext
 
 	private _adjustableDraw = new Vector3(0, 0, 0)
 	Draw(context: BlockContext) {
@@ -58,11 +58,11 @@ export class WallDrawer {
 
 	private FullWallSprite() {
 		const block = this.BlockContext.Block
-		return this.Config.BlockSprites.get(Blocks.SolidOf(block))[Blocks.VariantOf(block)].FullWallFor(this.State.ViewDirection)
+		return this.Config.BlockSprites.get(Blocks.SolidOf(block))![Blocks.VariantOf(block)].FullWallFor(this.State.ViewDirection)
 	}
 
 	private HalfWallSprite() {
 		const block = this.BlockContext.Block
-		return this.Config.BlockSprites.get(Blocks.SolidOf(block))[Blocks.VariantOf(block)].HalfWallFor(this.State.ViewDirection)
+		return this.Config.BlockSprites.get(Blocks.SolidOf(block))![Blocks.VariantOf(block)].HalfWallFor(this.State.ViewDirection)
 	}
 }

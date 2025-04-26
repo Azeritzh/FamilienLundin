@@ -1,6 +1,6 @@
 class AgePerformance {
-	intervalId = 0
-	element: HTMLDivElement = null
+	intervalId: any = 0
+	element: HTMLDivElement | null = null
 
 	timings: { [index: string]: TimingInfo } = {}
 
@@ -22,13 +22,13 @@ class AgePerformance {
   max:     ${this.timings[key].max().toFixed(2)}
 `
 			}
-			this.element.innerText = text
+			this.element!.innerText = text
 		}, interval * 1000)
 	}
 
 	hidePerformance() {
 		clearInterval(this.intervalId)
-		document.body.removeChild(this.element)
+		document.body.removeChild(this.element!)
 		this.element = null
 	}
 }
@@ -50,7 +50,7 @@ class TimingInfo {
 }
 
 const agePerformance = new AgePerformance()
-window["agePerformance"] = agePerformance
+;(<any>window)["agePerformance"] = agePerformance
 
 export function startTiming(name: string) {
 	if (!agePerformance.timings[name])

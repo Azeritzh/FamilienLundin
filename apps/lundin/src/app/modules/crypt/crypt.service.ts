@@ -1,18 +1,18 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { AES, enc } from "crypto-js"
+import { decrypt, encrypt } from "@lundin/utility"
 import { firstValueFrom } from "rxjs"
 
 @Injectable()
 export class CryptService {
 	constructor(private httpClient: HttpClient) { }
 
-	encrypt(content: string, key: string) {
-		return AES.encrypt(content, key).toString()
+	async encrypt(content: string, key: string) {
+		return await encrypt(content, key)
 	}
 
-	decrypt(encrypted: string, key: string) {
-		return AES.decrypt(encrypted, key).toString(enc.Utf8)
+	async decrypt(encrypted: string, key: string) {
+		return await decrypt(encrypted, key)
 	}
 
 	async load() {

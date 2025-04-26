@@ -43,7 +43,7 @@ function CreateMapping(mapA: TypeMap, mapB: TypeMap) {
 	const mapping = new Map<Id, Id>()
 	for(const [key, value] of mapA.Types) {
 		if (mapB.Types.has(key))
-			mapping.set(value, mapB[key])
+			mapping.set(value, mapB.Types.get(key)!)
 		else
 			mapping.set(value, value) // unknown types are left as is
 	}

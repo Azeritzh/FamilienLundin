@@ -8,13 +8,14 @@ import { AncestryService } from "../ancestry.service"
 	selector: "lundin-edit-relations",
 	templateUrl: "./edit-relations.component.html",
 	styleUrls: ["./edit-relations.component.scss", "../../../styles/popup-box.scss"],
+	standalone: false,
 })
 export class EditRelationsComponent {
-	personId: number
+	personId!: number
 	relations: PersonalRelation[] = [{ type: "child", id: 0 }]
 
 	constructor(
-		private ancestryService: AncestryService,
+		public ancestryService: AncestryService,
 		private navigationService: NavigationService,
 		private router: Router,
 	) { }
@@ -22,7 +23,7 @@ export class EditRelationsComponent {
 	editPerson(personId: number) {
 		this.personId = personId
 		const person = this.ancestryService.person(personId)
-		this.relations = person.relations.map(x => ({ ...x }))
+		this.relations = person?.relations.map(x => ({ ...x })) ?? []
 	}
 
 	deleteRelation(relation: PersonalRelation) {

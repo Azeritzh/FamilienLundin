@@ -44,7 +44,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 	}
 
 	private spawnWallsAt(xPos: number) {
-		const size = this.rectangularSize.DefaultOf(this.constants.wallType)
+		const size = this.rectangularSize.DefaultOf(this.constants.wallType) ?? new RectangularSize(1, 1)
 		this.spawnWallAt(xPos, 0, size)
 		this.spawnWallAt(xPos, 9, size)
 		if (this.random.Int(2))
@@ -76,7 +76,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 
 	private spawnObstacle() {
 		const obstacleType = this.random.In(this.constants.obstacleTypes)
-		const obstacleHeight = this.rectangularSize.DefaultOf(obstacleType).Height
+		const obstacleHeight = this.rectangularSize.DefaultOf(obstacleType)?.Height ?? 1
 		this.spawnObstacleAt(
 			obstacleType,
 			this.random.Float(2),
@@ -106,6 +106,7 @@ export class ObstacleLogic implements GameLogic<RenderendAction> {
 
 	private getShipHeight() {
 		for (const [ship] of this.entities.With.shipBehaviour)
-			return this.position.Of(ship).y
+			return this.position.Of(ship)?.y ?? 0
+		return 0
 	}
 }

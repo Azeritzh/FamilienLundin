@@ -3,10 +3,10 @@ import { BaseValues } from "./base-values"
 
 export interface ValueInitialiser {
 	/** This is supposed to take the default value for the type and copy it to the entity (or rather, to the value map) */
-	initialiseValueFor(entity: Id)
+	initialiseValueFor(entity: Id): void
 }
 
-export class ValueAccessor<T>{
+export class ValueAccessor<T> {
 	constructor(
 		public readonly Get: ValueGetter<T>,
 		public readonly Set: ValueSetter<T>,
@@ -20,9 +20,9 @@ export class ValueAccessor<T>{
 }
 
 export interface ValueGetter<T> {
-	CurrentlyOf(entity: Id): T
-	Of(entity: Id): T
-	DefaultOf(entity: Id): T
+	CurrentlyOf(entity: Id): T | undefined
+	Of(entity: Id): T | undefined
+	DefaultOf(entity: Id): T | undefined
 }
 
 export class StandardValueGetter<T, GroupedEntityValues> implements ValueGetter<T> {
@@ -30,8 +30,8 @@ export class StandardValueGetter<T, GroupedEntityValues> implements ValueGetter<
 		private readonly typeValues: Map<Id, GroupedEntityValues>,
 		private readonly entityValue: Map<Id, T>,
 		private readonly updatedEntityValue: Map<Id, T>,
-		private readonly getTypeValue: (collection: GroupedEntityValues) => T,
-		private readonly defaultValue: T = undefined
+		private readonly getTypeValue: (collection: GroupedEntityValues) => T | null | undefined,
+		private readonly defaultValue: T | undefined = undefined
 	) { }
 
 	public CurrentlyOf(entity: Id) {
@@ -45,12 +45,14 @@ export class StandardValueGetter<T, GroupedEntityValues> implements ValueGetter<
 
 	public DefaultOf(entity: Id) {
 		const type = EntityTypeOf(entity)
-		return this.getTypeValue(this.typeValues.get(type))
-			?? this.defaultValue
+		const values = this.typeValues.get(type)
+		if (values)
+			return this.getTypeValue(values) ?? this.defaultValue
+		return this.defaultValue
 	}
 }
 
-export class ValueSetter<T>{
+export class ValueSetter<T> {
 	constructor(
 		private readonly updatedEntityValue: Map<Id, T>,
 	) { }
@@ -60,7 +62,7 @@ export class ValueSetter<T>{
 	}
 }
 
-export class ValueAccessBuilder<EntityValues extends BaseValues, GroupedEntityValues>{
+export class ValueAccessBuilder<EntityValues extends BaseValues, GroupedEntityValues> {
 	constructor(
 		private typeValues: Map<Id, GroupedEntityValues>,
 		private entityValues: EntityValues,
@@ -69,11 +71,11 @@ export class ValueAccessBuilder<EntityValues extends BaseValues, GroupedEntityVa
 
 	public For<T>(
 		getValueMap: (collection: EntityValues) => Map<Id, T>,
-		getTypeValue: (collection: GroupedEntityValues) => T,
-		defaultValue: T = undefined,
+		getTypeValue: (collection: GroupedEntityValues) => T | null | undefined,
+		defaultValue: T | undefined = undefined,
 	) {
-		return new ValueAccessor(
-			new StandardValueGetter(
+		return new ValueAccessor<T>(
+			new StandardValueGetter<T, GroupedEntityValues>(
 				this.typeValues,
 				getValueMap(this.entityValues),
 				getValueMap(this.updatedEntityValues),

@@ -1,4 +1,9 @@
 {
-  "name": "renderend",
-  "version": "0.0.1"
+	"name": "@lundin/renderend",
+	"version": "0.0.1",
+  "dependencies": {
+    "@lundin/age": "0.0.1",
+    "@lundin/utility": "0.0.1",
+    "tslib": "^2.3.0"
+  }
 }

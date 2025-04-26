@@ -7,6 +7,7 @@ import { MessageService } from "../message.service"
 	selector: "lundin-message-list",
 	templateUrl: "./message-list.component.html",
 	styleUrls: ["./message-list.component.scss"],
+	standalone: false,
 })
 export class MessageListComponent {
 	threads: MessageThread[] = []

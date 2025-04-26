@@ -26,10 +26,10 @@ export interface DisplayConfig {
 export function readDisplayConfig(jsonConfig: any) {
 	const config: DisplayConfig = <any>{}
 	for (const key in jsonConfig)
-		config[key[0].toUpperCase() + key.substring(1)] = jsonConfig[key]
+		(config as any)[key[0].toUpperCase() + key.substring(1)] = jsonConfig[key]
 	config.Inputs = new Map<Input, string[]>()
 	for (const key in jsonConfig.inputs)
-		config.Inputs.set(Input[key], jsonConfig.inputs[key])
+		config.Inputs.set(Input[key as keyof typeof Input], jsonConfig.inputs[key])
 	for (const key in config.Sprites)
 		if (config.Sprites[key].frameInterval)
 			config.Sprites[key].frameInterval = config.Sprites[key].frameInterval * updatesPerSecond

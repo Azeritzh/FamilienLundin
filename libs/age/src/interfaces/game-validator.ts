@@ -1,3 +1,3 @@
 export interface GameValidator<GameAction> {
-	validate(actions: GameAction[]): string[]
+	validate(actions: GameAction[]): string[] | null
 }

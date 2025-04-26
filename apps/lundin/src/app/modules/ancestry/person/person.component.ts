@@ -13,11 +13,12 @@ import { EditRelationsComponent } from "../edit-relations/edit-relations.compone
 	selector: "lundin-person",
 	templateUrl: "./person.component.html",
 	styleUrls: ["./person.component.scss"],
+	standalone: false,
 })
 export class PersonComponent implements OnInit {
-	personId: number
-	person$: Observable<Person>
-	predefinedInfoTexts = {
+	personId!: number
+	person$: Observable<Person | undefined> | null = null
+	predefinedInfoTexts: { [index: string]: string } = {
 		__born: "Født",
 		__dead: "Død",
 	}
@@ -31,7 +32,7 @@ export class PersonComponent implements OnInit {
 
 	ngOnInit() {
 		this.activatedRoute.paramMap.subscribe(async params => {
-			this.personId = +params.get("id")
+			this.personId = +(params.get("id") ?? 0)
 			this.person$ = this.ancestryService.person$(this.personId)
 		})
 	}
@@ -75,7 +76,7 @@ export class PersonComponent implements OnInit {
 		return this.predefinedInfoTexts[info.title] ?? info.title
 	}
 
-	genderIcon(person: Person){
+	genderIcon(person: Person) {
 		switch (person.gender) {
 			case "male": return "♂"
 			case "female": return "♀"

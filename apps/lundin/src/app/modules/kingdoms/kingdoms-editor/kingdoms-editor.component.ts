@@ -6,15 +6,16 @@ import { DisplayState } from "../kingdoms-display/display-state"
 	selector: "lundin-kingdoms-editor",
 	templateUrl: "./kingdoms-editor.component.html",
 	styleUrls: ["./kingdoms-editor.component.scss"],
+	standalone: false,
 })
 export class KingdomsEditorComponent {
 	@Input() game = new Kingdoms()
 	@Input() displayState = new DisplayState()
-	terrainBrush: Terrain = null
-	fertilityBrush: Fertility = null
+	terrainBrush: Terrain | null = null
+	fertilityBrush: Fertility | null = null
 
 	clickField() {
-		const { x, y } = this.displayState.selectedField
+		const { x, y } = this.displayState.selectedField ?? { x: 0, y: 0 }
 		if (!this.game.state.board.isWithinBounds(x, y))
 			return
 		const field = this.game.state.board.get(x, y)
@@ -24,11 +25,11 @@ export class KingdomsEditorComponent {
 			field.fertility = this.fertilityBrush
 	}
 
-	changeTerrain(terrain: Terrain) {
+	changeTerrain(terrain: Terrain | null) {
 		this.terrainBrush = terrain
 	}
 
-	changeFertility(fertility: Fertility) {
+	changeFertility(fertility: Fertility | null) {
 		this.fertilityBrush = fertility
 	}
 }

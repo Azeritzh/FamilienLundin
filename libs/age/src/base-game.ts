@@ -7,7 +7,7 @@ export abstract class BaseGame<GameAction> {
 		protected readonly Validators: GameValidator<GameAction>[] = [],
 	) { }
 
-	Update(...actions: GameAction[]): string[] {
+	Update(...actions: GameAction[]): string[] | null {
 		const problems = this.Validate(actions)
 		if (problems)
 			return problems
@@ -22,5 +22,6 @@ export abstract class BaseGame<GameAction> {
 			if (problems)
 				return problems
 		}
+		return null
 	}
 }

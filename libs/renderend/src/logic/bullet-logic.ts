@@ -21,12 +21,12 @@ export class BulletLogic implements GameLogic<RenderendAction> {
 
 	private spawnBulletFor(entity: Id, bulletType: Id) {
 		const charge = this.charge.CurrentlyOf(entity)
-		if (charge < 1)
+		if ((charge ?? 0) < 1)
 			return
 		const position = this.position.Of(entity) ?? new Vector2(0, 0)
 		const bullet = this.entities.Create(bulletType)
 		this.setPosition.For(bullet, position.add(new Vector2(0.5, 0)))
-		if (charge > 0)
-			this.setCharge.For(entity, charge - 1)
+		if (charge! > 0)
+			this.setCharge.For(entity, charge! - 1)
 	}
 }

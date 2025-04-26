@@ -9,6 +9,7 @@ import { NavigationService } from "../services/navigation.service"
 	selector: "lundin-root",
 	templateUrl: "./app.component.html",
 	styleUrls: ["./app.component.scss"],
+	standalone: false,
 })
 export class AppComponent implements OnInit {
 	header = "Familien Lundin"
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
 	]
 	@HostBinding("class.hidden-navigation") hideNavigation = true
 
-	@ViewChild("overlayHost", { read: OverlayHostDirective, static: true }) overlayHost: OverlayHostDirective
+	@ViewChild("overlayHost", { read: OverlayHostDirective, static: true }) overlayHost!: OverlayHostDirective
 	showingLoading = true
 	showingOverlay = false
 	showingMessage = false
@@ -40,11 +41,11 @@ export class AppComponent implements OnInit {
 			this.overlayHost.viewContainerRef.clear()
 			this.showingOverlay = false
 			if (component)
-				init(this.openAsOverlay(component))
+				init?.(this.openAsOverlay(component))
 		})
 		this.navigationService.message$.subscribe(message => {
 			this.showingMessage = !!message
-			this.message = message
+			this.message = message ?? ""
 		})
 		Object.defineProperty(this.navigationEntries[0], "text", { get: () => this.authService.isLoggedIn() ? "Hjem" : "Log ind" })
 	}

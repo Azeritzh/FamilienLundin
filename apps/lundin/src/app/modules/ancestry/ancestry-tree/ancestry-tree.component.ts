@@ -8,11 +8,12 @@ import { AncestryService } from "../ancestry.service"
 	selector: "lundin-ancestry-tree",
 	templateUrl: "./ancestry-tree.component.html",
 	styleUrls: ["./ancestry-tree.component.scss"],
+	standalone: false,
 })
 export class AncestryTreeComponent implements OnInit, OnDestroy {
 	generations: Person[][] = []
 	children: Person[] = []
-	private subscription: Subscription
+	private subscription: Subscription | null = null
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -24,7 +25,7 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.activatedRoute.paramMap.subscribe(async params => {
-			const id = +params.get("id")
+			const id = +(params.get("id") ?? 0)
 			this.updateSubscription(id)
 		})
 	}
@@ -34,7 +35,7 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 		this.subscription = this.ancestryService.person$(id).subscribe(this.setup)
 	}
 
-	private setup = (person: Person) => {
+	private setup = (person: Person | undefined) => {
 		if (!person)
 			return
 		this.generations = []
@@ -48,6 +49,7 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 		this.children = person.relations
 			.filter(x => x.type === "child")
 			.map(x => this.ancestryService.person(x.id))
+			.filter(x => x !== undefined) as Person[]
 	}
 
 	private loadGeneration(depth: number) {
@@ -73,7 +75,7 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 		return person.relations
 			.filter(x => x.type === "parent")
 			.map(x => this.ancestryService.person(x.id))
-			.find(x => x.gender === gender)
+			.find(x => x?.gender === gender)
 	}
 
 	private isEmpty(list: any[]) {

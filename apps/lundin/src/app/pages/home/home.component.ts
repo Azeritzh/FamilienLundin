@@ -7,7 +7,8 @@ import { NavigationService } from "../../services/navigation.service"
 @Component({
 	selector: "lundin-home",
 	templateUrl: "./home.component.html",
-	styleUrls: ["./home.component.scss"]
+	styleUrls: ["./home.component.scss"],
+	standalone: false,
 })
 export class HomeComponent {
 	constructor(

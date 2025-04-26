@@ -82,5 +82,5 @@ export class LoadingLogic implements GameLogic<GameUpdate> {
 }
 
 interface StateProvider {
-	hej
+	hej: string
 }

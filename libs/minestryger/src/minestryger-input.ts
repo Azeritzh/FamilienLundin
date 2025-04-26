@@ -60,7 +60,7 @@ export class MinestrygerInput {
 
 	private updateDisplayConfig(changes: any) {
 		for (const key in changes)
-			this.display.config[key] = changes[key]
+			(<any>this.display.config)[key] = changes[key]
 		this.display.updateSize()
 	}
 

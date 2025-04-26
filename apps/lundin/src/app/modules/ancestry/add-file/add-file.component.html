@@ -14,7 +14,7 @@
 	<input #descriptionInput
 		type="text"
 		id="description"
-		(input)="file.description = $event.target.value"
+		(input)="updateDescription($event)"
 		autocomplete="off">
 </div>
 

@@ -7,9 +7,10 @@ import { VirusGameComponent, VirusPlayer } from "./virus-game/virus-game.compone
 	selector: "lundin-virus",
 	templateUrl: "./virus.component.html",
 	styleUrls: ["./virus.component.scss"],
+	standalone: false,
 })
 export class VirusComponent {
-	@ViewChild(VirusGameComponent) gameComponent: VirusGameComponent
+	@ViewChild(VirusGameComponent) gameComponent: VirusGameComponent | null = null
 	players = [
 		new VirusPlayer("Spiller 1", "red"),
 		new VirusPlayer("Spiller 2", "green", new RandomAi(generateVirusActions)),
@@ -19,7 +20,7 @@ export class VirusComponent {
 	autoSize = true
 
 	triggerNewGame(force = false) {
-		if (force || this.gameComponent.game.state.tick === 0)
-			this.gameComponent.startGame()
+		if (force || this.gameComponent?.game.state.tick === 0)
+			this.gameComponent?.startGame()
 	}
 }

@@ -5,6 +5,6 @@ export class Globals{
 		public Tick = 0,
 		public NextId = 1,
 		public Seed = 1,
-		public WorldBounds: Box = null
+		public WorldBounds: Box | null = null
 	) { }
 }

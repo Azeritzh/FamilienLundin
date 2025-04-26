@@ -21,14 +21,14 @@ export class EntityDrawer {
 	}
 
 	private drawGeneralEntity(entity: Id) {
-		const position = this.game.entities.position.Get.Of(entity)
+		const position = this.game.entities.position.Get.Of(entity)!
 		const velocity = this.game.entities.velocity.Get.Of(entity)
 		const sprite = this.game.config.typeMap.TypeFor(EntityTypeOf(entity))
-		this.spriteDrawer.draw(sprite, position, velocity)
+		this.spriteDrawer.draw(sprite ?? "ERROR", position, velocity)
 	}
 
 	private drawShip(entity: Id) {
-		const position = this.game.entities.position.Get.Of(entity)
+		const position = this.game.entities.position.Get.Of(entity)!
 		const velocity = this.game.entities.velocity.Get.Of(entity)
 		const shields = this.shieldSpriteFor(entity)
 		if (shields)
@@ -44,6 +44,7 @@ export class EntityDrawer {
 			case 3: return "full-shield"
 			case 2: return "half-shield"
 		}
+		return null
 	}
 
 	private chargeSpriteFor(entity: Id) {
@@ -56,5 +57,6 @@ export class EntityDrawer {
 			return "charge-2"
 		if (1 <= charge)
 			return "charge-1"
+		return null
 	}
 }

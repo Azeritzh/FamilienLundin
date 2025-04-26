@@ -7,6 +7,7 @@ import { CalendarService } from "../calendar.service"
 	selector: "lundin-calendar-event-list",
 	templateUrl: "./calendar-event-list.component.html",
 	styleUrls: ["./calendar-event-list.component.scss"],
+	standalone: false,
 })
 export class CalendarEventListComponent {
 	events: CalendarEvent[] = []

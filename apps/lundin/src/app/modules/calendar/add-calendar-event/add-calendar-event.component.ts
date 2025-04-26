@@ -7,6 +7,7 @@ import { CalendarService } from "../calendar.service"
 	selector: "lundin-add-calendar-event",
 	templateUrl: "./add-calendar-event.component.html",
 	styleUrls: ["./add-calendar-event.component.scss", "../../../styles/popup-box.scss"],
+	standalone: false,
 })
 export class AddCalendarEventComponent {
 	event: CalendarEvent = {

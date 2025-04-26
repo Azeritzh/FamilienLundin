@@ -4,5 +4,6 @@ import { Component } from "@angular/core"
 	selector: "lundin-calendar-root",
 	template: "<router-outlet></router-outlet>",
 	styleUrls: ["./calendar-root.component.scss"],
+	standalone: false,
 })
 export class CalendarRootComponent { }

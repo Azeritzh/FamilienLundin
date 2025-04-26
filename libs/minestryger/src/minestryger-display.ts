@@ -6,9 +6,9 @@ import { MinestrygerConfig } from "./minestryger-config"
 import { Field } from "./minestryger-state"
 
 export class MinestrygerDisplay {
-	public canvas: HTMLCanvasElement
-	private context: CanvasRenderingContext2D
-	public state: DisplayState
+	public canvas!: HTMLCanvasElement
+	private context!: CanvasRenderingContext2D
+	public state!: DisplayState
 	public elements: { [index: string]: HTMLElement } = {}
 	private gameElements: GameElements
 	private settingsElements: SettingsElements
@@ -37,7 +37,7 @@ export class MinestrygerDisplay {
 		this.hostElement.className = "game-host"
 		this.hostElement.innerHTML = this.gameElements.getInitialElements() + this.settingsElements.getInitialElements()
 		this.canvas = document.createElement("canvas")
-		this.context = this.canvas.getContext("2d")
+		this.context = this.canvas.getContext("2d")!
 		this.hostElement.appendChild(this.canvas)
 		const style = document.createElement("style")
 		style.innerText = this.config.styling
@@ -93,15 +93,15 @@ export class MinestrygerDisplay {
 	private getSprite(field: Field, hover = false) {
 		if (field.revealed)
 			return field.bomb
-				? this.config.sprites.bomb
+				? this.config.sprites["bomb"]
 				: this.config.sprites[field.surroundingBombs.toString()]
 		if (field.locked)
 			return hover
 				? this.config.sprites["flag-hover"]
-				: this.config.sprites.flag
+				: this.config.sprites["flag"]
 		return hover
 			? this.config.sprites["hidden-hover"]
-			: this.config.sprites.hidden
+			: this.config.sprites["hidden"]
 	}
 
 	drawSprite(sprite: Sprite, x: number, y: number) {

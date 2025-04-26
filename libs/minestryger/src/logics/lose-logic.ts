@@ -26,7 +26,7 @@ export class LoseLogic implements GameLogic<MinestrygerAction> {
 		if (!this.isRevealedBomb(x, y))
 			return
 		this.state.playState = PlayState.Lost
-		this.state.finishTime = Date.now() - this.state.startTime
+		this.state.finishTime = Date.now() - (this.state.startTime ?? 0)
 		for (const { field } of this.state.board.allFields())
 			if (field.bomb)
 				field.revealed = true

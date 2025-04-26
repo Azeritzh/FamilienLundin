@@ -10,6 +10,7 @@ import { AncestryService } from "../ancestry.service"
 	selector: "lundin-ancestry-list",
 	templateUrl: "./ancestry-list.component.html",
 	styleUrls: ["./ancestry-list.component.scss"],
+	standalone: false,
 })
 export class AncestryListComponent {
 	people$: Observable<Person[]>
@@ -33,15 +34,15 @@ export class AncestryListComponent {
 	}
 
 	bornFor(person: Person) {
-		return person.information.find(x => x.title === "__born").content
+		return person.information.find(x => x.title === "__born")?.content
 	}
 
 	deadFor(person: Person) {
-		return person.information.find(x => x.title === "__dead").content
+		return person.information.find(x => x.title === "__dead")?.content
 	}
 
-	filter(people: Person[]) {
-		return people
+	filter(people: Person[] | null) {
+		return (people ?? [])
 			.filter(x => this.includeAll || x.userId)
 			.filter(x => this.search([x.name.toLowerCase()]))
 	}

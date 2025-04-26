@@ -7,6 +7,7 @@ import { Virus, VirusAction, VirusConfig, generateVirusActions } from "@lundin/v
 	selector: "lundin-virus-game",
 	templateUrl: "./virus-game.component.html",
 	styleUrls: ["./virus-game.component.scss"],
+	standalone: false,
 })
 export class VirusGameComponent {
 	@Input() players = [
@@ -18,8 +19,8 @@ export class VirusGameComponent {
 	@Input() autoSize = true
 
 	game = new Virus()
-	positions: { x: number, y: number }[]
-	origin?: { x: number, y: number }
+	positions: { x: number, y: number }[] = []
+	origin: { x: number, y: number } | null = null
 	message = ""
 
 	@HostBinding("style.grid-template-columns") get columns() {
@@ -117,8 +118,9 @@ export class VirusGameComponent {
 	private announceNextTurn() {
 		const player = this.getPlayer()
 		this.message = player.name + "'s tur"
-		if (player.ai)
-			setTimeout(() => this.performAction(player.ai.requestActions(this.game)[0]), 10)
+		const ai = player.ai
+		if (ai)
+			setTimeout(() => this.performAction(ai.requestActions(this.game)[0]), 10)
 	}
 
 	colorFor(position: { x: number, y: number }) {
@@ -141,6 +143,6 @@ export class VirusPlayer {
 	constructor(
 		public name: string,
 		public color: string,
-		public ai: GameAi<Virus, VirusAction> = null
+		public ai: GameAi<Virus, VirusAction> | null = null
 	) { }
 }

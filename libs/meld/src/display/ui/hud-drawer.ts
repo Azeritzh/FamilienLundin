@@ -6,7 +6,7 @@ import { DisplayState } from "../state/display-state"
 import { UiDisplay } from "./ui-display"
 
 export class HudDrawer {
-	private Player: Id
+	private Player!: Id
 
 	constructor(
 		private Game: Meld,
@@ -84,8 +84,8 @@ export class HudDrawer {
 
 	private DrawItem(item: Item, x: number, y: number) {
 		const sprite = this.Config.ItemSprites.has(item.Type)
-			? this.Config.ItemSprites.get(item.Type)
-			: this.Config.BlockSprites.get(item.Content)[0].TileFor(this.State.ViewDirection)
+			? this.Config.ItemSprites.get(item.Type)!
+			: this.Config.BlockSprites.get(item.Content)![0].TileFor(this.State.ViewDirection)
 		this.DisplayProvider.Draw(sprite, x, y, 0, 0, UiDisplay.TopLayer)
 	}
 }

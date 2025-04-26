@@ -8,7 +8,7 @@ import { DisplayConfig } from "../state/display-config"
 import { DisplayState } from "../state/display-state"
 
 export class BlockMarkerDrawer {
-	private Player: Id
+	private Player!: Id
 
 	constructor(
 		private Game: Meld,
@@ -51,7 +51,7 @@ export class BlockMarkerDrawer {
 		Camera.DrawAnimated(Config.GameplaySprites.BlockMarker.Straight,
 			Layer.Top + 1,
 			targetBlock,
-			null, null, null, null, 0.3)
+			null, undefined, undefined, null, 0.3)
 
 		if (height == 0)
 			return
@@ -59,7 +59,7 @@ export class BlockMarkerDrawer {
 		Camera.DrawAnimated(Config.GameplaySprites.BlockMarker.StraightTop,
 			Layer.Top + 1,
 			targetBlock,
-			null, null, null, null, 0.3)
+			null, undefined, undefined, null, 0.3)
 		Camera.DrawAnimated(Config.GameplaySprites.BlockMarker.StraightTop,
 			Layer.Middle + Layer.AboveOverlayAdjustment,
 			targetBlock)

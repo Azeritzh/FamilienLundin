@@ -5,10 +5,11 @@ import { Person } from "@lundin/api-interfaces"
 	selector: "lundin-portrait",
 	templateUrl: "./portrait.component.html",
 	styleUrls: ["./portrait.component.scss"],
+	standalone: false,
 })
 export class PortraitComponent {
-	@Input() person: Person
-	@Input() relation: "partner" | "parent" | "child" | "sibling"
+	@Input() person!: Person
+	@Input() relation!: "partner" | "parent" | "child" | "sibling"
 
 	relationText(){
 		switch (this.relation) {

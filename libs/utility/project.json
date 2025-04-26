@@ -1,21 +1,19 @@
 {
+	"name": "utility",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/utility/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
+		"build": {
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
 			"options": {
-				"lintFilePatterns": ["libs/utility/src/**/*.ts"]
-			},
-			"outputs": ["{options.outputFile}"]
-		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"options": {
-				"jestConfig": "libs/utility/jest.config.ts",
-				"passWithNoTests": true
+				"outputPath": "dist/libs/utility",
+				"main": "libs/utility/src/index.ts",
+				"tsConfig": "libs/utility/tsconfig.lib.json",
+				"assets": ["libs/utility/*.md"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

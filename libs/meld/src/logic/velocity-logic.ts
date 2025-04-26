@@ -24,7 +24,7 @@ export class VelocityLogic implements GameLogic<GameUpdate> {
 		if (!velocity || velocity.isZero())
 			return
 		const cappedVelocity = this.CappedVelocity(velocity)
-		const position = this.Position.CurrentlyOf(entity)
+		const position = this.Position.CurrentlyOf(entity) ?? Vector3.Zero
 		this.SetPosition.For(entity, position.add(cappedVelocity))
 		this.SetVelocity.For(entity, cappedVelocity)
 	}

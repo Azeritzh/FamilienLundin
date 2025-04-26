@@ -27,11 +27,11 @@ export class InputHandler {
 
 		if (this.State.InputMode == InputMode.Chat)
 			return []
-		return this.ActionHandlers.map(x => x.Update(player)).filter(x => x)
+		return this.ActionHandlers.map(x => x.Update(player)).filter(x => x !== null)
 	}
 
 }
 
 export interface ActionHandler {
-	Update(player: Id): GameUpdate
+	Update(player: Id): GameUpdate | null
 }

@@ -20,7 +20,7 @@ import { RecipesComponent } from "./recipes/recipes.component"
 	imports: [
 		AppRoutingModule,
 		BrowserModule,
-		HttpClientModule,
+		//HttpClientModule,
 		MarkdownModule.forRoot(),
 		SharedModule,
 	],

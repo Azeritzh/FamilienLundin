@@ -4,5 +4,6 @@ import { Component } from "@angular/core"
 	selector: "lundin-ancestry-root",
 	template: "<router-outlet></router-outlet>",
 	styleUrls: ["./ancestry-root.component.scss"],
+	standalone: false,
 })
 export class AncestryRootComponent { }

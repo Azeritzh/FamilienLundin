@@ -90,6 +90,7 @@ export class KeyStates {
 			case 0: return "MouseLeft"
 			case 1: return "MouseMiddle"
 			case 2: return "MouseRight"
+			default: return "MouseLeft" // idk...
 		}
 	}
 
@@ -120,7 +121,7 @@ export class KeyStates {
 		const gamepads = (navigator.getGamepads?.() ?? []).filter(x => x)
 		if (gamepads.length === 0)
 			return 0
-		const gamepad = gamepads.first()
+		const gamepad = gamepads.first()!
 		if (gamepad?.mapping === "standard")
 			return this.getStandardGamepadState(input, gamepad)
 		else
@@ -147,6 +148,7 @@ export class KeyStates {
 			case "PadLeft": return gamepad.buttons[14].pressed ? 1 : 0
 			case "PadRight": return gamepad.buttons[15].pressed ? 1 : 0
 		}
+		return 0
 	}
 
 	private getStandardAnalogStickState(input: string, gamepad: Gamepad) {
@@ -156,6 +158,7 @@ export class KeyStates {
 			case "PadLeftStickLeft": return Math.max(0, -gamepad.axes[0]) * 1.2 - 0.2
 			case "PadLeftStickRight": return Math.max(0, gamepad.axes[0]) * 1.2 - 0.2
 		}
+		return 0
 	}
 
 	private getNonStandardGamepadState(input: string, gamepad: Gamepad) {
@@ -171,6 +174,7 @@ export class KeyStates {
 			case "PadLeft": return (0.4 < gamepad.axes[9] && gamepad.axes[9] < 1.1) ? 1 : 0
 			case "PadRight": return (-0.8 < gamepad.axes[9] && gamepad.axes[9] < 0) ? 1 : 0
 		}
+		return 0
 	}
 
 	private getNonStandardEmulatedLeftAnalogState(input: string, gamepad: Gamepad) {
@@ -180,6 +184,7 @@ export class KeyStates {
 			case "PadLeftStickLeft": return (0.4 < gamepad.axes[9] && gamepad.axes[9] < 1.1) ? 1 : 0
 			case "PadLeftStickRight": return (-0.8 < gamepad.axes[9] && gamepad.axes[9] < 0) ? 1 : 0
 		}
+		return 0
 	}
 }
 

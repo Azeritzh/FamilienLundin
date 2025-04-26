@@ -26,7 +26,7 @@ export class BlockCollisionLogic implements GameLogic<GameUpdate> {
 		const velocity = this.Velocity.CurrentlyOf(entity)
 		if (velocity?.isZero() ?? true)
 			return
-		const newVelocity = this.CollisionVelocityChange(entity, velocity)
+		const newVelocity = this.CollisionVelocityChange(entity, velocity!)
 		if (newVelocity)
 			this.SetVelocity.For(entity, newVelocity)
 	}

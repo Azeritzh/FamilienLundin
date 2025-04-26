@@ -56,9 +56,9 @@ export class GameState {
 	}
 
 	static From(config: GameConfig, deserialised: SerialisableGameState) {
-		deserialised.Regions = deserialised.Regions.map(x => Object.assign(new SerialisableRegion(null, null, null, null, null, null, null, null), x))
+		deserialised.Regions = deserialised.Regions.map(x => Object.assign(new SerialisableRegion(null!, null!, null!, null!, null!, null!, null!, null!), x))
 		for (const region of deserialised.Regions) {
-			region.Chunks = region.Chunks.map(x => Object.assign(new SerialisableBlockChunk(null, null, null), x))
+			region.Chunks = region.Chunks.map(x => Object.assign(new SerialisableBlockChunk(null!, null!, null!), x))
 			for (const chunk of region.Chunks) {
 				chunk.Offset = Object.assign(new Vector3(0, 0, 0), chunk.Offset)
 				chunk.Size = Object.assign(new Vector3(0, 0, 0), chunk.Size)
@@ -162,8 +162,8 @@ export class SerialisableGameState {
 		return state
 	}
 
-	static From(state: GameState, config: GameConfig = null): SerialisableGameState {
-		const entityValues = {}
+	static From(state: GameState, config: GameConfig | null = null): SerialisableGameState {
+		const entityValues: { [index: string]: GroupedEntityValues } = {}
 		for (const [entity] of state.EntityValues.Entities)
 			entityValues[entity] = state.EntityValues.GroupFor(entity)
 		return {
@@ -175,7 +175,7 @@ export class SerialisableGameState {
 			},
 			Globals: state.Globals,
 			EntityValues: entityValues,
-			Regions: Array.from(state.Regions, ([, value]) => SerialisableRegion.From(value, config)),
+			Regions: Array.from(state.Regions, ([, value]) => SerialisableRegion.From(value, config ?? undefined)),
 			Players: Object.fromEntries(state.Players.entries()),
 		}
 	}

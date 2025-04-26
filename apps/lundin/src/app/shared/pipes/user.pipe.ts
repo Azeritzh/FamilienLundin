@@ -3,7 +3,10 @@ import { User } from "@lundin/api-interfaces"
 import { map } from "rxjs/operators"
 import { UserService } from "../../services/user.service"
 
-@Pipe({ name: "user" })
+@Pipe({
+	name: "user",
+	standalone: false,
+})
 export class UserPipe implements PipeTransform {
 	constructor(private userService: UserService) { }
 	transform(id: number) {

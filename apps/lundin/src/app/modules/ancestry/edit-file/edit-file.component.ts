@@ -6,10 +6,11 @@ import { NavigationService } from "../../../services/navigation.service"
 	selector: "lundin-edit-file",
 	templateUrl: "./edit-file.component.html",
 	styleUrls: ["./edit-file.component.scss", "../../../styles/popup-box.scss"],
+	standalone: false,
 })
 export class EditFileComponent {
-	personId: number
-	file: PersonFile
+	personId!: number
+	file!: PersonFile
 
 	constructor(
 		private navigationService: NavigationService,

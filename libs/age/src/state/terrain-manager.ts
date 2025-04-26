@@ -3,7 +3,7 @@ import { Box } from "../values/box"
 import { FieldRegion, RegionCoordsFor } from "./field-region"
 
 export interface ITerrainManager<Field> {
-	WorldBounds: Box
+	WorldBounds: Box | null
 
 	Get(x: number, y: number, z?: number): Field
 	Set(x: number, y: number, z: number, field: Field): void
@@ -20,7 +20,7 @@ export class TerrainManager<Field, Region extends FieldRegion<Field>> implements
 		private DefaultBlock: Field,
 		private Regions: Map<string, Region>,
 		private UpdatedBlocks = new Map<string, Field>(),
-		public WorldBounds: Box = null, // TODO: do this differently. See also LoadStateLogic
+		public WorldBounds: Box | null = null, // TODO: do this differently. See also LoadStateLogic
 	) { }
 
 	public GetAt(position: Vector3) {
@@ -91,7 +91,7 @@ export class TerrainManager<Field, Region extends FieldRegion<Field>> implements
 	}
 
 	/** Iterates through all fields, and returns the position and field */
-	public *AllFields() {
+	/*public *AllFields() {
 		for (const [coords, region] of this.Regions) {
 			const [regionX, regionY, regionZ] = coords.split(",").map(x => +x)
 			for (const z of range(0, this.RegionSize.z))
@@ -99,7 +99,7 @@ export class TerrainManager<Field, Region extends FieldRegion<Field>> implements
 					for (const x of range(0, this.RegionSize.x))
 						yield { position: this.getGlobalPosition(x, y, z, regionX, regionY, regionZ), field: region[this.chunkIndexFor(x, y, z)] }
 		}
-	}
+	}*/
 
 	/** Takes a local position and returns the corresponding chunk index */
 	private chunkIndexFor(x: number, y: number, z: number) {

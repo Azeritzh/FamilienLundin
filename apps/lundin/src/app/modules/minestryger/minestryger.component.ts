@@ -7,12 +7,13 @@ import { MinestrygerService } from "./minestryger.service"
 	selector: "lundin-minestryger",
 	templateUrl: "./minestryger.component.html",
 	styleUrls: ["./minestryger.component.scss"],
+	standalone: false,
 })
 export class MinestrygerComponent implements OnInit, OnDestroy {
-	@ViewChild("gameHost", { static: true }) gameHost: ElementRef<HTMLDivElement>
-	private game: Minestryger
-	private display: MinestrygerDisplay
-	private input: MinestrygerInput
+	@ViewChild("gameHost", { static: true }) gameHost!: ElementRef<HTMLDivElement>
+	private game!: Minestryger
+	private display!: MinestrygerDisplay
+	private input!: MinestrygerInput
 
 	private enableRegistering = true
 
@@ -71,20 +72,22 @@ export class MinestrygerComponent implements OnInit, OnDestroy {
 	}
 
 	private registerScore() {
+		const finishTime = this.game.state.finishTime ?? 1_000_000
 		const score = {
-			time: this.game.state.finishTime,
+			time: finishTime,
 			date: new Date().toISOString(),
 			type: `${this.game.config.width}-${this.game.config.height}-${this.game.config.bombs}-${this.game.state.hasUsedFlags ? "f" : "n"}`,
 		}
 		if (this.enableRegistering)
 			this.minestrygerService.registerScore(score)
-		const time = (this.game.state.finishTime / 1000).toLocaleString(undefined, { minimumFractionDigits: 2 })
+		const time = (finishTime / 1000).toLocaleString(undefined, { minimumFractionDigits: 2 })
 		this.navigationService.showMessage(`Du har vundet! Endelig tid: ${time} sekunder`)
 	}
 
 	private exposeGame = () => {
 		const exposed: any = {}
-		window["minestryger"] = exposed
+		const win: any = window
+		win["minestryger"] = exposed
 		exposed.game = this.game
 		exposed.board = this.game.state.board
 		exposed.startNewGame = (width?: number, height?: number, bombs?: number) => {

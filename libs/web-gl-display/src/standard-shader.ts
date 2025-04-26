@@ -24,13 +24,13 @@ gl_FragColor = texture2D(uImage, vTexCoord) * uColor;
 export class StandardShader extends GenericShader {
 	constructor(
 		gl: WebGL2RenderingContext,
-		public aPositionLocation?: number,
-		public aTexCoordLocation?: number,
-		public uImageLocation?: WebGLUniformLocation,
-		public uColorLocation?: WebGLUniformLocation,
-		public uWorldLocation?: WebGLUniformLocation,
-		public uObjectLocation?: WebGLUniformLocation,
-		public uFrameLocation?: WebGLUniformLocation,
+		public aPositionLocation = 0,
+		public aTexCoordLocation = 0,
+		public uImageLocation: WebGLUniformLocation | null = null,
+		public uColorLocation: WebGLUniformLocation | null = null,
+		public uWorldLocation: WebGLUniformLocation | null = null,
+		public uObjectLocation: WebGLUniformLocation | null = null,
+		public uFrameLocation: WebGLUniformLocation | null = null,
 	) {
 		super(gl, vertexShader, fragmentShader)
 		this.aPositionLocation = gl.getAttribLocation(this.program, "aPosition")

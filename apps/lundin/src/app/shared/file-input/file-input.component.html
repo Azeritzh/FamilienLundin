@@ -1,13 +1,16 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div id="file-box"
 	(click)="clickThrough(fileInput)"
 	(dragover)="fileDragHover($event)"
 	(dragleave)="fileDragHover($event)"
 	(drop)="fileSelectHandler(handleFiles)($event)">
-	<img src="/assets/images/icons/DropFiles_icon.svg">
+	<img src="/assets/images/icons/DropFiles_icon.svg"
+	alt="todo" />
 	Vælg en fil eller træk den herind
 	<input #fileInput
 		id="file-input"
 		style="display: none;"
 		type="file"
-		(change)="handleFiles($event.target.files)" />
+		(change)="handleFiles($event)" />
 </div>

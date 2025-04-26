@@ -41,17 +41,17 @@ export abstract class BaseInputParser<Input> {
 	}
 
 	public BoolStateFor(input: Input) {
-		return this.ActionStates.get(input) > 0.5
+		return this.ActionStates.get(input) ?? 0 > 0.5
 	}
 
 	public HasJustBeenPressed(input: Input) {
-		return this.ActionStates.get(input) > 0.5
-			&& this.PreviousStates.get(input) <= 0.5
+		return (this.ActionStates.get(input) ?? 0) > 0.5
+			&& (this.PreviousStates.get(input) ?? 0) <= 0.5
 	}
 
 	public HasJustBeenReleased(input: Input) {
-		return this.ActionStates.get(input) <= 0.5
-			&& this.PreviousStates.get(input) > 0.5
+		return (this.ActionStates.get(input) ?? 0) <= 0.5
+			&& (this.PreviousStates.get(input) ?? 0) > 0.5
 	}
 }
 

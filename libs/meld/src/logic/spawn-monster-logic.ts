@@ -41,7 +41,7 @@ export class SpawnMonsterLogic implements GameLogic<GameUpdate> {
 			const position = this.Position.Of(player) ?? Vector3.Zero
 			const regionCoords = RegionCoordsFor(Math.floor(position.X), Math.floor(position.Y), Math.floor(position.Z), this.Config.Constants.RegionSize())
 			if (this.State.Regions.has(regionCoords.stringify()))
-				yield this.State.Regions.get(regionCoords.stringify())
+				yield this.State.Regions.get(regionCoords.stringify())!
 		}
 	}
 }

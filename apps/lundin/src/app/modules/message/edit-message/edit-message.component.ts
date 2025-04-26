@@ -7,9 +7,10 @@ import { MessageService } from "../message.service"
 	selector: "lundin-edit-message",
 	templateUrl: "./edit-message.component.html",
 	styleUrls: ["./edit-message.component.scss", "../../../styles/popup-box.scss"],
+	standalone: false,
 })
 export class EditMessageComponent {
-	threadId: number
+	threadId = 0
 	title = ""
 	content = ""
 

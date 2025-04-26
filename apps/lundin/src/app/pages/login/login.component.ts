@@ -5,7 +5,8 @@ import { NavigationService } from "../../services/navigation.service"
 @Component({
 	selector: "lundin-login",
 	templateUrl: "./login.component.html",
-	styleUrls: ["./login.component.scss"]
+	styleUrls: ["./login.component.scss"],
+	standalone: false,
 })
 export class LoginComponent {
 	title = "Velkommen til Familien Lundin"

@@ -36,7 +36,7 @@ export class RenderendGame extends GameRunner<RenderendAction> {
 		this.displayProvider.setSize(width, height)
 	}
 
-	onDestroy() {
+	override onDestroy() {
 		super.onDestroy()
 		this.resizeObserver.disconnect()
 	}

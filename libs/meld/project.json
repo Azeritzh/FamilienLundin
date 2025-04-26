@@ -1,31 +1,19 @@
 {
+	"name": "meld",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/meld/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
-			"options": {
-				"lintFilePatterns": ["libs/meld/src/**/*.ts"]
-			},
-			"outputs": ["{options.outputFile}"]
-		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"options": {
-				"jestConfig": "libs/meld/jest.config.ts",
-				"passWithNoTests": true
-			}
-		},
 		"build": {
-      "executor": "@nrwl/node:webpack",
-      "options": {
-        "outputPath": "dist/meld",
-        "main": "libs/meld/src/index.ts",
-        "tsConfig": "libs/meld/tsconfig.lib.json",
-        "project": "libs/meld/package.json",
-        "webpackConfig": "libs/meld/webpack.config.js"
-      }
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/libs/meld",
+				"main": "libs/meld/src/index.ts",
+				"tsConfig": "libs/meld/tsconfig.lib.json",
+				"assets": ["libs/meld/*.md"]
+			}
 		}
-	},
-	"tags": []
+	}
 }

@@ -49,7 +49,7 @@ import { SharedModule } from "./shared/shared.module"
 		CryptModule,
 		FormsModule,
 		GalleryModule,
-		HttpClientModule,
+		//HttpClientModule,
 		KingdomsModule,
 		MediaModule,
 		MeldModule,

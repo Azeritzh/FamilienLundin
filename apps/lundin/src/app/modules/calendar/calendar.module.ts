@@ -19,7 +19,7 @@ import { CalendarComponent } from "./calendar/calendar.component"
 	imports: [
 		AppRoutingModule,
 		BrowserModule,
-		HttpClientModule,
+		//HttpClientModule,
 		SharedModule,
 	],
 	providers: [CalendarService],

@@ -1,27 +1,17 @@
 {
-	"sourceRoot": "apps/lundin-e2e/src",
-	"projectType": "application",
-	"architect": {
-		"e2e": {
-			"builder": "@nrwl/cypress:cypress",
-			"options": {
-				"cypressConfig": "apps/lundin-e2e/cypress.json",
-				"devServerTarget": "lundin:serve"
-			},
-			"configurations": {
-				"production": {
-					"devServerTarget": "lundin:serve:production"
-				}
-			}
-		},
-		"lint": {
-			"builder": "@nrwl/linter:eslint",
-			"options": {
-				"lintFilePatterns": ["apps/lundin-e2e/**/*.{js,ts}"]
-			},
-			"outputs": ["{options.outputFile}"]
-		}
-	},
-	"tags": [],
-	"implicitDependencies": ["lundin"]
+  "name": "lundin-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "implicitDependencies": ["api"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
+      "options": {
+        "jestConfig": "apps/lundin-e2e/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "dependsOn": ["api:build"]
+    }
+  }
 }

@@ -6,12 +6,12 @@ import { Block, Blocks } from "./block"
 import { EntityValues, GroupedEntityValues, SerialisableEntities } from "./entity-values"
 import { OverworldGeneration } from "./overworld-generation"
 
-export class Region extends FieldRegion<Block>{
+export class Region extends FieldRegion<Block> {
 	constructor(
-		public Size: GridVector,
-		public ChunkSize: GridVector,
-		public Offset: GridVector,
-		public Chunks: BlockChunk<Block>[],
+		public override Size: GridVector,
+		public override ChunkSize: GridVector,
+		public override Offset: GridVector,
+		public override Chunks: BlockChunk<Block>[],
 		public EntityValues: EntityValues,
 		public EntitiesToBeCreated: Map<Id, GroupedEntityValues>,
 		public OverworldGeneration: OverworldGeneration,
@@ -88,14 +88,14 @@ export class SerialisableRegion {
 			new Vector3(0, 0, 0),
 			new Vector3(0, 0, 0),
 			new Vector3(0, 0, 0),
-			source.Chunks.map(x => SerialisableBlockChunk.From(x)),
+			source.Chunks.map((x: any) => SerialisableBlockChunk.From(x)),
 			SerialisableEntities.From(source.EntityValues),
 			source.EntitiesToBeCreated,
 			source.OverworldGeneration,
 		)
 	}
 
-	public static From(state: Region, config: GameConfig = null): SerialisableRegion {
+	public static From(state: Region, config: GameConfig | null = null): SerialisableRegion {
 		return new SerialisableRegion(
 			new Version(
 				config?.EntityTypeMap ?? new TypeMap(),
@@ -177,8 +177,8 @@ export class SerialisableBlockChunk {
 	private MapBlock(block: Block, solidMapping: Map<Id, Id>, nonSolidMapping: Map<Id, Id>): Block {
 		return Blocks.New(
 			Blocks.TypeOf(block),
-			solidMapping.get(Blocks.SolidOf(block)),
-			nonSolidMapping.get(Blocks.NonSolidOf(block)),
+			solidMapping.get(Blocks.SolidOf(block))!,
+			nonSolidMapping.get(Blocks.NonSolidOf(block))!,
 			Blocks.VariantOf(block)
 		)
 	}

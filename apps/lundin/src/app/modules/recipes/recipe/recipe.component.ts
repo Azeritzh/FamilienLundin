@@ -8,7 +8,8 @@ import { RecipesService } from "../recipes.service"
 @Component({
 	selector: "lundin-recipe",
 	templateUrl: "./recipe.component.html",
-	styleUrls: ["./recipe.component.scss"]
+	styleUrls: ["./recipe.component.scss"],
+	standalone: false,
 })
 export class RecipeComponent implements OnInit {
 	recipe = <Recipe>{}
@@ -21,9 +22,9 @@ export class RecipeComponent implements OnInit {
 
 	ngOnInit() {
 		this.activatedRoute.paramMap.subscribe(async params => {
-			const id = +params.get("id")
+			const id = +(params.get("id") ?? 0)
 			const recipes = await this.recipesService.getRecipes()
-			this.recipe = recipes.find(x => x._id === id)
+			this.recipe = recipes.find(x => x._id === id) ?? <Recipe>{}
 		})
 	}
 

@@ -4,7 +4,7 @@ export class NoughtsAndCrossesState implements GameState {
 	constructor(
 		public board = new GameGrid<NoughtsAndCrossesPiece>(3, 3),
 		public currentPlayer: NoughtsAndCrossesPiece.Nought | NoughtsAndCrossesPiece.Cross = NoughtsAndCrossesPiece.Cross,
-		public tick: number = 0,
+		public tick = 0,
 	) { }
 
 	setPiece(piece: NoughtsAndCrossesPiece, x: number, y: number) {

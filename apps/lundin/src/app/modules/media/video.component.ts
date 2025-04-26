@@ -4,11 +4,12 @@ import { Component, ElementRef, ViewChild } from "@angular/core"
 	selector: "lundin-video",
 	templateUrl: "./video.component.html",
 	styleUrls: ["./video.component.scss"],
+	standalone: false,
 })
 export class VideoComponent {
-	@ViewChild("videoPlayer") videoPlayer: ElementRef<HTMLAudioElement>
-	videoLibrary = []
-	currentVideo: Video = null
+	@ViewChild("videoPlayer") videoPlayer!: ElementRef<HTMLAudioElement>
+	videoLibrary: any[] = []
+	currentVideo: Video | null = null
 
 	constructor() {
 		fetch("/api/video/get-library")

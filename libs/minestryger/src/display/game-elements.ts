@@ -2,8 +2,8 @@ import { DisplayConfig } from "../minestryger-display"
 import { Minestryger } from "../minestryger"
 
 export class GameElements {
-	public canvas: HTMLCanvasElement
-	private timerId: number
+	public canvas!: HTMLCanvasElement
+	private timerId: number | null = null
 
 	constructor(
 		public game: Minestryger,
@@ -21,14 +21,14 @@ export class GameElements {
 	}
 
 	initialise() {
-		this.elements["time"] = document.getElementById("time")
-		this.elements["button"] = document.getElementById("new-game-button")
-		this.elements["remaining-bombs"] = document.getElementById("remaining-bombs")
+		this.elements["time"] = document.getElementById("time")!
+		this.elements["button"] = document.getElementById("new-game-button")!
+		this.elements["remaining-bombs"] = document.getElementById("remaining-bombs")!
 		this.timerId = window.setInterval(this.updateTime, 500)
 	}
 
 	onDestroy() {
-		window.clearInterval(this.timerId)
+		window.clearInterval(this.timerId!)
 	}
 
 	show() {

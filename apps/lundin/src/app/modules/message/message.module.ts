@@ -22,7 +22,7 @@ import { MessageService } from "./message.service"
 	imports: [
 		AppRoutingModule,
 		BrowserModule,
-		HttpClientModule,
+		//HttpClientModule,
 		MarkdownModule.forRoot(),
 		SharedModule,
 	],

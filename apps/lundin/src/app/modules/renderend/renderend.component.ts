@@ -5,10 +5,11 @@ import { RenderendGame } from "@lundin/renderend"
 	selector: "lundin-renderend",
 	templateUrl: "./renderend.component.html",
 	styleUrls: ["./renderend.component.scss"],
+	standalone: false,
 })
 export class RenderendComponent implements OnInit, OnDestroy {
-	@ViewChild("gameHost", { static: true }) gameHost: ElementRef<HTMLDivElement>
-	private game: RenderendGame
+	@ViewChild("gameHost", { static: true }) gameHost!: ElementRef<HTMLDivElement>
+	private game!: RenderendGame
 
 	constructor(private ngZone: NgZone) { }
 

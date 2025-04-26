@@ -7,7 +7,6 @@
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"resolveJsonModule": true,
 		"importHelpers": true,
 		"target": "es2020",
 		"module": "esnext",
@@ -15,6 +14,7 @@
 		"skipLibCheck": true,
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
+		"resolveJsonModule": true,
 		"paths": {
 			"@lundin/age": ["libs/age/src/index.ts"],
 			"@lundin/agentia": ["libs/agentia/src/index.ts"],

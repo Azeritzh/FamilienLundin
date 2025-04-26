@@ -2,7 +2,7 @@ import { DisplayConfig, DisplayState } from "../minestryger-display"
 import { Minestryger } from "../minestryger"
 
 export class SettingsElements {
-	public canvas: HTMLCanvasElement
+	public canvas!: HTMLCanvasElement
 
 	constructor(
 		public game: Minestryger,
@@ -94,8 +94,8 @@ export class SettingsElements {
 		this.registerElement("medium-button")
 		this.registerElement("hard-button")
 		this.registerElement("flags")
-		document.getElementById("advanced-button").onclick = this.toggleAdvanced
-		this.registerElement("advanced-settings").style.display = "none"
+		document.getElementById("advanced-button")!.onclick = this.toggleAdvanced
+		this.registerElement("advanced-settings")!.style.display = "none"
 		this.registerElement("width")
 		this.registerElement("height")
 		this.registerElement("bombs")
@@ -105,7 +105,7 @@ export class SettingsElements {
 	}
 
 	private registerElement(id: string) {
-		return this.elements[id] = document.getElementById(id)
+		return this.elements[id] = document.getElementById(id)!
 	}
 
 	private toggleAdvanced = () => {

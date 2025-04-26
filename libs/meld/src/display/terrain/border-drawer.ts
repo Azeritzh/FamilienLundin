@@ -9,7 +9,7 @@ export class BorderDrawer {
 		private Config: DisplayConfig,
 		private Camera: Camera,
 	) { }
-	BlockContext: BlockContext
+	BlockContext!: BlockContext
 
 	Draw(context: BlockContext) {
 		this.BlockContext = context
@@ -121,8 +121,8 @@ export class BorderDrawer {
 	private TileOverlayFor(direction: Side) {
 		const solidType = Blocks.SolidOf(this.BlockContext.Block)
 		const tileOverlays = this.Config.BlockTileOverlays.has(solidType)
-			? this.Config.BlockTileOverlays.get(solidType)
-			: this.Config.DefaultTileOverlays
+			? this.Config.BlockTileOverlays.get(solidType)!
+			: this.Config.DefaultTileOverlays!
 		switch (direction) {
 			case Side.Bottom: return tileOverlays.TileOverlayBottom
 			case Side.Top: return tileOverlays.TileOverlayTop
@@ -138,22 +138,26 @@ export class BorderDrawer {
 	private HalfWallOverlayFor(direction: Side) {
 		const solidType = Blocks.SolidOf(this.BlockContext.Block)
 		const wallOverlays = this.Config.BlockWallOverlays.has(solidType)
-			? this.Config.BlockWallOverlays.get(solidType)
-			: this.Config.DefaultWallOverlays
+			? this.Config.BlockWallOverlays.get(solidType)!
+			: this.Config.DefaultWallOverlays!
 		switch (direction) {
 			case Side.Left: return this.Camera.IsDiagonalView() ? wallOverlays.DiagonalHalfWallOverlayLeft : wallOverlays.StraightHalfWallOverlayLeft
-			case Side.Right: return this.Camera.IsDiagonalView() ? wallOverlays.DiagonalHalfWallOverlayRight : wallOverlays.StraightHalfWallOverlayRight
+			case Side.Right:
+			default:
+				return this.Camera.IsDiagonalView() ? wallOverlays.DiagonalHalfWallOverlayRight : wallOverlays.StraightHalfWallOverlayRight
 		}
 	}
 
 	private FullWallOverlayFor(direction: Side) {
 		const solidType = Blocks.SolidOf(this.BlockContext.Block)
 		const wallOverlays = this.Config.BlockWallOverlays.has(solidType)
-			? this.Config.BlockWallOverlays.get(solidType)
-			: this.Config.DefaultWallOverlays
+			? this.Config.BlockWallOverlays.get(solidType)!
+			: this.Config.DefaultWallOverlays!
 		switch (direction) {
 			case Side.Left: return this.Camera.IsDiagonalView() ? wallOverlays.DiagonalFullWallOverlayLeft : wallOverlays.StraightFullWallOverlayLeft
-			case Side.Right: return this.Camera.IsDiagonalView() ? wallOverlays.DiagonalFullWallOverlayRight : wallOverlays.StraightFullWallOverlayRight
+			case Side.Right:
+			default:
+				return this.Camera.IsDiagonalView() ? wallOverlays.DiagonalFullWallOverlayRight : wallOverlays.StraightFullWallOverlayRight
 		}
 	}
 }

@@ -11,6 +11,7 @@ import { MessageService } from "../message.service"
 	selector: "lundin-message-thread",
 	templateUrl: "./message-thread.component.html",
 	styleUrls: ["./message-thread.component.scss"],
+	standalone: false,
 })
 export class MessageThreadComponent implements OnInit {
 	thread = <MessageThread>{}
@@ -24,13 +25,13 @@ export class MessageThreadComponent implements OnInit {
 
 	ngOnInit() {
 		this.activatedRoute.paramMap.subscribe(async params => {
-			const threadId = +params.get("id")
+			const threadId = +(params.get("id") ?? 0)
 			this.thread = await this.messageService.getFullThread(threadId)
 		})
 	}
 
 	canEdit() {
-		return this.thread.authorId === this.authService.loginInfo.userId
+		return this.thread.authorId === this.authService.loginInfo?.userId
 	}
 
 	async addResponse() {

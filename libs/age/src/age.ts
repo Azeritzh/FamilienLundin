@@ -9,7 +9,7 @@ export class AgEngine<GameAction> {
 		private readonly state: GameState,
 	) { }
 
-	update(...actions: GameAction[]): string[] {
+	update(...actions: GameAction[]): string[] | null {
 		const problems = this.validate(actions)
 		if (problems)
 			return problems
@@ -23,6 +23,7 @@ export class AgEngine<GameAction> {
 			if (problems)
 				return problems
 		}
+		return null
 	}
 
 	private performLogic(actions: GameAction[]) {

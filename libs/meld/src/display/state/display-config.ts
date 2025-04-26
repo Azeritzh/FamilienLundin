@@ -8,26 +8,26 @@ import { updatesPerSecond } from "../../meld-game"
 import { GameConfig } from "../../config/game-config"
 
 export class DisplayConfig {
-	RenderToVirtualSize: boolean
-	VirtualPixelsPerTile: number
-	VirtualHeight: number
-	WallDisplayHeight: number
-	DisplayDepth: number
-	TransparencyRadius: number
-	TransparencyAlpha: number
-	BlockingTransparencyRadius: number
-	BlockingTransparencyAlpha: number
-	AssetFolder: string
+	RenderToVirtualSize!: boolean
+	VirtualPixelsPerTile!: number
+	VirtualHeight!: number
+	WallDisplayHeight!: number
+	DisplayDepth!: number
+	TransparencyRadius!: number
+	TransparencyAlpha!: number
+	BlockingTransparencyRadius!: number
+	BlockingTransparencyAlpha!: number
+	AssetFolder!: string
 
-	DefaultTileOverlays: BlockTileOverlays
-	DefaultWallOverlays: BlockWallOverlays
-	BlockSprites: Map<SolidId, BlockSprites[]>
-	BlockTileOverlays: Map<SolidId, BlockTileOverlays>
-	BlockWallOverlays: Map<SolidId, BlockWallOverlays>
-	EntitySprites: Map<TypeId, EntitySprites>
-	ItemSprites: Map<ItemTypeId, string>
-	GameplaySprites: GameplaySprites
-	Sprites: { [index: string]: SpriteInfo }
+	DefaultTileOverlays!: BlockTileOverlays
+	DefaultWallOverlays!: BlockWallOverlays
+	BlockSprites!: Map<SolidId, BlockSprites[]>
+	BlockTileOverlays!: Map<SolidId, BlockTileOverlays>
+	BlockWallOverlays!: Map<SolidId, BlockWallOverlays>
+	EntitySprites!: Map<TypeId, EntitySprites>
+	ItemSprites!: Map<ItemTypeId, string>
+	GameplaySprites!: GameplaySprites
+	Sprites!: { [index: string]: SpriteInfo }
 
 	public static From(gameConfig: GameConfig, deserialised: SerialisableDisplayConfig): DisplayConfig {
 
@@ -37,21 +37,21 @@ export class DisplayConfig {
 				gameConfig.SolidTypeMap.TypeIdFor(key),
 				deserialised.BlockSprites[key].map(x => BlockSprites.From(x, gameConfig.SolidTypeMap))
 			)
-	
+
 		const blockTileOverlays = new Map<SolidId, BlockTileOverlays>()
 		for (const key in deserialised.BlockTileOverlays)
 			blockTileOverlays.set(
 				gameConfig.SolidTypeMap.TypeIdFor(key),
 				Object.assign(new BlockTileOverlays(), deserialised.BlockTileOverlays[key])
 			)
-	
+
 		const blockWallOverlays = new Map<SolidId, BlockWallOverlays>()
 		for (const key in deserialised.BlockWallOverlays)
 			blockWallOverlays.set(
 				gameConfig.SolidTypeMap.TypeIdFor(key),
 				Object.assign(new BlockWallOverlays(), deserialised.BlockWallOverlays[key])
 			)
-	
+
 		const entitySprites = new Map<TypeId, EntitySprites>()
 		for (const key in deserialised.EntitySprites) {
 			const entry = deserialised.EntitySprites[key]
@@ -63,19 +63,19 @@ export class DisplayConfig {
 			)
 			entitySprites.set(gameConfig.EntityTypeMap.TypeIdFor(key), sprites)
 		}
-	
+
 		const itemSprites = new Map<ItemTypeId, string>()
 		for (const key in deserialised.ItemSprites)
 			itemSprites.set(
 				gameConfig.ItemTypeMap.TypeIdFor(key),
 				deserialised.ItemSprites[key]
 			)
-	
+
 		const defaultSpriteTypes = deserialised.DefaultSpriteTypes ?? {}
-		const sprites = {}
+		const sprites: { [index: string]: SpriteInfo } = {}
 		for (const key in deserialised.Sprites)
 			sprites[key] = spriteInfoFrom(key, deserialised.Sprites[key], defaultSpriteTypes)
-	
+
 		return {
 			RenderToVirtualSize: deserialised.RenderToVirtualSize ?? true,
 			VirtualPixelsPerTile: deserialised.VirtualPixelsPerTile ?? 16,
@@ -87,7 +87,7 @@ export class DisplayConfig {
 			BlockingTransparencyRadius: deserialised.BlockingTransparencyRadius ?? 10,
 			BlockingTransparencyAlpha: deserialised.BlockingTransparencyAlpha ?? 0.2,
 			AssetFolder: deserialised.AssetFolder ?? "assets/",
-	
+
 			DefaultTileOverlays: Object.assign(new BlockTileOverlays(), deserialised.DefaultTileOverlays ?? {}),
 			DefaultWallOverlays: Object.assign(new BlockWallOverlays(), deserialised.DefaultWallOverlays ?? {}),
 			BlockSprites: blockSprites,
@@ -114,7 +114,7 @@ export class GameplaySprites {
 	static From(source: any) {
 		const model = new GameplaySprites()
 		for (const prop in source)
-			model[prop] = source[prop]
+			(<any>model)[prop] = source[prop]
 		model.BlockMarker = ToClass(model.BlockMarker, BlockMarkerSprites)
 		model.Dash = ToClass(model.Dash, DashSprites)
 		model.Shadow = ToClass(model.Shadow, ShadowSprites)
@@ -208,7 +208,7 @@ export function spriteInfoFrom(
 	serialised: SerialisedSpriteInfo,
 	defaultSpriteTypes: { [index: string]: SerialisedSpriteInfo },
 ): SpriteInfo {
-	const defaults = defaultSpriteTypes[serialised.type]
+	const defaults = defaultSpriteTypes[serialised.type!]
 	const frameInterval = serialised.frameInterval ?? defaults?.frameInterval ?? 0
 	return {
 		path: serialised.path ?? name,

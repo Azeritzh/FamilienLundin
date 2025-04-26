@@ -7,6 +7,7 @@ import { MessageService } from "../message.service"
 	selector: "lundin-add-message",
 	templateUrl: "./add-message.component.html",
 	styleUrls: ["./add-message.component.scss", "../../../styles/popup-box.scss"],
+	standalone: false,
 })
 export class AddMessageComponent {
 	threadId?: number
@@ -33,7 +34,7 @@ export class AddMessageComponent {
 			content: this.content,
 			creationTime: new Date().toISOString(),
 		}
-		await this.messageService.addResponse(this.threadId, message)
+		await this.messageService.addResponse(this.threadId ?? 0, message) // TODO: ?? 0
 		this.router.navigateByUrl("messages/" + this.threadId)
 	}
 

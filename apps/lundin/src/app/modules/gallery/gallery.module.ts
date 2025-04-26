@@ -20,7 +20,7 @@ import { AppRoutingModule } from "../../app-routing.module"
 	imports: [
 		AppRoutingModule,
 		BrowserModule,
-		HttpClientModule,
+		//HttpClientModule,
 		MarkdownModule.forRoot(),
 		SharedModule,
 	],

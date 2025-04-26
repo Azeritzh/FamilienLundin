@@ -7,7 +7,7 @@ import { DisplayArea } from "../services/camera"
 export class DisplayState {
 	constructor(
 		public Size: ScreenSize,
-		public PlayerName: string = "",
+		public PlayerName = "",
 
 		// Camera
 		public CameraFocus = new Vector3(0, 0, 0),

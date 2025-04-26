@@ -1,36 +1,101 @@
-# Lundin
+# Familienlundin
 
-Dette er koden bag FamilienLundin siden. Den er bygget med [Nx](https://nx.dev), og består af en [Angular](https://angular.io) frontend og en [NestJs](https://nestjs.com) backend.
+<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
-## Opsætning
+✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
 
-For at arbejde på projektet skal der bruges en række programmer. Sørg for at have installeret [git](https://git-scm.com/), [Node.js](https://nodejs.org) og [Yarn](https://yarnpkg.com/), og eventuelt [Visual Studio Code]() til at programmere i. Yarn er lidt speciel med hensyn til installering: man skal først installere Node, og derefter åbne en terminal og køre `npm install -g yarn`.
+[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/nest?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
 
-For at komme igang skal projektet først downloades. Åbn en terminal i den mappe, det skal ligge i, og kør `git clone https://github.com/Azeritzh/FamilienLundin.git` for at hente det ned. Resten skal foregå inde fra den mappe, så navigér derind i terminalen med `cd FamilienLundin`. Nu er næste trin at hente de biblioteker og værktøjer projektet har brug for; det sker ved at køre `yarn`. Når den en gang er færdig, er projektet klar til brug.
+## Run tasks
 
-## Struktur
+To run the dev server for your app, use:
 
-Dette er et såkaldt "monorepo", hvilket vil sige at det er et enkelt repository som indeholder adskillige projekter. De primære projekter vi har er frontenden, som findes under `apps/lundin` og backenden, som findes under `apps/api`. Derudover er der en `libs` mappe til diverse kodebiblioteker (det kunne f.eks. være logikken bag et spil).
-
-## Udvikling
-
-For at kunne køre og teste det kode man skriver, må man starte både backend og frontend. Kør backend med `yarn nx serve api` og frontend med `yarn nx serve lundin` (det kræver hver sin terminal. Ting der kører i en terminal kan stoppes igen med Ctrl+C). Derefter er siden tilgængelig på localhost:4200 i en browser. Siden kræver login, og der følger ingen data-filer med i projektet, så der skal oprettes en test bruger for at kunne logge ind. Det kan gør man ved at navigere til `localhost:3333/api/user/add-basic`.
-
-Testing sker via `yarn test [projektnavn]`, så for eksempel `yarn test lundin` for at teste frontenden. Alting testes på en gang med `yarn fulltest`.
-
-## Produktion
-
-Production håndteres ved at clone projektet på serveren, navigere ind i mappen og køre `yarn install --production` og derefter køre `./deploy-production.sh` (det kræver at man har kørt `build-production.bat` og committed det). Serveren startes med `nohup node dist/apps/api/main.js &` (`&` starter det som en baggrundsprocess, og `nohup` sørger for den ikke stopper når sessionen gør). Process id'en kan findes med `ps -x`, som viser kørende processer, og serveren stoppes så med `kill 1234` (hvor 1234 er processens id).
-
-Skridt:
+```sh
+npx nx serve lundin
 ```
-ssh pi@123.123.123.123
-// skriv kode
-ps -x
-// find pid
-kill 1234
-cd FamilienLundin
-git pull
-./deploy-production.sh
-nohup node dist/apps/api/main.js &
+
+To create a production bundle:
+
+```sh
+npx nx build lundin
 ```
+
+To see all available targets to run for a project, run:
+
+```sh
+npx nx show project lundin
+```
+
+These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+
+[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## Add new projects
+
+While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+
+Use the plugin's generator to create new projects.
+
+To generate a new application, use:
+
+```sh
+npx nx g @nx/nest:app demo
+```
+
+To generate a new library, use:
+
+```sh
+npx nx g @nx/node:lib mylib
+```
+
+You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+
+[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## Set up CI!
+
+### Step 1
+
+To connect to Nx Cloud, run the following command:
+
+```sh
+npx nx connect
+```
+
+Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+
+- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+### Step 2
+
+Use the following command to configure a CI workflow for your workspace:
+
+```sh
+npx nx g ci-workflow
+```
+
+[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## Install Nx Console
+
+Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+
+[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## Useful links
+
+Learn more:
+
+- [Learn more about this workspace setup](https://nx.dev/nx-api/nest?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
+- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+And join the Nx community:
+- [Discord](https://go.nx.dev/community)
+- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
+- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
+- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)

@@ -8,12 +8,12 @@
 <ng-container *ngIf="currentTopScoreSet$() | async as topScores">
 	<ng-container *ngFor="let category of topScoreCategories">
 		<h2>{{category.title}}</h2>
-		<div *ngFor="let score of topScores[category.key]"
+		<div *ngFor="let score of topscores(topScores, category.key)"
 			[title]="score.date | date:'yyyy-MM-dd HH:mm'">
 			<span class="name">{{score.userId | user | async}}:</span>
 			<span class="time">{{score.time / 1000 | number:'1.2-2'}}s</span>
 		</div>
-		<div *ngIf="topScores[category.key].length === 0">
+		<div *ngIf="topscores(topScores, category.key).length === 0">
 			Ingen tider
 		</div>
 	</ng-container>

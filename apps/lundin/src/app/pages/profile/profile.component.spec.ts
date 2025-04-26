@@ -11,7 +11,7 @@ describe("ProfileComponent", () => {
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
 			declarations: [ProfileComponent],
-			imports: [HttpClientModule, FormsModule],
+			imports: [/*HttpClientModule,*/ FormsModule],
 			providers: [AuthService],
 		}).compileComponents()
 	}))

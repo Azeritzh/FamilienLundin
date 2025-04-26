@@ -6,6 +6,7 @@ import { GalleryService } from "../gallery.service"
 	selector: "lundin-add-image",
 	templateUrl: "./add-image.component.html",
 	styleUrls: ["./add-image.component.scss", "../../../styles/popup-box.scss"],
+	standalone: false,
 })
 export class AddImageComponent {
 

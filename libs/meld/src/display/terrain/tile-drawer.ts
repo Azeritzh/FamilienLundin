@@ -13,7 +13,7 @@ export class TileDrawer {
 		private Camera: Camera,
 		private Game: Meld,
 	) { }
-	BlockContext: BlockContext
+	BlockContext!: BlockContext
 
 	Draw(context: BlockContext) {
 		this.BlockContext = context
@@ -59,6 +59,6 @@ export class TileDrawer {
 
 	private TileSprite() {
 		const block = this.BlockContext.Block
-		return this.Config.BlockSprites.get(Blocks.SolidOf(block))[Blocks.VariantOf(block)].TileFor(this.State.ViewDirection)
+		return this.Config.BlockSprites.get(Blocks.SolidOf(block))![Blocks.VariantOf(block)].TileFor(this.State.ViewDirection)
 	}
 }

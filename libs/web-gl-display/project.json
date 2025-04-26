@@ -1,21 +1,19 @@
 {
+	"name": "web-gl-display",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/web-gl-display/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
+		"build": {
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
 			"options": {
-				"lintFilePatterns": ["libs/web-gl-display/src/**/*.ts"]
-			},
-			"outputs": ["{options.outputFile}"]
-		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"options": {
-				"jestConfig": "libs/web-gl-display/jest.config.ts",
-				"passWithNoTests": true
+				"outputPath": "dist/libs/web-gl-display",
+				"main": "libs/web-gl-display/src/index.ts",
+				"tsConfig": "libs/web-gl-display/tsconfig.lib.json",
+				"assets": ["libs/web-gl-display/*.md"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

@@ -1,21 +1,19 @@
 {
+	"name": "noughts-and-crosses",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/noughts-and-crosses/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
+		"build": {
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
 			"options": {
-				"lintFilePatterns": ["libs/noughts-and-crosses/src/**/*.ts"]
-			},
-			"outputs": ["{options.outputFile}"]
-		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"options": {
-				"jestConfig": "libs/noughts-and-crosses/jest.config.ts",
-				"passWithNoTests": true
+				"outputPath": "dist/libs/noughts-and-crosses",
+				"main": "libs/noughts-and-crosses/src/index.ts",
+				"tsConfig": "libs/noughts-and-crosses/tsconfig.lib.json",
+				"assets": ["libs/noughts-and-crosses/*.md"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

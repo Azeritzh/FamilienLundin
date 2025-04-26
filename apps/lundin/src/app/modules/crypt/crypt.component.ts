@@ -5,6 +5,7 @@ import { CryptService } from "./crypt.service"
 	selector: "lundin-crypt",
 	templateUrl: "./crypt.component.html",
 	styleUrls: ["./crypt.component.scss"],
+	standalone: false,
 })
 export class CryptComponent {
 	key = ""
@@ -15,13 +16,13 @@ export class CryptComponent {
 		cryptService.load().then(encrypted => this.encrypted = encrypted)
 	}
 
-	encrypt() {
-		this.encrypted = this.cryptService.encrypt(this.content, this.key)
+	async encrypt() {
+		this.encrypted = await this.cryptService.encrypt(this.content, this.key)
 		this.cryptService.save(this.encrypted)
 	}
 
-	decrypt() {
-		this.content = this.cryptService.decrypt(this.encrypted, this.key)
+	async decrypt() {
+		this.content = await this.cryptService.decrypt(this.encrypted, this.key)
 	}
 
 	insertTab(textarea: HTMLTextAreaElement, event: KeyboardEvent) {

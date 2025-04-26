@@ -10,7 +10,7 @@ export class InputParser extends BaseInputParser<Input> {
 	public PreviousTarget = Vector3.Zero
 	public CurrentVector = Vector2.Zero
 	public PreviousVector = Vector2.Zero
-	private Player: Id
+	private Player!: Id
 
 	constructor(
 		private Game: Meld,

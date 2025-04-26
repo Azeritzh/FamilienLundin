@@ -1,0 +1,9 @@
+{
+	"name": "@lundin/agentia",
+	"version": "0.0.1",
+	"dependencies": {
+		"tslib": "^2.3.0",
+    "@lundin/age": "0.0.1",
+    "@lundin/utility": "0.0.1"
+	}
+}

@@ -1,6 +1,8 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <header class="nav-content">
 	{{header}}
-	<div *ngIf="authService.isLoggedIn() && (authService.loginInfo?.userId | user | async) as username"
+	<div *ngIf="authService.isLoggedIn() && (authService.loginInfo?.userId ?? 0 | user | async) as username"
 		class="profile-nav-content">
 		<div class="profile-welcome-message">{{username}}</div>
 		<a routerLink="profile">
@@ -12,19 +14,22 @@
 <nav>
 	<button (click)="hideNavigation = !hideNavigation"
 		class="nav-btn collaps-btn">
-		<img [src]="hideNavigation ? '/assets/images/icons/Collapse2_icon.svg' : '/assets/images/icons/Collapse1_icon.svg'">
+		<img [src]="hideNavigation ? '/assets/images/icons/Collapse2_icon.svg' : '/assets/images/icons/Collapse1_icon.svg'"
+			alt="todo">
 		<span class="nav-text">Kollaps</span>
 	</button>
 	<a *ngFor="let entry of shownNavigationEntries()"
 		[routerLink]="entry.link"
 		class="nav-btn">
-		<img [src]="entry.imageUrl">
+		<img [src]="entry.imageUrl"
+			alt="todo">
 		<span class="nav-text">{{entry.text}}</span>
 	</a>
 	<button *ngIf="authService.isLoggedIn()"
 		(click)="logout()"
 		class="nav-btn logout-btn">
-		<img src="/assets/images/icons/LogOut_icon.svg">
+		<img src="/assets/images/icons/LogOut_icon.svg"
+			alt="todo">
 		<span class="nav-text">Log ud</span>
 	</button>
 </nav>
@@ -49,5 +54,6 @@
 	[class.hidden]="!showingMessage">
 	{{message}}
 	<img src="/assets/images/icons/Close_icon.svg"
-		(click)="closeMessage()">
+		(click)="closeMessage()"
+		alt="todo">
 </div>

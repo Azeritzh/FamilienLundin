@@ -10,7 +10,7 @@ import { CryptService } from "./crypt.service"
 	imports: [
 		BrowserModule,
 		SharedModule,
-		HttpClientModule,
+		//HttpClientModule,
 	],
 	providers: [CryptService],
 })

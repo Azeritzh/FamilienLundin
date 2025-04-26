@@ -1,21 +1,19 @@
 {
+	"name": "agentia",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/agentia/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
+		"build": {
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
 			"options": {
-				"lintFilePatterns": ["libs/agentia/**/*.ts"]
-			},
-      "outputs": ["{options.outputFile}"]
-		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"options": {
-				"jestConfig": "libs/agentia/jest.config.ts",
-				"passWithNoTests": true
+				"outputPath": "dist/libs/agentia",
+				"main": "libs/agentia/src/index.ts",
+				"tsConfig": "libs/agentia/tsconfig.lib.json",
+				"assets": ["libs/agentia/*.md"]
 			}
 		}
-	},
-	"tags": []
+	}
 }

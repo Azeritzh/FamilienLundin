@@ -8,9 +8,10 @@ import { RecipesService } from "../recipes.service"
 	selector: "lundin-recipe-form",
 	templateUrl: "./recipe-form.component.html",
 	styleUrls: ["./recipe-form.component.scss", "../../../styles/popup-box.scss"],
+	standalone: false,
 })
 export class RecipeFormComponent {
-	file: File = null
+	file: File | null = null
 	recipe: Recipe = {
 		_id: 0,
 		title: "",
@@ -34,8 +35,8 @@ export class RecipeFormComponent {
 	async save() {
 		this.navigationService.closeOverlay()
 		const { _id } = this.recipe._id
-			? await this.recipeService.updateRecipe(this.recipe, this.file)
-			: await this.recipeService.addRecipe(this.recipe, this.file)
+			? await this.recipeService.updateRecipe(this.recipe, this.file!)
+			: await this.recipeService.addRecipe(this.recipe, this.file!)
 		this.router.navigateByUrl("recipes/" + _id)
 	}
 

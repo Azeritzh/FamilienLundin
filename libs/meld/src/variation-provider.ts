@@ -12,10 +12,10 @@ export class BlockSurroundings {
 		public EastBlock: Block,
 		public SouthBlock: Block,
 		public WestBlock: Block,
-		public NorthBorder?: Block,
-		public EastBorder?: Block,
-		public SouthBorder?: Block,
-		public WestBorder?: Block,
+		public NorthBorder: Block | null = null,
+		public EastBorder: Block | null = null,
+		public SouthBorder: Block | null = null,
+		public WestBorder: Block | null = null,
 	) { }
 
 	public UpdateBorderInfo() {

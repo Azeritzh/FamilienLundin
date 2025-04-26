@@ -2,7 +2,7 @@ import { Item } from "../state/item"
 
 export class SelectableTools {
 	constructor(
-		public Items: Item[],
+		public Items: (Item | null)[],
 		public CurrentToolIndex = 0
 	) { }
 

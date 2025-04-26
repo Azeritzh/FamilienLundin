@@ -1,12 +1,12 @@
 import { range } from "@lundin/utility"
 
 export class GameGrid<T> {
-	private grid: T[]
+	private grid: T[] = []
 
 	constructor(
 		public readonly width: number,
 		public readonly height: number,
-		initialise: (x: number, y: number) => T = () => null,
+		initialise: (x: number, y: number) => T = () => <any>null,
 	) {
 		this.setAll(initialise)
 	}

@@ -20,10 +20,11 @@ export class TypeMap {
 		for (const [typeName, id] of this.Types.entries())
 			if (typeId === id)
 				return typeName
+		return null
 	}
 
 	public TypeIdFor(typeName: string): Id {
-		return this.Types.get(typeName)
+		return this.Types.get(typeName) ?? 0 // TODO: C# version throws exception
 	}
 
 	public Add(type: string, id: Id) {

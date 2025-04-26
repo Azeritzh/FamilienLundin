@@ -1,31 +1,19 @@
 {
+	"name": "minestryger",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/minestryger/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
-			"options": {
-				"lintFilePatterns": ["libs/minestryger/src/**/*.ts"]
-			},
-			"outputs": ["{options.outputFile}"]
-		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"options": {
-				"jestConfig": "libs/minestryger/jest.config.ts",
-				"passWithNoTests": true
-			}
-		},
 		"build": {
-      "executor": "@nrwl/node:webpack",
-      "options": {
-        "outputPath": "dist/minestryger",
-        "main": "libs/minestryger/src/index.ts",
-        "tsConfig": "libs/minestryger/tsconfig.lib.json",
-        "project": "libs/minestryger/package.json",
-        "webpackConfig": "libs/minestryger/webpack.config.js"
-      }
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/libs/minestryger",
+				"main": "libs/minestryger/src/index.ts",
+				"tsConfig": "libs/minestryger/tsconfig.lib.json",
+				"assets": ["libs/minestryger/*.md"]
+			}
 		}
-	},
-	"tags": []
+	}
 }

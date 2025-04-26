@@ -22,7 +22,7 @@ export class Sprite {
 	) {
 	}
 
-	render(x: number, y: number, frameX = 0, frameY = 0, rotation = 0, color: Vector3 = null, alpha = 1, scaleX = 1, scaleY = 1) {
+	render(x: number, y: number, frameX = 0, frameY = 0, rotation = 0, color: Vector3 | null = null, alpha = 1, scaleX = 1, scaleY = 1) {
 		const gl = this.gl
 
 		gl.activeTexture(gl.TEXTURE0)
