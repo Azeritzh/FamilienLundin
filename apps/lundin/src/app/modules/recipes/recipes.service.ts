@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core"
 import { Recipe } from "@lundin/api-interfaces"
 import { firstValueFrom } from "rxjs"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class RecipesService {
 	constructor(private httpClient: HttpClient) { }
 

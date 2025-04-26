@@ -7,7 +7,6 @@ import { EditImageComponent } from "../edit-image/edit-image.component"
 	selector: "lundin-gallery",
 	templateUrl: "./gallery.component.html",
 	styleUrls: ["./gallery.component.scss"],
-	standalone: false,
 })
 export class GalleryComponent {
 

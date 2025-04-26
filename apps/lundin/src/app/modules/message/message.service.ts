@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core"
 import { Message, MessageThread } from "@lundin/api-interfaces"
 import { firstValueFrom } from "rxjs"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class MessageService {
 	constructor(private httpClient: HttpClient) { }
 

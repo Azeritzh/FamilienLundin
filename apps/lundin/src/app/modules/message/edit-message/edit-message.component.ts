@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { FormsModule } from "@angular/forms"
 import { Router } from "@angular/router"
 import { NavigationService } from "../../../services/navigation.service"
 import { MessageService } from "../message.service"
@@ -7,7 +8,9 @@ import { MessageService } from "../message.service"
 	selector: "lundin-edit-message",
 	templateUrl: "./edit-message.component.html",
 	styleUrls: ["./edit-message.component.scss", "../../../styles/popup-box.scss"],
-	standalone: false,
+	imports: [
+		FormsModule,
+	],
 })
 export class EditMessageComponent {
 	threadId = 0

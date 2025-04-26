@@ -1,11 +1,20 @@
+import { CommonModule } from "@angular/common"
 import { Component, ElementRef, ViewChild } from "@angular/core"
+import { AlbumsComponent } from "./albums.component"
 import { MusicService } from "./music.service"
+import { PlaylistsComponent } from "./playlists.component"
+import { TrackListComponent } from "./tracklist.component"
 
 @Component({
 	selector: "lundin-music",
 	templateUrl: "./music.component.html",
 	styleUrls: ["./music.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		AlbumsComponent,
+		PlaylistsComponent,
+		TrackListComponent,
+	],
 })
 export class MusicComponent {
 	@ViewChild("audioPlayer") audioPlayer!: ElementRef<HTMLAudioElement>
@@ -23,7 +32,7 @@ export class MusicComponent {
 
 	ngAfterViewInit() {
 		this.audioPlayer.nativeElement.addEventListener("ended", () => {
-			if(this.musicService.playingIndex === null)
+			if (this.musicService.playingIndex === null)
 				this.musicService.play(this.musicService.queue[0])
 			else if (this.musicService.playingIndex < this.musicService.queue.length - 1)
 				this.musicService.play(this.musicService.queue[this.musicService.playingIndex + 1])
@@ -31,7 +40,7 @@ export class MusicComponent {
 	}
 
 	private playSong(file: string | null) {
-		if(!file)
+		if (!file)
 			return
 		this.audioPlayer.nativeElement.src = "api/music/files/" + file.replace(/#/g, "ꖛ") // Replace # with ꖛ to avoid issues with the URL
 		this.audioPlayer.nativeElement.onloadeddata = () => this.audioPlayer.nativeElement.play()

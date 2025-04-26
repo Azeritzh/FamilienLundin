@@ -7,7 +7,6 @@ import { DisplayConfig } from "./display-config"
 @Component({
 	selector: "lundin-kingdoms-display",
 	templateUrl: "./kingdoms-display.component.html",
-	standalone: false,
 })
 export class KingdomsDisplayComponent implements OnInit {
 	@Input() game = new Kingdoms()

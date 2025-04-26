@@ -1,11 +1,14 @@
 import { Component } from "@angular/core"
 import { CryptService } from "./crypt.service"
+import { FormsModule } from "@angular/forms"
 
 @Component({
 	selector: "lundin-crypt",
 	templateUrl: "./crypt.component.html",
 	styleUrls: ["./crypt.component.scss"],
-	standalone: false,
+	imports: [
+		FormsModule,
+	],
 })
 export class CryptComponent {
 	key = ""

@@ -1,13 +1,20 @@
+import { CommonModule } from "@angular/common"
 import { Component } from "@angular/core"
+import { FormsModule } from "@angular/forms"
 import { PersonalRelation } from "@lundin/api-interfaces"
 import { NavigationService } from "../../../services/navigation.service"
+import { LabellingDirective } from "../../../shared/directives/labelling.directive"
 import { AncestryService } from "../ancestry.service"
 
 @Component({
 	selector: "lundin-add-person",
 	templateUrl: "./add-person.component.html",
 	styleUrls: ["./add-person.component.scss", "../../../styles/popup-box.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FormsModule,
+		LabellingDirective,
+	],
 })
 export class AddPersonComponent {
 	name = ""

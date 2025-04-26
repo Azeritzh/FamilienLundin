@@ -1,13 +1,17 @@
 import { Component, ViewChild } from "@angular/core"
 import { RandomAi } from "@lundin/age"
 import { generateVirusActions } from "@lundin/virus"
+import { SettingsComponent } from "./settings/settings.component"
 import { VirusGameComponent, VirusPlayer } from "./virus-game/virus-game.component"
 
 @Component({
 	selector: "lundin-virus",
 	templateUrl: "./virus.component.html",
 	styleUrls: ["./virus.component.scss"],
-	standalone: false,
+	imports: [
+		VirusGameComponent,
+		SettingsComponent,
+	],
 })
 export class VirusComponent {
 	@ViewChild(VirusGameComponent) gameComponent: VirusGameComponent | null = null

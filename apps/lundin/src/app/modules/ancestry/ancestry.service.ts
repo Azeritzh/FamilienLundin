@@ -4,7 +4,9 @@ import { Person, PersonalRelation } from "@lundin/api-interfaces"
 import { BehaviorSubject, firstValueFrom } from "rxjs"
 import { map } from "rxjs/operators"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class AncestryService {
 	people: Person[] = []
 	private _people$ = new BehaviorSubject<Person[]>(this.people.slice())

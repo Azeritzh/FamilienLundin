@@ -1,12 +1,19 @@
+import { CommonModule } from "@angular/common"
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from "@angular/core"
+import { FormsModule } from "@angular/forms"
 import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs"
 import { Album, MusicService } from "./music.service"
+import { TrackListComponent } from "./tracklist.component"
 
 @Component({
 	selector: "lundin-albums",
 	templateUrl: "./albums.component.html",
 	styleUrls: ["./albums.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FormsModule,
+		TrackListComponent,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlbumsComponent implements OnDestroy {

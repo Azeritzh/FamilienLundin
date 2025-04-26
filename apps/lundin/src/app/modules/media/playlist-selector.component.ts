@@ -1,4 +1,6 @@
+import { CommonModule } from "@angular/common"
 import { Component, EventEmitter, Output } from "@angular/core"
+import { FormsModule } from "@angular/forms"
 import { MusicPlaylist } from "@lundin/api-interfaces"
 import { AuthService } from "../../services/auth.service"
 import { PlaylistService } from "./playlist.service"
@@ -7,7 +9,10 @@ import { PlaylistService } from "./playlist.service"
 	selector: "lundin-playlist-selector",
 	templateUrl: "./playlist-selector.component.html",
 	styleUrls: ["./playlist-selector.component.scss", "../../styles/popup-box.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FormsModule,
+	],
 })
 export class PlaylistSelectorComponent {
 	playlists: MusicPlaylist[] = []

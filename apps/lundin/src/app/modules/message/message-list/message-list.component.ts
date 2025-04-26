@@ -1,13 +1,18 @@
+import { CommonModule } from "@angular/common"
 import { Component } from "@angular/core"
 import { Router } from "@angular/router"
 import { MessageThread } from "@lundin/api-interfaces"
+import { UserPipe } from "../../../shared/pipes/user.pipe"
 import { MessageService } from "../message.service"
 
 @Component({
 	selector: "lundin-message-list",
 	templateUrl: "./message-list.component.html",
 	styleUrls: ["./message-list.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		UserPipe,
+	],
 })
 export class MessageListComponent {
 	threads: MessageThread[] = []

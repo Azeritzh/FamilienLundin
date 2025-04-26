@@ -1,7 +1,9 @@
+import { CommonModule } from "@angular/common"
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { Recipe } from "@lundin/api-interfaces"
 import { NavigationService } from "../../../services/navigation.service"
+import { LabellingDirective } from "../../../shared/directives/labelling.directive"
 import { RecipeFormComponent } from "../recipe-form/recipe-form.component"
 import { RecipesService } from "../recipes.service"
 
@@ -9,7 +11,10 @@ import { RecipesService } from "../recipes.service"
 	selector: "lundin-recipe",
 	templateUrl: "./recipe.component.html",
 	styleUrls: ["./recipe.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		LabellingDirective,
+	],
 })
 export class RecipeComponent implements OnInit {
 	recipe = <Recipe>{}

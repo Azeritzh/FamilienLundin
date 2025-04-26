@@ -1,14 +1,19 @@
+import { CommonModule } from "@angular/common"
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { ActivatedRoute, Router } from "@angular/router"
 import { Person } from "@lundin/api-interfaces"
 import { Subscription } from "rxjs"
 import { AncestryService } from "../ancestry.service"
+import { AncestryTreeNodeComponent } from "./ancestry-tree-node.component"
 
 @Component({
 	selector: "lundin-ancestry-tree",
 	templateUrl: "./ancestry-tree.component.html",
 	styleUrls: ["./ancestry-tree.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		AncestryTreeNodeComponent,
+	],
 })
 export class AncestryTreeComponent implements OnInit, OnDestroy {
 	generations: Person[][] = []
@@ -84,12 +89,12 @@ export class AncestryTreeComponent implements OnInit, OnDestroy {
 		return true
 	}
 
-	get currentPerson() {
+	get currentPerson(): Person | undefined {
 		return this.generations[0]?.[0]
 	}
 
 	navigateToDetails() {
-		this.router.navigateByUrl("/ancestry/person/" + this.currentPerson._id)
+		this.router.navigateByUrl("/ancestry/person/" + this.currentPerson?._id)
 	}
 
 	ngOnDestroy() {

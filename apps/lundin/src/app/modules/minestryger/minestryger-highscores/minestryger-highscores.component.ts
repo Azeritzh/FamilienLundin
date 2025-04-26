@@ -1,13 +1,18 @@
+import { CommonModule } from "@angular/common"
 import { Component, Input } from "@angular/core"
 import { MinestrygerScoreSet, MinestrygerTopScoreSet } from "@lundin/api-interfaces"
 import { Observable } from "rxjs"
+import { UserPipe } from "../../../shared/pipes/user.pipe"
 import { MinestrygerService } from "../minestryger.service"
 
 @Component({
 	selector: "lundin-minestryger-highscores",
 	templateUrl: "./minestryger-highscores.component.html",
 	styleUrls: ["./minestryger-highscores.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		UserPipe,
+	],
 })
 export class MinestrygerHighscoresComponent {
 	@Input() category: string = "beginnerFlags"

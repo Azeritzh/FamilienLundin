@@ -1,10 +1,15 @@
+import { CommonModule } from "@angular/common"
 import { Component, EventEmitter, Input, Output } from "@angular/core"
+import { FileInputComponent } from "../file-input/file-input.component"
 
 @Component({
 	selector: "lundin-image-input",
 	templateUrl: "./image-input.component.html",
 	styleUrls: ["./image-input.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FileInputComponent,
+	]
 })
 export class ImageInputComponent {
 	@Input() imagePath: string | null = null

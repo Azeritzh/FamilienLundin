@@ -1,13 +1,18 @@
 import { Component } from "@angular/core"
+import { FormsModule } from "@angular/forms"
 import { CalendarEvent } from "@lundin/api-interfaces"
 import { NavigationService } from "../../../services/navigation.service"
+import { LabellingDirective } from "../../../shared/directives/labelling.directive"
 import { CalendarService } from "../calendar.service"
 
 @Component({
 	selector: "lundin-add-calendar-event",
 	templateUrl: "./add-calendar-event.component.html",
 	styleUrls: ["./add-calendar-event.component.scss", "../../../styles/popup-box.scss"],
-	standalone: false,
+	imports: [
+		FormsModule,
+		LabellingDirective,
+	],
 })
 export class AddCalendarEventComponent {
 	event: CalendarEvent = {

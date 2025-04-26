@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core"
 import { NewMinestrygerScore, MinestrygerTopScoreSet, MinestrygerScoreSet } from "@lundin/api-interfaces"
 import { BehaviorSubject, firstValueFrom } from "rxjs"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class MinestrygerService {
 	topScores: MinestrygerTopScoreSet = {
 		beginnerFlags: [],

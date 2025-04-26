@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core"
 import { BehaviorSubject, Subject } from "rxjs"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class MusicService {
 	loaded$ = new BehaviorSubject<void>(undefined)
 	musicLibrary: { [folder: string]: Album } = {}

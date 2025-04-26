@@ -8,12 +8,17 @@ import { AncestryService } from "../ancestry.service"
 import { EditFileComponent } from "../edit-file/edit-file.component"
 import { EditInfoComponent } from "../edit-info/edit-info.component"
 import { EditRelationsComponent } from "../edit-relations/edit-relations.component"
+import { CommonModule } from "@angular/common"
+import { FamilyTreeComponent } from "../family-tree/family-tree.component"
 
 @Component({
 	selector: "lundin-person",
 	templateUrl: "./person.component.html",
 	styleUrls: ["./person.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FamilyTreeComponent,
+	],
 })
 export class PersonComponent implements OnInit {
 	personId!: number

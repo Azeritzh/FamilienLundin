@@ -1,13 +1,17 @@
 import { Component, OnInit } from "@angular/core"
 import { Fertility, Kingdoms, Terrain } from "@lundin/kingdoms"
 import { DisplayState } from "./kingdoms-display/display-state"
-import { FieldSelection } from "./kingdoms-display/kingdoms-display.component"
+import { FieldSelection, KingdomsDisplayComponent } from "./kingdoms-display/kingdoms-display.component"
+import { KingdomsEditorComponent } from "./kingdoms-editor/kingdoms-editor.component"
 
 @Component({
 	selector: "lundin-kingdoms",
 	templateUrl: "./kingdoms.component.html",
 	styleUrls: ["./kingdoms.component.scss"],
-	standalone: false,
+	imports: [
+		KingdomsDisplayComponent,
+		KingdomsEditorComponent,
+	],
 })
 export class KingdomsComponent implements OnInit {
 	game = new Kingdoms()

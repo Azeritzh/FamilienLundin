@@ -2,66 +2,27 @@ import { CommonModule } from "@angular/common"
 import { Component, HostBinding, OnInit, Type, ViewChild } from "@angular/core"
 import { FormsModule } from "@angular/forms"
 import { Router, RouterModule } from "@angular/router"
+import { provideMarkdown } from "ngx-markdown"
 import { first } from "rxjs/operators"
 import { OverlayHostDirective } from "./directives/overlay-host.directive"
-import { AgentiaModule } from "./modules/agentia/agentia.module"
-import { AncestryModule } from "./modules/ancestry/ancestry.module"
-import { AncestryService } from "./modules/ancestry/ancestry.service"
-import { CalendarModule } from "./modules/calendar/calendar.module"
-import { CryptModule } from "./modules/crypt/crypt.module"
-import { CryptService } from "./modules/crypt/crypt.service"
-import { GalleryModule } from "./modules/gallery/gallery.module"
-import { KingdomsModule } from "./modules/kingdoms/kingdoms.module"
-import { MediaModule } from "./modules/media/media.module"
-import { MusicService } from "./modules/media/music.service"
-import { PlaylistService } from "./modules/media/playlist.service"
-import { MeldModule } from "./modules/meld/meld.module"
-import { MessageModule } from "./modules/message/message.module"
-import { MinestrygerModule } from "./modules/minestryger/minestryger.module"
-import { MinestrygerService } from "./modules/minestryger/minestryger.service"
-import { NoughtsAndCrossesModule } from "./modules/noughts-and-crosses/noughts-and-crosses.module"
-import { RecipesModule } from "./modules/recipes/recipes.module"
-import { RecipesService } from "./modules/recipes/recipes.service"
-import { RenderendModule } from "./modules/renderend/renderend.module"
-import { VirusModule } from "./modules/virus/virus.module"
 import { AuthService } from "./services/auth.service"
 import { NavigationService } from "./services/navigation.service"
-import { SharedModule } from "./shared/shared.module"
+import { UserPipe } from "./shared/pipes/user.pipe"
 
 @Component({
 	selector: "lundin-root",
 	templateUrl: "./app.component.html",
 	styleUrls: ["./app.component.scss"],
 	imports: [
-		OverlayHostDirective,
-
-		AgentiaModule,
-		AncestryModule,
-		CalendarModule,
-		CryptModule,
-		GalleryModule,
-		KingdomsModule,
-		MediaModule,
-		MeldModule,
-		MessageModule,
-		MinestrygerModule,
-		NoughtsAndCrossesModule,
-		RecipesModule,
-		RenderendModule,
-		SharedModule,
-		VirusModule,
-
 		CommonModule,
 		FormsModule,
 		RouterModule,
+
+		OverlayHostDirective,
+		UserPipe,
 	],
 	providers: [
-		AncestryService,
-		CryptService,
-		MinestrygerService,
-		MusicService,
-		PlaylistService,
-		RecipesService,
+		provideMarkdown(),
 	]
 })
 export class AppComponent implements OnInit {

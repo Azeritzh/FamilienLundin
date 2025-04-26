@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common"
 import { Component, ElementRef, HostBinding, Input } from "@angular/core"
 import { GameAi, RandomAi } from "@lundin/age"
 import { range } from "@lundin/utility"
@@ -7,7 +8,9 @@ import { Virus, VirusAction, VirusConfig, generateVirusActions } from "@lundin/v
 	selector: "lundin-virus-game",
 	templateUrl: "./virus-game.component.html",
 	styleUrls: ["./virus-game.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+	],
 })
 export class VirusGameComponent {
 	@Input() players = [

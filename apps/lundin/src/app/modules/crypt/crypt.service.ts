@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core"
 import { decrypt, encrypt } from "@lundin/utility"
 import { firstValueFrom } from "rxjs"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class CryptService {
 	constructor(private httpClient: HttpClient) { }
 

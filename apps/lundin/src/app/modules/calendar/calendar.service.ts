@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core"
 import { CalendarEvent } from "@lundin/api-interfaces"
 import { firstValueFrom } from "rxjs"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class CalendarService {
 	constructor(private httpClient: HttpClient) { }
 

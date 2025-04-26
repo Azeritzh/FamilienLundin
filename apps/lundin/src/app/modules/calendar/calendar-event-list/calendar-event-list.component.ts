@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common"
 import { Component } from "@angular/core"
 import { Router } from "@angular/router"
 import { CalendarEvent } from "@lundin/api-interfaces"
@@ -7,7 +8,9 @@ import { CalendarService } from "../calendar.service"
 	selector: "lundin-calendar-event-list",
 	templateUrl: "./calendar-event-list.component.html",
 	styleUrls: ["./calendar-event-list.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+	],
 })
 export class CalendarEventListComponent {
 	events: CalendarEvent[] = []

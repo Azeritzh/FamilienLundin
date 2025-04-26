@@ -1,12 +1,19 @@
 import { Component } from "@angular/core"
 import { NavigationService } from "../../../services/navigation.service"
 import { AncestryService } from "../ancestry.service"
+import { CommonModule } from "@angular/common"
+import { FormsModule } from "@angular/forms"
+import { LabellingDirective } from "../../../shared/directives/labelling.directive"
 
 @Component({
 	selector: "lundin-edit-info",
 	templateUrl: "./edit-info.component.html",
 	styleUrls: ["./edit-info.component.scss", "../../../styles/popup-box.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FormsModule,
+		LabellingDirective,
+	],
 })
 export class EditInfoComponent {
 	personId!: number

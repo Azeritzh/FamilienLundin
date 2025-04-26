@@ -1,13 +1,16 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { defaultDisplayConfig, FlagAction, Minestryger, MinestrygerAction, MinestrygerDisplay, MinestrygerInput, PlayState, RevealAction, RevealAreaAction } from "@lundin/minestryger"
 import { NavigationService } from "../../services/navigation.service"
+import { MinestrygerHighscoresComponent } from "./minestryger-highscores/minestryger-highscores.component"
 import { MinestrygerService } from "./minestryger.service"
 
 @Component({
 	selector: "lundin-minestryger",
 	templateUrl: "./minestryger.component.html",
 	styleUrls: ["./minestryger.component.scss"],
-	standalone: false,
+	imports: [
+		MinestrygerHighscoresComponent,
+	],
 })
 export class MinestrygerComponent implements OnInit, OnDestroy {
 	@ViewChild("gameHost", { static: true }) gameHost!: ElementRef<HTMLDivElement>

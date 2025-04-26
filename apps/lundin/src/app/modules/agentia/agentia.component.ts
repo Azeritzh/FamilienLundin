@@ -1,12 +1,17 @@
+import { CommonModule } from "@angular/common"
 import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core"
-import { Agentia, AgentiaPresets, Agent } from "@lundin/agentia"
+import { FormsModule } from "@angular/forms"
+import { Agent, Agentia, AgentiaPresets } from "@lundin/agentia"
 import { Vector2 } from "@lundin/utility"
 
 @Component({
 	selector: "lundin-agentia",
 	templateUrl: "./agentia.component.html",
 	styleUrls: ["./agentia.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FormsModule,
+	],
 })
 export class AgentiaComponent implements OnInit, OnDestroy {
 	game = new Agentia()

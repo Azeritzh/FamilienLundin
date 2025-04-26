@@ -5,7 +5,6 @@ import { UserService } from "../../services/user.service"
 
 @Pipe({
 	name: "user",
-	standalone: false,
 })
 export class UserPipe implements PipeTransform {
 	constructor(private userService: UserService) { }

@@ -1,9 +1,9 @@
 import { CommonModule } from "@angular/common"
 import { Component } from "@angular/core"
 import { AddCalendarEventComponent } from "../../modules/calendar/add-calendar-event/add-calendar-event.component"
-import { CalendarModule } from "../../modules/calendar/calendar.module"
+import { CalendarEventListComponent } from "../../modules/calendar/calendar-event-list/calendar-event-list.component"
 import { AddMessageComponent } from "../../modules/message/add-message/add-message.component"
-import { MessageModule } from "../../modules/message/message.module"
+import { MessageListComponent } from "../../modules/message/message-list/message-list.component"
 import { AuthService } from "../../services/auth.service"
 import { NavigationService } from "../../services/navigation.service"
 import { LoginComponent } from "../login/login.component"
@@ -14,9 +14,9 @@ import { LoginComponent } from "../login/login.component"
 	styleUrls: ["./home.component.scss"],
 	imports: [
 		LoginComponent,
-		MessageModule,
-		CalendarModule,
 		CommonModule,
+		MessageListComponent,
+		CalendarEventListComponent,
 	],
 })
 export class HomeComponent {

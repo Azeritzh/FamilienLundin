@@ -5,12 +5,17 @@ import { Observable } from "rxjs"
 import { NavigationService } from "../../../services/navigation.service"
 import { AddPersonComponent } from "../add-person/add-person.component"
 import { AncestryService } from "../ancestry.service"
+import { CommonModule } from "@angular/common"
+import { FormsModule } from "@angular/forms"
 
 @Component({
 	selector: "lundin-ancestry-list",
 	templateUrl: "./ancestry-list.component.html",
 	styleUrls: ["./ancestry-list.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FormsModule,
+	],
 })
 export class AncestryListComponent {
 	people$: Observable<Person[]>

@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core"
 import { MusicPlaylist } from "@lundin/api-interfaces"
 import { firstValueFrom } from "rxjs"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class PlaylistService {
 	constructor(private httpClient: HttpClient) { }
 

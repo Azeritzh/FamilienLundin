@@ -6,7 +6,6 @@ import { DisplayState } from "../kingdoms-display/display-state"
 	selector: "lundin-kingdoms-editor",
 	templateUrl: "./kingdoms-editor.component.html",
 	styleUrls: ["./kingdoms-editor.component.scss"],
-	standalone: false,
 })
 export class KingdomsEditorComponent {
 	@Input() game = new Kingdoms()

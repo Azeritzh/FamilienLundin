@@ -1,14 +1,23 @@
+import { CommonModule } from "@angular/common"
 import { Component } from "@angular/core"
+import { FormsModule } from "@angular/forms"
 import { Router } from "@angular/router"
 import { Recipe } from "@lundin/api-interfaces"
 import { NavigationService } from "../../../services/navigation.service"
+import { LabellingDirective } from "../../../shared/directives/labelling.directive"
+import { ImageInputComponent } from "../../../shared/image-input/image-input.component"
 import { RecipesService } from "../recipes.service"
 
 @Component({
 	selector: "lundin-recipe-form",
 	templateUrl: "./recipe-form.component.html",
 	styleUrls: ["./recipe-form.component.scss", "../../../styles/popup-box.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FormsModule,
+		LabellingDirective,
+		ImageInputComponent,
+	],
 })
 export class RecipeFormComponent {
 	file: File | null = null

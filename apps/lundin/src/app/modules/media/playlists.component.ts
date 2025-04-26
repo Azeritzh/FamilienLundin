@@ -1,13 +1,20 @@
+import { CommonModule } from "@angular/common"
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from "@angular/core"
 import { MusicPlaylist } from "@lundin/api-interfaces"
+import { UserPipe } from "../../shared/pipes/user.pipe"
 import { MusicService, Track } from "./music.service"
 import { PlaylistService } from "./playlist.service"
+import { TrackListComponent } from "./tracklist.component"
 
 @Component({
 	selector: "lundin-playlists",
 	templateUrl: "./playlists.component.html",
 	styleUrls: ["./playlists.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		UserPipe,
+		TrackListComponent,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaylistsComponent {

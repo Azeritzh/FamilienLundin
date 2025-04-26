@@ -1,4 +1,6 @@
+import { CommonModule } from "@angular/common"
 import { Component } from "@angular/core"
+import { FormsModule } from "@angular/forms"
 import { Router } from "@angular/router"
 import { PersonalRelation } from "@lundin/api-interfaces"
 import { NavigationService } from "../../../services/navigation.service"
@@ -8,7 +10,10 @@ import { AncestryService } from "../ancestry.service"
 	selector: "lundin-edit-relations",
 	templateUrl: "./edit-relations.component.html",
 	styleUrls: ["./edit-relations.component.scss", "../../../styles/popup-box.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FormsModule,
+	],
 })
 export class EditRelationsComponent {
 	personId!: number

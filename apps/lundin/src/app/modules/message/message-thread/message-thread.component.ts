@@ -1,8 +1,11 @@
+import { CommonModule } from "@angular/common"
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { MessageThread } from "@lundin/api-interfaces"
+import { MarkdownModule } from "ngx-markdown"
 import { AuthService } from "../../../services/auth.service"
 import { NavigationService } from "../../../services/navigation.service"
+import { UserPipe } from "../../../shared/pipes/user.pipe"
 import { AddMessageComponent } from "../add-message/add-message.component"
 import { EditMessageComponent } from "../edit-message/edit-message.component"
 import { MessageService } from "../message.service"
@@ -11,7 +14,11 @@ import { MessageService } from "../message.service"
 	selector: "lundin-message-thread",
 	templateUrl: "./message-thread.component.html",
 	styleUrls: ["./message-thread.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		MarkdownModule,
+		UserPipe,
+	],
 })
 export class MessageThreadComponent implements OnInit {
 	thread = <MessageThread>{}

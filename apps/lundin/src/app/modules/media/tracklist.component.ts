@@ -1,16 +1,22 @@
-import { KeyValue } from "@angular/common"
+import { CommonModule, KeyValue } from "@angular/common"
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from "@angular/core"
+import { FormsModule } from "@angular/forms"
 import { debounceTime, distinctUntilChanged, firstValueFrom, Subject, Subscription } from "rxjs"
 import { NavigationService } from "../../services/navigation.service"
 import { MusicService, Track } from "./music.service"
 import { PlaylistSelectorComponent } from "./playlist-selector.component"
 import { PlaylistService } from "./playlist.service"
+import { TrackComponent } from "./track.component"
 
 @Component({
 	selector: "lundin-tracklist",
 	templateUrl: "./tracklist.component.html",
 	styleUrls: ["./tracklist.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FormsModule,
+		TrackComponent,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackListComponent implements OnChanges, OnDestroy {
@@ -104,7 +110,7 @@ export class TrackListComponent implements OnChanges, OnDestroy {
 		const component = await this.navigationService.openAsOverlay(PlaylistSelectorComponent)
 		const playlist = await firstValueFrom(component.selectedPlaylist)
 		this.navigationService.closeOverlay()
-		;(<string[]>playlist.content).push(...(this.shownTracks ?? this.tracks).map(x => x.identifier))
+			; (<string[]>playlist.content).push(...(this.shownTracks ?? this.tracks).map(x => x.identifier))
 		if (playlist._id)
 			this.playlistService.updatePlaylist(playlist)
 		else

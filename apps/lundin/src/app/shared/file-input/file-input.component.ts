@@ -4,7 +4,6 @@ import { Component, EventEmitter, Output } from "@angular/core"
 	selector: "lundin-file-input",
 	templateUrl: "./file-input.component.html",
 	styleUrls: ["./file-input.component.scss"],
-	standalone: false,
 })
 export class FileInputComponent {
 	@Output() changeFile = new EventEmitter<File>()

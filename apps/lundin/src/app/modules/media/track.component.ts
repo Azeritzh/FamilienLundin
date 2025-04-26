@@ -1,15 +1,18 @@
+import { CommonModule } from "@angular/common"
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, Output } from "@angular/core"
-import { MusicService, Track } from "./music.service"
-import { NavigationService } from "../../services/navigation.service"
-import { PlaylistService } from "./playlist.service"
-import { PlaylistSelectorComponent } from "./playlist-selector.component"
 import { firstValueFrom } from "rxjs"
+import { NavigationService } from "../../services/navigation.service"
+import { MusicService, Track } from "./music.service"
+import { PlaylistSelectorComponent } from "./playlist-selector.component"
+import { PlaylistService } from "./playlist.service"
 
 @Component({
 	selector: "lundin-track",
 	templateUrl: "./track.component.html",
 	styleUrls: ["./track.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackComponent {
