@@ -1,4 +1,4 @@
-@import "../../styles/general.scss";
+@use "../../styles/general.scss";
 
 :host {
 	@extend .default-page, .default-background;
