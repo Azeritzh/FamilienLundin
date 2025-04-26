@@ -1,8 +1,7 @@
-import { HttpClientModule } from "@angular/common/http"
+import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
-import { BrowserModule } from "@angular/platform-browser"
+import { RouterModule } from "@angular/router"
 import { MarkdownModule } from "ngx-markdown"
-import { AppRoutingModule } from "../../app-routing.module"
 import { SharedModule } from "../../shared/shared.module"
 import { RecipeFormComponent } from "./recipe-form/recipe-form.component"
 import { RecipeComponent } from "./recipe/recipe.component"
@@ -18,11 +17,10 @@ import { RecipesComponent } from "./recipes/recipes.component"
 		RecipesRootComponent,
 	],
 	imports: [
-		AppRoutingModule,
-		BrowserModule,
-		//HttpClientModule,
+		CommonModule,
 		MarkdownModule.forRoot(),
 		SharedModule,
+		RouterModule,
 	],
 	providers: [RecipesService],
 	exports: [

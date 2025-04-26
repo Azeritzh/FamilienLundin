@@ -1,11 +1,16 @@
+import { CommonModule } from "@angular/common"
 import { Component } from "@angular/core"
+import { RouterModule } from "@angular/router"
 import { AuthService } from "../../services/auth.service"
 
 @Component({
 	selector: "lundin-various",
 	templateUrl: "./various.component.html",
 	styleUrls: ["./various.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		RouterModule,
+	],
 })
 export class VariousComponent {
 	tools: Entry[] = [

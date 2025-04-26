@@ -2,7 +2,9 @@ import { Injectable, Type } from "@angular/core"
 import { NavigationEnd, Router } from "@angular/router"
 import { Subject } from "rxjs"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class NavigationService {
 	overlay$ = new Subject<{ component?: Type<any>, init?: (component: any) => void }>()
 	message$ = new Subject<string | null>()

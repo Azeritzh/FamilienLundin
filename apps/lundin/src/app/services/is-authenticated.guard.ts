@@ -3,7 +3,9 @@ import { CanActivate, Router } from "@angular/router"
 import { map } from "rxjs/operators"
 import { AuthService } from "./auth.service"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class IsAuthenticatedGuard implements CanActivate {
 	constructor(
 		private authService: AuthService,

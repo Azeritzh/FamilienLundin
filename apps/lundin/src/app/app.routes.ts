@@ -1,5 +1,4 @@
-import { NgModule } from "@angular/core"
-import { RouterModule, Routes } from "@angular/router"
+import { Routes } from "@angular/router"
 import { AgentiaComponent } from "./modules/agentia/agentia.component"
 import { AncestryRootComponent } from "./modules/ancestry/ancestry-root/ancestry-root.component"
 import { ancestryRoutes } from "./modules/ancestry/routes"
@@ -26,7 +25,7 @@ import { ProfileComponent } from "./pages/profile/profile.component"
 import { VariousComponent } from "./pages/various/various.component"
 import { IsAuthenticatedGuard } from "./services/is-authenticated.guard"
 
-const routes: Routes = [
+export const routes: Routes = [
 	{ path: "", component: HomeComponent },
 	{ path: "ancestry", component: AncestryRootComponent, children: ancestryRoutes },
 	{ path: "calendar", component: CalendarRootComponent, canActivate: [IsAuthenticatedGuard], children: calendarRoutes },
@@ -47,9 +46,3 @@ const routes: Routes = [
 	{ path: "various/crypt", component: CryptComponent, canActivate: [IsAuthenticatedGuard] },
 	{ path: "video", component: VideoComponent },
 ]
-
-@NgModule({
-	imports: [RouterModule.forRoot(routes)],
-	exports: [RouterModule],
-})
-export class AppRoutingModule { }

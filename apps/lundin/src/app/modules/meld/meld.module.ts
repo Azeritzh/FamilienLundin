@@ -1,5 +1,5 @@
+import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
-import { BrowserModule } from "@angular/platform-browser"
 import { SharedModule } from "../../shared/shared.module"
 import { MeldComponent } from "./meld.component"
 
@@ -8,7 +8,7 @@ import { MeldComponent } from "./meld.component"
 		MeldComponent,
 	],
 	imports: [
-		BrowserModule,
+		CommonModule,
 		SharedModule,
 	],
 	providers: [],

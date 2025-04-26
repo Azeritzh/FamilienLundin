@@ -1,5 +1,7 @@
+import { CommonModule } from "@angular/common"
 import { HttpClient } from "@angular/common/http"
 import { Component } from "@angular/core"
+import { FormsModule } from "@angular/forms"
 import { firstValueFrom } from "rxjs"
 import { AuthService } from "../../services/auth.service"
 
@@ -7,11 +9,14 @@ import { AuthService } from "../../services/auth.service"
 	selector: "lundin-profile",
 	templateUrl: "./profile.component.html",
 	styleUrls: ["./profile.component.scss"],
-	standalone: false,
+	imports: [
+		CommonModule,
+		FormsModule,
+	],
 })
 export class ProfileComponent {
 	password: string = ""
-	newPassword: string	= ""
+	newPassword: string = ""
 	repeatNewPassword: string = ""
 
 	constructor(

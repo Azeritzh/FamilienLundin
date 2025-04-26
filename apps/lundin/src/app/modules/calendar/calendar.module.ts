@@ -1,7 +1,6 @@
-import { HttpClientModule } from "@angular/common/http"
+import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
-import { BrowserModule } from "@angular/platform-browser"
-import { AppRoutingModule } from "../../app-routing.module"
+import { RouterModule } from "@angular/router"
 import { SharedModule } from "../../shared/shared.module"
 import { AddCalendarEventComponent } from "./add-calendar-event/add-calendar-event.component"
 import { CalendarEventListComponent } from "./calendar-event-list/calendar-event-list.component"
@@ -17,10 +16,9 @@ import { CalendarComponent } from "./calendar/calendar.component"
 		CalendarRootComponent,
 	],
 	imports: [
-		AppRoutingModule,
-		BrowserModule,
-		//HttpClientModule,
+		CommonModule,
 		SharedModule,
+		RouterModule,
 	],
 	providers: [CalendarService],
 	exports: [

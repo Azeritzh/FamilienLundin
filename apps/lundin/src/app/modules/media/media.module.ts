@@ -1,6 +1,5 @@
+import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
-import { BrowserModule } from "@angular/platform-browser"
-import { AppRoutingModule } from "../../app-routing.module"
 import { SharedModule } from "../../shared/shared.module"
 import { AlbumsComponent } from "./albums.component"
 import { MusicComponent } from "./music.component"
@@ -23,9 +22,8 @@ import { VideoComponent } from "./video.component"
 		VideoComponent,
 	],
 	imports: [
-		BrowserModule,
+		CommonModule,
 		SharedModule,
-		AppRoutingModule,
 	],
 	providers: [
 		MusicService,

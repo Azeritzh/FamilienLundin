@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { FormsModule } from "@angular/forms"
 import { AuthService } from "../../services/auth.service"
 import { NavigationService } from "../../services/navigation.service"
 
@@ -6,7 +7,9 @@ import { NavigationService } from "../../services/navigation.service"
 	selector: "lundin-login",
 	templateUrl: "./login.component.html",
 	styleUrls: ["./login.component.scss"],
-	standalone: false,
+	imports: [
+		FormsModule,
+	],
 })
 export class LoginComponent {
 	title = "Velkommen til Familien Lundin"

@@ -1,12 +1,12 @@
+import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
-import { BrowserModule } from "@angular/platform-browser"
 import { SharedModule } from "../../shared/shared.module"
 import { AgentiaComponent } from "./agentia.component"
 
 @NgModule({
 	declarations: [AgentiaComponent],
 	imports: [
-		BrowserModule,
+		CommonModule,
 		SharedModule,
 	],
 	providers: [],

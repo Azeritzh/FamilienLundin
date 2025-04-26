@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core"
 import { AuthResponse } from "@lundin/api-interfaces"
 import { firstValueFrom, ReplaySubject, Subject } from "rxjs"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class AuthService {
 	onLogin = new ReplaySubject<void>(1)
 	onRefreshResponse = new Subject<boolean>()

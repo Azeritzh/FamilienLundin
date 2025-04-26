@@ -1,6 +1,5 @@
-import { HttpClientModule } from "@angular/common/http"
+import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
-import { BrowserModule } from "@angular/platform-browser"
 import { SharedModule } from "../../shared/shared.module"
 import { CryptComponent } from "./crypt.component"
 import { CryptService } from "./crypt.service"
@@ -8,9 +7,8 @@ import { CryptService } from "./crypt.service"
 @NgModule({
 	declarations: [CryptComponent],
 	imports: [
-		BrowserModule,
+		CommonModule,
 		SharedModule,
-		//HttpClientModule,
 	],
 	providers: [CryptService],
 })

@@ -14,7 +14,7 @@ import { UserPipe } from "./pipes/user.pipe"
 		UserPipe,
 	],
 	imports: [
-		CommonModule,
+		//CommonModule,
 		FormsModule,
 	],
 	exports: [

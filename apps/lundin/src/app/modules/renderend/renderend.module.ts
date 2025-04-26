@@ -1,5 +1,5 @@
+import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
-import { BrowserModule } from "@angular/platform-browser"
 import { SharedModule } from "../../shared/shared.module"
 import { RenderendComponent } from "./renderend.component"
 
@@ -8,7 +8,7 @@ import { RenderendComponent } from "./renderend.component"
 		RenderendComponent,
 	],
 	imports: [
-		BrowserModule,
+		CommonModule,
 		SharedModule,
 	],
 	providers: [],

@@ -1,15 +1,68 @@
-import { Component, ComponentFactoryResolver, HostBinding, OnInit, Type, ViewChild } from "@angular/core"
-import { Router } from "@angular/router"
+import { CommonModule } from "@angular/common"
+import { Component, HostBinding, OnInit, Type, ViewChild } from "@angular/core"
+import { FormsModule } from "@angular/forms"
+import { Router, RouterModule } from "@angular/router"
 import { first } from "rxjs/operators"
-import { OverlayHostDirective } from "../directives/overlay-host.directive"
-import { AuthService } from "../services/auth.service"
-import { NavigationService } from "../services/navigation.service"
+import { OverlayHostDirective } from "./directives/overlay-host.directive"
+import { AgentiaModule } from "./modules/agentia/agentia.module"
+import { AncestryModule } from "./modules/ancestry/ancestry.module"
+import { AncestryService } from "./modules/ancestry/ancestry.service"
+import { CalendarModule } from "./modules/calendar/calendar.module"
+import { CryptModule } from "./modules/crypt/crypt.module"
+import { CryptService } from "./modules/crypt/crypt.service"
+import { GalleryModule } from "./modules/gallery/gallery.module"
+import { KingdomsModule } from "./modules/kingdoms/kingdoms.module"
+import { MediaModule } from "./modules/media/media.module"
+import { MusicService } from "./modules/media/music.service"
+import { PlaylistService } from "./modules/media/playlist.service"
+import { MeldModule } from "./modules/meld/meld.module"
+import { MessageModule } from "./modules/message/message.module"
+import { MinestrygerModule } from "./modules/minestryger/minestryger.module"
+import { MinestrygerService } from "./modules/minestryger/minestryger.service"
+import { NoughtsAndCrossesModule } from "./modules/noughts-and-crosses/noughts-and-crosses.module"
+import { RecipesModule } from "./modules/recipes/recipes.module"
+import { RecipesService } from "./modules/recipes/recipes.service"
+import { RenderendModule } from "./modules/renderend/renderend.module"
+import { VirusModule } from "./modules/virus/virus.module"
+import { AuthService } from "./services/auth.service"
+import { NavigationService } from "./services/navigation.service"
+import { SharedModule } from "./shared/shared.module"
 
 @Component({
 	selector: "lundin-root",
 	templateUrl: "./app.component.html",
 	styleUrls: ["./app.component.scss"],
-	standalone: false,
+	imports: [
+		OverlayHostDirective,
+
+		AgentiaModule,
+		AncestryModule,
+		CalendarModule,
+		CryptModule,
+		GalleryModule,
+		KingdomsModule,
+		MediaModule,
+		MeldModule,
+		MessageModule,
+		MinestrygerModule,
+		NoughtsAndCrossesModule,
+		RecipesModule,
+		RenderendModule,
+		SharedModule,
+		VirusModule,
+
+		CommonModule,
+		FormsModule,
+		RouterModule,
+	],
+	providers: [
+		AncestryService,
+		CryptService,
+		MinestrygerService,
+		MusicService,
+		PlaylistService,
+		RecipesService,
+	]
 })
 export class AppComponent implements OnInit {
 	header = "Familien Lundin"
@@ -33,7 +86,6 @@ export class AppComponent implements OnInit {
 
 	constructor(
 		public authService: AuthService,
-		private componentFactoryResolver: ComponentFactoryResolver,
 		private navigationService: NavigationService,
 		private router: Router,
 	) {
@@ -58,8 +110,7 @@ export class AppComponent implements OnInit {
 	}
 
 	private openAsOverlay<T>(component: Type<T>): T {
-		const factory = this.componentFactoryResolver.resolveComponentFactory(component)
-		const componentRef = this.overlayHost.viewContainerRef.createComponent(factory)
+		const componentRef = this.overlayHost.viewContainerRef.createComponent(component)
 		this.showingOverlay = true
 		return componentRef.instance
 	}
@@ -83,7 +134,7 @@ export class AppComponent implements OnInit {
 		return this.navigationEntries.filter(x => x.mustBeLoggedIn ? isLoggedIn : true)
 	}
 
-	async logout(){
+	async logout() {
 		await this.authService.logout()
 		this.router.navigateByUrl("/")
 	}

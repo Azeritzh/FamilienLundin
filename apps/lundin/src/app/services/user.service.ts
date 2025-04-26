@@ -4,7 +4,9 @@ import { User } from "@lundin/api-interfaces"
 import { BehaviorSubject, firstValueFrom } from "rxjs"
 import { AuthService } from "./auth.service"
 
-@Injectable()
+@Injectable({
+	providedIn: "root",
+})
 export class UserService {
 	users$ = new BehaviorSubject<User[]>([])
 

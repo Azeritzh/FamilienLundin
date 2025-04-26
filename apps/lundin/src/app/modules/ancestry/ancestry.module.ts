@@ -1,7 +1,6 @@
-import { HttpClientModule } from "@angular/common/http"
+import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
-import { BrowserModule } from "@angular/platform-browser"
-import { AppRoutingModule } from "../../app-routing.module"
+import { RouterModule } from "@angular/router"
 import { SharedModule } from "../../shared/shared.module"
 import { AddFileComponent } from "./add-file/add-file.component"
 import { AddPersonComponent } from "./add-person/add-person.component"
@@ -33,10 +32,9 @@ import { PortraitComponent } from "./portrait/portrait.component"
 		PortraitComponent,
 	],
 	imports: [
-		AppRoutingModule,
-		BrowserModule,
+		CommonModule,
 		SharedModule,
-		HttpClientModule,
+		RouterModule,
 	],
 	providers: [AncestryService],
 	exports: [AncestryRootComponent]

@@ -1,8 +1,7 @@
-import { HttpClientModule } from "@angular/common/http"
+import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
-import { BrowserModule } from "@angular/platform-browser"
+import { RouterModule } from "@angular/router"
 import { MarkdownModule } from "ngx-markdown"
-import { AppRoutingModule } from "../../app-routing.module"
 import { SharedModule } from "../../shared/shared.module"
 import { AddMessageComponent } from "./add-message/add-message.component"
 import { EditMessageComponent } from "./edit-message/edit-message.component"
@@ -20,11 +19,10 @@ import { MessageService } from "./message.service"
 		MessageThreadComponent,
 	],
 	imports: [
-		AppRoutingModule,
-		BrowserModule,
-		//HttpClientModule,
+		CommonModule,
 		MarkdownModule.forRoot(),
 		SharedModule,
+		RouterModule,
 	],
 	providers: [MessageService],
 	exports: [
