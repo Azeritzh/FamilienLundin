@@ -1,17 +1,12 @@
 @import "../../styles/general.scss";
 
 :host {
-	display: grid;
-	grid-template-areas:
-		"tabs"
-		"tab"
-		"current";
-	grid-template-rows: 2.5rem 1fr 4rem;
-	height: 100%;
+	display: block;
+	padding-bottom: 6rem;
 }
 
 .tabs {
-	grid-area: tabs;
+	height: 2.5rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -22,54 +17,12 @@
 	}
 }
 
-.tab {
-	grid-area: tab;
-}
-
 .current-song {
-	grid-area: current;
-}
-
-.scroll-list-container {
-	@extend .scroll-container;
-	height: 100%;
-	margin: 0;
-}
-
-table {
-	margin: 0.5rem;
-
-	thead {
-		position: sticky;
-		top: 0;
-		background-color: rgba(255, 255, 255, 0.8);
-
-		th {
-			padding: 0.2rem;
-		}
-	}
-
-	tbody {
-		tr {
-			cursor: pointer;
-		}
-
-		tr:nth-child(odd) {
-			background-color: rgba(255, 255, 255, 0.05);
-		}
-
-		tr:nth-child(even) {
-			background-color: rgba(0, 0, 0, 0.05);
-		}
-
-		tr:hover {
-			background-color: rgba(0, 0, 0, 0.1);
-		}
-
-		td {
-			padding: 0.2rem;
-		}
-	}
+	position: fixed;
+	bottom: 0;
+	height: 5rem;
+	width: calc(100% - 3rem);
+	background-color: var(--color-background);
 }
 
 audio {

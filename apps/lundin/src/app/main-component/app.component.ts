@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 		{ text: "Familie", link: "/ancestry", imageUrl: "/assets/images/icons/Family_icon.svg" },
 		{ text: "Galleri", link: "/gallery", imageUrl: "/assets/images/icons/Gallery_icon.svg", mustBeLoggedIn: true },
 		{ text: "Opskrifter", link: "/recipes", imageUrl: "/assets/images/icons/Recipes_icon.svg", mustBeLoggedIn: true },
-		{ text: "Musik", link: "/music", imageUrl: "/assets/images/icons/Gallery_icon.svg", mustBeLoggedIn: true },
+		{ text: "Musik", link: "/music", imageUrl: "/assets/images/icons/Music_icon.svg", mustBeLoggedIn: true },
 		{ text: "Video", link: "/video", imageUrl: "/assets/images/icons/Gallery_icon.svg", mustBeLoggedIn: true },
 		{ text: "Diverse", link: "/various", imageUrl: "/assets/images/icons/Home_icon.svg" },
 	]

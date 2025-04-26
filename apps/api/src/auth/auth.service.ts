@@ -24,7 +24,15 @@ export class AuthService {
 		const user = await this.userService.findOne({ _id: userId })
 		if (!user)
 			return null
-		const hashedToken = user.refreshTokens?.[expirationFrom(token)]
+		const expiration = expirationFrom(token)
+		const hashedToken = user.refreshTokens?.[expiration]
+		if(!hashedToken){
+			const removed = user.removedRefreshTokens?.[expiration]
+			const expired = user.expiredRefreshTokens?.[expiration]
+			console.log("Did not find refresh token with expiration time " + expiration)
+			console.log("found removed token: " + removed)
+			console.log("found expired token: " + expired)
+		}
 		return await refreshTokenMatches(token, hashedToken)
 			? user
 			: null
