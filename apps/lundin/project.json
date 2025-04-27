@@ -19,7 +19,7 @@
 				"assets": [
 					{
 						"glob": "**/*",
-						"input": "apps/lundin/src"
+						"input": "apps/lundin/public"
 					}
 				],
 				"styles": ["apps/lundin/src/styles.scss"],
