@@ -7,20 +7,27 @@ export class MusicService {
 	library: { [folder: string]: Album } = {}
 
 	constructor() {
+		this.updateLibrary()
+		setInterval(() => this.updateLibrary(), 1000 * 60 * 60) // update every hour
+	}
+
+	private updateLibrary() {
 		const files = this.getFiles(this.libraryPath)
 			.filter(x => x.endsWith("album.json"))
+		const library: { [folder: string]: Album } = {}
 
 		for (const file of files) {
 			const identifier = file.substring(this.libraryPath.length + 1, file.length - 11)
 			try {
-				this.library[identifier] = JSON.parse(fs.readFileSync(file, "utf-8"))
-				for (const track of this.library[identifier].tracks)
+				library[identifier] = JSON.parse(fs.readFileSync(file, "utf-8"))
+				for (const track of library[identifier].tracks)
 					this.fillFileNames(track, identifier)
 			}
 			catch {
 				console.error("Failed to parse file:", file)
 			}
 		}
+		this.library = library
 	}
 
 	private fillFileNames(track: Track, folder: string) {
