@@ -140,5 +140,7 @@ interface Column {
 function combinedArtists(track: Track) {
 	if (track.artists.length === 1 && track.artists[0] === track.albumArtist)
 		return track.albumArtist
+	if (track.artists[0] === track.albumArtist)
+		return track.albumArtist + " (+" + track.artists.slice(1).join(", ") + ")"
 	return track.albumArtist + " (" + track.artists.join(", ") + ")"
 }
