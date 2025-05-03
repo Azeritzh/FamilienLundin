@@ -15,6 +15,8 @@ import { MusicController } from "./controllers/music.controller"
 import { RecipeController } from "./controllers/recipe.controller"
 import { UserController } from "./controllers/user.controller"
 import { VideoController } from "./controllers/video.controller"
+import { APP_FILTER } from "@nestjs/core"
+import { NotFoundExceptionFilter } from "./filters/not-found-exception.filter"
 
 @Module({
 	imports: [
@@ -38,5 +40,11 @@ import { VideoController } from "./controllers/video.controller"
 		UserController,
 		VideoController,
 	],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: NotFoundExceptionFilter, // Handle unmatched routes
+    },
+  ],
 })
 export class AppModule { }
