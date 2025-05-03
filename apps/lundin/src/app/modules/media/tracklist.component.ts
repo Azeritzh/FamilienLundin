@@ -20,7 +20,7 @@ import { TrackComponent } from "./track.component"
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackListComponent implements OnChanges, OnDestroy {
-	subscription: Subscription | null
+	subscriptions: { [index: string]: Subscription } = {}
 	@Input() tracks: Track[] = []
 	@Input() isQueue = false
 	@Input() showRemoveButtons = false
@@ -53,24 +53,31 @@ export class TrackListComponent implements OnChanges, OnDestroy {
 		private playlistService: PlaylistService,
 	) {
 		this.updateEnabledColumns()
-		this.subscription = this.query$.pipe(
+		this.subscriptions["query"] = this.query$.pipe(
 			debounceTime(300),
 			distinctUntilChanged(),
 		).subscribe(this.search)
-		window.addEventListener("scroll", () => {
-			this.knownPosition = null
-			this.changeDetectorRef.markForCheck()
-		}, true)
+		this.subscriptions["nextTrack"] = this.musicService.nextTrack$.subscribe(() => {
+			changeDetectorRef.markForCheck()
+		})
+		window.addEventListener("scroll", this.scrollListener, true)
 	}
 
 	ngOnDestroy() {
-		this.subscription?.unsubscribe()
+		for (const sub of Object.values(this.subscriptions))
+			sub.unsubscribe()
+		window.removeEventListener("scroll", this.scrollListener, true)
 	}
 
 	// re-search when tracks change
 	ngOnChanges(changes: { [index: string]: any }) {
 		if (changes["tracks"])
 			this.search()
+	}
+
+	private scrollListener = () => {
+		this.knownPosition = null
+		this.changeDetectorRef.markForCheck()
 	}
 
 	private search = () => {
