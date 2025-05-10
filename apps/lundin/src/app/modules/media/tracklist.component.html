@@ -49,7 +49,7 @@
 		[fields]="enabledColumns"
 		[showQueueButtons]="!isQueue"
 		[showRemoveButton]="showRemoveButtons"
-		[isPlaying]="isQueue && musicService.queue[musicService.playingIndex!] === track.identifier"
+		[isPlaying]="isQueue && musicService.queue[musicService.currentIndex!] === track.identifier"
 		(remove)="remove.emit(track)">
 	</lundin-track>
 </div>

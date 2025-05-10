@@ -13,12 +13,15 @@ export class MusicService {
 	tracksQueue: Track[] = []
 	queue: TrackIdentifier[] = []
 
-	playingIndex: number | null = null
-	nextTrack$ = new Subject<Track | null>()
+	currentIndex: number | null = null
+	currentTrack: Track | null = null
+	nextTrack$ = new BehaviorSubject<Track | null>(null)
+	audioElement: HTMLAudioElement = null!
 
 	constructor() {
 		fetch("/api/music/get-library")
 			.then(async response => this.loadLibrary(await response.json()))
+		this.createAudioElement()
 	}
 
 	private loadLibrary(albums: { [folder: string]: Album }) {
@@ -28,13 +31,61 @@ export class MusicService {
 		this.loaded$.next()
 	}
 
-	play(track: TrackIdentifier, updateIndex = true) {
+	private createAudioElement() {
+		this.audioElement = document.getElementById("music-player") as HTMLAudioElement
+		if (this.audioElement)
+			return console.warn("Audio element already exists")
+		this.audioElement = document.createElement("audio")
+		this.audioElement.id = "music-player"
+		this.audioElement.style.display = "none"
+		document.body.appendChild(this.audioElement)
+
+		this.audioElement.addEventListener("ended", () => {
+			this.startNextTrack()
+		})
+	}
+
+	private startNextTrack() {
+		if (this.currentIndex === null)
+			this.currentIndex = 0
+		else
+			this.currentIndex++
+
+		if (this.currentIndex < this.queue.length)
+			this.playTrack(this.trackFor(this.queue[this.currentIndex]))
+		else
+			this.currentIndex = null
+	}
+
+	play(trackId: TrackIdentifier, updateIndex = true) {
 		if (updateIndex) {
-			const index = this.queue.indexOf(track)
+			const index = this.queue.indexOf(trackId)
 			if (index !== -1)
-				this.playingIndex = index
+				this.currentIndex = index
 		}
-		this.nextTrack$.next(this.trackFor(track))
+		this.playTrack(this.trackFor(trackId))
+	}
+
+	private playTrack(track: Track | null) {
+		const file = track?.filename ?? track?.duplicateOf
+		if (!file)
+			return
+		this.currentTrack = track
+		this.audioElement.src = "api/music/files/" + file.replace(/#/g, "ꖛ") // Replace # with ꖛ to avoid issues with the URL
+		this.audioElement.onloadeddata = () => this.audioElement.play()
+		this.nextTrack$.next(track)
+	}
+
+	pause() {
+		this.audioElement.pause()
+	}
+
+	unpause() {
+		this.audioElement.play()
+	}
+
+	isPlaying() {
+		return !this.audioElement.paused && !this.audioElement.ended && this.audioElement.readyState > 2
 	}
 
 	trackFor(trackIdentifier: TrackIdentifier) {
@@ -43,17 +94,17 @@ export class MusicService {
 	}
 
 	addAndPlay(...tracks: TrackIdentifier[]) {
-		if (this.playingIndex === null)
-			this.playingIndex = 0
+		if (this.currentIndex === null)
+			this.currentIndex = 0
 		else
-			this.playingIndex++
-		this.queue.splice(this.playingIndex, 0, ...tracks)
+			this.currentIndex++
+		this.queue.splice(this.currentIndex, 0, ...tracks)
 		this.updateTracksQueue()
 		this.play(tracks[0], false)
 	}
 
 	addAsNext(track: TrackIdentifier) {
-		this.queue.splice((this.playingIndex ?? -1) + 1, 0, track)
+		this.queue.splice((this.currentIndex ?? -1) + 1, 0, track)
 		this.updateTracksQueue()
 	}
 
@@ -77,6 +128,19 @@ export class MusicService {
 		this.queue.sort(() => Math.random() - 0.5)
 		this.updateTracksQueue()
 	}
+
+	//inputs:
+	// start new song
+	// pause/unpause current song
+	// stop current song
+	// seek to new position
+	// go to next song (start new song, but we already know which)
+	// go to previous song (start new song, but we already know which)
+	// adjust volume
+
+	//outputs:
+	// song started // when going to next song
+	// song stopped // when at end of queue
 }
 
 export interface Album {

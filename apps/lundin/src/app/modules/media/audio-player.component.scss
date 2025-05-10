@@ -1,0 +1,38 @@
+@use "../../styles/general.scss";
+
+:host {
+	display: block;
+}
+
+.info {
+	display: flex;
+	height: 2rem;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+
+	.title {
+		font-size: large;
+	}
+}
+
+.player {
+	display: flex;
+	height: 2rem;
+	align-items: center;
+	gap: 1rem;
+	padding: 0 1rem;
+
+	.play-button, .mute-button {
+		width: 1rem;
+		filter: invert(1);
+	}
+
+	.seek-bar {
+		flex: 1;
+	}
+
+	.volume-bar {
+		width: 5rem;
+	}
+}

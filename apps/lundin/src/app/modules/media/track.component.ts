@@ -73,14 +73,16 @@ export class TrackComponent {
 	}
 
 	handlePlay() {
-		if (this.showQueueButtons)
+		if(this.musicService.currentTrack?.identifier === this.track.identifier)
+			this.musicService.unpause()
+		else if (this.showQueueButtons)
 			this.musicService.addAndPlay(this.track.identifier)
 		else
 			this.musicService.play(this.track.identifier)
 	}
 
 	handlePause() {
-		// TODO
+		this.musicService.pause()
 	}
 
 	handleAddNext() {
