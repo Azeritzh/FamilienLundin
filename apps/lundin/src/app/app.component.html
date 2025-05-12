@@ -1,6 +1,11 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <header class="nav-content">
+	<button (click)="hideNavigation = !hideNavigation"
+		class="collapse-btn">
+		<img [src]="hideNavigation ? '/assets/images/icons/Collapse2_icon.svg' : '/assets/images/icons/Collapse1_icon.svg'"
+			alt="todo">
+	</button>
 	{{header}}
 	<div *ngIf="authService.isLoggedIn() && (authService.loginInfo?.userId ?? 0 | user | async) as username"
 		class="profile-nav-content">
@@ -12,12 +17,6 @@
 </header>
 
 <nav>
-	<button (click)="hideNavigation = !hideNavigation"
-		class="nav-btn collaps-btn">
-		<img [src]="hideNavigation ? '/assets/images/icons/Collapse2_icon.svg' : '/assets/images/icons/Collapse1_icon.svg'"
-			alt="todo">
-		<span class="nav-text">Kollaps</span>
-	</button>
 	<a *ngFor="let entry of shownNavigationEntries()"
 		[routerLink]="entry.link"
 		class="nav-btn">

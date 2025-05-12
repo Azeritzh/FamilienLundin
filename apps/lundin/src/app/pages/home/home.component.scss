@@ -24,8 +24,6 @@
 	min-width: 16rem;
 }
 
-.scroll-list-container {
-	@extend .scroll-container;
-	height: calc(100% - 3rem);
+.container-header + section {
 	margin-top: 0.5rem;
 }

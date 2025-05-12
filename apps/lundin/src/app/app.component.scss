@@ -6,11 +6,39 @@
 		"navigation content";
 	grid-template-columns: 10rem 1fr;
 	grid-template-rows: 3rem 1fr;
-	height: 100vh;
 	transition: var(--standard-transition); // transition only works with grid-template-columns in firefox so far
 }
 :host.hidden-navigation {
 	grid-template-columns: 3.5rem 1fr;
+}
+
+@media (max-width: 768px) {
+	:host {
+		grid-template-columns: 0rem 1fr;
+	}
+
+	nav {
+		width: 10rem;
+		min-height: unset;
+	}
+
+	:host.hidden-navigation {
+		grid-template-columns: 0rem 1fr;
+
+		nav {
+			width: 0;
+		}
+	}
+
+	header {
+		position: sticky;
+		top: 0;
+		z-index: 2;
+	}
+
+	article {
+		max-width: 100vw;
+	}
 }
 
 header { grid-area: header; }
@@ -25,24 +53,24 @@ header {
 	background-color: var(--color-primary);
 	color: white;
 	line-height: 3rem;
-	padding: 0 1rem;
 }
 
 header a {
 	margin-left: auto;
 	line-height: 2rem;
+	padding: 0.25rem;
 }
 
 nav {
+	position: sticky;
+	top: 0;
+	align-self: start; // for sticky to work
+	z-index: 2;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	min-height: calc(100vh - 3rem);
 	background-color: var(--color-background);
-}
-
-article {
-	height: calc(100vh - 3rem);
-	overflow: auto;
 }
 
 nav a { display: inline-flex; }
@@ -53,7 +81,6 @@ a, button {
 	font-size: 1.2rem;
 	padding: 0.2rem;
 }
-a + button { margin-top: auto; }
 
 .nav-btn {
 	background-color: var(--color-background);
@@ -75,8 +102,10 @@ a + button { margin-top: auto; }
 	background-color: var(--color-secondary);
 }
 
-.collaps-btn {
-	border-bottom: 1px solid var(--color-border);
+.collapse-btn {
+	background-color: unset;
+	line-height: 3rem;
+	padding: 0;
 }
 
 .logout-btn {
@@ -113,7 +142,7 @@ a + button { margin-top: auto; }
 }
 
 .message-box {
-	position: absolute;
+	position: fixed;
 	display: flow-root;
 
 	font-weight: bold;
