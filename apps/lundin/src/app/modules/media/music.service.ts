@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core"
+import { randomise } from "@lundin/utility"
 import { BehaviorSubject, Subject } from "rxjs"
 
 @Injectable({
@@ -125,7 +126,7 @@ export class MusicService {
 	}
 
 	randomiseQueue() {
-		this.queue.sort(() => Math.random() - 0.5)
+		this.queue = randomise(this.queue)
 		this.updateTracksQueue()
 	}
 

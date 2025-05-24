@@ -63,6 +63,17 @@ export function randomNumberBelow(max: number) {
 	return Math.random() * max
 }
 
+export function randomise<T>(list: T[]) {
+	const shuffled = list.slice()
+	const indexes = list.map((_, i) => i)
+	for (let i = 0; i < list.length; i++) {
+		const index = indexes[randomIntBelow(indexes.length)]
+		shuffled[i] = list[index]
+		indexes.splice(i, 1)
+	}
+	return shuffled
+}
+
 export const Tau = Math.PI * 2
 
 export function Rotate(source: number, angle: number) {
@@ -115,7 +126,7 @@ const buff_to_base64 = (buff: Uint8Array) => btoa(
 
 const base64_to_buf = (b64: string) =>
 	Uint8Array.from(atob(b64), (c) => c.charCodeAt(null!))
-	//Uint8Array.from(window.Buffer.from(b64, "base64"))
+//Uint8Array.from(window.Buffer.from(b64, "base64"))
 
 
 const getPasswordKey = (password: string) =>

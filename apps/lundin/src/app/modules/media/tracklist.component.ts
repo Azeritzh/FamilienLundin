@@ -7,6 +7,7 @@ import { MusicService, Track } from "./music.service"
 import { PlaylistSelectorComponent } from "./playlist-selector.component"
 import { PlaylistService } from "./playlist.service"
 import { TrackComponent } from "./track.component"
+import { randomInt, randomIntBelow, randomise } from "@lundin/utility"
 
 @Component({
 	selector: "lundin-tracklist",
@@ -127,8 +128,7 @@ export class TrackListComponent implements OnChanges, OnDestroy {
 	randomiseTracks() {
 		if (!this.randomiseLocally)
 			return this.randomise.emit()
-		this.tracks = [...this.tracks]
-		this.tracks.sort(() => Math.random() - 0.5)
+		this.tracks = randomise(this.tracks)
 		this.shownTracks = this.tracks
 		this.randomise.emit()
 	}

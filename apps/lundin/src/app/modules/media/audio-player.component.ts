@@ -47,7 +47,7 @@ export class AudioPlayerComponent implements OnDestroy {
 	private updateCurrentTime = () => {
 		if (this.isSeeking)
 			return
-		this.duration = this.musicService.audioElement.duration
+		this.duration = this.musicService.audioElement.duration || 0
 		this.currentTime = this.musicService.audioElement.currentTime
 		this.changeDetectorRef.markForCheck()
 	}
