@@ -1,14 +1,9 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
+
 .thread {
 	@extend .list-entry-container;
-	border-bottom: 1px solid var(--color-border);
 	cursor: pointer;
 	overflow: hidden;
-}
-.thread:first-child {
-	border-top: 1px solid var(--color-border);
-}
-.thread:hover {
-	background-color: var(--color-secondary);
 }
 .thread * { padding: 0.2rem; }
 
@@ -17,7 +12,6 @@
 .author { text-align: right; }
 
 .list-entry-container {
-	border: 1px solid var(--color-primary);
 	margin: 0.2rem 0.5rem;
 	border-radius: var(--border-radius-half);
 }
@@ -29,10 +23,10 @@
 
 .message-header {
 	@extend .list-entry-content;
-	background-color: var(--color-secondary);
+	@include colour.sub-header;
 }
 
 .message-content {
 	@extend .list-entry-content;
-	background-color: var(--color-background);
+	@include colour.box;
 }

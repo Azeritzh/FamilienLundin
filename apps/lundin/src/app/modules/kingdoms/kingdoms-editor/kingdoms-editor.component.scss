@@ -1,3 +1,5 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
+
 :host {
 	height: 100%;
 	display: grid;
@@ -17,13 +19,12 @@
 }
 
 h1 {
+	@include colour.header;
 	font-size: 1.2rem;
 	font-weight: bold;
 	line-height: 2rem;
 	text-align: center;
 	margin-bottom: 0.5rem;
-	background-color: var(--color-primary);
-	color: var(--color-text-light);
 }
 
 .setting {

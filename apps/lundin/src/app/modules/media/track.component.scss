@@ -31,7 +31,7 @@ img.fixed {
 	height: 1.5rem;
 	max-width: 30rem;
 	overflow: hidden;
-	background-color: var(--color-btn-neutral);
+	background-color: var(--color-neutral);
 	transition: 0.3s ease;
 
 	img {
@@ -55,8 +55,8 @@ img, button {
 	background-color: transparent;
 }
 img:hover, button:hover {
-	background-color: var(--color-btn-neutral-hover);
+	background-color: var(--color-neutral-hover);
 }
 img.negative:hover {
-	background-color: var(--color-btn-negative-hover);
+	background-color: var(--color-negative-hover);
 }

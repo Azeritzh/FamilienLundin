@@ -1,3 +1,5 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
+
 * {
 	font-family: "Segoe UI", "Calibri";
 }
@@ -28,38 +30,37 @@ body {
 /* Custom styling for buttons */
 
 .button, button:not(.clear) {
-	background-color: var(--color-btn-neutral);
+	background-color: var(--color-neutral);
 	height: 2rem;
 	line-height: 2rem;
 	padding: 0 1rem;
 	border-radius: var(--border-radius-full);
 	color: var(--color-text-light);
 	outline: unset;
-	white-space: nowrap;
 }
 
 .button:hover, button:not(.clear):hover {
-	background-color: var(--color-btn-neutral-hover);
+	background-color: var(--color-neutral-hover);
 }
 
 .button:disabled, button:not(.clear):disabled {
-	background-color: var(--color-btn-disabled);
+	background-color: var(--color-disabled-button);
 }
 
 .btn-positive {
-	background-color: var(--color-btn-positive);
+	background-color: var(--color-positive);
 }
 
 .btn-positive:hover {
-	background-color: var(--color-btn-positive-hover);
+	background-color: var(--color-positive-hover);
 }
 
 .btn-negative {
-	background-color: var(--color-btn-negative);
+	background-color: var(--color-negative);
 }
 
 .btn-negative:hover {
-	background-color: var(--color-btn-negative-hover);
+	background-color: var(--color-negative-hover);
 }
 
 /* Styling for inputs, textareas, select and labels */
@@ -67,14 +68,11 @@ body {
 input,
 textarea,
 select {
+	@include colour.input-area;
 	height: 2rem;
 	line-height: 2rem;
 	padding: 0 0.5rem;
 	border-radius: var(--border-radius-half);
-	border: 1px solid var(--color-border);
-	outline-color: var(--color-primary);
-	color: var(--color-text-input-background);
-	background-color: var(--color-input-background);
 }
 
 textarea {
@@ -90,25 +88,23 @@ input[type="checkbox"] {
 }
 
 header.container-header {
+	@include colour.header;
 	display: flex;
-	background-color: var(--color-primary);
 	justify-content: space-between;
 	font-size: 1.2rem;
 	padding: 0.2rem 0.5rem;
 	line-height: 1.7rem;
-	color: var(--color-text-light);
 	border-top-left-radius: 0.9rem;
 	border-top-right-radius: 0.9rem;
 }
 
 .sub-header {
+	@include colour.header;
 	display: flex;
-	background-color: var(--color-primary);
 	justify-content: space-between;
 	font-size: 1rem;
 	padding: 0 0.5rem;
 	line-height: 1.5rem;
-	color: var(--color-text-light);
 }
 
 .lowered-label {
@@ -151,9 +147,8 @@ header.container-header {
 }
 
 .scroll-container::-webkit-scrollbar-track {
-	border-radius: var(--border-radius-full);
-	border: 1px solid var(--color-primary);
-	background-color: white;
+	border-radius: var(--border-radius-full);	
+	background-color: white; /* TODO */
 }
 
 .scroll-container::-webkit-scrollbar {
@@ -162,14 +157,14 @@ header.container-header {
 
 .scroll-container::-webkit-scrollbar-thumb {
 	border-radius: var(--border-radius-full);
-	background-color: var(--color-btn-neutral);
+	background-color: var(--color-neutral);
 }
 
 /* Various */
 
 .container-box {
+	@include colour.content-area;
 	border-radius: var(--border-radius-full);
 	/* border: 1px solid var(--color-border);*/
 	padding-bottom: 0.5rem;
-	background-color: var(--color-box-background);
 }

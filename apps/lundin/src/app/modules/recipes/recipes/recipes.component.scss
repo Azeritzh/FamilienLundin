@@ -1,3 +1,4 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
 @use "../../../styles/general.scss";
 
 .recipes-container {
@@ -17,7 +18,7 @@
 }
 
 .recipes-list-item {
-	background-color: var(--color-secondary);
+	@include colour.sub-header;
 	border-radius: var(--border-radius-full);
 	overflow: hidden;
 	height: 15rem;
@@ -28,11 +29,11 @@
 }
 
 .img-description {
+	@include colour.header;
 	position: absolute;
 	bottom: 0%;
 	width: 100%;
 	left: 0;
-	background-color: var(--color-primary);
 	padding: 0.5rem 0.2rem;
 	text-overflow: ellipsis;
 	white-space: nowrap;

@@ -31,9 +31,9 @@ section input + label { margin-left: 0.5rem; }
     flex: 1;
     border-top-left-radius: unset;
     border-bottom-left-radius: unset;
-    background-color: var(--color-btn-negative);
+    background-color: var(--color-negative);
 }
 
 .save {
-    background-color: var(--color-btn-positive);
+    background-color: var(--color-positive);
 }

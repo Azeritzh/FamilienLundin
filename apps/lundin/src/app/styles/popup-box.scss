@@ -1,3 +1,5 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
+
 :host {
 	display: flex;
 	flex-direction: column;
@@ -6,11 +8,10 @@
 }
 
 h1 {
+	@include colour.header;
 	font-size: 1.3rem;
-	background-color: var(--color-primary);
 	border-radius: 0.5rem 0.5rem 0 0;
 	padding: 0.5rem;
-	color: var(--color-text-light);
 	text-align: center;
 }
 

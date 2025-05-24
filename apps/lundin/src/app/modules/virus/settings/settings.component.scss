@@ -1,13 +1,14 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
+
 :host{ margin-right: 0.5rem; }
 
 h1 {
+	@include colour.header;
 	font-size: 1.2rem;
 	font-weight: bold;
 	line-height: 2rem;
 	text-align: center;
 	margin-bottom: 0.5rem;
-	background-color: var(--color-primary);
-	color: var(--color-text-light);
 }
 
 button {
@@ -24,7 +25,6 @@ li {
 	padding: 0.5rem;
 	margin-bottom: 0.2rem;
 	border-radius: var(--border-radius-half);
-	background-color: var(--color-secondary);
 }
 
 .name {	grid-area: name; }

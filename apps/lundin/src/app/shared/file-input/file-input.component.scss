@@ -4,13 +4,13 @@
 	text-align: center;
 	line-height: 5rem;
 	border-radius: var(--border-radius-full);
-	background-color: var(--color-secondary);
+	background-color: var(--color-side-bar); /* TODO */
 	border: 2px dashed white;
 	cursor: pointer;
 	transition: var(--standard-transition);
 }
 #file-box:hover, #file-box.dragover {
-	background-color: var(--color-background);
+	background-color: var(--color-side-bar-hover); /* TODO */
 }
 #file-box.loading {
 	color: transparent;

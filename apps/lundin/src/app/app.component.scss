@@ -1,3 +1,5 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
+
 /*-------------- Topbar, Navbar & Overlay -----------------  */
 
 :host {
@@ -47,11 +49,10 @@ article { grid-area: content; }
 lundin-login { grid-area: 2 / 1 / 3 / 3; }
 
 header {
+	@include colour.header;
 	display: flex;
 	font-size: 2rem;
 	font-weight: bold;
-	background-color: var(--color-primary);
-	color: white;
 	line-height: 3rem;
 }
 
@@ -62,6 +63,7 @@ header a {
 }
 
 nav {
+	@include colour.side-bar;
 	position: sticky;
 	top: 0;
 	align-self: start; // for sticky to work
@@ -70,7 +72,6 @@ nav {
 	flex-direction: column;
 	overflow: hidden;
 	min-height: calc(100vh - 3rem);
-	background-color: var(--color-background);
 }
 
 nav a { display: inline-flex; }
@@ -83,8 +84,7 @@ a, button {
 }
 
 .nav-btn {
-	background-color: var(--color-background);
-	color: var(--color-text-dark);
+	@include colour.side-bar;
 	border-radius: unset;
 }
 
@@ -99,7 +99,7 @@ a, button {
 }
 
 .nav-btn:hover {
-	background-color: var(--color-secondary);
+	background-color: var(--color-side-bar-hover);
 }
 
 .collapse-btn {
@@ -142,13 +142,12 @@ a, button {
 }
 
 .message-box {
+	@include colour.header;
 	position: fixed;
 	display: flow-root;
 
 	font-weight: bold;
 	text-align: center;
-	color: var(--color-text-light);
-	background-color: var(--color-primary);
 	padding: 0.5rem;
 	border-radius: var(--border-radius-half);
 

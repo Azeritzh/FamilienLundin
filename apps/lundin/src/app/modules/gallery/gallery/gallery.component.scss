@@ -1,3 +1,4 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
 @use "../../../styles/general.scss";
 
 .gallery-container {
@@ -17,7 +18,7 @@
 }
 
 .gallery-list-item {
-	background-color: var(--color-secondary);
+	@include colour.box;
 	border-radius: var(--border-radius-full);
 	overflow: hidden;
 	height: 15rem;
@@ -26,15 +27,15 @@
 }
 
 .img-description {
+	@include colour.header;
 	position: absolute;
-    top: 87%;
-    width: 100%;
-    left: 0;
-    background-color: var(--color-primary);
-    padding: 0.5rem 0.2rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+	top: 87%;
+	width: 100%;
+	left: 0;
+	padding: 0.5rem 0.2rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .search-container {
@@ -45,8 +46,8 @@
 
 img {
 	position: relative;
-    max-height: 100%;
-    left: 50%;
-    transform: translate(-50%);
-    display: block;
+	max-height: 100%;
+	left: 50%;
+	transform: translate(-50%);
+	display: block;
 }

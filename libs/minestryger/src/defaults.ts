@@ -137,7 +137,7 @@ export const defaultDisplayConfig: DisplayConfig = {
 	line-height: 2rem;
 	text-align: center;
 	margin-bottom: 0.5rem;
-	background-color: var(--color-primary);
+	background-color: var(--color-header);
 	color: var(--color-text-light);
 }
 

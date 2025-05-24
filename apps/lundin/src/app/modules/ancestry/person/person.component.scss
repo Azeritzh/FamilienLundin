@@ -1,3 +1,4 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
 @use "../../../styles/general.scss";
 
 .person-container {
@@ -63,9 +64,9 @@ img {
 }
 
 .file-item {
-	background-color: var(--color-secondary);
+	@include colour.box;
 	border-radius: var(--border-radius-half);
-	overflow:hidden;
+	overflow: hidden;
 	min-height: 10rem;
 	position: relative;
 	height: 50%;
@@ -79,20 +80,20 @@ img {
 }
 
 .file-description {
+	@include colour.header;
 	position: absolute;
-    top: 81%;
-    width: 100%;
-    left: 0;
-    background-color: var(--color-primary);
-    padding: 0.5rem 0.2rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+	top: 81%;
+	width: 100%;
+	left: 0;
+	padding: 0.5rem 0.2rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .scroll-info-file-container {
 	@extend .scroll-container;
-    height: calc(100% - 3rem);
+	height: calc(100% - 3rem);
 }
 
 .btn-container {

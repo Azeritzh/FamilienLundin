@@ -1,3 +1,4 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
 @use "../../styles/general.scss";
 
 :host {
@@ -5,8 +6,7 @@
 }
 
 h1 {
-	background-color: var(--color-primary);
-	color: var(--color-text-light);
+	@include colour.header;
 	text-align: center;
 	font-size: 1.5rem;
 	font-weight: bold;
@@ -15,9 +15,8 @@ h1 {
 }
 
 a {
+	@include colour.neutral;
 	display: inline-block;
-	background-color: var(--color-btn-neutral);
-	color: var(--color-text-light);
 	text-align: center;
 	font-size: 1.5rem;
 	font-weight: bold;
@@ -26,4 +25,3 @@ a {
 	width: 15rem;
 	transition: var(--standard-transition);
 }
-a:hover { background-color: var(--color-btn-neutral-hover); }

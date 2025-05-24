@@ -19,6 +19,7 @@ time, mark, audio, video
 	border: 0;
 	font-size: 100%;
 	font: inherit;
+	text-wrap: nowrap;
 	vertical-align: baseline;
 	box-sizing: border-box;
 }
@@ -35,6 +36,10 @@ button, input, textarea, select
 
 button {
 	cursor: pointer;
+}
+
+p, div, textarea {
+	text-wrap: unset;
 }
 
 /* HTML5 display-role reset for older browsers */

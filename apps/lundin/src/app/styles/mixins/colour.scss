@@ -1,0 +1,94 @@
+@mixin positive {
+	background-color: var(--color-positive);
+	color: var(--color-text-light);
+
+	&:hover {
+		background-color: var(--color-positive-hover);
+	}
+}
+
+@mixin neutral {
+	background-color: var(--color-neutral);
+	color: var(--color-text-light);
+
+	&:hover {
+		background-color: var(--color-neutral-hover);
+	}
+}
+
+@mixin negative {
+	background-color: var(--color-negative);
+	color: var(--color-text-light);
+
+	&:hover {
+		background-color: var(--color-negative-hover);
+	}
+}
+
+@mixin disabled-button {
+	background-color: var(--color-disabled-button);
+	color: var(--color-text-light);
+
+	&:hover {
+		background-color: var(--color-disabled-button);
+	}
+}
+
+@mixin side-bar {
+	background-color: var(--color-side-bar);
+	color: var(--color-text-dark);
+
+	@media (prefers-color-scheme: dark) {
+		color: var(--color-text-light);
+	}
+}
+
+@mixin header {
+	background-color: var(--color-header);
+	color: var(--color-text-light);
+}
+
+@mixin sub-header {
+	background-color: var(--color-sub-header);
+	color: var(--color-text-dark);
+
+	@media (prefers-color-scheme: dark) {
+		color: var(--color-text-light);
+	}
+}
+
+@mixin background {
+	background-color: var(--color-background);
+	color: var(--color-text-dark);
+
+	@media (prefers-color-scheme: dark) {
+		color: var(--color-text-light);
+	}
+}
+
+@mixin box {
+	background-color: var(--color-box);
+	color: var(--color-text-dark);
+
+	@media (prefers-color-scheme: dark) {
+		color: var(--color-text-light);
+	}
+}
+
+@mixin input-area {
+	background-color: var(--color-input-area);
+	color: var(--color-text-dark);
+
+	@media (prefers-color-scheme: dark) {
+		color: var(--color-text-light);
+	}
+}
+
+@mixin content-area {
+	background-color: var(--color-content-area);
+	color: var(--color-text-dark);
+
+	@media (prefers-color-scheme: dark) {
+		color: var(--color-text-light);
+	}
+}

@@ -3,24 +3,26 @@ html {
 	--color-text-dark: #101010;
 	--color-text-light: white;
 
-	--color-btn-positive: #7c9464;
-	--color-btn-positive-hover: #81AF74;
-	--color-btn-neutral: #33648f;
-	--color-btn-neutral-hover: #4A80BE;
-	--color-btn-negative: #aa5454;
-	--color-btn-negative-hover: #CE6969;
-	
-	--color-btn-disabled: #AFAFAF;
+	--color-positive: #7c9464;
+	--color-positive-hover: #81AF74;
+	--color-neutral: #33648f;
+	--color-neutral-hover: #4A80BE;
+	--color-negative: #aa5454;
+	--color-negative-hover: #CE6969;
 
-	--color-primary: #90ab89;
-	--color-secondary: #e0e8e3;
-	--color-background:#f4f6f2;
-	--color-box-background:rgba(255, 255, 255, 0.75);
-	--color-input-background:#ffffff;
-	--color-input-background-text: --color-text-dark;
+	--color-disabled-button: #AFAFAF;
 
-	--color-border: #d4d4d4;
-	
+	--color-side-bar: #f4f6f2;
+	--color-side-bar-hover: #e0e8e3;
+	--color-header: #90ab89;
+	--color-sub-header: #e0e8e3;
+	--color-background: #f4f6f2;
+	--color-box: #f4f6f2;
+	--color-input-area: #ffffff;
+	--color-content-area: rgba(255, 255, 255, 0.75);
+
+	--color-border: #d4d4d4; /* TODO */
+
 	/* sizes */
 	--border-radius-half: 0.5rem;
 	--border-radius-full: 1rem;
@@ -30,12 +32,14 @@ html {
 	--standard-transition: 0.3s ease;
 
 	@media (prefers-color-scheme: dark) {
-		--color-primary: #313131;
-		--color-secondary: #111111;
-		--color-background:#272727;
-		--color-box-background:rgba(20, 20, 20, 0.75);
-		--color-input-background:#444444;
-		--color-input-background-text: --color-text-light;
+		--color-side-bar: #222222;
+		--color-side-bar-hover: #111111;
+		--color-header: #313131;
+		--color-sub-header: #111111;
+		--color-background: #272727;
+		--color-box: #rgba(20, 20, 20, 0.75);
+		--color-input-area: #444444;
+		--color-content-area: rgba(0, 0, 0, 0.75);
 
 		color: var(--color-text-light);
 	}

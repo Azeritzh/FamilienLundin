@@ -1,13 +1,8 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
+
 .entry {
 	@extend .list-entry-container;
-	border-bottom: 1px solid var(--color-border);
 	cursor: pointer;
-}
-.entry:first-child {
-	border-top: 1px solid var(--color-border);
-}
-.entry:hover {
-	background-color: var(--color-secondary);
 }
 .entry * { padding: 0.2rem; }
 
@@ -19,7 +14,6 @@
 .date { text-align: right; }
 
 .list-entry-container {
-	border: 1px solid var(--color-primary);
 	margin: 0.2rem 0.5rem;
 	border-radius: var(--border-radius-half);
 }
@@ -31,14 +25,14 @@
 
 .message-header {
 	@extend .list-entry-content;
-	background-color: var(--color-secondary);
+	@include colour.sub-header;
 	border-top-left-radius: var(--border-radius-half);
 	border-top-right-radius: var(--border-radius-half);
 }
 
 .message-content {
 	@extend .list-entry-content;
-	background-color: white;
+	@include colour.box;
 	border-bottom-left-radius: var(--border-radius-half);
 	border-bottom-right-radius: var(--border-radius-half);
 }

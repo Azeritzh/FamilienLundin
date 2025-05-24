@@ -1,3 +1,5 @@
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
+
 :host {
 	display: grid;
 }
@@ -15,6 +17,7 @@
 }
 
 .message {
+	@include colour.header;
 	grid-column: 1 / -1;
 	text-align: center;
 	line-height: 2rem;
@@ -22,8 +25,6 @@
 	font-weight: bold;
 	border-top-left-radius: var(--border-radius-half);
 	border-top-right-radius: var(--border-radius-half);
-	color: var(--color-text-light);
-	background: var(--color-primary);
 	border-style: solid;
 	border-left-width: 3rem;
 	border-right-width: 3rem;
