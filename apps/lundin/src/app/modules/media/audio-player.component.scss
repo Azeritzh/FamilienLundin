@@ -23,9 +23,18 @@
 	gap: 1rem;
 	padding: 0 1rem;
 
-	.play-button, .mute-button {
+	.play-button,
+	.mute-button {
 		width: 1rem;
 		filter: invert(1);
+	}
+
+	@media (prefers-color-scheme: dark) {
+
+		.play-button,
+		.mute-button {
+			filter: invert(0);
+		}
 	}
 
 	.seek-bar {

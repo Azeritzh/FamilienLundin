@@ -19,24 +19,30 @@ body {
 	background-position-y: center;
 }
 
+@media (prefers-color-scheme: dark) {
+	.default-background {
+		background-image: unset;
+	}
+}
+
 /* Custom styling for buttons */
 
-button {
+.button, button:not(.clear) {
 	background-color: var(--color-btn-neutral);
 	height: 2rem;
 	line-height: 2rem;
 	padding: 0 1rem;
 	border-radius: var(--border-radius-full);
-	color: white;
+	color: var(--color-text-light);
 	outline: unset;
 	white-space: nowrap;
 }
 
-button:hover{
+.button:hover, button:not(.clear):hover {
 	background-color: var(--color-btn-neutral-hover);
 }
 
-button:disabled {
+.button:disabled, button:not(.clear):disabled {
 	background-color: var(--color-btn-disabled);
 }
 
@@ -58,13 +64,17 @@ button:disabled {
 
 /* Styling for inputs, textareas, select and labels */
 
-input, textarea, select {
+input,
+textarea,
+select {
 	height: 2rem;
 	line-height: 2rem;
 	padding: 0 0.5rem;
 	border-radius: var(--border-radius-half);
 	border: 1px solid var(--color-border);
 	outline-color: var(--color-primary);
+	color: var(--color-text-input-background);
+	background-color: var(--color-input-background);
 }
 
 textarea {
@@ -126,30 +136,31 @@ header.container-header {
 	text-shadow: -1px 1px 0 white, 1px 1px 0 white, 1px -1px 0 white, -1px -1px 0 white;
 	white-space: nowrap;
 	transition: var(--standard-transition);
+
+	@media (prefers-color-scheme: dark) {
+		text-shadow: -1px 1px 0 black, 1px 1px 0 black, 1px -1px 0 black, -1px -1px 0 black;
+	}
 }
 
 /* Custom styling for scrollbars */
 
 .scroll-container {
-    overflow-y: scroll;
-    width: calc(100% - 0.5rem);
-    margin-top: 0.5rem;
+	overflow-y: scroll;
+	width: calc(100% - 0.5rem);
+	margin-top: 0.5rem;
 }
 
-.scroll-container::-webkit-scrollbar-track
-{
-    border-radius: var(--border-radius-full);
-    border: 1px solid var(--color-primary);
+.scroll-container::-webkit-scrollbar-track {
+	border-radius: var(--border-radius-full);
+	border: 1px solid var(--color-primary);
 	background-color: white;
 }
 
-.scroll-container::-webkit-scrollbar
-{
+.scroll-container::-webkit-scrollbar {
 	width: 1rem;
 }
 
-.scroll-container::-webkit-scrollbar-thumb
-{
+.scroll-container::-webkit-scrollbar-thumb {
 	border-radius: var(--border-radius-full);
 	background-color: var(--color-btn-neutral);
 }
@@ -160,5 +171,5 @@ header.container-header {
 	border-radius: var(--border-radius-full);
 	/* border: 1px solid var(--color-border);*/
 	padding-bottom: 0.5rem;
-	background-color: rgb(255 255 255 / 76%);
+	background-color: var(--color-box-background);
 }

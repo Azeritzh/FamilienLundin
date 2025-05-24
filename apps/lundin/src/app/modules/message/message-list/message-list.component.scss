@@ -34,5 +34,5 @@
 
 .message-content {
 	@extend .list-entry-content;
-	background-color: white;
+	background-color: var(--color-background);
 }
