@@ -64,12 +64,12 @@ export function randomNumberBelow(max: number) {
 }
 
 export function randomise<T>(list: T[]) {
-	const shuffled = list.slice()
-	const indexes = list.map((_, i) => i)
-	for (let i = 0; i < list.length; i++) {
-		const index = indexes[randomIntBelow(indexes.length)]
-		shuffled[i] = list[index]
-		indexes.splice(i, 1)
+	const remaining = list.slice()
+	const shuffled: T[] = []
+	while (remaining.length > 0) {
+		const index = randomIntBelow(remaining.length)
+		shuffled.push(remaining[index])
+		remaining.splice(index, 1)
 	}
 	return shuffled
 }
