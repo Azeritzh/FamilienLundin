@@ -1,12 +1,23 @@
-h1, h2 {
+@use "apps/lundin/src/app/styles/mixins/colour.scss";
+
+h1,
+h2 {
 	width: 100%;
 	text-align: center;
 	margin: 1rem 0;
+	white-space: wrap;
 }
-h1 { font-size: 2rem; }
-h2 { font-size: 1.5rem; }
 
-input, button {
+h1 {
+	font-size: 2rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+input,
+button {
 	display: block;
 	height: unset;
 	font-size: 1.2rem;
@@ -21,12 +32,12 @@ input {
 }
 
 .login-container {
+	@include colour.content-area;
 	display: flex;
-    justify-content: center;
-    flex-direction: column;
-    height: auto;
+	justify-content: center;
+	flex-direction: column;
+	height: auto;
 	width: 25rem;
-	background-color: rgb(255 255 255 / 76%);
 	margin-left: auto;
 	margin-right: auto;
 	padding: 2rem;
@@ -35,8 +46,8 @@ input {
 
 .login-header {
 	width: 15rem;
-    margin-right: auto;
-    margin-left: auto;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 .login-subheader {
@@ -45,7 +56,7 @@ input {
 
 .login-form {
 	display: flex;
-    flex-direction: column;
-    height: 13rem;
-    justify-content: space-between;
+	flex-direction: column;
+	height: 13rem;
+	justify-content: space-between;
 }
