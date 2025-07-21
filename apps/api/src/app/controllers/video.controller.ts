@@ -13,7 +13,7 @@ export class VideoController {
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Get("files/**")
+	@Get("files/*path")
 	async getFile(@Req() req, @Res() res) {
 		const filePath = decodeURIComponent(req.url.split("video/files/")[1])
 		res.sendFile(filePath, { root: this.videoService.libraryPath })

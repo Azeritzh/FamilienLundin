@@ -19,7 +19,7 @@ export class MusicController {
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Get("files/**")
+	@Get("files/*path")
 	async getFile(@Req() req, @Res() res) {
 		const filePath = decodeURIComponent(req.url.split("music/files/")[1])
 			.replace(/ꖛ/g, "#")  // Restore # in the filename
