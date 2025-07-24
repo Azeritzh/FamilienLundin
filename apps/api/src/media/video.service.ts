@@ -3,7 +3,7 @@ import * as fs from "fs"
 
 @Injectable()
 export class VideoService {
-	libraryPath = "F:/Media/Video/Film"
+	libraryPath = "/mnt/data/Media/Video/Film"
 	library: { [index: string]: any } = {}
 
 	constructor() {

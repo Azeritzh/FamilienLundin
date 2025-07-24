@@ -3,7 +3,7 @@ import * as fs from "fs"
 
 @Injectable()
 export class MusicService {
-	libraryPath = "F:/Media/Lyd/Musik"
+	libraryPath = "/mnt/data/Media/Lyd/Musik"
 	library: { [folder: string]: Album } = {}
 
 	constructor() {
