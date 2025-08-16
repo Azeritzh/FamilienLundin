@@ -1,73 +1,81 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<ng-container *ngIf="person$ | async as person"
-	class="person-container">
-	<section class="tree-box">
-		<header class="container-header">
-			<h1>{{person.name}} {{genderIcon(person)}} - Familie</h1>
-			<div class="btn-container">
-				<button type="button"
-					(click)="seeAncestryTree()">
-					Se stamtræ
-				</button>
-				<button type="button"
-					(click)="editRelations()">
-					Redigér
-				</button>
-			</div>
-
-		</header>
-		<lundin-family-tree [personId]="personId"></lundin-family-tree>
-	</section>
-
-	<section class="info-file-container">
-		<section class="information-box">
-			<header class="container-header">
-				<h1>Information</h1>
-				<button type="button"
-					(click)="editInfo()">
-					Tilføj / Redigér
-				</button>
-			</header>
-			<ul class="scroll-info-file-container">
-				<li *ngFor="let info of person.information"
-					class="info-list">
-					<span class="information-title">{{titleOf(info)}}</span>
-					<span class="information-content">{{info.content}}</span>
-				</li>
-			</ul>
-		</section>
-
-		<section class="file-box">
-			<header class="container-header">
-				<h1>Filer</h1>
-				<button type="button"
-					(click)="editFiles()">
-					Tilføj ny fil
-				</button>
-			</header>
-			<ul class="scroll-info-file-container file-list">
-				<li *ngFor="let file of person.files"
-					class="file-item">
-					<img *ngIf="isImage(file)"
-						[src]="pathFor(file)"
-						(click)="editFile(file)"
-						alt="todo">
-					<a *ngIf="!isImage(file)"
-						[href]="pathFor(file)"
-						[title]="file.description"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="file-text-item">
-						{{file.name}}
-					</a>
-					<span *ngIf="file.description"
-						class="file-description">
-						{{file.description}}
-					</span>
-				</li>
-			</ul>
-		</section>
-	</section>
-
-</ng-container>
+@if (person$ | async; as person) {
+  <ng-container
+    class="person-container">
+    <section class="tree-box">
+      <header class="container-header">
+        <h1>{{person.name}} {{genderIcon(person)}} - Familie</h1>
+        <div class="btn-container">
+          <button type="button"
+            (click)="seeAncestryTree()">
+            Se stamtræ
+          </button>
+          <button type="button"
+            (click)="editRelations()">
+            Redigér
+          </button>
+        </div>
+      </header>
+      <lundin-family-tree [personId]="personId"></lundin-family-tree>
+    </section>
+    <section class="info-file-container">
+      <section class="information-box">
+        <header class="container-header">
+          <h1>Information</h1>
+          <button type="button"
+            (click)="editInfo()">
+            Tilføj / Redigér
+          </button>
+        </header>
+        <ul class="scroll-info-file-container">
+          @for (info of person.information; track info) {
+            <li
+              class="info-list">
+              <span class="information-title">{{titleOf(info)}}</span>
+              <span class="information-content">{{info.content}}</span>
+            </li>
+          }
+        </ul>
+      </section>
+      <section class="file-box">
+        <header class="container-header">
+          <h1>Filer</h1>
+          <button type="button"
+            (click)="editFiles()">
+            Tilføj ny fil
+          </button>
+        </header>
+        <ul class="scroll-info-file-container file-list">
+          @for (file of person.files; track file) {
+            <li
+              class="file-item">
+              @if (isImage(file)) {
+                <img
+                  [src]="pathFor(file)"
+                  (click)="editFile(file)"
+                  alt="todo">
+              }
+              @if (!isImage(file)) {
+                <a
+                  [href]="pathFor(file)"
+                  [title]="file.description"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="file-text-item">
+                  {{file.name}}
+                </a>
+              }
+              @if (file.description) {
+                <span
+                  class="file-description">
+                  {{file.description}}
+                </span>
+              }
+            </li>
+          }
+        </ul>
+      </section>
+    </section>
+  </ng-container>
+}

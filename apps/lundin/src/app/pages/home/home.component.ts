@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component } from "@angular/core"
 import { AddCalendarEventComponent } from "../../modules/calendar/add-calendar-event/add-calendar-event.component"
 import { CalendarEventListComponent } from "../../modules/calendar/calendar-event-list/calendar-event-list.component"
@@ -13,11 +13,10 @@ import { LoginComponent } from "../login/login.component"
 	templateUrl: "./home.component.html",
 	styleUrls: ["./home.component.scss"],
 	imports: [
-		LoginComponent,
-		CommonModule,
-		MessageListComponent,
-		CalendarEventListComponent,
-	],
+    LoginComponent,
+    MessageListComponent,
+    CalendarEventListComponent
+],
 })
 export class HomeComponent {
 	constructor(

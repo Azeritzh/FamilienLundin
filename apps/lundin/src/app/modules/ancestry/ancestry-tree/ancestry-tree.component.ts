@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { ActivatedRoute, Router } from "@angular/router"
 import { Person } from "@lundin/api-interfaces"
@@ -11,9 +11,8 @@ import { AncestryTreeNodeComponent } from "./ancestry-tree-node.component"
 	templateUrl: "./ancestry-tree.component.html",
 	styleUrls: ["./ancestry-tree.component.scss"],
 	imports: [
-		CommonModule,
-		AncestryTreeNodeComponent,
-	],
+    AncestryTreeNodeComponent
+],
 })
 export class AncestryTreeComponent implements OnInit, OnDestroy {
 	generations: Person[][] = []

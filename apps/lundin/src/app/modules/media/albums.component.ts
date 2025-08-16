@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from "@angular/core"
 import { FormsModule } from "@angular/forms"
 import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs"
@@ -10,10 +10,9 @@ import { TrackListComponent } from "./tracklist.component"
 	templateUrl: "./albums.component.html",
 	styleUrls: ["./albums.component.scss"],
 	imports: [
-		CommonModule,
-		FormsModule,
-		TrackListComponent,
-	],
+    FormsModule,
+    TrackListComponent
+],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlbumsComponent implements OnDestroy {

@@ -1,43 +1,59 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<img *ngIf="!isPlaying"
-	class="fixed"
-	src="/assets/images/icons/play.svg"
-	(click)="handlePlay(); $event.stopPropagation();"
-	alt="play">
-<img *ngIf="isPlaying"
-	class="fixed"
-	src="/assets/images/icons/pause.svg"
-	(click)="handlePause(); $event.stopPropagation();"
-	alt="pause">
-<div *ngFor="let field of fields; let i = index"
-	class="field"
-	[style.flex]="field.size ?? 1">
-	{{isPlaying && i === 0 ? "⏵" : ""}}
-	{{field.titleFor(track)}}
-</div>
-<img *ngIf="showQueueButtons && !showRemoveButton"
-	class="fixed"
-	src="/assets/images/icons/plus.svg"
-	(click)="handleAddLast(); $event.stopPropagation();"
-	alt="pause">
-<img *ngIf="showRemoveButton"
-	class="fixed negative"
-	src="/assets/images/icons/Close_icon.svg"
-	(click)="handleRemove(); $event.stopPropagation();"
-	alt="pause">
-<div *ngIf="active"
-	class="buttons"
-	[class.collapsed]="collapsed">
-	<button *ngIf="showQueueButtons"
-		(click)="handleAddNext(); $event.stopPropagation();">
-		Tilføj som næste
-	</button>
-	<button *ngIf="showQueueButtons"
-		(click)="handleAddLast(); $event.stopPropagation();">
-		Tilføj som sidste
-	</button>
-	<button (click)="handleAddToList(); $event.stopPropagation();">
-		Tilføj til liste...
-	</button>
-</div>
+@if (!isPlaying) {
+  <img
+    class="fixed"
+    src="/assets/images/icons/play.svg"
+    (click)="handlePlay(); $event.stopPropagation();"
+    alt="play">
+}
+@if (isPlaying) {
+  <img
+    class="fixed"
+    src="/assets/images/icons/pause.svg"
+    (click)="handlePause(); $event.stopPropagation();"
+    alt="pause">
+}
+@for (field of fields; track field; let i = $index) {
+  <div
+    class="field"
+    [style.flex]="field.size ?? 1">
+    {{isPlaying && i === 0 ? "⏵" : ""}}
+    {{field.titleFor(track)}}
+  </div>
+}
+@if (showQueueButtons && !showRemoveButton) {
+  <img
+    class="fixed"
+    src="/assets/images/icons/plus.svg"
+    (click)="handleAddLast(); $event.stopPropagation();"
+    alt="pause">
+}
+@if (showRemoveButton) {
+  <img
+    class="fixed negative"
+    src="/assets/images/icons/Close_icon.svg"
+    (click)="handleRemove(); $event.stopPropagation();"
+    alt="pause">
+}
+@if (active) {
+  <div
+    class="buttons"
+    [class.collapsed]="collapsed">
+    @if (showQueueButtons) {
+      <button
+        (click)="handleAddNext(); $event.stopPropagation();">
+        Tilføj som næste
+      </button>
+    }
+    @if (showQueueButtons) {
+      <button
+        (click)="handleAddLast(); $event.stopPropagation();">
+        Tilføj som sidste
+      </button>
+    }
+    <button (click)="handleAddToList(); $event.stopPropagation();">
+      Tilføj til liste...
+    </button>
+  </div>
+}

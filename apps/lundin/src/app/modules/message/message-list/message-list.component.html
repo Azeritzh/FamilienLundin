@@ -1,20 +1,22 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<div *ngFor="let thread of threads"
-	class="thread"
-	(click)="openThread(thread._id)">
-	<header class="message-header">
-		<div class="title">
-			{{thread.title}}
-		</div>
-		<div class="date">
-			{{thread.creationTime | date}}
-		</div>
-	</header>
-	<section class="message-content">
-		<div class="content">{{firstLineOfThread(thread)}}</div>
-		<div class="author">
-			{{thread.authorId | user | async}}
-		</div>
-	</section>
-</div>
+@for (thread of threads; track thread) {
+  <div
+    class="thread"
+    (click)="openThread(thread._id)">
+    <header class="message-header">
+      <div class="title">
+        {{thread.title}}
+      </div>
+      <div class="date">
+        {{thread.creationTime | date}}
+      </div>
+    </header>
+    <section class="message-content">
+      <div class="content">{{firstLineOfThread(thread)}}</div>
+      <div class="author">
+        {{thread.authorId | user | async}}
+      </div>
+    </section>
+  </div>
+}

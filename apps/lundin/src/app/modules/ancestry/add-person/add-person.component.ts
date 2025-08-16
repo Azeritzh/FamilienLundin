@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component } from "@angular/core"
 import { FormsModule } from "@angular/forms"
 import { PersonalRelation } from "@lundin/api-interfaces"
@@ -11,10 +11,9 @@ import { AncestryService } from "../ancestry.service"
 	templateUrl: "./add-person.component.html",
 	styleUrls: ["./add-person.component.scss", "../../../styles/popup-box.scss"],
 	imports: [
-		CommonModule,
-		FormsModule,
-		LabellingDirective,
-	],
+    FormsModule,
+    LabellingDirective
+],
 })
 export class AddPersonComponent {
 	name = ""

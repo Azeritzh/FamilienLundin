@@ -1,34 +1,40 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<ol *ngIf="!currentAlbum"
-	class="albums">
-	<input type="text"
-		placeholder="Søg"
-		[(ngModel)]="query"
-		(input)="query$.next(query)" />
-	<li *ngFor="let album of shownAlbums ?? albums"
-		class="album"
-		(click)="selectAlbum(album)">
-		<img [src]="'api/music/files/' + album.cover"
-			alt="todo">
-		<div class="artist">{{album.artist}}</div>
-		<div class="title">{{album.album}}</div>
-	</li>
-</ol>
+@if (!currentAlbum) {
+  <ol
+    class="albums">
+    <input type="text"
+      placeholder="Søg"
+      [(ngModel)]="query"
+      (input)="query$.next(query)" />
+    @for (album of shownAlbums ?? albums; track album) {
+      <li
+        class="album"
+        (click)="selectAlbum(album)">
+        <img [src]="'api/music/files/' + album.cover"
+          alt="todo">
+        <div class="artist">{{album.artist}}</div>
+        <div class="title">{{album.album}}</div>
+      </li>
+    }
+  </ol>
+}
 
 
-<div *ngIf="currentAlbum"
-	class="selected-album">
-	<div class="info">
-		<div class="buttons">
-			<button (click)="currentAlbum = null">
-				Tilbage
-			</button>
-		</div>
-		<img [src]="'api/music/files/' + currentAlbum.cover"
-			alt="todo">
-		<div class="artist">{{currentAlbum.artist}}</div>
-		<div class="title">{{currentAlbum.album}}</div>
-	</div>
-	<lundin-tracklist [tracks]="currentAlbum.tracks"></lundin-tracklist>
-</div>
+@if (currentAlbum) {
+  <div
+    class="selected-album">
+    <div class="info">
+      <div class="buttons">
+        <button (click)="currentAlbum = null">
+          Tilbage
+        </button>
+      </div>
+      <img [src]="'api/music/files/' + currentAlbum.cover"
+        alt="todo">
+      <div class="artist">{{currentAlbum.artist}}</div>
+      <div class="title">{{currentAlbum.album}}</div>
+    </div>
+    <lundin-tracklist [tracks]="currentAlbum.tracks"></lundin-tracklist>
+  </div>
+}

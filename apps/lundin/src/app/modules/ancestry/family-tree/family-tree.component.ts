@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy } from "@angular/core"
 import { Person, PersonalRelation } from "@lundin/api-interfaces"
 import { Subscription } from "rxjs"
 import { AncestryService } from "../ancestry.service"
-import { CommonModule } from "@angular/common"
+
 import { PortraitComponent } from "../portrait/portrait.component"
 
 @Component({
@@ -10,9 +10,8 @@ import { PortraitComponent } from "../portrait/portrait.component"
 	templateUrl: "./family-tree.component.html",
 	styleUrls: ["./family-tree.component.scss"],
 	imports: [
-		CommonModule,
-		PortraitComponent,
-	],
+    PortraitComponent
+],
 })
 export class FamilyTreeComponent implements OnDestroy {
 	@Input() set personId(id: number) {

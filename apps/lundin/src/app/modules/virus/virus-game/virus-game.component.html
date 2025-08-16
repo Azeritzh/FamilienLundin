@@ -1,12 +1,14 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="message"
-	[style.border-color]="getPlayer().color">
-	{{message}}
+  [style.border-color]="getPlayer().color">
+  {{message}}
 </div>
-<div *ngFor="let position of positions"
-	class="game-field"
-	(click)="select(position.x, position.y)"
-	[style.backgroundColor]="colorFor(position)"
-	[class.selected]="isSelected(position)">
-</div>
+@for (position of positions; track position) {
+  <div
+    class="game-field"
+    (click)="select(position.x, position.y)"
+    [style.backgroundColor]="colorFor(position)"
+    [class.selected]="isSelected(position)">
+  </div>
+}

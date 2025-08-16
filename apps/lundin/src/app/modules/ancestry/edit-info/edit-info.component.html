@@ -1,93 +1,95 @@
 <h1>Redigér informationer</h1>
 
 <div class="content-container">
-	<section>
-		<label for="name"
-			[labelling]="nameInput">
-			Navn
-		</label>
-		<input #nameInput
-			type="text"
-			[(ngModel)]="name"
-			id="name"
-			autocomplete="off">
-		<label for="gender"
-			[labelling]="genderInput">
-			Køn
-		</label>
-		<select #genderInput
-			[(ngModel)]="gender">
-			<option value="male">
-				Hankøn
-			</option>
-			<option value="female">
-				Hunkøn
-			</option>
-			<option value="other">
-				Andet
-			</option>
-		</select>
-	</section>
+  <section>
+    <label for="name"
+      [labelling]="nameInput">
+      Navn
+    </label>
+    <input #nameInput
+      type="text"
+      [(ngModel)]="name"
+      id="name"
+      autocomplete="off">
+    <label for="gender"
+      [labelling]="genderInput">
+      Køn
+    </label>
+    <select #genderInput
+      [(ngModel)]="gender">
+      <option value="male">
+        Hankøn
+      </option>
+      <option value="female">
+        Hunkøn
+      </option>
+      <option value="other">
+        Andet
+      </option>
+    </select>
+  </section>
 
-	<section>
-		<label for="born"
-			[labelling]="bornInput">
-			Født
-		</label>
-		<input #bornInput
-			type="text"
-			[(ngModel)]="born"
-			id="born"
-			autocomplete="off">
+  <section>
+    <label for="born"
+      [labelling]="bornInput">
+      Født
+    </label>
+    <input #bornInput
+      type="text"
+      [(ngModel)]="born"
+      id="born"
+      autocomplete="off">
 
-		<label for="dead"
-			[labelling]="deadInput">
-			Død
-		</label>
-		<input #deadInput
-			type="text"
-			[(ngModel)]="dead"
-			id="dead"
-			autocomplete="off">
-	</section>
-	
-	<button type="button"
-		class="add-info"
-		(click)="addInformation()">
-		Tilføj infolinje
-	</button>
+    <label for="dead"
+      [labelling]="deadInput">
+      Død
+    </label>
+    <input #deadInput
+      type="text"
+      [(ngModel)]="dead"
+      id="dead"
+      autocomplete="off">
+  </section>
 
-	<ul class="info-list">
-		<li *ngFor="let info of information"
-			class="information-row">
-			<input class="info-input-title" type="text"
-				[(ngModel)]="info.title"
-				placeholder="Titel"
-				autocomplete="off">
-			<input class="info-input-content" type="text"
-				[(ngModel)]="info.content"
-				placeholder="Beskrivelse"
-				autocomplete="off">
-			<button type="button"
-				class="delete"
-				(click)="deleteInformation(info)">
-				Slet
-			</button>
-		</li>
-	</ul>
+  <button type="button"
+    class="add-info"
+    (click)="addInformation()">
+    Tilføj infolinje
+  </button>
+
+  <ul class="info-list">
+    @for (info of information; track info) {
+      <li
+        class="information-row">
+        <input class="info-input-title" type="text"
+          [(ngModel)]="info.title"
+          placeholder="Titel"
+          autocomplete="off">
+        <input class="info-input-content" type="text"
+          [(ngModel)]="info.content"
+          placeholder="Beskrivelse"
+          autocomplete="off">
+        <button type="button"
+          class="delete"
+          (click)="deleteInformation(info)">
+          Slet
+        </button>
+      </li>
+    }
+  </ul>
 </div>
 
 <div class="btn-container">
-	<button type="button"
-		class="save"
-		(click)="save()">
-		Gem ændringer
-	</button>
+  <button type="button"
+    class="save"
+    (click)="save()">
+    Gem ændringer
+  </button>
 
-	<button type="button"
-		class="cancel"
-		(click)="cancel()">
-		Annuller
-	</button>
+  <button type="button"
+    class="cancel"
+    (click)="cancel()">
+    Annuller
+  </button>
 </div>
 

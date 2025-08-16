@@ -1,23 +1,31 @@
 <header class="container-header">
-	<h1>{{currentPerson?.name}} - stamtræ</h1>
-	<div class="btn-container">
-		<button type="button"
-			(click)="navigateToDetails()">
-			Persondetaljer
-		</button>
-	</div>
+  <h1>{{currentPerson?.name}} - stamtræ</h1>
+  <div class="btn-container">
+    <button type="button"
+      (click)="navigateToDetails()">
+      Persondetaljer
+    </button>
+  </div>
 </header>
 <section class="tree-container">
-	<div *ngIf="children.length"
-		class="generation">
-		<lundin-ancestry-tree-node *ngFor="let person of children"
-			[person]="person">
-		</lundin-ancestry-tree-node>
-	</div>
-	<div *ngFor="let generation of generations"
-		class="generation">
-		<lundin-ancestry-tree-node *ngFor="let person of generation"
-			[person]="person">
-		</lundin-ancestry-tree-node>
-	</div>
+  @if (children.length) {
+    <div
+      class="generation">
+      @for (person of children; track person) {
+        <lundin-ancestry-tree-node
+          [person]="person">
+        </lundin-ancestry-tree-node>
+      }
+    </div>
+  }
+  @for (generation of generations; track generation) {
+    <div
+      class="generation">
+      @for (person of generation; track person) {
+        <lundin-ancestry-tree-node
+          [person]="person">
+        </lundin-ancestry-tree-node>
+      }
+    </div>
+  }
 </section>

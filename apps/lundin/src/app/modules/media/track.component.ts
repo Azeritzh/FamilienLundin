@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, Output } from "@angular/core"
 import { firstValueFrom } from "rxjs"
 import { NavigationService } from "../../services/navigation.service"
@@ -10,9 +10,7 @@ import { PlaylistService } from "./playlist.service"
 	selector: "lundin-track",
 	templateUrl: "./track.component.html",
 	styleUrls: ["./track.component.scss"],
-	imports: [
-		CommonModule,
-	],
+	imports: [],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackComponent {

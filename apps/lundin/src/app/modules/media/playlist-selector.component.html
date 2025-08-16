@@ -1,23 +1,25 @@
 <h1>Vælg en spilleliste</h1>
 
 <div class="content-container">
-	<ul>
-		<button *ngFor="let playlist of playlists"
-			(click)="selectPlaylist(playlist)">
-			{{playlist.title}}
-		</button>
-	</ul>
+  <ul>
+    @for (playlist of playlists; track playlist) {
+      <button
+        (click)="selectPlaylist(playlist)">
+        {{playlist.title}}
+      </button>
+    }
+  </ul>
 
-	<h2>Eller opret en ny:</h2>
-	<div class="create-playlist">
-		<input type="text"
-			placeholder="Ny spilleliste"
-			[(ngModel)]="newPlaylistName"
-			(keyup.enter)="createPlaylist()" />
+  <h2>Eller opret en ny:</h2>
+  <div class="create-playlist">
+    <input type="text"
+      placeholder="Ny spilleliste"
+      [(ngModel)]="newPlaylistName"
+      (keyup.enter)="createPlaylist()" />
 
-		<button (click)="createPlaylist()"
-			[disabled]="!newPlaylistName">
-			Opret
-		</button>
-	</div>
+    <button (click)="createPlaylist()"
+      [disabled]="!newPlaylistName">
+      Opret
+    </button>
+  </div>
 </div>

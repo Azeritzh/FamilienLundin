@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component } from "@angular/core"
 import { FormsModule } from "@angular/forms"
 import { Router } from "@angular/router"
@@ -11,9 +11,8 @@ import { AncestryService } from "../ancestry.service"
 	templateUrl: "./edit-relations.component.html",
 	styleUrls: ["./edit-relations.component.scss", "../../../styles/popup-box.scss"],
 	imports: [
-		CommonModule,
-		FormsModule,
-	],
+    FormsModule
+],
 })
 export class EditRelationsComponent {
 	personId!: number

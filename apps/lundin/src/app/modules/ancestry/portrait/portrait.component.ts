@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component, Input } from "@angular/core"
 import { RouterModule } from "@angular/router"
 import { Person } from "@lundin/api-interfaces"
@@ -8,9 +8,8 @@ import { Person } from "@lundin/api-interfaces"
 	templateUrl: "./portrait.component.html",
 	styleUrls: ["./portrait.component.scss"],
 	imports: [
-		CommonModule,
-		RouterModule,
-	],
+    RouterModule
+],
 })
 export class PortraitComponent {
 	@Input() person!: Person

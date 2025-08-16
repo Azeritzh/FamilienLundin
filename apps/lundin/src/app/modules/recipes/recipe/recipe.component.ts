@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { Recipe } from "@lundin/api-interfaces"
@@ -12,9 +12,8 @@ import { RecipesService } from "../recipes.service"
 	templateUrl: "./recipe.component.html",
 	styleUrls: ["./recipe.component.scss"],
 	imports: [
-		CommonModule,
-		LabellingDirective,
-	],
+    LabellingDirective
+],
 })
 export class RecipeComponent implements OnInit {
 	recipe = <Recipe>{}

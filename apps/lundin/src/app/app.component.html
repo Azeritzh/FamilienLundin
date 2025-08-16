@@ -1,58 +1,64 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <header class="nav-content">
-	<button (click)="hideNavigation = !hideNavigation"
-		class="collapse-btn">
-		<img [src]="hideNavigation ? '/assets/images/icons/Collapse2_icon.svg' : '/assets/images/icons/Collapse1_icon.svg'"
-			alt="todo">
-	</button>
-	{{header}}
-	<div *ngIf="authService.isLoggedIn() && (authService.loginInfo?.userId ?? 0 | user | async) as username"
-		class="profile-nav-content">
-		<div class="profile-welcome-message">{{username}}</div>
-		<a routerLink="profile">
-			<div class="profile-img">{{firstLetterOf(username)}}</div>
-		</a>
-	</div>
+  <button (click)="hideNavigation = !hideNavigation"
+    class="collapse-btn">
+    <img [src]="hideNavigation ? '/assets/images/icons/Collapse2_icon.svg' : '/assets/images/icons/Collapse1_icon.svg'"
+      alt="todo">
+  </button>
+  {{header}}
+  @if (authService.isLoggedIn() && (authService.loginInfo?.userId ?? 0 | user | async); as username) {
+    <div
+      class="profile-nav-content">
+      <div class="profile-welcome-message">{{username}}</div>
+      <a routerLink="profile">
+        <div class="profile-img">{{firstLetterOf(username)}}</div>
+      </a>
+    </div>
+  }
 </header>
 
 <nav>
-	<a *ngFor="let entry of shownNavigationEntries()"
-		[routerLink]="entry.link"
-		class="nav-btn">
-		<img [src]="entry.imageUrl"
-			alt="todo">
-		<span class="nav-text">{{entry.text}}</span>
-	</a>
-	<button *ngIf="authService.isLoggedIn()"
-		(click)="logout()"
-		class="nav-btn logout-btn">
-		<img src="/assets/images/icons/LogOut_icon.svg"
-			alt="todo">
-		<span class="nav-text">Log ud</span>
-	</button>
+  @for (entry of shownNavigationEntries(); track entry) {
+    <a
+      [routerLink]="entry.link"
+      class="nav-btn">
+      <img [src]="entry.imageUrl"
+        alt="todo">
+      <span class="nav-text">{{entry.text}}</span>
+    </a>
+  }
+  @if (authService.isLoggedIn()) {
+    <button
+      (click)="logout()"
+      class="nav-btn logout-btn">
+      <img src="/assets/images/icons/LogOut_icon.svg"
+        alt="todo">
+      <span class="nav-text">Log ud</span>
+    </button>
+  }
 </nav>
 <article>
-	<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </article>
 
 <div class="loading"
-	[class.hidden]="!showingLoading">
-	{{header}}
+  [class.hidden]="!showingLoading">
+  {{header}}
 </div>
 
 <div class="overlay"
-	[class.hidden]="!showingOverlay"
-	(click)="closeOverlay($event)">
-	<ng-template #overlayHost
-		lundinOverlayHost>
-	</ng-template>
+  [class.hidden]="!showingOverlay"
+  (click)="closeOverlay($event)">
+  <ng-template #overlayHost
+    lundinOverlayHost>
+  </ng-template>
 </div>
 
 <div class="message-box"
-	[class.hidden]="!showingMessage">
-	{{message}}
-	<img src="/assets/images/icons/Close_icon.svg"
-		(click)="closeMessage()"
-		alt="todo">
+  [class.hidden]="!showingMessage">
+  {{message}}
+  <img src="/assets/images/icons/Close_icon.svg"
+    (click)="closeMessage()"
+    alt="todo">
 </div>

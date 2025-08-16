@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component, EventEmitter, Output } from "@angular/core"
 import { FormsModule } from "@angular/forms"
 import { MusicPlaylist } from "@lundin/api-interfaces"
@@ -10,9 +10,8 @@ import { PlaylistService } from "./playlist.service"
 	templateUrl: "./playlist-selector.component.html",
 	styleUrls: ["./playlist-selector.component.scss", "../../styles/popup-box.scss"],
 	imports: [
-		CommonModule,
-		FormsModule,
-	],
+    FormsModule
+],
 })
 export class PlaylistSelectorComponent {
 	playlists: MusicPlaylist[] = []

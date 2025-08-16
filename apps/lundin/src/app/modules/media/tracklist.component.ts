@@ -1,4 +1,4 @@
-import { CommonModule, KeyValue } from "@angular/common"
+import { CommonModule, KeyValue } from "@angular/common";
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from "@angular/core"
 import { FormsModule } from "@angular/forms"
 import { debounceTime, distinctUntilChanged, firstValueFrom, Subject, Subscription } from "rxjs"

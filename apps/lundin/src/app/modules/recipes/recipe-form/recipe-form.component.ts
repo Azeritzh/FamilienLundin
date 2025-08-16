@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component } from "@angular/core"
 import { FormsModule } from "@angular/forms"
 import { Router } from "@angular/router"
@@ -13,11 +13,10 @@ import { RecipesService } from "../recipes.service"
 	templateUrl: "./recipe-form.component.html",
 	styleUrls: ["./recipe-form.component.scss", "../../../styles/popup-box.scss"],
 	imports: [
-		CommonModule,
-		FormsModule,
-		LabellingDirective,
-		ImageInputComponent,
-	],
+    FormsModule,
+    LabellingDirective,
+    ImageInputComponent
+],
 })
 export class RecipeFormComponent {
 	file: File | null = null

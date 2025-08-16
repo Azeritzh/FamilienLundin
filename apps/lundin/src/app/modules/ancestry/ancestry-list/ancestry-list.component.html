@@ -1,52 +1,54 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <section class="list-container">
-	<header class="container-header">
-		<h1>Familiemedlemmer</h1>
-		<button type="button"
-			(click)="add()">
-			Tilføj person
-		</button>
-	</header>
+  <header class="container-header">
+    <h1>Familiemedlemmer</h1>
+    <button type="button"
+      (click)="add()">
+      Tilføj person
+    </button>
+  </header>
 
-	<section class="search-container ">
-		<input type="text"
-			[(ngModel)]="query"
-			placeholder="Søg efter familiemedlem"
-			autocomplete="off">
-		<label class="checkbox-container">
-			<input type="checkbox"
-				[(ngModel)]="includeAll"
-				class="checkbox-input">
-			Inkluder alle
-		</label>
-	</section>
+  <section class="search-container ">
+    <input type="text"
+      [(ngModel)]="query"
+      placeholder="Søg efter familiemedlem"
+      autocomplete="off">
+    <label class="checkbox-container">
+      <input type="checkbox"
+        [(ngModel)]="includeAll"
+        class="checkbox-input">
+      Inkluder alle
+    </label>
+  </section>
 
-	<ul class="list-content-container">
-		<li class="list-titles-container">
-			<div class="list-item">Navn</div>
-			<div class="list-item">Født</div>
-			<div class="list-item">Død</div>
-			<div class="list-item-active-column">Aktivt medlem</div>
-		</li>
-		<div class="scroll-list-container">
-			<li *ngFor="let person of filter(people$ | async)"
-				class="person list-entry-container"
-				(click)="clickPerson(person._id)">
-				<div class="name list-item">
-					{{person.name}}
-				</div>
-				<span class="info list-item">
-					{{bornFor(person)}}
-				</span>
-				<span class="info list-item">
-					{{deadFor(person)}}
-				</span>
-				<div class="list-item-active-column">
-					{{person.userId ? "Aktiv" : "Ikke aktiv"}}
-				</div>
-			</li>
-		</div>
-	</ul>
+  <ul class="list-content-container">
+    <li class="list-titles-container">
+      <div class="list-item">Navn</div>
+      <div class="list-item">Født</div>
+      <div class="list-item">Død</div>
+      <div class="list-item-active-column">Aktivt medlem</div>
+    </li>
+    <div class="scroll-list-container">
+      @for (person of filter(people$ | async); track person) {
+        <li
+          class="person list-entry-container"
+          (click)="clickPerson(person._id)">
+          <div class="name list-item">
+            {{person.name}}
+          </div>
+          <span class="info list-item">
+            {{bornFor(person)}}
+          </span>
+          <span class="info list-item">
+            {{deadFor(person)}}
+          </span>
+          <div class="list-item-active-column">
+            {{person.userId ? "Aktiv" : "Ikke aktiv"}}
+          </div>
+        </li>
+      }
+    </div>
+  </ul>
 
 </section>

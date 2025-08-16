@@ -1,111 +1,112 @@
 <h1>Tilføj ny person</h1>
 
 <div class="content-container">
-	<section>
-		<label for="name"
-			[labelling]="nameInput">
-			Navn
-		</label>
-		<input #nameInput
-			type="text"
-			[(ngModel)]="name"
-			id="name"
-			autocomplete="off">
-		<label for="gender"
-			[labelling]="genderInput">
-			Køn
-		</label>
-		<select #genderInput
-			[(ngModel)]="gender">
-			<option value="male">
-				Hankøn
-			</option>
-			<option value="female">
-				Hunkøn
-			</option>
-			<option value="other">
-				Andet
-			</option>
-		</select>
-	</section>
+  <section>
+    <label for="name"
+      [labelling]="nameInput">
+      Navn
+    </label>
+    <input #nameInput
+      type="text"
+      [(ngModel)]="name"
+      id="name"
+      autocomplete="off">
+    <label for="gender"
+      [labelling]="genderInput">
+      Køn
+    </label>
+    <select #genderInput
+      [(ngModel)]="gender">
+      <option value="male">
+        Hankøn
+      </option>
+      <option value="female">
+        Hunkøn
+      </option>
+      <option value="other">
+        Andet
+      </option>
+    </select>
+  </section>
 
-	<section>
-		<label for="born"
-			[labelling]="bornInput">
-			Født
-		</label>
-		<input #bornInput
-			type="text"
-			[(ngModel)]="born"
-			id="born"
-			autocomplete="off">
+  <section>
+    <label for="born"
+      [labelling]="bornInput">
+      Født
+    </label>
+    <input #bornInput
+      type="text"
+      [(ngModel)]="born"
+      id="born"
+      autocomplete="off">
 
-		<label for="dead"
-			[labelling]="deadInput">
-			Død
-		</label>
-		<input #deadInput
-			type="text"
-			[(ngModel)]="dead"
-			id="dead"
-			autocomplete="off">
-	</section>
-	<section class="relations-top">
-		<h2>
-			Relationer
-		</h2>
-		<button type="button"
-			class="add-relation"
-			(click)="addRelation()">
-			Tilføj ny relation
-		</button>
-	</section>
+    <label for="dead"
+      [labelling]="deadInput">
+      Død
+    </label>
+    <input #deadInput
+      type="text"
+      [(ngModel)]="dead"
+      id="dead"
+      autocomplete="off">
+  </section>
+  <section class="relations-top">
+    <h2>
+      Relationer
+    </h2>
+    <button type="button"
+      class="add-relation"
+      (click)="addRelation()">
+      Tilføj ny relation
+    </button>
+  </section>
 
-	<ul class="relations-list-container">
-		<li *ngFor="let relation of relations"
-			class="relation-row">
-
-			<select [ngModel]="relation.id"
-				(ngModelChange)="relation.id = +$event"
-				class="select-relation-name">
-				<option *ngFor="let person of ancestryService.people"
-					[value]="person._id">
-					{{person.name}} (ID: {{person._id}})
-				</option>
-			</select>
-
-			<select [(ngModel)]="relation.type"
-			class="select-relation">
-				<option value="parent">
-					Forælder
-				</option>
-				<option value="child">
-					Barn
-				</option>
-				<option value="partner">
-					Partner
-				</option>
-			</select>
-
-			<button type="button"
-				class="delete"
-				(click)="deleteRelation(relation)">
-				Slet
-			</button>
-		</li>
-	</ul>
+  <ul class="relations-list-container">
+    @for (relation of relations; track relation) {
+      <li
+        class="relation-row">
+        <select [ngModel]="relation.id"
+          (ngModelChange)="relation.id = +$event"
+          class="select-relation-name">
+          @for (person of ancestryService.people; track person) {
+            <option
+              [value]="person._id">
+              {{person.name}} (ID: {{person._id}})
+            </option>
+          }
+        </select>
+        <select [(ngModel)]="relation.type"
+          class="select-relation">
+          <option value="parent">
+            Forælder
+          </option>
+          <option value="child">
+            Barn
+          </option>
+          <option value="partner">
+            Partner
+          </option>
+        </select>
+        <button type="button"
+          class="delete"
+          (click)="deleteRelation(relation)">
+          Slet
+        </button>
+      </li>
+    }
+  </ul>
 </div>
 
 <div class="btn-container">
-	<button type="button"
-		class="add-person"
-		(click)="add()"
-		[disabled]="!name">
-		Opret person
-	</button>
-	<button type="button"
-		class="cancel-btn"
-		(click)="closePopup()">
-		Annuller
-	</button>
+  <button type="button"
+    class="add-person"
+    (click)="add()"
+    [disabled]="!name">
+    Opret person
+  </button>
+  <button type="button"
+    class="cancel-btn"
+    (click)="closePopup()">
+    Annuller
+  </button>
 </div>

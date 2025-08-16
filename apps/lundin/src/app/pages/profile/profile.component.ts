@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { HttpClient } from "@angular/common/http"
 import { Component } from "@angular/core"
 import { FormsModule } from "@angular/forms"
@@ -10,9 +10,8 @@ import { AuthService } from "../../services/auth.service"
 	templateUrl: "./profile.component.html",
 	styleUrls: ["./profile.component.scss"],
 	imports: [
-		CommonModule,
-		FormsModule,
-	],
+    FormsModule
+],
 })
 export class ProfileComponent {
 	password: string = ""

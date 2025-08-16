@@ -1,26 +1,28 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <section class="recipes-container">
-	<header class="container-header">
-		<h1>Familie opskrifter (Funktionalitet halvt implementeret)</h1>
-		<button type="button"
-			(click)="add()">
-			Tilføj ny opskrift
-		</button>
-	</header>
+  <header class="container-header">
+    <h1>Familie opskrifter (Funktionalitet halvt implementeret)</h1>
+    <button type="button"
+      (click)="add()">
+      Tilføj ny opskrift
+    </button>
+  </header>
 
-	<section class="search-container">
-		<input type="text"
-			placeholder="Søg i opskrifter"
-			autocomplete="off">
-	</section>
+  <section class="search-container">
+    <input type="text"
+      placeholder="Søg i opskrifter"
+      autocomplete="off">
+  </section>
 
-	<ul class="recipes-img-list">
-		<li *ngFor="let recipe of recipes" class="recipes-list-item"
-			(click)="open(recipe)">
-			<img [src]="pathFor(recipe.fileId)"
-				alt="todo">
-			<span class="img-description">{{recipe.title}}</span>
-		</li>
-	</ul>
+  <ul class="recipes-img-list">
+    @for (recipe of recipes; track recipe) {
+      <li class="recipes-list-item"
+        (click)="open(recipe)">
+        <img [src]="pathFor(recipe.fileId)"
+          alt="todo">
+        <span class="img-description">{{recipe.title}}</span>
+      </li>
+    }
+  </ul>
 </section>

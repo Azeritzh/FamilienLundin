@@ -1,7 +1,7 @@
 import { Component } from "@angular/core"
 import { NavigationService } from "../../../services/navigation.service"
 import { AncestryService } from "../ancestry.service"
-import { CommonModule } from "@angular/common"
+
 import { FormsModule } from "@angular/forms"
 import { LabellingDirective } from "../../../shared/directives/labelling.directive"
 
@@ -10,10 +10,9 @@ import { LabellingDirective } from "../../../shared/directives/labelling.directi
 	templateUrl: "./edit-info.component.html",
 	styleUrls: ["./edit-info.component.scss", "../../../styles/popup-box.scss"],
 	imports: [
-		CommonModule,
-		FormsModule,
-		LabellingDirective,
-	],
+    FormsModule,
+    LabellingDirective
+],
 })
 export class EditInfoComponent {
 	personId!: number

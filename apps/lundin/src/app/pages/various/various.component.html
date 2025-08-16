@@ -1,14 +1,14 @@
 <h1>Spil</h1>
-<ng-container *ngFor="let entry of shown(games)">
-	<a [routerLink]="entry.link">{{entry.title}}</a>
-</ng-container>
+@for (entry of shown(games); track entry) {
+  <a [routerLink]="entry.link">{{entry.title}}</a>
+}
 
 <h1>Diverse</h1>
-<ng-container *ngFor="let entry of shown(tools)">
-	<a [routerLink]="entry.link">{{entry.title}}</a>
-</ng-container>
+@for (entry of shown(tools); track entry) {
+  <a [routerLink]="entry.link">{{entry.title}}</a>
+}
 
 <h1>Ufærdigt</h1>
-<ng-container *ngFor="let entry of shown(wips)">
-	<a [routerLink]="entry.link">{{entry.title}}</a>
-</ng-container>
+@for (entry of shown(wips); track entry) {
+  <a [routerLink]="entry.link">{{entry.title}}</a>
+}

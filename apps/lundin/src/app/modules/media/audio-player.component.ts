@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from "@angular/core"
 import { Subscription } from "rxjs"
 import { MusicService, Track } from "./music.service"
@@ -7,9 +7,7 @@ import { MusicService, Track } from "./music.service"
 	selector: "lundin-audio-player",
 	templateUrl: "./audio-player.component.html",
 	styleUrls: ["./audio-player.component.scss"],
-	imports: [
-		CommonModule,
-	],
+	imports: [],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AudioPlayerComponent implements OnDestroy {

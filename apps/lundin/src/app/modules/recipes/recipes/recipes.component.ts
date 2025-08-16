@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component } from "@angular/core"
 import { Router } from "@angular/router"
 import { Recipe } from "@lundin/api-interfaces"
@@ -10,9 +10,7 @@ import { RecipesService } from "../recipes.service"
 	selector: "lundin-recipes",
 	templateUrl: "./recipes.component.html",
 	styleUrls: ["./recipes.component.scss"],
-	imports: [
-		CommonModule,
-	],
+	imports: [],
 })
 export class RecipesComponent {
 	recipes: Recipe[] = []

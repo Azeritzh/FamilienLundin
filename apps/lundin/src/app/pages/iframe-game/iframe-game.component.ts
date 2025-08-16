@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component, OnInit } from "@angular/core"
 import { DomSanitizer } from "@angular/platform-browser"
 import { ActivatedRoute } from "@angular/router"
@@ -7,9 +7,7 @@ import { ActivatedRoute } from "@angular/router"
 	selector: "lundin-iframe-game",
 	templateUrl: "./iframe-game.component.html",
 	styleUrls: ["./iframe-game.component.scss"],
-	imports: [
-		CommonModule,
-	],
+	imports: [],
 })
 export class IframeGameComponent implements OnInit {
 	gameLink: string = ""

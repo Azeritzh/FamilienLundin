@@ -1,13 +1,11 @@
-import { CommonModule } from "@angular/common"
+
 import { Component, ElementRef, ViewChild } from "@angular/core"
 
 @Component({
 	selector: "lundin-video",
 	templateUrl: "./video.component.html",
 	styleUrls: ["./video.component.scss"],
-	imports: [
-		CommonModule,
-	],
+	imports: [],
 })
 export class VideoComponent {
 	@ViewChild("videoPlayer") videoPlayer!: ElementRef<HTMLAudioElement>

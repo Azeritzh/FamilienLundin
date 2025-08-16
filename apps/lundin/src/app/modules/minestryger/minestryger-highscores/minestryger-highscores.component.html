@@ -1,32 +1,40 @@
 <h1>
-	Bedste tider
-	<button type="button"
-		(click)="switchPeriod()">
-		{{scoresThisYear ? "I år" : "Altid"}}
-	</button>
+  Bedste tider
+  <button type="button"
+    (click)="switchPeriod()">
+    {{scoresThisYear ? "I år" : "Altid"}}
+  </button>
 </h1>
-<ng-container *ngIf="currentTopScoreSet$() | async as topScores">
-	<ng-container *ngFor="let category of topScoreCategories">
-		<h2>{{category.title}}</h2>
-		<div *ngFor="let score of topscores(topScores, category.key)"
-			[title]="score.date | date:'yyyy-MM-dd HH:mm'">
-			<span class="name">{{score.userId | user | async}}:</span>
-			<span class="time">{{score.time / 1000 | number:'1.2-2'}}s</span>
-		</div>
-		<div *ngIf="topscores(topScores, category.key).length === 0">
-			Ingen tider
-		</div>
-	</ng-container>
-</ng-container>
+@if (currentTopScoreSet$() | async; as topScores) {
+  @for (category of topScoreCategories; track category) {
+    <h2>{{category.title}}</h2>
+    @for (score of topscores(topScores, category.key); track score) {
+      <div
+        [title]="score.date | date:'yyyy-MM-dd HH:mm'">
+        <span class="name">{{score.userId | user | async}}:</span>
+        <span class="time">{{score.time / 1000 | number:'1.2-2'}}s</span>
+      </div>
+    }
+    @if (topscores(topScores, category.key).length === 0) {
+      <div>
+        Ingen tider
+      </div>
+    }
+  }
+}
 
 <h1>Mine tider</h1>
-<ng-container *ngIf="myScores$ | async as myScores">
-	<h2>Nuværende indstillinger</h2>
-	<div *ngFor="let score of currentCategory(myScores)">
-		<span class="name">{{score.date | date:"yyyy-MM-dd HH:mm"}}</span>
-		<span class="time">{{score.time / 1000 | number:'1.2-2'}}s</span>
-	</div>
-	<div *ngIf="currentCategory(myScores).length === 0">
-		Ingen tider
-	</div>
-</ng-container>
+@if (myScores$ | async; as myScores) {
+  <h2>Nuværende indstillinger</h2>
+  @for (score of currentCategory(myScores); track score) {
+    <div>
+      <span class="name">{{score.date | date:"yyyy-MM-dd HH:mm"}}</span>
+      <span class="time">{{score.time / 1000 | number:'1.2-2'}}s</span>
+    </div>
+  }
+  @if (currentCategory(myScores).length === 0) {
+    <div>
+      Ingen tider
+    </div>
+  }
+}

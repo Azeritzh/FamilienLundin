@@ -3,17 +3,16 @@ import { NavigationService } from "../../../services/navigation.service"
 import { FileInputComponent } from "../../../shared/file-input/file-input.component"
 import { AncestryService } from "../ancestry.service"
 import { LabellingDirective } from "../../../shared/directives/labelling.directive"
-import { CommonModule } from "@angular/common"
+
 
 @Component({
 	selector: "lundin-add-file",
 	templateUrl: "./add-file.component.html",
 	styleUrls: ["./add-file.component.scss", "../../../styles/popup-box.scss"],
 	imports: [
-		CommonModule,
-		FileInputComponent,
-		LabellingDirective,
-	],
+    FileInputComponent,
+    LabellingDirective
+],
 })
 export class AddFileComponent {
 	personId!: number

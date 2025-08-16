@@ -1,7 +1,9 @@
-<div *ngIf="relation"
-	class="relation">{{relationText()}}</div>
+@if (relation) {
+  <div
+  class="relation">{{relationText()}}</div>
+}
 <a [routerLink]="'/ancestry/person/' + person._id">
-	{{person.name[0]}}
+  {{person.name[0]}}
 </a>
 <div class="name">{{person.name}}</div>
 <div class="dates">{{bornText()}} - {{deadText()}}</div>

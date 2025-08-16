@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component } from "@angular/core"
 import { PersonFile } from "@lundin/api-interfaces"
 import { NavigationService } from "../../../services/navigation.service"
@@ -7,9 +7,7 @@ import { NavigationService } from "../../../services/navigation.service"
 	selector: "lundin-edit-file",
 	templateUrl: "./edit-file.component.html",
 	styleUrls: ["./edit-file.component.scss", "../../../styles/popup-box.scss"],
-	imports: [
-		CommonModule,
-	],
+	imports: [],
 })
 export class EditFileComponent {
 	personId!: number

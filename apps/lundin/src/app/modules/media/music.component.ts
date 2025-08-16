@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component, ElementRef, ViewChild } from "@angular/core"
 import { AlbumsComponent } from "./albums.component"
 import { MusicService } from "./music.service"
@@ -11,12 +11,11 @@ import { AudioPlayerComponent } from "./audio-player.component"
 	templateUrl: "./music.component.html",
 	styleUrls: ["./music.component.scss"],
 	imports: [
-		CommonModule,
-		AlbumsComponent,
-		PlaylistsComponent,
-		TrackListComponent,
-		AudioPlayerComponent,
-	],
+    AlbumsComponent,
+    PlaylistsComponent,
+    TrackListComponent,
+    AudioPlayerComponent
+],
 })
 export class MusicComponent {
 	@ViewChild("audioPlayer") audioPlayer!: ElementRef<HTMLAudioElement>

@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component } from "@angular/core"
 import { NoughtsAndCrosses, NoughtsAndCrossesAction, NoughtsAndCrossesPiece } from "@lundin/noughts-and-crosses"
 
@@ -6,9 +6,7 @@ import { NoughtsAndCrosses, NoughtsAndCrossesAction, NoughtsAndCrossesPiece } fr
 	selector: "lundin-noughts-and-crosses",
 	templateUrl: "./noughts-and-crosses.component.html",
 	styleUrls: ["./noughts-and-crosses.component.scss"],
-	imports: [
-		CommonModule,
-	],
+	imports: [],
 })
 export class NoughtsAndCrossesComponent {
 	game = new NoughtsAndCrosses()

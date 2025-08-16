@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component, EventEmitter, Input, Output } from "@angular/core"
 import { FormsModule } from "@angular/forms"
 import { RandomAi } from "@lundin/age"
@@ -10,9 +10,8 @@ import { VirusPlayer } from "../virus-game/virus-game.component"
 	templateUrl: "./settings.component.html",
 	styleUrls: ["./settings.component.scss"],
 	imports: [
-		CommonModule,
-		FormsModule,
-	],
+    FormsModule
+],
 })
 export class SettingsComponent {
 	@Input() players: VirusPlayer[] = []

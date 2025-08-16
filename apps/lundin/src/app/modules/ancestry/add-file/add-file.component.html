@@ -1,33 +1,35 @@
 <h1>Tilføj ny fil</h1>
 
 <div class="content-container">
-	<lundin-file-input (changeFile)="handleFile($event)"></lundin-file-input>
-	<div *ngIf="file.data"
-		class="file-display">
-		Fil: {{file.data.name}}
-	</div>
+  <lundin-file-input (changeFile)="handleFile($event)"></lundin-file-input>
+  @if (file.data) {
+    <div
+      class="file-display">
+      Fil: {{file.data.name}}
+    </div>
+  }
 
-	<label for="description"
-		[labelling]="descriptionInput">
-		Beskrivelse
-	</label>
-	<input #descriptionInput
-		type="text"
-		id="description"
-		(input)="updateDescription($event)"
-		autocomplete="off">
+  <label for="description"
+    [labelling]="descriptionInput">
+    Beskrivelse
+  </label>
+  <input #descriptionInput
+    type="text"
+    id="description"
+    (input)="updateDescription($event)"
+    autocomplete="off">
 </div>
 
 <div class="btn-container">
-	<button type="button"
-		class="save"
-		(click)="save()">
-		Gem ændringer
-	</button>
+  <button type="button"
+    class="save"
+    (click)="save()">
+    Gem ændringer
+  </button>
 
-	<button type="button"
-		class="cancel"
-		(click)="cancel()">
-		Annuller
-	</button>
+  <button type="button"
+    class="cancel"
+    (click)="cancel()">
+    Annuller
+  </button>
 </div>

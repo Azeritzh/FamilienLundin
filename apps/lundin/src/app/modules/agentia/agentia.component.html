@@ -1,149 +1,145 @@
 <div class="settings-area">
-	<h1>Indstillinger</h1>
+  <h1>Indstillinger</h1>
 
-	<div class="setting">
-		<button type="button"
-			(click)="useGameOfLifePreset()">
-			Game of Life
-		</button>
-	</div>
+  <div class="setting">
+    <button type="button"
+      (click)="useGameOfLifePreset()">
+      Game of Life
+    </button>
+  </div>
 
-	<div class="setting">
-		<button type="button"
-			(click)="useBoidsPreset()">
-			Boids
-		</button>
-	</div>
+  <div class="setting">
+    <button type="button"
+      (click)="useBoidsPreset()">
+      Boids
+    </button>
+  </div>
 
-	<div class="setting">
-		<label for="width">Vidde</label>
-		<input id="width"
-			type="number"
-			[ngModel]="game.config.width"
-			(ngModelChange)="updateWidth($event);"
-			min="2"
-			max="9999"
-			autocomplete="off">
-	</div>
+  <div class="setting">
+    <label for="width">Vidde</label>
+    <input id="width"
+      type="number"
+      [ngModel]="game.config.width"
+      (ngModelChange)="updateWidth($event);"
+      min="2"
+      max="9999"
+      autocomplete="off">
+  </div>
 
-	<div class="setting">
-		<label for="height">Højde</label>
-		<input id="height"
-			type="number"
-			[ngModel]="game.config.height"
-			(ngModelChange)="updateHeight($event)"
-			min="2"
-			max="9999"
-			autocomplete="off">
-	</div>
+  <div class="setting">
+    <label for="height">Højde</label>
+    <input id="height"
+      type="number"
+      [ngModel]="game.config.height"
+      (ngModelChange)="updateHeight($event)"
+      min="2"
+      max="9999"
+      autocomplete="off">
+  </div>
 
-	<div class="setting">
-		<button type="button"
-			(click)="sizeToWindow()">
-			Sæt til vinduesstørrelse
-		</button>
-	</div>
+  <div class="setting">
+    <button type="button"
+      (click)="sizeToWindow()">
+      Sæt til vinduesstørrelse
+    </button>
+  </div>
 
-	<div class="setting">
-		<label for="interval">Opdateringsinterval</label>
-		<input id="interval"
-			type="number"
-			[ngModel]="updateInterval"
-			(ngModelChange)="setUpdateInterval($event)"
-			min="50"
-			max="5000"
-			autocomplete="off">
-	</div>
+  <div class="setting">
+    <label for="interval">Opdateringsinterval</label>
+    <input id="interval"
+      type="number"
+      [ngModel]="updateInterval"
+      (ngModelChange)="setUpdateInterval($event)"
+      min="50"
+      max="5000"
+      autocomplete="off">
+  </div>
 
-	<div class="setting">
-		<button *ngIf="timerId"
-			type="button"
-			(click)="stopInterval()">
-			Stop
-		</button>
-		<button *ngIf="!timerId"
-			type="button"
-			(click)="startInterval()">
-			Start
-		</button>
-	</div>
+  <div class="setting">
+    @if (timerId) {
+      <button
+        type="button"
+        (click)="stopInterval()">
+        Stop
+      </button>
+    }
+    @if (!timerId) {
+      <button
+        type="button"
+        (click)="startInterval()">
+        Start
+      </button>
+    }
+  </div>
 
-	<div class="setting">
-		<button type="button"
-			(click)="showAdvancedSettings = !showAdvancedSettings">
-			Avancerede indstillinger
-		</button>
-	</div>
+  <div class="setting">
+    <button type="button"
+      (click)="showAdvancedSettings = !showAdvancedSettings">
+      Avancerede indstillinger
+    </button>
+  </div>
 
-	<ng-container *ngIf="showAdvancedSettings">
-
-		<div class="code-setting">
-			<label for="configureText">Konfiguration</label>
-			<textarea id="configureText"
-				[(ngModel)]="configureText"
-				autocomplete="off">
-			</textarea>
-		</div>
-
-		<div class="setting">
-			<button type="button"
-				(click)="updateConfigure()">
-				Opdater konfiguration
-			</button>
-		</div>
-
-		<div class="code-setting">
-			<label for="setupText">Opstart</label>
-			<textarea id="setupText"
-				[(ngModel)]="setupText"
-				autocomplete="off">
-			</textarea>
-		</div>
-
-		<div class="code-setting">
-			<label for="updateText">Opdatering</label>
-			<textarea id="updateText"
-				[(ngModel)]="updateText"
-				autocomplete="off">
-			</textarea>
-		</div>
-
-		<div class="code-setting">
-			<label for="agentSetupText">Opstart agent</label>
-			<textarea id="agentSetupText"
-				[(ngModel)]="agentSetupText"
-				autocomplete="off">
-			</textarea>
-		</div>
-
-		<div class="code-setting">
-			<label for="agentUpdateText">Opdater agent</label>
-			<textarea id="agentUpdateText"
-				[(ngModel)]="agentUpdateText"
-				autocomplete="off">
-			</textarea>
-		</div>
-
-		<div class="code-setting">
-			<label for="clickText">Klik</label>
-			<textarea id="clickText"
-				[(ngModel)]="clickText"
-				autocomplete="off">
-			</textarea>
-		</div>
-
-		<div class="setting">
-			<button type="button"
-				(click)="updateCode()">
-				Opdater kode
-			</button>
-		</div>
-	</ng-container>
+  @if (showAdvancedSettings) {
+    <div class="code-setting">
+      <label for="configureText">Konfiguration</label>
+      <textarea id="configureText"
+        [(ngModel)]="configureText"
+        autocomplete="off">
+      </textarea>
+    </div>
+    <div class="setting">
+      <button type="button"
+        (click)="updateConfigure()">
+        Opdater konfiguration
+      </button>
+    </div>
+    <div class="code-setting">
+      <label for="setupText">Opstart</label>
+      <textarea id="setupText"
+        [(ngModel)]="setupText"
+        autocomplete="off">
+      </textarea>
+    </div>
+    <div class="code-setting">
+      <label for="updateText">Opdatering</label>
+      <textarea id="updateText"
+        [(ngModel)]="updateText"
+        autocomplete="off">
+      </textarea>
+    </div>
+    <div class="code-setting">
+      <label for="agentSetupText">Opstart agent</label>
+      <textarea id="agentSetupText"
+        [(ngModel)]="agentSetupText"
+        autocomplete="off">
+      </textarea>
+    </div>
+    <div class="code-setting">
+      <label for="agentUpdateText">Opdater agent</label>
+      <textarea id="agentUpdateText"
+        [(ngModel)]="agentUpdateText"
+        autocomplete="off">
+      </textarea>
+    </div>
+    <div class="code-setting">
+      <label for="clickText">Klik</label>
+      <textarea id="clickText"
+        [(ngModel)]="clickText"
+        autocomplete="off">
+      </textarea>
+    </div>
+    <div class="setting">
+      <button type="button"
+        (click)="updateCode()">
+        Opdater kode
+      </button>
+    </div>
+  }
 
 </div>
 
 <div class="game-area">
-	<canvas #canvas
-	(click)="clickCanvas($event)">
-	</canvas>
+  <canvas #canvas
+    (click)="clickCanvas($event)">
+  </canvas>
 </div>

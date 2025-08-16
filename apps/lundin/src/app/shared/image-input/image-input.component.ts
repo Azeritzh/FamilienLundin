@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component, EventEmitter, Input, Output } from "@angular/core"
 import { FileInputComponent } from "../file-input/file-input.component"
 
@@ -7,9 +7,8 @@ import { FileInputComponent } from "../file-input/file-input.component"
 	templateUrl: "./image-input.component.html",
 	styleUrls: ["./image-input.component.scss"],
 	imports: [
-		CommonModule,
-		FileInputComponent,
-	]
+    FileInputComponent
+]
 })
 export class ImageInputComponent {
 	@Input() imagePath: string | null = null

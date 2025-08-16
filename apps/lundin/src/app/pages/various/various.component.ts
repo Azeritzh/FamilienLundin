@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common"
+
 import { Component } from "@angular/core"
 import { RouterModule } from "@angular/router"
 import { AuthService } from "../../services/auth.service"
@@ -8,9 +8,8 @@ import { AuthService } from "../../services/auth.service"
 	templateUrl: "./various.component.html",
 	styleUrls: ["./various.component.scss"],
 	imports: [
-		CommonModule,
-		RouterModule,
-	],
+    RouterModule
+],
 })
 export class VariousComponent {
 	tools: Entry[] = [
