@@ -9,6 +9,7 @@ import { PlaylistService } from "./playlist.service"
 import { TrackComponent } from "./track.component"
 import { randomise } from "@lundin/utility"
 import { AuthService } from "../../services/auth.service";
+import { UserService } from "../../services/user.service";
 
 @Component({
 	selector: "lundin-tracklist",
@@ -55,6 +56,7 @@ export class TrackListComponent implements OnChanges, OnDestroy {
 		public musicService: MusicService,
 		private navigationService: NavigationService,
 		private playlistService: PlaylistService,
+		private userService: UserService,
 	) {
 		this.updateEnabledColumns()
 		this.subscriptions["query"] = this.query$.pipe(
@@ -88,10 +90,18 @@ export class TrackListComponent implements OnChanges, OnDestroy {
 		this.changeDetectorRef.markForCheck()
 		if (!this.query)
 			this.shownTracks = this.tracks
-		if (this.query.startsWith("rating:"))
-			this.shownTracks = this.tracks.filter(this.ratingFilter(this.query))
-		else
-			this.shownTracks = this.tracks.filter(this.simpleFilter(this.query))
+		try {
+			if (this.query.startsWith("rating:"))
+				this.shownTracks = this.tracks.filter(this.ratingFilter(this.query))
+			else if (this.query.startsWith("js:"))
+				this.shownTracks = this.tracks.filter(this.jsFilter(this.query))
+			else
+				this.shownTracks = this.tracks.filter(this.simpleFilter(this.query))
+		}
+		catch (e) {
+			console.error("Error in search filter:", e)
+			this.shownTracks = []
+		}
 	}
 
 	private ratingFilter(query: string) {
@@ -105,6 +115,20 @@ export class TrackListComponent implements OnChanges, OnDestroy {
 		if (query[0] === "<")
 			return (track: Track) => this.musicService.ratings[userId]?.[track.identifier] < targetRating
 		return (track: Track) => this.musicService.ratings[userId]?.[track.identifier] === targetRating
+	}
+
+	private jsFilter(query: string) {
+		query = query.substring(3).trim()
+		const ratingFor = (track: Track) => (user: string) =>
+			this.musicService.ratings[this.userService.users.find(x => x.name === user)?._id ?? 0]?.[track.identifier]
+		const filterFn = new Function("track", "rating", "ratingFor", `return (${query});`)
+		return (track: Track) => {
+			return filterFn(
+				track,
+				this.musicService.ratings[this.authService.loginInfo?.userId!]?.[track.identifier],
+				ratingFor(track),
+			)
+		}
 	}
 
 	private simpleFilter(query: string) {

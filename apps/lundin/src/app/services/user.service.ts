@@ -9,6 +9,9 @@ import { AuthService } from "./auth.service"
 })
 export class UserService {
 	users$ = new BehaviorSubject<User[]>([])
+	get users(){
+		return this.users$.getValue()
+	}
 
 	constructor(
 		private http: HttpClient,
