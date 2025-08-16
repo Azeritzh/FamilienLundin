@@ -88,11 +88,31 @@ export class TrackListComponent implements OnChanges, OnDestroy {
 		this.changeDetectorRef.markForCheck()
 		if (!this.query)
 			this.shownTracks = this.tracks
-		const search = this.query.toLowerCase()
-		this.shownTracks = this.tracks.filter(track => {
+		if (this.query.startsWith("rating:"))
+			this.shownTracks = this.tracks.filter(this.ratingFilter(this.query))
+		else
+			this.shownTracks = this.tracks.filter(this.simpleFilter(this.query))
+	}
+
+	private ratingFilter(query: string) {
+		query = query.substring(7).trim()
+		const userId = this.authService.loginInfo?.userId!
+		const targetRating = query[0] === ">" || query[0] === "<"
+			? parseInt(query.substring(1))
+			: parseInt(query)
+		if (query[0] === ">")
+			return (track: Track) => this.musicService.ratings[userId]?.[track.identifier] > targetRating
+		if (query[0] === "<")
+			return (track: Track) => this.musicService.ratings[userId]?.[track.identifier] < targetRating
+		return (track: Track) => this.musicService.ratings[userId]?.[track.identifier] === targetRating
+	}
+
+	private simpleFilter(query: string) {
+		query = query.toLowerCase()
+		return (track: Track) => {
 			const text = this.enabledColumns.map(column => column.titleFor(track)).join(" ").toLowerCase()
-			return text.includes(search)
-		})
+			return text.includes(query.toLowerCase())
+		}
 	}
 
 	updateEnabledColumns() {
