@@ -44,7 +44,7 @@ export class MusicController {
 			})
 		else
 			return this.storageService.musicRatingCollection.updateOne({ userId: request.user._id },
-				ratings => ratings[update.trackId] = update.rating
+				x => x.ratings[update.trackId] = update.rating
 			)
 	}
 
