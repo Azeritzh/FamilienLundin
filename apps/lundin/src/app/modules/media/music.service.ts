@@ -1,6 +1,9 @@
+import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
+import { MusicRating } from "@lundin/api-interfaces"
 import { randomise } from "@lundin/utility"
-import { BehaviorSubject, Subject } from "rxjs"
+import { BehaviorSubject, firstValueFrom } from "rxjs"
+import { AuthService } from "../../services/auth.service"
 
 @Injectable({
 	providedIn: "root",
@@ -8,6 +11,7 @@ import { BehaviorSubject, Subject } from "rxjs"
 export class MusicService {
 	loaded$ = new BehaviorSubject<void>(undefined)
 	musicLibrary: { [folder: string]: Album } = {}
+	ratings: { [userId: number]: { [trackId: string]: number } } = {}
 
 	tracksAll: Track[] = []
 	tracksNoDuplicates: Track[] = []
@@ -19,9 +23,18 @@ export class MusicService {
 	nextTrack$ = new BehaviorSubject<Track | null>(null)
 	audioElement: HTMLAudioElement = null!
 
-	constructor() {
-		fetch("/api/music/get-library")
-			.then(async response => this.loadLibrary(await response.json()))
+	constructor(
+		private authService: AuthService,
+		private httpClient: HttpClient
+	) {
+		Promise.all([
+			firstValueFrom(this.httpClient.get<{ [folder: string]: Album }>("api/music/get-library")),
+			firstValueFrom(this.httpClient.get<MusicRating[]>("api/music/get-ratings")),
+		]).then(([albums, ratings]) => {
+			this.loadLibrary(albums)
+			this.loadRatings(ratings)
+			this.loaded$.next()
+		})
 		this.createAudioElement()
 	}
 
@@ -29,7 +42,12 @@ export class MusicService {
 		this.musicLibrary = albums
 		this.tracksAll = Object.entries(albums).flatMap(([, value]) => value.tracks)
 		this.tracksNoDuplicates = this.tracksAll.filter(x => x.duplicateOf === null)
-		this.loaded$.next()
+	}
+
+	private loadRatings(ratingSets: MusicRating[]) {
+		this.ratings = {}
+		for (const ratingSet of ratingSets)
+			this.ratings[ratingSet.userId] = ratingSet.ratings
 	}
 
 	private createAudioElement() {
@@ -44,6 +62,14 @@ export class MusicService {
 		this.audioElement.addEventListener("ended", () => {
 			this.startNextTrack()
 		})
+	}
+
+	setRating(trackId: TrackIdentifier, rating: number) {
+		const userId = this.authService.loginInfo?.userId!
+		if (!this.ratings[userId])
+			this.ratings[userId] = {}
+		this.ratings[userId][trackId] = rating
+		firstValueFrom(this.httpClient.post("api/music/set-rating", { trackId, rating }))
 	}
 
 	private startNextTrack() {

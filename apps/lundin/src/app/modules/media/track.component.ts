@@ -105,6 +105,10 @@ export class TrackComponent {
 		else
 			this.playlistService.addPlaylist(playlist)
 	}
+
+	setRating(rating: number) {
+		this.musicService.setRating(this.track.identifier, rating)
+	}
 }
 
 interface Field {

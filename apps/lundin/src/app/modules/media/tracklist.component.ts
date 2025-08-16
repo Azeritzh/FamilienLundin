@@ -7,7 +7,8 @@ import { MusicService, Track } from "./music.service"
 import { PlaylistSelectorComponent } from "./playlist-selector.component"
 import { PlaylistService } from "./playlist.service"
 import { TrackComponent } from "./track.component"
-import { randomInt, randomIntBelow, randomise } from "@lundin/utility"
+import { randomise } from "@lundin/utility"
+import { AuthService } from "../../services/auth.service";
 
 @Component({
 	selector: "lundin-tracklist",
@@ -35,9 +36,10 @@ export class TrackListComponent implements OnChanges, OnDestroy {
 		artists: { enabled: false, title: "Kunstnere", titleFor: (track) => track.artists.join(", ") },
 		album: { enabled: true, title: "Album", titleFor: (track) => track.album },
 		albumArtist: { enabled: false, title: "Albumkunstner", titleFor: (track) => track.albumArtist },
-		year: { enabled: true, title: "Year", titleFor: (track) => track.year, size: 0.4 },
+		year: { enabled: true, title: "År", titleFor: (track) => track.year, size: 0.4 },
 		genres: { enabled: false, title: "Genrer", titleFor: (track) => track.genre.join(", "), size: 0.4 },
 		duration: { enabled: true, title: "Varighed", titleFor: (track) => track.length, size: 0.4 },
+		rating: { enabled: true, title: "Bedømmelse", titleFor: (track) => this.ratingStringFor(track), size: 0.4 },
 	}
 	enabledColumns: Column[] = []
 	showColumnSettings = false
@@ -49,6 +51,7 @@ export class TrackListComponent implements OnChanges, OnDestroy {
 
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
+		private authService: AuthService,
 		public musicService: MusicService,
 		private navigationService: NavigationService,
 		private playlistService: PlaylistService,
@@ -131,6 +134,14 @@ export class TrackListComponent implements OnChanges, OnDestroy {
 		this.tracks = randomise(this.tracks)
 		this.shownTracks = this.tracks
 		this.randomise.emit()
+	}
+
+	private ratingStringFor(track: Track) {
+		if (!this.musicService.ratings)
+			return ""
+		var userId = this.authService.loginInfo?.userId ?? 0
+		const rating = this.musicService.ratings[userId]?.[track.identifier] ?? 0
+		return "★".repeat(rating) + "☆".repeat(5 - rating)
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

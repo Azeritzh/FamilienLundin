@@ -3,7 +3,7 @@ import { JwtAuthGuard } from "../../auth/jwt.strategy"
 import { MusicService } from "../../media/music.service"
 import { StorageService } from "../../storage/storage.service"
 import { RequestWithUser } from "./auth.controller"
-import { MusicPlaylist } from "@lundin/api-interfaces"
+import { MusicPlaylist, MusicRatingUpdate } from "@lundin/api-interfaces"
 
 @Controller("music")
 export class MusicController {
@@ -30,6 +30,22 @@ export class MusicController {
 	@Get("get-ratings")
 	async getRatings() {
 		return this.storageService.musicRatingCollection.find() ?? []
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post("set-rating")
+	async setRating(@Req() request: RequestWithUser, @Body() update: MusicRatingUpdate) {
+		const existing = this.storageService.musicRatingCollection.findOne({ userId: request.user._id })
+		if (!existing || !existing.ratings)
+			return this.storageService.musicRatingCollection.insertOne({
+				_id: 0,
+				userId: request.user._id,
+				ratings: { [update.trackId]: update.rating },
+			})
+		else
+			return this.storageService.musicRatingCollection.updateOne({ userId: request.user._id },
+				ratings => ratings[update.trackId] = update.rating
+			)
 	}
 
 	@UseGuards(JwtAuthGuard)

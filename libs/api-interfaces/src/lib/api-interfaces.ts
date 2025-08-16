@@ -102,6 +102,11 @@ export interface MusicRating {
 	ratings: { [trackId: string]: number }
 }
 
+export interface MusicRatingUpdate {
+	trackId: string
+	rating: number
+}
+
 export interface MusicPlaylist {
 	_id: number
 	userId: number

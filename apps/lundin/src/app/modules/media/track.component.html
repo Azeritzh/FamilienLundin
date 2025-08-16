@@ -52,6 +52,21 @@
         Tilføj som sidste
       </button>
     }
+    <button (click)="setRating(1); $event.stopPropagation();">
+      1 ★
+    </button>
+    <button (click)="setRating(2); $event.stopPropagation();">
+      2 ★
+    </button>
+    <button (click)="setRating(3); $event.stopPropagation();">
+      3 ★
+    </button>
+    <button (click)="setRating(4); $event.stopPropagation();">
+      4 ★
+    </button>
+    <button (click)="setRating(5); $event.stopPropagation();">
+      5 ★
+    </button>
     <button (click)="handleAddToList(); $event.stopPropagation();">
       Tilføj til liste...
     </button>
