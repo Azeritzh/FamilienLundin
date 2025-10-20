@@ -49,11 +49,11 @@ article { grid-area: content; }
 lundin-login { grid-area: 2 / 1 / 3 / 3; }
 
 header {
-	@include colour.header;
 	display: flex;
 	font-size: 2rem;
 	font-weight: bold;
 	line-height: 3rem;
+	@include colour.header;
 }
 
 header a {
@@ -63,7 +63,6 @@ header a {
 }
 
 nav {
-	@include colour.side-bar;
 	position: sticky;
 	top: 0;
 	align-self: start; // for sticky to work
@@ -72,6 +71,7 @@ nav {
 	flex-direction: column;
 	overflow: hidden;
 	min-height: calc(100vh - 3rem);
+	@include colour.side-bar;
 }
 
 nav a { display: inline-flex; }
@@ -84,8 +84,8 @@ a, button {
 }
 
 .nav-btn {
-	@include colour.side-bar;
 	border-radius: unset;
+	@include colour.side-bar;
 }
 
 .nav-btn img {
@@ -142,7 +142,6 @@ a, button {
 }
 
 .message-box {
-	@include colour.header;
 	position: fixed;
 	display: flow-root;
 
@@ -162,6 +161,7 @@ a, button {
 	max-width: 100%;
 	box-shadow: var(--standard-shadow);
 	transition: var(--standard-transition);
+	@include colour.header;
 }
 .message-box.hidden { bottom: -6rem; }
 .message-box img {

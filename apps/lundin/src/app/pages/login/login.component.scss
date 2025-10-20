@@ -32,7 +32,6 @@ input {
 }
 
 .login-container {
-	@include colour.content-area;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -42,6 +41,7 @@ input {
 	margin-right: auto;
 	padding: 2rem;
 	border-radius: var(--border-radius-full);
+	@include colour.content-area;
 }
 
 .login-header {

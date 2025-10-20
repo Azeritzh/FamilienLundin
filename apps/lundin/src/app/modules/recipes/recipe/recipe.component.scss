@@ -1,7 +1,6 @@
 @use "../../../styles/general.scss";
 
 .recipes-container {
-	@extend .container-box;
 	height: 100%;
 	min-width: 50rem;
 	display: grid;
@@ -10,6 +9,7 @@
 		"left right";
 	grid-template-rows: auto 1fr;
 	grid-template-columns: 20rem 1fr;
+	@extend .container-box;
 }
 
 header {
@@ -23,13 +23,13 @@ header {
 }
 
 .left-content {
-	@extend .content-container;
 	grid-area: left;
+	@extend .content-container;
 }
 
 .right-content {
-	@extend .content-container;
 	grid-area: right;
+	@extend .content-container;
 }
 
 img {

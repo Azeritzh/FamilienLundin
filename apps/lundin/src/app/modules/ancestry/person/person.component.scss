@@ -21,14 +21,14 @@ img {
 }
 
 .tree-box {
-	@extend .container-box;
 	height: calc(50vh - 1rem);
+	@extend .container-box;
 }
 
 .information-box {
-	@extend .container-box;
 	height: calc(50vh - 5rem);
 	width: 50vw;
+	@extend .container-box;
 }
 
 .info-list {
@@ -48,9 +48,9 @@ img {
 }
 
 .file-box {
-	@extend .container-box;
 	height: calc(50vh - 5rem);
 	width: 50vw;
+	@extend .container-box;
 }
 
 .file-list {
@@ -64,12 +64,12 @@ img {
 }
 
 .file-item {
-	@include colour.box;
 	border-radius: var(--border-radius-half);
 	overflow: hidden;
 	min-height: 10rem;
 	position: relative;
 	height: 50%;
+	@include colour.box;
 }
 
 .file-text-item {
@@ -80,7 +80,6 @@ img {
 }
 
 .file-description {
-	@include colour.header;
 	position: absolute;
 	top: 81%;
 	width: 100%;
@@ -89,11 +88,12 @@ img {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
+	@include colour.header;
 }
 
 .scroll-info-file-container {
-	@extend .scroll-container;
 	height: calc(100% - 3rem);
+	@extend .scroll-container;
 }
 
 .btn-container {

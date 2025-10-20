@@ -1,7 +1,7 @@
-@import "./app/styles/resets.scss";
-@import "./app/styles/variables.scss";
-@import "./app/styles/general.scss";
-@import "./app/styles/markdown.scss";
+@use "./app/styles/resets.scss";
+@use "./app/styles/variables.scss";
+@use "./app/styles/general.scss";
+@use "./app/styles/markdown.scss";
 @font-face {
 	font-family: "Vt323";
 	src: url("/assets/VT323-Regular.ttf");

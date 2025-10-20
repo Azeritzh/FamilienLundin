@@ -68,11 +68,11 @@ body {
 input,
 textarea,
 select {
-	@include colour.input-area;
 	height: 2rem;
 	line-height: 2rem;
 	padding: 0 0.5rem;
 	border-radius: var(--border-radius-half);
+	@include colour.input-area;
 }
 
 textarea {
@@ -88,7 +88,6 @@ input[type="checkbox"] {
 }
 
 header.container-header {
-	@include colour.header;
 	display: flex;
 	justify-content: space-between;
 	font-size: 1.2rem;
@@ -96,15 +95,16 @@ header.container-header {
 	line-height: 1.7rem;
 	border-top-left-radius: 0.9rem;
 	border-top-right-radius: 0.9rem;
+	@include colour.header;
 }
 
 .sub-header {
-	@include colour.header;
 	display: flex;
 	justify-content: space-between;
 	font-size: 1rem;
 	padding: 0 0.5rem;
 	line-height: 1.5rem;
+	@include colour.header;
 }
 
 .lowered-label {
@@ -163,8 +163,8 @@ header.container-header {
 /* Various */
 
 .container-box {
-	@include colour.content-area;
 	border-radius: var(--border-radius-full);
 	/* border: 1px solid var(--color-border);*/
 	padding-bottom: 0.5rem;
+	@include colour.content-area;
 }

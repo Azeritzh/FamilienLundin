@@ -26,9 +26,9 @@
 .thread-subject { border-bottom: 1px solid var(--color-header); }
 
 h1 {
-	@include colour.header;
 	font-size: 1.5rem;
 	font-weight: bold;
+	@include colour.header;
 }
 
 button + .response {
@@ -43,8 +43,8 @@ button + .response {
 }
 
 .response {
-	@extend .list-entry-container;
 	overflow: hidden;
+	@extend .list-entry-container;
 }
 
 .response-date { text-align: right; }
@@ -56,9 +56,9 @@ button + .response {
 }
 
 .response-content {
+	white-space: pre;
 	@include colour.content-area;
 	@extend .list-entry-content;
-	white-space: pre;
 }
 
 .list-entry-content {
@@ -67,8 +67,8 @@ button + .response {
 }
 
 .thread {
-	@extend .scroll-container;
 	height: calc(100% - 3rem);
+	@extend .scroll-container;
 }
 
 .btn-container {

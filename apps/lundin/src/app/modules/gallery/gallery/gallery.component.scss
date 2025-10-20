@@ -2,32 +2,31 @@
 @use "../../../styles/general.scss";
 
 .gallery-container {
-	@extend .container-box;
 	height: 100%;
 	min-width: 50rem;
+	@extend .container-box;
 }
 
 .gallery-img-list {
-	@extend .scroll-container;
 	height: calc(100vh - 12rem);
 	padding: 0 1rem;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 1rem;
 	text-align: center;
+	@extend .scroll-container;
 }
 
 .gallery-list-item {
-	@include colour.box;
 	border-radius: var(--border-radius-full);
 	overflow: hidden;
 	height: 15rem;
 	display: flex;
 	position: relative;
+	@include colour.box;
 }
 
 .img-description {
-	@include colour.header;
 	position: absolute;
 	top: 87%;
 	width: 100%;
@@ -36,6 +35,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
+	@include colour.header;
 }
 
 .search-container {
