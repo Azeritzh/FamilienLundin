@@ -42,6 +42,8 @@ export class GalleryController {
 	}
 
 	private ensureThumbnailFor(file: string) {
+		if(file.match(/\.(mp4|mkv|avi)$/i))
+			return
 		const parts = file.split("/") // we assume the path is "/mnt/data/Name/..."
 		const thumbnailDir = `thumbnails/${parts[3]}/${parts[parts.length - 2]}`
 		const thumbnailPath = thumbnailDir + "/" + parts[parts.length - 1]
@@ -64,7 +66,7 @@ export class GalleryController {
 		const allFiles: string[] = []
 		const files = fs.readdirSync(directory, { withFileTypes: true })
 		for (const file of files)
-			if (file.isFile() && file.name.match(/\.(jpg|jpeg|png|gif)$/i))
+			if (file.isFile() && file.name.match(/\.(jpg|jpeg|png|gif|mp4|mkv|avi)$/i))
 				allFiles.push(`${directory}/${file.name}`)
 		return allFiles
 	}
