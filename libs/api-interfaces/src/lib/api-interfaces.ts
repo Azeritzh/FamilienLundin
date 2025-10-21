@@ -114,3 +114,7 @@ export interface MusicPlaylist {
 	shared: boolean
 	content: string[] | string
 }
+
+export interface GalleryStructure {
+	[name: string]: string[]
+}

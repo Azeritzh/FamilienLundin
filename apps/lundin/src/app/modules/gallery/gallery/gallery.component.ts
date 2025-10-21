@@ -1,7 +1,7 @@
+import { HttpClient } from "@angular/common/http"
 import { Component } from "@angular/core"
-import { NavigationService } from "../../../services/navigation.service"
-import { AddImageComponent } from "../add-image/add-image.component"
-import { EditImageComponent } from "../edit-image/edit-image.component"
+import { Router } from "@angular/router"
+import { GalleryStructure } from "@lundin/api-interfaces"
 
 @Component({
 	selector: "lundin-gallery",
@@ -9,16 +9,22 @@ import { EditImageComponent } from "../edit-image/edit-image.component"
 	styleUrls: ["./gallery.component.scss"],
 })
 export class GalleryComponent {
+	structure: GalleryStructure = {
+		"Kristjan": [],
+	}
+	subGalleries: string[] = []
 
 	constructor(
-		private navigationService: NavigationService,
-	) {	}
-
-	add() {
-		this.navigationService.openAsOverlay(AddImageComponent)
+		private router: Router,
+		httpClient: HttpClient,
+	) {
+		httpClient.get("api/gallery/get-folders").subscribe(folders => {
+			this.structure = folders as any
+			this.subGalleries = Object.keys(this.structure)
+		})
 	}
 
-	edit() {
-		this.navigationService.openAsOverlay(EditImageComponent)
+	openSubGallery(subGallery: string) {
+		this.router.navigate([`/gallery/${subGallery}`])
 	}
 }

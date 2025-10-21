@@ -1,26 +1,8 @@
-<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<section class="gallery-container">
-	<header class="container-header">
-		<h1>Familie billeder (Funktionalitet ikke implementeret)</h1>
-		<button type="button"
-			(click)="add()">
-			Tilføj nye billeder
-		</button>
-	</header>
-
-	<section class="search-container">
-		<input type="text"
-			placeholder="Søg i billeder"
-			autocomplete="off">
-	</section>
-
-	<ul class="gallery-img-list">
-		<li class="gallery-list-item"
-			(click)="edit()">
-			<img [src]=""
-				alt="todo">
-			<span class="img-description">test</span>
-		</li>
-	</ul>
-</section>
+@for(subGallery of subGalleries; track subGallery) {
+<h2>{{subGallery}}</h2>
+@for(folder of structure[subGallery]; track folder) {
+<button (click)="openSubGallery(subGallery + '/' + folder)">
+	{{folder}}
+</button>
+}
+}
