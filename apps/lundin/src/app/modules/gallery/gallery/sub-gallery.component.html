@@ -1,5 +1,7 @@
 @for(image of images; track image) {
-<a [href]="'api/gallery/files/images/' + image"><img [src]="'api/gallery/files/thumbnails/' + image"
-		alt="gallery image" />
+<a [href]="'api/gallery/files/images/' + image">
+	<img [src]="'api/gallery/files/thumbnails/' + image"
+		alt="gallery image"
+		loading="lazy" />
 </a>
 }
