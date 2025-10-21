@@ -1,53 +1,22 @@
-@use "apps/lundin/src/app/styles/mixins/colour.scss";
-@use "../../../styles/general.scss";
 
-.gallery-container {
-	height: 100%;
-	min-width: 50rem;
-	@extend .container-box;
+h2 {
+  font-size: 1.5rem;
+  margin: 1rem 0 0.5rem;
+  font-weight: bold;
 }
 
-.gallery-img-list {
-	height: calc(100vh - 12rem);
-	padding: 0 1rem;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 1rem;
-	text-align: center;
-	@extend .scroll-container;
+.folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: stretch;
 }
 
-.gallery-list-item {
-	border-radius: var(--border-radius-full);
-	overflow: hidden;
-	height: 15rem;
-	display: flex;
-	position: relative;
-	@include colour.box;
+button {
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
 }
 
-.img-description {
-	position: absolute;
-	top: 87%;
-	width: 100%;
-	left: 0;
-	padding: 0.5rem 0.2rem;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
-	@include colour.header;
-}
-
-.search-container {
-	display: flex;
-	flex-direction: column;
-	margin: 1rem;
-}
-
-img {
-	position: relative;
-	max-height: 100%;
-	left: 50%;
-	transform: translate(-50%);
-	display: block;
+button:hover, button:focus {
+  transform: translateY(-4px);
 }

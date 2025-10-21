@@ -1,8 +1,10 @@
 @for(subGallery of subGalleries; track subGallery) {
 <h2>{{subGallery}}</h2>
-@for(folder of structure[subGallery]; track folder) {
-<button (click)="openSubGallery(subGallery + '/' + folder)">
-	{{folder}}
-</button>
-}
+<div class="folder-grid">
+	@for(folder of structure[subGallery]; track folder) {
+	<button (click)="openSubGallery(subGallery + '/' + folder)">
+		{{folder}}
+	</button>
+	}
+</div>
 }
