@@ -66,7 +66,7 @@ export class GalleryController {
 		const allFiles: string[] = []
 		const files = fs.readdirSync(directory, { withFileTypes: true })
 		for (const file of files)
-			if (file.isFile() && file.name.match(/\.(jpg|jpeg|png|gif|mp4|mkv|avi)$/i))
+			if (file.isFile() && file.name.match(/\.(jpg|jpeg|png|gif|avif|mp4|mkv|avi)$/i))
 				allFiles.push(`${directory}/${file.name}`)
 		return allFiles
 	}
