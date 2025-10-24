@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http"
 import { Component } from "@angular/core"
-import { NavigationService } from "../../../services/navigation.service"
-import { ActivatedRoute, Router } from "@angular/router"
+import { ActivatedRoute } from "@angular/router"
 
 @Component({
 	selector: "lundin-sub-gallery",
@@ -11,7 +10,7 @@ import { ActivatedRoute, Router } from "@angular/router"
 export class SubGalleryComponent {
 	subGallery: string = ""
 	folder: string = ""
-	images: string[] = []
+	files: string[] = []
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -27,7 +26,15 @@ export class SubGalleryComponent {
 
 	private loadImages() {
 		this.httpClient.get("api/gallery/get-files/" + this.subGallery + "/" + this.folder).subscribe(files => {
-			this.images = files as any
+			this.files = files as any
 		})
+	}
+
+	getVideoType(filename: string): string {
+		if (filename.endsWith('.mp4')) return 'video/mp4'
+		if (filename.endsWith('.webm')) return 'video/webm'
+		if (filename.endsWith('.mkv')) return 'video/x-matroska'
+		if (filename.endsWith('.avi')) return 'video/x-msvideo'
+		return 'video/mp4' // fallback
 	}
 }

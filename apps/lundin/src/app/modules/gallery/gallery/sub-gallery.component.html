@@ -1,17 +1,18 @@
-@for(image of images; track image) {
-@if(image.endsWith('.mp4') || image.endsWith('.mkv') || image.endsWith('.avi')) {
+<h2>{{subGallery}} / {{folder}}</h2>
+@for(file of files; track file) {
+@if(file.endsWith('.mp4') || file.endsWith('.mkv') || file.endsWith('.webm') || file.endsWith('.avi')) {
 <video width="300"
 	height="169"
 	controls
 	preload="none"
 	poster="assets/images/video-thumb.png">
-	<source [src]="'api/gallery/files/images/' + image"
-		type="video/mp4">
+	<source [src]="'api/gallery/files/images/' + file"
+		[type]="getVideoType(file)">
 	Din browser understøtter ikke videoafspilning.
 </video>
 } @else {
-<a [href]="'api/gallery/files/images/' + image">
-	<img [src]="'api/gallery/files/thumbnails/' + image"
+<a [href]="'api/gallery/files/images/' + file">
+	<img [src]="'api/gallery/files/thumbnails/' + file"
 		alt="gallery image"
 		loading="lazy" />
 </a>
